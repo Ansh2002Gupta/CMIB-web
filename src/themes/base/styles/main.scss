@@ -1,0 +1,62 @@
+@use './fonts.scss' as fonts;
+@use 'core/themes/mixins/mainTemplate.scss' as main;
+@use 'core/themes/mixins/responsive.scss' as responsive;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  // sets rem
+  font-size: responsive.$rem-xl;
+
+  @include responsive.useLg {
+    font-size: responsive.$rem-lg;
+  }
+
+  @include responsive.useSm {
+    font-size: responsive.$rem-sm;
+  }
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+@mixin useMain() {
+  // @include fonts.useFontFaces();  // TODO: Remove this call after verifying the consequences of removing it
+  @include main.useMainTemplate() {
+    display: flex;
+    flex-grow: 1;
+    background: var(--body-bg);
+    color: var(--text-default);
+    font-family: var(--font-family-regular);
+    font-size: var(--font-size-normal);
+    line-height: var(--line-height-normal);
+
+    // global scss examples can be accessed over components directly by using names only
+    .flex {
+      display: flex;
+    }
+    .alignCenter {
+      align-items: center;
+    }
+    .justifyCenter {
+      justify-content: center
+    }
+  }
+}
+
+body {
+  #root {
+    @include useMain;
+  }
+}
+  

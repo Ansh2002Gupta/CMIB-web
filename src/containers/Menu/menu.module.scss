@@ -1,0 +1,8 @@
+.sideMenuContainer {
+    width: var(--sidemenuWidth);
+    height: 100%;
+    background-color: var(--sidemenuBgColor);
+    display: flex;
+    flex-direction: column;
+    padding: var(--fontSizeSmall);
+}

@@ -1,0 +1,13 @@
+@use "core/themes/mixins/responsive.scss" as responsive;
+
+.mainContainer {
+  width: 100%;
+  display: flex;
+}
+
+
+@include responsive.useSm {
+  .mainContainer {
+    margin: 0;
+  }
+}

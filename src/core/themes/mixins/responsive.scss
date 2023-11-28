@@ -1,0 +1,49 @@
+$xs-max: 511;
+$sm-max: 767;
+$md-max: 1023;
+$lg-max: 1279;
+$xl-max: 1535;
+
+$rem-xl: 18px;
+$rem-lg: 16px;
+$rem-sm: 14px;
+
+:export {
+  xs-max: $xs-max;
+  sm-max: $sm-max;
+  md-max: $md-max;
+  lg-max: $lg-max;
+  xl-max: $xl-max;
+}
+
+  
+@mixin useXs {
+  @media (max-width: #{$xs-max}px) {
+    @content;
+  }
+}
+
+
+@mixin useSm {
+  @media (max-width: #{$sm-max}px) {
+    @content;
+  }
+}
+
+@mixin useMd {
+  @media (max-width: #{$md-max}px) {
+    @content;
+  }
+}
+
+@mixin useLg {
+  @media (max-width: #{$lg-max}px) {
+    @content;
+  }
+}
+
+@mixin useXl {
+  @media (max-width: #{$xl-max}px) {
+    @content;
+  }
+}

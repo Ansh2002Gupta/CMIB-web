@@ -1,0 +1,10 @@
+@use "core/themes/mixins/responsive.scss" as responsive;
+
+
+.mainLayout {
+    .mainLayoutRightSection {
+      background-color: var(--header-bg);
+      padding: 24px;
+    }
+}
+
