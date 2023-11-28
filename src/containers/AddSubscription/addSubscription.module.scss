@@ -1,0 +1,12 @@
+.addSubscriptionBtn {
+  display: flex;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  background-color: var(--greenBtnBg);
+  color: var(--textPrimary);
+  font-size: var(--fontSizeSmall);
+  line-height: var(--lineHeightNormal);
+}

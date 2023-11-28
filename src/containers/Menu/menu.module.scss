@@ -1,5 +1,5 @@
 .sideMenuContainer {
-    width: var(--sidemenuWidth);
+    min-width: var(--sidemenuWidth);
     height: 100%;
     background-color: var(--sidemenuBgColor);
     display: flex;

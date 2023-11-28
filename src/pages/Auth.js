@@ -5,13 +5,10 @@ import { Outlet } from "react-router-dom";
 
 import AuthLayout from "../layouts/AuthLayout";
 
-
-function Auth(props) {
-    return (
-      <AuthLayout
-        leftSection={<AuthImage />}
-        rightSection={<Outlet />} /> // view component
-    );
+function Auth() {
+  return (
+    <AuthLayout leftSection={<AuthImage />} rightSection={<Outlet />} /> // view component
+  );
 }
 
 export default Auth;
