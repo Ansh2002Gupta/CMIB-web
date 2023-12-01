@@ -1,4 +1,11 @@
 .headerContainer {
     justify-content: space-between;
-    border-bottom: 1px solid var(--border);
+    align-items: center;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 14px;
+    color: black;
+}
+.notificationIcon {
+    font-size: 22px;
+    cursor: pointer;
 }

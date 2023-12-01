@@ -13,6 +13,7 @@ const colorPallets = {
   black1: "#000833",
 
   green1: "#04AF55",
+  black: "#000000"
 };
 
 const variables = {
@@ -20,7 +21,7 @@ const variables = {
   primaryBg: colorPallets.blue1,
   textPrimary: colorPallets.white1,
 
-  textDefault: colorPallets.blue2,
+  textDefault: colorPallets.black,
   textLight: colorPallets.blue3,
 
   textBold: colorPallets.black1,
@@ -32,6 +33,8 @@ const variables = {
   radiusSm: "4px",
   radiusMd: "6px",
   radiusLg: "8px",
+
+  fontSizeXSmall: "12px",
 
   fontSizeSmall: "14px",
   lineHeightSmall: "18px",
@@ -68,6 +71,7 @@ const variables = {
   headerBg: "#f5f5f5",
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
+  headerText: colorPallets.black,
 };
 
 export default variables;
