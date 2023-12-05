@@ -10,7 +10,7 @@ const locale = {
   'label.loginBtn': 'Login',
   'label.userNamePlaceHolder': 'Please enter your email!',
   'label.passwordPlaceholder': 'Please enter your password!',
-  'label.inValidEmail': 'Not a valid email, Please enter again!',
+  'label.invalidEmail': 'Not a valid email, Please enter again!',
 }
 
 export default locale;

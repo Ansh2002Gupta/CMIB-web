@@ -2,20 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Button, Typography, Image } from "antd";
 
-import useResponsive from "../../core/hooks/useResponsive";
+import variables from "../../themes/base/styles/variables";
 import { Base } from "core/layouts";
 
 import CardView from "../../hocs/CardView/CardView";
 import CustomInput from "../../components/CustomInput";
-import variables from "../../themes/base/styles/variables";
-import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
+import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
+import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
 import styles from "./LoginForm.module.scss";
 
 const LoginForm = () => {
   const intl = useIntl();
-  const responsive = useResponsive();
-  const isMobileView = !responsive.isSm;
   const [formInputs, setFormInputs] = useState({
     userName: "",
     password: "",
@@ -45,18 +43,10 @@ const LoginForm = () => {
 
   return (
     <Base className={styles.loginForm}>
-      <div className={styles.headingContainer}>
-        <div>
-          <Typography className={styles.loginHeading}>
-            {intl.formatMessage({ id: "label.loginHeading" })}
-          </Typography>
-        </div>
-        <div>
-          <Typography className={styles.loginSubHeading}>
-            {intl.formatMessage({ id: "label.loginSubheading" })}
-          </Typography>
-        </div>
-      </div>
+      <HeadingAndSubHeading
+        headingText={intl.formatMessage({ id: "label.loginHeading" })}
+        subHeadingText={intl.formatMessage({ id: "label.loginSubheading" })}
+      />
       <div
         className={[
           styles.inputAndBtnContainer,
@@ -70,7 +60,7 @@ const LoginForm = () => {
             customLabelStyles={styles.inputLabel}
             customInputStyles={styles.input}
             isError={!isEmailValid}
-            errorMessage={intl.formatMessage({ id: "label.inValidEmail" })}
+            errorMessage={intl.formatMessage({ id: "label.invalidEmail" })}
             placeholder={intl.formatMessage({
               id: "label.userNamePlaceHolder",
             })}
