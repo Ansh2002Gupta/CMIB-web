@@ -3,14 +3,14 @@ import { useIntl } from "react-intl";
 import { Button, Typography, Image } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
-import variables from "../../themes/base/styles/variables";
 import { Base } from "core/layouts";
 
 import CardView from "../../hocs/CardView/CardView";
 import CustomInput from "../../components/CustomInput";
-import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
+import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
+import { emailRegex } from "../../Constants/Constants";
 import styles from "./LoginForm.module.scss";
 
 const LoginForm = () => {
@@ -32,7 +32,7 @@ const LoginForm = () => {
   };
 
   const isValidEmail = () => {
-    setIsEmailValid(variables.emailRegex.test(formInputs?.userName));
+    setIsEmailValid(emailRegex.test(formInputs?.userName));
   };
 
   useEffect(() => {
@@ -92,7 +92,6 @@ const LoginForm = () => {
               id: "label.passwordPlaceholder",
             })}
             isRequired
-            // type="password"
             type={showPassword ? "text" : "password"}
             isSuffixRequiredForPassword
             SuffixElement1={<EyeOutlined/>}

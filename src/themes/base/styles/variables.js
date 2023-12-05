@@ -63,6 +63,7 @@ const variables = {
   sidemenuWidth: "74px",
 
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
+  borderColor: colorPallets.ltGrey1,
 
   boxShadow: `1px 1px 10px #e9ebf1`,
   boxShadowBottom: `0 3px 3px -1px #e9ebf1`,
@@ -70,6 +71,7 @@ const variables = {
   fontFamilyRegular: "General Sans",
 
   error: colorPallets.red1,
+  requiredStarColor: colorPallets.red1,
 
   maxZIndex: 99,
 
@@ -87,22 +89,20 @@ const variables = {
 
   forgotLink: colorPallets.darkBlue,
 
-  emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-
-  requiredStarColor: colorPallets.red1,
-  errorText: colorPallets.red1,
-
-  borderColor: colorPallets.ltGrey1,
-
   followUsTextColor: colorPallets.darkGrey,
 
   boxShadowColor: colorPallets.shadowBlack,
 
   disableBtn: colorPallets.mediumGrey,
+  btnHeight: "56px",
 
   loginMobileBg: colorPallets.white,
 
   checkBoxText: colorPallets.black1,
+
+  paddingSmall: "16px",
+  paddingMedium: "24px",
+  paddingLarge: "32px",
 };
 
 export default variables;

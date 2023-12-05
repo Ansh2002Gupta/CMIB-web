@@ -7,8 +7,6 @@ import Base from "../../core/layouts/Base/Base";
 import styles from "./CustomInput.module.scss";
 
 const CustomInput = ({
-  SuffixElement1,
-  SuffixElement2,
   customContainerStyles,
   customErrorTextStyles,
   customInputStyles,
@@ -22,6 +20,8 @@ const CustomInput = ({
   onChange,
   onSuffixElementClick,
   placeholder,
+  SuffixElement1,
+  SuffixElement2,
   type,
   value,
 }) => {
@@ -83,43 +83,43 @@ const CustomInput = ({
 };
 
 CustomInput.defaultProps = {
-  label: "",
-  type: "text",
-  placeholder: "",
-  value: "",
-  customInputStyles: "",
-  customLabelStyles: "",
   customContainerStyles: "",
   customErrorTextStyles: "",
-  onChange: () => {},
+  customInputStyles: "",
+  customLabelStyles: "",
   errorMessage: "",
   isError: false,
   isRequired: false,
   isSuffixRequiredForPassword: false,
+  isTextVisible: true,
+  label: "",
+  onChange: () => {},
+  onSuffixElementClick: () => {},
+  placeholder: "",
   SuffixElement1: null,
   SuffixElement2: null,
-  onSuffixElementClick: () => {},
-  isTextVisible: true,
+  type: "",
+  value: "",
 };
 
 CustomInput.propTypes = {
-  label: PropTypes.string,
-  type: PropTypes.string,
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
-  customInputStyles: PropTypes.string,
-  customLabelStyles: PropTypes.string,
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
-  onChange: PropTypes.func,
+  customInputStyles: PropTypes.string,
+  customLabelStyles: PropTypes.string,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
   isRequired: PropTypes.bool,
   isSuffixRequiredForPassword: PropTypes.bool,
+  isTextVisible: PropTypes.bool,
+  label: PropTypes.string,
+  onChange: PropTypes.func,
+  onSuffixElementClick: PropTypes.func,
+  placeholder: PropTypes.string,
   SuffixElement1: PropTypes.node,
   SuffixElement2: PropTypes.node,
-  onSuffixElementClick: PropTypes.func,
-  isTextVisible: PropTypes.bool,
+  type: PropTypes.string,
+  value: PropTypes.string,
 };
 
 export default CustomInput;

@@ -5,11 +5,11 @@ import { Typography } from "antd";
 import styles from "./HeadingAndSubHeading.module.scss";
 
 const HeadingAndSubHeading = ({
-  headingText,
-  subHeadingText,
   customContainerStyles,
   customHeadingStyles,
   customSubHeadingStyles,
+  headingText,
+  subHeadingText,
 }) => {
   return (
     <div className={[styles.headingContainer, customContainerStyles].join(" ")}>
@@ -32,19 +32,19 @@ const HeadingAndSubHeading = ({
 };
 
 HeadingAndSubHeading.defaultProps = {
+  customContainerStyles: "",
+  customHeadingStyles: "",
+  customSubHeadingStyles: "",
   headingText: "",
   subHeadingText: "",
-  customContainerStyles: {},
-  customHeadingStyles: {},
-  customSubHeadingStyles: {},
 };
 
 HeadingAndSubHeading.propTypes = {
+  customContainerStyles: PropTypes.string,
+  customHeadingStyles: PropTypes.string,
+  customSubHeadingStyles: PropTypes.string,
   headingText: PropTypes.string,
   subHeadingText: PropTypes.string,
-  customContainerStyles: PropTypes.object,
-  customHeadingStyles: PropTypes.object,
-  customSubHeadingStyles: PropTypes.object,
 };
 
 export default HeadingAndSubHeading;

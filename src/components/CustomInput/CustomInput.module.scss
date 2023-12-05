@@ -7,6 +7,7 @@
 .inputLabelContainer {
   display: flex;
   gap: 4px;
+  padding-bottom: 4px;
 }
 
 .isRequiredStar {
@@ -14,9 +15,9 @@
 }
 
 .errorText {
-  color: var(--errorText);
-  font-weight: 500;
-  font-size: 14px;
+  color: var(--error);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
   margin-top: 8px;
 }
 
@@ -27,8 +28,8 @@
 .inputField {
   min-width: 100%;
   color: var(--inputText) !important;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
   &::placeholder {
     color: var(--inputPlaceHolder) !important;
   }

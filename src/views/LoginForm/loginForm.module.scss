@@ -21,14 +21,14 @@
 
 .inputLabel {
   color: var(--inputLabel);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 .forgotLink {
   color: var(--forgotLink);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
   &:hover {
     color: var(--forgotLink) !important;
   }
@@ -38,13 +38,13 @@
   background: var(--greenBtnBg);
   border-radius: 8px;
   color: var(--btnText);
-  font-size: 16px;
-  font-weight: 600;
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 17px 32px;
-  min-height: 56px;
+  padding: 17px var(--paddingLarge);
+  min-height: var(--btnHeight);
   &:hover {
     background: var(--greenBtnBg) !important;
   }
@@ -65,8 +65,8 @@
 
 .rememberMeText {
   color: var(--checkBoxText);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 .rememberMeImage {
@@ -80,11 +80,11 @@
 
 .input {
   color: var(--inputText);
-  font-size: 16px;
-  font-weight: 500;
-  padding: 16px;
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
+  padding: var(--paddingMedium);
   border-radius: 12px;
-  border: 1px solid var(--borderColor);
+  border: var(--borderLight);
   background-color: var(--bodyBg);
 }
 
@@ -97,12 +97,12 @@
   }
   .inputAndBtnContainer {
     background-color: var(--loginMobileBg);
-    padding: 24px 16px 32px 16px;
+    padding: var(--paddingMedium) var(--paddingSmall) var(--paddingLarge) var(--paddingSmall);
   }
   .borderForMobileScreens {
     border-top-width: 2px;
     border-top-style: solid;
     border-color: var(--borderColor);
-    padding-top: 24px;
+    padding-top: var(--paddingMedium);
   }
 }
