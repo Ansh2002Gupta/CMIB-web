@@ -2,17 +2,25 @@ const colorPallets = {
   blue1: "#60C5F9",
   blue2: "#0a3292",
   blue3: "#8997c5",
+  darkBlue: "#00137E",
 
-  red1: "#ef6a6a",
+  red1: "#D93400",
 
-  white1: "#ffffff",
-
-  ltGrey1: "#ecf1fb",
+  ltGrey1: "#ccd0e5",
   ltGrey2: "#cecece36",
+
+  mediumGrey: "#B1B3B5",
+
+  darkGrey: "#616C82",
 
   black1: "#000833",
 
   green1: "#04AF55",
+
+  white: "#FBFCFF",
+  white1: "#ffffff",
+
+  shadowBlack: "#616c820a",
 };
 
 const variables = {
@@ -68,6 +76,33 @@ const variables = {
   headerBg: "#f5f5f5",
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
+
+  headingColor: colorPallets.black1,
+  subHeadingColor: colorPallets.darkGrey,
+  btnText: colorPallets.white,
+
+  inputLabel: colorPallets.black1,
+  inputText: colorPallets.black1,
+  inputPlaceHolder: colorPallets.darkGrey,
+
+  forgotLink: colorPallets.darkBlue,
+
+  emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+
+  requiredStarColor: colorPallets.red1,
+  errorText: colorPallets.red1,
+
+  borderColor: colorPallets.ltGrey1,
+
+  followUsTextColor: colorPallets.darkGrey,
+
+  boxShadowColor: colorPallets.shadowBlack,
+
+  disableBtn: colorPallets.mediumGrey,
+
+  loginMobileBg: colorPallets.white,
+
+  checkBoxText: colorPallets.black1,
 };
 
 export default variables;

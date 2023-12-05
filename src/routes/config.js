@@ -1,5 +1,6 @@
 import Home from "../pages/Home";
 import Auth from "../pages/Auth";
+import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import LoginForm from "../views/LoginForm";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -10,6 +11,9 @@ import DashboardView from "../views/Dashboard/Dashboard";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
+const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
+  HeaderContentWithFooter
+);
 
 const config = [
   {
@@ -29,7 +33,7 @@ const config = [
   },
   {
     pagePath: "/login",
-    element: <AuthWithPublicAccess />, // Page
+    element: <HeaderContentWithFooterWithPublicAccess />, // Page
     views: [
       // array of views under Page route
       {

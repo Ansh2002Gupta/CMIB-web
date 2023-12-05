@@ -1,82 +1,146 @@
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Button, Space, Typography, Input } from "antd";
+import { Button, Typography, Image } from "antd";
+
+import useResponsive from "../../core/hooks/useResponsive";
 import { Base } from "core/layouts";
-import { AuthContext } from "../../globalContext/auth/authProvider";
-import { setAuth } from "./../../globalContext/auth/authActions";
-import { AuthService } from "./../../services";
-import Styles from "./loginForm.module.scss";
 
-export function useLoginForm(initialState = {}) {
-  const navigate = useNavigate();
-  const [formValues, setFormValues] = useState({
-    username: initialState.username || "",
-    password: initialState.password || "",
-  });
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [, authDispatch] = useContext(AuthContext);
-  const onLogin = async () => {
-    setIsProcessing(true);
-    // api call and passResponse to setAuthAction
-    const response = await AuthService.login(formValues);
-    authDispatch(setAuth(response));
-    setIsProcessing(false);
-    navigate("/");
-  };
-  return {
-    formValues,
-    setFormValues,
-    onLogin,
-    isProcessing,
-  };
-}
+import CardView from "../../hocs/CardView/CardView";
+import CustomInput from "../../components/CustomInput";
+import variables from "../../themes/base/styles/variables";
+import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
+import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
+import styles from "./LoginForm.module.scss";
 
-function LoginForm(props) {
+const LoginForm = () => {
   const intl = useIntl();
-  const { formValues, setFormValues, onLogin, isProcessing } = useLoginForm();
-  const { username, password } = formValues || {};
-  const isLoginActionDisabled =
-    !username.trim() || !password.trim() || isProcessing;
+  const responsive = useResponsive();
+  const isMobileView = !responsive.isSm;
+  const [formInputs, setFormInputs] = useState({
+    userName: "",
+    password: "",
+  });
+  const [shouldRememberMe, setShouldRememberMe] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isAllowedToLogin, setIsAllowedToLogin] = useState(false);
+
+  const handleOnLogin = () => {
+    if (!isEmailValid) {
+      return;
+    }
+    console.log("Success:", { formInputs, shouldRememberMe });
+  };
+
+  const isValidEmail = () => {
+    setIsEmailValid(variables.emailRegex.test(formInputs?.userName));
+  };
+
+  useEffect(() => {
+    if (formInputs.userName && formInputs.password) {
+      setIsAllowedToLogin(true);
+      return;
+    }
+    setIsAllowedToLogin(false);
+  }, [formInputs?.userName, formInputs?.password]);
+
   return (
-    <Base>
-      <div className={Styles.loginForm}>
-        <Space style={{ width: "100%" }} direction="vertical" size="middle">
-          <Typography>{intl.formatMessage({ id: "signIn" })}</Typography>
-          <Input
-            placeholder={intl.formatMessage({ id: "username" })}
-            value={username}
+    <Base className={styles.loginForm}>
+      <div className={styles.headingContainer}>
+        <div>
+          <Typography className={styles.loginHeading}>
+            {intl.formatMessage({ id: "label.loginHeading" })}
+          </Typography>
+        </div>
+        <div>
+          <Typography className={styles.loginSubHeading}>
+            {intl.formatMessage({ id: "label.loginSubheading" })}
+          </Typography>
+        </div>
+      </div>
+      <div
+        className={[
+          styles.inputAndBtnContainer,
+          styles.borderForMobileScreens,
+        ].join(" ")}
+      >
+        <div className={styles.inputContainer}>
+          <CustomInput
+            label={intl.formatMessage({ id: "label.userName" })}
+            type="text"
+            customLabelStyles={styles.inputLabel}
+            customInputStyles={styles.input}
+            isError={!isEmailValid}
+            errorMessage={intl.formatMessage({ id: "label.inValidEmail" })}
+            placeholder={intl.formatMessage({
+              id: "label.userNamePlaceHolder",
+            })}
+            isRequired
+            value={formInputs.userName}
             onChange={(e) => {
-              setFormValues((v) => {
-                v.username = e.target.value;
-                return { ...v };
+              setIsEmailValid(true);
+              setFormInputs({
+                ...formInputs,
+                userName: e?.target?.value,
               });
             }}
           />
-          <Input
+          <CustomInput
+            label={intl.formatMessage({ id: "label.password" })}
+            customLabelStyles={styles.inputLabel}
+            customInputStyles={styles.input}
+            placeholder={intl.formatMessage({
+              id: "label.passwordPlaceholder",
+            })}
+            isRequired
             type="password"
-            placeholder={intl.formatMessage({ id: "password" })}
-            value={password}
-            onChange={(e) => {
-              setFormValues((v) => {
-                v.password = e.target.value;
-                return { ...v };
-              });
-            }}
+            value={formInputs.password}
+            onChange={(e) =>
+              setFormInputs({
+                ...formInputs,
+                password: e.target.value,
+              })
+            }
           />
+          <div className={styles.forgotLinkAndRememberMeContainer}>
+            <span
+              className={styles.rememberMeContainer}
+              onClick={() => setShouldRememberMe((prev) => !prev)}
+            >
+              <Image
+                src={shouldRememberMe ? checkedBox : unCheckedBox}
+                className={styles.rememberMeImage}
+                width={20}
+                preview={false}
+              />
+              <Typography className={styles.rememberMeText}>
+                Remember Me
+              </Typography>
+            </span>
+            <div>
+              <Button className={styles.forgotLink} type="link">
+                Forget password?
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div>
           <Button
-            onClick={() => {
-              onLogin();
-            }}
             type="primary"
-            disabled={isLoginActionDisabled}
+            htmlType="submit"
+            block
+            className={styles.loginBtn}
+            onClick={() => {
+              isValidEmail();
+              handleOnLogin();
+            }}
+            disabled={!isAllowedToLogin}
           >
-            {intl.formatMessage({ id: "login" })}
+            {intl.formatMessage({ id: "label.loginBtn" })}
           </Button>
-        </Space>
+        </div>
       </div>
     </Base>
   );
-}
+};
 
-export default LoginForm;
+export default CardView(LoginForm);
