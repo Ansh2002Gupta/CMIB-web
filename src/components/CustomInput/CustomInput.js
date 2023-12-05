@@ -1,27 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Form, Input, Typography } from "antd";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { Input, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
 import styles from "./CustomInput.module.scss";
 
 const CustomInput = ({
-  label,
-  type,
-  placeholder,
-  value,
-  customInputStyles,
-  customLabelStyles,
+  SuffixElement1,
+  SuffixElement2,
   customContainerStyles,
   customErrorTextStyles,
-  onChange,
+  customInputStyles,
+  customLabelStyles,
   errorMessage,
   isError,
   isRequired,
+  isSuffixRequiredForPassword,
+  isTextVisible,
+  label,
+  onChange,
+  onSuffixElementClick,
+  placeholder,
+  type,
+  value,
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
   return (
     <Base className={[styles.container, customContainerStyles].join(" ")}>
       {!!label && (
@@ -33,42 +36,39 @@ const CustomInput = ({
         </div>
       )}
       <div className={styles.formContainer}>
-        {type?.toLowerCase() === "password" && (
-          <Input
-            type={showPassword ? "text" : "password"}
-            className={[styles.inputField, customInputStyles].join(" ")}
-            {...{
-              value,
-              placeholder,
-              onChange,
-            }}
-            suffix={
-              <>
-                {!showPassword ? (
-                  <EyeOutlined
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  />
-                ) : (
-                  <EyeInvisibleOutlined
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  />
-                )}
-              </>
-            }
-          />
-        )}
-        {type === "text" && (
-          <Input
-            className={[styles.inputField, customInputStyles].join(" ")}
-            {...{
-              value,
-              placeholder,
-              onChange,
-            }}
-          />
-        )}
+        <Input
+          type={type || "text"}
+          className={[styles.inputField, customInputStyles].join(" ")}
+          {...{
+            value,
+            placeholder,
+            onChange,
+          }}
+          suffix={
+            isSuffixRequiredForPassword ? (
+              isTextVisible ? (
+                <span
+                  className={styles.suffixElement}
+                  onClick={() => {
+                    onSuffixElementClick && onSuffixElementClick();
+                  }}
+                >
+                  {SuffixElement1}
+                </span>
+              ) : (
+                <span
+                  className={styles.suffixElement}
+                  onClick={() => {
+                    onSuffixElementClick && onSuffixElementClick();
+                  }}
+                >
+                  {SuffixElement2}
+                </span>
+              )
+            ) : null
+          }
+        />
       </div>
-
       {isError && (
         <div>
           <Typography
@@ -87,14 +87,19 @@ CustomInput.defaultProps = {
   type: "text",
   placeholder: "",
   value: "",
-  customInputStyles: {},
-  customLabelStyles: {},
-  customContainerStyles: {},
-  customErrorTextStyles: {},
+  customInputStyles: "",
+  customLabelStyles: "",
+  customContainerStyles: "",
+  customErrorTextStyles: "",
   onChange: () => {},
   errorMessage: "",
   isError: false,
   isRequired: false,
+  isSuffixRequiredForPassword: false,
+  SuffixElement1: null,
+  SuffixElement2: null,
+  onSuffixElementClick: () => {},
+  isTextVisible: true,
 };
 
 CustomInput.propTypes = {
@@ -102,14 +107,19 @@ CustomInput.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,
-  customInputStyles: PropTypes.object,
-  customLabelStyles: PropTypes.object,
-  customContainerStyles: PropTypes.object,
-  customErrorTextStyles: PropTypes.object,
+  customInputStyles: PropTypes.string,
+  customLabelStyles: PropTypes.string,
+  customContainerStyles: PropTypes.string,
+  customErrorTextStyles: PropTypes.string,
   onChange: PropTypes.func,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
   isRequired: PropTypes.bool,
+  isSuffixRequiredForPassword: PropTypes.bool,
+  SuffixElement1: PropTypes.node,
+  SuffixElement2: PropTypes.node,
+  onSuffixElementClick: PropTypes.func,
+  isTextVisible: PropTypes.bool,
 };
 
 export default CustomInput;

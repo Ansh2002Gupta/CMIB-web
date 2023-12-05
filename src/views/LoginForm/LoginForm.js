@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Button, Typography, Image } from "antd";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import variables from "../../themes/base/styles/variables";
 import { Base } from "core/layouts";
@@ -21,6 +22,7 @@ const LoginForm = () => {
   const [shouldRememberMe, setShouldRememberMe] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isAllowedToLogin, setIsAllowedToLogin] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleOnLogin = () => {
     if (!isEmailValid) {
@@ -90,7 +92,13 @@ const LoginForm = () => {
               id: "label.passwordPlaceholder",
             })}
             isRequired
-            type="password"
+            // type="password"
+            type={showPassword ? "text" : "password"}
+            isSuffixRequiredForPassword
+            SuffixElement1={<EyeOutlined/>}
+            SuffixElement2={<EyeInvisibleOutlined />}
+            onSuffixElementClick={() => setShowPassword((prev) => !prev)}
+            isTextVisible={!showPassword}
             value={formInputs.password}
             onChange={(e) =>
               setFormInputs({
