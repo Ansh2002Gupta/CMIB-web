@@ -41,6 +41,14 @@ const LoginForm = () => {
     setIsAllowedToLogin(false);
   }, [formInputs?.userName, formInputs?.password]);
 
+  useEffect(() => {
+    return () => {
+      setShouldRememberMe(false);
+      setIsEmailValid(true);
+      setIsAllowedToLogin(false);
+    };
+  }, []);
+
   return (
     <Base className={styles.loginForm}>
       <HeadingAndSubHeading

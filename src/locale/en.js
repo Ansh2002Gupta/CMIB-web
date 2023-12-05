@@ -11,6 +11,7 @@ const locale = {
   'label.userNamePlaceHolder': 'Please enter your email!',
   'label.passwordPlaceholder': 'Please enter your password!',
   'label.invalidEmail': 'Not a valid email, Please enter again!',
+  'label.recievedOTP': 'Haven’t received the OTP?',
 }
 
 export default locale;
