@@ -4,6 +4,10 @@ const locale = {
   'label.userName': 'Username',
   'label.password': 'Password',
   'label.login': 'Login',
+  'label.viewProfile': 'View Profile',
+  'label.changePassword': 'Change Password',
+  'label.companyProfile': 'Company Profile',
+  'label.logout': 'Logout',
 }
 
 export default locale;

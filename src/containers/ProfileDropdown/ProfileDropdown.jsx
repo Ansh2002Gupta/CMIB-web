@@ -1,53 +1,10 @@
 import React, { useState } from 'react';
-import { Avatar, Dropdown, Space, Card, Button } from 'antd';
+import { Avatar, Dropdown, Space } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 
-import { ReactComponent as UserIcon } from '../../themes/base/assets/icons/user.svg';
-import { ReactComponent as CompanyIcon } from '../../themes/base/assets/icons/building.svg';
-import { ReactComponent as LockIcon } from '../../themes/base/assets/icons/lock.svg';
-import { ReactComponent as LogoutIcon } from '../../themes/base/assets/icons/logout.svg';
+import CardDropdownOverlay from './CardDropdownOverlay';
 
-import Styles from './profileDropdown.module.scss'
-
-const CardDropdownOverlay = ({ userName, userEmail, userProfile, onLogout }) => (
-    <Card
-        className={Styles.profileMenu}
-        bodyStyle={{
-            padding: '16px'
-        }}
-        title={
-            <Space
-                className={Styles.profileMenuHeader}
-                direction='vertical'
-                size='middle'>
-                <Avatar size={64} src={userProfile} icon={<UserOutlined />} />
-
-                <Space direction="vertical" size='1' >
-                    <span className={`${Styles.profileName} ${Styles.profileMenuName}`}>{userName}</span>
-                    <span className={`${Styles.profileRole} ${Styles.profileMenuRole}`}>{userEmail}</span>
-                </Space>
-            </Space>
-        }
-        actions={[
-            <Button
-                className={Styles.logoutBtn}
-                type='text'
-                icon={<span><LogoutIcon /></span>}
-                onClick={onLogout}
-            >
-                Log out
-            </Button>
-        ]}
-    >
-        <Space className={Styles.profileList} size='small' direction='vertical'>
-            <Button type='text' icon={<span><UserIcon /></span>}>View Profile</Button>
-            <Button type='text' icon={<span> <CompanyIcon /></span>} >Company Profile</Button>
-            <Button type='text' icon={<span><LockIcon /></span>}>Change Password</Button>
-        </Space>
-
-    </Card>
-);
-
+import styles from './profileDropdown.module.scss'
 
 const ProfileDropdown = ({ onLogout }) => {
     // it is temporary need to change logic
@@ -58,12 +15,8 @@ const ProfileDropdown = ({ onLogout }) => {
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
-    const handleVisibleChange = (visible) => {
-        setDropdownVisible(visible);
-    };
-
     return (
-        <Space className={Styles.profileDropdown}>
+        <Space className={styles.profileDropdown}>
             <Avatar
                 src={userProfilePic}
                 icon={<UserOutlined />}
@@ -79,15 +32,15 @@ const ProfileDropdown = ({ onLogout }) => {
                         onLogout={onLogout}
                     />}
                 trigger={['click']}
-                onOpenChange={handleVisibleChange}
+                onOpenChange={(visible) => setDropdownVisible(visible)}
                 open={dropdownVisible}
             >
-                <Space size={64}>
+                <Space size={16}>
                     <Space direction="vertical" size='1' >
-                        <span className={Styles.profileName} >{userName}</span>
-                        <span className={Styles.profileRole}>{userRole}</span>
+                        <span className={styles.profileName} >{userName}</span>
+                        <span className={styles.profileRole}>{userRole}</span>
                     </Space>
-                    <DownOutlined className={`${Styles.downIcon} ${dropdownVisible ? Styles.arrowRotated : ''}`} />
+                    <DownOutlined className={`${styles.downIcon} ${dropdownVisible ? styles.arrowRotated : ''}`} />
                 </Space>
             </Dropdown>
 

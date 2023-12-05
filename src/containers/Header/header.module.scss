@@ -2,10 +2,11 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid var(--border);
-    padding-bottom: 14px;
+    padding-bottom: var(--paddingSmall);
+    padding-right: var(--padding4px);
     color: black;
 }
 .notificationIcon {
-    font-size: 22px;
+    font-size: var(--fontSize22px);
     cursor: pointer;
 }

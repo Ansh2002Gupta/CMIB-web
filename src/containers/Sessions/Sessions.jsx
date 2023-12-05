@@ -3,8 +3,8 @@ import { Button, Dropdown, Typography } from 'antd';
 import { DownOutlined } from '@ant-design/icons'
 
 
-import Styles from './sessions.module.scss';
-
+import styles from './sessions.module.scss';
+// TODO: need to set items of the session dropdown according to api data.
 const items = [
   {
     key: '1',
@@ -26,7 +26,7 @@ function Sessions() {
       items,
       selectable: true,
     }}
-    className={Styles.sessionContainer}
+    className={styles.sessionContainer}
   >
     <Button shape='round' size='middle'>
       <Typography.Text> Session: </Typography.Text> &nbsp;

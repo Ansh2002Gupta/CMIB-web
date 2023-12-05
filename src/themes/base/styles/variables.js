@@ -9,6 +9,7 @@ const colorPallets = {
 
   ltGrey1: "#ecf1fb",
   ltGrey2: "#cecece36",
+  ltGrey3: "#616c82",
 
   black1: "#000833",
 
@@ -48,6 +49,8 @@ const variables = {
   fontSizeXlarge: "20px",
   lineHeightXlarge: "24px",
 
+  fontSize22px: "22px",
+
   fontSizeHeading: "32px",
   lineHeightHeading: "40px",
 
@@ -72,6 +75,17 @@ const variables = {
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
   headerText: colorPallets.black,
+
+  paddingSmall: "14px",
+  paddingXSmall: "12px",
+
+  padding4px: "4px",
+
+  boxShadowProfile: "0px 4px 8px rgba(0, 0, 0, 0.15)",
+
+  profileColor: colorPallets.ltGrey3,
+
+  marginNormal: "16px"
 };
 
 export default variables;
