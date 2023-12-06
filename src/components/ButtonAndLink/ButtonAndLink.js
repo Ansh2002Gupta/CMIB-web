@@ -8,8 +8,6 @@ import GreenButton from "../GreenButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import styles from "./ButtonAndLink.module.scss";
 
-// TODO: Add link as the props for re-direction.
-
 const ButtonAndLink = ({
   bottomLinkText,
   topBtnText,

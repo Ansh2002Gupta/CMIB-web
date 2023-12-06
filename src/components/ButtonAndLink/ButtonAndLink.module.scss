@@ -12,8 +12,8 @@
 .backToLoginLink {
   color: var(--linkColor);
   text-align: center;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
   &:hover {
     color: var(--linkColor) !important;
   }
