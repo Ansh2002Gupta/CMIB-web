@@ -11,11 +11,13 @@ const colorPallets = {
 
   mediumGrey: "#B1B3B5",
 
-  darkGrey: "#616C82",
+  darkGrey1: "#616C82",
+  darkGrey2: "#5a5a5a",
 
   black1: "#000833",
 
   green1: "#04AF55",
+  green2: "#00873E",
 
   white: "#FBFCFF",
   white1: "#ffffff",
@@ -80,29 +82,36 @@ const variables = {
   greenBtnBg: colorPallets.green1,
 
   headingColor: colorPallets.black1,
-  subHeadingColor: colorPallets.darkGrey,
+  subHeadingColor: colorPallets.darkGrey1,
   btnText: colorPallets.white,
 
   inputLabel: colorPallets.black1,
   inputText: colorPallets.black1,
-  inputPlaceHolder: colorPallets.darkGrey,
+  inputPlaceHolder: colorPallets.darkGrey1,
 
-  forgotLink: colorPallets.darkBlue,
+  linkColor: colorPallets.darkBlue,
 
-  followUsTextColor: colorPallets.darkGrey,
+  followUsTextColor: colorPallets.darkGrey1,
 
   boxShadowColor: colorPallets.shadowBlack,
 
   disableBtn: colorPallets.mediumGrey,
   btnHeight: "56px",
 
-  loginMobileBg: colorPallets.white,
+  mobileBg1: colorPallets.white,
 
   checkBoxText: colorPallets.black1,
 
   paddingSmall: "16px",
   paddingMedium: "24px",
   paddingLarge: "32px",
+
+  bulletPoint: colorPallets.ltGrey1,
+  bulletPointText: colorPallets.darkGrey2,
+
+  active: colorPallets.green2,
+
+  successText: colorPallets.green1,
 };
 
 export default variables;

@@ -8,6 +8,8 @@ import withPublicAccess from "../hocs/withPublicAccess";
 import { CONFIGURATIONS, DASHBOARD, SUBSCRIPTIONS } from "./routeNames";
 import Configurations from "../views/Configurations/Configurations";
 import DashboardView from "../views/Dashboard/Dashboard";
+import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
+import CreateNewPassword from "../views/CreateNewPassword";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
@@ -39,6 +41,28 @@ const config = [
       {
         viewPath: "",
         element: <LoginForm />, // view
+      },
+    ],
+  },
+  {
+    pagePath: "/forgot-password",
+    element: <HeaderContentWithFooterWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <ForgotPassword />, // view
+      },
+    ],
+  },
+  {
+    pagePath: "/create-new-password",
+    element: <HeaderContentWithFooterWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <CreateNewPassword />, // view
       },
     ],
   },

@@ -1,0 +1,60 @@
+// TODO: Issue to be resolved regarding not able to provide style via variables
+.container {
+  flex-direction: column;
+  gap: 32px;
+//   max-width: 400px;
+}
+
+.heading {
+  color: #000833 !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  //   color: var(--textBold);
+  //   font-size: var(--fontSizeXlarge);
+  //   font-weight: var(--fontWeightBold);
+}
+
+.image {
+  width: 50px ;
+  height: 50px ;
+}
+
+.subHeading {
+  color: var(--On-surface, #616c82) !important;
+  font-size: 14px;
+  font-weight: 500;
+  //   color: var(--subHeadingColor);
+  //   font-size: var(--fontSizeSmall);
+  //   font-weight: var(--fontWeightMedium);
+}
+
+.headingAndSubHeadingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.imageAndHeadingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.btn {
+  display: flex;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  flex: 1 0 0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  background: #04af55;
+  &:hover {
+    background: #04af55 !important;
+    color: #fff !important;
+  }
+}

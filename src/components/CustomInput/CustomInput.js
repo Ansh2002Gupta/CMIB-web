@@ -17,6 +17,8 @@ const CustomInput = ({
   isSuffixRequiredForPassword,
   isTextVisible,
   label,
+  messageStyles: customMessageStyles,
+  messageToShow,
   onChange,
   onSuffixElementClick,
   placeholder,
@@ -78,6 +80,15 @@ const CustomInput = ({
           </Typography>
         </div>
       )}
+      {!!messageToShow && (
+        <div>
+          <Typography
+            className={[styles.messageText, customMessageStyles].join(" ")}
+          >
+            {messageToShow}
+          </Typography>
+        </div>
+      )}
     </Base>
   );
 };
@@ -93,6 +104,8 @@ CustomInput.defaultProps = {
   isSuffixRequiredForPassword: false,
   isTextVisible: true,
   label: "",
+  messageStyles: "",
+  messageToShow: "",
   onChange: () => {},
   onSuffixElementClick: () => {},
   placeholder: "",
@@ -113,6 +126,8 @@ CustomInput.propTypes = {
   isSuffixRequiredForPassword: PropTypes.bool,
   isTextVisible: PropTypes.bool,
   label: PropTypes.string,
+  messageStyles: PropTypes.string,
+  messageToShow: PropTypes.string,
   onChange: PropTypes.func,
   onSuffixElementClick: PropTypes.func,
   placeholder: PropTypes.string,

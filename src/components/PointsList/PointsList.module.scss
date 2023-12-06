@@ -1,0 +1,48 @@
+.container {
+  flex-direction: column;
+  gap: 16px;
+}
+
+.box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 16px;
+}
+
+.pointsContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pointText {
+  color: var(--bulletPointText);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.bullet {
+  width: 8px;
+  height: 8px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: var(--bulletPoint);
+}
+
+.active{
+    background-color: var(--active);
+}
+
+@media screen and (max-width: 511px) {
+  .box {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    gap: 8px;
+  }
+  .bullet {
+    width: 5px;
+    height: 5px;
+    padding: 3px;
+  }
+}

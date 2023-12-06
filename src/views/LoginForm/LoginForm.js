@@ -7,14 +7,16 @@ import { Base } from "core/layouts";
 
 import CardView from "../../hocs/CardView/CardView";
 import CustomInput from "../../components/CustomInput";
-import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
 import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
 import { emailRegex } from "../../Constants/Constants";
 import styles from "./LoginForm.module.scss";
 
 const LoginForm = () => {
   const intl = useIntl();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const [formInputs, setFormInputs] = useState({
     userName: "",
     password: "",
@@ -94,7 +96,7 @@ const LoginForm = () => {
             isRequired
             type={showPassword ? "text" : "password"}
             isSuffixRequiredForPassword
-            SuffixElement1={<EyeOutlined/>}
+            SuffixElement1={<EyeOutlined />}
             SuffixElement2={<EyeInvisibleOutlined />}
             onSuffixElementClick={() => setShowPassword((prev) => !prev)}
             isTextVisible={!showPassword}
@@ -122,7 +124,7 @@ const LoginForm = () => {
               </Typography>
             </span>
             <div>
-              <Button className={styles.forgotLink} type="link">
+              <Button className={styles.forgotLink} type="link" onClick={()=>navigate("/forgot-password")}>
                 Forget password?
               </Button>
             </div>

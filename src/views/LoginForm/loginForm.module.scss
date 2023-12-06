@@ -26,11 +26,11 @@
 }
 
 .forgotLink {
-  color: var(--forgotLink);
+  color: var(--linkColor);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightBold);
   &:hover {
-    color: var(--forgotLink) !important;
+    color: var(--linkColor) !important;
   }
 }
 
@@ -82,7 +82,7 @@
   color: var(--inputText);
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightMedium);
-  padding: var(--paddingMedium);
+  padding: var(--paddingSmall);
   border-radius: 12px;
   border: var(--borderLight);
   background-color: var(--bodyBg);
@@ -96,7 +96,7 @@
     flex: 1;
   }
   .inputAndBtnContainer {
-    background-color: var(--loginMobileBg);
+    background-color: var(--mobileBg1);
     padding: var(--paddingMedium) var(--paddingSmall) var(--paddingLarge) var(--paddingSmall);
   }
   .borderForMobileScreens {
