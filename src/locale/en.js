@@ -40,6 +40,12 @@ const locale = {
     "New password and Confirm password do not match, Please enter again",
   "label.newPasswordAndConfirmPasswordMatched":
     "Your password has been changed successfully",
+  "label.otpHeading":
+    "Please enter the one time password that you have received on your registered email address/mobile number",
+  "label.otp": "OTP",
+  "label.sendAgain": "Send Again",
+  "label.fourteenMinTimerText1": "You have requested OTP for 4 times!",
+  "label.fourteenMinTimerText2": "You can resend the next OTP after",
 };
 
 export default locale;

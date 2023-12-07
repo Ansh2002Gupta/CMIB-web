@@ -1,0 +1,113 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.heading {
+  color: var(--textBold);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
+}
+
+.subHeading {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.requiredStar {
+  color: var(--error);
+}
+
+.otpFieldsAndButtonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 76px;
+}
+
+.input {
+  display: flex;
+  padding: var(--paddingSmall);
+  min-height: 56px;
+  max-width: none !important;
+  flex: 1;
+  font-size: var(--fontSizeXlarge);
+  font-weight: var(--fontWeightMedium);
+  color: var(--inputText);
+  border-radius: 12px;
+  border: var(--borderLight);
+  background: var(--bodyBg);
+}
+
+.subHeadingContainer {
+  display: flex;
+  gap: 4px;
+}
+
+.inputContainer {
+  display: flex;
+  gap: 16px;
+}
+
+.box {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.sendAgainTextAndTimerContainer {
+  display: flex;
+  gap: 2px;
+  justify-content: start;
+  align-items: center;
+}
+
+.receivedOTP {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.sendAgainText {
+  color: var(--disableBtn);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  padding: 0px;
+  &:hover {
+    color: var(--disableBtn) !important;
+  }
+}
+
+.active {
+  color: var(--linkColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  &:hover {
+    color: var(--linkColor) !important;
+  }
+}
+
+.fourteenMinCounterContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.subHeadingAndInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fourteenMinCounterBottomContainer {
+  display: flex;
+  gap: 8px;
+}
+
+@media screen and (max-width: 511px) {
+  .otpFieldsAndButtonContainer {
+    flex: 1;
+    justify-content: space-between;
+  }
+}

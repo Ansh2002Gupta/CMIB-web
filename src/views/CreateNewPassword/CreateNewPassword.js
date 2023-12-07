@@ -18,7 +18,7 @@ import {
   atLeastOneNumericValue,
   atLeastOneSmallLetter,
   atLeastOneSpecialCharacter,
-} from "../../Constants/Constants";
+} from "../../Constants/constants";
 import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
 import styles from "./CreateNewPassword.module.scss";
 
@@ -67,6 +67,7 @@ const CreateNewPassword = () => {
     confirmPassword: false,
   });
   const handleOnSubmit = () => {
+    // TODO: Integrate API.
     if (!passwordValidations.bothEqual) {
       setStatus("label.newPasswordAndConfirmPasswordDoNotMatched");
       return;

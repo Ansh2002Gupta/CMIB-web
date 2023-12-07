@@ -4,3 +4,4 @@ export const atLeastOneCapitalLetter = /(?=.*[A-Z])/;
 export const atLeastOneSmallLetter = /(?=.*[a-z])/;
 export const atLeastOneNumericValue = /(?=.*\d)/;
 export const atLeastOneSpecialCharacter = /(?=.*[!?.@#$%^&+=])/;
+export const ADMIN_ROUTE = "admin"

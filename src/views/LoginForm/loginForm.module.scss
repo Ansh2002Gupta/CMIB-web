@@ -97,12 +97,16 @@
   }
   .inputAndBtnContainer {
     background-color: var(--mobileBg1);
-    padding: var(--paddingMedium) var(--paddingSmall) var(--paddingLarge) var(--paddingSmall);
+    padding: var(--paddingMedium) var(--paddingSmall) var(--paddingLarge)
+      var(--paddingSmall);
   }
   .borderForMobileScreens {
     border-top-width: 2px;
     border-top-style: solid;
     border-color: var(--borderColor);
     padding-top: var(--paddingMedium);
+  }
+  .rememberMeText {
+    padding: 6px 0px;
   }
 }
