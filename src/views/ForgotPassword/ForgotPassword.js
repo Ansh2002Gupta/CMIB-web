@@ -10,7 +10,7 @@ import CustomModal from "../../components/CustomModal";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
-import { emailRegex } from "../../Constants/constants";
+import { EMAIL_REGEX } from "../../Constants/constants.js";
 import styles from "./ForgotPassword.module.scss";
 
 const ForgotPassword = () => {
@@ -22,7 +22,7 @@ const ForgotPassword = () => {
 
   const handleOnSubmit = () => {
     // TODO: Do an api call for forgot password functionality.
-    if (!emailRegex.test(userName)) {
+    if (!EMAIL_REGEX.test(userName)) {
       setStatus("error");
       return;
     }

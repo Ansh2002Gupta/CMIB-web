@@ -9,10 +9,11 @@ import CardView from "../../hocs/CardView/CardView";
 import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
+import useLogin from "../../core/hooks/useLogin";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
 import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
-import { emailRegex } from "../../Constants/constants";
+import { EMAIL_REGEX } from "../../Constants/constants";
 import styles from "./LoginForm.module.scss";
 
 const LoginForm = () => {
@@ -27,18 +28,23 @@ const LoginForm = () => {
   const [isAllowedToLogin, setIsAllowedToLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
+  const { data, error, apiCallStatus, handleUserLogin, isLoading } = useLogin();
 
   const handleOnLogin = () => {
     // TODO: Integrate API.
     if (!isEmailValid) {
       return;
     }
+    handleUserLogin({
+      email: formInputs.userName,
+      password: formInputs.password,
+    });
     setCurrentActiveScreen(2);
     console.log("Success:", { formInputs, shouldRememberMe });
   };
 
   const isValidEmail = () => {
-    setIsEmailValid(emailRegex.test(formInputs?.userName));
+    setIsEmailValid(EMAIL_REGEX.test(formInputs?.userName));
   };
 
   useEffect(() => {

@@ -13,11 +13,11 @@ import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingA
 import PointsList from "../../components/PointsList";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import {
-  atLeast6CharacterRegex,
-  atLeastOneCapitalLetter,
-  atLeastOneNumericValue,
-  atLeastOneSmallLetter,
-  atLeastOneSpecialCharacter,
+  AT_LEAST_SIX_CHARACTERS_REGEX,
+  AT_LEAST_ONE_SPECIAL_CHARACTER,
+  AT_LEAST_ONE_NUMERIC_VALUE,
+  AT_LEAST_ONE_SMALL_LETTER,
+  AT_LEAST_ONE_CAPITAL_LETTER,
 } from "../../Constants/constants";
 import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
 import styles from "./CreateNewPassword.module.scss";
@@ -87,11 +87,12 @@ const CreateNewPassword = () => {
   };
   const passwordStrengthCheck = (newPassword, confirmPassword) => {
     setPasswordValidation({
-      oneNumericValue: atLeastOneNumericValue.test(newPassword),
-      oneCapitalLetterValue: atLeastOneCapitalLetter.test(newPassword),
-      oneSmallLetterValue: atLeastOneSmallLetter.test(newPassword),
-      oneSpecialCharacterValue: atLeastOneSpecialCharacter.test(newPassword),
-      atLeast6Characters: atLeast6CharacterRegex.test(newPassword),
+      oneNumericValue: AT_LEAST_ONE_NUMERIC_VALUE.test(newPassword),
+      oneCapitalLetterValue: AT_LEAST_ONE_CAPITAL_LETTER.test(newPassword),
+      oneSmallLetterValue: AT_LEAST_ONE_SMALL_LETTER.test(newPassword),
+      oneSpecialCharacterValue:
+        AT_LEAST_ONE_SPECIAL_CHARACTER.test(newPassword),
+      atLeast6Characters: AT_LEAST_SIX_CHARACTERS_REGEX.test(newPassword),
       bothEqual: newPassword === confirmPassword,
     });
   };
@@ -203,17 +204,18 @@ const CreateNewPassword = () => {
           />
         </div>
         <div>
-          {!!status && status !== "label.newPasswordAndConfirmPasswordMatched" && (
-            <div>
-              {
-                <Typography className={[styles.errorText].join(" ")}>
-                  {intl.formatMessage({
-                    id: status,
-                  })}
-                </Typography>
-              }
-            </div>
-          )}
+          {!!status &&
+            status !== "label.newPasswordAndConfirmPasswordMatched" && (
+              <div>
+                {
+                  <Typography className={[styles.errorText].join(" ")}>
+                    {intl.formatMessage({
+                      id: status,
+                    })}
+                  </Typography>
+                }
+              </div>
+            )}
           <CustomModal
             isOpen={status === "label.newPasswordAndConfirmPasswordMatched"}
             headingText={intl.formatMessage({
@@ -224,7 +226,7 @@ const CreateNewPassword = () => {
             })}
             imageSrc={checkedIcon}
             onCancel={() => setStatus("")}
-            onBtnClick={()=> navigate("/login")}
+            onBtnClick={() => navigate("/login")}
           />
           <ButtonAndLink
             bottomLinkText={intl.formatMessage({
