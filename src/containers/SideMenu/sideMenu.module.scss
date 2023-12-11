@@ -1,23 +1,20 @@
-:global(ant-menu-selected) {
-  background-color: red;
-}
-
+// TODO: need to debug why variables not working on some components
 .sideMenuOptionsContainer {
-  margin-top: 12px;
-  font-size: 16px;
-  font-weight: 500;
+  margin-top: var(--sizeXSmall);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
 }
 .appLogo {
-  margin: 18px;
+  margin: var(--sizeLarge);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .moduleSelector {
-  font-size: 12px;
+  font-size: var(--fontSizeXSmall);
   color: #fff;
   background: #141b43;
-  padding: 12px;
+  padding: var(--sizeXSmall);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,11 +22,11 @@
   overflow-x: hidden;
 }
 .menuItemContainer {
-  font-weight: 500;
+  font-weight: var(--fontWeightMedium);
 }
 .moduleSelectorHeading {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--fontSizeXSmall);
+  font-weight: var(--fontWeightMedium);
   color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -37,10 +34,10 @@
   white-space: nowrap;
 }
 .moduleList {
-  font-size: 14px;
+  font-size: var(--fontSizeSmall);
   width: 100%;
   color: #fff;
-  font-weight: 500;
+  font-weight: var(--fontWeightMedium);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -49,8 +46,20 @@
   cursor: pointer;
 }
 .moduleListItem {
-  padding: 12px;
+  padding: var(--sizeXSmall);
   width: 100%;
+  &:hover {
+    border-left: 2px solid #fff;
+    background-color: #141b43;
+  }
+}
+.moduleSubMenuList {
+  list-style: none;
+  margin-left: var(--sizeXSmallInRem);
+}
+.moduleSubMenuItem {
+  margin: var(--sizeXSmallInRem);
+  padding-left: var(--sizeXSmall);
   &:hover {
     border-left: 2px solid #fff;
     background-color: #141b43;

@@ -16,7 +16,6 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
     <Layout
       style={{
         minHeight: '100vh',
-        
       }}>
       <Layout.Sider
         width={240}
@@ -24,29 +23,27 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
         collapsedWidth={0}
         trigger={null}
       >
-        <SideMenu logo={<AppLogo/>} />
+        <SideMenu logo={<AppLogo />} />
       </Layout.Sider>
     </Layout>
   ) : (
-    <Drawer
-    className={styles.sideDrawer}
+      <Drawer
+        className={styles.sideDrawer}
+        placement="left"
+        open={openSideMenu}
+        onClose={() => setOpenSideMenu(false)}
+        width="90%"
+        closeIcon={<CloseOutlined />}
       title={
-      <div className={styles.drawerAppLogo}>
-
-        <AppLogo />
-      </div>
-    }
-      placement="left"
-      open={openSideMenu}
-      onClose={() => setOpenSideMenu(false)}
-      width="90%"
-      closeIcon={<CloseOutlined/>}
-     
+        <div className={styles.drawerAppLogo}>
+          <AppLogo />
+        </div>
+      }
       styles={{
         body: {
           padding: 0,
         },
-        content:{
+        content: {
           background: '#001529',
         },
         mask: {
@@ -58,6 +55,6 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
       <SideMenu />
     </Drawer>
   );
-  
+
 }
 export default MenuContainer;

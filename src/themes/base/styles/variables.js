@@ -85,7 +85,16 @@ const variables = {
 
   profileColor: colorPallets.ltGrey3,
 
-  marginNormal: "16px"
+  marginNormal: "16px",
+
+  sizeXSmall: "12px",
+  sizeSmall: "14px",
+  sizeNormal: "16px",
+  sizeLarge: "18px",
+  sizeXLarge: "20px",
+
+  sizeXSmallInRem: "1rem",
+  sizeSmallInRem: "2rem",
 };
 
 export default variables;
