@@ -29,13 +29,13 @@ function MainLayout({ className, style, header, menu, content }) {
       <ThreeRow
         className={`${Styles.mainLayoutMobile} ${className}`}
         topSection={header}
-        topSectionStyle={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 999999,
-          padding: '10px',
-          backgroundColor: 'var(--secondary-bg)'
-        }}
+        // topSectionStyle={{
+        //   position: 'sticky',
+        //   top: 0,
+        //   zIndex: 999999,
+        //   padding: '10px',
+        //   backgroundColor: 'var(--secondary-bg)'
+        // }}
         middleSection={content}
         middleSectionStyle={{
           flexGrow: 1,
