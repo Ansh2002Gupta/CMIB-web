@@ -1,28 +1,28 @@
 .profileDropdown {
     cursor: pointer;
-    color: var(--textDefault);
+    color: var(--textDefault, #000000);
     width: 100%;
 }
 .profileName {
     display: block;
-    font-weight: var(--fontWeightBold);
+    font-weight: var(--fontWeightBold, 600);
     color: #0f172a;
-    font-size: var(--fontSizeSmall);
+    font-size: var(--fontSizeSmall, 14px);
 }
 .profileMenuName {
-    border: 16px; // TODO: have to use variable
+    border: var(--fontSizeNormal, 16px); // TODO: have to use variable
 }
 .profileRole {
     display: block;
-    color: var(--profileColor);
-    font-weight: var(--fontWeightMedium); // TODO: fix style not loading
-    font-size: var(--fontSizeXSmall);
+    color: var(--profileColor, #616c82);
+    font-weight: var(--fontWeightMedium, 500); // TODO: fix style not loading
+    font-size: var(--fontSizeXSmall, 12px);
 }
 .profileMenuRole {
-    font-size: 14px; // TODO: have to use variable
+    font-size: var(fontSizeSmall, 14px); // TODO: have to use variable
 }
 .downIcon {
-    font-size: var(--fontSizeNormal);
+    font-size: var(--fontSizeNormal, 16px);
     margin-left: 2px;
 }
 .arrowRotated {
@@ -30,16 +30,16 @@
     transition: transform 0.3s ease-in-out;
 }
 .profileMenu {
-    border-radius: 22px;
+    border-radius: var(--sizeXXLarge, 22px);
     width: 250px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); // TODO: need to add box shadow using variable
-    margin-top: 12px;
+    margin-top: var(--sizeXSmall, 12px);
 }
 .profileMenuHeader {
-    margin: 12px 0;
+    margin: var(--sizeXSmall, 12px) 0;
 }
 .profileList {
-    font-size: var(--fontSizeSmall);
+    font-size: var(--fontSizeSmall, 14px);
     width: 100%;
 }
 .logoutBtn {

@@ -49,7 +49,7 @@ const variables = {
   fontSizeXlarge: "20px",
   lineHeightXlarge: "24px",
 
-  fontSize22px: "22px",
+  fontSizeXXLarge: "22px",
 
   fontSizeHeading: "32px",
   lineHeightHeading: "40px",
@@ -93,6 +93,7 @@ const variables = {
   sizeNormal: "16px",
   sizeLarge: "18px",
   sizeXLarge: "20px",
+  sizeXXLarge: "22px",
 
   sizeXSmallInRem: "1rem",
   sizeSmallInRem: "2rem",

@@ -1,12 +1,12 @@
 .headerContainer {
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: var(--paddingSmall);
-    padding-right: var(--padding4px);
+    border-bottom: 2px solid var(--border, #cecece36);
+    padding-bottom: var(--sizeSmall, 14px);
+    padding-right: 4px;
     color: black;
 }
 .notificationIcon {
-    font-size: var(--fontSize22px);
+    font-size: var(--fontSizeXXLarge, 22px);
     cursor: pointer;
 }
