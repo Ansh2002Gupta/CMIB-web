@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Input, Typography } from "antd";
+import { Input, Select, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
@@ -11,17 +11,22 @@ const CustomInput = ({
   customErrorTextStyles,
   customInputStyles,
   customLabelStyles,
+  defaultSelectValue,
   errorMessage,
   isError,
   isRequired,
+  isPrefixRequired,
   isSuffixRequiredForPassword,
   isTextVisible,
   label,
   messageStyles: customMessageStyles,
   messageToShow,
   onChange,
+  onSelectItem,
   onSuffixElementClick,
   placeholder,
+  prefixElement,
+  selectOptions,
   SuffixElement1,
   SuffixElement2,
   type,
@@ -38,38 +43,51 @@ const CustomInput = ({
         </div>
       )}
       <div className={styles.formContainer}>
-        <Input
-          type={type || "text"}
-          className={[styles.inputField, customInputStyles].join(" ")}
-          {...{
-            value,
-            placeholder,
-            onChange,
-          }}
-          suffix={
-            isSuffixRequiredForPassword ? (
-              isTextVisible ? (
-                <span
-                  className={styles.suffixElement}
-                  onClick={() => {
-                    onSuffixElementClick && onSuffixElementClick();
-                  }}
-                >
-                  {SuffixElement1}
-                </span>
-              ) : (
-                <span
-                  className={styles.suffixElement}
-                  onClick={() => {
-                    onSuffixElementClick && onSuffixElementClick();
-                  }}
-                >
-                  {SuffixElement2}
-                </span>
-              )
-            ) : null
-          }
-        />
+        {type !== "select" && (
+          <Input
+            type={type || "text"}
+            className={[styles.inputField, customInputStyles].join(" ")}
+            {...{
+              value,
+              placeholder,
+              onChange,
+            }}
+            prefix={isPrefixRequired ? prefixElement : null}
+            suffix={
+              isSuffixRequiredForPassword ? (
+                isTextVisible ? (
+                  <span
+                    className={styles.suffixElement}
+                    onClick={() => {
+                      onSuffixElementClick && onSuffixElementClick();
+                    }}
+                  >
+                    {SuffixElement1}
+                  </span>
+                ) : (
+                  <span
+                    className={styles.suffixElement}
+                    onClick={() => {
+                      onSuffixElementClick && onSuffixElementClick();
+                    }}
+                  >
+                    {SuffixElement2}
+                  </span>
+                )
+              ) : null
+            }
+          />
+        )}
+        {type === "select" && (
+          <>
+            <Select
+              className={customInputStyles}
+              onChange={(e) => onSelectItem(e)}
+              options={selectOptions}
+              defaultValue={"1"}
+            />
+          </>
+        )}
       </div>
       {isError && (
         <div>
@@ -98,8 +116,10 @@ CustomInput.defaultProps = {
   customErrorTextStyles: "",
   customInputStyles: "",
   customLabelStyles: "",
+  defaultSelectValue: "",
   errorMessage: "",
   isError: false,
+  isPrefixRequired: false,
   isRequired: false,
   isSuffixRequiredForPassword: false,
   isTextVisible: true,
@@ -107,8 +127,11 @@ CustomInput.defaultProps = {
   messageStyles: "",
   messageToShow: "",
   onChange: () => {},
+  onSelectItem: () => {},
   onSuffixElementClick: () => {},
   placeholder: "",
+  prefixElement: null,
+  selectOptions: [],
   SuffixElement1: null,
   SuffixElement2: null,
   type: "",
@@ -120,8 +143,10 @@ CustomInput.propTypes = {
   customErrorTextStyles: PropTypes.string,
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
+  defaultSelectValue: PropTypes.string,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
+  isPrefixRequired: PropTypes.bool,
   isRequired: PropTypes.bool,
   isSuffixRequiredForPassword: PropTypes.bool,
   isTextVisible: PropTypes.bool,
@@ -129,8 +154,11 @@ CustomInput.propTypes = {
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   onChange: PropTypes.func,
+  onSelectItem: PropTypes.func,
   onSuffixElementClick: PropTypes.func,
   placeholder: PropTypes.string,
+  prefixElement: PropTypes.node,
+  selectOptions: PropTypes.array,
   SuffixElement1: PropTypes.node,
   SuffixElement2: PropTypes.node,
   type: PropTypes.string,

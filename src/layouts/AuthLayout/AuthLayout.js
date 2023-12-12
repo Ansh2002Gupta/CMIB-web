@@ -15,9 +15,9 @@ function AuthLayout({ className, style, leftSection, rightSection }) {
         className={`${Styles.authayout} ${className}`}
         style={style}
         leftSection={leftSection}
-        leftSectionStyle={{ width: '50%' }}
+        leftSectionStyle={{ width: '20%' }}
         rightSection={rightSection}
-        rightSectionStyle={{ width: '50%' }}
+        rightSectionStyle={{ width: '80%' }}
         isRightFillSpace
       />
     ) : (

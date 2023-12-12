@@ -5,11 +5,20 @@ import LoginForm from "../views/LoginForm";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
-import { CONFIGURATIONS, DASHBOARD, SUBSCRIPTIONS } from "./routeNames";
+import {
+  CONFIGURATIONS,
+  DASHBOARD,
+  SUBSCRIPTIONS,
+  LOGIN,
+  MANAGE_USERS,
+  CREATE_NEW_PASSWORD,
+  FORGOT_PASSWORD,
+} from "./routeNames";
 import Configurations from "../views/Configurations/Configurations";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import CreateNewPassword from "../views/CreateNewPassword";
+import ManageUsers from "../views/ManageUsers";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
@@ -34,7 +43,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/login",
+    pagePath: LOGIN,
     element: <HeaderContentWithFooterWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -45,7 +54,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/forgot-password",
+    pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -56,13 +65,24 @@ const config = [
     ],
   },
   {
-    pagePath: "/create-new-password",
+    pagePath: CREATE_NEW_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />, // Page
     views: [
       // array of views under Page route
       {
         viewPath: "",
         element: <CreateNewPassword />, // view
+      },
+    ],
+  },
+  {
+    pagePath: MANAGE_USERS,
+    element: <AuthWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <ManageUsers />, // view
       },
     ],
   },

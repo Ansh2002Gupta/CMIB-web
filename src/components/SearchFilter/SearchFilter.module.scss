@@ -1,0 +1,87 @@
+.cardParentContainer {
+  position: absolute;
+  left: 31%;
+  top: 55px;
+  z-index: 100000000;
+  background-color: var(--bodyBg);
+  border: var(--borderLight);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.filterContainer {
+  min-width: 30vw;
+  min-height: 200px;
+  max-height: 600px;
+  border: 0;
+}
+
+.active {
+  background-color: var(--lightBlueBg);
+}
+
+.filterOption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: var(--lightBlueBg);
+  padding: var(--fontSizeNormal);
+  cursor: pointer;
+}
+
+.filterTextAndCheckContainer {
+  min-width: fit-content;
+  display: flex;
+  gap: 12px;
+}
+
+.filterOptionText {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.filterSecondLevelOption {
+  display: flex;
+  gap: 8px;
+  padding: var(--paddingSmall) 14px;
+  cursor: pointer;
+}
+
+.footerBtnContainer {
+  display: flex;
+  padding: 8px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.cancelBtn {
+  padding: 8px 12px;
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  background-color: var(--bodyBg);
+  min-height: 45px;
+  border-radius: 12px;
+  border: var(--borderLight);
+  &:hover {
+    border: var(--borderLight) !important;
+    color: var(--textBold) !important;
+  }
+}
+
+.showResultBtn {
+  padding: 8px var(--paddingSmall);
+  min-height: 45px;
+}
+
+.clearAllBtn {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  text-decoration-line: underline !important;
+  &:hover {
+    color: var(--textBold) !important;
+  }
+}
