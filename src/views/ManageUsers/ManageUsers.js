@@ -62,7 +62,11 @@ const ManageUsers = () => {
       dataIndex: "UserName",
       key: "UserName",
       sorter: (a, b) => a.UserName.localeCompare(b.UserName),
-      render: (text) => <p className={styles.boldText}>{text}</p>,
+      render: (text) => (
+        <p className={[styles.boldText, styles.textEllipsis].join(" ")}>
+          {text}
+        </p>
+      ),
     },
     {
       title: () => (
@@ -72,6 +76,7 @@ const ManageUsers = () => {
       ),
       dataIndex: "email",
       key: "email",
+      render:(text)=><p className={styles.textEllipsis}>{text}</p>
     },
     {
       title: () => (
@@ -81,6 +86,7 @@ const ManageUsers = () => {
       ),
       dataIndex: "mobile",
       key: "mobile",
+      render:(text)=><p className={styles.textEllipsis}>{text}</p>
     },
     {
       title: () => (
@@ -90,6 +96,7 @@ const ManageUsers = () => {
       ),
       dataIndex: "access",
       key: "access",
+      render:(text)=><p className={styles.textEllipsis}>{text}</p>
     },
     {
       title: () => (

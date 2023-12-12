@@ -11,7 +11,6 @@
     "antd": "^5.2.0",
     "antd-input-otp": "^2.0.4",
     "axios": "^1.2.3",
-    "dayjs": "^1.11.10",
     "highcharts": "^10.3.2",
     "moment": "^2.29.4",
     "react": "^17.0.2",

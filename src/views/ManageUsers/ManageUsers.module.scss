@@ -88,6 +88,13 @@
   font-weight: var(--fontWeightBold);
 }
 
+.textEllipsis {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .columnHeading {
   color: var(--subHeadingColor);
   font-size: var(--fontSizeSmall);
