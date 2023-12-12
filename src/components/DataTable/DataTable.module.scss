@@ -59,6 +59,11 @@
   flex-direction: row;
 }
 
+.paginationContainer {
+  display: flex;
+  align-items: baseline;
+}
+
 // TODO: override the color of the sorting arrows based on active and non-active state
 .ant-table-column-sorter-up,
 .ant-table-column-sorter-down {
@@ -82,8 +87,13 @@
     flex-direction: column-reverse;
     gap: 16px;
     justify-content: center;
+    padding: var(--paddingSmall) 0px var(--paddingSmall) 8px;
   }
   .rowPerPageContainer {
     margin-top: 16px;
+  }
+  .paginationContainer {
+    width: 100%;
+    justify-content: space-between;
   }
 }

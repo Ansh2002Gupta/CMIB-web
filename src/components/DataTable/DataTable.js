@@ -143,6 +143,7 @@ const DataTable = ({
           {...rightPaginationConfig}
           className={styles.paginationContainer}
           {...{ itemRender }}
+          showLessItems
         />
       </div>
     </div>
