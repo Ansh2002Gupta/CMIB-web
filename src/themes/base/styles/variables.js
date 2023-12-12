@@ -87,6 +87,7 @@ const variables = {
 
   marginNormal: "16px",
 
+  sizeXXSmall: "8px",
   sizeXSmall: "12px",
   sizeSmall: "14px",
   sizeNormal: "16px",

@@ -1,20 +1,19 @@
-// TODO: need to debug why variables not working on some components
 .sideMenuOptionsContainer {
-  margin-top: var(--sizeXSmall);
-  font-size: var(--fontSizeNormal);
-  font-weight: var(--fontWeightMedium);
+  margin-top: var(--sizeXSmall, 12px);
+  font-size: var(--fontSizeNormal, 16px);
+  font-weight: var(--fontWeightMedium, 500);
 }
 .appLogo {
-  margin: var(--sizeLarge);
+  margin: var(--sizeLarge, 18px);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .moduleSelector {
-  font-size: var(--fontSizeXSmall);
+  font-size: var(--fontSizeXSmall, 12px);
   color: #fff;
   background: #141b43;
-  padding: var(--sizeXSmall);
+  padding: var(--sizeXSmall, 12px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,11 +21,11 @@
   overflow-x: hidden;
 }
 .menuItemContainer {
-  font-weight: var(--fontWeightMedium);
+  font-weight: var(--fontWeightMedium, 500);
 }
 .moduleSelectorHeading {
-  font-size: var(--fontSizeXSmall);
-  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeXSmall, 12px);
+  font-weight: var(--fontWeightMedium, 500);
   color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -34,10 +33,10 @@
   white-space: nowrap;
 }
 .moduleList {
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeSmall, 14px);
   width: 100%;
   color: #fff;
-  font-weight: var(--fontWeightMedium);
+  font-weight: var(--fontWeightMedium, 500);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,7 +45,7 @@
   cursor: pointer;
 }
 .moduleListItem {
-  padding: var(--sizeXSmall);
+  padding: var(--sizeXSmall, 12px);
   width: 100%;
   &:hover {
     border-left: 2px solid #fff;
@@ -55,11 +54,14 @@
 }
 .moduleSubMenuList {
   list-style: none;
-  margin-left: var(--sizeXSmallInRem);
+  width: 100%;
+  overflow: hidden;
+  padding-left: var(sizeXSmallInRem, 1rem);
 }
 .moduleSubMenuItem {
-  margin: var(--sizeXSmallInRem);
-  padding-left: var(--sizeXSmall);
+  width: 100%;
+  margin: var(--sizeXSmallInRem, 1rem);
+  padding: var(--sizeXSmall, 8px) var(--sizeXSmall, 12px);
   &:hover {
     border-left: 2px solid #fff;
     background-color: #141b43;
