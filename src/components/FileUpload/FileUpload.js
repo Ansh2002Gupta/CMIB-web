@@ -9,7 +9,7 @@ import styles from "./FileUpload.module.scss";
 
 const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
   const TYPES = {
-    IMAGE_ONLY: ".jpg,.jpeg,.png",
+    IMAGE_ONLY: ".jpg,.jpeg,.png,.PNG",
     ANY_FILE: "*",
   };
   const props = {

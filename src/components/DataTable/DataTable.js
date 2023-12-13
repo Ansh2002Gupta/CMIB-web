@@ -5,7 +5,7 @@ import { Image, Pagination, Select, Table, Typography } from "antd";
 
 import useResponsive from "../../core/hooks/useResponsive";
 import arrowRight from "../../themes/base/assets/images/arrow-right.svg";
-import { ROW_PER_PAGE_OPTIONS } from "../../Constants/constants";
+import { ROW_PER_PAGE_OPTIONS } from "../../Constants/Constants";
 import styles from "./DataTable.module.scss";
 import "./override.css";
 

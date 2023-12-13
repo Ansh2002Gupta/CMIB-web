@@ -18,7 +18,7 @@ import {
   atLeastOneNumericValue,
   atLeastOneSmallLetter,
   atLeastOneSpecialCharacter,
-} from "../../Constants/constants";
+} from "../../Constants/Constants";
 import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
 import styles from "./CreateNewPassword.module.scss";
 
