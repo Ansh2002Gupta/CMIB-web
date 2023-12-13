@@ -46,6 +46,7 @@ const locale = {
   "label.sendAgain": "Send Again",
   "label.fourteenMinTimerText1": "You have requested OTP for 4 times!",
   "label.fourteenMinTimerText2": "You can resend the next OTP after",
+  "label.somethingWentWrong": "Something went wrong!",
 };
 
 export default locale;

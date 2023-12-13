@@ -56,7 +56,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/create-new-password",
+    pagePath: "/create-new-password/:token",
     element: <HeaderContentWithFooterWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -67,19 +67,9 @@ const config = [
     ],
   },
   {
-    pagePath: "/",
+    pagePath: "/dashboard",
     element: <HomeWithPrivateAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <DashboardView />, // view
-      },
-    ],
-  },
-  {
-    pagePath: DASHBOARD,
-    element: <HomeWithPrivateAccess />, // Page
+    // element: <AuthWithPublicAccess />, // Page
     views: [
       // array of views under Page route
       {

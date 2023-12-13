@@ -11,6 +11,7 @@ const CustomInput = ({
   customErrorTextStyles,
   customInputStyles,
   customLabelStyles,
+  disabled,
   errorMessage,
   isError,
   isRequired,
@@ -45,6 +46,7 @@ const CustomInput = ({
             value,
             placeholder,
             onChange,
+            disabled,
           }}
           suffix={
             isSuffixRequiredForPassword ? (
@@ -98,6 +100,7 @@ CustomInput.defaultProps = {
   customErrorTextStyles: "",
   customInputStyles: "",
   customLabelStyles: "",
+  disabled: false,
   errorMessage: "",
   isError: false,
   isRequired: false,
@@ -120,6 +123,7 @@ CustomInput.propTypes = {
   customErrorTextStyles: PropTypes.string,
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
+  disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
   isRequired: PropTypes.bool,

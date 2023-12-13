@@ -1,9 +1,7 @@
 import * as _ from "lodash";
 import * as crypto from "crypto-js";
-// yar install above files
 
 import StorageService from "../../src/services/storage-service.js";
-//might required to remove await from the functions since I'm using synchronous services.
 
 const getDescryptedVal = (val, secretKey) => {
   let decryptObj = crypto.AES.decrypt(val, secretKey);
@@ -26,7 +24,7 @@ export const removeAll = () => {
   }
 };
 
-export const getItem = async (key) => {
+export const getItem = (key) => {
   // let retrievedVal = await StorageService.get(key);
   let retrievedVal = StorageService.get(key);
 
@@ -43,7 +41,7 @@ export const getItem = async (key) => {
   return _.isError(decryptedObj) ? decryptedVal : decryptedObj;
 };
 
-export const setItem = async (key, val) => {
+export const setItem = (key, val) => {
   let parsedVal;
 
   // Check whether value is an object

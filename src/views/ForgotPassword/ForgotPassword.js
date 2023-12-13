@@ -8,6 +8,7 @@ import CardView from "../../hocs/CardView/CardView";
 import CustomInput from "../../components/CustomInput";
 import CustomModal from "../../components/CustomModal";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
+import useForgotPassword from "../../core/hooks/useForgotPassword.js";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
 import { EMAIL_REGEX } from "../../Constants/constants.js";
@@ -19,14 +20,20 @@ const ForgotPassword = () => {
   const [status, setStatus] = useState("");
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
   const { navigateScreen: navigate } = useNavigateScreen();
+  const {
+    handleForgotPassword,
+    isLoading,
+    errorWhileResetPassword,
+    forgotPasswordResult,
+  } = useForgotPassword();
 
-  const handleOnSubmit = () => {
-    // TODO: Do an api call for forgot password functionality.
+  const handleOnSubmit = async () => {
     if (!EMAIL_REGEX.test(userName)) {
       setStatus("error");
       return;
     }
     setStatus("success");
+    await handleForgotPassword({ email: userName });
     console.log("Success:", { userName });
   };
 
@@ -75,7 +82,7 @@ const ForgotPassword = () => {
           }}
         />
         <CustomModal
-          isOpen={status === "success"}
+          isOpen={status === "success" && forgotPasswordResult}
           headingText={intl.formatMessage({
             id: "label.thanks",
           })}
@@ -91,6 +98,8 @@ const ForgotPassword = () => {
         />
         <div>
           <ButtonAndLink
+            error={!!errorWhileResetPassword ? errorWhileResetPassword : ""}
+            loading={isLoading}
             topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
             bottomLinkText={intl.formatMessage({ id: "label.backToLoginBtn" })}
             isTopBtnDisable={!isAllowedToSubmit}

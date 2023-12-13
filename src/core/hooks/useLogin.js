@@ -1,10 +1,9 @@
 import { useState } from "react";
-// import AsyncStorage from "@react-native-async-storage/async-storage"; // TODO: remove it.
 
 import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../Constants/constants";
+import { API_STATUS, STATUS_CODES } from "../../Constants/constants.js";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../Constants/errorMessages";
-import { setItem, getItem } from "../../services/encrypted-storage-service.js";
+import { setItem } from "../../services/encrypted-storage-service.js";
 
 const useLogin = () => {
   const [apiCallStatus, setApiCallStatus] = useState(API_STATUS.IDLE);
@@ -16,11 +15,10 @@ const useLogin = () => {
       setApiCallStatus(API_STATUS.LOADING);
       error && setError("");
       const res = await Http.post(`admin/login`, payload);
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+      if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setApiCallStatus(API_STATUS.SUCCESS);
-        const authToken = res.data.data.access_token;
+        const authToken = res.data.access_token;
         setItem("authToken", authToken);
-        console.log({ authToken });
         setData(res.data);
         return;
       }

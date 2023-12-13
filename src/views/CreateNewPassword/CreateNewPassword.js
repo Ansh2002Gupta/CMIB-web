@@ -1,4 +1,5 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState, useContext } from "react";
+import { useLocation } from "react-router";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -11,7 +12,9 @@ import CustomInput from "../../components/CustomInput";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import PointsList from "../../components/PointsList";
+import useCreateNewPassword from "../../core/hooks/useCreateNewPassword";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { CredentialContext } from "../../globalContext/userCredentails/userCredentailsProvider.js";
 import {
   AT_LEAST_SIX_CHARACTERS_REGEX,
   AT_LEAST_ONE_SPECIAL_CHARACTER,
@@ -24,6 +27,15 @@ import styles from "./CreateNewPassword.module.scss";
 
 const CreateNewPassword = () => {
   const intl = useIntl();
+  const [credentials] = useContext(CredentialContext);
+  const {
+    errorWhileCreatingPassword,
+    handleCreateNewPassword,
+    isLoading,
+    createNewPasswordData,
+  } = useCreateNewPassword();
+  const url = useLocation();
+  const token = url?.pathname?.split("/")[2];
   const [passwordValidations, setPasswordValidation] = useState({
     oneNumericValue: false,
     oneCapitalLetterValue: false,
@@ -66,8 +78,7 @@ const CreateNewPassword = () => {
     password: false,
     confirmPassword: false,
   });
-  const handleOnSubmit = () => {
-    // TODO: Integrate API.
+  const handleOnSubmit = async () => {
     if (!passwordValidations.bothEqual) {
       setStatus("label.newPasswordAndConfirmPasswordDoNotMatched");
       return;
@@ -83,7 +94,12 @@ const CreateNewPassword = () => {
       return;
     }
     setStatus("label.newPasswordAndConfirmPasswordMatched");
-    console.log("Success:", { formInputs });
+    await handleCreateNewPassword({
+      email: credentials?.email,
+      password: formInputs.password,
+      password_confirmation: formInputs.confirmPassword,
+      token: token,
+    });
   };
   const passwordStrengthCheck = (newPassword, confirmPassword) => {
     setPasswordValidation({
@@ -135,6 +151,7 @@ const CreateNewPassword = () => {
       <div className={styles.fieldsContainer}>
         <div className={styles.inputAndPointsContainer}>
           <CustomInput
+            disabled={isLoading}
             label={intl.formatMessage({ id: "label.password" })}
             customLabelStyles={styles.inputLabel}
             customInputStyles={styles.input}
@@ -165,6 +182,7 @@ const CreateNewPassword = () => {
             }}
           />
           <CustomInput
+            disabled={isLoading}
             label={intl.formatMessage({ id: "label.confirmPassword" })}
             customLabelStyles={styles.inputLabel}
             customInputStyles={styles.input}
@@ -217,7 +235,10 @@ const CreateNewPassword = () => {
               </div>
             )}
           <CustomModal
-            isOpen={status === "label.newPasswordAndConfirmPasswordMatched"}
+            isOpen={
+              status === "label.newPasswordAndConfirmPasswordMatched" &&
+              createNewPasswordData
+            }
             headingText={intl.formatMessage({
               id: "label.newPasswordAndConfirmPasswordMatched",
             })}
@@ -229,6 +250,10 @@ const CreateNewPassword = () => {
             onBtnClick={() => navigate("/login")}
           />
           <ButtonAndLink
+            loading={isLoading}
+            error={
+              !!errorWhileCreatingPassword ? errorWhileCreatingPassword : ""
+            }
             bottomLinkText={intl.formatMessage({
               id: "label.backToLoginBtn",
             })}

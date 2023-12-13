@@ -3,6 +3,13 @@
   gap: 32px;
 }
 
+.error {
+  padding-bottom: 8px;
+  color: var(--error);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+}
+
 .linkContainer {
   display: flex;
   justify-content: center;
@@ -17,4 +24,8 @@
   &:hover {
     color: var(--linkColor) !important;
   }
+}
+
+.backToLoginLink[disabled] {
+  color: grey !important;
 }

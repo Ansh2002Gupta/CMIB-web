@@ -10,11 +10,15 @@ import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
 import useLogin from "../../core/hooks/useLogin";
+import useAuthOTP from "../../core/hooks/useAuthOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
 import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
+import { DASHBOARD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../Constants/constants";
 import styles from "./LoginForm.module.scss";
+
+const isOptedForTwofactorAuthentication = true;
 
 const LoginForm = () => {
   const intl = useIntl();
@@ -28,19 +32,36 @@ const LoginForm = () => {
   const [isAllowedToLogin, setIsAllowedToLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
-  const { data, error, apiCallStatus, handleUserLogin, isLoading } = useLogin();
+  const { error: loginError, handleUserLogin, isLoading } = useLogin();
+  const {
+    otpData,
+    errorWhileSendingOTP,
+    handleAuthOTP,
+    isLoading: isOTPLoading,
+  } = useAuthOTP();
 
-  const handleOnLogin = () => {
-    // TODO: Integrate API.
+  const handleOnOTP = async () => {
+    if (!loginError && !isLoading) {
+      await handleAuthOTP({
+        email: formInputs.userName,
+      });
+      setCurrentActiveScreen(2); //only when user opted for 2 factor authentication.
+    }
+  };
+
+  const handleOnLogin = async () => {
     if (!isEmailValid) {
       return;
     }
-    handleUserLogin({
+    await handleUserLogin({
       email: formInputs.userName,
       password: formInputs.password,
     });
-    setCurrentActiveScreen(2);
-    console.log("Success:", { formInputs, shouldRememberMe });
+    if (isOptedForTwofactorAuthentication) {
+      handleOnOTP();
+    } else {
+      !loginError && !isLoading && navigate(DASHBOARD);
+    }
   };
 
   const isValidEmail = () => {
@@ -79,6 +100,7 @@ const LoginForm = () => {
           <>
             <div className={styles.inputContainer}>
               <CustomInput
+                disabled={isLoading || isOTPLoading}
                 label={intl.formatMessage({ id: "label.userName" })}
                 type="text"
                 customLabelStyles={styles.inputLabel}
@@ -99,6 +121,7 @@ const LoginForm = () => {
                 }}
               />
               <CustomInput
+                disabled={isLoading || isOTPLoading}
                 label={intl.formatMessage({ id: "label.password" })}
                 customLabelStyles={styles.inputLabel}
                 customInputStyles={styles.input}
@@ -137,6 +160,7 @@ const LoginForm = () => {
                 </span>
                 <div>
                   <Button
+                    disabled={isLoading || isOTPLoading}
                     className={styles.forgotLink}
                     type="link"
                     onClick={() => navigate("/forgot-password")}
@@ -150,6 +174,7 @@ const LoginForm = () => {
               <Button
                 type="primary"
                 htmlType="submit"
+                loading={isLoading || isOTPLoading}
                 block
                 className={styles.loginBtn}
                 onClick={() => {
@@ -163,7 +188,17 @@ const LoginForm = () => {
             </div>
           </>
         )}
-        {currentActiveScreen === 2 && <OTPInput noOfBlocks={4} />}
+        {currentActiveScreen === 2 && (
+          <OTPInput
+            noOfBlocks={4}
+            {...{
+              errorWhileSendingOTP,
+              handleAuthOTP,
+              isOTPLoading,
+              setCurrentActiveScreen,
+            }}
+          />
+        )}
       </div>
     </Base>
   );

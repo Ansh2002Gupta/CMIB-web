@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Typography, Statistic, Button } from "antd";
 import { InputOTP } from "antd-input-otp";
 
 import Base from "../../core/layouts/Base/Base";
 
-import GreenButton from "../GreenButton";
-import { useIntl } from "react-intl";
+import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
+import useCheckOTP from "../../core/hooks/useCheckOTP";
 import styles from "./OTPInput.module.scss";
 
-const OTPInput = ({ noOfBlocks }) => {
+const OTPInput = ({
+  noOfBlocks,
+  errorWhileSendingOTP,
+  handleAuthOTP,
+  isOTPLoading,
+  setCurrentActiveScreen,
+}) => {
+  const {
+    errorWhileVerifyingOTP,
+    handleCheckOTP,
+    isLoading: isCheckingOTP,
+  } = useCheckOTP();
   const [otpValues, setOtpValues] = useState(new Array(noOfBlocks).fill(""));
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
   const [showCountdown, setShowCountdown] = useState(1);
@@ -26,17 +38,24 @@ const OTPInput = ({ noOfBlocks }) => {
   };
 
   const handleOnSubmit = () => {
-    // TODO: Integrate API
+    // TODO: currently API is not available.
     console.log({ otpValues });
+    handleCheckOTP({
+      email: "user@example.com",
+      password: "NewPassword123!",
+      password_confirmation: "NewPassword123!",
+      otp: otpValues.join(""),
+    });
   };
 
-  const sendOTP = () => {
+  const sendOTP = async () => {
     if (noOfTimesOTPCanBeSend === 1) {
       setShowCountdown(2);
       return;
     }
     setNoOfTimesOTPCanBeSend((prev) => prev - 1);
     setShowCountdown(1);
+    await handleAuthOTP();
   };
 
   useEffect(() => {
@@ -119,6 +138,7 @@ const OTPInput = ({ noOfBlocks }) => {
                 </Typography>
                 <div className={styles.sendAgainTextAndTimerContainer}>
                   <Button
+                    disabled={isOTPLoading || isCheckingOTP}
                     className={[
                       styles.sendAgainText,
                       showCountdown === 0 ? styles.active : "",
@@ -152,9 +172,17 @@ const OTPInput = ({ noOfBlocks }) => {
             )}
           </div>
         </div>
-        <GreenButton
-          btnText="Submit"
+        <ButtonAndLink
+          error={
+            errorWhileSendingOTP || errorWhileVerifyingOTP
+              ? intl.formatMessage({ id: "label.somethingWentWrong" })
+              : ""
+          }
+          loading={isOTPLoading || isCheckingOTP}
+          topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
           onClick={handleOnSubmit}
+          bottomLinkText={intl.formatMessage({ id: "label.backToLoginBtn" })}
+          onLinkClick={() => setCurrentActiveScreen(1)}
           isBtnDisable={!isAllowedToSubmit}
         />
       </div>
@@ -163,10 +191,12 @@ const OTPInput = ({ noOfBlocks }) => {
 };
 
 OTPInput.defaultProps = {
+  handleAuthOTP: () => {},
   noOfBlocks: 4,
 };
 
 OTPInput.propTypes = {
+  handleAuthOTP: PropTypes.func,
   noOfBlocks: PropTypes.number,
 };
 
