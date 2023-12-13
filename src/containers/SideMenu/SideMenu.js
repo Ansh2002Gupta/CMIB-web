@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, ConfigProvider, Menu, } from "antd";
-import { UpOutlined } from "@ant-design/icons";
+import { Button, ConfigProvider, Menu, Space, } from "antd";
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
 
 import TwoRow from "../../core/layouts/TwoRow";
 import TwoColumn from "../../core/layouts/TwoColumn";
@@ -15,19 +15,21 @@ const ModuleList = ({ modules, onSelectItem }) => {
     {
       modules.map(module =>
         <>
-          {console.log(module.key)}
           <li
-            className={styles.moduleListItem}
+            className={`${styles.moduleListItem} ${module?.subMenu?.length ? styles.disabled :'' } `}
             key={module.key}
             onClick={() => !module?.subMenu?.length && onSelectItem(module)}
           >
-            {module.label}
+            <Space size={64}>
+              {module.label}
+              {module?.subMenu?.length && <DownOutlined />}
+            </Space>
           </li>
           <ul className={styles.moduleSubMenuList} key={'subMenu'}>
             {module?.subMenu?.map(menu =>
               <li
                 key={menu.key}
-                className={styles.moduleSubMenuItem}
+                className={styles.moduleListItem}
                 onClick={() => onSelectItem(menu, true)}
               >
                 {menu.label}
