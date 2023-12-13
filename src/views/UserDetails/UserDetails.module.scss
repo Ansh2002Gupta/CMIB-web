@@ -1,0 +1,53 @@
+.headerContainer {
+  padding: var(--paddingMedium);
+  border: var(--borderLight);
+  width: 100%;
+}
+
+.btnIconStyles {
+  width: 24px !important;
+}
+
+.btnCustomStyles {
+  padding: var(--paddingSmall) 12px;
+  border-radius: 12px;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  background-color: var(--bodyBg) !important;
+  color: var(--textBold);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--textBold) !important;
+  }
+}
+
+.activeSwitchAndBtnContainer {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.switchAndTextContainer {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.text {
+  color: var(--textBold);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.switchBgColor {
+  background-color: var(--active2) !important;
+}
+
+.bottomContainer {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: red;
+}

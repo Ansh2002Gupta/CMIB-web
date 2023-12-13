@@ -13,6 +13,7 @@ axios.interceptors.request.use(
     //   }
     // }
     // ****** //
+    config.headers['api-version'] = "v1";
     return config
   },
   function (error) {

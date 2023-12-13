@@ -11,7 +11,9 @@ const CustomInput = ({
   customErrorTextStyles,
   customInputStyles,
   customLabelStyles,
+  customSelectInputStyles,
   defaultSelectValue,
+  disabled,
   errorMessage,
   isError,
   isRequired,
@@ -42,15 +44,45 @@ const CustomInput = ({
           )}
         </div>
       )}
-      <div className={styles.formContainer}>
-        {type !== "select" && (
+      <div
+        className={[
+          styles.formContainer,
+          type === "mobile" ? styles.mobile : "",
+        ].join(" ")}
+      >
+        {(type === "select" || type === "mobile") && (
+          <>
+            <Select
+              className={[styles.selectInput, customSelectInputStyles].join(
+                " "
+              )}
+              onChange={(changedValue) =>
+                onSelectItem({
+                  target: {
+                    value: changedValue,
+                  },
+                })
+              }
+              options={selectOptions}
+              defaultValue={defaultSelectValue}
+              {...{ disabled }}
+            />
+          </>
+        )}
+        {(type !== "select" || type === "mobile") && (
           <Input
             type={type || "text"}
-            className={[styles.inputField, customInputStyles].join(" ")}
+            className={[
+              styles.inputField,
+              type === "mobile" ? styles.mobileInput : "",
+              ,
+              customInputStyles,
+            ].join(" ")}
             {...{
               value,
               placeholder,
               onChange,
+              disabled,
             }}
             prefix={isPrefixRequired ? prefixElement : null}
             suffix={
@@ -77,16 +109,6 @@ const CustomInput = ({
               ) : null
             }
           />
-        )}
-        {type === "select" && (
-          <>
-            <Select
-              className={customInputStyles}
-              onChange={(e) => onSelectItem(e)}
-              options={selectOptions}
-              defaultValue={"1"}
-            />
-          </>
         )}
       </div>
       {isError && (
@@ -116,7 +138,9 @@ CustomInput.defaultProps = {
   customErrorTextStyles: "",
   customInputStyles: "",
   customLabelStyles: "",
+  customSelectInputStyles: "",
   defaultSelectValue: "",
+  disabled: false,
   errorMessage: "",
   isError: false,
   isPrefixRequired: false,
@@ -143,7 +167,9 @@ CustomInput.propTypes = {
   customErrorTextStyles: PropTypes.string,
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
+  customSelectInputStyles: PropTypes.string,
   defaultSelectValue: PropTypes.string,
+  disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
   isPrefixRequired: PropTypes.bool,

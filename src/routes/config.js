@@ -13,12 +13,14 @@ import {
   MANAGE_USERS,
   CREATE_NEW_PASSWORD,
   FORGOT_PASSWORD,
+  VIEW_USER_DETAILS,
 } from "./routeNames";
 import Configurations from "../views/Configurations/Configurations";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import CreateNewPassword from "../views/CreateNewPassword";
 import ManageUsers from "../views/ManageUsers";
+import UserDetails from "../views/UserDetails";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
@@ -83,6 +85,17 @@ const config = [
       {
         viewPath: "",
         element: <ManageUsers />, // view
+      },
+    ],
+  },
+  {
+    pagePath: VIEW_USER_DETAILS,
+    element: <AuthWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <UserDetails />, // view
       },
     ],
   },

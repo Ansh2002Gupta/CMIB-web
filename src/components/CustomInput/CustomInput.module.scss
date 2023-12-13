@@ -21,7 +21,7 @@
   margin-top: 8px;
 }
 
-.messageText{
+.messageText {
   margin-top: 8px;
 }
 
@@ -37,8 +37,33 @@
   &::placeholder {
     color: var(--inputPlaceHolder) !important;
   }
+  .css-dev-only-do-not-override-1r40iow.ant-input[disabled]{
+    background-color: red;
+  }
 }
 
-.suffixElement{
-    cursor: pointer;
+.css-dev-only-do-not-override-1r40iow.ant-input[disabled]{
+  background-color: red;
+}
+
+.inputField .css-dev-only-do-not-override-1r40iow.ant-input[disabled]{
+  background-color: red;
+}
+
+.mobileInput {
+  min-width: auto;
+}
+
+.suffixElement {
+  cursor: pointer;
+}
+
+.mobile {
+  display: flex;
+  gap: 8px;
+  background-color: var(--bodyBg);
+}
+
+.selectInput {
+  padding: 0px;
 }
