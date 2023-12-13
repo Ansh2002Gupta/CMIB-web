@@ -71,7 +71,7 @@ const CustomInput = ({
         )}
         {(type !== "select" || type === "mobile") && (
           <Input
-            type={type || "text"}
+            type={type === "mobile" ? "number" : type || "text"}
             className={[
               styles.inputField,
               type === "mobile" ? styles.mobileInput : "",
