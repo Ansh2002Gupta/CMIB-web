@@ -21,7 +21,7 @@ import {
   AT_LEAST_ONE_NUMERIC_VALUE,
   AT_LEAST_ONE_SMALL_LETTER,
   AT_LEAST_ONE_CAPITAL_LETTER,
-} from "../../Constants/constants";
+} from "../../Constants/Constants";
 import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
 import styles from "./CreateNewPassword.module.scss";
 

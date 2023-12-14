@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../Constants/constants.js";
+import { API_STATUS, STATUS_CODES } from "../../Constants/Constants.js";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../Constants/errorMessages";
 
 const useCheckOTP = () => {

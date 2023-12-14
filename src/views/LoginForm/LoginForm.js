@@ -15,8 +15,8 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
 import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
 import { DASHBOARD } from "../../routes/routeNames";
-import { EMAIL_REGEX } from "../../Constants/constants";
-import styles from "./LoginForm.module.scss";
+import { EMAIL_REGEX } from "../../Constants/Constants";
+import styles from "./loginForm.module.scss";
 
 const isOptedForTwofactorAuthentication = true;
 

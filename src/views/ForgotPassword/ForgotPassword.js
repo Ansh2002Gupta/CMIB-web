@@ -11,7 +11,7 @@ import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingA
 import useForgotPassword from "../../core/hooks/useForgotPassword.js";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
-import { EMAIL_REGEX } from "../../Constants/constants.js";
+import { EMAIL_REGEX } from "../../Constants/Constants.js";
 import styles from "./ForgotPassword.module.scss";
 
 const ForgotPassword = () => {
