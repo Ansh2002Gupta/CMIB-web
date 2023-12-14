@@ -57,6 +57,19 @@
   min-height: 50px;
 }
 
+// .noBorderRight{
+//   // background-color: red;
+//   border-right: 0 !important;
+//   border-top-right-radius: 0px !important;
+//   border-bottom-right-radius: 0px !important;
+// }
+
+.mobileInput {
+  border-left: 0 !important;
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+
 @media screen and (max-width: 1023px) {
   .container {
     grid-template-columns: 1fr 1fr;

@@ -1,13 +1,12 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
-import { DatePicker, Select, Typography } from "antd";
+import { DatePicker, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
 import CustomInput from "../../components/CustomInput";
 import { useIntl } from "react-intl";
-import moment from "moment";
 import styles from "./UserInfo.module.scss";
+import "./Override.css";
 
 const UserInfo = ({
   access,
@@ -60,8 +59,11 @@ const UserInfo = ({
             isRequired
             value={mobileNo}
             disabled={!isEditable}
-            customInputStyles={[styles.text, styles.input].join(" ")}
-            customSelectInputStyles={styles.selectInput}
+            customInputStyles={[
+              styles.text,
+              styles.input,
+            ].join(" ")}
+            customSelectInputStyles={[styles.selectInput].join(" ")}
             customLabelStyles={styles.label}
             onChange={(e) => updateUserData("mobile", e.target.value)}
             selectOptions={[
@@ -116,6 +118,7 @@ const UserInfo = ({
             {intl.formatMessage({ id: "label.dateCreatedOn" })}
           </Typography>
           <DatePicker
+           disabled
             onChange={(date, dateString) => updateUserData("date", dateString)}
             className={[styles.text, styles.input].join(" ")}
             // Fixed the below

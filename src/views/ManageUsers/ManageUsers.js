@@ -11,6 +11,7 @@ import GreenButton from "../../components/GreenButton/GreenButton";
 import SearchFilter from "../../components/SearchFilter";
 import useOutSideClick from "../../core/hooks/useOutSideClick";
 import useResponsive from "../../core/hooks/useResponsive";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import edit from "../../themes/base/assets/images/edit.svg";
 import eyeIcon from "../../themes/base/assets/images/eye.svg";
 import filter from "../../themes/base/assets/images/filter.svg";
@@ -22,6 +23,7 @@ import styles from "./ManageUsers.module.scss";
 const ManageUsers = () => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const elementNotConsideredInOutSideClick = useRef();
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
@@ -35,8 +37,11 @@ const ManageUsers = () => {
     },
     elementNotToBeConsidered: elementNotConsideredInOutSideClick,
   });
-  const handleOnEdit = () => {
-    // TODO:  send data to users/edit screen once it is completed.
+  const handleOnEdit = (userId) => {
+    navigate(`/view-user-details?userId=${userId}&edit=true`);
+  };
+  const handleOnSeeUserDetails = (userId) => {
+    navigate(`/view-user-details?userId=${userId}&edit=false`);
   };
 
   const onHandleUserStatus = (userId) => {
@@ -76,7 +81,7 @@ const ManageUsers = () => {
       ),
       dataIndex: "email",
       key: "email",
-      render:(text)=><p className={styles.textEllipsis}>{text}</p>
+      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
     },
     {
       title: () => (
@@ -86,7 +91,7 @@ const ManageUsers = () => {
       ),
       dataIndex: "mobile",
       key: "mobile",
-      render:(text)=><p className={styles.textEllipsis}>{text}</p>
+      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
     },
     {
       title: () => (
@@ -96,7 +101,7 @@ const ManageUsers = () => {
       ),
       dataIndex: "access",
       key: "access",
-      render:(text)=><p className={styles.textEllipsis}>{text}</p>
+      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
     },
     {
       title: () => (
@@ -141,13 +146,13 @@ const ManageUsers = () => {
       title: "",
       dataIndex: "see",
       key: "see",
-      render: () => {
+      render: (_, rowData) => {
         return (
           <Image
             className={styles.eyeIcon}
             src={eyeIcon}
             preview={false}
-            onClick={handleOnEdit}
+            onClick={() => handleOnSeeUserDetails(rowData?.id)}
           />
         );
       },
@@ -156,13 +161,13 @@ const ManageUsers = () => {
       title: "",
       dataIndex: "edit",
       key: "edit",
-      render: () => {
+      render: (_, rowData) => {
         return (
           <Image
             className={styles.editIcon}
             src={edit}
             preview={false}
-            onClick={handleOnEdit}
+            onClick={() => handleOnEdit(rowData?.id)}
           />
         );
       },

@@ -1,0 +1,18 @@
+.parentContainer .ant-input-disabled,
+.ant-input[disabled] {
+  border: 0px;
+  background-color: #fff;
+  padding-left: 0px;
+}
+
+.UserInfo_input__GyT0y.ant-picker-disabled {
+  border: 0px;
+  background-color: #fff;
+  padding-left: 0px;
+}
+
+.UserInfo_selectInput__BHLSE .ant-select-selector {
+  border: 0px;
+  background-color: #fff;
+  padding-left: 0px;
+}

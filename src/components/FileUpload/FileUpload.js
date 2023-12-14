@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, Typography, Upload, message } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
@@ -37,6 +37,7 @@ const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
     },
     accept: isOnlyImage ? TYPES.IMAGE_ONLY : TYPES.ANY_FILE, // This is where you specify the accepted file types
   };
+
   return (
     <Base className={styles.container}>
       <Typography className={styles.headingText}>{heading}</Typography>
@@ -45,8 +46,9 @@ const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
         <Upload
           className={styles.uploadContainer}
           {...{ props }}
-          >
-          {/* {fileList.length >= 8 ? null : uploadButton} */}
+          // fileList={fileList}
+          isImageUrl={true}
+        >
           <div className={styles.uploadTextContainer}>
             <Image
               src={uploadImg}
@@ -68,7 +70,7 @@ const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
   );
 };
 
-// action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+// action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188" // file upload URL
 // listType="picture-card"
 // fileList={fileList}
 // onPreview={handlePreview}
@@ -77,6 +79,7 @@ const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
 FileUpload.defaultProps = {
   heading: "Sent To",
   subHeading: "Photo",
+  isOnlyImage: true,
 };
 
 export default FileUpload;
