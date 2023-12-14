@@ -56,7 +56,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/create-new-password/:token",
+    pagePath: "/create-new-password",
     element: <HeaderContentWithFooterWithPublicAccess />, // Page
     views: [
       // array of views under Page route

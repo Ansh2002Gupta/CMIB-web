@@ -9,12 +9,15 @@ import Base from "../../core/layouts/Base/Base";
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
 import useCheckOTP from "../../core/hooks/useCheckOTP";
 import styles from "./OTPInput.module.scss";
+import "./Override.css";
 
 const OTPInput = ({
-  noOfBlocks,
   errorWhileSendingOTP,
   handleAuthOTP,
+  headingText,
   isOTPLoading,
+  noOfBlocks,
+  onSubmit,
   setCurrentActiveScreen,
 }) => {
   const {
@@ -23,6 +26,7 @@ const OTPInput = ({
     isLoading: isCheckingOTP,
   } = useCheckOTP();
   const [otpValues, setOtpValues] = useState(new Array(noOfBlocks).fill(""));
+  const [isSendAgainBtnActive, setIsSendAgainBtnActive] = useState(false);
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
   const [showCountdown, setShowCountdown] = useState(1);
   const [noOfTimesOTPCanBeSend, setNoOfTimesOTPCanBeSend] = useState(4);
@@ -30,6 +34,7 @@ const OTPInput = ({
   const intl = useIntl();
 
   const handleTimerEnd = (timerLength) => {
+    setIsSendAgainBtnActive(true);
     if (timerLength === 15) {
       setNoOfTimesOTPCanBeSend(4);
     }
@@ -38,17 +43,11 @@ const OTPInput = ({
   };
 
   const handleOnSubmit = () => {
-    // TODO: currently API is not available.
-    console.log({ otpValues });
-    handleCheckOTP({
-      email: "user@example.com",
-      password: "NewPassword123!",
-      password_confirmation: "NewPassword123!",
-      otp: otpValues.join(""),
-    });
+    onSubmit(otpValues);
   };
 
   const sendOTP = async () => {
+    setIsSendAgainBtnActive(false);
     if (noOfTimesOTPCanBeSend === 1) {
       setShowCountdown(2);
       return;
@@ -81,7 +80,9 @@ const OTPInput = ({
     <Base className={styles.container}>
       <div>
         <Typography className={styles.heading}>
-          {intl.formatMessage({ id: "label.otpHeading" })}
+          {headingText
+            ? headingText
+            : intl.formatMessage({ id: "label.otpHeading" })}
         </Typography>
       </div>
       <div className={styles.otpFieldsAndButtonContainer}>
@@ -138,7 +139,9 @@ const OTPInput = ({
                 </Typography>
                 <div className={styles.sendAgainTextAndTimerContainer}>
                   <Button
-                    disabled={isOTPLoading || isCheckingOTP}
+                    disabled={
+                      isOTPLoading || isCheckingOTP || !isSendAgainBtnActive
+                    }
                     className={[
                       styles.sendAgainText,
                       showCountdown === 0 ? styles.active : "",
@@ -150,7 +153,6 @@ const OTPInput = ({
                   </Button>
                   {showCountdown === 1 ? (
                     <span>
-                      {/* TODO: Have to find some workaround for countdown component styles issue. */}
                       <Countdown
                         onFinish={() => handleTimerEnd(1)}
                         value={new Date().setMinutes(
@@ -180,10 +182,10 @@ const OTPInput = ({
           }
           loading={isOTPLoading || isCheckingOTP}
           topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
-          onClick={handleOnSubmit}
+          onTopBtnClick={handleOnSubmit}
           bottomLinkText={intl.formatMessage({ id: "label.backToLoginBtn" })}
           onLinkClick={() => setCurrentActiveScreen(1)}
-          isBtnDisable={!isAllowedToSubmit}
+          isTopBtnDisable={!isAllowedToSubmit}
         />
       </div>
     </Base>
@@ -191,13 +193,23 @@ const OTPInput = ({
 };
 
 OTPInput.defaultProps = {
+  errorWhileSendingOTP: "",
   handleAuthOTP: () => {},
+  headingText: "",
+  isOTPLoading: false,
   noOfBlocks: 4,
+  onSubmit: () => {},
+  setCurrentActiveScreen: () => {},
 };
 
 OTPInput.propTypes = {
+  errorWhileSendingOTP: PropTypes.string,
   handleAuthOTP: PropTypes.func,
+  headingText: PropTypes.string,
+  isOTPLoading: PropTypes.bool,
   noOfBlocks: PropTypes.number,
+  onSubmit: PropTypes.func,
+  setCurrentActiveScreen: PropTypes.func,
 };
 
 export default OTPInput;

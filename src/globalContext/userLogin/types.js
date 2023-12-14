@@ -1,0 +1,2 @@
+export const SAVE_REMEMBER_ME = "SAVE_REMEMBER_ME";
+export const CLEAR_REMEMBER_ME = "CLEAR_REMEMBER_ME";

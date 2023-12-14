@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Button, Typography, Image } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -12,13 +12,13 @@ import OTPInput from "../../components/OTPInput/OTPInput";
 import useLogin from "../../core/hooks/useLogin";
 import useAuthOTP from "../../core/hooks/useAuthOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { UserLoginContext } from "../../globalContext/userLogin/userLoginProvider";
+import { saveRememberMe } from "../../globalContext/userLogin/userLoginActions";
 import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
 import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
 import { DASHBOARD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../Constants/Constants";
 import styles from "./loginForm.module.scss";
-
-const isOptedForTwofactorAuthentication = true;
 
 const LoginForm = () => {
   const intl = useIntl();
@@ -27,14 +27,19 @@ const LoginForm = () => {
     userName: "",
     password: "",
   });
-  const [shouldRememberMe, setShouldRememberMe] = useState(false);
+  const [userLoginState, userLoginDispatch] = useContext(UserLoginContext);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isAllowedToLogin, setIsAllowedToLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
-  const { error: loginError, handleUserLogin, isLoading } = useLogin();
   const {
-    otpData,
+    error: loginError,
+    data: loginResponse,
+    handleUserLogin,
+    isLoading,
+    apiCallStatus,
+  } = useLogin();
+  const {
     errorWhileSendingOTP,
     handleAuthOTP,
     isLoading: isOTPLoading,
@@ -57,12 +62,17 @@ const LoginForm = () => {
       email: formInputs.userName,
       password: formInputs.password,
     });
-    if (isOptedForTwofactorAuthentication) {
-      handleOnOTP();
-    } else {
+  };
+
+  useEffect(() => {
+    if (apiCallStatus === "success" && loginResponse) {
+      if (loginResponse?.is_two_factor === 1) {
+        handleOnOTP();
+        return;
+      }
       !loginError && !isLoading && navigate(DASHBOARD);
     }
-  };
+  }, [apiCallStatus, loginResponse]);
 
   const isValidEmail = () => {
     setIsEmailValid(EMAIL_REGEX.test(formInputs?.userName));
@@ -78,9 +88,10 @@ const LoginForm = () => {
 
   useEffect(() => {
     return () => {
-      setShouldRememberMe(false);
       setIsEmailValid(true);
       setIsAllowedToLogin(false);
+      setShowPassword(false);
+      setCurrentActiveScreen(1);
     };
   }, []);
 
@@ -146,10 +157,16 @@ const LoginForm = () => {
               <div className={styles.forgotLinkAndRememberMeContainer}>
                 <span
                   className={styles.rememberMeContainer}
-                  onClick={() => setShouldRememberMe((prev) => !prev)}
+                  onClick={() => {
+                    if (!userLoginState?.rememberMe) {
+                      userLoginDispatch(saveRememberMe({ rememberMe: true }));
+                      return;
+                    }
+                    userLoginDispatch(saveRememberMe({ rememberMe: false }));
+                  }}
                 >
                   <Image
-                    src={shouldRememberMe ? checkedBox : unCheckedBox}
+                    src={userLoginState?.rememberMe ? checkedBox : unCheckedBox}
                     className={styles.rememberMeImage}
                     width={20}
                     preview={false}
@@ -171,6 +188,13 @@ const LoginForm = () => {
               </div>
             </div>
             <div>
+              {loginError ? (
+                <Typography className={styles.errorText}>
+                  {loginError}
+                </Typography>
+              ) : (
+                ""
+              )}
               <Button
                 type="primary"
                 htmlType="submit"

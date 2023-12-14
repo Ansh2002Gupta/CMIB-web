@@ -1,5 +1,5 @@
-import React, { useMemo, useEffect, useState, useContext } from "react";
-import { useLocation } from "react-router";
+import React, { useMemo, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -14,7 +14,6 @@ import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingA
 import PointsList from "../../components/PointsList";
 import useCreateNewPassword from "../../core/hooks/useCreateNewPassword";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { CredentialContext } from "../../globalContext/userCredentails/userCredentailsProvider.js";
 import {
   AT_LEAST_SIX_CHARACTERS_REGEX,
   AT_LEAST_ONE_SPECIAL_CHARACTER,
@@ -27,15 +26,16 @@ import styles from "./CreateNewPassword.module.scss";
 
 const CreateNewPassword = () => {
   const intl = useIntl();
-  const [credentials] = useContext(CredentialContext);
   const {
     errorWhileCreatingPassword,
     handleCreateNewPassword,
     isLoading,
     createNewPasswordData,
+    setErrorWhileCreatingPassword,
   } = useCreateNewPassword();
-  const url = useLocation();
-  const token = url?.pathname?.split("/")[2];
+  const [searchParams] = useSearchParams();
+  const otp = searchParams.get("otp");
+  const email = searchParams.get("email");
   const [passwordValidations, setPasswordValidation] = useState({
     oneNumericValue: false,
     oneCapitalLetterValue: false,
@@ -95,10 +95,10 @@ const CreateNewPassword = () => {
     }
     setStatus("label.newPasswordAndConfirmPasswordMatched");
     await handleCreateNewPassword({
-      email: credentials?.email,
+      email: email,
       password: formInputs.password,
       password_confirmation: formInputs.confirmPassword,
-      token: token,
+      otp: otp,
     });
   };
   const passwordStrengthCheck = (newPassword, confirmPassword) => {
@@ -115,6 +115,7 @@ const CreateNewPassword = () => {
 
   useEffect(() => {
     passwordStrengthCheck(formInputs.password, formInputs.confirmPassword);
+    setErrorWhileCreatingPassword("");
   }, [formInputs.confirmPassword, formInputs.password]);
 
   useEffect(() => {

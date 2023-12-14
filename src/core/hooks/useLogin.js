@@ -7,7 +7,7 @@ import { setItem } from "../../services/encrypted-storage-service.js";
 
 const useLogin = () => {
   const [apiCallStatus, setApiCallStatus] = useState(API_STATUS.IDLE);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [error, setError] = useState("");
 
   const handleUserLogin = async (payload) => {

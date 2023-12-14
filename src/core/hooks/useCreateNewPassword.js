@@ -15,7 +15,7 @@ const useCreateNewPassword = () => {
       setPostStatus(API_STATUS.LOADING);
       setCreateNewPasswordData(null);
       errorWhileCreatingPassword && setErrorWhileCreatingPassword("");
-      const res = await Http.post(`admin/forget-password`, payload);
+      const res = await Http.post(`admin/forget-password-otp`, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setCreateNewPasswordData(res.data);
@@ -43,6 +43,7 @@ const useCreateNewPassword = () => {
     isError,
     isLoading,
     isSuccess,
+    setErrorWhileCreatingPassword,
   };
 };
 

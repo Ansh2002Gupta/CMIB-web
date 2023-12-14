@@ -88,6 +88,12 @@
   background-color: var(--bodyBg);
 }
 
+.errorText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--error);
+}
+
 @media (max-width: 511px) {
   .loginForm {
     gap: 40px;
