@@ -45,6 +45,7 @@
   gap: 8px;
   justify-content: space-between;
   align-items: center;
+  min-height: 44px;
   flex-direction: row-reverse;
   padding: 8px var(--paddingMedium);
   border: var(--borderLight);
@@ -61,7 +62,7 @@
 
 .paginationContainer {
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 
 // TODO: override the color of the sorting arrows based on active and non-active state

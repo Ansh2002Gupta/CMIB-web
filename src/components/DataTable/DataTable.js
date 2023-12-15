@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Pagination, Select, Table, Typography } from "antd";
+import { Button, Pagination, Select, Table, Typography } from "antd";
 
 import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as ArrowRight } from "../../themes/base/assets/images/arrow-right.svg";
 import { ROW_PER_PAGE_OPTIONS } from "../../Constants/Constants";
 import styles from "./DataTable.module.scss";
+import "./Override.css";
 
 const DataTable = ({
   columns,
@@ -77,7 +78,7 @@ const DataTable = ({
   const itemRender = (current, type, originalElement) => {
     if (type === "prev") {
       return (
-        <div
+        <Button
           className={[styles.nextAndPrevArrowContainer, styles.rowReverse].join(
             " "
           )}
@@ -88,19 +89,19 @@ const DataTable = ({
               {intl.formatMessage({ id: "label.previous" })}
             </Typography>
           ) : null}
-        </div>
+        </Button>
       );
     }
     if (type === "next") {
       return (
-        <div className={styles.nextAndPrevArrowContainer}>
+        <Button className={styles.nextAndPrevArrowContainer}>
           <ArrowRight />
           {responsive.isLg ? (
             <Typography className={styles.nextAndPrevText}>
               {intl.formatMessage({ id: "label.next" })}
             </Typography>
           ) : null}
-        </div>
+        </Button>
       );
     }
     return originalElement;

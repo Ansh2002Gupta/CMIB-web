@@ -1,0 +1,12 @@
+.ant-pagination::after {
+  content: none;
+}
+
+.ant-pagination-prev,
+.ant-pagination-next {
+  margin-top: -12px;
+}
+
+iframe#webpack-dev-server-client-overlay {
+  display: none !important;
+}
