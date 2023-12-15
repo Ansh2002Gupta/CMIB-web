@@ -1,21 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import moment from "moment/moment";
-import { Button, Image, Input, Switch, Typography } from "antd";
+import { Button, Input, Switch, Typography } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
 import ContentHeader from "../../containers/ContentHeader";
 import DataTable from "../../components/DataTable";
-import GreenButton from "../../components/GreenButton/GreenButton";
+import CustomButton from "../../components/CustomButton/CustomButton";
 import SearchFilter from "../../components/SearchFilter";
 import useOutSideClick from "../../core/hooks/useOutSideClick";
 import useResponsive from "../../core/hooks/useResponsive";
-import edit from "../../themes/base/assets/images/edit.svg";
-import eyeIcon from "../../themes/base/assets/images/eye.svg";
-import filter from "../../themes/base/assets/images/filter.svg";
-import plusIcon from "../../themes/base/assets/images/plus icon.svg";
-import searchIcon from "../../themes/base/assets/images/search icon.svg";
+
+import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
+import { ReactComponent as EyeIcon } from "../../themes/base/assets/images/eye.svg";
+import { ReactComponent as Filter } from "../../themes/base/assets/images/filter.svg";
+import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
+import { ReactComponent as SearchIcon } from "../../themes/base/assets/images/search icon.svg";
+
 import { DATA_SOURCE, ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./ManageUsers.module.scss";
 
@@ -76,7 +78,7 @@ const ManageUsers = () => {
       ),
       dataIndex: "email",
       key: "email",
-      render:(text)=><p className={styles.textEllipsis}>{text}</p>
+      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
     },
     {
       title: () => (
@@ -86,7 +88,7 @@ const ManageUsers = () => {
       ),
       dataIndex: "mobile",
       key: "mobile",
-      render:(text)=><p className={styles.textEllipsis}>{text}</p>
+      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
     },
     {
       title: () => (
@@ -96,7 +98,7 @@ const ManageUsers = () => {
       ),
       dataIndex: "access",
       key: "access",
-      render:(text)=><p className={styles.textEllipsis}>{text}</p>
+      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
     },
     {
       title: () => (
@@ -142,14 +144,7 @@ const ManageUsers = () => {
       dataIndex: "see",
       key: "see",
       render: () => {
-        return (
-          <Image
-            className={styles.eyeIcon}
-            src={eyeIcon}
-            preview={false}
-            onClick={handleOnEdit}
-          />
-        );
+        return <EyeIcon className={styles.eyeIcon} onClick={handleOnEdit} />;
       },
     },
     {
@@ -157,14 +152,7 @@ const ManageUsers = () => {
       dataIndex: "edit",
       key: "edit",
       render: () => {
-        return (
-          <Image
-            className={styles.editIcon}
-            src={edit}
-            preview={false}
-            onClick={handleOnEdit}
-          />
-        );
+        return <Edit className={styles.editIcon} onClick={handleOnEdit} />;
       },
     },
   ];
@@ -187,11 +175,11 @@ const ManageUsers = () => {
             headerText={intl.formatMessage({ id: "label.users" })}
             customStyles={styles.headerResponsiveStyle}
             rightSection={
-              <GreenButton
+              <CustomButton
                 btnText={intl.formatMessage({
                   id: `label.${responsive.isMd ? "addNewUsers" : "newUsers"}`,
                 })}
-                iconUrl={plusIcon}
+                IconElement={PlusIcon}
                 iconStyles={styles.btnIconStyles}
                 customStyle={styles.btnCustomStyles}
               />
@@ -203,13 +191,7 @@ const ManageUsers = () => {
         <div className={styles.filterAndTableContainer}>
           <div className={styles.searchBarContainer}>
             <Input
-              prefix={
-                <Image
-                  preview={false}
-                  src={searchIcon}
-                  className={styles.searchIcon}
-                />
-              }
+              prefix={<SearchIcon className={styles.searchIcon} />}
               placeholder={intl.formatMessage({
                 id: "label.searchByUserNameAndEmail",
               })}
@@ -223,7 +205,7 @@ const ManageUsers = () => {
               className={styles.filterBtn}
               onClick={() => setShowFilters((prev) => !prev)}
             >
-              <Image src={filter} preview={false} />
+              <Filter />
               <Typography className={styles.filterBtnText}>
                 {intl.formatMessage({ id: "label.filter" })}
               </Typography>

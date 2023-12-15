@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Image, Pagination, Select, Table, Typography } from "antd";
+import { Pagination, Select, Table, Typography } from "antd";
 
 import useResponsive from "../../core/hooks/useResponsive";
-import arrowRight from "../../themes/base/assets/images/arrow-right.svg";
+import { ReactComponent as ArrowRight } from "../../themes/base/assets/images/arrow-right.svg";
 import { ROW_PER_PAGE_OPTIONS } from "../../Constants/Constants";
 import styles from "./DataTable.module.scss";
 
@@ -82,11 +82,7 @@ const DataTable = ({
             " "
           )}
         >
-          <Image
-            src={arrowRight}
-            preview={false}
-            className={styles.prevArrow}
-          />
+          <ArrowRight className={styles.prevArrow} />
           {responsive.isLg ? (
             <Typography className={styles.nextAndPrevText}>
               {intl.formatMessage({ id: "label.previous" })}
@@ -98,7 +94,7 @@ const DataTable = ({
     if (type === "next") {
       return (
         <div className={styles.nextAndPrevArrowContainer}>
-          <Image src={arrowRight} preview={false} />
+          <ArrowRight />
           {responsive.isLg ? (
             <Typography className={styles.nextAndPrevText}>
               {intl.formatMessage({ id: "label.next" })}

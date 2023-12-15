@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Image } from "antd";
+import { Button } from "antd";
 
-import styles from "./GreenButton.module.scss";
+import styles from "./CustomButton.module.scss";
 
-const GreenButton = ({
+const CustomButton = ({
   btnText,
   customStyle,
   iconStyles,
-  iconUrl,
+  IconElement,
   isBtnDisable,
   onClick,
 }) => {
@@ -16,9 +16,9 @@ const GreenButton = ({
     <div>
       <Button
         icon={
-          iconUrl ? (
+          IconElement ? (
             <>
-              <Image src={iconUrl} preview={false} className={iconStyles} />
+              <IconElement className={iconStyles} />
             </>
           ) : null
         }
@@ -33,22 +33,22 @@ const GreenButton = ({
   );
 };
 
-GreenButton.defaultProps = {
+CustomButton.defaultProps = {
   btnText: "",
   customStyle: "",
   iconStyles: "",
-  iconUrl: "",
+  IconElement: null,
   isBtnDisable: false,
   onClick: () => {},
 };
 
-GreenButton.propTypes = {
+CustomButton.propTypes = {
   btnText: PropTypes.string,
   customStyle: PropTypes.string,
   iconStyles: PropTypes.string,
-  iconUrl: PropTypes.string,
+  IconElement: PropTypes.node,
   isBtnDisable: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
-export default GreenButton;
+export default CustomButton;

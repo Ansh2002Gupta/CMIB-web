@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Button, Card, Image, Typography } from "antd";
+import { Button, Card, Typography } from "antd";
 
 import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 
-import GreenButton from "../GreenButton";
-import arrowRight from "../../themes/base/assets/images/arrow-right-filter.svg";
-import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
-import partialSelection from "../../themes/base/assets/images/some filters are selected.svg";
-import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
+import CustomButton from "../CustomButton";
+
+import { ReactComponent as ArrowRight } from "../../themes/base/assets/images/arrow-right-filter.svg";
+import { ReactComponent as CheckedBox } from "../../themes/base/assets/images/checkedBox.svg";
+import { ReactComponent as PartialSelection } from "../../themes/base/assets/images/some filters are selected.svg";
+import { ReactComponent as UnCheckedBox } from "../../themes/base/assets/images/unCheckedBox.svg";
+
 import { stylesObject } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
 
@@ -75,22 +77,19 @@ const SearchFilter = ({
                         onClick={selectOrRemoveAll}
                       >
                         <div className={styles.filterTextAndCheckContainer}>
-                          <Image
-                            src={
-                              currentFilterStatus.length === 0
-                                ? unCheckedBox
-                                : currentFilterStatus.length === 3
-                                ? checkedBox
-                                : partialSelection
-                            }
-                            preview={false}
-                          />
+                          {currentFilterStatus.length === 0 ? (
+                            <UnCheckedBox />
+                          ) : currentFilterStatus.length === 3 ? (
+                            <CheckedBox />
+                          ) : (
+                            <PartialSelection />
+                          )}
                           <Typography className={styles.filterOptionText}>
                             {item.name}
                           </Typography>
                         </div>
                         <div>
-                          <Image src={arrowRight} preview={false} />
+                          <ArrowRight />
                         </div>
                       </div>
                     );
@@ -107,14 +106,11 @@ const SearchFilter = ({
                           handleOnUpdateAccessFilterStatus(item.optionId)
                         }
                       >
-                        <Image
-                          src={
-                            currentFilterStatus.includes(item.optionId)
-                              ? checkedBox
-                              : unCheckedBox
-                          }
-                          preview={false}
-                        />
+                        {currentFilterStatus.includes(item.optionId) ? (
+                          <CheckedBox />
+                        ) : (
+                          <UnCheckedBox />
+                        )}
                         <Typography className={styles.filterOptionText}>
                           {`${item?.str} (${item?.count})`}
                         </Typography>
@@ -132,7 +128,7 @@ const SearchFilter = ({
             >
               {intl.formatMessage({ id: "label.cancel" })}
             </Button>
-            <GreenButton
+            <CustomButton
               btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
             />

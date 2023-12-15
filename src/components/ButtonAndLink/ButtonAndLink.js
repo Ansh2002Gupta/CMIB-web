@@ -4,7 +4,7 @@ import { Button } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
-import GreenButton from "../GreenButton";
+import CustomButton from "../CustomButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import styles from "./ButtonAndLink.module.scss";
 
@@ -18,7 +18,7 @@ const ButtonAndLink = ({
   const { navigateScreen: navigate } = useNavigateScreen();
   return (
     <Base className={styles.container}>
-      <GreenButton btnText={topBtnText} isBtnDisable={isTopBtnDisable} onClick={onTopBtnClick} />
+      <CustomButton btnText={topBtnText} isBtnDisable={isTopBtnDisable} onClick={onTopBtnClick} />
       <div className={styles.linkContainer}>
         <Button
           className={styles.backToLoginLink}

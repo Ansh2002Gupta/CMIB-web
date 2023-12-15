@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Button, Typography, Image } from "antd";
+import { Button } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import { Base } from "core/layouts";
@@ -10,8 +10,6 @@ import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
-import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
 import { emailRegex } from "../../Constants/Constants";
 import styles from "./loginForm.module.scss";
 
@@ -114,30 +112,14 @@ const LoginForm = () => {
                   })
                 }
               />
-              <div className={styles.forgotLinkAndRememberMeContainer}>
-                <span
-                  className={styles.rememberMeContainer}
-                  onClick={() => setShouldRememberMe((prev) => !prev)}
+              <div className={styles.forgotLinkContainer}>
+                <Button
+                  className={styles.forgotLink}
+                  type="link"
+                  onClick={() => navigate("/forgot-password")}
                 >
-                  <Image
-                    src={shouldRememberMe ? checkedBox : unCheckedBox}
-                    className={styles.rememberMeImage}
-                    width={20}
-                    preview={false}
-                  />
-                  <Typography className={styles.rememberMeText}>
-                    Remember Me
-                  </Typography>
-                </span>
-                <div>
-                  <Button
-                    className={styles.forgotLink}
-                    type="link"
-                    onClick={() => navigate("/forgot-password")}
-                  >
-                    Forget password?
-                  </Button>
-                </div>
+                  Forget password?
+                </Button>
               </div>
             </div>
             <div>

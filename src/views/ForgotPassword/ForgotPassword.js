@@ -9,7 +9,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomModal from "../../components/CustomModal";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
+import { ReactComponent as CheckedIcon } from "../../themes/base/assets/images/greenCheckIcon.svg";
 import { emailRegex } from "../../Constants/Constants";
 import styles from "./ForgotPassword.module.scss";
 
@@ -85,7 +85,7 @@ const ForgotPassword = () => {
           btnText={intl.formatMessage({
             id: "label.gobackToLoginBtn",
           })}
-          imageSrc={checkedIcon}
+          ImgElement={CheckedIcon}
           onCancel={() => setStatus("")}
           onBtnClick={() => navigate("/login")}
         />

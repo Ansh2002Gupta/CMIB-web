@@ -5,7 +5,7 @@ import { InputOTP } from "antd-input-otp";
 
 import Base from "../../core/layouts/Base/Base";
 
-import GreenButton from "../GreenButton";
+import CustomButton from "../CustomButton";
 import { useIntl } from "react-intl";
 import styles from "./OTPInput.module.scss";
 
@@ -152,7 +152,7 @@ const OTPInput = ({ noOfBlocks }) => {
             )}
           </div>
         </div>
-        <GreenButton
+        <CustomButton
           btnText="Submit"
           onClick={handleOnSubmit}
           isBtnDisable={!isAllowedToSubmit}
