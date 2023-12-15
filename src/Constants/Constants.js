@@ -18,3 +18,18 @@ export const STATUS_CODES = {
   NOT_FOUND: 404,
   UNAUTHORIZED_USER: 401,
 };
+
+export const ROW_PER_PAGE_OPTIONS = [
+  {
+    value: "10",
+    label: "10",
+  },
+  {
+    value: "15",
+    label: "15",
+  },
+  {
+    value: "20",
+    label: "20",
+  },
+];

@@ -11,6 +11,7 @@ import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingA
 import OTPInput from "../../components/OTPInput/OTPInput";
 import useForgotPassword from "../../core/hooks/useForgotPassword.js";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { ReactComponent as CheckedIcon } from "../../themes/base/assets/images/greenCheckIcon.svg";
 import { EMAIL_REGEX } from "../../Constants/Constants.js";
 import styles from "./ForgotPassword.module.scss";
 

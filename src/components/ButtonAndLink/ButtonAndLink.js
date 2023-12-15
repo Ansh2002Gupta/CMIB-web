@@ -4,7 +4,7 @@ import { Button, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
-import GreenButton from "../GreenButton";
+import CustomButton from "../CustomButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import styles from "./ButtonAndLink.module.scss";
 
@@ -23,7 +23,7 @@ const ButtonAndLink = ({
     <div>
       {!!error && <Typography className={styles.error}>{error}</Typography>}
       <Base className={styles.container}>
-        <GreenButton
+        <CustomButton
           {...{ loading }}
           btnText={topBtnText}
           isBtnDisable={isTopBtnDisable}

@@ -2,6 +2,11 @@ const locale = {
   // en locale
   "label.signIn": "Sign In",
   "label.userName": "Username",
+  "label.userName2": "User Name",
+  "label.email": "Email",
+  "label.mobileNumber": "Mobile Number",
+  "label.access": "Access",
+  "label.status": "Status",
   "label.emailId": "Enter ID",
   "label.password": "Password",
   "label.thanks": "Thanks!",
@@ -48,6 +53,21 @@ const locale = {
   "label.fourteenMinTimerText2": "You can resend the next OTP after",
   "label.somethingWentWrong": "Something went wrong!",
   "label.forgotPasswordOTP": "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
+  "label.filter": "Filter",
+  "label.userDetails": "User Details",
+  "label.dateCreatedOn": "Date Created On",
+  "label.clearAll": "clear all",
+  "label.cancel": "Cancel",
+  "label.rowPerPage": "Row per page",
+  "label.searchResult": "Search result",
+  "label.next": "Next",
+  "label.previous": "Previous",
+  "label.active": "Active",
+  "label.inactive": "Inactive",
+  "label.addNewUsers": "Add New Users",
+  "label.newUsers": "New Users",
+  "label.users": "Users",
+  "label.searchByUserNameAndEmail": "Search by user name and email",
 };
 
 export default locale;

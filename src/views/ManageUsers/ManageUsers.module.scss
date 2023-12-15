@@ -1,0 +1,146 @@
+.headerContainer {
+  padding: var(--paddingMedium);
+  border: var(--borderLight);
+  width: 100%;
+}
+
+.btnCustomStyles {
+  padding: var(--paddingSmall) 12px;
+  border-radius: 12px;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.btnIconStyles {
+  width: 24px !important;
+}
+
+.filterAndTableContainer {
+  background-color: var(--blueBg);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: var(--paddingMedium);
+  flex: 1;
+}
+
+.searchIcon {
+  width: 18px;
+  height: 18px;
+  padding-right: 8px;
+  padding-bottom: 4px;
+}
+
+.eyeIcon {
+  cursor: pointer;
+}
+
+.editIcon {
+  cursor: pointer;
+}
+
+.searchBar {
+  width: 30%;
+  min-height: 44px;
+  border-radius: 12px;
+  // Note: Below styles are not working
+  // color: var(--inputPlaceHolder);
+  // font-size: var(--fontSizeSmall);
+  // font-weight: var(--fontWeightMedium);
+  .ant-input {
+    color: #000803 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+  }
+}
+
+.searchBarContainer {
+  display: flex;
+  justify-content: start;
+  gap: 16px;
+  position: relative;
+}
+
+.filterBtn {
+  padding: var(--paddingSmall);
+  gap: 8px;
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: var(--borderLight);
+  &:hover {
+    border: var(--borderLight) !important;
+  }
+}
+
+.filterBtnText {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.switchBgColor {
+  background-color: var(--active2) !important;
+}
+
+.boldText {
+  font-weight: var(--fontWeightBold);
+}
+
+.textEllipsis {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.columnHeading {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+}
+
+.userStatusContainer {
+  display: flex;
+  gap: 8px;
+}
+
+@media screen and (max-width: 1535px) {
+  .headerResponsiveStyle {
+    font-size: 28px;
+  }
+  .btnCustomStyles {
+    font-size: var(--fontSizeExtraSmall);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .searchBar {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .headerResponsiveStyle {
+    font-size: 24px;
+  }
+  .btnCustomStyles {
+    min-height: 44px;
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .searchBarContainer {
+    flex-direction: column;
+  }
+  .searchBar {
+    width: 100%;
+    min-height: 50px;
+  }
+  .filterBtn {
+    max-width: 100px;
+    align-self: flex-end;
+  }
+}

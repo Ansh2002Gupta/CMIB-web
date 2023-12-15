@@ -2,6 +2,8 @@ const colorPallets = {
   blue1: "#60C5F9",
   blue2: "#0a3292",
   blue3: "#8997c5",
+  lightBlue1: "#F6F8F9",
+  lightBlue2: "#f2f4fc",
   darkBlue: "#00137E",
 
   red1: "#D93400",
@@ -29,6 +31,8 @@ const variables = {
   bodyBg: colorPallets.white1,
   primaryBg: colorPallets.blue1,
   textPrimary: colorPallets.white1,
+  blueBg: colorPallets.lightBlue1,
+  lightBlueBg: colorPallets.lightBlue2,
 
   textDefault: colorPallets.blue2,
   textLight: colorPallets.blue3,
@@ -42,6 +46,9 @@ const variables = {
   radiusSm: "4px",
   radiusMd: "6px",
   radiusLg: "8px",
+
+  fontSizeExtraSmall: "12px",
+  lineHeightExtraSmall: "16px",
 
   fontSizeSmall: "14px",
   lineHeightSmall: "18px",
@@ -110,6 +117,7 @@ const variables = {
   bulletPointText: colorPallets.darkGrey2,
 
   active: colorPallets.green2,
+  active2: colorPallets.green1,
 
   successText: colorPallets.green1,
 };

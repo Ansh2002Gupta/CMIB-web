@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Button, Typography, Image } from "antd";
+import { Button,Typography } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import { Base } from "core/layouts";
@@ -13,9 +13,6 @@ import useLogin from "../../core/hooks/useLogin";
 import useAuthOTP from "../../core/hooks/useAuthOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserLoginContext } from "../../globalContext/userLogin/userLoginProvider";
-import { saveRememberMe } from "../../globalContext/userLogin/userLoginActions";
-import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
-import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
 import { DASHBOARD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../Constants/Constants";
 import styles from "./loginForm.module.scss";
@@ -154,37 +151,15 @@ const LoginForm = () => {
                   })
                 }
               />
-              <div className={styles.forgotLinkAndRememberMeContainer}>
-                <span
-                  className={styles.rememberMeContainer}
-                  onClick={() => {
-                    if (!userLoginState?.rememberMe) {
-                      userLoginDispatch(saveRememberMe({ rememberMe: true }));
-                      return;
-                    }
-                    userLoginDispatch(saveRememberMe({ rememberMe: false }));
-                  }}
+              <div className={styles.forgotLinkContainer}>
+                <Button
+                  disabled={isLoading || isOTPLoading}
+                  className={styles.forgotLink}
+                  type="link"
+                  onClick={() => navigate("/forgot-password")}
                 >
-                  <Image
-                    src={userLoginState?.rememberMe ? checkedBox : unCheckedBox}
-                    className={styles.rememberMeImage}
-                    width={20}
-                    preview={false}
-                  />
-                  <Typography className={styles.rememberMeText}>
-                    Remember Me
-                  </Typography>
-                </span>
-                <div>
-                  <Button
-                    disabled={isLoading || isOTPLoading}
-                    className={styles.forgotLink}
-                    type="link"
-                    onClick={() => navigate("/forgot-password")}
-                  >
-                    Forget password?
-                  </Button>
-                </div>
+                  Forget password?
+                </Button>
               </div>
             </div>
             <div>

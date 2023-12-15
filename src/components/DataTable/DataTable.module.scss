@@ -1,0 +1,99 @@
+.rowPerPageOptionsAndPaginationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bodyBg);
+  border-radius: 12px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  padding: var(--paddingMedium);
+}
+
+.rowPerPageContainer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.rowPerPageCount {
+  width: 70px;
+  color: var(--On-background, var(--textBold));
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.rowPerPageText {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.rowtext {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.nextAndPrevText {
+  color: var(--On-background, var(--textBold));
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.nextAndPrevArrowContainer {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+  padding: 8px var(--paddingMedium);
+  border: var(--borderLight);
+  border-radius: 12px;
+}
+
+.prevArrow {
+  transform: rotate(180deg);
+}
+
+.rowReverse {
+  flex-direction: row;
+}
+
+.paginationContainer {
+  display: flex;
+  align-items: baseline;
+}
+
+// TODO: override the color of the sorting arrows based on active and non-active state
+.ant-table-column-sorter-up,
+.ant-table-column-sorter-down {
+  color: red; /* Light gray for non-active arrows */
+}
+
+/* Active sorting arrow styles */
+.ant-table-column-sorter-up.active .ant-table-column-sorter-up-inner,
+.ant-table-column-sorter-down.active .ant-table-column-sorter-down-inner {
+  color: #1890ff; /* Blue for active arrows */
+}
+
+@media (max-width: 1023px) {
+  .nextAndPrevArrowContainer {
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .rowPerPageOptionsAndPaginationContainer {
+    flex-direction: column-reverse;
+    gap: 16px;
+    justify-content: center;
+    padding: var(--paddingSmall) 0px var(--paddingSmall) 8px;
+  }
+  .rowPerPageContainer {
+    margin-top: 16px;
+  }
+  .paginationContainer {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
