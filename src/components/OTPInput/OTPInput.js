@@ -22,7 +22,6 @@ const OTPInput = ({
 }) => {
   const {
     errorWhileVerifyingOTP,
-    handleCheckOTP,
     isLoading: isCheckingOTP,
   } = useCheckOTP();
   const [otpValues, setOtpValues] = useState(new Array(noOfBlocks).fill(""));
