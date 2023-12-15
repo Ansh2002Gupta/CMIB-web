@@ -13,7 +13,7 @@ const useUserDetails = () => {
     try {
       const res = await Http.get(`admin/users/${userId}`);
       if (res?.error) {
-        // setError(res.data. );
+        setError(res.message);
         return;
       }
       setUsersData(res?.data);

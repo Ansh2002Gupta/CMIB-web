@@ -10,6 +10,7 @@ import FileUpload from "../../components/FileUpload";
 import GreenButton from "../../components/GreenButton";
 import UserInfo from "../../containers/UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useUpdateUserDetailsApi from "../../core/hooks/useUpdateUserDetailsApi";
 import useUserDetails from "../../core/hooks/useUserDetails";
 import edit from "../../themes/base/assets/images/edit.svg";
 import styles from "./UserDetails.module.scss";
@@ -25,9 +26,45 @@ const UserDetails = ({ userName }) => {
     name: "",
     email: "",
     mobile: "",
+    mobile_prefix: "",
+    profile_photo: "",
     access: "",
     date: "",
   });
+  const {
+    errorWhileUpdatingUserData,
+    userDetails,
+    updateUserDetails,
+    isError,
+    isLoading: isUpdatingUserData,
+    isSuccess,
+    apiStatus,
+    setErrorWhileUpdatingUserData,
+  } = useUpdateUserDetailsApi();
+
+  const goBackToViewDetailsPage = () => {
+    setErrorWhileUpdatingUserData("");
+    navigate(`/view-user-details?userId=${userId}&edit=false`);
+  };
+
+  const handleUpdateUserData = () => {
+    //neccesary checks for input
+    updateUserDetails(userId, {
+      name: userData?.name,
+      email: userData?.email,
+      password: "123!@#QWEq",
+      mobile_number: userData?.mobile,
+      created_by: userId, // user id basically
+      role: userData?.access,
+      profile_photo: userData?.profile_photo,
+    });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      goBackToViewDetailsPage();
+    }
+  }, [isSuccess]);
 
   const updateUserData = (key, value) => {
     setUserData((prev) => {
@@ -43,6 +80,8 @@ const UserDetails = ({ userName }) => {
       name: data?.name || "",
       email: data?.email || "",
       mobile: data?.mobile_number || "",
+      mobile_prefix: data?.mobile_number || "",
+      profile_photo: data?.profile_photo || "",
       access: data?.role || "",
       date: data?.created_at || "",
     });
@@ -50,6 +89,12 @@ const UserDetails = ({ userName }) => {
 
   useEffect(() => {
     getUserData(userId);
+  }, [isFormEditable]);
+
+  useEffect(() => {
+    return () => {
+      setActive(false);
+    };
   }, []);
 
   return (
@@ -93,22 +138,26 @@ const UserDetails = ({ userName }) => {
         isBottomFillSpace
         bottomSection={
           <>
-            {!isLoading && !error && !!data && (
-              <div className={styles.bottomContainer}>
-                <UserInfo
-                  isEditable={isFormEditable}
-                  {...{ updateUserData }}
-                  name={userData?.name}
-                  email={userData?.email}
-                  mobileNo={userData?.mobile}
-                  date={userData?.date}
-                  access={userData?.access}
-                  isDateDisable
-                />
-                <FileUpload />
-              </div>
-            )}
-            {isLoading && (
+            {!isLoading &&
+              !error &&
+              !!data &&
+              !isUpdatingUserData &&
+              !errorWhileUpdatingUserData && (
+                <div className={styles.bottomContainer}>
+                  <UserInfo
+                    isEditable={isFormEditable}
+                    {...{ updateUserData }}
+                    name={userData?.name}
+                    email={userData?.email}
+                    mobileNo={userData?.mobile}
+                    date={userData?.date}
+                    access={userData?.access}
+                    isDateDisable
+                  />
+                  <FileUpload />
+                </div>
+              )}
+            {(isLoading || isUpdatingUserData) && (
               <div
                 style={{
                   width: "100%",
@@ -120,7 +169,7 @@ const UserDetails = ({ userName }) => {
                 <Spin size="large" />
               </div>
             )}
-            {error && (
+            {(error || errorWhileUpdatingUserData) && (
               <div
                 style={{
                   width: "100%",
@@ -131,7 +180,7 @@ const UserDetails = ({ userName }) => {
               >
                 <Alert
                   message="Error"
-                  description={error}
+                  description={error || errorWhileUpdatingUserData}
                   type="error"
                   showIcon
                 />
@@ -142,8 +191,17 @@ const UserDetails = ({ userName }) => {
       />
       {isFormEditable && (
         <div className={styles.saveAndCancelBtnContainer}>
-          <Button className={styles.cancelBtn}>Cancel</Button>
-          <GreenButton customStyle={styles.saveBtn} btnText={"Save Changes"} />
+          <Button
+            className={styles.cancelBtn}
+            onClick={goBackToViewDetailsPage}
+          >
+            Cancel
+          </Button>
+          <GreenButton
+            customStyle={styles.saveBtn}
+            btnText={"Save Changes"}
+            onClick={handleUpdateUserData}
+          />
         </div>
       )}
     </div>

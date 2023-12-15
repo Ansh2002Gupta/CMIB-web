@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import moment from "moment";
 import { DatePicker, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
@@ -59,28 +60,28 @@ const UserInfo = ({
             isRequired
             value={mobileNo}
             disabled={!isEditable}
-            customInputStyles={[
-              styles.text,
-              styles.input,
-            ].join(" ")}
+            customInputStyles={[styles.text, styles.input].join(" ")}
             customSelectInputStyles={[styles.selectInput].join(" ")}
             customLabelStyles={styles.label}
             onChange={(e) => updateUserData("mobile", e.target.value)}
             selectOptions={[
               {
-                value: "All",
-                label: "All",
+                value: "91",
+                label: "+91",
               },
               {
-                value: "One",
-                label: "One",
+                value: "135",
+                label: "+135",
               },
               {
-                value: "Two",
-                label: "Two",
+                value: "1",
+                label: "+1",
               },
             ]}
             defaultSelectValue="+91"
+            onSelectItem={(e) =>
+              updateUserData("mobile_prefix", e.target.value)
+            }
           />
         </div>
         <div>
@@ -118,15 +119,11 @@ const UserInfo = ({
             {intl.formatMessage({ id: "label.dateCreatedOn" })}
           </Typography>
           <DatePicker
-           disabled
             onChange={(date, dateString) => updateUserData("date", dateString)}
             className={[styles.text, styles.input].join(" ")}
             // Fixed the below
-            // defaultValue={moment("2023-12-11T17:15:30.000000Z").format(
-            //   "DD/MM/YYYY"
-            // )}
-            format={"DD/MM/YYYY"}
-            // disabled={!isDateDisable && isEditable}
+            defaultValue={moment(date)}
+            disabled={isDateDisable || !isEditable}
             customInputStyles={[styles.text, styles.input].join(" ")}
             customLabelStyles={styles.label}
           />

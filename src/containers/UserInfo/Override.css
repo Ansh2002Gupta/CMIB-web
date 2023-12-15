@@ -11,8 +11,25 @@
   padding-left: 0px;
 }
 
-.UserInfo_selectInput__BHLSE .ant-select-selector {
+.ant-select-disabled {
   border: 0px;
-  background-color: #fff;
+  background: #fff;
   padding-left: 0px;
 }
+
+/* .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border: 0px;
+  background: #fff !important;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.ant-select .ant-select-arrow{
+  display: none;
+}
+
+.ant-select-single.ant-select-show-arrow .ant-select-selection-item{
+  color: black;
+  font-size: 14px;
+  font-weight: 500;
+} */

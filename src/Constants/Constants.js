@@ -21,3 +21,16 @@ export const ROW_PER_PAGE_OPTIONS = [
     label: "20",
   },
 ];
+
+export const STATUS_CODES = {
+  SUCCESS_STATUS: 200,
+  NOT_FOUND: 404,
+  UNAUTHORIZED_USER: 401,
+};
+
+export const API_STATUS = {
+  IDLE: "idle",
+  LOADING: "loading",
+  SUCCESS: "success",
+  ERROR: "error",
+};
