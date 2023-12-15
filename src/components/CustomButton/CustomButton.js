@@ -10,6 +10,7 @@ const CustomButton = ({
   iconStyles,
   IconElement,
   isBtnDisable,
+  loading,
   onClick,
 }) => {
   return (
@@ -24,7 +25,7 @@ const CustomButton = ({
         }
         className={[styles.btn, customStyle].join(" ")}
         disabled={isBtnDisable}
-        {...{ onClick }}
+        {...{ onClick,loading }}
         block
       >
         {btnText}
@@ -39,6 +40,7 @@ CustomButton.defaultProps = {
   iconStyles: "",
   IconElement: null,
   isBtnDisable: false,
+  loading:false,
   onClick: () => {},
 };
 
@@ -48,6 +50,7 @@ CustomButton.propTypes = {
   iconStyles: PropTypes.string,
   IconElement: PropTypes.node,
   isBtnDisable: PropTypes.bool,
+  loading: PropTypes.bool,
   onClick: PropTypes.func,
 };
 

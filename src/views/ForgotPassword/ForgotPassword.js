@@ -10,8 +10,6 @@ import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
 import useForgotPassword from "../../core/hooks/useForgotPassword.js";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { ReactComponent as CheckedIcon } from "../../themes/base/assets/images/greenCheckIcon.svg";
 import { EMAIL_REGEX } from "../../Constants/Constants.js";
 import styles from "./ForgotPassword.module.scss";
 
@@ -19,9 +17,9 @@ const ForgotPassword = () => {
   const intl = useIntl();
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
   const [userName, setUserName] = useState("");
+  const [userEnteredOTP, setUserEnteredOTP] = useState(null);
   const [status, setStatus] = useState("");
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
-  const { navigateScreen: navigate } = useNavigateScreen();
   const {
     handleForgotPassword,
     isLoading,
@@ -37,7 +35,6 @@ const ForgotPassword = () => {
     }
     setStatus("success");
     await handleForgotPassword({ email: userName });
-    console.log("Success:", { userName });
   };
 
   useEffect(() => {
@@ -131,6 +128,7 @@ const ForgotPassword = () => {
               })}
               onSubmit={(otp) => {
                 setCurrentActiveScreen(3);
+                setUserEnteredOTP(otp);
               }}
               {...{
                 errorWhileResetPassword,
@@ -139,7 +137,7 @@ const ForgotPassword = () => {
           )}
         </Base>
       ) : (
-        <CreateNewPassword />
+        <CreateNewPassword otp={userEnteredOTP?.join("")} email={userName} />
       )}
     </>
   );

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Button,Typography } from "antd";
+import { Button, Typography } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import { Base } from "core/layouts";
@@ -12,7 +12,6 @@ import OTPInput from "../../components/OTPInput/OTPInput";
 import useLogin from "../../core/hooks/useLogin";
 import useAuthOTP from "../../core/hooks/useAuthOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { UserLoginContext } from "../../globalContext/userLogin/userLoginProvider";
 import { DASHBOARD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../Constants/Constants";
 import styles from "./loginForm.module.scss";
@@ -24,13 +23,13 @@ const LoginForm = () => {
     userName: "",
     password: "",
   });
-  const [userLoginState, userLoginDispatch] = useContext(UserLoginContext);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isAllowedToLogin, setIsAllowedToLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
   const {
     error: loginError,
+    setError: setLoginError,
     data: loginResponse,
     handleUserLogin,
     isLoading,
@@ -51,11 +50,11 @@ const LoginForm = () => {
     }
   };
 
-  const handleOnLogin = async () => {
-    if (!isEmailValid) {
+  const handleOnLogin = () => {
+    if (!EMAIL_REGEX.test(formInputs?.userName)) {
       return;
     }
-    await handleUserLogin({
+    handleUserLogin({
       email: formInputs.userName,
       password: formInputs.password,
     });
@@ -76,6 +75,7 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
+    setLoginError("");
     if (formInputs.userName && formInputs.password) {
       setIsAllowedToLogin(true);
       return;
@@ -178,6 +178,7 @@ const LoginForm = () => {
                 className={styles.loginBtn}
                 onClick={() => {
                   isValidEmail();
+                  setLoginError("");
                   handleOnLogin();
                 }}
                 disabled={!isAllowedToLogin}

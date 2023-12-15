@@ -20,10 +20,7 @@ const OTPInput = ({
   onSubmit,
   setCurrentActiveScreen,
 }) => {
-  const {
-    errorWhileVerifyingOTP,
-    isLoading: isCheckingOTP,
-  } = useCheckOTP();
+  const { errorWhileVerifyingOTP, isLoading: isCheckingOTP } = useCheckOTP();
   const [otpValues, setOtpValues] = useState(new Array(noOfBlocks).fill(""));
   const [isSendAgainBtnActive, setIsSendAgainBtnActive] = useState(false);
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
@@ -42,10 +39,12 @@ const OTPInput = ({
   };
 
   const handleOnSubmit = () => {
+    //TODO: Call an API for finding out does the entered OTP is correct or not.
     onSubmit(otpValues);
   };
 
   const sendOTP = async () => {
+    // TODO: call api for sending a new OTP
     setIsSendAgainBtnActive(false);
     if (noOfTimesOTPCanBeSend === 1) {
       setShowCountdown(2);

@@ -80,6 +80,10 @@
   }
 }
 
+.sendAgainText[disabled] {
+  color: var(--disableLink) !important;
+}
+
 .active {
   color: var(--linkColor);
   font-size: var(--fontSizeSmall);

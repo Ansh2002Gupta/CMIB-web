@@ -120,6 +120,8 @@ const variables = {
   active2: colorPallets.green1,
 
   successText: colorPallets.green1,
+
+  disableLink: colorPallets.mediumGrey,
 };
 
 export default variables;

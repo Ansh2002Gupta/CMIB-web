@@ -1,5 +1,4 @@
 import React, { useMemo, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -23,7 +22,7 @@ import {
 import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
 import styles from "./CreateNewPassword.module.scss";
 
-const CreateNewPassword = () => {
+const CreateNewPassword = ({ email, otp }) => {
   const intl = useIntl();
   const {
     errorWhileCreatingPassword,
@@ -32,9 +31,6 @@ const CreateNewPassword = () => {
     createNewPasswordData,
     setErrorWhileCreatingPassword,
   } = useCreateNewPassword();
-  const [searchParams] = useSearchParams();
-  const otp = searchParams.get("otp");
-  const email = searchParams.get("email");
   const [passwordValidations, setPasswordValidation] = useState({
     oneNumericValue: false,
     oneCapitalLetterValue: false,
