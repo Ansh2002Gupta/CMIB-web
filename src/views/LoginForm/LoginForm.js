@@ -12,8 +12,8 @@ import OTPInput from "../../components/OTPInput/OTPInput";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
 import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
-import { emailRegex } from "../../Constants/constants";
-import styles from "./LoginForm.module.scss";
+import { emailRegex } from "../../Constants/Constants";
+import styles from "./loginForm.module.scss";
 
 const LoginForm = () => {
   const intl = useIntl();
