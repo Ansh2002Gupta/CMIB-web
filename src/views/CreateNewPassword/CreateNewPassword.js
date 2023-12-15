@@ -7,7 +7,6 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../../components/ButtonAndLink/ButtonAndLink";
-import CardView from "../../hocs/CardView/CardView";
 import CustomInput from "../../components/CustomInput";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
@@ -275,4 +274,4 @@ const CreateNewPassword = () => {
   );
 };
 
-export default CardView(CreateNewPassword);
+export default CreateNewPassword;

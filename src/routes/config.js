@@ -9,7 +9,6 @@ import { CONFIGURATIONS, DASHBOARD, SUBSCRIPTIONS } from "./routeNames";
 import Configurations from "../views/Configurations/Configurations";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
-import CreateNewPassword from "../views/CreateNewPassword";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
@@ -56,18 +55,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/create-new-password",
-    element: <HeaderContentWithFooterWithPublicAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <CreateNewPassword />, // view
-      },
-    ],
-  },
-  {
-    pagePath: "/dashboard",
+    pagePath: DASHBOARD,
     element: <HomeWithPrivateAccess />, // Page
     // element: <AuthWithPublicAccess />, // Page
     views: [

@@ -186,6 +186,7 @@ const OTPInput = ({
           bottomLinkText={intl.formatMessage({ id: "label.backToLoginBtn" })}
           onLinkClick={() => setCurrentActiveScreen(1)}
           isTopBtnDisable={!isAllowedToSubmit}
+          linkRedirection={"/login"}
         />
       </div>
     </Base>

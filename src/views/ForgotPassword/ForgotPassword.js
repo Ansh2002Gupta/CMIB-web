@@ -5,6 +5,7 @@ import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../../components/ButtonAndLink";
 import CardView from "../../hocs/CardView/CardView";
+import CreateNewPassword from "../CreateNewPassword/CreateNewPassword.js";
 import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
@@ -62,78 +63,84 @@ const ForgotPassword = () => {
   }, []);
 
   return (
-    <Base
-      className={[
-        styles.container,
-        currentActiveScreen === 2 ? styles.secondScreen : "",
-      ].join(" ")}
-    >
-      <HeadingAndSubHeading
-        headingText={intl.formatMessage({
-          id: "label.forgotPasswordHeading",
-        })}
-        subHeadingText={
-          currentActiveScreen === 1
-            ? intl.formatMessage({
-                id: "label.forgotPasswordSubHeading",
-              })
-            : ""
-        }
-      />
-      {currentActiveScreen === 1 && (
-        <div className={styles.bottomContainer}>
-          <CustomInput
-            label={intl.formatMessage({ id: "label.emailId" })}
-            type="text"
-            disabled={isLoading}
-            customLabelStyles={styles.inputLabel}
-            customInputStyles={styles.input}
-            isError={status === "error"}
-            errorMessage={intl.formatMessage({ id: "label.invalidEmail" })}
-            placeholder={intl.formatMessage({
-              id: "label.userNamePlaceHolder",
+    <>
+      {currentActiveScreen <= 2 ? (
+        <Base
+          className={[
+            styles.container,
+            currentActiveScreen === 2 ? styles.secondScreen : "",
+          ].join(" ")}
+        >
+          <HeadingAndSubHeading
+            headingText={intl.formatMessage({
+              id: "label.forgotPasswordHeading",
             })}
-            isRequired
-            value={userName}
-            onChange={(e) => {
-              setStatus("");
-              setUserName(e?.target?.value);
-            }}
+            subHeadingText={
+              currentActiveScreen === 1
+                ? intl.formatMessage({
+                    id: "label.forgotPasswordSubHeading",
+                  })
+                : ""
+            }
           />
-          <div>
-            <ButtonAndLink
-              error={!!errorWhileResetPassword ? errorWhileResetPassword : ""}
-              loading={isLoading}
-              topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
-              bottomLinkText={intl.formatMessage({
-                id: "label.backToLoginBtn",
+          {currentActiveScreen === 1 && (
+            <div className={styles.bottomContainer}>
+              <CustomInput
+                label={intl.formatMessage({ id: "label.emailId" })}
+                type="text"
+                disabled={isLoading}
+                customLabelStyles={styles.inputLabel}
+                customInputStyles={styles.input}
+                isError={status === "error"}
+                errorMessage={intl.formatMessage({ id: "label.invalidEmail" })}
+                placeholder={intl.formatMessage({
+                  id: "label.userNamePlaceHolder",
+                })}
+                isRequired
+                value={userName}
+                onChange={(e) => {
+                  setStatus("");
+                  setUserName(e?.target?.value);
+                }}
+              />
+              <div>
+                <ButtonAndLink
+                  error={
+                    !!errorWhileResetPassword ? errorWhileResetPassword : ""
+                  }
+                  loading={isLoading}
+                  topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
+                  bottomLinkText={intl.formatMessage({
+                    id: "label.backToLoginBtn",
+                  })}
+                  isTopBtnDisable={!isAllowedToSubmit}
+                  onTopBtnClick={() => {
+                    handleOnSubmit();
+                  }}
+                  linkRedirection={"/login"}
+                />
+              </div>
+            </div>
+          )}
+          {currentActiveScreen === 2 && (
+            <OTPInput
+              noOfBlocks={4}
+              headingText={intl.formatMessage({
+                id: "label.forgotPasswordOTP",
               })}
-              isTopBtnDisable={!isAllowedToSubmit}
-              onTopBtnClick={() => {
-                handleOnSubmit();
+              onSubmit={(otp) => {
+                setCurrentActiveScreen(3);
               }}
-              linkRedirection="/login"
+              {...{
+                errorWhileResetPassword,
+              }}
             />
-          </div>
-        </div>
+          )}
+        </Base>
+      ) : (
+        <CreateNewPassword />
       )}
-      {currentActiveScreen === 2 && (
-        <OTPInput
-          noOfBlocks={4}
-          headingText={intl.formatMessage({
-            id: "label.forgotPasswordOTP",
-          })}
-          onSubmit={(otp) => {
-            navigate(
-              `/create-new-password?otp=${otp?.join("")}&email=${userName}`
-            );
-          }}
-          {...{
-            errorWhileResetPassword,
-          }}
-        />
-      )}
-    </Base>
+    </>
   );
 };
 
