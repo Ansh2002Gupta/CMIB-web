@@ -1,3 +1,22 @@
+.sideMenuContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+.sideMenuTopSection {
+  width: 100%;
+}
+.sideMenuBottomSection {
+  width: 100%;
+  background: var(--sideMenuColor, #141b43);
+  color: var(--textPrimary, #fff);
+  justify-content: space-between;
+  padding: var(--sizeXXSmall, 8px) var(--sizeXSmall, 12px);
+}
 .sideMenuOptionsContainer {
   margin-top: var(--sizeXSmall, 12px);
   font-size: var(--fontSizeNormal, 16px);
@@ -11,7 +30,7 @@
 }
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);
-  color: #fff;
+  color: var(--textPrimary, #fff);
   background: #141b43;
   padding: var(--sizeXSmall, 12px);
   display: flex;
@@ -35,7 +54,7 @@
 .moduleList {
   font-size: var(--fontSizeSmall, 14px);
   width: 100%;
-  color: #fff;
+  color: var(--textPrimary, #fff);
   font-weight: var(--fontWeightMedium, 500);
   display: flex;
   flex-direction: column;
@@ -51,7 +70,7 @@
   &.disabled {
     color: grey;
     cursor: not-allowed;
- }
+  }
   &:not(.disabled):hover {
     border-left: 2px solid #fff;
     background-color: #141b43;

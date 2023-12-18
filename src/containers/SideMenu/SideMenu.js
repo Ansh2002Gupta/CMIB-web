@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, ConfigProvider, Menu, Space, } from "antd";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import { Button, ConfigProvider, Menu, Space, Typography, } from "antd";
+import { ArrowRightOutlined, GlobalOutlined, UpOutlined } from "@ant-design/icons";
 
 import TwoRow from "../../core/layouts/TwoRow";
 import TwoColumn from "../../core/layouts/TwoColumn";
@@ -16,14 +16,11 @@ const ModuleList = ({ modules, onSelectItem }) => {
       modules.map(module =>
         <>
           <li
-            className={`${styles.moduleListItem} ${module?.subMenu?.length ? styles.disabled :'' } `}
+            className={`${styles.moduleListItem} ${module?.subMenu?.length ? styles.disabled : ''} `}
             key={module.key}
             onClick={() => !module?.subMenu?.length && onSelectItem(module)}
           >
-            <Space size={64}>
-              {module.label}
-              {module?.subMenu?.length && <DownOutlined />}
-            </Space>
+            {module.label}
           </li>
           <ul className={styles.moduleSubMenuList} key={'subMenu'}>
             {module?.subMenu?.map(menu =>
@@ -53,54 +50,61 @@ const SideMenu = ({ logo }) => {
   const handleOnClickMenuItem = ({ key }) => {
     navigate(key)
   }
-  return (
-    <>
-      <div className={styles.appLogo}>
-        {logo}
-      </div>
-      <TwoRow
-        topSection={(
-          <TwoColumn
-            className={styles.moduleSelector}
-            leftSection={(
-              <div
-                className={openModuleSelector ? '' : styles.moduleSelectorHeading}
-              >
-                {openModuleSelector ? 'Choose a module' : selectedModule.label}
-              </div>
-            )}
+  return (<ConfigProvider
+    theme={{
+      token: {
+        colorText: 'var(--textPrimary, #fff)',
+      },
+      components: {
+        Menu: {
+          darkItemSelectedBg: 'white',
+          darkItemSelectedColor: 'black',
+        },
+        Button: {
+          textHoverBg: 'var(--sideMenuColor)',
+        }
+      }
+    }}
+  >
+    <div className={styles.sideMenuContainer}>
+      <div className={styles.sideMenuTopSection}>
+        <div className={styles.appLogo}>
+          {logo}
+        </div>
+        <TwoRow
+          topSection={(
+            <TwoColumn
+              className={styles.moduleSelector}
+              leftSection={(
+                <div
+                  className={openModuleSelector ? '' : styles.moduleSelectorHeading}
+                >
+                  {openModuleSelector ? 'Choose a module' : selectedModule.label}
+                </div>
+              )}
 
-            rightSection={(
-              <Button
-                size="small"
-                shape="round"
-                type="text"
-                style={{
-                  color: '#fff',
-                  background: '#262d52',
-                  fontSize: '12px'
-                }}
-                onClick={() => setOpenModuleSelector(prev => !prev)}
-              >
-                {openModuleSelector ? <UpOutlined /> : 'Change'}
-              </Button>
-            )}
-          />
-        )}
-        bottomSection={(
-          openModuleSelector && <ModuleList modules={modules} onSelectItem={handleOnSelectItem} />
-        )}
-      />
-      <ConfigProvider
-        theme={{
-          components: {
-            Menu: {
-              darkItemSelectedBg: 'white',
-              darkItemSelectedColor: 'black',
-            }
-          }
-        }}
-      >
+              rightSection={(
+                <Button
+                  size="small"
+                  shape="round"
+                  type="text"
+                  style={{
+                    color: 'var(--textPrimary,#fff)',
+                    background: '#262d52',
+                    fontSize: 'var(--fontSizeXSmall,12px)'
+                  }}
+                  onClick={() => setOpenModuleSelector(prev => !prev)}
+                >
+                  {openModuleSelector ? <UpOutlined /> : 'Change'}
+                </Button>
+              )}
+            />
+          )}
+          bottomSection={(
+            openModuleSelector && <ModuleList modules={modules} onSelectItem={handleOnSelectItem} />
+          )}
+        />
+
         {
           !openModuleSelector && selectedModule &&
           <Menu
@@ -114,8 +118,31 @@ const SideMenu = ({ logo }) => {
             onSelect={handleOnClickMenuItem}
           />
         }
-      </ConfigProvider>
-    </>
+      </div>
+      <Space
+        className={styles.sideMenuBottomSection}
+        align="center"
+        direction="horizontal"
+      >
+        <Button
+          styles={{
+            icon: {
+              paddingRight: 'var(--sizeXXSmall, 8px)'
+            }
+          }}
+          size="large"
+          type="text"
+          block
+          icon={<GlobalOutlined />}
+        >
+          <Typography.Text>
+            Visit Website
+          </Typography.Text>
+        </Button>
+        <ArrowRightOutlined />
+      </Space>
+    </div>
+  </ConfigProvider>
   );
 };
 

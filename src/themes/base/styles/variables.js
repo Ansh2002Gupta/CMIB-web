@@ -2,6 +2,7 @@ const colorPallets = {
   blue1: "#60C5F9",
   blue2: "#0a3292",
   blue3: "#8997c5",
+  blue4: "#141b43",
 
   red1: "#ef6a6a",
 
@@ -97,6 +98,9 @@ const variables = {
 
   sizeXSmallInRem: "1rem",
   sizeSmallInRem: "2rem",
+  sizeNormalInRem: "3rem",
+
+  sideMenuColor: colorPallets.blue4
 };
 
 export default variables;
