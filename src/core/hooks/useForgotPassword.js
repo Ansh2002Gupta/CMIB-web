@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../constants/constants";
+import { API_STATUS, STATUS_CODES } from "../../constants/Constants";
 import {
   ADMIN_ROUTE,
   AUTHENTICATE_OTP_ROUTE,

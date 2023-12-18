@@ -6,7 +6,7 @@ import { ADMIN_ROUTE, AUTHENTICATE_OTP_ROUTE } from "../../constants/apiEndpoint
 import {
   API_STATUS,
   STATUS_CODES,
-} from "../../constants/constants";
+} from "../../constants/Constants";
 
 const useAuthOTP = () => {
   const [authOTPApiStatus, setAuthOTPApiStatus] = useState(API_STATUS.IDLE);

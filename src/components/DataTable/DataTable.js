@@ -6,7 +6,7 @@ import { Button, Image, Pagination, Select, Table, Typography } from "antd";
 
 import useResponsive from "../../core/hooks/useResponsive";
 import useQueryParams from "../../core/hooks/useQueryParams";
-import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constants/constants";
+import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constants/Constants";
 import styles from "./DataTable.module.scss";
 import "./Override.css";
 
