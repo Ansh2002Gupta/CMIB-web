@@ -10,7 +10,7 @@ import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
 import useForgotPassword from "../../core/hooks/useForgotPassword.js";
-import { EMAIL_REGEX } from "../../constants/regex.js";
+import { EMAIL_REGEX } from "../../constant/regex.js";
 import { LOGIN } from "../../routes/routeNames.js";
 import styles from "./ForgotPassword.module.scss";
 

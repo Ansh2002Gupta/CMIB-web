@@ -13,7 +13,7 @@ import useLogin from "../../core/hooks/useLogin";
 import useAuthOTP from "../../core/hooks/useAuthOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
-import { EMAIL_REGEX } from "../../constants/regex";
+import { EMAIL_REGEX } from "../../constant/regex";
 import styles from "./loginForm.module.scss";
 
 const LoginForm = () => {

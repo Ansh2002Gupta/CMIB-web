@@ -19,7 +19,7 @@ import {
   AT_LEAST_ONE_NUMERIC_VALUE,
   AT_LEAST_ONE_SMALL_LETTER,
   AT_LEAST_ONE_CAPITAL_LETTER,
-} from "../../constants/regex";
+} from "../../constant/regex";
 import { LOGIN } from "../../routes/routeNames";
 import styles from "./CreateNewPassword.module.scss";
 

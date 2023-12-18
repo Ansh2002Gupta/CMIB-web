@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_VERSION_NUMBER } from "./constants/apiEndpoints";
+import { API_VERSION_NUMBER } from "./constant/apiEndpoints";
 // import { StorageService } from './services'
 
 // Add a request interceptor

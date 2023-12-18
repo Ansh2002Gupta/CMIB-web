@@ -1,4 +1,4 @@
-import { colorPallets } from "../../../constants/colors";
+import { colorPallets } from "../../../constant/colors";
 
 const variables = {
   // Background colors

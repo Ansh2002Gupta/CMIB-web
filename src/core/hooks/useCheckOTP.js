@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../constants/Constants";
+import { API_STATUS, STATUS_CODES } from "../../constant/constant";
 import {
   ADMIN_ROUTE,
   FORGOT_PASSWORD_END_POINT,
-} from "../../constants/apiEndpoints";
+} from "../../constant/apiEndpoints";
 
 const useCheckOTP = () => {
   const [otpAPIStatus, setOtpAPIStatus] = useState(API_STATUS.IDLE);
