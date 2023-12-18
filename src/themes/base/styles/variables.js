@@ -2,6 +2,7 @@ const colorPallets = {
   blue1: "#60C5F9",
   blue2: "#0a3292",
   blue3: "#8997c5",
+  blue4:  "#0f172a",
 
   red1: "#ef6a6a",
 
@@ -14,7 +15,9 @@ const colorPallets = {
   black1: "#000833",
 
   green1: "#04AF55",
-  black: "#000000"
+  black: "#000000",
+  
+
 };
 
 const variables = {
@@ -85,7 +88,8 @@ const variables = {
 
   profileColor: colorPallets.ltGrey3,
 
-  marginNormal: "16px"
+  marginNormal: "16px",
+  profileTextColor: colorPallets.blue4,
 };
 
 export default variables;

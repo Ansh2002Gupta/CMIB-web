@@ -43,7 +43,6 @@ const ProfileDropdown = ({ onLogout }) => {
                     <DownOutlined className={`${styles.downIcon} ${dropdownVisible ? styles.arrowRotated : ''}`} />
                 </Space>
             </Dropdown>
-
         </Space>
     );
 };
