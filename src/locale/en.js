@@ -56,7 +56,7 @@ const locale = {
   "label.filter": "Filter",
   "label.userDetails": "User Details",
   "label.dateCreatedOn": "Date Created On",
-  "label.clearAll": "clear all",
+  "label.clearAll": "Clear all",
   "label.cancel": "Cancel",
   "label.rowPerPage": "Row per page",
   "label.searchResult": "Search result",
@@ -68,6 +68,7 @@ const locale = {
   "label.newUsers": "New Users",
   "label.users": "Users",
   "label.searchByUserNameAndEmail": "Search by user name and email",
+  "label.generalGetApiFailedErrorMessage": "Something went wrong! Please try again later",
 };
 
 export default locale;

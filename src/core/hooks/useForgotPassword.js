@@ -1,42 +1,55 @@
 import { useState } from "react";
+import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../Constants/Constants.js";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../Constants/errorMessages";
+import { API_STATUS, STATUS_CODES } from "../../constants/constants";
+import {
+  ADMIN_ROUTE,
+  AUTHENTICATE_OTP_ROUTE,
+} from "../../constants/apiEndpoints";
 
 const useForgotPassword = () => {
-  const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
+  const intl = useIntl();
+  const [forgotPasswordApiStatus, setForgotPasswordApiStatus] = useState(
+    API_STATUS.IDLE
+  );
   const [forgotPasswordResult, setForgotPasswordResult] = useState(null);
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
 
   const handleForgotPassword = async (payload) => {
     try {
-      setPostStatus(API_STATUS.LOADING);
+      setForgotPasswordApiStatus(API_STATUS.LOADING);
       setForgotPasswordResult(null);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const res = await Http.post(`admin/reset-password-otp`, payload);
+      const url = ADMIN_ROUTE + AUTHENTICATE_OTP_ROUTE;
+      const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
-        setPostStatus(API_STATUS.SUCCESS);
+        setForgotPasswordApiStatus(API_STATUS.SUCCESS);
         return;
       }
-      setPostStatus(API_STATUS.ERROR);
+      setForgotPasswordApiStatus(API_STATUS.ERROR);
+      setErrorWhileResetPassword(
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+      );
     } catch (err) {
-      setPostStatus(API_STATUS.ERROR);
+      setForgotPasswordApiStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);
         return;
       }
-      setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setErrorWhileResetPassword(
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+      );
     }
   };
 
-  const isLoading = postStatus === API_STATUS.LOADING;
-  const isSuccess = postStatus === API_STATUS.SUCCESS;
-  const isError = postStatus === API_STATUS.ERROR;
+  const isLoading = forgotPasswordApiStatus === API_STATUS.LOADING;
+  const isSuccess = forgotPasswordApiStatus === API_STATUS.SUCCESS;
+  const isError = forgotPasswordApiStatus === API_STATUS.ERROR;
   return {
     forgotPasswordResult,
     errorWhileResetPassword,
-    postStatus,
+    forgotPasswordApiStatus,
     handleForgotPassword,
     isError,
     isLoading,

@@ -1,12 +1,12 @@
 .headingContainer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--gapSmall);
 }
 
 .loginHeading {
   color: var(--headingColor);
-  font-size: 40px;
+  font-size: var(--fontSizeExtraLargeHeading);
   font-weight: var(--fontWeightBold);
 }
 
@@ -18,24 +18,24 @@
 
 @media (max-width: 1535px) {
   .loginHeading {
-    font-size: 36px;
+    font-size: var(--fontSizeLargeHeading);
   }
 }
 
 @media (max-width: 1279px) {
   .loginHeading {
-    font-size: 32px;
+    font-size: var(--fontSizeHeading);
   }
   .loginSubHeading {
-    font-size: 14px;
+    font-size: var(--fontSizeSmall);
   }
 }
 
 @media (max-width: 511px) {
   .loginHeading {
-    font-size: 28px;
+    font-size: var(--fontSizeXXlarge);
   }
   .headingContainer {
-    padding: 24px 16px 0px 16px;
+    padding: var(--paddingMedium) var(--paddingSmall) 0px var(--paddingSmall);
   }
 }

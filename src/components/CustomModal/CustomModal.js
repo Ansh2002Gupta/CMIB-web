@@ -16,6 +16,7 @@ const CustomModal = ({
   onCancel,
   subHeadingText,
 }) => {
+  
   return (
     <Modal footer={null} open={isOpen} {...{ onCancel }}>
       <Base className={styles.container}>

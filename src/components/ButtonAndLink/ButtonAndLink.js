@@ -17,14 +17,20 @@ const ButtonAndLink = ({
   onLinkClick,
   onTopBtnClick,
   topBtnText,
+  type,
 }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
+  const handleOnLinkClick = () => {
+    linkRedirection && navigate(linkRedirection);
+    onLinkClick && onLinkClick();
+  };
+
   return (
     <div>
       {!!error && <Typography className={styles.error}>{error}</Typography>}
       <Base className={styles.container}>
         <CustomButton
-          {...{ loading }}
+          {...{ loading, type }}
           btnText={topBtnText}
           isBtnDisable={isTopBtnDisable}
           onClick={onTopBtnClick}
@@ -34,10 +40,7 @@ const ButtonAndLink = ({
             disabled={loading}
             className={styles.backToLoginLink}
             type="link"
-            onClick={() => {
-              linkRedirection && navigate(linkRedirection);
-              onLinkClick && onLinkClick();
-            }}
+            onClick={() => handleOnLinkClick()}
           >
             {bottomLinkText}
           </Button>

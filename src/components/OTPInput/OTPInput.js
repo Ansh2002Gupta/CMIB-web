@@ -8,6 +8,8 @@ import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
 import useCheckOTP from "../../core/hooks/useCheckOTP";
+import { LOGIN } from "../../routes/routeNames";
+import { TIMER_OF_15_MINUTES } from "../../constants/constants";
 import styles from "./OTPInput.module.scss";
 import "./Override.css";
 
@@ -31,11 +33,10 @@ const OTPInput = ({
 
   const handleTimerEnd = (timerLength) => {
     setIsSendAgainBtnActive(true);
-    if (timerLength === 15) {
+    if (timerLength === TIMER_OF_15_MINUTES) {
       setNoOfTimesOTPCanBeSend(4);
     }
     setShowCountdown(0);
-    console.log("Timer finish");
   };
 
   const handleOnSubmit = () => {
@@ -43,7 +44,7 @@ const OTPInput = ({
     onSubmit(otpValues);
   };
 
-  const sendOTP = async () => {
+  const sendOTP = () => {
     // TODO: call api for sending a new OTP
     setIsSendAgainBtnActive(false);
     if (noOfTimesOTPCanBeSend === 1) {
@@ -52,7 +53,7 @@ const OTPInput = ({
     }
     setNoOfTimesOTPCanBeSend((prev) => prev - 1);
     setShowCountdown(1);
-    await handleAuthOTP();
+    handleAuthOTP();
   };
 
   useEffect(() => {
@@ -83,7 +84,7 @@ const OTPInput = ({
             : intl.formatMessage({ id: "label.otpHeading" })}
         </Typography>
       </div>
-      <div className={styles.otpFieldsAndButtonContainer}>
+      <form className={styles.otpFieldsAndButtonContainer}>
         <div className={styles.subHeadingAndInputContainer}>
           <div>
             <div className={styles.subHeadingContainer}>
@@ -184,9 +185,10 @@ const OTPInput = ({
           bottomLinkText={intl.formatMessage({ id: "label.backToLoginBtn" })}
           onLinkClick={() => setCurrentActiveScreen(1)}
           isTopBtnDisable={!isAllowedToSubmit}
-          linkRedirection={"/login"}
+          linkRedirection={LOGIN}
+          type="submit"
         />
-      </div>
+      </form>
     </Base>
   );
 };

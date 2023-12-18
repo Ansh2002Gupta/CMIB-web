@@ -1,6 +1,10 @@
+.container {
+  position: relative;
+}
+
 .cardParentContainer {
   position: absolute;
-  left: 31%;
+  left: 0px;
   top: 55px;
   z-index: 100000000;
   background-color: var(--bodyBg);
@@ -16,6 +20,25 @@
   border: 0;
 }
 
+.filterBtn {
+  padding: var(--paddingSmall);
+  gap: var(--gapXSmall);
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: var(--borderLight);
+  &:hover {
+    border: var(--borderLight) !important;
+  }
+}
+
+.filterBtnText {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
 .active {
   background-color: var(--lightBlueBg);
 }
@@ -23,7 +46,7 @@
 .filterOption {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--gapSmallMedium);
   background-color: var(--lightBlueBg);
   padding: var(--fontSizeNormal);
   cursor: pointer;
@@ -32,7 +55,14 @@
 .filterTextAndCheckContainer {
   min-width: fit-content;
   display: flex;
-  gap: 12px;
+  gap: var(--gapSmallMedium);
+  align-items: center;
+}
+
+.filterRightArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .filterOptionText {
@@ -43,27 +73,28 @@
 
 .filterSecondLevelOption {
   display: flex;
-  gap: 8px;
+  gap: var(--gapXSmall);
   padding: var(--paddingSmall) 14px;
+  align-items: center;
   cursor: pointer;
 }
 
 .footerBtnContainer {
   display: flex;
-  padding: 8px;
+  padding: var(--paddingExtraSmall);
   justify-content: flex-end;
   align-items: center;
-  gap: 8px;
+  gap: var(--gapSmall);
 }
 
 .cancelBtn {
-  padding: 8px 12px;
+  padding: var(--paddingExtraSmall) 12px;
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   background-color: var(--bodyBg);
-  min-height: 45px;
-  border-radius: 12px;
+  min-height: var(--minBtnHeight);
+  border-radius: var(--radiusXLg);
   border: var(--borderLight);
   &:hover {
     border: var(--borderLight) !important;
@@ -72,16 +103,18 @@
 }
 
 .showResultBtn {
-  padding: 8px var(--paddingSmall);
-  min-height: 45px;
+  padding: var(--paddingExtraSmall) var(--paddingSmall);
+  min-height: var(--minBtnHeight);
 }
 
 .clearAllBtn {
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
-  text-decoration-line: underline !important;
   &:hover {
     color: var(--textBold) !important;
+  }
+  span {
+    text-decoration: underline !important;
   }
 }

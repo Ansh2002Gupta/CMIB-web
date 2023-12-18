@@ -1,45 +1,51 @@
 import { useState } from "react";
+import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../Constants/Constants.js";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../Constants/errorMessages";
+import { API_STATUS, STATUS_CODES } from "../../constants/constants.js";
+import { LOGIN_END_POINT, ADMIN_ROUTE } from "../../constants/apiEndpoints.js";
 import { setItem } from "../../services/encrypted-storage-service.js";
 
 const useLogin = () => {
-  const [apiCallStatus, setApiCallStatus] = useState(API_STATUS.IDLE);
+  const intl = useIntl();
+
+  const [loginApiStatus, setLoginApiStatus] = useState(API_STATUS.IDLE);
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
 
   const handleUserLogin = async (payload) => {
     try {
-      setApiCallStatus(API_STATUS.LOADING);
+      setLoginApiStatus(API_STATUS.LOADING);
       error && setError("");
-      const res = await Http.post(`admin/login`, payload);
+      const url = ADMIN_ROUTE + LOGIN_END_POINT;
+      const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
-        setApiCallStatus(API_STATUS.SUCCESS);
-        const authToken = res.data.access_token;
-        setItem("authToken", authToken);
+        setLoginApiStatus(API_STATUS.SUCCESS);
+        const auth = res.data.access_token;
+        setItem("authToken", auth);
         setData(res.data);
         return;
       }
-      setApiCallStatus(API_STATUS.ERROR);
+      setLoginApiStatus(API_STATUS.ERROR);
     } catch (err) {
-      setApiCallStatus(API_STATUS.ERROR);
+      setLoginApiStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setError(err.response?.data?.message);
         return;
       }
-      setError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setError(
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+      );
     }
   };
 
-  const isLoading = apiCallStatus === API_STATUS.LOADING;
+  const isLoading = loginApiStatus === API_STATUS.LOADING;
 
   return {
     data,
     error,
     setError,
-    apiCallStatus,
+    loginApiStatus,
     handleUserLogin,
     isLoading,
   };

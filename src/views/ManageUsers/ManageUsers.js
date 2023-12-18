@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import moment from "moment/moment";
-import { Button, Input, Switch, Typography } from "antd";
+import { ThemeContext } from "core/providers/theme";
+import { Input, Switch, Image } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
@@ -9,34 +10,22 @@ import ContentHeader from "../../containers/ContentHeader";
 import DataTable from "../../components/DataTable";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import SearchFilter from "../../components/SearchFilter";
-import useOutSideClick from "../../core/hooks/useOutSideClick";
 import useResponsive from "../../core/hooks/useResponsive";
-
-import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
-import { ReactComponent as EyeIcon } from "../../themes/base/assets/images/eye.svg";
-import { ReactComponent as Filter } from "../../themes/base/assets/images/filter.svg";
-import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
-import { ReactComponent as SearchIcon } from "../../themes/base/assets/images/search icon.svg";
-
 import { DATA_SOURCE, ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./ManageUsers.module.scss";
 
 const ManageUsers = () => {
   const intl = useIntl();
   const responsive = useResponsive();
-  const elementNotConsideredInOutSideClick = useRef();
+  const { getImage } = useContext(ThemeContext);
+
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
   const [currentTableData, setCurrentTableData] = useState(DATA_SOURCE);
   const [currentDataLength, setCurrentDataLength] = useState(
     DATA_SOURCE.length
   );
-  const { wrapperRef } = useOutSideClick({
-    onOutSideClick: () => {
-      setShowFilters(false);
-    },
-    elementNotToBeConsidered: elementNotConsideredInOutSideClick,
-  });
+
   const handleOnEdit = () => {
     // TODO:  send data to users/edit screen once it is completed.
   };
@@ -54,6 +43,7 @@ const ManageUsers = () => {
     });
     setCurrentTableData(updatedData);
   };
+
   const columns = [
     {
       title: () => (
@@ -109,7 +99,9 @@ const ManageUsers = () => {
       dataIndex: "createdOn",
       key: "createdOn",
       render: (data) => moment(data).format("DD/MM/YYYY"),
-      sorter: (a, b) => moment(a.createdOn).unix() - moment(b.createdOn).unix(),
+      sorter: (a, b) =>
+        moment(a.createdOn).unix() -
+        moment(b.createdOn).unix(),
       sortDirection: ["ascend"],
       defaultSortOrder: "ascend",
     },
@@ -144,7 +136,14 @@ const ManageUsers = () => {
       dataIndex: "see",
       key: "see",
       render: () => {
-        return <EyeIcon className={styles.eyeIcon} onClick={handleOnEdit} />;
+        return (
+          <Image
+            src={getImage("eye")}
+            className={styles.eyeIcon}
+            onClick={handleOnEdit}
+            preview={false}
+          />
+        );
       },
     },
     {
@@ -152,7 +151,14 @@ const ManageUsers = () => {
       dataIndex: "edit",
       key: "edit",
       render: () => {
-        return <Edit className={styles.editIcon} onClick={handleOnEdit} />;
+        return (
+          <Image
+            src={getImage("edit")}
+            preview={false}
+            className={styles.editIcon}
+            onClick={handleOnEdit}
+          />
+        );
       },
     },
   ];
@@ -179,7 +185,7 @@ const ManageUsers = () => {
                 btnText={intl.formatMessage({
                   id: `label.${responsive.isMd ? "addNewUsers" : "newUsers"}`,
                 })}
-                IconElement={PlusIcon}
+                iconUrl={getImage("plusIcon")}
                 iconStyles={styles.btnIconStyles}
                 customStyle={styles.btnCustomStyles}
               />
@@ -187,11 +193,18 @@ const ManageUsers = () => {
           />
         </div>
       }
+      className={styles.baseLayout}
       bottomSection={
         <div className={styles.filterAndTableContainer}>
           <div className={styles.searchBarContainer}>
             <Input
-              prefix={<SearchIcon className={styles.searchIcon} />}
+              prefix={
+                <Image
+                  src={getImage("searchIcon")}
+                  className={styles.searchIcon}
+                  preview={false}
+                />
+              }
               placeholder={intl.formatMessage({
                 id: "label.searchByUserNameAndEmail",
               })}
@@ -200,22 +213,10 @@ const ManageUsers = () => {
               value={searchedValue}
               onChange={(e) => setSearchedValue(e.target.value)}
             />
-            <Button
-              ref={elementNotConsideredInOutSideClick}
-              className={styles.filterBtn}
-              onClick={() => setShowFilters((prev) => !prev)}
-            >
-              <Filter />
-              <Typography className={styles.filterBtnText}>
-                {intl.formatMessage({ id: "label.filter" })}
-              </Typography>
-            </Button>
-            <div ref={wrapperRef}>
-              <SearchFilter
-                filterPropertiesArray={ACCESS_FILTER_DATA}
-                {...{ showFilters, setShowFilters }}
-              />
-            </div>
+            <SearchFilter
+              filterPropertiesArray={ACCESS_FILTER_DATA}
+              {...{ showFilters, setShowFilters }}
+            />
           </div>
           <DataTable
             {...{

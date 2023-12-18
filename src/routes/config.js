@@ -1,26 +1,26 @@
-import Home from "../pages/Home";
 import Auth from "../pages/Auth";
+import Configurations from "../views/Configurations/Configurations";
+import DashboardView from "../views/Dashboard/Dashboard";
+import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
+import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
+import ManageUsers from "../views/ManageUsers";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import {
-  CONFIGURATIONS,
+  ROUTE,
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
   MANAGE_USERS,
-  CREATE_NEW_PASSWORD,
   FORGOT_PASSWORD,
+  ROOT,
 } from "./routeNames";
-import Configurations from "../views/Configurations/Configurations";
-import DashboardView from "../views/Dashboard/Dashboard";
-import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
-import CreateNewPassword from "../views/CreateNewPassword";
-import ManageUsers from "../views/ManageUsers";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
+const HomeWithPublicAccess = withPublicAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
   HeaderContentWithFooter
@@ -65,7 +65,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/",
+    pagePath: ROOT,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
@@ -99,7 +99,7 @@ const config = [
     ],
   },
   {
-    pagePath: CONFIGURATIONS,
+    pagePath: ROUTE,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
@@ -111,7 +111,7 @@ const config = [
   },
   {
     pagePath: MANAGE_USERS,
-    element: <AuthWithPublicAccess />, // Page
+    element: <HomeWithPublicAccess noOuterPadding />, // Page
     views: [
       // array of views under Page route
       {

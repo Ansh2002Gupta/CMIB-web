@@ -1,6 +1,6 @@
 import variables from "../../themes/base/styles/variables";
 
-export const stylesObject = {
+export const classes = {
   cardBody: {
     padding: "0px",
     borderTop: variables.borderLight,

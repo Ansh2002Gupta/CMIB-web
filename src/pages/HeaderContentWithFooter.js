@@ -1,18 +1,19 @@
-import React from "react";
-// will be replaced by view component injected through route
+import React, { useContext } from "react";
 import { Outlet } from "react-router-dom";
+import { ThemeContext } from "core/providers/theme";
+import { Image } from "antd";
 
 import HeaderContentWithFooterLayout from "../layouts/HeaderContentWithFooterLayout/HeaderContentWithFooterLayout";
-
-// import MenuContainer from "../containers/Menu/Menu";
-// import HeaderContainer from "../containers/Header";
+import PublicHeader from "../containers/PublicHeader";
 
 function HeaderContentWithFooter() {
+  const { getImage } = useContext(ThemeContext);
+
   return (
     <HeaderContentWithFooterLayout
-      // menu={<MenuContainer />}
-      // header={<HeaderContainer />}
+      header={<PublicHeader />}
       content={<Outlet />} // view component
+      footer={<Image src={getImage("publicFooter")} preview={false} />}
     />
   );
 }

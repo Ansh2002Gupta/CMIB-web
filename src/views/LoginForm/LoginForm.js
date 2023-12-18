@@ -5,15 +5,15 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import { Base } from "core/layouts";
 
-import CardView from "../../hocs/CardView/CardView";
+import withCardView from "../../hocs/withCardView";
 import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
 import useLogin from "../../core/hooks/useLogin";
 import useAuthOTP from "../../core/hooks/useAuthOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { DASHBOARD } from "../../routes/routeNames";
-import { EMAIL_REGEX } from "../../Constants/Constants";
+import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
+import { EMAIL_REGEX } from "../../constants/regex";
 import styles from "./loginForm.module.scss";
 
 const LoginForm = () => {
@@ -33,7 +33,7 @@ const LoginForm = () => {
     data: loginResponse,
     handleUserLogin,
     isLoading,
-    apiCallStatus,
+    loginApiStatus,
   } = useLogin();
   const {
     errorWhileSendingOTP,
@@ -41,16 +41,19 @@ const LoginForm = () => {
     isLoading: isOTPLoading,
   } = useAuthOTP();
 
-  const handleOnOTP = async () => {
+  const handleOnOTP = () => {
     if (!loginError && !isLoading) {
-      await handleAuthOTP({
+      handleAuthOTP({
         email: formInputs.userName,
       });
       setCurrentActiveScreen(2); //only when user opted for 2 factor authentication.
     }
   };
 
-  const handleOnLogin = () => {
+  const handleOnLogin = (e) => {
+    e.preventDefault();
+    isValidEmail();
+    setLoginError("");
     if (!EMAIL_REGEX.test(formInputs?.userName)) {
       return;
     }
@@ -61,14 +64,14 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (apiCallStatus === "success" && loginResponse) {
+    if (loginApiStatus === "success" && loginResponse) {
       if (loginResponse?.is_two_factor === 1) {
         handleOnOTP();
         return;
       }
       !loginError && !isLoading && navigate(DASHBOARD);
     }
-  }, [apiCallStatus, loginResponse]);
+  }, [loginApiStatus, loginResponse]);
 
   const isValidEmail = () => {
     setIsEmailValid(EMAIL_REGEX.test(formInputs?.userName));
@@ -98,11 +101,12 @@ const LoginForm = () => {
         headingText={intl.formatMessage({ id: "label.loginHeading" })}
         subHeadingText={intl.formatMessage({ id: "label.loginSubheading" })}
       />
-      <div
+      <form
         className={[
           styles.inputAndBtnContainer,
           styles.borderForMobileScreens,
         ].join(" ")}
+        onSubmit={handleOnLogin}
       >
         {currentActiveScreen === 1 && (
           <>
@@ -110,7 +114,7 @@ const LoginForm = () => {
               <CustomInput
                 disabled={isLoading || isOTPLoading}
                 label={intl.formatMessage({ id: "label.userName" })}
-                type="text"
+                type="email"
                 customLabelStyles={styles.inputLabel}
                 customInputStyles={styles.input}
                 isError={!isEmailValid}
@@ -156,7 +160,7 @@ const LoginForm = () => {
                   disabled={isLoading || isOTPLoading}
                   className={styles.forgotLink}
                   type="link"
-                  onClick={() => navigate("/forgot-password")}
+                  onClick={() => navigate(FORGOT_PASSWORD)}
                 >
                   Forget password?
                 </Button>
@@ -176,11 +180,7 @@ const LoginForm = () => {
                 loading={isLoading || isOTPLoading}
                 block
                 className={styles.loginBtn}
-                onClick={() => {
-                  isValidEmail();
-                  setLoginError("");
-                  handleOnLogin();
-                }}
+                onClick={handleOnLogin}
                 disabled={!isAllowedToLogin}
               >
                 {intl.formatMessage({ id: "label.loginBtn" })}
@@ -199,9 +199,9 @@ const LoginForm = () => {
             }}
           />
         )}
-      </div>
+      </form>
     </Base>
   );
 };
 
-export default CardView(LoginForm);
+export default withCardView(LoginForm);

@@ -1,42 +1,53 @@
 import { useState } from "react";
+import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../Constants/Constants.js";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../Constants/errorMessages";
+import { API_STATUS, STATUS_CODES } from "../../constants/constants";
+import {
+  ADMIN_ROUTE,
+  FORGOT_PASSWORD_END_POINT,
+} from "../../constants/apiEndpoints";
 
 const useCheckOTP = () => {
-  const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
+  const [otpAPIStatus, setOtpAPIStatus] = useState(API_STATUS.IDLE);
   const [checkOTPData, setCheckOTPData] = useState([]);
   const [errorWhileVerifyingOTP, setErrorWhileVeryingOTP] = useState("");
+  const intl = useIntl();
 
   const handleCheckOTP = async (payload) => {
     try {
-      setPostStatus(API_STATUS.LOADING);
+      setOtpAPIStatus(API_STATUS.LOADING);
       errorWhileVerifyingOTP && setErrorWhileVeryingOTP("");
-      const res = await Http.post(`admin/forget-password-otp`, payload);
+      const url = ADMIN_ROUTE + FORGOT_PASSWORD_END_POINT;
+      const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
-        setPostStatus(API_STATUS.SUCCESS);
+        setOtpAPIStatus(API_STATUS.SUCCESS);
         setCheckOTPData(res.data);
         return;
       }
-      setPostStatus(API_STATUS.ERROR);
+      setOtpAPIStatus(API_STATUS.ERROR);
+      setErrorWhileVeryingOTP(
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+      );
     } catch (err) {
-      setPostStatus(API_STATUS.ERROR);
+      setOtpAPIStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileVeryingOTP(err.response?.data?.message);
         return;
       }
-      setErrorWhileVeryingOTP(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setErrorWhileVeryingOTP(
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+      );
     }
   };
 
-  const isLoading = postStatus === API_STATUS.LOADING;
-  const isSuccess = postStatus === API_STATUS.SUCCESS;
-  const isError = postStatus === API_STATUS.ERROR;
+  const isLoading = otpAPIStatus === API_STATUS.LOADING;
+  const isSuccess = otpAPIStatus === API_STATUS.SUCCESS;
+  const isError = otpAPIStatus === API_STATUS.ERROR;
   return {
     checkOTPData,
     errorWhileVerifyingOTP,
-    postStatus,
+    otpAPIStatus,
     handleCheckOTP,
     isError,
     isLoading,

@@ -1,14 +1,18 @@
+.baseLayout {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .headerContainer {
   padding: var(--paddingMedium);
-  border: var(--borderLight);
   width: 100%;
 }
 
 .btnCustomStyles {
   padding: var(--paddingSmall) 12px;
-  border-radius: 12px;
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusXLg);
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
 }
 
 .btnIconStyles {
@@ -20,15 +24,15 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--gapSmall);
   padding: var(--paddingMedium);
   flex: 1;
 }
 
 .searchIcon {
-  width: 18px;
-  height: 18px;
-  padding-right: 8px;
+  width: 30px;
+  height: 30px;
+  padding-right: var(--paddingExtraSmall);
   padding-bottom: 4px;
 }
 
@@ -43,42 +47,23 @@
 .searchBar {
   width: 30%;
   min-height: 44px;
-  border-radius: 12px;
-  // Note: Below styles are not working
-  // color: var(--inputPlaceHolder);
-  // font-size: var(--fontSizeSmall);
-  // font-weight: var(--fontWeightMedium);
-  .ant-input {
-    color: #000803 !important;
-    font-size: 14px !important;
-    font-weight: 500 !important;
+  border-radius: var(--radiusXLg);
+  input {
+    color: var(--inputText) !important;
+    font-size: var(--fontSizeSmall) !important;
+    font-weight: var(--fontWeightMedium) !important;
   }
+}
+
+input::placeholder {
+  color: var(--inputPlaceHolder) !important;
 }
 
 .searchBarContainer {
   display: flex;
   justify-content: start;
-  gap: 16px;
+  gap: var(--gapSmall);
   position: relative;
-}
-
-.filterBtn {
-  padding: var(--paddingSmall);
-  gap: 8px;
-  display: flex;
-  min-height: 48px;
-  align-items: center;
-  justify-content: center;
-  border: var(--borderLight);
-  &:hover {
-    border: var(--borderLight) !important;
-  }
-}
-
-.filterBtnText {
-  color: var(--textBold);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
 }
 
 .switchBgColor {
@@ -104,12 +89,16 @@
 
 .userStatusContainer {
   display: flex;
-  gap: 8px;
+  gap: var(--gapXSmall);
+}
+
+.padding {
+  padding: var(--paddingMedium);
 }
 
 @media screen and (max-width: 1535px) {
   .headerResponsiveStyle {
-    font-size: 28px;
+    font-size: var(--fontSizeXXlarge);
   }
   .btnCustomStyles {
     font-size: var(--fontSizeExtraSmall);
@@ -124,7 +113,7 @@
 
 @media screen and (max-width: 767px) {
   .headerResponsiveStyle {
-    font-size: 24px;
+    font-size: var(--fontSizeXlargeMedium);
   }
   .btnCustomStyles {
     min-height: 44px;

@@ -28,7 +28,7 @@ export const getItem = (key) => {
   // let retrievedVal = await StorageService.get(key);
   let retrievedVal = StorageService.get(key);
 
-  if (_.isNull(retrievedVal)) {
+  if (!retrievedVal) {
     return null;
   }
   let decryptedVal = getDescryptedVal(retrievedVal, key);

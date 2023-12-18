@@ -1,6 +1,7 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
+import { ThemeContext } from "core/providers/theme";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Base from "../../core/layouts/Base/Base";
@@ -18,19 +19,15 @@ import {
   AT_LEAST_ONE_NUMERIC_VALUE,
   AT_LEAST_ONE_SMALL_LETTER,
   AT_LEAST_ONE_CAPITAL_LETTER,
-} from "../../Constants/Constants";
-import checkedIcon from "../../themes/base/assets/images/greenCheckIcon.svg";
+} from "../../constants/regex";
+import { LOGIN } from "../../routes/routeNames";
 import styles from "./CreateNewPassword.module.scss";
 
 const CreateNewPassword = ({ email, otp }) => {
   const intl = useIntl();
-  const {
-    errorWhileCreatingPassword,
-    handleCreateNewPassword,
-    isLoading,
-    createNewPasswordData,
-    setErrorWhileCreatingPassword,
-  } = useCreateNewPassword();
+  const { navigateScreen: navigate } = useNavigateScreen();
+  const { getImage } = useContext(ThemeContext);
+
   const [passwordValidations, setPasswordValidation] = useState({
     oneNumericValue: false,
     oneCapitalLetterValue: false,
@@ -40,31 +37,6 @@ const CreateNewPassword = ({ email, otp }) => {
     bothEqual: false,
   });
   const [status, setStatus] = useState("");
-  const { navigateScreen: navigate } = useNavigateScreen();
-  const passwordStrengthPointsArray = useMemo(() => {
-    return [
-      {
-        str: intl.formatMessage({ id: "label.passwordStrengthCheck1" }),
-        isValid: passwordValidations.atLeast6Characters,
-      },
-      {
-        str: intl.formatMessage({ id: "label.passwordStrengthCheck2" }),
-        isValid: passwordValidations.oneNumericValue,
-      },
-      {
-        str: intl.formatMessage({ id: "label.passwordStrengthCheck3" }),
-        isValid: passwordValidations.oneCapitalLetterValue,
-      },
-      {
-        str: intl.formatMessage({ id: "label.passwordStrengthCheck4" }),
-        isValid: passwordValidations.oneSmallLetterValue,
-      },
-      {
-        str: intl.formatMessage({ id: "label.passwordStrengthCheck5" }),
-        isValid: passwordValidations.oneSpecialCharacterValue,
-      },
-    ];
-  }, [passwordValidations]);
   const [formInputs, setFormInputs] = useState({
     password: "",
     confirmPassword: "",
@@ -73,7 +45,40 @@ const CreateNewPassword = ({ email, otp }) => {
     password: false,
     confirmPassword: false,
   });
-  const handleOnSubmit = async () => {
+
+  const {
+    errorWhileCreatingPassword,
+    handleCreateNewPassword,
+    isLoading,
+    createNewPasswordData,
+    setErrorWhileCreatingPassword,
+  } = useCreateNewPassword();
+
+  const passwordStrengthPointsArray = [
+    {
+      str: intl.formatMessage({ id: "label.passwordStrengthCheck1" }),
+      isValid: passwordValidations.atLeast6Characters,
+    },
+    {
+      str: intl.formatMessage({ id: "label.passwordStrengthCheck2" }),
+      isValid: passwordValidations.oneNumericValue,
+    },
+    {
+      str: intl.formatMessage({ id: "label.passwordStrengthCheck3" }),
+      isValid: passwordValidations.oneCapitalLetterValue,
+    },
+    {
+      str: intl.formatMessage({ id: "label.passwordStrengthCheck4" }),
+      isValid: passwordValidations.oneSmallLetterValue,
+    },
+    {
+      str: intl.formatMessage({ id: "label.passwordStrengthCheck5" }),
+      isValid: passwordValidations.oneSpecialCharacterValue,
+    },
+  ];
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
     if (!passwordValidations.bothEqual) {
       setStatus("label.newPasswordAndConfirmPasswordDoNotMatched");
       return;
@@ -96,6 +101,7 @@ const CreateNewPassword = ({ email, otp }) => {
       otp: otp,
     });
   };
+
   const passwordStrengthCheck = (newPassword, confirmPassword) => {
     setPasswordValidation({
       oneNumericValue: AT_LEAST_ONE_NUMERIC_VALUE.test(newPassword),
@@ -144,7 +150,7 @@ const CreateNewPassword = ({ email, otp }) => {
           id: "label.createNewPasswordSubHeading",
         })}
       />
-      <div className={styles.fieldsContainer}>
+      <form className={styles.fieldsContainer} onSubmit={handleOnSubmit}>
         <div className={styles.inputAndPointsContainer}>
           <CustomInput
             disabled={isLoading}
@@ -173,7 +179,7 @@ const CreateNewPassword = ({ email, otp }) => {
               setStatus("");
               setFormInputs({
                 ...formInputs,
-                password: e.target.value,
+                password: e?.target?.value,
               });
             }}
           />
@@ -230,21 +236,6 @@ const CreateNewPassword = ({ email, otp }) => {
                 }
               </div>
             )}
-          <CustomModal
-            isOpen={
-              status === "label.newPasswordAndConfirmPasswordMatched" &&
-              createNewPasswordData
-            }
-            headingText={intl.formatMessage({
-              id: "label.newPasswordAndConfirmPasswordMatched",
-            })}
-            btnText={intl.formatMessage({
-              id: "label.gobackToLoginBtn",
-            })}
-            imageSrc={checkedIcon}
-            onCancel={() => setStatus("")}
-            onBtnClick={() => navigate("/login")}
-          />
           <ButtonAndLink
             loading={isLoading}
             error={
@@ -259,13 +250,27 @@ const CreateNewPassword = ({ email, otp }) => {
             isTopBtnDisable={
               !(formInputs.confirmPassword && formInputs.password)
             }
-            onTopBtnClick={() => {
-              handleOnSubmit();
-            }}
-            linkRedirection="/login"
+            onTopBtnClick={handleOnSubmit}
+            linkRedirection={LOGIN}
+            type="submit"
+          />
+          <CustomModal
+            isOpen={
+              status === "label.newPasswordAndConfirmPasswordMatched" &&
+              createNewPasswordData
+            }
+            headingText={intl.formatMessage({
+              id: "label.newPasswordAndConfirmPasswordMatched",
+            })}
+            btnText={intl.formatMessage({
+              id: "label.gobackToLoginBtn",
+            })}
+            ImgElement={getImage("checkedBox")}
+            onCancel={() => setStatus("")}
+            onBtnClick={() => navigate(LOGIN)}
           />
         </div>
-      </div>
+      </form>
     </Base>
   );
 };

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_VERSION_NUMBER } from "./constants/apiEndpoints";
 // import { StorageService } from './services'
 
 // Add a request interceptor
@@ -14,7 +15,7 @@ axios.interceptors.request.use(
     // }
     // ****** //
     config.headers["Content-Type"] = "application/json";
-    config.headers["api-version"] = "v1";
+    config.headers["api-version"] = API_VERSION_NUMBER;
     return config;
   },
   function (error) {

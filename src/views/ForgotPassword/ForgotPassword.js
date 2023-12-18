@@ -4,22 +4,25 @@ import { useIntl } from "react-intl";
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../../components/ButtonAndLink";
-import CardView from "../../hocs/CardView/CardView";
+import withCardView from "../../hocs/withCardView";
 import CreateNewPassword from "../CreateNewPassword/CreateNewPassword.js";
 import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
 import useForgotPassword from "../../core/hooks/useForgotPassword.js";
-import { EMAIL_REGEX } from "../../Constants/Constants.js";
+import { EMAIL_REGEX } from "../../constants/regex.js";
+import { LOGIN } from "../../routes/routeNames.js";
 import styles from "./ForgotPassword.module.scss";
 
 const ForgotPassword = () => {
   const intl = useIntl();
+
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
   const [userName, setUserName] = useState("");
   const [userEnteredOTP, setUserEnteredOTP] = useState(null);
   const [status, setStatus] = useState("");
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
+
   const {
     handleForgotPassword,
     isLoading,
@@ -28,13 +31,14 @@ const ForgotPassword = () => {
     setErrorWhileResetPassword,
   } = useForgotPassword();
 
-  const handleOnSubmit = async () => {
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
     if (!EMAIL_REGEX.test(userName)) {
       setStatus("error");
       return;
     }
     setStatus("success");
-    await handleForgotPassword({ email: userName });
+    handleForgotPassword({ email: userName });
   };
 
   useEffect(() => {
@@ -82,15 +86,17 @@ const ForgotPassword = () => {
             }
           />
           {currentActiveScreen === 1 && (
-            <div className={styles.bottomContainer}>
+            <form className={styles.bottomContainer} onSubmit={handleOnSubmit}>
               <CustomInput
                 label={intl.formatMessage({ id: "label.emailId" })}
-                type="text"
+                type="email"
                 disabled={isLoading}
                 customLabelStyles={styles.inputLabel}
                 customInputStyles={styles.input}
                 isError={status === "error"}
-                errorMessage={intl.formatMessage({ id: "label.invalidEmail" })}
+                errorMessage={intl.formatMessage({
+                  id: "label.invalidEmail",
+                })}
                 placeholder={intl.formatMessage({
                   id: "label.userNamePlaceHolder",
                 })}
@@ -112,13 +118,11 @@ const ForgotPassword = () => {
                     id: "label.backToLoginBtn",
                   })}
                   isTopBtnDisable={!isAllowedToSubmit}
-                  onTopBtnClick={() => {
-                    handleOnSubmit();
-                  }}
-                  linkRedirection={"/login"}
+                  onTopBtnClick={handleOnSubmit}
+                  linkRedirection={LOGIN}
                 />
               </div>
-            </div>
+            </form>
           )}
           {currentActiveScreen === 2 && (
             <OTPInput
@@ -143,4 +147,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default CardView(ForgotPassword);
+export default withCardView(ForgotPassword);

@@ -7,6 +7,7 @@ import Base from "../../core/layouts/Base/Base";
 import styles from "./CustomInput.module.scss";
 
 const CustomInput = ({
+  currentSelectedValue,
   customContainerStyles,
   customErrorTextStyles,
   customInputStyles,
@@ -81,14 +82,13 @@ const CustomInput = ({
           />
         )}
         {type === "select" && (
-          <>
             <Select
               className={customInputStyles}
               onChange={(e) => onSelectItem(e)}
               options={selectOptions}
               defaultValue={"1"}
+              value={currentSelectedValue}
             />
-          </>
         )}
       </div>
       {isError && (
@@ -114,6 +114,7 @@ const CustomInput = ({
 };
 
 CustomInput.defaultProps = {
+  currentSelectedValue: "",
   customContainerStyles: "",
   customErrorTextStyles: "",
   customInputStyles: "",
@@ -142,6 +143,7 @@ CustomInput.defaultProps = {
 };
 
 CustomInput.propTypes = {
+  currentSelectedValue: PropTypes.string,
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
   customInputStyles: PropTypes.string,

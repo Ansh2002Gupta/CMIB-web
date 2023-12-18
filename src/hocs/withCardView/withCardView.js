@@ -2,10 +2,9 @@ import React from "react";
 
 import Base from "../../core/layouts/Base/Base";
 import useResponsive from "../../core/hooks/useResponsive";
+import styles from "./withCardView.module.scss";
 
-import styles from "./CardView.module.scss";
-
-const CardView = (BaseComponent) => {
+const withCardView = (BaseComponent) => {
   const NewModifiedComponent = () => {
     const responsive = useResponsive();
 
@@ -24,4 +23,4 @@ const CardView = (BaseComponent) => {
   return NewModifiedComponent;
 };
 
-export default CardView;
+export default withCardView;
