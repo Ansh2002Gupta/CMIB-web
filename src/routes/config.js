@@ -66,7 +66,7 @@ const config = [
   },
   {
     pagePath: ROOT,
-    element: <HomeWithPrivateAccess />, // Page
+    element: <HomeWithPublicAccess />, // Page
     views: [
       // array of views under Page route
       {

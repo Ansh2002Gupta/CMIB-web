@@ -3,7 +3,7 @@ import _ from "lodash";
 import { useNavigate } from "react-router";
 
 import { getItem } from "../services/encrypted-storage-service";
-import { LOGIN } from "../routes/routeNames";
+import { ROOT } from "../routes/routeNames";
 
 function withPublicAccess(Component) {
   return (props) => {
@@ -11,14 +11,15 @@ function withPublicAccess(Component) {
     const navigate = useNavigate();
 
     useEffect(() => {
-      if (_.isEmpty(auth)) {
-        navigate(LOGIN);
+      if (!_.isEmpty(auth)) {
+        navigate(ROOT);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth]);
+    }, []);
 
     return <Component {...props} />;
   };
 }
 
 export default withPublicAccess;
+ 
