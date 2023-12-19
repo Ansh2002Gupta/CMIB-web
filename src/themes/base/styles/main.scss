@@ -26,7 +26,7 @@ html,
 body,
 #root {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   display: flex;
 }
 
@@ -35,6 +35,7 @@ body,
   @include main.useMainTemplate() {
     display: flex;
     flex-grow: 1;
+    width: 100%;
     background: var(--body-bg);
     color: var(--text-default);
     font-family: var(--font-family-regular);

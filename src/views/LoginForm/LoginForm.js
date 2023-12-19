@@ -1,82 +1,207 @@
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Button, Space, Typography, Input } from "antd";
+import { Button, Typography } from "antd";
+
 import { Base } from "core/layouts";
-import { AuthContext } from "../../globalContext/auth/authProvider";
-import { setAuth } from "./../../globalContext/auth/authActions";
-import { AuthService } from "./../../services";
-import Styles from "./loginForm.module.scss";
 
-export function useLoginForm(initialState = {}) {
-  const navigate = useNavigate();
-  const [formValues, setFormValues] = useState({
-    username: initialState.username || "",
-    password: initialState.password || "",
-  });
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [, authDispatch] = useContext(AuthContext);
-  const onLogin = async () => {
-    setIsProcessing(true);
-    // api call and passResponse to setAuthAction
-    const response = await AuthService.login(formValues);
-    authDispatch(setAuth(response));
-    setIsProcessing(false);
-    navigate("/");
-  };
-  return {
-    formValues,
-    setFormValues,
-    onLogin,
-    isProcessing,
-  };
-}
+import withCardView from "../../hocs/withCardView";
+import CustomInput from "../../components/CustomInput";
+import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
+import OTPInput from "../../components/OTPInput/OTPInput";
+import useLogin from "../../core/hooks/useLogin";
+import useAuthOTP from "../../core/hooks/useAuthOTP";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
+import { EMAIL_REGEX } from "../../constant/regex";
+import styles from "./loginForm.module.scss";
 
-function LoginForm(props) {
+const LoginForm = () => {
   const intl = useIntl();
-  const { formValues, setFormValues, onLogin, isProcessing } = useLoginForm();
-  const { username, password } = formValues || {};
-  const isLoginActionDisabled =
-    !username.trim() || !password.trim() || isProcessing;
+  const { navigateScreen: navigate } = useNavigateScreen();
+
+  const [formInputs, setFormInputs] = useState({
+    userName: "",
+    password: "",
+  });
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isAllowedToLogin, setIsAllowedToLogin] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
+
+  const {
+    error: loginError,
+    setError: setLoginError,
+    data: loginResponse,
+    handleUserLogin,
+    isLoading,
+    loginApiStatus,
+  } = useLogin();
+
+  const {
+    errorWhileSendingOTP,
+    handleAuthOTP,
+    isLoading: isOTPLoading,
+  } = useAuthOTP();
+
+  const handleOnOTP = () => {
+    if (!loginError && !isLoading) {
+      handleAuthOTP({
+        email: formInputs.userName,
+      });
+      setCurrentActiveScreen(2); //only when user opted for 2 factor authentication.
+    }
+  };
+
+  const handleOnLogin = (e) => {
+    e.preventDefault();
+    isValidEmail();
+    setLoginError("");
+    if (!EMAIL_REGEX.test(formInputs?.userName)) {
+      return;
+    }
+    handleUserLogin({
+      email: formInputs.userName,
+      password: formInputs.password,
+    });
+  };
+
+  useEffect(() => {
+    if (loginApiStatus === "success" && loginResponse) {
+      if (loginResponse?.is_two_factor === 1) {
+        handleOnOTP();
+        return;
+      }
+      !loginError && !isLoading && navigate(DASHBOARD);
+    }
+  }, [loginApiStatus, loginResponse]);
+
+  const isValidEmail = () => {
+    setIsEmailValid(EMAIL_REGEX.test(formInputs?.userName));
+  };
+
+  useEffect(() => {
+    setLoginError("");
+    if (formInputs.userName && formInputs.password) {
+      setIsAllowedToLogin(true);
+      return;
+    }
+    setIsAllowedToLogin(false);
+  }, [formInputs?.userName, formInputs?.password]);
+
+  useEffect(() => {
+    return () => {
+      setIsEmailValid(true);
+      setIsAllowedToLogin(false);
+      setShowPassword(false);
+      setCurrentActiveScreen(1);
+    };
+  }, []);
+
   return (
-    <Base>
-      <div className={Styles.loginForm}>
-        <Space style={{ width: "100%" }} direction="vertical" size="middle">
-          <Typography>{intl.formatMessage({ id: "signIn" })}</Typography>
-          <Input
-            placeholder={intl.formatMessage({ id: "username" })}
-            value={username}
-            onChange={(e) => {
-              setFormValues((v) => {
-                v.username = e.target.value;
-                return { ...v };
-              });
+    <Base className={styles.loginForm}>
+      <HeadingAndSubHeading
+        headingText={intl.formatMessage({ id: "label.loginHeading" })}
+        subHeadingText={intl.formatMessage({ id: "label.loginSubheading" })}
+      />
+      <form
+        className={[
+          styles.inputAndBtnContainer,
+          styles.borderForMobileScreens,
+        ].join(" ")}
+        onSubmit={handleOnLogin}
+      >
+        {currentActiveScreen === 1 && (
+          <>
+            <div className={styles.inputContainer}>
+              <CustomInput
+                disabled={isLoading || isOTPLoading}
+                label={intl.formatMessage({ id: "label.userName" })}
+                type="email"
+                customLabelStyles={styles.inputLabel}
+                customInputStyles={styles.input}
+                isError={!isEmailValid}
+                errorMessage={intl.formatMessage({ id: "label.invalidEmail" })}
+                placeholder={intl.formatMessage({
+                  id: "label.userNamePlaceHolder",
+                })}
+                isRequired
+                value={formInputs.userName}
+                onChange={(e) => {
+                  setIsEmailValid(true);
+                  setFormInputs({
+                    ...formInputs,
+                    userName: e?.target?.value,
+                  });
+                }}
+              />
+              <CustomInput
+                disabled={isLoading || isOTPLoading}
+                label={intl.formatMessage({ id: "label.password" })}
+                customLabelStyles={styles.inputLabel}
+                customInputStyles={styles.input}
+                placeholder={intl.formatMessage({
+                  id: "label.passwordPlaceholder",
+                })}
+                isRequired
+                type={showPassword ? "text" : "password"}
+                isSuffixRequiredForPassword
+                onSuffixElementClick={() => setShowPassword((prev) => !prev)}
+                isTextVisible={!showPassword}
+                value={formInputs.password}
+                onChange={(e) =>
+                  setFormInputs({
+                    ...formInputs,
+                    password: e.target.value,
+                  })
+                }
+              />
+              <div className={styles.forgotLinkContainer}>
+                <Button
+                  disabled={isLoading || isOTPLoading}
+                  className={styles.forgotLink}
+                  type="link"
+                  onClick={() => navigate(FORGOT_PASSWORD)}
+                >
+                  Forget password?
+                </Button>
+              </div>
+            </div>
+            <div>
+              {loginError ? (
+                <Typography className={styles.errorText}>
+                  {loginError}
+                </Typography>
+              ) : (
+                ""
+              )}
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isLoading || isOTPLoading}
+                block
+                className={styles.loginBtn}
+                onClick={handleOnLogin}
+                disabled={!isAllowedToLogin}
+              >
+                {intl.formatMessage({ id: "label.loginBtn" })}
+              </Button>
+            </div>
+          </>
+        )}
+        {currentActiveScreen === 2 && (
+          <OTPInput
+            noOfBlocks={4}
+            {...{
+              errorWhileSendingOTP,
+              handleAuthOTP,
+              isOTPLoading,
+              setCurrentActiveScreen,
             }}
           />
-          <Input
-            type="password"
-            placeholder={intl.formatMessage({ id: "password" })}
-            value={password}
-            onChange={(e) => {
-              setFormValues((v) => {
-                v.password = e.target.value;
-                return { ...v };
-              });
-            }}
-          />
-          <Button
-            onClick={() => {
-              onLogin();
-            }}
-            type="primary"
-            disabled={isLoginActionDisabled}
-          >
-            {intl.formatMessage({ id: "login" })}
-          </Button>
-        </Space>
-      </div>
+        )}
+      </form>
     </Base>
   );
-}
+};
 
-export default LoginForm;
+export default withCardView(LoginForm);

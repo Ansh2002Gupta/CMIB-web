@@ -1,14 +1,13 @@
 import React from "react";
 import { TwoRow } from "core/layouts";
 
-import AcademicReportContainer from "../../containers/AcademicReport";
-import TabOptions from "../../components/TabOptions";
+import ContentHeader from "../../containers/ContentHeader";
 
-function DashboardView(props) {
+function DashboardView() {
   return (
     <TwoRow
-      topSection={<TabOptions />}
-      bottomSection={<AcademicReportContainer />}
+      topSection={<ContentHeader headerText="Dashboard" />}
+      bottomSection={<></>}
     />
   );
 }

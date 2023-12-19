@@ -1,0 +1,52 @@
+.container {
+  flex-direction: column;
+  gap: 32px;
+}
+
+.heading {
+  color: var(--textBold, #000833);
+  font-size: var(--fontSizeXlarge, 20px);
+  font-weight: var(--fontWeightBold, 600);
+}
+
+.image {
+  width: 50px;
+  height: 50px;
+}
+
+.subHeading {
+  color: var(--subHeadingColor, #616c82);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+}
+
+.headingAndSubHeadingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapXSmall, 8px);
+}
+
+.imageAndHeadingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.btn {
+  display: flex;
+  padding: 12px var(--paddingSmall, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gapSmallMedium, 12px);
+  min-height: 56px;
+  flex: 1 0 0;
+  border-radius: var(--radiusLg, 8px);
+  color: #fff;
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  background: var(--greenBtnBg, #04af55);
+  &:hover {
+    background-color: var(--greenBtnBg, #04af55) !important;
+    color: var(--bodyBg, #fff) !important;
+  }
+}

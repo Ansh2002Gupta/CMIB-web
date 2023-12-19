@@ -7,7 +7,6 @@ const HeaderName = () => {
   return (
     <div>
       <Typography className={Styles.heading}>Hi, Samay!</Typography>
-      <Typography className={Styles.subHeading}>Dashboard</Typography>
     </div>
   );
 };

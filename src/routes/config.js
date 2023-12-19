@@ -1,48 +1,125 @@
-import DashboardView from '../views/Dashboard';
-import LoginForm from '../views/LoginForm';
-import Home from '../pages/Home';
-import Auth from '../pages/Auth'
-import withPrivateAccess from '../hocs/withPrivateAccess';
-import withPublicAccess from '../hocs/withPublicAccess';
+import Auth from "../pages/Auth";
+import Configurations from "../views/Configurations/Configurations";
+import DashboardView from "../views/Dashboard/Dashboard";
+import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
+import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
+import Home from "../pages/Home";
+import LoginForm from "../views/LoginForm";
+import ManageUsers from "../views/ManageUsers";
+import Subscriptions from "../views/Subscriptions/Subscriptions";
+import withPrivateAccess from "../hocs/withPrivateAccess";
+import withPublicAccess from "../hocs/withPublicAccess";
+import {
+  ROUTE,
+  DASHBOARD,
+  SUBSCRIPTIONS,
+  LOGIN,
+  MANAGE_USERS,
+  FORGOT_PASSWORD,
+  ROOT,
+} from "./routeNames";
 
-const HomeWithPrivateAccess = withPrivateAccess(Home)
-const AuthWithPublicAccess = withPublicAccess(Auth)
+const HomeWithPrivateAccess = withPrivateAccess(Home);
+const HomeWithPublicAccess = withPublicAccess(Home);
+const AuthWithPublicAccess = withPublicAccess(Auth);
+const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
+  HeaderContentWithFooter
+);
 
 const config = [
   {
-    pagePath: '/example/:id',
+    pagePath: "/example/:id",
     element: <HomeWithPrivateAccess />, // Page
-    views: [ // array of views under Page route
+    views: [
+      // array of views under Page route
       {
-        viewPath: 'route',
-        element: <div>Example Route</div>
+        viewPath: "route",
+        element: <div>Example Route</div>,
       },
       {
-        viewPath: 'route1',
-        element: <div>Example Route1</div>
+        viewPath: "route1",
+        element: <div>Example Route1</div>,
       },
-    ] 
+    ],
   },
   {
-    pagePath: '/login',
-    element: <AuthWithPublicAccess />, // Page
-    views: [ // array of views under Page route
+    pagePath: LOGIN,
+    element: <HeaderContentWithFooterWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
       {
-        viewPath: '',
-        element: <LoginForm /> // view
+        viewPath: "",
+        element: <LoginForm />, // view
       },
-    ] 
+    ],
   },
   {
-    pagePath: '/',
-    element: <HomeWithPrivateAccess />, // Page
-    views: [ // array of views under Page route
+    pagePath: FORGOT_PASSWORD,
+    element: <HeaderContentWithFooterWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
       {
-        viewPath: '',
-        element: <DashboardView /> // view
+        viewPath: "",
+        element: <ForgotPassword />, // view
       },
-    ] 
-  }
-]
+    ],
+  },
+  {
+    pagePath: ROOT,
+    element: <HomeWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <DashboardView />, // view
+      },
+    ],
+  },
+  {
+    pagePath: DASHBOARD,
+    element: <HomeWithPrivateAccess />, // Page
+    // element: <AuthWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <DashboardView />, // view
+      },
+    ],
+  },
+  {
+    pagePath: SUBSCRIPTIONS,
+    element: <HomeWithPrivateAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <Subscriptions />, // view
+      },
+    ],
+  },
+  {
+    pagePath: ROUTE,
+    element: <HomeWithPrivateAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <Configurations />, // view
+      },
+    ],
+  },
+  {
+    pagePath: MANAGE_USERS,
+    element: <HomeWithPublicAccess noOuterPadding />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <ManageUsers />, // view
+      },
+    ],
+  },
+];
 
 export default config;
