@@ -53,6 +53,5 @@ Thumbs.db
 *.mov
 *.wmv
 
-# environment variable
+#environment file
 .env
-
