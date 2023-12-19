@@ -1,0 +1,105 @@
+.rowPerPageOptionsAndPaginationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bodyBg);
+  border-radius: var(--radiusXLg);
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  padding: var(--paddingMedium);
+}
+
+.rowPerPageContainer {
+  display: flex;
+  gap: var(--gapXSmall);
+  align-items: center;
+}
+
+.rowPerPageCount {
+  width: 70px;
+  color: var(--On-background, var(--textBold));
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.rowPerPageText {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.rowtext {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.table {
+  min-height: 50vh;
+}
+
+.nextAndPrevText {
+  color: var(--On-background, var(--textBold));
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.nextAndPrevArrowContainer {
+  display: flex;
+  gap: var(--gapXSmall);
+  justify-content: space-between;
+  align-items: baseline;
+  min-height: 44px;
+  flex-direction: row-reverse;
+  padding: var(--paddingExtraSmall) var(--paddingMedium);
+  border: var(--borderLight);
+  border-radius: var(--radiusXLg);
+}
+
+.prevArrow {
+  transform: rotate(180deg);
+}
+
+.rowReverse {
+  flex-direction: row;
+}
+
+.paginationContainer {
+  display: flex;
+  align-items: center;
+}
+
+// TODO: override the color of the sorting arrows based on active and non-active state
+.ant-table-column-sorter-up,
+.ant-table-column-sorter-down {
+  color: red; /* Light gray for non-active arrows */
+}
+
+/* Active sorting arrow styles */
+.ant-table-column-sorter-up.active .ant-table-column-sorter-up-inner,
+.ant-table-column-sorter-down.active .ant-table-column-sorter-down-inner {
+  color: #1890ff; /* Blue for active arrows */
+}
+
+@media (max-width: 1023px) {
+  .nextAndPrevArrowContainer {
+    padding: 4px var(--paddingExtraSmall);
+  }
+}
+
+@media (max-width: 767px) {
+  .rowPerPageOptionsAndPaginationContainer {
+    flex-direction: column-reverse;
+    gap: var(--gapSmall);
+    justify-content: center;
+    padding: var(--paddingSmall) 0px var(--paddingSmall)
+      var(--paddingExtraSmall);
+  }
+  .rowPerPageContainer {
+    margin-top: var(--marginMedium);
+  }
+  .paginationContainer {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

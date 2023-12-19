@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: unset;
+}
+
+.inputLabelContainer {
+  display: flex;
+  gap: 4px;
+  padding-bottom: 4px;
+}
+
+.isRequiredStar {
+  color: var(--requiredStarColor);
+}
+
+.errorText {
+  color: var(--error);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  margin-top: 8px;
+}
+
+.messageText{
+  margin-top: 8px;
+}
+
+.formContainer {
+  margin-bottom: 0px;
+}
+
+.inputField {
+  min-width: 100%;
+  color: var(--inputText) !important;
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
+  &::placeholder {
+    color: var(--inputPlaceHolder) !important;
+  }
+}
+
+.suffixElement{
+    cursor: pointer;
+}

@@ -13,6 +13,10 @@ dist/
 # Compiled Python bytecode
 *.py[cod]
 
+#lock files
+yarn.lock
+package-lock.json
+
 # Log files
 *.log
 
@@ -47,4 +51,7 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+
+# environment variable
+.env
 
