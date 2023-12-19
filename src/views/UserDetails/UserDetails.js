@@ -23,13 +23,13 @@ const UserDetails = ({ userName }) => {
   const [active, setActive] = useState(false);
   const { getUserData, isLoading, userData: data, error } = useUserDetails();
   const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    mobile: "",
-    mobile_prefix: "",
-    profile_photo: "",
-    access: "",
-    date: "",
+    name: "nihil",
+    email: "nihil@gmail.com",
+    mobile: "101010101010",
+    mobile_prefix: "91",
+    profile_photo: "ddddddddddddddddddddddddddddddd",
+    access: "All",
+    date: "11/12/2020",
   });
   const {
     errorWhileUpdatingUserData,
@@ -75,20 +75,20 @@ const UserDetails = ({ userName }) => {
     });
   };
 
-  useEffect(() => {
-    setUserData({
-      name: data?.name || "",
-      email: data?.email || "",
-      mobile: data?.mobile_number || "",
-      mobile_prefix: data?.mobile_number || "",
-      profile_photo: data?.profile_photo || "",
-      access: data?.role || "",
-      date: data?.created_at || "",
-    });
-  }, [data]);
+  // useEffect(() => {
+  //   setUserData({
+  //     name: data?.name || "",
+  //     email: data?.email || "",
+  //     mobile: data?.mobile_number || "",
+  //     mobile_prefix: data?.mobile_number || "",
+  //     profile_photo: data?.profile_photo || "",
+  //     access: data?.role || "",
+  //     date: data?.created_at || "",
+  //   });
+  // }, [data]);
 
   useEffect(() => {
-    getUserData(userId);
+    // getUserData(userId); // un-comment it later
   }, [isFormEditable]);
 
   useEffect(() => {
@@ -138,14 +138,15 @@ const UserDetails = ({ userName }) => {
         isBottomFillSpace
         bottomSection={
           <>
-            {!isLoading &&
+            {(!isLoading &&
               !error &&
               !!data &&
               !isUpdatingUserData &&
-              !errorWhileUpdatingUserData && (
+              !errorWhileUpdatingUserData) || true && (
                 <div className={styles.bottomContainer}>
                   <UserInfo
-                    isEditable={isFormEditable}
+                    // isEditable={isFormEditable}
+                    isEditable={false}
                     {...{ updateUserData }}
                     name={userData?.name}
                     email={userData?.email}
