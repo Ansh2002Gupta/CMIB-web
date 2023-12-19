@@ -69,6 +69,7 @@ const locale = {
   "label.users": "Users",
   "label.searchByUserNameAndEmail": "Search by user name and email",
   "label.generalGetApiFailedErrorMessage": "Something went wrong! Please try again later",
+  "label.left": "left",
 };
 
 export default locale;

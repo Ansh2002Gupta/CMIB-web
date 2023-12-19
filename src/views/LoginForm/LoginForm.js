@@ -10,6 +10,7 @@ import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingA
 import OTPInput from "../../components/OTPInput/OTPInput";
 import useLogin from "../../core/hooks/useLogin";
 import useAuthOTP from "../../core/hooks/useAuthOTP";
+import useCheckOTP from "../../core/hooks/useCheckOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";
@@ -43,17 +44,23 @@ const LoginForm = () => {
     isLoading: isOTPLoading,
   } = useAuthOTP();
 
-  const handleOnOTP = () => {
-    if (!loginError && !isLoading) {
-      handleAuthOTP({
-        email: formInputs.userName,
-      });
-      setCurrentActiveScreen(2); //only when user opted for 2 factor authentication.
+  const {
+    errorWhileVerifyingOTP,
+    otpAPIStatus,
+    handleCheckOTP,
+    isError,
+    isLoading: isCheckingOTP,
+    isSuccess,
+  } = useCheckOTP();
+
+  useEffect(() => {
+    if (otpAPIStatus === "success") {
+      navigate(DASHBOARD);
     }
-  };
+  }, [otpAPIStatus]);
 
   const handleOnLogin = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     isValidEmail();
     setLoginError("");
     if (!EMAIL_REGEX.test(formInputs?.userName)) {
@@ -68,7 +75,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (loginApiStatus === "success" && loginResponse) {
       if (loginResponse?.is_two_factor === 1) {
-        handleOnOTP();
+        setCurrentActiveScreen(2);
         return;
       }
       !loginError && !isLoading && navigate(DASHBOARD);
@@ -103,15 +110,14 @@ const LoginForm = () => {
         headingText={intl.formatMessage({ id: "label.loginHeading" })}
         subHeadingText={intl.formatMessage({ id: "label.loginSubheading" })}
       />
-      <form
+      <div
         className={[
           styles.inputAndBtnContainer,
           styles.borderForMobileScreens,
         ].join(" ")}
-        onSubmit={handleOnLogin}
       >
         {currentActiveScreen === 1 && (
-          <>
+          <form onSubmit={handleOnLogin}>
             <div className={styles.inputContainer}>
               <CustomInput
                 disabled={isLoading || isOTPLoading}
@@ -162,7 +168,7 @@ const LoginForm = () => {
                   type="link"
                   onClick={() => navigate(FORGOT_PASSWORD)}
                 >
-                  Forget password?
+                  {intl.formatMessage({ id: "label.forgotPasswordHeading" })}
                 </Button>
               </div>
             </div>
@@ -186,20 +192,23 @@ const LoginForm = () => {
                 {intl.formatMessage({ id: "label.loginBtn" })}
               </Button>
             </div>
-          </>
+          </form>
         )}
         {currentActiveScreen === 2 && (
           <OTPInput
             noOfBlocks={4}
             {...{
               errorWhileSendingOTP,
+              errorWhileVerifyingOTP,
               handleAuthOTP,
               isOTPLoading,
               setCurrentActiveScreen,
+              isCheckingOTP,
             }}
+            onSubmit={(otp) => handleCheckOTP({ otp })}
           />
         )}
-      </form>
+      </div>
     </Base>
   );
 };

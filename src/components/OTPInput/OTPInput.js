@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Typography, Statistic, Button } from "antd";
+import { Typography, Button } from "antd";
 import { InputOTP } from "antd-input-otp";
 
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
-import useCheckOTP from "../../core/hooks/useCheckOTP";
+import MyCountDown from "../MyCountDown";
 import { LOGIN } from "../../routes/routeNames";
 import { TIMER_OF_15_MINUTES } from "../../constant/constant";
 import styles from "./OTPInput.module.scss";
@@ -15,34 +15,30 @@ import "./Override.css";
 
 const OTPInput = ({
   errorWhileSendingOTP,
+  errorWhileVerifyingOTP,
   handleAuthOTP,
   headingText,
   isOTPLoading,
   noOfBlocks,
   onSubmit,
   setCurrentActiveScreen,
+  isCheckingOTP,
 }) => {
-  const { errorWhileVerifyingOTP, isLoading: isCheckingOTP } = useCheckOTP();
+  const intl = useIntl();
+
   const [otpValues, setOtpValues] = useState(new Array(noOfBlocks).fill(""));
   const [isSendAgainBtnActive, setIsSendAgainBtnActive] = useState(false);
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
   const [showCountdown, setShowCountdown] = useState(1);
   const [noOfTimesOTPCanBeSend, setNoOfTimesOTPCanBeSend] = useState(4);
-  const { Countdown } = Statistic;
-  const intl = useIntl();
 
-  const handleTimerEnd = (timerLength) => {
+  const handleTimerEnd = useCallback((timerLength) => {
     setIsSendAgainBtnActive(true);
     if (timerLength === TIMER_OF_15_MINUTES) {
       setNoOfTimesOTPCanBeSend(4);
     }
     setShowCountdown(0);
-  };
-
-  const handleOnSubmit = () => {
-    //TODO: Call an API for finding out does the entered OTP is correct or not.
-    onSubmit(otpValues);
-  };
+  }, []);
 
   const sendOTP = () => {
     // TODO: call api for sending a new OTP
@@ -84,7 +80,13 @@ const OTPInput = ({
             : intl.formatMessage({ id: "label.otpHeading" })}
         </Typography>
       </div>
-      <form className={styles.otpFieldsAndButtonContainer}>
+      <form
+        className={styles.otpFieldsAndButtonContainer}
+        onSubmit={(e) => {
+          e?.preventDefault();
+          onSubmit();
+        }}
+      >
         <div className={styles.subHeadingAndInputContainer}>
           <div>
             <div className={styles.subHeadingContainer}>
@@ -119,13 +121,10 @@ const OTPInput = ({
                     {intl.formatMessage({ id: "label.fourteenMinTimerText2" })}
                   </Typography>
                   <span>
-                    <Countdown
-                      onFinish={() => handleTimerEnd(15)}
-                      value={new Date().setMinutes(
-                        new Date().getMinutes() + 15
-                      )}
+                    <MyCountDown
+                      onFinish={handleTimerEnd}
                       format="mm:ss"
-                      className={styles["ant-statistic-content-value"]}
+                      minutes={15}
                     />
                   </span>
                 </div>
@@ -152,19 +151,17 @@ const OTPInput = ({
                   </Button>
                   {showCountdown === 1 ? (
                     <span>
-                      <Countdown
-                        onFinish={() => handleTimerEnd(1)}
-                        value={new Date().setMinutes(
-                          new Date().getMinutes() + 1
-                        )}
+                      <MyCountDown
+                        onFinish={handleTimerEnd}
                         format="(mm:ss)"
-                        className={styles["ant-statistic-content-value"]}
+                        minutes={1}
                       />
                     </span>
                   ) : (
                     <div>
                       <Typography className={styles.active}>
-                        ({noOfTimesOTPCanBeSend} left)
+                        ({noOfTimesOTPCanBeSend}{" "}
+                        {intl.formatMessage({ id: "label.left" })})
                       </Typography>
                     </div>
                   )}
@@ -181,7 +178,7 @@ const OTPInput = ({
           }
           loading={isOTPLoading || isCheckingOTP}
           topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
-          onTopBtnClick={handleOnSubmit}
+          onTopBtnClick={() => onSubmit(otpValues?.join(""))}
           bottomLinkText={intl.formatMessage({ id: "label.backToLoginBtn" })}
           onLinkClick={() => setCurrentActiveScreen(1)}
           isTopBtnDisable={!isAllowedToSubmit}
