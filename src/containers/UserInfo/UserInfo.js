@@ -24,29 +24,28 @@ const UserInfo = ({
   const items = [
     {
       key: "1",
-      label: "UserName",
-      children: "Zhou Maomao",
+      label: `${intl.formatMessage({ id: "label.userName2" })} *`,
+      children: name,
     },
     {
       key: "2",
-      label: "Email",
-      children: "hello@gmail.com",
+      label: `${intl.formatMessage({ id: "label.email" })} *`,
+      children: email,
     },
     {
       key: "3",
-      label: "Mobile",
-      children: "223344116677",
+      label: `${intl.formatMessage({ id: "label.mobileNumber" })} *`,
+      children: mobileNo,
     },
     {
       key: "4",
-      label: "Acess",
-      // span: 2,
-      children: "Placements",
+      label: `${intl.formatMessage({ id: "label.access" })} *`,
+      children: access,
     },
     {
       key: "5",
-      label: "Date created on",
-      children: "11/12/2010",
+      label: `${intl.formatMessage({ id: "label.dateCreatedOn" })} *`,
+      children: date,
     },
   ];
 
@@ -123,6 +122,7 @@ const UserInfo = ({
             <div>
               <CustomInput
                 type="select"
+                isMultiSelect
                 onSelectItem={(e) => updateUserData("access", e.target.value)}
                 defaultSelectValue={access}
                 label={intl.formatMessage({ id: "label.access" })}

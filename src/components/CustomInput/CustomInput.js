@@ -16,6 +16,7 @@ const CustomInput = ({
   disabled,
   errorMessage,
   isError,
+  isMultiSelect,
   isRequired,
   isPrefixRequired,
   isSuffixRequiredForPassword,
@@ -53,6 +54,7 @@ const CustomInput = ({
         {(type === "select" || type === "mobile") && (
           <>
             <Select
+              mode={isMultiSelect ? "multiple" : ""}
               className={[styles.selectInput, customSelectInputStyles].join(
                 " "
               )}
@@ -143,6 +145,7 @@ CustomInput.defaultProps = {
   disabled: false,
   errorMessage: "",
   isError: false,
+  isMultiSelect: false,
   isPrefixRequired: false,
   isRequired: false,
   isSuffixRequiredForPassword: false,
@@ -172,6 +175,7 @@ CustomInput.propTypes = {
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
+  isMultiSelect: PropTypes.bool,
   isPrefixRequired: PropTypes.bool,
   isRequired: PropTypes.bool,
   isSuffixRequiredForPassword: PropTypes.bool,

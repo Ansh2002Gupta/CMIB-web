@@ -1,12 +1,12 @@
-import { useContext } from 'react';
-import { IntlProvider } from 'react-intl'
-import intl from './locale'
+import { useContext } from "react";
+import { IntlProvider } from "react-intl";
+import intl from "./locale";
 import { ThemeProvider } from "./core/providers/theme";
 import { LocaleContext } from "./globalContext/locale/localeProviders";
-import { ConfigProvider } from 'antd';
+import { ConfigProvider } from "antd";
 import { BrowserRouter } from "react-router-dom";
-import Routes from './routes';
-
+import Routes from "./routes";
+import variables from "./themes/base/styles/variables";
 
 /*
   Theme Provider for components library used can be injected to boilerplate's Theme Provider so that style variables
@@ -14,7 +14,7 @@ import Routes from './routes';
 */
 function UiComponentsProvider({ children, ...restProps }) {
   const { styleVariables } = restProps;
-  
+
   return (
     <ConfigProvider
       theme={{
@@ -25,11 +25,17 @@ function UiComponentsProvider({ children, ...restProps }) {
           fontSize: parseInt(styleVariables?.fontSizeNormal),
           colorError: styleVariables?.error,
         },
+        components: {
+          Descriptions: {
+            titleColor: variables.textBold,
+            contentColor: variables.inputLabel,
+          },
+        },
       }}
     >
       {children}
     </ConfigProvider>
-  )
+  );
 }
 
 function App() {
@@ -51,7 +57,11 @@ function App() {
       UiComponentsProvider={UiComponentsProvider}
       initial="primary"
     >
-      <IntlProvider messages={intl[localeState?.locale]} locale={localeState?.locale} defaultLocale="en">
+      <IntlProvider
+        messages={intl[localeState?.locale]}
+        locale={localeState?.locale}
+        defaultLocale="en"
+      >
         <div className="app">
           <BrowserRouter>
             <Routes />
