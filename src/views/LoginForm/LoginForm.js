@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Button, Typography } from "antd";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import { Base } from "core/layouts";
 
@@ -19,6 +18,7 @@ import styles from "./loginForm.module.scss";
 const LoginForm = () => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
+
   const [formInputs, setFormInputs] = useState({
     userName: "",
     password: "",
@@ -27,6 +27,7 @@ const LoginForm = () => {
   const [isAllowedToLogin, setIsAllowedToLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
+
   const {
     error: loginError,
     setError: setLoginError,
@@ -35,6 +36,7 @@ const LoginForm = () => {
     isLoading,
     loginApiStatus,
   } = useLogin();
+
   const {
     errorWhileSendingOTP,
     handleAuthOTP,
@@ -143,8 +145,6 @@ const LoginForm = () => {
                 isRequired
                 type={showPassword ? "text" : "password"}
                 isSuffixRequiredForPassword
-                SuffixElement1={<EyeOutlined />}
-                SuffixElement2={<EyeInvisibleOutlined />}
                 onSuffixElementClick={() => setShowPassword((prev) => !prev)}
                 isTextVisible={!showPassword}
                 value={formInputs.password}

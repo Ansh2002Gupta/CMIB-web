@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { ThemeContext } from "core/providers/theme";
-import { Button, Image, Pagination, Select, Table, Typography } from "antd";
+import { Pagination, Select, Table, Typography } from "antd";
 
-import useResponsive from "../../core/hooks/useResponsive";
+import PaginationItems from "./PaginationItems";
 import useQueryParams from "../../core/hooks/useQueryParams";
 import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
@@ -22,11 +21,9 @@ const DataTable = ({
   setCurrentTableData,
 }) => {
   const intl = useIntl();
-  const { getImage } = useContext(ThemeContext);
 
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
 
-  const responsive = useResponsive();
   const { setQueryParams, getQueryParams, removeQueryParams } =
     useQueryParams();
   const [current, setCurrent] = useState(
@@ -79,42 +76,6 @@ const DataTable = ({
     showSizeChanger: false,
   };
 
-  const itemRender = (current, type, originalElement) => {
-    if (type === "prev") {
-      return (
-        <Button
-          className={[styles.nextAndPrevArrowContainer, styles.rowReverse].join(
-            " "
-          )}
-        >
-          <Image
-            src={getImage("arrowRight")}
-            preview={false}
-            className={styles.prevArrow}
-          />
-          {responsive.isLg ? (
-            <Typography className={styles.nextAndPrevText}>
-              {intl.formatMessage({ id: "label.previous" })}
-            </Typography>
-          ) : null}
-        </Button>
-      );
-    }
-    if (type === "next") {
-      return (
-        <Button className={styles.nextAndPrevArrowContainer}>
-          <Image src={getImage("arrowRight")} preview={false} />
-          {responsive.isLg ? (
-            <Typography className={styles.nextAndPrevText}>
-              {intl.formatMessage({ id: "label.next" })}
-            </Typography>
-          ) : null}
-        </Button>
-      );
-    }
-    return originalElement;
-  };
-
   useEffect(() => {
     return () => {
       setCurrent(1);
@@ -148,7 +109,9 @@ const DataTable = ({
         <Pagination
           {...rightPaginationConfig}
           className={styles.paginationContainer}
-          {...{ itemRender }}
+          itemRender={(current, type, originalElement) => (
+            <PaginationItems {...{ current, type, originalElement }} />
+          )}
           showLessItems
         />
       </div>

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 import { ThemeContext } from "core/providers/theme";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Base from "../../core/layouts/Base/Base";
 
@@ -163,8 +162,6 @@ const CreateNewPassword = ({ email, otp }) => {
             type={shouldShow.password ? "text" : "password"}
             isRequired
             isSuffixRequiredForPassword
-            SuffixElement1={<EyeOutlined />}
-            SuffixElement2={<EyeInvisibleOutlined />}
             onSuffixElementClick={() =>
               setShouldShow((prev) => {
                 return {
@@ -194,8 +191,6 @@ const CreateNewPassword = ({ email, otp }) => {
             isRequired
             type={shouldShow.confirmPassword ? "text" : "password"}
             isSuffixRequiredForPassword
-            SuffixElement1={<EyeOutlined />}
-            SuffixElement2={<EyeInvisibleOutlined />}
             onSuffixElementClick={() =>
               setShouldShow((prev) => {
                 return {

@@ -59,6 +59,7 @@ ButtonAndLink.defaultProps = {
   onLinkClick: () => {},
   onTopBtnClick: () => {},
   topBtnText: "",
+  type: "",
 };
 
 ButtonAndLink.propTypes = {
@@ -70,6 +71,7 @@ ButtonAndLink.propTypes = {
   onLinkClick: PropTypes.func,
   onTopBtnClick: PropTypes.func,
   topBtnText: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default ButtonAndLink;

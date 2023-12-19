@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Input, Select, Typography } from "antd";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Base from "../../core/layouts/Base/Base";
 
@@ -29,8 +30,7 @@ const CustomInput = ({
   placeholder,
   prefixElement,
   selectOptions,
-  SuffixElement1,
-  SuffixElement2,
+  SuffixIcon,
   type,
   value,
 }) => {
@@ -57,38 +57,46 @@ const CustomInput = ({
             }}
             prefix={isPrefixRequired ? prefixElement : null}
             suffix={
-              isSuffixRequiredForPassword ? (
-                isTextVisible ? (
-                  <span
-                    className={styles.suffixElement}
+              <>
+                {isSuffixRequiredForPassword &&
+                  (isTextVisible ? (
+                    <span
+                      className={styles.suffixElement}
+                      onClick={() => {
+                        onSuffixElementClick && onSuffixElementClick();
+                      }}
+                    >
+                      <EyeOutlined />
+                    </span>
+                  ) : (
+                    <span
+                      className={styles.suffixElement}
+                      onClick={() => {
+                        onSuffixElementClick && onSuffixElementClick();
+                      }}
+                    >
+                      <EyeInvisibleOutlined />
+                    </span>
+                  ))}
+                {SuffixIcon && (
+                  <SuffixIcon
                     onClick={() => {
                       onSuffixElementClick && onSuffixElementClick();
                     }}
-                  >
-                    {SuffixElement1}
-                  </span>
-                ) : (
-                  <span
-                    className={styles.suffixElement}
-                    onClick={() => {
-                      onSuffixElementClick && onSuffixElementClick();
-                    }}
-                  >
-                    {SuffixElement2}
-                  </span>
-                )
-              ) : null
+                  />
+                )}
+              </>
             }
           />
         )}
         {type === "select" && (
-            <Select
-              className={customInputStyles}
-              onChange={(e) => onSelectItem(e)}
-              options={selectOptions}
-              defaultValue={"1"}
-              value={currentSelectedValue}
-            />
+          <Select
+            className={customInputStyles}
+            onChange={(e) => onSelectItem(e)}
+            options={selectOptions}
+            defaultValue={"1"}
+            value={currentSelectedValue}
+          />
         )}
       </div>
       {isError && (
@@ -136,8 +144,7 @@ CustomInput.defaultProps = {
   placeholder: "",
   prefixElement: null,
   selectOptions: [],
-  SuffixElement1: null,
-  SuffixElement2: null,
+  SuffixIcon: null,
   type: "",
   value: "",
 };
@@ -165,8 +172,7 @@ CustomInput.propTypes = {
   placeholder: PropTypes.string,
   prefixElement: PropTypes.node,
   selectOptions: PropTypes.array,
-  SuffixElement1: PropTypes.node,
-  SuffixElement2: PropTypes.node,
+  SuffixIcon: PropTypes.node,
   type: PropTypes.string,
   value: PropTypes.string,
 };

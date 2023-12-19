@@ -10,6 +10,7 @@ import ContentHeader from "../../containers/ContentHeader";
 import DataTable from "../../components/DataTable";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import SearchFilter from "../../components/SearchFilter";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 import { DATA_SOURCE, ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./ManageUsers.module.scss";
@@ -17,6 +18,7 @@ import styles from "./ManageUsers.module.scss";
 const ManageUsers = () => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
 
   const [showFilters, setShowFilters] = useState(false);
@@ -26,8 +28,8 @@ const ManageUsers = () => {
     DATA_SOURCE.length
   );
 
-  const handleOnEdit = () => {
-    // TODO:  send data to users/edit screen once it is completed.
+  const goToUserDetailsPage = (userId, editable) => {
+    navigate(`/view-user-details?userId=${userId}&edit=${editable}`);
   };
 
   const onHandleUserStatus = (userId) => {
@@ -99,9 +101,7 @@ const ManageUsers = () => {
       dataIndex: "createdOn",
       key: "createdOn",
       render: (data) => moment(data).format("DD/MM/YYYY"),
-      sorter: (a, b) =>
-        moment(a.createdOn).unix() -
-        moment(b.createdOn).unix(),
+      sorter: (a, b) => moment(a.createdOn).unix() - moment(b.createdOn).unix(),
       sortDirection: ["ascend"],
       defaultSortOrder: "ascend",
     },
@@ -135,12 +135,13 @@ const ManageUsers = () => {
       title: "",
       dataIndex: "see",
       key: "see",
-      render: () => {
+      render: (_, rowData) => {
+        const { id } = rowData;
         return (
           <Image
             src={getImage("eye")}
             className={styles.eyeIcon}
-            onClick={handleOnEdit}
+            onClick={() => goToUserDetailsPage(id, false)}
             preview={false}
           />
         );
@@ -150,13 +151,14 @@ const ManageUsers = () => {
       title: "",
       dataIndex: "edit",
       key: "edit",
-      render: () => {
+      render: (_, rowData) => {
+        const { id } = rowData;
         return (
           <Image
             src={getImage("edit")}
             preview={false}
             className={styles.editIcon}
-            onClick={handleOnEdit}
+            onClick={() => goToUserDetailsPage(id, true)}
           />
         );
       },
