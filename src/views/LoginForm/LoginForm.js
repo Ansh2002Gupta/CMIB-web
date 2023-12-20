@@ -48,9 +48,7 @@ const LoginForm = () => {
     errorWhileVerifyingOTP,
     otpAPIStatus,
     handleCheckOTP,
-    isError,
     isLoading: isCheckingOTP,
-    isSuccess,
   } = useCheckOTP();
 
   useEffect(() => {
@@ -117,7 +115,7 @@ const LoginForm = () => {
         ].join(" ")}
       >
         {currentActiveScreen === 1 && (
-          <form onSubmit={handleOnLogin}>
+          <form onSubmit={handleOnLogin} className={styles.formContainer}>
             <div className={styles.inputContainer}>
               <CustomInput
                 disabled={isLoading || isOTPLoading}
