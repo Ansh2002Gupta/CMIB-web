@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Alert, Button, Spin, Switch, Typography } from "antd";
@@ -18,10 +19,9 @@ import styles from "./UserDetails.module.scss";
 const UserDetails = ({ userName }) => {
   const [searchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const isFormEditable = searchParams?.get("edit") === "true";
-  const userId = searchParams?.get("userId");
+  const intl = useIntl();
+
   const [active, setActive] = useState(false);
-  const { getUserData, isLoading, userData: data, error } = useUserDetails();
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -31,6 +31,8 @@ const UserDetails = ({ userName }) => {
     access: "",
     date: "",
   });
+
+  const { getUserData, isLoading, userData: data, error } = useUserDetails();
   const {
     errorWhileUpdatingUserData,
     userDetails,
@@ -41,6 +43,9 @@ const UserDetails = ({ userName }) => {
     apiStatus,
     setErrorWhileUpdatingUserData,
   } = useUpdateUserDetailsApi();
+
+  const userId = searchParams?.get("userId");
+  const isFormEditable = searchParams?.get("edit") === "true";
 
   const goBackToViewDetailsPage = () => {
     setErrorWhileUpdatingUserData("");
