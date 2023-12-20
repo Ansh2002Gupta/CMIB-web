@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Typography, Image, Switch, Input } from 'antd';
+import { useIntl } from 'react-intl';
+import { Typography, Image, Switch } from 'antd';
+
 import { TwoRow, TwoColumn, ThreeRow } from '../../core/layouts';
 
-import styles from './SessionDetails.module.scss';
-import { useIntl } from 'react-intl';
 import variables from '../../themes/base/styles/variables';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
+import styles from './SessionDetails.module.scss';
 
 const SessionDetails = () => {
   const intl = useIntl();

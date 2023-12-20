@@ -77,6 +77,7 @@ const variables = {
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
+  borderBlue: `2px solid ${colorPallets.darkBlue}`,
   borderColor: colorPallets.ltGrey1,
 
   // Box shadow

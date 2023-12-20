@@ -1,43 +1,39 @@
 import React, { useState } from 'react';
-import { TwoRow } from 'core/layouts';
-
-import ContentHeader from '../../containers/ContentHeader';
 import { useIntl } from 'react-intl';
-import TwoColumn from '../../core/layouts/TwoColumn/TwoColumn';
-import styles from './session.module.scss';
-import CustomButton from '../../components/CustomButton';
-import variables from '../../themes/base/styles/variables';
-import { Tabs } from 'antd';
 
+import { TwoRow, TwoColumn } from 'core/layouts';
+
+import variables from '../../themes/base/styles/variables';
+import ContentHeader from '../../containers/ContentHeader';
 import SessionDetails from '../../containers/SessionDetails';
+import CustomButton from '../../components/CustomButton';
+import CustomTabs from '../../components/CustomTabs';
+
+import styles from './session.module.scss';
 
 function Session() {
   const intl = useIntl();
-  const [activeTabKey, setActiveTabKey] = useState('1');
-
-  const onChange = (key) => {
-    setActiveTabKey(key);
-  };
+  const [activeTab, setActiveTab] = useState('1');
 
   const TabItems = [
     {
       key: '1',
-      label: intl.formatMessage({ id: 'session.sessionDetails' }),
+      title: intl.formatMessage({ id: 'session.sessionDetails' }),
       children: <SessionDetails />,
     },
     {
       key: '2',
-      label: intl.formatMessage({ id: 'session.roundOne' }),
+      title: intl.formatMessage({ id: 'session.roundOne' }),
       children: <div>Round 1</div>,
     },
     {
       key: '3',
-      label: intl.formatMessage({ id: 'session.roundTwo' }),
+      title: intl.formatMessage({ id: 'session.roundTwo' }),
       children: <div>Round 2</div>,
     },
   ];
 
-  const activeTab = TabItems.find((tab) => tab.key === activeTabKey);
+  const activeTabChildren = TabItems.find((tab) => tab.key === activeTab);
 
   return (
     <TwoRow
@@ -66,24 +62,15 @@ function Session() {
             />
           }
           bottomSection={
-            <Tabs
-              defaultActiveKey="1"
-              activeKey={activeTabKey}
-              onChange={onChange}
-              style={{
-                width: variables.fullWidth,
-                borderWidth: '0px',
-                padding: '0px',
-              }}
-            >
-              {TabItems.map((tab) => (
-                <Tabs.TabPane key={tab.key} tab={tab.label} />
-              ))}
-            </Tabs>
+            <CustomTabs
+              tabs={TabItems}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
           }
         />
       }
-      bottomSection={!!activeTab && activeTab.children}
+      bottomSection={!!activeTabChildren && activeTabChildren.children}
       bottomSectionStyle={{
         padding: variables.fontSizeXlargeMedium,
       }}
