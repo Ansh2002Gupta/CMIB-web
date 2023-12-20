@@ -88,6 +88,7 @@ const locale = {
   'session.bankACNumberOnline': 'Bank A/C number online',
   'session.roundOne': 'Round 1',
   'session.roundTwo': 'Round 2',
+  'session.saveChanges': 'Save Changes',
 };
 
 export default locale;

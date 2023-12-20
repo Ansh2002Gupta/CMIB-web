@@ -69,12 +69,14 @@ cursor: pointer;
     background-color: var(--bodyBg);
     min-width:  300px;
   }
-  .disbledInput {
-    color: var(--textBold);
+  .buttonStyles{
+    background-color: var(--bodyBg);
+}
+
+.textStyle{
+    font-family: var(--fontFamilyRegular);
     font-size: var(--fontSizeSmall);
     font-weight: var(--fontWeightMedium);
-    border-width: 0;
-    padding: 0;
-    background-color: var(--bodyBg);
-    min-width: 300px;
-  }
+    color: var(--textBold);
+}
+ 
