@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { TwoColumn, TwoRow, ThreeRow } from 'core/layouts'
-import useResponsive from 'core/hooks/useResponsive'
-import Styles from './mainLayout.module.scss'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TwoColumn, TwoRow, ThreeRow } from 'core/layouts';
+import useResponsive from 'core/hooks/useResponsive';
+import Styles from './mainLayout.module.scss';
 
 function MainLayout({ className, style, header, menu, content }) {
   // responsive variables based upon config set under `/core/themes/mixins/responsive.scss`
@@ -29,17 +29,10 @@ function MainLayout({ className, style, header, menu, content }) {
       <ThreeRow
         className={`${Styles.mainLayoutMobile} ${className}`}
         topSection={header}
-        topSectionStyle={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 999999,
-          padding: '10px',
-          backgroundColor: 'var(--secondary-bg)'
-        }}
         middleSection={content}
         middleSectionStyle={{
           flexGrow: 1,
-          padding: '10px'
+          padding: '10px',
         }}
         bottomSection={menu}
         bottomSectionStyle={{
@@ -49,17 +42,17 @@ function MainLayout({ className, style, header, menu, content }) {
         }}
       />
     )
-  )
+  );
 }
 
 MainLayout.defaultProps = {
   className: '',
   style: {},
-}
+};
 
 MainLayout.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
-}
+};
 
-export default MainLayout
+export default MainLayout;
