@@ -1,17 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Input, Select, Typography } from "antd";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Base from "../../core/layouts/Base/Base";
 
 import styles from "./CustomInput.module.scss";
 
 const CustomInput = ({
+  currentSelectedValue,
   customContainerStyles,
   customErrorTextStyles,
   customInputStyles,
   customLabelStyles,
   customSelectInputStyles,
+  disabled,
   defaultSelectValue,
   disabled,
   errorMessage,
@@ -30,8 +33,7 @@ const CustomInput = ({
   placeholder,
   prefixElement,
   selectOptions,
-  SuffixElement1,
-  SuffixElement2,
+  SuffixIcon,
   type,
   value,
 }) => {
@@ -88,27 +90,35 @@ const CustomInput = ({
             }}
             prefix={isPrefixRequired ? prefixElement : null}
             suffix={
-              isSuffixRequiredForPassword ? (
-                isTextVisible ? (
-                  <span
-                    className={styles.suffixElement}
+              <>
+                {isSuffixRequiredForPassword &&
+                  (isTextVisible ? (
+                    <span
+                      className={styles.suffixElement}
+                      onClick={() => {
+                        onSuffixElementClick && onSuffixElementClick();
+                      }}
+                    >
+                      <EyeOutlined />
+                    </span>
+                  ) : (
+                    <span
+                      className={styles.suffixElement}
+                      onClick={() => {
+                        onSuffixElementClick && onSuffixElementClick();
+                      }}
+                    >
+                      <EyeInvisibleOutlined />
+                    </span>
+                  ))}
+                {SuffixIcon && (
+                  <SuffixIcon
                     onClick={() => {
                       onSuffixElementClick && onSuffixElementClick();
                     }}
-                  >
-                    {SuffixElement1}
-                  </span>
-                ) : (
-                  <span
-                    className={styles.suffixElement}
-                    onClick={() => {
-                      onSuffixElementClick && onSuffixElementClick();
-                    }}
-                  >
-                    {SuffixElement2}
-                  </span>
-                )
-              ) : null
+                  />
+                )}
+              </>
             }
           />
         )}
@@ -136,11 +146,13 @@ const CustomInput = ({
 };
 
 CustomInput.defaultProps = {
+  currentSelectedValue: "",
   customContainerStyles: "",
   customErrorTextStyles: "",
   customInputStyles: "",
   customLabelStyles: "",
   customSelectInputStyles: "",
+  disabled: false,
   defaultSelectValue: "",
   disabled: false,
   errorMessage: "",
@@ -159,18 +171,19 @@ CustomInput.defaultProps = {
   placeholder: "",
   prefixElement: null,
   selectOptions: [],
-  SuffixElement1: null,
-  SuffixElement2: null,
+  SuffixIcon: null,
   type: "",
   value: "",
 };
 
 CustomInput.propTypes = {
+  currentSelectedValue: PropTypes.string,
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   customSelectInputStyles: PropTypes.string,
+  disabled: PropTypes.bool,
   defaultSelectValue: PropTypes.string,
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
@@ -189,8 +202,7 @@ CustomInput.propTypes = {
   placeholder: PropTypes.string,
   prefixElement: PropTypes.node,
   selectOptions: PropTypes.array,
-  SuffixElement1: PropTypes.node,
-  SuffixElement2: PropTypes.node,
+  SuffixIcon: PropTypes.node,
   type: PropTypes.string,
   value: PropTypes.string,
 };

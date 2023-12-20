@@ -1,11 +1,11 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: var(--gapXLarge);
 }
 
 .heading {
-  color: var(--textBold);
+  color: var(--subHeadingColor);
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightMedium);
 }
@@ -35,24 +35,24 @@
   font-size: var(--fontSizeXlarge);
   font-weight: var(--fontWeightMedium);
   color: var(--inputText);
-  border-radius: 12px;
+  border-radius: var(--radiusXLg);
   border: var(--borderLight);
   background: var(--bodyBg);
 }
 
 .subHeadingContainer {
   display: flex;
-  gap: 4px;
+  gap: var(--gapXXSmall);
 }
 
 .inputContainer {
   display: flex;
-  gap: 16px;
+  gap: var(--gapSmall);
 }
 
 .box {
   display: flex;
-  gap: 8px;
+  gap: var(--gapXSmall);
   justify-content: center;
   align-items: center;
 }
@@ -80,6 +80,10 @@
   }
 }
 
+.sendAgainText[disabled] {
+  color: var(--disableLink) !important;
+}
+
 .active {
   color: var(--linkColor);
   font-size: var(--fontSizeSmall);
@@ -97,17 +101,20 @@
 .subHeadingAndInputContainer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--gapSmall);
 }
 
 .fourteenMinCounterBottomContainer {
   display: flex;
-  gap: 8px;
+  gap: var(--gapXSmall);
 }
 
 @media screen and (max-width: 511px) {
   .otpFieldsAndButtonContainer {
     flex: 1;
     justify-content: space-between;
+  }
+  .container {
+    padding: var(--paddingSmall);
   }
 }

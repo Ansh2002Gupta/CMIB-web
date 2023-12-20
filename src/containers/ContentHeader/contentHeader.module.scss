@@ -6,10 +6,8 @@
 .contentHeaderText {
   color: var(--textBold);
   font-size: var(--fontSizeHeading);
-  font-style: normal;
   font-weight: var(--fontWeightBold);
   line-height: var(--lineHeightHeading);
-  letter-spacing: -0.32px;
 }
 
 @media screen and (max-width: 767px) {

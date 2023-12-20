@@ -6,6 +6,7 @@
 # Node artifact files
 node_modules/
 dist/
+build/
 
 # Compiled Java class files
 *.class
@@ -15,6 +16,7 @@ dist/
 
 #lock files
 yarn.lock
+package-lock.json
 
 # Log files
 *.log
@@ -51,3 +53,5 @@ Thumbs.db
 *.mov
 *.wmv
 
+#environment file
+.env

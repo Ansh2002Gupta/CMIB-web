@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { ThemeContext } from "core/providers/theme";
 import { Button, Card, Image, Typography } from "antd";
 
 import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 
-import GreenButton from "../GreenButton";
-import arrowRight from "../../themes/base/assets/images/arrow-right-filter.svg";
-import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
-import partialSelection from "../../themes/base/assets/images/some filters are selected.svg";
-import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
-import { stylesObject } from "./SearchFilter.styles";
+import CustomButton from "../CustomButton";
+import useOutSideClick from "../../core/hooks/useOutSideClick";
+import { classes } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
 
 const SearchFilter = ({
@@ -19,7 +17,18 @@ const SearchFilter = ({
   showFilters,
 }) => {
   const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
+
   const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
+  const elementNotConsideredInOutSideClick = useRef();
+
+  const { wrapperRef } = useOutSideClick({
+    onOutSideClick: () => {
+      setShowFilters(false);
+    },
+    elementNotToBeConsidered: elementNotConsideredInOutSideClick,
+  });
+
   const handleOnUpdateAccessFilterStatus = (optionId) => {
     let updateData;
     if (currentFilterStatus.includes(optionId)) {
@@ -39,14 +48,38 @@ const SearchFilter = ({
     setCurrentFilterStatus([]);
   };
 
+  const getCheckBoxes = () => {
+    // TODO: refactor this SearchFilter Component
+    if (!currentFilterStatus?.length) {
+      return getImage("unCheckedBox");
+    }
+    if (currentFilterStatus?.length === 3) {
+      return getImage("checkedBox");
+    }
+    return getImage("someFiltersAreSelected");
+  };
+
   return (
-    <>
-      {showFilters ? (
-        <div className={styles.cardParentContainer}>
+    <div className={styles.container}>
+      <Button
+        ref={wrapperRef}
+        className={styles.filterBtn}
+        onClick={() => setShowFilters((prev) => !prev)}
+      >
+        <Image src={getImage("filter")} preview={false} />
+        <Typography className={styles.filterBtnText}>
+          {intl.formatMessage({ id: "label.filter" })}
+        </Typography>
+      </Button>
+      {showFilters && (
+        <div
+          className={styles.cardParentContainer}
+          ref={elementNotConsideredInOutSideClick}
+        >
           <Card
             title={intl.formatMessage({ id: "label.filter" })}
             className={styles.filterContainer}
-            headStyle={stylesObject.filterHeaderText}
+            headStyle={classes.filterHeaderText}
             extra={
               <Button
                 type="link"
@@ -56,13 +89,13 @@ const SearchFilter = ({
                 {intl.formatMessage({ id: "label.clearAll" })}
               </Button>
             }
-            bodyStyle={stylesObject.cardBody}
+            bodyStyle={classes.cardBody}
           >
             <TwoColumn
               // TODO: Srujan will be working on the responsive designs of the filters hence do not touch it much
               isLeftFillSpace
               isRightFillSpace
-              leftSectionStyle={stylesObject.filterLeftSectionBorder}
+              leftSectionStyle={classes.filterLeftSectionBorder}
               leftSection={
                 <div>
                   {filterPropertiesArray?.map((item) => {
@@ -75,22 +108,13 @@ const SearchFilter = ({
                         onClick={selectOrRemoveAll}
                       >
                         <div className={styles.filterTextAndCheckContainer}>
-                          <Image
-                            src={
-                              currentFilterStatus.length === 0
-                                ? unCheckedBox
-                                : currentFilterStatus.length === 3
-                                ? checkedBox
-                                : partialSelection
-                            }
-                            preview={false}
-                          />
+                          <Image src={getCheckBoxes()} preview={false} />
                           <Typography className={styles.filterOptionText}>
                             {item.name}
                           </Typography>
                         </div>
-                        <div>
-                          <Image src={arrowRight} preview={false} />
+                        <div className={styles.filterRightArrow}>
+                          <Image src={getImage("arrowRightFilter")} preview={false} />
                         </div>
                       </div>
                     );
@@ -107,14 +131,14 @@ const SearchFilter = ({
                           handleOnUpdateAccessFilterStatus(item.optionId)
                         }
                       >
-                        <Image
-                          src={
-                            currentFilterStatus.includes(item.optionId)
-                              ? checkedBox
-                              : unCheckedBox
-                          }
-                          preview={false}
-                        />
+                        {currentFilterStatus.includes(item.optionId) ? (
+                          <Image src={getImage("checkedBox")} preview={false} />
+                        ) : (
+                          <Image
+                            src={getImage("unCheckedBox")}
+                            preview={false}
+                          />
+                        )}
                         <Typography className={styles.filterOptionText}>
                           {`${item?.str} (${item?.count})`}
                         </Typography>
@@ -132,16 +156,14 @@ const SearchFilter = ({
             >
               {intl.formatMessage({ id: "label.cancel" })}
             </Button>
-            <GreenButton
+            <CustomButton
               btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
             />
           </div>
         </div>
-      ) : (
-        <></>
       )}
-    </>
+    </div>
   );
 };
 

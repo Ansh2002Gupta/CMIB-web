@@ -3,7 +3,7 @@ function formatKey(name) {
 }
 
 class Storage {
-  //localStoraage
+  //localStorage
   static set(key, value) {
     if (!value) return;
     return localStorage.setItem(formatKey(key), value);

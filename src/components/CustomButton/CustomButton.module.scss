@@ -3,15 +3,15 @@
   padding: 17px var(--paddingLarge);
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  border-radius: 8px;
+  gap: var(--gapXSmall);
+  border-radius: var(--radiusLg);
   background-color: var(--greenBtnBg);
   min-height: var(--btnHeight);
   color: var(--btnText);
   font-weight: var(--fontWeightBold);
-  &:hover{
-      background-color: var(--greenBtnBg) !important;
-      color: var(--btnText) !important;
+  &:hover {
+    background-color: var(--greenBtnBg) !important;
+    color: var(--btnText) !important;
   }
 }
 

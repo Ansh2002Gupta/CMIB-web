@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Image, Pagination, Select, Table, Typography } from "antd";
+import { Pagination, Select, Table, Typography } from "antd";
 
+import PaginationItems from "./PaginationItems";
+import useQueryParams from "../../core/hooks/useQueryParams";
 import useResponsive from "../../core/hooks/useResponsive";
-import arrowRight from "../../themes/base/assets/images/arrow-right.svg";
-import { ROW_PER_PAGE_OPTIONS } from "../../Constants/Constants";
+import { ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
-import "./override.css";
+import "./override.css"; // please check
 
 const DataTable = ({
   columns,
   columnsToBeSearchFrom,
   currentDataLength,
   currentTableData,
+  customContainerStyles,
   originalData,
   searchedValue,
   setCurrentDataLength,
   setCurrentTableData,
 }) => {
   const intl = useIntl();
-  const responsive = useResponsive();
-  const [current, setCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+
+  const [pageSize, setPageSize] = useState(PAGE_SIZE);
+
+  const { setQueryParams, getQueryParams, removeQueryParams } =
+    useQueryParams();
+  const [current, setCurrent] = useState(
+    Number(getQueryParams("current-page")) || 1
+  );
 
   useEffect(() => {
     const updatedData = originalData?.filter((item) => {
@@ -38,8 +45,9 @@ const DataTable = ({
       return isPresent;
     });
     setCurrentTableData(updatedData);
-    setCurrent(1);
-    if (searchedValue.trim().length === 0) {
+    searchedValue && setCurrent(1);
+    searchedValue && setQueryParams("current-page", 1);
+    if (!searchedValue?.trim()?.length) {
       setCurrentDataLength(originalData.length);
     } else {
       setCurrentDataLength(updatedData.length);
@@ -47,7 +55,7 @@ const DataTable = ({
   }, [searchedValue]);
 
   const handleOnChangePageSize = (size) => {
-    setPageSize(size);
+    setPageSize(Number(size));
     setCurrent(1);
   };
 
@@ -63,6 +71,7 @@ const DataTable = ({
     pageSize,
     total: currentDataLength,
     onChange: (page) => {
+      setQueryParams("current-page", page);
       setCurrent(page);
     },
     showSizeChanger: false,
@@ -71,62 +80,20 @@ const DataTable = ({
   useEffect(() => {
     return () => {
       setCurrent(1);
-      setPageSize(10);
-    };
-  }, []);
-
-  const itemRender = (current, type, originalElement) => {
-    if (type === "prev") {
-      return (
-        <div
-          className={[styles.nextAndPrevArrowContainer, styles.rowReverse].join(
-            " "
-          )}
-        >
-          <Image
-            src={arrowRight}
-            preview={false}
-            className={styles.prevArrow}
-          />
-          {responsive.isLg ? (
-            <Typography className={styles.nextAndPrevText}>
-              {intl.formatMessage({ id: "label.previous" })}
-            </Typography>
-          ) : null}
-        </div>
-      );
-    }
-    if (type === "next") {
-      return (
-        <div className={styles.nextAndPrevArrowContainer}>
-          <Image src={arrowRight} preview={false} />
-          {responsive.isLg ? (
-            <Typography className={styles.nextAndPrevText}>
-              {intl.formatMessage({ id: "label.next" })}
-            </Typography>
-          ) : null}
-        </div>
-      );
-    }
-    return originalElement;
-  };
-
-  useEffect(() => {
-    return () => {
-      setCurrent(1);
-      setPageSize(10);
+      setPageSize(PAGE_SIZE);
+      removeQueryParams();
     };
   }, []);
 
   return (
-    <div>
+    <div className={customContainerStyles}>
       <Table
         columns={columns}
         dataSource={currentTableData}
         pagination={false}
         rowClassName={styles.rowtext}
         scroll={{ x: "max-content" }}
-        className={styles.tableBody}
+        className={styles.table}
       />
       <div className={styles.rowPerPageOptionsAndPaginationContainer}>
         <div className={styles.rowPerPageContainer}>
@@ -143,7 +110,9 @@ const DataTable = ({
         <Pagination
           {...rightPaginationConfig}
           className={styles.paginationContainer}
-          {...{ itemRender }}
+          itemRender={(current, type, originalElement) => (
+            <PaginationItems {...{ current, type, originalElement }} />
+          )}
           showLessItems
         />
       </div>
@@ -156,6 +125,7 @@ DataTable.defaultProps = {
   columnsToBeSearchFrom: [],
   currentDataLength: 0,
   currentTableData: [],
+  customContainerStyles: "",
   originalData: [],
   searchedValue: "",
   setCurrentDataLength: () => {},
@@ -167,6 +137,7 @@ DataTable.propTypes = {
   columnsToBeSearchFrom: PropTypes.array,
   currentDataLength: PropTypes.number,
   currentTableData: PropTypes.array,
+  customContainerStyles: PropTypes.string,
   originalData: PropTypes.array,
   searchedValue: PropTypes.string,
   setCurrentDataLength: PropTypes.func,

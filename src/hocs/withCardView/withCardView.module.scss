@@ -1,19 +1,19 @@
 .container {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--gapMedium);
   justify-content: center;
   align-items: center;
-  padding: 48px;
+  padding: var(--paddingXXLarge);
 }
 
 .innerContainer {
   width: 50vw;
   max-width: 600px;
-  padding: 40px;
-  border-radius: 24px;
+  padding: var(--paddingXLarge);
+  border-radius: var(--radiusXXLg);
   border: var(--borderLight);
   background-color: var(--bodyBg);
   box-shadow: 0px 4px 32px 0px var(--boxShadowColor);

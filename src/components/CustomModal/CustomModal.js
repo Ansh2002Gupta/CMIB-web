@@ -1,29 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Image, Modal, Typography } from "antd";
+import { Modal, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
-import GreenButton from "../GreenButton";
+import CustomButton from "../CustomButton";
 import styles from "./CustomModal.module.scss";
 
 const CustomModal = ({
   btnText,
   headingText,
-  imageSrc,
+  ImgElement,
   isOpen,
   onBtnClick,
   onCancel,
   subHeadingText,
 }) => {
+  
   return (
     <Modal footer={null} open={isOpen} {...{ onCancel }}>
       <Base className={styles.container}>
         <div className={styles.imageAndHeadingContainer}>
           <div>
-            {!!imageSrc && (
-              <Image src={imageSrc} preview={false} className={styles.image} />
-            )}
+            {ImgElement ? <ImgElement className={styles.image} /> : null}
           </div>
           <div className={styles.headingAndSubHeadingContainer}>
             <div>
@@ -36,7 +35,7 @@ const CustomModal = ({
             </div>
           </div>
         </div>
-        <GreenButton
+        <CustomButton
           onClick={onBtnClick}
           {...{ btnText }}
           customStyle={styles.btn}
@@ -49,7 +48,7 @@ const CustomModal = ({
 CustomModal.defaultProps = {
   btnText: "",
   headingText: "",
-  imageSrc: "",
+  ImgElement: null,
   isOpen: false,
   onBtnClick: () => {},
   onCancel: () => {},
@@ -59,7 +58,7 @@ CustomModal.defaultProps = {
 CustomModal.propTypes = {
   btnText: PropTypes.string,
   headingText: PropTypes.string,
-  imageSrc: PropTypes.string,
+  ImgElement: PropTypes.node,
   isOpen: PropTypes.bool,
   onBtnClick: PropTypes.func,
   onCancel: PropTypes.func,

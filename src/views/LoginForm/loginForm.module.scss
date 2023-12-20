@@ -1,7 +1,7 @@
 .loginForm {
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  gap: var(--gapXXLarge);
   width: 100%;
 }
 
@@ -9,14 +9,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 32px;
+  gap: var(--gapLarge);
 }
 
 .inputAndBtnContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 32px;
+  gap: var(--gapLarge);
 }
 
 .inputLabel {
@@ -36,7 +36,7 @@
 
 .loginBtn {
   background: var(--greenBtnBg);
-  border-radius: 8px;
+  border-radius: var(--radiusLg);
   color: var(--btnText);
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightBold);
@@ -59,7 +59,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: var(--gapXSmall);
   cursor: pointer;
 }
 
@@ -73,9 +73,9 @@
   width: 20px;
 }
 
-.forgotLinkAndRememberMeContainer {
+.forgotLinkContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .input {
@@ -83,14 +83,20 @@
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightMedium);
   padding: var(--paddingSmall);
-  border-radius: 12px;
+  border-radius: var(--radiusXLg);
   border: var(--borderLight);
   background-color: var(--bodyBg);
 }
 
+.errorText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--error);
+}
+
 @media (max-width: 511px) {
   .loginForm {
-    gap: 40px;
+    gap: var(--gapXLarge);
   }
   .inputAndBtnContainer {
     flex: 1;

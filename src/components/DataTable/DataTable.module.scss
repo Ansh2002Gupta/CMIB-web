@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: var(--bodyBg);
-  border-radius: 12px;
+  border-radius: var(--radiusXLg);
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   padding: var(--paddingMedium);
@@ -11,7 +11,7 @@
 
 .rowPerPageContainer {
   display: flex;
-  gap: 8px;
+  gap: var(--gapXSmall);
   align-items: center;
 }
 
@@ -34,6 +34,10 @@
   font-weight: var(--fontWeightMedium);
 }
 
+.table {
+  min-height: 50vh;
+}
+
 .nextAndPrevText {
   color: var(--On-background, var(--textBold));
   font-size: var(--fontSizeSmall);
@@ -42,13 +46,14 @@
 
 .nextAndPrevArrowContainer {
   display: flex;
-  gap: 8px;
+  gap: var(--gapXSmall);
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
+  min-height: 44px;
   flex-direction: row-reverse;
-  padding: 8px var(--paddingMedium);
+  padding: var(--paddingExtraSmall) var(--paddingMedium);
   border: var(--borderLight);
-  border-radius: 12px;
+  border-radius: var(--radiusXLg);
 }
 
 .prevArrow {
@@ -61,7 +66,7 @@
 
 .paginationContainer {
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 
 // TODO: override the color of the sorting arrows based on active and non-active state
@@ -78,19 +83,20 @@
 
 @media (max-width: 1023px) {
   .nextAndPrevArrowContainer {
-    padding: 4px 8px;
+    padding: 4px var(--paddingExtraSmall);
   }
 }
 
 @media (max-width: 767px) {
   .rowPerPageOptionsAndPaginationContainer {
     flex-direction: column-reverse;
-    gap: 16px;
+    gap: var(--gapSmall);
     justify-content: center;
-    padding: var(--paddingSmall) 0px var(--paddingSmall) 8px;
+    padding: var(--paddingSmall) 0px var(--paddingSmall)
+      var(--paddingExtraSmall);
   }
   .rowPerPageContainer {
-    margin-top: 16px;
+    margin-top: var(--marginMedium);
   }
   .paginationContainer {
     width: 100%;

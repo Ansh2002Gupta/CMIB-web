@@ -1,47 +1,86 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Button, Typography, Image } from "antd";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { Button, Typography } from "antd";
 
 import { Base } from "core/layouts";
 
-import CardView from "../../hocs/CardView/CardView";
+import withCardView from "../../hocs/withCardView";
 import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
+import useLogin from "../../core/hooks/useLogin";
+import useAuthOTP from "../../core/hooks/useAuthOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import checkedBox from "../../themes/base/assets/images/checkedBox.svg";
-import unCheckedBox from "../../themes/base/assets/images/unCheckedBox.svg";
-import { emailRegex } from "../../Constants/Constants";
+import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
+import { EMAIL_REGEX } from "../../constant/regex";
 import styles from "./loginForm.module.scss";
 
 const LoginForm = () => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
+
   const [formInputs, setFormInputs] = useState({
     userName: "",
     password: "",
   });
-  const [shouldRememberMe, setShouldRememberMe] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isAllowedToLogin, setIsAllowedToLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
 
-  const handleOnLogin = () => {
-    // TODO: Integrate API.
-    if (!isEmailValid) {
-      return;
+  const {
+    error: loginError,
+    setError: setLoginError,
+    data: loginResponse,
+    handleUserLogin,
+    isLoading,
+    loginApiStatus,
+  } = useLogin();
+
+  const {
+    errorWhileSendingOTP,
+    handleAuthOTP,
+    isLoading: isOTPLoading,
+  } = useAuthOTP();
+
+  const handleOnOTP = () => {
+    if (!loginError && !isLoading) {
+      handleAuthOTP({
+        email: formInputs.userName,
+      });
+      setCurrentActiveScreen(2); //only when user opted for 2 factor authentication.
     }
-    setCurrentActiveScreen(2);
-    console.log("Success:", { formInputs, shouldRememberMe });
   };
 
-  const isValidEmail = () => {
-    setIsEmailValid(emailRegex.test(formInputs?.userName));
+  const handleOnLogin = (e) => {
+    e.preventDefault();
+    isValidEmail();
+    setLoginError("");
+    if (!EMAIL_REGEX.test(formInputs?.userName)) {
+      return;
+    }
+    handleUserLogin({
+      email: formInputs.userName,
+      password: formInputs.password,
+    });
   };
 
   useEffect(() => {
+    if (loginApiStatus === "success" && loginResponse) {
+      if (loginResponse?.is_two_factor === 1) {
+        handleOnOTP();
+        return;
+      }
+      !loginError && !isLoading && navigate(DASHBOARD);
+    }
+  }, [loginApiStatus, loginResponse]);
+
+  const isValidEmail = () => {
+    setIsEmailValid(EMAIL_REGEX.test(formInputs?.userName));
+  };
+
+  useEffect(() => {
+    setLoginError("");
     if (formInputs.userName && formInputs.password) {
       setIsAllowedToLogin(true);
       return;
@@ -51,9 +90,10 @@ const LoginForm = () => {
 
   useEffect(() => {
     return () => {
-      setShouldRememberMe(false);
       setIsEmailValid(true);
       setIsAllowedToLogin(false);
+      setShowPassword(false);
+      setCurrentActiveScreen(1);
     };
   }, []);
 
@@ -63,18 +103,20 @@ const LoginForm = () => {
         headingText={intl.formatMessage({ id: "label.loginHeading" })}
         subHeadingText={intl.formatMessage({ id: "label.loginSubheading" })}
       />
-      <div
+      <form
         className={[
           styles.inputAndBtnContainer,
           styles.borderForMobileScreens,
         ].join(" ")}
+        onSubmit={handleOnLogin}
       >
         {currentActiveScreen === 1 && (
           <>
             <div className={styles.inputContainer}>
               <CustomInput
+                disabled={isLoading || isOTPLoading}
                 label={intl.formatMessage({ id: "label.userName" })}
-                type="text"
+                type="email"
                 customLabelStyles={styles.inputLabel}
                 customInputStyles={styles.input}
                 isError={!isEmailValid}
@@ -93,6 +135,7 @@ const LoginForm = () => {
                 }}
               />
               <CustomInput
+                disabled={isLoading || isOTPLoading}
                 label={intl.formatMessage({ id: "label.password" })}
                 customLabelStyles={styles.inputLabel}
                 customInputStyles={styles.input}
@@ -102,8 +145,6 @@ const LoginForm = () => {
                 isRequired
                 type={showPassword ? "text" : "password"}
                 isSuffixRequiredForPassword
-                SuffixElement1={<EyeOutlined />}
-                SuffixElement2={<EyeInvisibleOutlined />}
                 onSuffixElementClick={() => setShowPassword((prev) => !prev)}
                 isTextVisible={!showPassword}
                 value={formInputs.password}
@@ -114,42 +155,32 @@ const LoginForm = () => {
                   })
                 }
               />
-              <div className={styles.forgotLinkAndRememberMeContainer}>
-                <span
-                  className={styles.rememberMeContainer}
-                  onClick={() => setShouldRememberMe((prev) => !prev)}
+              <div className={styles.forgotLinkContainer}>
+                <Button
+                  disabled={isLoading || isOTPLoading}
+                  className={styles.forgotLink}
+                  type="link"
+                  onClick={() => navigate(FORGOT_PASSWORD)}
                 >
-                  <Image
-                    src={shouldRememberMe ? checkedBox : unCheckedBox}
-                    className={styles.rememberMeImage}
-                    width={20}
-                    preview={false}
-                  />
-                  <Typography className={styles.rememberMeText}>
-                    Remember Me
-                  </Typography>
-                </span>
-                <div>
-                  <Button
-                    className={styles.forgotLink}
-                    type="link"
-                    onClick={() => navigate("/forgot-password")}
-                  >
-                    Forget password?
-                  </Button>
-                </div>
+                  Forget password?
+                </Button>
               </div>
             </div>
             <div>
+              {loginError ? (
+                <Typography className={styles.errorText}>
+                  {loginError}
+                </Typography>
+              ) : (
+                ""
+              )}
               <Button
                 type="primary"
                 htmlType="submit"
+                loading={isLoading || isOTPLoading}
                 block
                 className={styles.loginBtn}
-                onClick={() => {
-                  isValidEmail();
-                  handleOnLogin();
-                }}
+                onClick={handleOnLogin}
                 disabled={!isAllowedToLogin}
               >
                 {intl.formatMessage({ id: "label.loginBtn" })}
@@ -157,10 +188,20 @@ const LoginForm = () => {
             </div>
           </>
         )}
-        {currentActiveScreen === 2 && <OTPInput noOfBlocks={4} />}
-      </div>
+        {currentActiveScreen === 2 && (
+          <OTPInput
+            noOfBlocks={4}
+            {...{
+              errorWhileSendingOTP,
+              handleAuthOTP,
+              isOTPLoading,
+              setCurrentActiveScreen,
+            }}
+          />
+        )}
+      </form>
     </Base>
   );
 };
 
-export default CardView(LoginForm);
+export default withCardView(LoginForm);

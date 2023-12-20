@@ -11,6 +11,7 @@ const HeadingAndSubHeading = ({
   headingText,
   subHeadingText,
 }) => {
+  
   return (
     <div className={[styles.headingContainer, customContainerStyles].join(" ")}>
       <div>

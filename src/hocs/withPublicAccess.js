@@ -1,27 +1,25 @@
-import React, { useContext, useEffect } from 'react'
-import _ from 'lodash'
-import { useNavigate } from 'react-router'
-import { AuthContext } from "../globalContext/auth/authProvider";
+import React, { useEffect } from "react";
+import _ from "lodash";
+import { useNavigate } from "react-router";
 
+import { getItem } from "../services/encrypted-storage-service";
+import { ROOT } from "../routes/routeNames";
 
 function withPublicAccess(Component) {
   return (props) => {
-    const [authState] = useContext(AuthContext);
+    const auth = getItem("authToken");
     const navigate = useNavigate();
+
     useEffect(() => {
-      if (!_.isEmpty(authState)) {
-        navigate('/')
+      if (!_.isEmpty(auth)) {
+        navigate(ROOT);
       }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    
-    if (!_.isEmpty(authState)) {
-      return null
-    }
-    return (
-      <Component {...props}  />
-    )
-  }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return <Component {...props} />;
+  };
 }
 
 export default withPublicAccess;
+ 

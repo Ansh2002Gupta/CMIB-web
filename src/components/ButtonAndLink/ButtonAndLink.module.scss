@@ -1,6 +1,13 @@
 .container {
   flex-direction: column;
-  gap: 32px;
+  gap: var(--gapLarge);
+}
+
+.error {
+  padding-bottom: var(--paddingExtraSmall);
+  color: var(--error);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
 }
 
 .linkContainer {
@@ -17,4 +24,8 @@
   &:hover {
     color: var(--linkColor) !important;
   }
+}
+
+.backToLoginLink[disabled] {
+  color: var(--disableLink) !important;
 }

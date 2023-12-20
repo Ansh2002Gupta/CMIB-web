@@ -1,29 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import moment from "moment/moment";
-import { Button, Image, Input, Switch, Typography } from "antd";
+import { ThemeContext } from "core/providers/theme";
+import { Input, Switch, Image } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
 import ContentHeader from "../../containers/ContentHeader";
 import DataTable from "../../components/DataTable";
-import GreenButton from "../../components/GreenButton/GreenButton";
+import CustomButton from "../../components/CustomButton/CustomButton";
 import SearchFilter from "../../components/SearchFilter";
-import useOutSideClick from "../../core/hooks/useOutSideClick";
-import useResponsive from "../../core/hooks/useResponsive";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import edit from "../../themes/base/assets/images/edit.svg";
-import eyeIcon from "../../themes/base/assets/images/eye.svg";
-import filter from "../../themes/base/assets/images/filter.svg";
-import plusIcon from "../../themes/base/assets/images/plus icon.svg";
-import searchIcon from "../../themes/base/assets/images/search icon.svg";
+import useResponsive from "../../core/hooks/useResponsive";
 import { DATA_SOURCE, ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./ManageUsers.module.scss";
 
 const ManageUsers = () => {
   const intl = useIntl();
   const responsive = useResponsive();
+
   const { navigateScreen: navigate } = useNavigateScreen();
+  const { getImage } = useContext(ThemeContext);
+
   const elementNotConsideredInOutSideClick = useRef();
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
@@ -36,7 +34,7 @@ const ManageUsers = () => {
       setShowFilters(false);
     },
     elementNotToBeConsidered: elementNotConsideredInOutSideClick,
-  });
+  }); // please check
   const handleOnEdit = (userId) => {
     navigate(`/view-user-details?userId=${userId}&edit=true`);
   };
@@ -57,6 +55,7 @@ const ManageUsers = () => {
     });
     setCurrentTableData(updatedData);
   };
+
   const columns = [
     {
       title: () => (
@@ -147,12 +146,13 @@ const ManageUsers = () => {
       dataIndex: "see",
       key: "see",
       render: (_, rowData) => {
+        const { id } = rowData;
         return (
           <Image
+            src={getImage("eye")}
             className={styles.eyeIcon}
-            src={eyeIcon}
+            onClick={() => goToUserDetailsPage(id, false)}
             preview={false}
-            onClick={() => handleOnSeeUserDetails(rowData?.id)}
           />
         );
       },
@@ -162,12 +162,13 @@ const ManageUsers = () => {
       dataIndex: "edit",
       key: "edit",
       render: (_, rowData) => {
+        const { id } = rowData;
         return (
           <Image
-            className={styles.editIcon}
-            src={edit}
+            src={getImage("edit")}
             preview={false}
-            onClick={() => handleOnEdit(rowData?.id)}
+            className={styles.editIcon}
+            onClick={() => goToUserDetailsPage(id, true)}
           />
         );
       },
@@ -192,11 +193,11 @@ const ManageUsers = () => {
             headerText={intl.formatMessage({ id: "label.users" })}
             customStyles={styles.headerResponsiveStyle}
             rightSection={
-              <GreenButton
+              <CustomButton
                 btnText={intl.formatMessage({
                   id: `label.${responsive.isMd ? "addNewUsers" : "newUsers"}`,
                 })}
-                iconUrl={plusIcon}
+                iconUrl={getImage("plusIcon")}
                 iconStyles={styles.btnIconStyles}
                 customStyle={styles.btnCustomStyles}
               />
@@ -204,15 +205,16 @@ const ManageUsers = () => {
           />
         </div>
       }
+      className={styles.baseLayout}
       bottomSection={
         <div className={styles.filterAndTableContainer}>
           <div className={styles.searchBarContainer}>
             <Input
               prefix={
                 <Image
-                  preview={false}
-                  src={searchIcon}
+                  src={getImage("searchIcon")}
                   className={styles.searchIcon}
+                  preview={false}
                 />
               }
               placeholder={intl.formatMessage({
@@ -223,22 +225,10 @@ const ManageUsers = () => {
               value={searchedValue}
               onChange={(e) => setSearchedValue(e.target.value)}
             />
-            <Button
-              ref={elementNotConsideredInOutSideClick}
-              className={styles.filterBtn}
-              onClick={() => setShowFilters((prev) => !prev)}
-            >
-              <Image src={filter} preview={false} />
-              <Typography className={styles.filterBtnText}>
-                {intl.formatMessage({ id: "label.filter" })}
-              </Typography>
-            </Button>
-            <div ref={wrapperRef}>
-              <SearchFilter
-                filterPropertiesArray={ACCESS_FILTER_DATA}
-                {...{ showFilters, setShowFilters }}
-              />
-            </div>
+            <SearchFilter
+              filterPropertiesArray={ACCESS_FILTER_DATA}
+              {...{ showFilters, setShowFilters }}
+            />
           </div>
           <DataTable
             {...{

@@ -1,19 +1,23 @@
-import Home from "../pages/Home";
 import Auth from "../pages/Auth";
+import Configurations from "../views/Configurations/Configurations";
+import DashboardView from "../views/Dashboard/Dashboard";
+import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
+import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
+import ManageUsers from "../views/ManageUsers";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import {
-  CONFIGURATIONS,
+  ROUTE,
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
   MANAGE_USERS,
-  CREATE_NEW_PASSWORD,
   FORGOT_PASSWORD,
   VIEW_USER_DETAILS,
+  ROOT,
 } from "./routeNames";
 import Configurations from "../views/Configurations/Configurations";
 import DashboardView from "../views/Dashboard/Dashboard";
@@ -23,6 +27,7 @@ import ManageUsers from "../views/ManageUsers";
 import UserDetails from "../views/UserDetails";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
+const HomeWithPublicAccess = withPublicAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
   HeaderContentWithFooter
@@ -66,17 +71,7 @@ const config = [
       },
     ],
   },
-  {
-    pagePath: CREATE_NEW_PASSWORD,
-    element: <HeaderContentWithFooterWithPublicAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <CreateNewPassword />, // view
-      },
-    ],
-  },
+
   {
     pagePath: MANAGE_USERS,
     element: <AuthWithPublicAccess />, // Page
@@ -89,13 +84,13 @@ const config = [
     ],
   },
   {
-    pagePath: VIEW_USER_DETAILS,
-    element: <AuthWithPublicAccess />, // Page
+    pagePath: ROOT,
+    element: <HomeWithPublicAccess />, // Page
     views: [
       // array of views under Page route
       {
         viewPath: "",
-        element: <UserDetails />, // view
+        element: <DashboardView />, // view
       },
     ],
   },
@@ -113,6 +108,7 @@ const config = [
   {
     pagePath: DASHBOARD,
     element: <HomeWithPrivateAccess />, // Page
+    // element: <AuthWithPublicAccess />, // Page
     views: [
       // array of views under Page route
       {
@@ -133,13 +129,24 @@ const config = [
     ],
   },
   {
-    pagePath: CONFIGURATIONS,
+    pagePath: ROUTE, // changes plese check
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {
         viewPath: "",
         element: <Configurations />, // view
+      },
+    ],
+  },
+  {
+    pagePath: MANAGE_USERS,
+    element: <HomeWithPublicAccess noOuterPadding />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <ManageUsers />, // view
       },
     ],
   },
