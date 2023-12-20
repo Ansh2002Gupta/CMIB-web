@@ -1,66 +1,72 @@
 .parentContainer {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid var(--Primary-variant, #ccd0e5);
-  background: #fff;
+  gap: var(--gapMedium);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusXLgMedium);
+  border: var(--borderLight);
+  background: var(--bodyBg);
   flex: 1;
   overflow: visible;
 }
 
 .nonEditableContainer {
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid var(--Primary-variant, #ccd0e5);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusXLgMedium);
+  border: var(--borderLight);
 }
 
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  row-gap: 24px;
-  column-gap: 24px;
+  row-gap: var(--gapMedium);
+  column-gap: var(--gapMedium);
 }
 
 .heading {
-  color: var(--On-background, var(--On-background, #000833));
-  font-size: 16px;
-  font-weight: 600;
+  color: var(--textBold);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
 }
 
 .text {
-  color: var(--On-background, var(--On-background, #000833));
-  font-size: 14px;
-  font-weight: 500;
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 .label {
-  color: var(--On-surface, #616c82);
-  font-size: 12px;
-  font-weight: 500;
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 .dateContainer {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--gapXSmall);
 }
 
 .input {
   display: flex;
-  padding: 12px 16px;
+  padding: 12px var(--paddingSmall);
   align-items: center;
-  gap: 8px;
+  gap: var(--gapXSmall);
   align-self: stretch;
-  border-radius: 8px;
-  border: 1px solid var(--Primary-variant, #ccd0e5);
-  background: #fff;
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background: var(--bodyBg);
 }
 
 .selectInput {
   padding: 0px;
   min-height: 50px;
+  // TODO: Not working please find other way.
+  // .ant-select-selector {
+  //   min-height: 48px !important;
+  //   min-width: 100% !important;
+  //   border: 0 !important;
+  // }
 }
 
 .mobileInput {

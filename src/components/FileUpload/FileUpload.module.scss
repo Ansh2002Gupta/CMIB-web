@@ -1,18 +1,18 @@
 .container {
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid var(--Primary-variant, #ccd0e5);
-  background: #fff;
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusXLgMedium);
+  border: var(--borderLight);
+  background: var(--bodyBg);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--gapMedium);
 }
 
 .uploadContainer {
   width: 50%;
   height: 100%;
-  border-radius: 12px;
-  background-color: #f2f4fc;
+  border-radius: var(--radiusXLg);
+  background-color: var(--lightBlueBg);
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -21,15 +21,15 @@
 }
 
 .headingText {
-  color: var(--On-background, var(--On-background, #000833));
-  font-size: 16px;
-  font-weight: 600;
+  color: var(--textBold);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
 }
 
 .subHeadingText {
-  color: var(--On-surface, #616c82);
-  font-size: 12px;
-  font-weight: 500;
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 .uploadTextContainer {
@@ -37,7 +37,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: var(--gapMedium);
 }
 
 .uploadImage {
@@ -45,25 +45,24 @@
 }
 
 .uploadText {
-  color: #0f0f0f;
+  color: var(--uploadBg);
   text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 25px;
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
 }
 
 .uploadInfo {
-  color: var(--On-surface, #616c82);
+  color: var(--subHeadingColor);
   text-align: center;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 .uploadBottomContainer {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--gapXSmall);
 }
 
 @media screen and (max-width: 767px) {

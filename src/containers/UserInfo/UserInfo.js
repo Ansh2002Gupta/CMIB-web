@@ -21,6 +21,7 @@ const UserInfo = ({
   updateUserData,
 }) => {
   const intl = useIntl();
+
   const items = [
     {
       key: "1",
@@ -159,7 +160,7 @@ const UserInfo = ({
                   updateUserData("date", dateString)
                 }
                 className={[styles.text, styles.input].join(" ")}
-                // Fixed the below
+                // Fix the below
                 defaultValue={moment(date)}
                 disabled={isDateDisable || !isEditable}
                 customInputStyles={[styles.text, styles.input].join(" ")}

@@ -5,9 +5,11 @@ import Base from "../../core/layouts/Base/Base";
 
 import trashIcon from "../../themes/base/assets/images/trash.svg";
 import uploadImg from "../../themes/base/assets/images/Upload icon.svg";
+import { useIntl } from "react-intl";
 import styles from "./FileUpload.module.scss";
 
 const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
+  const intl = useIntl();
   const TYPES = {
     IMAGE_ONLY: ".jpg,.jpeg,.png,.PNG",
     ANY_FILE: "*",
@@ -44,6 +46,7 @@ const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
       <div className={styles.uploadBottomContainer}>
         <Typography className={styles.subHeadingText}>{subHeading}</Typography>
         <Upload
+          action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
           className={styles.uploadContainer}
           {...{ props }}
           // fileList={fileList}
@@ -57,10 +60,10 @@ const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
             />
             <div>
               <Typography className={styles.uploadText}>
-                Drag & drop files or Browse
+                {intl.formatMessage({ id: "label.dragNdrop" })}
               </Typography>
               <Typography className={styles.uploadInfo}>
-                Supported formates: png, jpg, jpeg
+                {intl.formatMessage({ id: "label.supportedFormat" })}
               </Typography>
             </div>
           </div>

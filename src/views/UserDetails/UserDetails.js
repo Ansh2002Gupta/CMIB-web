@@ -195,7 +195,7 @@ const UserDetails = ({ userName }) => {
             className={styles.cancelBtn}
             onClick={goBackToViewDetailsPage}
           >
-            Cancel
+            {intl.formatMessage({ id: "label.cancel" })}
           </Button>
           <GreenButton
             customStyle={styles.saveBtn}

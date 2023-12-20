@@ -66,6 +66,8 @@ const locale = {
   "label.newUsers": "New Users",
   "label.users": "Users",
   "label.searchByUserNameAndEmail": "Search by user name and email",
+  "label.dragNdrop": "Drag & drop files or Browse",
+  "label.supportedFormat": "Supported formates: png, jpg, jpeg",
 };
 
 export default locale;
