@@ -103,6 +103,7 @@ const variables = {
   sizeNormalInRem: '3rem',
 
   sideMenuColor: colorPallets.blue4,
+  moduleSelectorBorder: colorPallets.lightBrown,
 };
 
 export default variables;

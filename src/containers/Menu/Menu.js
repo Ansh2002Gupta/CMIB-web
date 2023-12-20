@@ -1,14 +1,14 @@
-import React from "react";
-import { Drawer, Layout } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
+import React from 'react';
+import { Drawer, Layout } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
 
-import useResponsive from "core/hooks/useResponsive";
+import useResponsive from 'core/hooks/useResponsive';
 
-import SideMenu from "../SideMenu";
+import SideMenu from '../SideMenu';
 
-import { ReactComponent as AppLogo } from '../../themes/base/assets/icons/app-logo.svg'
+import { ReactComponent as AppLogo } from '../../themes/base/assets/icons/app-logo.svg';
 
-import styles from "./menu.module.scss";
+import styles from './menu.module.scss';
 
 function MenuContainer({ openSideMenu, setOpenSideMenu }) {
   const responsive = useResponsive();
@@ -16,10 +16,11 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
     <Layout
       style={{
         minHeight: '100vh',
-      }}>
+      }}
+    >
       <Layout.Sider
         width={240}
-        breakpoint="md"
+        breakpoint='md'
         collapsedWidth={0}
         trigger={null}
       >
@@ -27,13 +28,13 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
       </Layout.Sider>
     </Layout>
   ) : (
-      <Drawer
-        className={styles.sideDrawer}
-        placement="left"
-        open={openSideMenu}
-        onClose={() => setOpenSideMenu(false)}
-        width="90%"
-        closeIcon={<CloseOutlined />}
+    <Drawer
+      className={styles.sideDrawer}
+      placement='left'
+      open={openSideMenu}
+      onClose={() => setOpenSideMenu(false)}
+      width='90%'
+      closeIcon={<CloseOutlined />}
       title={
         <div className={styles.drawerAppLogo}>
           <AppLogo />
@@ -48,13 +49,13 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
         },
         mask: {
           backdropFilter: 'blur(3px)',
-          background: 'rgba(0,0,0, 0.60)'
-        }
+          background: 'rgba(0,0,0, 0.60)',
+        },
       }}
     >
       <SideMenu />
     </Drawer>
   );
-
 }
+
 export default MenuContainer;

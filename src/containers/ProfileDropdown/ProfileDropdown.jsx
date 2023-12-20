@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import useResponsive from '../../core/hooks/useResponsive';
 import { Avatar, Dropdown, Space } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 
 import CardDropdownOverlay from './CardDropdownOverlay';
+import useResponsive from '../../core/hooks/useResponsive';
 
 import styles from './profileDropdown.module.scss'
 
@@ -18,7 +18,6 @@ const ProfileDropdown = ({ onLogout }) => {
     const responsive = useResponsive();
 
     return (
-
         <Dropdown
             dropdownRender={() =>
                 <CardDropdownOverlay
@@ -47,7 +46,6 @@ const ProfileDropdown = ({ onLogout }) => {
                         <DownOutlined className={`${styles.downIcon} ${dropdownVisible ? styles.arrowRotated : ''}`} />
                     </Space>
                 }
-
             </Space>
         </Dropdown>
 

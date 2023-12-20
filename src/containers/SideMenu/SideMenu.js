@@ -1,42 +1,19 @@
-import React, { useState } from "react";
-import { Button, ConfigProvider, Menu, Space, Typography, } from "antd";
-import { ArrowRightOutlined, GlobalOutlined, UpOutlined } from "@ant-design/icons";
+import React, { useState } from 'react';
+import { Button, ConfigProvider, Menu, Space, Typography } from 'antd';
+import {
+  ArrowRightOutlined,
+  GlobalOutlined,
+  UpOutlined,
+} from '@ant-design/icons';
 
-import TwoRow from "../../core/layouts/TwoRow";
-import TwoColumn from "../../core/layouts/TwoColumn";
+import ModuleList from './ModuleList';
+import TwoRow from '../../core/layouts/TwoRow';
+import TwoColumn from '../../core/layouts/TwoColumn';
 
-import modules from "./sideMenuItems";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import modules from './sideMenuItems';
+import useNavigateScreen from '../../core/hooks/useNavigateScreen';
+import styles from './sideMenu.module.scss';
 
-import styles from "./sideMenu.module.scss";
-
-const ModuleList = ({ modules, onSelectItem }) => {
-  return <ul className={styles.moduleList}>
-    {
-      modules.map(module =>
-        <>
-          <li
-            className={`${styles.moduleListItem} ${module?.subMenu?.length ? styles.disabled : ''} `}
-            key={module.key}
-            onClick={() => !module?.subMenu?.length && onSelectItem(module)}
-          >
-            {module.label}
-          </li>
-          <ul className={styles.moduleSubMenuList} key={'subMenu'}>
-            {module?.subMenu?.map(menu =>
-              <li
-                key={menu.key}
-                className={styles.moduleListItem}
-                onClick={() => onSelectItem(menu, true)}
-              >
-                {menu.label}
-              </li>
-            )}
-          </ul>
-        </>
-      )}
-  </ul>
-}
 const SideMenu = ({ logo }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
@@ -48,101 +25,105 @@ const SideMenu = ({ logo }) => {
     setOpenModuleSelector(false);
   };
   const handleOnClickMenuItem = ({ key }) => {
-    navigate(key)
-  }
-  return (<ConfigProvider
-    theme={{
-      token: {
-        colorText: 'var(--textPrimary, #fff)',
-      },
-      components: {
-        Menu: {
-          darkItemSelectedBg: 'white',
-          darkItemSelectedColor: 'black',
+    navigate(key);
+  };
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorText: 'var(--textPrimary, #fff)',
         },
-        Button: {
-          textHoverBg: 'var(--sideMenuColor)',
-        }
-      }
-    }}
-  >
-    <div className={styles.sideMenuContainer}>
-      <div className={styles.sideMenuTopSection}>
-        <div className={styles.appLogo}>
-          {logo}
-        </div>
-        <TwoRow
-          topSection={(
-            <TwoColumn
-              className={styles.moduleSelector}
-              leftSection={(
-                <div
-                  className={openModuleSelector ? '' : styles.moduleSelectorHeading}
-                >
-                  {openModuleSelector ? 'Choose a module' : selectedModule.label}
-                </div>
-              )}
+        components: {
+          Menu: {
+            darkItemSelectedBg: 'white',
+            darkItemSelectedColor: 'black',
+          },
+          Button: {
+            textHoverBg: 'var(--sideMenuColor)',
+          },
+        },
+      }}
+    >
+      <div className={styles.sideMenuContainer}>
+        <div className={styles.sideMenuTopSection}>
+          <div className={styles.appLogo}>{logo}</div>
+          <TwoRow
+            topSection={
+              <TwoColumn
+                className={styles.moduleSelector}
+                leftSection={
+                  <div
+                    className={
+                      openModuleSelector ? '' : styles.moduleSelectorHeading
+                    }
+                  >
+                    {openModuleSelector
+                      ? 'Choose a module'
+                      : selectedModule.label}
+                  </div>
+                }
+                rightSection={
+                  <Button
+                    size='small'
+                    shape='round'
+                    type='text'
+                    style={{
+                      color: 'var(--textPrimary,#fff)',
+                      background: '#262d52',
+                      fontSize: 'var(--fontSizeXSmall,12px)',
+                    }}
+                    onClick={() => setOpenModuleSelector((prev) => !prev)}
+                  >
+                    {openModuleSelector ? <UpOutlined /> : 'Change'}
+                  </Button>
+                }
+              />
+            }
+            bottomSection={
+              openModuleSelector && (
+                <ModuleList
+                  modules={modules}
+                  onSelectItem={handleOnSelectItem}
+                />
+              )
+            }
+          />
 
-              rightSection={(
-                <Button
-                  size="small"
-                  shape="round"
-                  type="text"
-                  style={{
-                    color: 'var(--textPrimary,#fff)',
-                    background: '#262d52',
-                    fontSize: 'var(--fontSizeXSmall,12px)'
-                  }}
-                  onClick={() => setOpenModuleSelector(prev => !prev)}
-                >
-                  {openModuleSelector ? <UpOutlined /> : 'Change'}
-                </Button>
-              )}
+          {!openModuleSelector && selectedModule && (
+            <Menu
+              className={styles.sideMenuOptionsContainer}
+              theme='dark'
+              defaultSelectedKeys={['1']}
+              mode='inline'
+              items={selectedModule.children}
+              expandIcon={<></>}
+              openKeys={modules.map((module) => module.key)}
+              onSelect={handleOnClickMenuItem}
             />
           )}
-          bottomSection={(
-            openModuleSelector && <ModuleList modules={modules} onSelectItem={handleOnSelectItem} />
-          )}
-        />
-
-        {
-          !openModuleSelector && selectedModule &&
-          <Menu
-            className={styles.sideMenuOptionsContainer}
-            theme="dark"
-            defaultSelectedKeys={['1']}
-            mode="inline"
-            items={selectedModule.children}
-            expandIcon={<></>}
-            openKeys={modules.map(module => module.key)}
-            onSelect={handleOnClickMenuItem}
-          />
-        }
-      </div>
-      <Space
-        className={styles.sideMenuBottomSection}
-        align="center"
-        direction="horizontal"
-      >
-        <Button
-          styles={{
-            icon: {
-              paddingRight: 'var(--sizeXXSmall, 8px)'
-            }
-          }}
-          size="large"
-          type="text"
-          block
-          icon={<GlobalOutlined />}
+        </div>
+        <Space
+          className={styles.sideMenuBottomSection}
+          align='center'
+          direction='horizontal'
         >
-          <Typography.Text>
-            Visit Website
-          </Typography.Text>
-        </Button>
-        <ArrowRightOutlined />
-      </Space>
-    </div>
-  </ConfigProvider>
+          <Button
+            styles={{
+              icon: {
+                paddingRight: 'var(--sizeXXSmall, 8px)',
+              },
+            }}
+            size='large'
+            type='text'
+            block
+            icon={<GlobalOutlined />}
+          >
+            <Typography.Text>Visit Website</Typography.Text>
+          </Button>
+          <ArrowRightOutlined />
+        </Space>
+      </div>
+    </ConfigProvider>
   );
 };
 
