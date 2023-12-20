@@ -1,0 +1,30 @@
+.container {
+  padding: var(--paddingMedium) var(--paddingForSection);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: var(--borderLight);
+}
+
+.rightSubIconContainer {
+  display: flex;
+  gap: var(--gapSmall);
+}
+
+@media screen and (max-width: 1535px) {
+  .container {
+    padding: var(--paddingMedium) var(--paddingXXLarge);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .container {
+    padding: var(--paddingMedium) var(--paddingLarge);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    padding: var(--paddingMedium) var(--paddingMedium);
+  }
+}

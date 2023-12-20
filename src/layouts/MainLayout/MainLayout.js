@@ -2,9 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TwoColumn, TwoRow, ThreeRow } from 'core/layouts';
 import useResponsive from 'core/hooks/useResponsive';
-import Styles from './mainLayout.module.scss';
+import styles from './mainLayout.module.scss';
 
-function MainLayout({ className, style, header, menu, content }) {
+function MainLayout({
+  className,
+  style,
+  header,
+  menu,
+  content,
+  noOuterPadding,
+}) {
   // responsive variables based upon config set under `/core/themes/mixins/responsive.scss`
   // larger screen first approach
   const responsive = useResponsive();
@@ -12,12 +19,15 @@ function MainLayout({ className, style, header, menu, content }) {
     // applies to sm screen and above
     responsive.isMd ? (
       <TwoColumn
-        className={`${Styles.mainLayout} ${className}`}
+        className={`${styles.mainLayout} ${className}`}
         style={style}
         leftSection={menu}
         rightSection={
           <TwoRow
-            className={`${Styles.mainLayoutRightSection}`}
+            className={`${[
+              styles.mainLayoutRightSection,
+              noOuterPadding ? styles.noPadding : '',
+            ].join(' ')}`}
             topSection={header}
             bottomSection={content}
           />
@@ -27,7 +37,7 @@ function MainLayout({ className, style, header, menu, content }) {
     ) : (
       // applies to resolution below sm
       <ThreeRow
-        className={`${Styles.mainLayoutMobile} ${className}`}
+        className={`${styles.mainLayoutMobile} ${className}`}
         topSection={header}
         middleSection={content}
         middleSectionStyle={{

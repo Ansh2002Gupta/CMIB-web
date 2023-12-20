@@ -1,0 +1,31 @@
+.container {
+  flex-direction: column;
+  gap: var(--gapLarge);
+}
+
+.error {
+  padding-bottom: var(--paddingExtraSmall);
+  color: var(--error);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+}
+
+.linkContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backToLoginLink {
+  color: var(--linkColor);
+  text-align: center;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  &:hover {
+    color: var(--linkColor) !important;
+  }
+}
+
+.backToLoginLink[disabled] {
+  color: var(--disableLink) !important;
+}
