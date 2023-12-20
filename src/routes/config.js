@@ -5,6 +5,7 @@ import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
+import Session from "../views/Session";
 import ManageUsers from "../views/ManageUsers";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -17,6 +18,7 @@ import {
   MANAGE_USERS,
   FORGOT_PASSWORD,
   ROOT,
+  SESSION
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -117,6 +119,18 @@ const config = [
       {
         viewPath: "",
         element: <ManageUsers />, // view
+      },
+    ],
+  },
+  {
+    pagePath: SESSION,
+    element: <HomeWithPrivateAccess />, // Page
+    // element: <AuthWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <Session />, // view
       },
     ],
   },

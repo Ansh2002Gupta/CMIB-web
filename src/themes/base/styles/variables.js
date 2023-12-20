@@ -1,4 +1,4 @@
-import { colorPallets } from "../../../constant/colors";
+import { colorPallets } from '../../../constant/colors';
 
 const variables = {
   // Background colors
@@ -8,7 +8,7 @@ const variables = {
   blueBg: colorPallets.lightBlue1,
   lightBlueBg: colorPallets.lightBlue2,
   headerBg: colorPallets.whiteSmoke,
-  sidemenuBgColor: "var(--primaryBg)",
+  sidemenuBgColor: 'var(--primaryBg)',
   greenBtnBg: colorPallets.green1,
   mobileBg1: colorPallets.white,
 
@@ -32,35 +32,35 @@ const variables = {
   requiredStarColor: colorPallets.red1,
 
   // Border-Radius
-  radiusXss: "2px",
-  radiusSm: "4px",
-  radiusMd: "6px",
-  radiusLg: "8px",
-  radiusXLg: "12px",
-  radiusXXLg: "24px",
+  radiusXss: '2px',
+  radiusSm: '4px',
+  radiusMd: '6px',
+  radiusLg: '8px',
+  radiusXLg: '12px',
+  radiusXXLg: '24px',
 
   // Font-size
-  fontSizeExtraSmall: "12px",
-  fontSizeSmall: "14px",
-  fontSizeNormal: "16px",
-  fontSizeLarge: "18px",
-  fontSizeXlarge: "20px",
-  fontSizeXlargeMedium: "24px",
-  fontSizeXXlarge: "28px",
-  fontSizeHeading: "32px",
-  fontSizeLargeHeading: "36px",
-  fontSizeExtraLargeHeading: "40px",
+  fontSizeExtraSmall: '12px',
+  fontSizeSmall: '14px',
+  fontSizeNormal: '16px',
+  fontSizeLarge: '18px',
+  fontSizeXlarge: '20px',
+  fontSizeXlargeMedium: '24px',
+  fontSizeXXlarge: '28px',
+  fontSizeHeading: '32px',
+  fontSizeLargeHeading: '36px',
+  fontSizeExtraLargeHeading: '40px',
 
   // Font-height
-  lineHeightExtraSmall: "16px",
-  lineHeightSmall: "18px",
-  lineHeightNormal: "20px",
-  lineHeightLarge: "22px",
-  lineHeightXlarge: "24px",
-  lineHeightXXlarge: "32px",
-  lineHeightHeading: "40px",
-  lineHeightLargeHeading: "44px",
-  lineHeightExtraLargeHeading: "48px",
+  lineHeightExtraSmall: '16px',
+  lineHeightSmall: '18px',
+  lineHeightNormal: '20px',
+  lineHeightLarge: '22px',
+  lineHeightXlarge: '24px',
+  lineHeightXXlarge: '32px',
+  lineHeightHeading: '40px',
+  lineHeightLargeHeading: '44px',
+  lineHeightExtraLargeHeading: '48px',
 
   // Font-weights
   fontWeightSmall: 400,
@@ -68,11 +68,12 @@ const variables = {
   fontWeightBold: 600,
 
   // Widths
-  sidemenuWidth: "74px",
+  sidemenuWidth: '74px',
+  fullWidth: '100%',
 
   // Heights
-  btnHeight: "56px",
-  minBtnHeight: "45px",
+  btnHeight: '56px',
+  minBtnHeight: '45px',
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
@@ -84,7 +85,7 @@ const variables = {
   boxShadowColor: colorPallets.shadowBlack,
 
   // Font-family
-  fontFamilyRegular: "General Sans",
+  fontFamilyRegular: 'General Sans',
 
   // Z-index
   maxZIndex: 99,
@@ -95,30 +96,30 @@ const variables = {
   inputPlaceHolder: colorPallets.darkGrey1,
 
   // Padding
-  paddingExtraSmall: "8px",
-  paddingSmall: "16px",
-  paddingMedium: "24px",
-  paddingLarge: "32px",
-  paddingXLarge: "40px",
-  paddingXXLarge: "48px",
-  paddingForSection: "72px",
+  paddingExtraSmall: '8px',
+  paddingSmall: '16px',
+  paddingMedium: '24px',
+  paddingLarge: '32px',
+  paddingXLarge: '40px',
+  paddingXXLarge: '48px',
+  paddingForSection: '72px',
 
   // Bullet points
   bulletPoint: colorPallets.ltGrey1,
   bulletPointText: colorPallets.darkGrey2,
 
   // Gap
-  gapXXLarge: "56px",
-  gapXLarge: "40px",
-  gapLarge: "32px",
-  gapMedium: "24px",
-  gapSmall: "16px",
-  gapSmallMedium: "12px",
-  gapXSmall: "8px",
-  gapXXSmall: "4px",
+  gapXXLarge: '56px',
+  gapXLarge: '40px',
+  gapLarge: '32px',
+  gapMedium: '24px',
+  gapSmall: '16px',
+  gapSmallMedium: '12px',
+  gapXSmall: '8px',
+  gapXXSmall: '4px',
 
   // margin
-  marginMedium: "16px",
+  marginMedium: '16px',
 };
 
 export default variables;

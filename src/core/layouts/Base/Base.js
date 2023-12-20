@@ -1,27 +1,24 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Column, Row } from '../../components'
-import Styles from './base.module.scss'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Column, Row } from '../../components';
+import Styles from './base.module.scss';
 
-function Base({ className, style, children }) {
+function Base({ className, style, children, onClick }) {
   return (
     <div
       className={`${Styles.baseLayout} ${className}`}
       style={style}
+      onClick={onClick}
     >
-      {
-        typeof children === 'function'
-        ? children({ Row, Column })
-        : children
-      }
+      {typeof children === 'function' ? children({ Row, Column }) : children}
     </div>
-  )
+  );
 }
 
 Base.defaultProps = {
   className: '',
   style: {},
-}
+};
 
 Base.propTypes = {
   className: PropTypes.string,
@@ -29,8 +26,8 @@ Base.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
-    PropTypes.func
+    PropTypes.func,
   ]).isRequired,
-}
+};
 
-export default Base
+export default Base;

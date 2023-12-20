@@ -1,0 +1,21 @@
+.topSectionStyle{
+    padding-top: var(--gapMedium);
+    padding-left: var(--gapMedium);
+    padding-right: var(--gapMedium);
+    border-bottom: var(--borderLight);
+    border-top: var(--borderLight);
+    background-color: var(--bodyBg);
+}
+.spaceBetween{justify-content: space-between;}
+.buttonStyles{
+    background-color: var(--greenBtnBg);
+}
+.mainContainer{
+     background-color: var(--blueBg);
+}
+.textStyle{
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--bodyBg);
+}
