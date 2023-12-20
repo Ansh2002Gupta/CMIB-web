@@ -6,7 +6,7 @@
 .profileName {
     display: block;
     font-weight: var(--fontWeightBold, 600);
-    color: #0f172a;
+    color: var(--profileTextColor, #0f172a);
     font-size: var(--fontSizeSmall, 14px);
 }
 .profileMenuName {

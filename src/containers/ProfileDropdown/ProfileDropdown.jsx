@@ -18,38 +18,38 @@ const ProfileDropdown = ({ onLogout }) => {
     const responsive = useResponsive();
 
     return (
-        
+
         <Dropdown
-                dropdownRender={() =>
-                    <CardDropdownOverlay
-                        userName={userName}
-                        userEmail={userEmail}
-                        userProfile={userProfilePic}
-                        onLogout={onLogout}
-                    />}
-                trigger={['click']}
-                onOpenChange={(visible) => setDropdownVisible(visible)}
-                open={dropdownVisible}
-            >
-        <Space className={styles.profileDropdown}>
+            dropdownRender={() =>
+                <CardDropdownOverlay
+                    userName={userName}
+                    userEmail={userEmail}
+                    userProfile={userProfilePic}
+                    onLogout={onLogout}
+                />}
+            trigger={['click']}
+            onOpenChange={(visible) => setDropdownVisible(visible)}
+            open={dropdownVisible}
+        >
+            <Space className={styles.profileDropdown}>
                 <Avatar
-                src={userProfilePic}
-                icon={<UserOutlined />}
-                size='large'
-                className='profileAvatar'
-            />
-            {
-                responsive.isMd && <Space size={16}>
-                <Space direction="vertical" size='1' >
-                    <span className={styles.profileName} >{userName}</span>
-                    <span className={styles.profileRole}>{userRole}</span>
-                </Space>
-                <DownOutlined className={`${styles.downIcon} ${dropdownVisible ? styles.arrowRotated : ''}`} />
+                    src={userProfilePic}
+                    icon={<UserOutlined />}
+                    size='large'
+                    className='profileAvatar'
+                />
+                {
+                    responsive.isMd && <Space size={16}>
+                        <Space direction="vertical" size='1' >
+                            <span className={styles.profileName} >{userName}</span>
+                            <span className={styles.profileRole}>{userRole}</span>
+                        </Space>
+                        <DownOutlined className={`${styles.downIcon} ${dropdownVisible ? styles.arrowRotated : ''}`} />
+                    </Space>
+                }
+
             </Space>
-            }
-                
-        </Space>
-            </Dropdown>
+        </Dropdown>
 
     );
 };
