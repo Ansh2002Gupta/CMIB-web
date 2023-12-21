@@ -13,13 +13,14 @@ import useForgotPassword from "../../core/hooks/useForgotPassword.js";
 import { EMAIL_REGEX } from "../../constant/regex.js";
 import { LOGIN } from "../../routes/routeNames.js";
 import styles from "./ForgotPassword.module.scss";
+import useCheckOTP from "../../core/hooks/useCheckOTP";
 
 const ForgotPassword = () => {
   const intl = useIntl();
 
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
   const [userName, setUserName] = useState("");
-  const [userEnteredOTP, setUserEnteredOTP] = useState(null);
+  const [changePasswordToken, setChangePasswordToken] = useState(null);
   const [status, setStatus] = useState("");
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
 
@@ -31,6 +32,14 @@ const ForgotPassword = () => {
     setErrorWhileResetPassword,
   } = useForgotPassword();
 
+  const {
+    errorWhileVerifyingOTP,
+    checkOTPData,
+    handleCheckOTP,
+    isLoading: isOTPLoading,
+    isSuccess: otpVerifiedSuccess,
+  } = useCheckOTP();
+
   const handleOnSubmit = (event) => {
     event.preventDefault();
     if (!EMAIL_REGEX.test(userName)) {
@@ -40,12 +49,22 @@ const ForgotPassword = () => {
     setStatus("success");
     handleForgotPassword({ email: userName });
   };
+  const handleOTPSubmit = (otp) => {
+    handleCheckOTP({ email: userName, otp: otp?.join("") });
+  };
 
   useEffect(() => {
     if (forgotPasswordSuccess) {
       setCurrentActiveScreen(2);
     }
   }, [forgotPasswordSuccess]);
+
+  useEffect(() => {
+    if (otpVerifiedSuccess) {
+      setCurrentActiveScreen(3);
+      setChangePasswordToken(checkOTPData?.token);
+    }
+  }, [otpVerifiedSuccess, checkOTPData]);
 
   useEffect(() => {
     setErrorWhileResetPassword("");
@@ -126,13 +145,17 @@ const ForgotPassword = () => {
           )}
           {currentActiveScreen === 2 && (
             <OTPInput
+              errorWhileVerifyingOTP={errorWhileVerifyingOTP}
+              isOTPLoading={isOTPLoading}
+              handleAuthOTP={() => {
+                handleForgotPassword({ email: userName });
+              }}
               noOfBlocks={4}
               headingText={intl.formatMessage({
                 id: "label.forgotPasswordOTP",
               })}
               onSubmit={(otp) => {
-                setCurrentActiveScreen(3);
-                setUserEnteredOTP(otp);
+                handleOTPSubmit(otp);
               }}
               {...{
                 errorWhileResetPassword,
@@ -141,7 +164,7 @@ const ForgotPassword = () => {
           )}
         </Base>
       ) : (
-        <CreateNewPassword otp={userEnteredOTP?.join("")} email={userName} />
+        <CreateNewPassword token={changePasswordToken} />
       )}
     </>
   );

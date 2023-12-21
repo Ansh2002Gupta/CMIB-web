@@ -3,10 +3,7 @@ import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
 import { API_STATUS, STATUS_CODES } from "../../constant/constant";
-import {
-  ADMIN_ROUTE,
-  AUTHENTICATE_OTP_ROUTE,
-} from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, SEND_OTP } from "../../constant/apiEndpoints";
 
 const useForgotPassword = () => {
   const intl = useIntl();
@@ -21,7 +18,7 @@ const useForgotPassword = () => {
       setForgotPasswordApiStatus(API_STATUS.LOADING);
       setForgotPasswordResult(null);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const url = ADMIN_ROUTE + AUTHENTICATE_OTP_ROUTE;
+      const url = ADMIN_ROUTE + SEND_OTP;
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setForgotPasswordApiStatus(API_STATUS.SUCCESS);

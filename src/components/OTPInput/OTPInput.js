@@ -15,6 +15,7 @@ import "./Override.css";
 
 const OTPInput = ({
   errorWhileSendingOTP,
+  errorWhileVerifyingOTP,
   handleAuthOTP,
   headingText,
   isOTPLoading,
@@ -22,7 +23,7 @@ const OTPInput = ({
   onSubmit,
   setCurrentActiveScreen,
 }) => {
-  const { errorWhileVerifyingOTP, isLoading: isCheckingOTP } = useCheckOTP();
+  const { isLoading: isCheckingOTP } = useCheckOTP();
   const [otpValues, setOtpValues] = useState(new Array(noOfBlocks).fill(""));
   const [isSendAgainBtnActive, setIsSendAgainBtnActive] = useState(false);
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
@@ -39,7 +40,8 @@ const OTPInput = ({
     setShowCountdown(0);
   };
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
     //TODO: Call an API for finding out does the entered OTP is correct or not.
     onSubmit(otpValues);
   };
@@ -84,7 +86,10 @@ const OTPInput = ({
             : intl.formatMessage({ id: "label.otpHeading" })}
         </Typography>
       </div>
-      <form className={styles.otpFieldsAndButtonContainer}>
+      <form
+        className={styles.otpFieldsAndButtonContainer}
+        onSubmit={handleOnSubmit}
+      >
         <div className={styles.subHeadingAndInputContainer}>
           <div>
             <div className={styles.subHeadingContainer}>
@@ -195,6 +200,7 @@ const OTPInput = ({
 
 OTPInput.defaultProps = {
   errorWhileSendingOTP: "",
+  errorWhileVerifyingOTP: "",
   handleAuthOTP: () => {},
   headingText: "",
   isOTPLoading: false,
@@ -205,6 +211,7 @@ OTPInput.defaultProps = {
 
 OTPInput.propTypes = {
   errorWhileSendingOTP: PropTypes.string,
+  errorWhileVerifyingOTP: PropTypes.string,
   handleAuthOTP: PropTypes.func,
   headingText: PropTypes.string,
   isOTPLoading: PropTypes.bool,
