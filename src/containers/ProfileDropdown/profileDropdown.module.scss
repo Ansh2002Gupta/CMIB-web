@@ -32,7 +32,7 @@
 .profileMenu {
     border-radius: var(--sizeXXLarge, 22px);
     width: 250px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); // TODO: need to add box shadow using variable
+    box-shadow: var(--profileBoxShadow, 0px 4px 8px rgba(0, 0, 0, 0.15)); // TODO: need to add box shadow using variable
     margin-top: var(--sizeXSmall, 12px);
 }
 .profileMenuHeader {

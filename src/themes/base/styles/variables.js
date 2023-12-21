@@ -16,6 +16,7 @@ const variables = {
   textDefault: colorPallets.black,
   textLight: colorPallets.blue3,
   textBold: colorPallets.black1,
+  textDark: colorPallets.black1,
   border: colorPallets.ltGrey2,
   hoverBorder: `1px solid ${colorPallets.primaryBg}`,
   headingColor: colorPallets.black1,
@@ -119,6 +120,8 @@ const variables = {
 
   // margin
   marginMedium: '16px',
+
+  profileBoxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)',
 };
 
 export default variables;

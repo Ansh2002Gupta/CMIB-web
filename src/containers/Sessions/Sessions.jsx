@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Dropdown, Typography } from 'antd';
 import { DownOutlined } from '@ant-design/icons'
 
-
 import styles from './sessions.module.scss';
 // TODO: need to set items of the session dropdown according to api data.
 const items = [
