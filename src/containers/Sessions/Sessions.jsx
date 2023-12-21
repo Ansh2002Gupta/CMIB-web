@@ -2,27 +2,17 @@ import React from 'react';
 import { Button, Dropdown, Typography } from 'antd';
 import { DownOutlined } from '@ant-design/icons'
 
+import { SESSION_ITEMS } from '../../dummyData';
+
 import styles from './sessions.module.scss';
-// TODO: need to set items of the session dropdown according to api data.
-const items = [
-  {
-    key: '1',
-    label: 'Item 1',
-  },
-  {
-    key: '2',
-    label: 'Item 2',
-  },
-  {
-    key: '3',
-    label: 'Item 3',
-  },
-];
+
 function Sessions() {
+  // TODO: need to set items of the session dropdown according to api data.
+
   return <Dropdown
     trigger={['click']}
     menu={{
-      items,
+      items: SESSION_ITEMS,
       selectable: true,
     }}
     className={styles.sessionContainer}
@@ -33,7 +23,6 @@ function Sessions() {
       <DownOutlined />
     </Button>
   </Dropdown>
-
 }
 
 export default Sessions;
