@@ -8,3 +8,4 @@ export const ADMIN_ROUTE = "admin";
 export const AUTHENTICATE_OTP_ROUTE = "/reset-password-otp";
 export const FORGOT_PASSWORD_END_POINT = "/forget-password-otp";
 export const LOGIN_END_POINT = "/login";
+export const CHECK_OTP_END_POINT = "/two-factor-check";

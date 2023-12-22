@@ -20,6 +20,7 @@ const locale = {
   "label.loginBtn": "Login",
   "label.backToLoginBtn": "Back to Login",
   "label.gobackToLoginBtn": "Go back to Login",
+  "label.back": "Back",
   "label.submitBtn": "Submit",
   "label.userNamePlaceHolder": "Please enter your email",
   "label.passwordPlaceholder": "Please enter your password",
@@ -51,7 +52,7 @@ const locale = {
   "label.sendAgain": "Send Again",
   "label.fourteenMinTimerText1": "You have requested OTP for 4 times!",
   "label.fourteenMinTimerText2": "You can resend the next OTP after",
-  "label.somethingWentWrong": "Something went wrong!",
+  "label.somethingWentWrong": "Something went wrong, Please try again!",
   "label.forgotPasswordOTP":
     "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
   "label.filter": "Filter",
@@ -93,6 +94,7 @@ const locale = {
   "label.changePassword": "Change Password",
   "label.companyProfile": "Company Profile",
   "label.logout": "Logout",
+  "label.left": "left",
 };
 
 export default locale;
