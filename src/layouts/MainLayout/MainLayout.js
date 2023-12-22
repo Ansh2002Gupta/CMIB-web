@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { TwoColumn, TwoRow, ThreeRow } from 'core/layouts';
-import useResponsive from 'core/hooks/useResponsive';
-import styles from './mainLayout.module.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { TwoColumn, TwoRow, ThreeRow } from "core/layouts";
+import useResponsive from "core/hooks/useResponsive";
+import styles from "./mainLayout.module.scss";
 
 function MainLayout({
   className,
@@ -26,8 +26,8 @@ function MainLayout({
           <TwoRow
             className={`${[
               styles.mainLayoutRightSection,
-              noOuterPadding ? styles.noPadding : '',
-            ].join(' ')}`}
+              noOuterPadding ? styles.noPadding : "",
+            ].join(" ")}`}
             topSection={header}
             bottomSection={content}
             isBottomFillSpace
@@ -40,21 +40,14 @@ function MainLayout({
       <ThreeRow
         className={`${styles.mainLayoutMobile} ${className}`}
         topSection={header}
-        topSectionStyle={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 999999,
-          padding: '10px',
-          backgroundColor: 'var(--secondary-bg)',
-        }}
         middleSection={content}
         middleSectionStyle={{
           flexGrow: 1,
-          padding: '10px',
+          padding: "10px",
         }}
         bottomSection={menu}
         bottomSectionStyle={{
-          position: 'sticky',
+          position: "sticky",
           bottom: 0,
           zIndex: 999,
         }}
@@ -64,7 +57,7 @@ function MainLayout({
 }
 
 MainLayout.defaultProps = {
-  className: '',
+  className: "",
   style: {},
 };
 
