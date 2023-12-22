@@ -1,8 +1,9 @@
 import React from "react";
 import { Statistic } from "antd";
 
-const MyCountDown = React.memo(({ onFinish, format, minutes }) => {
+const CustomCountdown = React.memo(({ format, minutes, onFinish }) => {
   const { Countdown } = Statistic;
+
   return (
     <Countdown
       {...{ format }}
@@ -12,4 +13,4 @@ const MyCountDown = React.memo(({ onFinish, format, minutes }) => {
   );
 });
 
-export default MyCountDown;
+export default CustomCountdown;

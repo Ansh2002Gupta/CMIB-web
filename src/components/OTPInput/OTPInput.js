@@ -1,15 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Typography, Button } from "antd";
+import { Button, Typography } from "antd";
 import { InputOTP } from "antd-input-otp";
 
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
-import MyCountDown from "../MyCountDown";
+import CustomCountdown from "../CustomCountdown";
 import { LOGIN } from "../../routes/routeNames";
-import { TIMER_OF_15_MINUTES } from "../../constant/constant";
+import {
+  TIMER_OF_1_MINUTES,
+  TIMER_OF_15_MINUTES,
+} from "../../constant/constant";
 import styles from "./OTPInput.module.scss";
 import "./Override.css";
 
@@ -18,11 +21,11 @@ const OTPInput = ({
   errorWhileVerifyingOTP,
   handleAuthOTP,
   headingText,
+  isCheckingOTP,
   isOTPLoading,
   noOfBlocks,
   onSubmit,
   setCurrentActiveScreen,
-  isCheckingOTP,
 }) => {
   const intl = useIntl();
 
@@ -83,7 +86,7 @@ const OTPInput = ({
       <form
         className={styles.otpFieldsAndButtonContainer}
         onSubmit={(e) => {
-          e?.preventDefault();
+          e.preventDefault();
           onSubmit();
         }}
       >
@@ -121,10 +124,10 @@ const OTPInput = ({
                     {intl.formatMessage({ id: "label.fourteenMinTimerText2" })}
                   </Typography>
                   <span>
-                    <MyCountDown
+                    <CustomCountdown
                       onFinish={handleTimerEnd}
                       format="mm:ss"
-                      minutes={15}
+                      minutes={TIMER_OF_15_MINUTES}
                     />
                   </span>
                 </div>
@@ -151,10 +154,10 @@ const OTPInput = ({
                   </Button>
                   {showCountdown === 1 ? (
                     <span>
-                      <MyCountDown
+                      <CustomCountdown
                         onFinish={handleTimerEnd}
                         format="(mm:ss)"
-                        minutes={1}
+                        minutes={TIMER_OF_1_MINUTES}
                       />
                     </span>
                   ) : (

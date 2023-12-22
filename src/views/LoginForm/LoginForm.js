@@ -4,13 +4,13 @@ import { Button, Typography } from "antd";
 
 import { Base } from "core/layouts";
 
-import withCardView from "../../hocs/withCardView";
 import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
-import useLogin from "../../core/hooks/useLogin";
+import withCardView from "../../hocs/withCardView";
 import useAuthOTP from "../../core/hooks/useAuthOTP";
 import useCheckOTP from "../../core/hooks/useCheckOTP";
+import useLogin from "../../core/hooks/useLogin";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";
@@ -30,12 +30,12 @@ const LoginForm = () => {
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
 
   const {
-    error: loginError,
-    setError: setLoginError,
     data: loginResponse,
+    error: loginError,
     handleUserLogin,
     isLoading,
     loginApiStatus,
+    setError: setLoginError,
   } = useLogin();
 
   const {
@@ -46,16 +46,16 @@ const LoginForm = () => {
 
   const {
     errorWhileVerifyingOTP,
-    otpAPIStatus,
     handleCheckOTP,
     isLoading: isCheckingOTP,
+    isSuccess: isOTPCheckedSuccessfully,
   } = useCheckOTP();
 
   useEffect(() => {
-    if (otpAPIStatus === "success") {
+    if (isOTPCheckedSuccessfully) {
       navigate(DASHBOARD);
     }
-  }, [otpAPIStatus]);
+  }, [isOTPCheckedSuccessfully]);
 
   const handleOnLogin = (e) => {
     e?.preventDefault();
