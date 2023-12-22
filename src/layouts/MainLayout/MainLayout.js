@@ -43,7 +43,6 @@ function MainLayout({
         middleSection={content}
         middleSectionStyle={{
           flexGrow: 1,
-          padding: "10px",
         }}
         bottomSection={menu}
         bottomSectionStyle={{

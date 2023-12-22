@@ -5,8 +5,8 @@ import { Typography, Image, Switch } from "antd";
 
 import { TwoRow, TwoColumn, ThreeRow } from "../../core/layouts";
 
-import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import CustomInput from "../../components/CustomInput";
 import variables from "../../themes/base/styles/variables";
 import styles from "./SessionDetails.module.scss";
 
