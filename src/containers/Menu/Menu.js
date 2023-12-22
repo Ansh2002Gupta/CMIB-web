@@ -45,11 +45,11 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
           padding: 0,
         },
         content: {
-          background: '#001529',
+          background: 'var(--sidemenuBgColor, #001529)',
         },
         mask: {
           backdropFilter: 'blur(3px)',
-          background: 'rgba(0,0,0, 0.60)',
+          background: 'var(--sideMenuMaskBg, rgba(0,0,0,0.60))',
         },
       }}
     >

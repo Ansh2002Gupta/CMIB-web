@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 // will be replaced by view component injected through route
 import { Outlet } from 'react-router-dom';
+import { Layout } from 'antd';
 
 import MainLayout from '../layouts/MainLayout';
 
 import MenuContainer from '../containers/Menu/Menu';
 import HeaderContainer from '../containers/Header';
-import { Layout } from 'antd';
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);

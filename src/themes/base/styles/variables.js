@@ -31,6 +31,7 @@ const variables = {
   checkBoxText: colorPallets.black1,
   error: colorPallets.red1,
   requiredStarColor: colorPallets.red1,
+  sideMenuMaskBg: colorPallets.maskBlack,
 
   // Border-Radius
   radiusXss: '2px',
