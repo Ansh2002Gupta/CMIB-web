@@ -17,6 +17,8 @@ import someFiltersAreSelected from "./some filters are selected.svg";
 import trash from "./trash.svg";
 import unCheckedBox from "./unCheckedBox.svg";
 import uploadIcon from "./Upload icon.svg";
+import addIcon from "./add.png";
+import editIcon from "./edit.png";
 
 const images = {
   arrowRight,
@@ -38,6 +40,8 @@ const images = {
   trash,
   unCheckedBox,
   uploadIcon,
+  addIcon,
+  editIcon,
 };
 
 export default images;

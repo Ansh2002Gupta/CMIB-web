@@ -1,2 +1,3 @@
 import Session from "./Session";
-export default Session
+
+export default Session;

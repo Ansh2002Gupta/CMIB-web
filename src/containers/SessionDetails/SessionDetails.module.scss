@@ -17,12 +17,15 @@
 .grayText{font-family: var(--fontFamilyRegular);
     font-size: var(--fontSizeSmall);
     font-weight: var(--fontWeightMedium);
-    color: var(--subHeadingColor)};
+    color: var(--subHeadingColor);
+
+};
 .blackText{
     font-family: var(--fontFamilyRegular);
     font-size: var(--fontSizeSmall);
     font-weight: var(--fontWeightMedium);
     color: var(--textBold);
+
 }
 .redText{ color: var(--error);}
 .editIcon{
@@ -36,18 +39,15 @@ cursor: pointer;
 }
 .gridContainer{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   column-gap: var(--gapSmall);
   flex: 1;
 }
 .gridItem {
     padding-bottom: var(--gapMedium);
   }
-.detailsContainer{
-
-}
-.statusContainer{gap:var(--gapXSmall);
-
+.statusContainer{
+    gap:var(--gapXSmall);
     align-items: center;
 }
 .Switch{
@@ -67,7 +67,7 @@ cursor: pointer;
     border-radius: var(--radiusXLg);
     border: var(--borderLight);
     background-color: var(--bodyBg);
-    min-width:  300px;
+   
   }
   .buttonStyles{
     background-color: var(--bodyBg);

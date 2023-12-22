@@ -10,7 +10,7 @@
 }
 
 .tab.active {
-  color: var(--black1);
+  color: var(--textBold);
   font-weight: var(--fontWeightBold);
   border-bottom: var(--borderBlue);
 }
@@ -20,8 +20,6 @@
 }
 .tab-container {
   justify-content: center;
- 
-
 }
 .tab-box {
   display: flex;
