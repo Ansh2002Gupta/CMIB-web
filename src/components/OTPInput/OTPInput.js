@@ -22,6 +22,7 @@ const OTPInput = ({
   errorWhileVerifyingOTP,
   handleAuthOTP,
   headingText,
+  isCheckingOTP,
   isOTPLoading,
   noOfBlocks,
   onSubmit,
