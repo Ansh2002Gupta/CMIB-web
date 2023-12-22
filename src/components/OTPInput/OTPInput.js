@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Typography, Statistic, Button } from "antd";
+import { Button, Typography } from "antd";
 import { InputOTP } from "antd-input-otp";
 
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
-import useCheckOTP from "../../core/hooks/useCheckOTP";
+import CustomCountdown from "../CustomCountdown";
 import { LOGIN } from "../../routes/routeNames";
-import { TIMER_OF_15_MINUTES } from "../../constant/constant";
+import {
+  TIMER_OF_1_MINUTES,
+  TIMER_OF_15_MINUTES,
+} from "../../constant/constant";
 import styles from "./OTPInput.module.scss";
 import "./Override.css";
 
@@ -18,6 +21,7 @@ const OTPInput = ({
   errorWhileVerifyingOTP,
   handleAuthOTP,
   headingText,
+  isCheckingOTP,
   isOTPLoading,
   noOfBlocks,
   onSubmit,
@@ -33,14 +37,13 @@ const OTPInput = ({
   const [otpError, setOtpError] = useState("");
   const intl = useIntl();
 
-  const handleTimerEnd = (timerLength) => {
+  const handleTimerEnd = useCallback((timerLength) => {
     setIsSendAgainBtnActive(true);
     if (timerLength === TIMER_OF_15_MINUTES) {
       setNoOfTimesOTPCanBeSend(4);
     }
     setShowCountdown(0);
-  };
-
+  }, []);
   const handleOnSubmit = (e) => {
     e.preventDefault();
     onSubmit(otpValues);
@@ -130,13 +133,10 @@ const OTPInput = ({
                     {intl.formatMessage({ id: "label.fourteenMinTimerText2" })}
                   </Typography>
                   <span>
-                    <Countdown
-                      onFinish={() => handleTimerEnd(15)}
-                      value={new Date().setMinutes(
-                        new Date().getMinutes() + 15
-                      )}
+                    <CustomCountdown
+                      onFinish={handleTimerEnd}
                       format="mm:ss"
-                      className={styles["ant-statistic-content-value"]}
+                      minutes={TIMER_OF_15_MINUTES}
                     />
                   </span>
                 </div>
@@ -163,19 +163,17 @@ const OTPInput = ({
                   </Button>
                   {showCountdown === 1 ? (
                     <span>
-                      <Countdown
-                        onFinish={() => handleTimerEnd(1)}
-                        value={new Date().setMinutes(
-                          new Date().getMinutes() + 1
-                        )}
+                      <CustomCountdown
+                        onFinish={handleTimerEnd}
                         format="(mm:ss)"
-                        className={styles["ant-statistic-content-value"]}
+                        minutes={TIMER_OF_1_MINUTES}
                       />
                     </span>
                   ) : (
                     <div>
                       <Typography className={styles.active}>
-                        ({noOfTimesOTPCanBeSend} left)
+                        ({noOfTimesOTPCanBeSend}{" "}
+                        {intl.formatMessage({ id: "label.left" })})
                       </Typography>
                     </div>
                   )}
@@ -188,8 +186,8 @@ const OTPInput = ({
           error={otpError}
           loading={isOTPLoading || isCheckingOTP}
           topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
-          onTopBtnClick={handleOnSubmit}
-          bottomLinkText={intl.formatMessage({ id: "label.backToLoginBtn" })}
+          onTopBtnClick={() => onSubmit(otpValues?.join(""))}
+          bottomLinkText={intl.formatMessage({ id: "label.back" })}
           onLinkClick={() => setCurrentActiveScreen(1)}
           isTopBtnDisable={!isAllowedToSubmit}
           linkRedirection={LOGIN}

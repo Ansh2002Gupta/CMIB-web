@@ -3,11 +3,15 @@ import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
 import { API_STATUS, STATUS_CODES } from "../../constant/constant";
-import { ADMIN_ROUTE, VERIFY_OTP } from "../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  CHECK_OTP_END_POINT,
+  VERIFY_OTP,
+} from "../../constant/apiEndpoints";
 
 const useCheckOTP = () => {
   const [otpAPIStatus, setOtpAPIStatus] = useState(API_STATUS.IDLE);
-  const [checkOTPData, setCheckOTPData] = useState([]);
+  const [checkOTPData, setCheckOTPData] = useState(null);
   const [errorWhileVerifyingOTP, setErrorWhileVeryingOTP] = useState("");
   const intl = useIntl();
 
