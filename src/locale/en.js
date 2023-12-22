@@ -52,8 +52,9 @@ const locale = {
   "label.sendAgain": "Send Again",
   "label.fourteenMinTimerText1": "You have requested OTP for 4 times!",
   "label.fourteenMinTimerText2": "You can resend the next OTP after",
-  "label.somethingWentWrong": "Something went wrong! Please try again!",
-  "label.forgotPasswordOTP": "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
+  "label.somethingWentWrong": "Something went wrong, Please try again!",
+  "label.forgotPasswordOTP":
+    "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
   "label.filter": "Filter",
   "label.userDetails": "User Details",
   "label.dateCreatedOn": "Date Created On",
@@ -69,7 +70,12 @@ const locale = {
   "label.newUsers": "New Users",
   "label.users": "Users",
   "label.searchByUserNameAndEmail": "Search by user name and email",
-  "label.generalGetApiFailedErrorMessage": "Something went wrong! Please try again later",
+  "label.generalGetApiFailedErrorMessage":
+    "Something went wrong! Please try again later",
+  "label.viewProfile": "View Profile",
+  "label.changePassword": "Change Password",
+  "label.companyProfile": "Company Profile",
+  "label.logout": "Logout",
   "label.left": "left",
 };
 
