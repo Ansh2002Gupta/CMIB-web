@@ -4,23 +4,22 @@ import { useIntl } from "react-intl";
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../../components/ButtonAndLink";
-import withCardView from "../../hocs/withCardView";
 import CreateNewPassword from "../CreateNewPassword/CreateNewPassword.js";
 import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
-import useForgotPassword from "../../core/hooks/useForgotPassword.js";
-import { EMAIL_REGEX } from "../../constant/regex.js";
-import { LOGIN } from "../../routes/routeNames.js";
-import styles from "./ForgotPassword.module.scss";
 import useCheckOTP from "../../core/hooks/useCheckOTP";
+import useForgotPassword from "../../core/hooks/useForgotPassword.js";
+import withCardView from "../../hocs/withCardView";
+import { LOGIN } from "../../routes/routeNames.js";
+import { EMAIL_REGEX } from "../../constant/regex.js";
+import styles from "./ForgotPassword.module.scss";
 
 const ForgotPassword = () => {
   const intl = useIntl();
 
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
   const [userName, setUserName] = useState("");
-  const [changePasswordToken, setChangePasswordToken] = useState(null);
   const [status, setStatus] = useState("");
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
 
@@ -50,7 +49,10 @@ const ForgotPassword = () => {
     handleForgotPassword({ email: userName });
   };
   const handleOTPSubmit = (otp) => {
-    handleCheckOTP({ email: userName, otp: otp?.join("") });
+    handleCheckOTP({
+      payload: { email: userName, otp: otp?.join("") },
+      onSuccess: () => setCurrentActiveScreen(3),
+    });
   };
 
   useEffect(() => {
@@ -58,13 +60,6 @@ const ForgotPassword = () => {
       setCurrentActiveScreen(2);
     }
   }, [forgotPasswordSuccess]);
-
-  useEffect(() => {
-    if (otpVerifiedSuccess) {
-      setCurrentActiveScreen(3);
-      setChangePasswordToken(checkOTPData?.token);
-    }
-  }, [otpVerifiedSuccess, checkOTPData]);
 
   useEffect(() => {
     setErrorWhileResetPassword("");
@@ -164,7 +159,7 @@ const ForgotPassword = () => {
           )}
         </Base>
       ) : (
-        <CreateNewPassword token={changePasswordToken} />
+        <CreateNewPassword token={checkOTPData?.token} />
       )}
     </>
   );

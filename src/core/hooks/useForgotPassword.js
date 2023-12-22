@@ -43,6 +43,7 @@ const useForgotPassword = () => {
   const isLoading = forgotPasswordApiStatus === API_STATUS.LOADING;
   const isSuccess = forgotPasswordApiStatus === API_STATUS.SUCCESS;
   const isError = forgotPasswordApiStatus === API_STATUS.ERROR;
+
   return {
     forgotPasswordResult,
     errorWhileResetPassword,

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Modal, Typography } from "antd";
+import { Modal, Typography, Image } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
@@ -10,19 +10,20 @@ import styles from "./CustomModal.module.scss";
 const CustomModal = ({
   btnText,
   headingText,
-  ImgElement,
+  imgElement,
   isOpen,
   onBtnClick,
   onCancel,
   subHeadingText,
 }) => {
-  
   return (
     <Modal footer={null} open={isOpen} {...{ onCancel }}>
       <Base className={styles.container}>
         <div className={styles.imageAndHeadingContainer}>
           <div>
-            {ImgElement ? <ImgElement className={styles.image} /> : null}
+            {imgElement ? (
+              <Image src={imgElement} className={styles.image} />
+            ) : null}
           </div>
           <div className={styles.headingAndSubHeadingContainer}>
             <div>

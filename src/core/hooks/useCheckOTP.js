@@ -11,7 +11,7 @@ const useCheckOTP = () => {
   const [errorWhileVerifyingOTP, setErrorWhileVeryingOTP] = useState("");
   const intl = useIntl();
 
-  const handleCheckOTP = async (payload) => {
+  const handleCheckOTP = async ({ payload, onSuccess }) => {
     try {
       setOtpAPIStatus(API_STATUS.LOADING);
       errorWhileVerifyingOTP && setErrorWhileVeryingOTP("");
@@ -20,6 +20,7 @@ const useCheckOTP = () => {
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setOtpAPIStatus(API_STATUS.SUCCESS);
         setCheckOTPData(res.data);
+        onSuccess();
         return;
       }
       setOtpAPIStatus(API_STATUS.ERROR);

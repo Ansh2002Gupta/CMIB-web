@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
+
 import { ThemeContext } from "core/providers/theme";
 
 import Base from "../../core/layouts/Base/Base";
@@ -96,7 +97,7 @@ const CreateNewPassword = ({ token }) => {
     setStatus("label.newPasswordAndConfirmPasswordMatched");
     await handleCreateNewPassword({
       password: formInputs.password,
-      token: token,
+      token,
     });
   };
 
@@ -259,7 +260,7 @@ const CreateNewPassword = ({ token }) => {
             btnText={intl.formatMessage({
               id: "label.gobackToLoginBtn",
             })}
-            ImgElement={getImage("checkedBox")}
+            imgElement={getImage("CircleCheck")}
             onCancel={() => setStatus("")}
             onBtnClick={() => navigate(LOGIN)}
           />

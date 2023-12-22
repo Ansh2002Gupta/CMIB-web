@@ -33,13 +33,10 @@ const useCreateNewPassword = () => {
       );
     } catch (err) {
       setCreateNewPasswordApiStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileCreatingPassword(err.response?.data?.message);
-        return;
-      }
-      setErrorWhileCreatingPassword(
-        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
-      );
+      const errorMessage =
+        err.response?.data?.message ||
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" });
+      setErrorWhileCreatingPassword(errorMessage);
     }
   };
 
