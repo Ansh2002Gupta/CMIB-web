@@ -162,7 +162,7 @@ const LoginForm = () => {
                   type="link"
                   onClick={() => navigate(FORGOT_PASSWORD)}
                 >
-                  Forget password?
+                  {intl.formatMessage({ id: "label.forgotPasswordHeading" })}
                 </Button>
               </div>
             </div>
