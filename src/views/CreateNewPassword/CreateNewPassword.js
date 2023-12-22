@@ -260,8 +260,12 @@ const CreateNewPassword = ({ token }) => {
             btnText={intl.formatMessage({
               id: "label.gobackToLoginBtn",
             })}
+            closeIcon={false}
             imgElement={getImage("CircleCheck")}
-            onCancel={() => setStatus("")}
+            maskClosable={false}
+            onCancel={() => {
+              setStatus("");
+            }}
             onBtnClick={() => navigate(LOGIN)}
           />
         </div>

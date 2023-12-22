@@ -9,20 +9,30 @@ import styles from "./CustomModal.module.scss";
 
 const CustomModal = ({
   btnText,
+  closeIcon,
   headingText,
   imgElement,
   isOpen,
+  maskClosable,
   onBtnClick,
   onCancel,
   subHeadingText,
 }) => {
   return (
-    <Modal footer={null} open={isOpen} {...{ onCancel }}>
+    <Modal
+      footer={null}
+      open={isOpen}
+      {...{ onCancel, closeIcon, maskClosable }}
+    >
       <Base className={styles.container}>
         <div className={styles.imageAndHeadingContainer}>
           <div>
             {imgElement ? (
-              <Image src={imgElement} className={styles.image} />
+              <Image
+                src={imgElement}
+                className={styles.image}
+                preview={false}
+              />
             ) : null}
           </div>
           <div className={styles.headingAndSubHeadingContainer}>
@@ -48,9 +58,11 @@ const CustomModal = ({
 
 CustomModal.defaultProps = {
   btnText: "",
+  closeIcon: false,
   headingText: "",
   ImgElement: null,
   isOpen: false,
+  maskClosable: false,
   onBtnClick: () => {},
   onCancel: () => {},
   subHeadingText: "",
@@ -58,9 +70,11 @@ CustomModal.defaultProps = {
 
 CustomModal.propTypes = {
   btnText: PropTypes.string,
+  closeIcon: PropTypes.bool,
   headingText: PropTypes.string,
   ImgElement: PropTypes.node,
   isOpen: PropTypes.bool,
+  maskclosable: PropTypes.bool,
   onBtnClick: PropTypes.func,
   onCancel: PropTypes.func,
   subHeadingText: PropTypes.string,

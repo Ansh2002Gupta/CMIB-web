@@ -141,7 +141,7 @@ const ForgotPassword = () => {
           {currentActiveScreen === 2 && (
             <OTPInput
               errorWhileVerifyingOTP={errorWhileVerifyingOTP}
-              isOTPLoading={isOTPLoading}
+              {...{ isOTPLoading }}
               handleAuthOTP={() => {
                 handleForgotPassword({ email: userName });
               }}

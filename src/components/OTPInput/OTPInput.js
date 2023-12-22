@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Button, Typography } from "antd";
+import { Button, Typography, Statistic } from "antd";
 import { InputOTP } from "antd-input-otp";
 
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
+import useCheckOTP from "../../core/hooks/useCheckOTP";
 import CustomCountdown from "../CustomCountdown";
 import { LOGIN } from "../../routes/routeNames";
 import {
@@ -21,7 +22,6 @@ const OTPInput = ({
   errorWhileVerifyingOTP,
   handleAuthOTP,
   headingText,
-  isCheckingOTP,
   isOTPLoading,
   noOfBlocks,
   onSubmit,
@@ -186,7 +186,7 @@ const OTPInput = ({
           error={otpError}
           loading={isOTPLoading || isCheckingOTP}
           topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
-          onTopBtnClick={() => onSubmit(otpValues?.join(""))}
+          onTopBtnClick={handleOnSubmit}
           bottomLinkText={intl.formatMessage({ id: "label.back" })}
           onLinkClick={() => setCurrentActiveScreen(1)}
           isTopBtnDisable={!isAllowedToSubmit}
