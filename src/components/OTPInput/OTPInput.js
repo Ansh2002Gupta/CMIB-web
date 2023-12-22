@@ -30,6 +30,7 @@ const OTPInput = ({
   const [showCountdown, setShowCountdown] = useState(1);
   const [noOfTimesOTPCanBeSend, setNoOfTimesOTPCanBeSend] = useState(4);
   const { Countdown } = Statistic;
+  const [otpError, setOtpError] = useState("");
   const intl = useIntl();
 
   const handleTimerEnd = (timerLength) => {
@@ -42,12 +43,10 @@ const OTPInput = ({
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    //TODO: Call an API for finding out does the entered OTP is correct or not.
     onSubmit(otpValues);
   };
 
   const sendOTP = () => {
-    // TODO: call api for sending a new OTP
     setIsSendAgainBtnActive(false);
     if (noOfTimesOTPCanBeSend === 1) {
       setShowCountdown(2);
@@ -66,6 +65,7 @@ const OTPInput = ({
       return;
     }
     setIsAllowedToSubmit(false);
+    setOtpError("");
   }, [otpValues]);
 
   useEffect(() => {
@@ -76,6 +76,12 @@ const OTPInput = ({
       setNoOfTimesOTPCanBeSend(4);
     };
   }, []);
+
+  useEffect(() => {
+    if (errorWhileSendingOTP || errorWhileVerifyingOTP) {
+      setOtpError(errorWhileSendingOTP || errorWhileVerifyingOTP);
+    }
+  }, [errorWhileSendingOTP, errorWhileVerifyingOTP]);
 
   return (
     <Base className={styles.container}>
@@ -179,11 +185,7 @@ const OTPInput = ({
           </div>
         </div>
         <ButtonAndLink
-          error={
-            errorWhileSendingOTP || errorWhileVerifyingOTP
-              ? intl.formatMessage({ id: "label.somethingWentWrong" })
-              : ""
-          }
+          error={otpError}
           loading={isOTPLoading || isCheckingOTP}
           topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
           onTopBtnClick={handleOnSubmit}

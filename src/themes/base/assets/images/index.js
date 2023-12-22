@@ -1,6 +1,7 @@
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import checkedBox from "./checkedBox.svg";
+import CircleCheck from "./CircleCheck.svg";
 import edit from "./edit.svg";
 import eye from "./eye.svg";
 import filter from "./filter.svg";
@@ -17,12 +18,12 @@ import someFiltersAreSelected from "./some filters are selected.svg";
 import trash from "./trash.svg";
 import unCheckedBox from "./unCheckedBox.svg";
 import uploadIcon from "./Upload icon.svg";
-import CircleCheck from "./CircleCheck.svg";
 
 const images = {
   arrowRight,
   arrowRightFilter,
   checkedBox,
+  CircleCheck,
   edit,
   eye,
   filter,
@@ -39,7 +40,6 @@ const images = {
   trash,
   unCheckedBox,
   uploadIcon,
-  CircleCheck,
 };
 
 export default images;
