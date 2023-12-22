@@ -4,6 +4,7 @@ import { ThemeContext } from "core/providers/theme";
 import { Typography, Image, Switch } from "antd";
 
 import { TwoRow, TwoColumn, ThreeRow } from "../../core/layouts";
+import useResponsive from "core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
@@ -15,6 +16,7 @@ const SessionDetails = () => {
   const [status, setStatus] = useState(true);
   const [edit, setEdit] = useState(false);
   const { getImage } = useContext(ThemeContext);
+  const responsive = useResponsive();
   const [formData, setFormData] = useState({
     sessionName: "Campus Placement Programme",
     natureOfGoods: "Services/goods",
@@ -133,7 +135,11 @@ const SessionDetails = () => {
         />
       }
       middleSection={
-        <div className={styles.gridContainer}>
+        <div
+          className={
+            responsive.isMd ? styles.gridContainer : styles.mobileGridContainer
+          }
+        >
           {FIELDSONE.map((item) => {
             return (
               <TwoRow
