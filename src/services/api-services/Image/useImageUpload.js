@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../constant/constant";
+import Http from "../../http-service";
+import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 import {
   COMPANY_ROUTE,
   IMAGE_UPLOAD_END_POINT,
-} from "../../constant/apiEndpoints";
-import { GENERAL_ERROR_MESSAGE } from "../../Constants/errorMessage";
+} from "../../../constant/apiEndpoints";
+import { GENERAL_ERROR_MESSAGE } from "../../../constant/errorMessage";
 
 const useImageUpload = () => {
   const [imageUploadStatus, setImageUploadStatus] = useState(API_STATUS.IDLE);

@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import Http from "../../services/http-service";
-import { GENERAL_ERROR_MESSAGE } from "../../Constants/errorMessage";
+import Http from "../../http-service";
+import { GENERAL_ERROR_MESSAGE } from "../../../constant/errorMessage";
 import {
   ADMIN_ROUTE,
-  UPDATE_USERS_END_POINT,
-} from "../../constant/apiEndpoints";
+  GET_USER_END_POINT,
+} from "../../../constant/apiEndpoints";
 
 const useUserDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ const useUserDetails = () => {
     setError("");
     setIsLoading(true);
     try {
-      const url = ADMIN_ROUTE + UPDATE_USERS_END_POINT + "/" + userId;
+      const url = ADMIN_ROUTE + GET_USER_END_POINT + "/" + userId;
       const res = await Http.get(url);
       if (res?.error) {
         setError(res.message);
