@@ -17,7 +17,6 @@ import styles from "./ForgotPassword.module.scss";
 
 const ForgotPassword = () => {
   const intl = useIntl();
-
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
   const [userName, setUserName] = useState("");
   const [status, setStatus] = useState("");
