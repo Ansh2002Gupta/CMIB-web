@@ -13,13 +13,17 @@
 
 /* causing problem (min-height) */
 .ant-select-selector {
-  min-height: 48px; 
+  min-height: 48px;
   min-width: 100%;
   border: 0;
 }
 
-.ant-descriptions-item-label{
+.ant-descriptions-item-label {
   color: var(--On-surface, #616c82) !important;
   font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+.ant-descriptions-item-content {
   font-weight: 500 !important;
 }

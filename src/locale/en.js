@@ -85,6 +85,8 @@ const locale = {
   "label.edit": "Edit",
   "label.photo": "Photo.jpg",
   "label.networkError": "Network Error!",
+  "label.error": "Error!",
+  "label.tryAgain": "Try again!",
 };
 
 export default locale;

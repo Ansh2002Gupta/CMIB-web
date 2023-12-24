@@ -5,7 +5,6 @@ import { Pagination, Select, Table, Typography } from "antd";
 
 import PaginationItems from "./PaginationItems";
 import useQueryParams from "../../core/hooks/useQueryParams";
-// import useResponsive from "../../core/hooks/useResponsive";
 import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
 import "./override.css"; // please check
