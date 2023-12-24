@@ -9,6 +9,7 @@ import useResponsive from "core/hooks/useResponsive";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import variables from "../../themes/base/styles/variables";
+import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 
 const SessionDetails = () => {
@@ -184,7 +185,7 @@ const SessionDetails = () => {
                 className={styles.statusContainer}
                 leftSection={
                   <Switch
-                    style={status && { backgroundColor: variables.greenBtnBg }}
+                    style={status && classes.switchBackground}
                     checked={status}
                     onChange={() => {
                       setStatus(!status);
@@ -230,7 +231,7 @@ const SessionDetails = () => {
           />
         )
       }
-      bottomSectionStyle={{ alignSelf: "flex-end" }}
+      bottomSectionStyle={classes.bottomSectionStyle}
     />
   );
 };
