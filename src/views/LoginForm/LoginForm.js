@@ -51,12 +51,6 @@ const LoginForm = () => {
     isSuccess: isOTPCheckedSuccessfully,
   } = useCheckOTP();
 
-  useEffect(() => {
-    if (isOTPCheckedSuccessfully) {
-      navigate(DASHBOARD);
-    }
-  }, [isOTPCheckedSuccessfully]);
-
   const handleOnLogin = (e) => {
     e?.preventDefault();
     isValidEmail();
@@ -203,7 +197,12 @@ const LoginForm = () => {
               setCurrentActiveScreen,
               isCheckingOTP,
             }}
-            onSubmit={(otp) => handleCheckOTP({ otp })}
+            onSubmit={(otp) =>
+              handleCheckOTP({
+                payload: { otp },
+                onSuccess: () => navigate(DASHBOARD),
+              })
+            }
           />
         )}
       </div>

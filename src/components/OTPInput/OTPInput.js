@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Button, Typography, Statistic } from "antd";
+import { Button, Typography } from "antd";
 import { InputOTP } from "antd-input-otp";
 
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
-import useCheckOTP from "../../core/hooks/useCheckOTP";
 import CustomCountdown from "../CustomCountdown";
 import { LOGIN } from "../../routes/routeNames";
 import {
@@ -22,20 +21,20 @@ const OTPInput = ({
   errorWhileVerifyingOTP,
   handleAuthOTP,
   headingText,
+  isCheckingOTP,
   isOTPLoading,
   noOfBlocks,
   onSubmit,
   setCurrentActiveScreen,
 }) => {
-  const { isLoading: isCheckingOTP } = useCheckOTP();
+  const intl = useIntl();
+
   const [otpValues, setOtpValues] = useState(new Array(noOfBlocks).fill(""));
   const [isSendAgainBtnActive, setIsSendAgainBtnActive] = useState(false);
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
   const [showCountdown, setShowCountdown] = useState(1);
   const [noOfTimesOTPCanBeSend, setNoOfTimesOTPCanBeSend] = useState(4);
-  const { Countdown } = Statistic;
   const [otpError, setOtpError] = useState("");
-  const intl = useIntl();
 
   const handleTimerEnd = useCallback((timerLength) => {
     setIsSendAgainBtnActive(true);
@@ -46,7 +45,7 @@ const OTPInput = ({
   }, []);
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    onSubmit(otpValues);
+    onSubmit(otpValues.join(""));
   };
 
   const sendOTP = () => {

@@ -50,7 +50,7 @@ const ForgotPassword = () => {
   };
   const handleOTPSubmit = (otp) => {
     handleCheckOTP({
-      payload: { email: userName, otp: otp?.join("") },
+      payload: { email: userName, otp },
       onSuccess: () => setCurrentActiveScreen(3),
     });
   };
@@ -140,8 +140,8 @@ const ForgotPassword = () => {
           )}
           {currentActiveScreen === 2 && (
             <OTPInput
-              errorWhileVerifyingOTP={errorWhileVerifyingOTP}
-              {...{ isOTPLoading }}
+              errorWhileSendingOTP={errorWhileResetPassword}
+              {...{ isOTPLoading, errorWhileVerifyingOTP }}
               handleAuthOTP={() => {
                 handleForgotPassword({ email: userName });
               }}
@@ -151,9 +151,6 @@ const ForgotPassword = () => {
               })}
               onSubmit={(otp) => {
                 handleOTPSubmit(otp);
-              }}
-              {...{
-                errorWhileResetPassword,
               }}
             />
           )}
