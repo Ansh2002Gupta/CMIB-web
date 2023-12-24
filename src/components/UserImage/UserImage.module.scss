@@ -1,0 +1,43 @@
+.container {
+  border: var(--borderLight);
+  border-radius: var(--radiusXLgMedium);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 40vw;
+  max-width: 400px;
+  overflow: hidden;
+}
+
+.userImage {
+  background-color: var(--error);
+  width: 100%;
+  object-fit: contain;
+  max-height: 400px;
+}
+
+.trashAndIconContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--paddingSmall);
+}
+
+.trashIcon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.text {
+  color: var(--linkColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    max-width: none;
+    width: 100%;
+  }
+}
