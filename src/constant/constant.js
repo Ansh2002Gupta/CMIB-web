@@ -28,3 +28,25 @@ export const ROW_PER_PAGE_OPTIONS = [
     label: "20",
   },
 ];
+
+export const ACCESS_OPTIONS = [
+  {
+    value: "all",
+    label: "All",
+  },
+  {
+    value: "placements",
+    label: "Placements",
+  },
+  {
+    value: "ca-jobs",
+    label: "CA-Jobs",
+  },
+];
+
+export const ROLE_ID_MAPPING = {
+  placements: 1,
+  "ca-jobs": 2,
+};
+
+export const ALL_ROLE_ID = [1, 2];

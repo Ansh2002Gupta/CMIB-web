@@ -14,8 +14,8 @@ const CustomInput = ({
   customInputStyles,
   customLabelStyles,
   customSelectInputStyles,
-  disabled,
-  defaultSelectValue,
+  defaultSelectValueArray,
+  defaultSelectValueString,
   disabled,
   errorMessage,
   isError,
@@ -24,6 +24,7 @@ const CustomInput = ({
   isPrefixRequired,
   isSuffixRequiredForPassword,
   isTextVisible,
+  isSelectBoxDisable,
   label,
   messageStyles: customMessageStyles,
   messageToShow,
@@ -37,7 +38,8 @@ const CustomInput = ({
   type,
   value,
 }) => {
-  return (
+
+    return (
     <Base className={[styles.container, customContainerStyles].join(" ")}>
       {!!label && (
         <div className={styles.inputLabelContainer}>
@@ -60,16 +62,20 @@ const CustomInput = ({
               className={[styles.selectInput, customSelectInputStyles].join(
                 " "
               )}
-              onChange={(changedValue) =>
+              onChange={(changedValue) => {
                 onSelectItem({
                   target: {
                     value: changedValue,
                   },
-                })
-              }
+                });
+              }}
               options={selectOptions}
-              defaultValue={defaultSelectValue}
-              {...{ disabled }}
+              defaultValue={
+                isMultiSelect
+                  ? defaultSelectValueArray
+                  : defaultSelectValueString
+              }
+              disabled={isSelectBoxDisable}
             />
           </>
         )}
@@ -152,8 +158,8 @@ CustomInput.defaultProps = {
   customInputStyles: "",
   customLabelStyles: "",
   customSelectInputStyles: "",
-  disabled: false,
-  defaultSelectValue: "",
+  defaultSelectValueArray: [],
+  defaultSelectValueString: "",
   disabled: false,
   errorMessage: "",
   isError: false,
@@ -162,6 +168,7 @@ CustomInput.defaultProps = {
   isRequired: false,
   isSuffixRequiredForPassword: false,
   isTextVisible: true,
+  isSelectBoxDisable: false,
   label: "",
   messageStyles: "",
   messageToShow: "",
@@ -183,8 +190,8 @@ CustomInput.propTypes = {
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   customSelectInputStyles: PropTypes.string,
-  disabled: PropTypes.bool,
-  defaultSelectValue: PropTypes.string,
+  defaultSelectValueArray: PropTypes.array,
+  defaultSelectValueString: PropTypes.string,
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
@@ -193,6 +200,7 @@ CustomInput.propTypes = {
   isRequired: PropTypes.bool,
   isSuffixRequiredForPassword: PropTypes.bool,
   isTextVisible: PropTypes.bool,
+  isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,

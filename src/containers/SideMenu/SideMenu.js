@@ -4,7 +4,7 @@ import { Button } from "antd";
 import Base from "../../core/layouts/Base/Base";
 
 import {
-  ROUTE,
+  CONFIGURATIONS,
   DASHBOARD,
   SUBSCRIPTIONS,
 } from "../../routes/routeNames";
@@ -18,7 +18,7 @@ const SideMenu = () => {
     <Base className={styles.sideMenuOptionsContainer}>
       <Button onClick={() => navigate(DASHBOARD)}>Dashboard</Button>
       <Button onClick={() => navigate(SUBSCRIPTIONS)}>Menu Subscriptons</Button>
-      <Button onClick={() => navigate(ROUTE)}>Configurations</Button>
+      <Button onClick={() => navigate(CONFIGURATIONS)}>Configurations</Button>
       <Button>Manage Payments</Button>
       <Button>Manage Candidates</Button>
       <Button>Manage Companies</Button>

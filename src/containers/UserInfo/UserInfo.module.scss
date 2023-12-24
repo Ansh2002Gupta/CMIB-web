@@ -5,7 +5,7 @@
   padding: var(--paddingMedium);
   border-radius: var(--radiusXLgMedium);
   border: var(--borderLight);
-  background: var(--bodyBg);
+  background-color: var(--bodyBg);
   flex: 1;
   overflow: visible;
 }
@@ -14,6 +14,7 @@
   padding: var(--paddingMedium);
   border-radius: var(--radiusXLgMedium);
   border: var(--borderLight);
+  background-color: var(--bodyBg);
 }
 
 .container {
@@ -47,6 +48,12 @@
   gap: var(--gapXSmall);
 }
 
+.twoFactorContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmall);
+}
+
 .input {
   display: flex;
   padding: 12px var(--paddingSmall);
@@ -61,18 +68,25 @@
 .selectInput {
   padding: 0px;
   min-height: 50px;
-  // TODO: Not working please find other way.
-  // .ant-select-selector {
-  //   min-height: 48px !important;
-  //   min-width: 100% !important;
-  //   border: 0 !important;
-  // }
+}
+
+.active {
+  background-color: var(--active2) !important ;
+}
+
+.switchAndTextContainer {
+  display: flex;
+  gap: var(--gapMedium);
 }
 
 .mobileInput {
   border-left: 0 !important;
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
+}
+
+.saveAndCancelBtnContainer{
+  padding-bottom: var(--paddingMedium);
 }
 
 @media screen and (max-width: 1023px) {

@@ -11,7 +11,7 @@ const variables = {
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
   mobileBg1: colorPallets.white,
-  uploadBg: colorPallets.white2,
+  uploadBg: colorPallets.white1,
 
   // Text-colors
   textDefault: colorPallets.blue2,

@@ -11,25 +11,15 @@
   padding-left: 0px;
 }
 
-.ant-select-disabled {
-  border: 0px;
-  background: #fff;
-  padding-left: 0px;
+/* causing problem (min-height) */
+.ant-select-selector {
+  min-height: 48px; 
+  min-width: 100%;
+  border: 0;
 }
 
-/* .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  border: 0px;
-  background: #fff !important;
-  padding-left: 0px;
-  padding-right: 0px;
+.ant-descriptions-item-label{
+  color: var(--On-surface, #616c82) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
 }
-
-.ant-select .ant-select-arrow{
-  display: none;
-}
-
-.ant-select-single.ant-select-show-arrow .ant-select-selection-item{
-  color: black;
-  font-size: 14px;
-  font-weight: 500;
-} */

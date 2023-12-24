@@ -1,5 +1,4 @@
 import Auth from "../pages/Auth";
-import Configurations from "../views/Configurations/Configurations";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
@@ -10,7 +9,6 @@ import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import {
-  ROUTE,
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
@@ -19,11 +17,6 @@ import {
   VIEW_USER_DETAILS,
   ROOT,
 } from "./routeNames";
-import Configurations from "../views/Configurations/Configurations";
-import DashboardView from "../views/Dashboard/Dashboard";
-import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
-import CreateNewPassword from "../views/CreateNewPassword";
-import ManageUsers from "../views/ManageUsers";
 import UserDetails from "../views/UserDetails";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -71,32 +64,9 @@ const config = [
       },
     ],
   },
-
-  {
-    pagePath: MANAGE_USERS,
-    element: <AuthWithPublicAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <ManageUsers />, // view
-      },
-    ],
-  },
   {
     pagePath: ROOT,
     element: <HomeWithPublicAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <DashboardView />, // view
-      },
-    ],
-  },
-  {
-    pagePath: "/",
-    element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {
@@ -129,17 +99,6 @@ const config = [
     ],
   },
   {
-    pagePath: ROUTE, // changes plese check
-    element: <HomeWithPrivateAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <Configurations />, // view
-      },
-    ],
-  },
-  {
     pagePath: MANAGE_USERS,
     element: <HomeWithPublicAccess noOuterPadding />, // Page
     views: [
@@ -147,6 +106,17 @@ const config = [
       {
         viewPath: "",
         element: <ManageUsers />, // view
+      },
+    ],
+  },
+  {
+    pagePath: VIEW_USER_DETAILS,
+    element: <AuthWithPublicAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <UserDetails />, // view
       },
     ],
   },

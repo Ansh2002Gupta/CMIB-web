@@ -26,6 +26,7 @@ const locale = {
   "label.newPasswordPlaceholder": "Enter your new password",
   "label.confirmPasswordPlaceholder": "Confirm your new password",
   "label.invalidEmail": "Not a valid email, Please enter again!",
+  "label.invalidMobile": "Not a valid mobile number, Please enter again!",
   "label.recievedOTP": "Haven’t received the OTP?",
   "label.createNewPasswordHeading": "Create New Password",
   "label.createNewPasswordSubHeading":
@@ -52,7 +53,8 @@ const locale = {
   "label.fourteenMinTimerText1": "You have requested OTP for 4 times!",
   "label.fourteenMinTimerText2": "You can resend the next OTP after",
   "label.somethingWentWrong": "Something went wrong!",
-  "label.forgotPasswordOTP": "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
+  "label.forgotPasswordOTP":
+    "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
   "label.filter": "Filter",
   "label.userDetails": "User Details",
   "label.dateCreatedOn": "Date Created On",
@@ -68,9 +70,21 @@ const locale = {
   "label.newUsers": "New Users",
   "label.users": "Users",
   "label.searchByUserNameAndEmail": "Search by user name and email",
-  "label.generalGetApiFailedErrorMessage": "Something went wrong! Please try again later",
-  "label.dragNdrop": "Drag & drop files or Browse",
+  "label.generalGetApiFailedErrorMessage":
+    "Something went wrong! Please try again later",
+  "label.dragNdrop": "Drag & drop files or",
+  "label.browse": "Browse",
   "label.supportedFormat": "Supported formates: png, jpg, jpeg",
+  "label.saveChanges": "Save Changes",
+  "label.onlyJpgAndPngFile": "You can only upload JPG/PNG file!",
+  "label.fileUpto5MB": "You can only file upto 5MB.",
+  "label.editUserDetails": "Edit User Details.",
+  "label.twoFactorAuth": "Two factor authentication",
+  "label.on": "ON",
+  "label.off": "OFF",
+  "label.edit": "Edit",
+  "label.photo": "Photo.jpg",
+  "label.networkError": "Network Error!",
 };
 
 export default locale;

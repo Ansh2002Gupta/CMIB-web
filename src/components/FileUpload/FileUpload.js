@@ -1,43 +1,103 @@
-import React, { useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import { Image, Typography, Upload, message } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
-import trashIcon from "../../themes/base/assets/images/trash.svg";
+import UserImage from "../UserImage/UserImage";
+import useImageUpload from "../../core/hooks/useImageUpload";
 import uploadImg from "../../themes/base/assets/images/Upload icon.svg";
-import { useIntl } from "react-intl";
 import styles from "./FileUpload.module.scss";
 
-const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
+const FileUpload = ({
+  heading,
+  subHeading,
+  updateUserData,
+  userProfilePic,
+  isFormEditable,
+}) => {
   const intl = useIntl();
-  const TYPES = {
-    IMAGE_ONLY: ".jpg,.jpeg,.png,.PNG",
-    ANY_FILE: "*",
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const {
+    imageUploadStatus,
+    errorWhileUploadingImage,
+    isUploadingImage,
+    uploadImageData,
+    uploadImage,
+  } = useImageUpload();
+
+  const beforeUpload = (file) => {
+    console.log({ file });
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    const isAllowedType = allowedTypes.includes(file?.file?.type);
+    const isLessThan5MB = file?.file?.size / 1024 / 1024 < 5;
+
+    if (!isAllowedType) {
+      messageApi.open({
+        type: "error",
+        content: intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
+        style: {
+          marginTop: "20vh",
+        },
+      });
+      return Upload.LIST_IGNORE;
+    }
+
+    if (!isLessThan5MB) {
+      messageApi.open({
+        type: "error",
+        content: intl.formatMessage({ id: "label.fileUpto5MB" }),
+        style: {
+          marginTop: "20vh",
+        },
+      });
+      return Upload.LIST_IGNORE;
+    }
+    return isAllowedType && isLessThan5MB;
   };
-  const props = {
-    beforeUpload: (file) => {
-      const isImage = file.type.startsWith("image/");
-      if (!isImage) {
-        message.error("You can only upload image files!");
+
+  const getImageSource = (uploadedImage) => {
+    if (uploadedImage && typeof uploadedImage === "string") {
+      return uploadedImage;
+    }
+    if (uploadedImage) {
+      return URL.createObjectURL(uploadedImage);
+    }
+    return "";
+  };
+
+  const handleOnUploadImage = (file) => {
+    const { onSuccess, onError, onProgress } = file;
+    const isValid = beforeUpload(file);
+    onProgress({ percent: 10 });
+    if (typeof isValid === "string" || !isValid) {
+      onError("error", file?.file);
+      return;
+    }
+    onProgress({ percent: 50 });
+    uploadImage(
+      file,
+      (result) => {
+        // on Success
+        onProgress({ percent: 100 });
+        onSuccess({ body: result });
+        const imageUrl = getImageSource(file?.file);
+        updateUserData("profile_photo", imageUrl);
+      },
+      (err) => {
+        //  on Error
+        onError("error", err);
+        messageApi.open({
+          type: "error",
+          content: intl.formatMessage({ id: "label.networkError" }),
+          style: {
+            marginTop: "20vh",
+          },
+        });
       }
-      const isFileLessThanEqualTo2MB = file.size / 1024 / 1024 <= 2;
-      if (!isFileLessThanEqualTo2MB) {
-        message.error("Image must be smaller than 2MB!");
-        return Upload.LIST_IGNORE;
-      }
-      return isImage || Upload.LIST_IGNORE;
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-    accept: isOnlyImage ? TYPES.IMAGE_ONLY : TYPES.ANY_FILE, // This is where you specify the accepted file types
+    );
   };
 
   return (
@@ -45,44 +105,60 @@ const FileUpload = ({ isOnlyImage, heading, subHeading }) => {
       <Typography className={styles.headingText}>{heading}</Typography>
       <div className={styles.uploadBottomContainer}>
         <Typography className={styles.subHeadingText}>{subHeading}</Typography>
-        <Upload
-          action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-          className={styles.uploadContainer}
-          {...{ props }}
-          // fileList={fileList}
-          isImageUrl={true}
-        >
-          <div className={styles.uploadTextContainer}>
-            <Image
-              src={uploadImg}
-              preview={false}
-              className={styles.uploadImage}
-            />
-            <div>
-              <Typography className={styles.uploadText}>
-                {intl.formatMessage({ id: "label.dragNdrop" })}
-              </Typography>
-              <Typography className={styles.uploadInfo}>
-                {intl.formatMessage({ id: "label.supportedFormat" })}
-              </Typography>
+        {contextHolder}
+        {userProfilePic ? (
+          <UserImage
+            onTrashClick={() => updateUserData("profile_photo", "")}
+            src={userProfilePic}
+            imageName={uploadImageData?.image_name}
+          />
+        ) : (
+          <Upload
+            className={styles.uploadContainer}
+            customRequest={handleOnUploadImage}
+            disabled={!isFormEditable}
+          >
+            <div className={styles.uploadTextContainer}>
+              <Image
+                src={uploadImg}
+                preview={false}
+                className={styles.uploadImage}
+              />
+              <div>
+                <div className={styles.uploadHeadingContainer}>
+                  <Typography className={styles.uploadText}>
+                    {intl.formatMessage({ id: "label.dragNdrop" })}
+                  </Typography>
+                  <Typography className={styles.uploadGreenText}>
+                    {intl.formatMessage({ id: "label.browse" })}
+                  </Typography>
+                </div>
+                <Typography className={styles.uploadInfo}>
+                  {intl.formatMessage({ id: "label.supportedFormat" })}
+                </Typography>
+              </div>
             </div>
-          </div>
-        </Upload>
+          </Upload>
+        )}
       </div>
     </Base>
   );
 };
 
-// action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188" // file upload URL
-// listType="picture-card"
-// fileList={fileList}
-// onPreview={handlePreview}
-// onChange={handleChange}
-
 FileUpload.defaultProps = {
   heading: "Sent To",
   subHeading: "Photo",
-  isOnlyImage: true,
+  updateUserData: () => {},
+  userProfilePic: "",
+  isFormEditable: false,
+};
+
+FileUpload.propTypes = {
+  heading: PropTypes.string,
+  subHeading: PropTypes.string,
+  updateUserData: PropTypes.func,
+  userProfilePic: PropTypes.string,
+  isFormEditable: PropTypes.bool,
 };
 
 export default FileUpload;

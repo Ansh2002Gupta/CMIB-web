@@ -17,7 +17,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
+  padding: var(--paddingMedium);
 }
 
 .headingText {
@@ -38,15 +38,29 @@
   justify-content: center;
   align-items: center;
   gap: var(--gapMedium);
+  cursor: pointer;
 }
 
 .uploadImage {
   max-width: 120px;
+  overflow: hidden;
+}
+
+.uploadHeadingContainer {
+  display: flex;
+  gap: var(--gapXXSmall);
 }
 
 .uploadText {
-  color: var(--uploadBg);
+  color: var(--headingColor);
   text-align: center;
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+}
+
+.uploadGreenText {
+  color: var(--successText);
+  text-decoration: underline !important;
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightBold);
 }
