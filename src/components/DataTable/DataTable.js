@@ -28,7 +28,6 @@ const DataTable = ({
     Number(getQueryParams("current-page")) || 1
   );
   const [currentTableData, setCurrentTableData] = useState(originalData);
-  console.log({originalData})
 
   const handleOnChangePageSize = (size) => {
     setPageSize(Number(size));

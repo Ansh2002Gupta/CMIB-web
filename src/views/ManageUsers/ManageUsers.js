@@ -1,59 +1,77 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import moment from "moment/moment";
-import { ThemeContext } from "core/providers/theme";
-import { Input, Switch, Image } from "antd";
+import {
+  Alert,
+  Button,
+  Image,
+  Input,
+  message,
+  Spin,
+  Switch,
+  Typography,
+} from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
+import { ThemeContext } from "core/providers/theme";
 
 import ContentHeader from "../../containers/ContentHeader";
-import DataTable from "../../components/DataTable";
 import CustomButton from "../../components/CustomButton/CustomButton";
+import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
+import useListingUsers from "../../services/api-services/Users/useListingUsers";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
-import { DATA_SOURCE, ACCESS_FILTER_DATA } from "../../dummyData";
+import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
+import { ACCESS_FILTER_DATA } from "../../dummyData";
+import { setUserDetails } from "../../globalContext/userDetails/userDetailsActions";
+import { UserDetailsContext } from "../../globalContext/userDetails/userDetailsProvider";
+import { VIEW_USER_DETAILS } from "../../routes/routeNames";
 import styles from "./ManageUsers.module.scss";
 
 const ManageUsers = () => {
   const intl = useIntl();
   const responsive = useResponsive();
-
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
+  const [messageApi, contextHolder] = message.useMessage();
+  const [, userDetailsDispatch] = useContext(UserDetailsContext);
 
-  const elementNotConsideredInOutSideClick = useRef();
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
-  const [currentTableData, setCurrentTableData] = useState(DATA_SOURCE);
-  const [currentDataLength, setCurrentDataLength] = useState(
-    DATA_SOURCE.length
-  );
-  const { wrapperRef } = useOutSideClick({
-    onOutSideClick: () => {
-      setShowFilters(false);
-    },
-    elementNotToBeConsidered: elementNotConsideredInOutSideClick,
-  }); // please check
-  const handleOnEdit = (userId) => {
-    navigate(`/view-user-details?userId=${userId}&edit=true`);
-  };
-  const handleOnSeeUserDetails = (userId) => {
-    navigate(`/view-user-details?userId=${userId}&edit=false`);
+
+  const {
+    isSuccess: areUsersFetchedSuccessfully,
+    isFetchingUsers,
+    errorWhileFetchingUsers,
+    usersList,
+    fetchUsers,
+  } = useListingUsers();
+
+  const {
+    errorWhileUpdatingUserData,
+    updateUserDetails,
+    isLoading: isUpdatingUserData,
+    isSuccess: isUserStatusUpdatedSuccesfully,
+    setErrorWhileUpdatingUserData,
+  } = useUpdateUserDetailsApi();
+  const [currentDataLength, setCurrentDataLength] = useState(usersList?.length);
+
+  useEffect(() => {
+    fetchUsers(10, 1);
+  }, []);
+
+  const goToUserDetailsPage = (userId, editable, userName) => {
+    userDetailsDispatch(
+      setUserDetails({ userName, editable, userId, type: "users" })
+    );
+    navigate(VIEW_USER_DETAILS);
   };
 
-  const onHandleUserStatus = (userId) => {
-    // TODO: do an api call for updating real data into the database.
-    const updatedData = currentTableData.map((item) => {
-      if (userId === item.id) {
-        return {
-          ...item,
-          status: !item.status,
-        };
-      }
-      return item;
+  const onHandleUserStatus = (userId, currentStatus) => {
+    updateUserDetails(userId, {
+      status: !currentStatus,
     });
-    setCurrentTableData(updatedData);
   };
 
   const columns = [
@@ -63,8 +81,8 @@ const ManageUsers = () => {
           {intl.formatMessage({ id: "label.userName2" })}
         </p>
       ),
-      dataIndex: "UserName",
-      key: "UserName",
+      dataIndex: "name",
+      key: "name",
       sorter: (a, b) => a.UserName.localeCompare(b.UserName),
       render: (text) => (
         <p className={[styles.boldText, styles.textEllipsis].join(" ")}>
@@ -88,8 +106,8 @@ const ManageUsers = () => {
           {intl.formatMessage({ id: "label.mobileNumber" })}
         </p>
       ),
-      dataIndex: "mobile",
-      key: "mobile",
+      dataIndex: "mobile_number",
+      key: "mobile_number",
       render: (text) => <p className={styles.textEllipsis}>{text}</p>,
     },
     {
@@ -98,9 +116,13 @@ const ManageUsers = () => {
           {intl.formatMessage({ id: "label.access" })}
         </p>
       ),
-      dataIndex: "access",
-      key: "access",
-      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
+      dataIndex: "role",
+      key: "role",
+      render: (textArray) => (
+        <p className={styles.textEllipsis}>
+          {textArray?.map((item) => item.name)?.join(", ")}
+        </p>
+      ),
     },
     {
       title: () => (
@@ -108,8 +130,8 @@ const ManageUsers = () => {
           {intl.formatMessage({ id: "label.dateCreatedOn" })}
         </p>
       ),
-      dataIndex: "createdOn",
-      key: "createdOn",
+      dataIndex: "created_at",
+      key: "created_at",
       render: (data) => moment(data).format("DD/MM/YYYY"),
       sorter: (a, b) => moment(a.createdOn).unix() - moment(b.createdOn).unix(),
       sortDirection: ["ascend"],
@@ -129,7 +151,7 @@ const ManageUsers = () => {
           <div className={styles.userStatusContainer}>
             <Switch
               checked={status}
-              onClick={() => onHandleUserStatus(data.id)}
+              onClick={() => onHandleUserStatus(data.id, status)}
               className={status ? styles.switchBgColor : ""}
             />
             <p>
@@ -146,12 +168,12 @@ const ManageUsers = () => {
       dataIndex: "see",
       key: "see",
       render: (_, rowData) => {
-        const { id } = rowData;
+        const { id, UserName } = rowData;
         return (
           <Image
             src={getImage("eye")}
             className={styles.eyeIcon}
-            onClick={() => goToUserDetailsPage(id, false)}
+            onClick={() => goToUserDetailsPage(id, false, UserName)}
             preview={false}
           />
         );
@@ -162,13 +184,13 @@ const ManageUsers = () => {
       dataIndex: "edit",
       key: "edit",
       render: (_, rowData) => {
-        const { id } = rowData;
+        const { id, UserName } = rowData;
         return (
           <Image
             src={getImage("edit")}
             preview={false}
             className={styles.editIcon}
-            onClick={() => goToUserDetailsPage(id, true)}
+            onClick={() => goToUserDetailsPage(id, true, UserName)}
           />
         );
       },
@@ -176,11 +198,22 @@ const ManageUsers = () => {
   ];
 
   useEffect(() => {
+    if (errorWhileUpdatingUserData) {
+      messageApi.open({
+        type: "error",
+        content: intl.formatMessage({ id: "label.enableToUpdateUserStatus" }),
+        style: {
+          marginTop: "20vh",
+        },
+      });
+    }
+  }, [errorWhileUpdatingUserData]);
+
+  useEffect(() => {
     return () => {
       setShowFilters(false);
       setSearchedValue("");
-      setCurrentTableData(DATA_SOURCE);
-      setCurrentDataLength(DATA_SOURCE.length);
+      setCurrentDataLength(0);
     };
   }, []);
 
@@ -200,6 +233,7 @@ const ManageUsers = () => {
                 iconUrl={getImage("plusIcon")}
                 iconStyles={styles.btnIconStyles}
                 customStyle={styles.btnCustomStyles}
+                onClick={goToUserDetailsPage}
               />
             }
           />
@@ -207,42 +241,70 @@ const ManageUsers = () => {
       }
       className={styles.baseLayout}
       bottomSection={
-        <div className={styles.filterAndTableContainer}>
-          <div className={styles.searchBarContainer}>
-            <Input
-              prefix={
-                <Image
-                  src={getImage("searchIcon")}
-                  className={styles.searchIcon}
-                  preview={false}
+        <>
+          {contextHolder}
+          {areUsersFetchedSuccessfully && (
+            <div className={styles.filterAndTableContainer}>
+              <div className={styles.searchBarContainer}>
+                <Input
+                  prefix={
+                    <Image
+                      src={getImage("searchIcon")}
+                      className={styles.searchIcon}
+                      preview={false}
+                    />
+                  }
+                  placeholder={intl.formatMessage({
+                    id: "label.searchByUserNameAndEmail",
+                  })}
+                  allowClear
+                  className={styles.searchBar}
+                  value={searchedValue}
+                  onChange={(e) => setSearchedValue(e.target.value)}
                 />
-              }
-              placeholder={intl.formatMessage({
-                id: "label.searchByUserNameAndEmail",
-              })}
-              allowClear
-              className={styles.searchBar}
-              value={searchedValue}
-              onChange={(e) => setSearchedValue(e.target.value)}
-            />
-            <SearchFilter
-              filterPropertiesArray={ACCESS_FILTER_DATA}
-              {...{ showFilters, setShowFilters }}
-            />
-          </div>
-          <DataTable
-            {...{
-              columns,
-              searchedValue,
-              currentTableData,
-              setCurrentTableData,
-              currentDataLength,
-              setCurrentDataLength,
-            }}
-            originalData={DATA_SOURCE}
-            columnsToBeSearchFrom={["UserName", "email"]}
-          />
-        </div>
+                <SearchFilter
+                  filterPropertiesArray={ACCESS_FILTER_DATA}
+                  {...{ showFilters, setShowFilters }}
+                />
+              </div>
+              <DataTable
+                {...{
+                  columns,
+                  searchedValue,
+                  currentDataLength,
+                  setCurrentDataLength,
+                }}
+                originalData={usersList || []}
+                columnsToBeSearchFrom={["UserName", "email"]}
+              />
+            </div>
+          )}
+          {(isFetchingUsers || isUpdatingUserData) &&
+            !errorWhileFetchingUsers &&
+            !errorWhileUpdatingUserData && (
+              <div className={styles.loaderContainer}>
+                <Spin size="large" />
+              </div>
+            )}
+          {errorWhileFetchingUsers && (
+            <div>
+              <Alert
+                type="error"
+                message="Error"
+                description={
+                  <div>
+                    <Typography>{errorWhileFetchingUsers}</Typography>
+                    <Button onClick={() => fetchUsers(10, 1)}>
+                      {intl.formatMessage({
+                        id: "label.tryAgain",
+                      })}
+                    </Button>
+                  </div>
+                }
+              />
+            </div>
+          )}
+        </>
       }
     />
   );
