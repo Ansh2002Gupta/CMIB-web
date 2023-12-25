@@ -1,5 +1,6 @@
 export const PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
+export const TIMER_OF_1_MINUTES = 1;
 
 export const API_STATUS = {
   IDLE: "idle",

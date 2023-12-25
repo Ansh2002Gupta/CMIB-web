@@ -130,3 +130,18 @@ export const ACCESS_FILTER_DATA = [
     ],
   },
 ];
+
+export const SESSION_ITEMS = [
+  {
+    key: '1',
+    label: 'Item 1',
+  },
+  {
+    key: '2',
+    label: 'Item 2',
+  },
+  {
+    key: '3',
+    label: 'Item 3',
+  },
+];
