@@ -35,6 +35,7 @@ const useUpdateUserDetailsApi = () => {
             });
             value = value?.filter((item) => item);
           }
+          value = value.join(",");
         }
         if (key === "profile_photo") {
           // TODO: Not able to upload image at the moment

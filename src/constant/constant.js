@@ -40,7 +40,7 @@ export const ACCESS_OPTIONS = [
     label: "Placements",
   },
   {
-    value: "ca-jobs",
+    value: "CA-Jobs",
     label: "CA-Jobs",
   },
 ];
