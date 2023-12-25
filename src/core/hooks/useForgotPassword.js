@@ -13,7 +13,7 @@ const useForgotPassword = () => {
   const [forgotPasswordResult, setForgotPasswordResult] = useState(null);
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
 
-  const handleForgotPassword = async (payload) => {
+  const handleForgotPassword = async ({ onSuccess, payload }) => {
     try {
       setForgotPasswordApiStatus(API_STATUS.LOADING);
       setForgotPasswordResult(null);
@@ -22,6 +22,7 @@ const useForgotPassword = () => {
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setForgotPasswordApiStatus(API_STATUS.SUCCESS);
+        onSuccess();
         return;
       }
       setForgotPasswordApiStatus(API_STATUS.ERROR);

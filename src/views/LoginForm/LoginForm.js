@@ -194,12 +194,14 @@ const LoginForm = () => {
             {...{
               errorWhileSendingOTP,
               errorWhileVerifyingOTP,
-              handleAuthOTP,
               isOTPLoading,
               isCheckingOTP,
               setCurrentActiveScreen,
               setErrorWhileSendingOTP,
               setErrorWhileVeryingOTP,
+            }}
+            handleAuthOTP={() => {
+              handleAuthOTP({ email: formInputs?.userName });
             }}
             onSubmit={(otp) =>
               handleCheckOTP({

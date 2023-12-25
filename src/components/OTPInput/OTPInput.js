@@ -154,7 +154,10 @@ const OTPInput = ({
                       showCountdown === 0 ? styles.active : "",
                     ].join(" ")}
                     type="link"
-                    onClick={sendOTP}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      sendOTP();
+                    }}
                   >
                     {intl.formatMessage({ id: "label.sendAgain" })}
                   </Button>

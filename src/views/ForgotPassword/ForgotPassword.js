@@ -21,13 +21,11 @@ const ForgotPassword = () => {
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
   const [userName, setUserName] = useState("");
   const [status, setStatus] = useState("");
-  const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
 
   const {
     handleForgotPassword,
     isLoading,
     errorWhileResetPassword,
-    isSuccess: forgotPasswordSuccess,
     setErrorWhileResetPassword,
   } = useForgotPassword();
 
@@ -46,8 +44,12 @@ const ForgotPassword = () => {
       return;
     }
     setStatus("success");
-    handleForgotPassword({ email: userName });
+    handleForgotPassword({
+      onSuccess: () => setCurrentActiveScreen(2),
+      payload: { email: userName },
+    });
   };
+
   const handleOTPSubmit = (otp) => {
     handleCheckOTP({
       onSuccess: () => setCurrentActiveScreen(3),
@@ -57,25 +59,13 @@ const ForgotPassword = () => {
   };
 
   useEffect(() => {
-    if (forgotPasswordSuccess) {
-      setCurrentActiveScreen(2);
-    }
-  }, [forgotPasswordSuccess]);
-
-  useEffect(() => {
     setErrorWhileResetPassword("");
-    if (userName) {
-      setIsAllowedToSubmit(true);
-      return;
-    }
-    setIsAllowedToSubmit(false);
   }, [userName]);
 
   useEffect(() => {
     return () => {
       setUserName("");
       setStatus("");
-      setIsAllowedToSubmit(false);
     };
   }, []);
 
@@ -132,7 +122,7 @@ const ForgotPassword = () => {
                   bottomLinkText={intl.formatMessage({
                     id: "label.backToLoginBtn",
                   })}
-                  isTopBtnDisable={!isAllowedToSubmit}
+                  isTopBtnDisable={!userName}
                   onTopBtnClick={handleOnSubmit}
                   linkRedirection={LOGIN}
                 />
@@ -149,7 +139,7 @@ const ForgotPassword = () => {
                 setErrorWhileVeryingOTP,
               }}
               handleAuthOTP={() => {
-                handleForgotPassword({ email: userName });
+                handleForgotPassword({ payload: { email: userName } });
               }}
               noOfBlocks={4}
               headingText={intl.formatMessage({

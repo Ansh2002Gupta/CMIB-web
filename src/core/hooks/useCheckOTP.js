@@ -16,6 +16,7 @@ const useCheckOTP = () => {
       setOtpAPIStatus(API_STATUS.LOADING);
       errorWhileVerifyingOTP && setErrorWhileVeryingOTP("");
       const res = await Http.post(url, payload);
+
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setOtpAPIStatus(API_STATUS.SUCCESS);
         setCheckOTPData(res.data);
