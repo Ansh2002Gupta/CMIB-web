@@ -26,6 +26,8 @@ const OTPInput = ({
   noOfBlocks,
   onSubmit,
   setCurrentActiveScreen,
+  setErrorWhileSendingOTP,
+  setErrorWhileVeryingOTP,
 }) => {
   const intl = useIntl();
 
@@ -43,8 +45,12 @@ const OTPInput = ({
     setShowCountdown(0);
   }, []);
 
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(otpValues.join(""));
+  };
+
   const sendOTP = () => {
-    // TODO: call api for sending a new OTP
     setIsSendAgainBtnActive(false);
     if (noOfTimesOTPCanBeSend === 1) {
       setShowCountdown(2);
@@ -63,6 +69,8 @@ const OTPInput = ({
       return;
     }
     setIsAllowedToSubmit(false);
+    setErrorWhileSendingOTP("");
+    setErrorWhileVeryingOTP("");
   }, [otpValues]);
 
   useEffect(() => {
@@ -85,10 +93,7 @@ const OTPInput = ({
       </div>
       <form
         className={styles.otpFieldsAndButtonContainer}
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmit();
-        }}
+        onSubmit={handleOnSubmit}
       >
         <div className={styles.subHeadingAndInputContainer}>
           <div>
@@ -148,7 +153,10 @@ const OTPInput = ({
                       showCountdown === 0 ? styles.active : "",
                     ].join(" ")}
                     type="link"
-                    onClick={sendOTP}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      sendOTP();
+                    }}
                   >
                     {intl.formatMessage({ id: "label.sendAgain" })}
                   </Button>
@@ -174,14 +182,10 @@ const OTPInput = ({
           </div>
         </div>
         <ButtonAndLink
-          error={
-            errorWhileSendingOTP || errorWhileVerifyingOTP
-              ? intl.formatMessage({ id: "label.somethingWentWrong" })
-              : ""
-          }
+          error={errorWhileSendingOTP || errorWhileVerifyingOTP}
           loading={isOTPLoading || isCheckingOTP}
           topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
-          onTopBtnClick={() => onSubmit(otpValues?.join(""))}
+          onTopBtnClick={handleOnSubmit}
           bottomLinkText={intl.formatMessage({ id: "label.back" })}
           onLinkClick={() => setCurrentActiveScreen(1)}
           isTopBtnDisable={!isAllowedToSubmit}
@@ -195,22 +199,28 @@ const OTPInput = ({
 
 OTPInput.defaultProps = {
   errorWhileSendingOTP: "",
+  errorWhileVerifyingOTP: "",
   handleAuthOTP: () => {},
   headingText: "",
   isOTPLoading: false,
   noOfBlocks: 4,
   onSubmit: () => {},
   setCurrentActiveScreen: () => {},
+  setErrorWhileSendingOTP: () => {},
+  setErrorWhileVeryingOTP: () => {},
 };
 
 OTPInput.propTypes = {
   errorWhileSendingOTP: PropTypes.string,
+  errorWhileVerifyingOTP: PropTypes.string,
   handleAuthOTP: PropTypes.func,
   headingText: PropTypes.string,
   isOTPLoading: PropTypes.bool,
   noOfBlocks: PropTypes.number,
   onSubmit: PropTypes.func,
   setCurrentActiveScreen: PropTypes.func,
+  setErrorWhileSendingOTP: PropTypes.func,
+  setErrorWhileVeryingOTP: PropTypes.func,
 };
 
 export default OTPInput;

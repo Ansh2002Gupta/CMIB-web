@@ -3,23 +3,24 @@ import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
 import { API_STATUS, STATUS_CODES } from "../../constant/constant";
-import { ADMIN_ROUTE, CHECK_OTP_END_POINT } from "../../constant/apiEndpoints";
 
 const useCheckOTP = () => {
   const [otpAPIStatus, setOtpAPIStatus] = useState(API_STATUS.IDLE);
   const [checkOTPData, setCheckOTPData] = useState(null);
   const [errorWhileVerifyingOTP, setErrorWhileVeryingOTP] = useState("");
+
   const intl = useIntl();
 
-  const handleCheckOTP = async (payload) => {
+  const handleCheckOTP = async ({ onSuccess, payload, url }) => {
     try {
       setOtpAPIStatus(API_STATUS.LOADING);
       errorWhileVerifyingOTP && setErrorWhileVeryingOTP("");
-      const url = ADMIN_ROUTE + CHECK_OTP_END_POINT;
       const res = await Http.post(url, payload);
+
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setOtpAPIStatus(API_STATUS.SUCCESS);
         setCheckOTPData(res.data);
+        onSuccess();
         return;
       }
       setOtpAPIStatus(API_STATUS.ERROR);
@@ -49,6 +50,7 @@ const useCheckOTP = () => {
     isError,
     isLoading,
     isSuccess,
+    setErrorWhileVeryingOTP,
   };
 };
 

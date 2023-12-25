@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
 import { API_STATUS, STATUS_CODES } from "../../constant/constant";
-import { ADMIN_ROUTE, FORGOT_PASSWORD_END_POINT } from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, RESET_ADMIN_PASSWORD } from "../../constant/apiEndpoints";
 
 const useCreateNewPassword = () => {
   const intl = useIntl();
@@ -20,7 +20,7 @@ const useCreateNewPassword = () => {
       setCreateNewPasswordApiStatus(API_STATUS.LOADING);
       setCreateNewPasswordData(null);
       errorWhileCreatingPassword && setErrorWhileCreatingPassword("");
-      const url = ADMIN_ROUTE + FORGOT_PASSWORD_END_POINT;
+      const url = ADMIN_ROUTE + RESET_ADMIN_PASSWORD;
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setCreateNewPasswordApiStatus(API_STATUS.SUCCESS);
@@ -33,13 +33,10 @@ const useCreateNewPassword = () => {
       );
     } catch (err) {
       setCreateNewPasswordApiStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileCreatingPassword(err.response?.data?.message);
-        return;
-      }
-      setErrorWhileCreatingPassword(
-        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
-      );
+      const errorMessage =
+        err.response?.data?.message ||
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" });
+      setErrorWhileCreatingPassword(errorMessage);
     }
   };
 
