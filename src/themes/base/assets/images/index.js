@@ -1,6 +1,7 @@
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import checkedBox from "./checkedBox.svg";
+import CircleCheck from "./CircleCheck.svg";
 import edit from "./edit.svg";
 import dummyPerson from "./dummy person image.png";
 import eye from "./eye.svg";
@@ -24,6 +25,7 @@ const images = {
   arrowRightFilter,
   checkedBox,
   dummyPerson,
+  CircleCheck,
   edit,
   eye,
   filter,

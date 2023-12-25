@@ -3,7 +3,10 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import { ADMIN_ROUTE, FORGOT_PASSWORD_END_POINT } from "../../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  FORGOT_PASSWORD_END_POINT,
+} from "../../../constant/apiEndpoints";
 
 const useCreateNewPassword = () => {
   const intl = useIntl();

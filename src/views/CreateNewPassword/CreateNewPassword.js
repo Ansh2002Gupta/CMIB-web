@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
+
 import { ThemeContext } from "core/providers/theme";
 
 import Base from "../../core/layouts/Base/Base";
@@ -22,7 +23,7 @@ import {
 import { LOGIN } from "../../routes/routeNames";
 import styles from "./CreateNewPassword.module.scss";
 
-const CreateNewPassword = ({ email, otp }) => {
+const CreateNewPassword = ({ token }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
@@ -49,6 +50,7 @@ const CreateNewPassword = ({ email, otp }) => {
     errorWhileCreatingPassword,
     handleCreateNewPassword,
     isLoading,
+    isSuccess: passwordChangeSuccess,
     createNewPasswordData,
     setErrorWhileCreatingPassword,
   } = useCreateNewPassword();
@@ -94,10 +96,8 @@ const CreateNewPassword = ({ email, otp }) => {
     }
     setStatus("label.newPasswordAndConfirmPasswordMatched");
     await handleCreateNewPassword({
-      email: email,
       password: formInputs.password,
-      password_confirmation: formInputs.confirmPassword,
-      otp: otp,
+      token,
     });
   };
 
@@ -260,8 +260,12 @@ const CreateNewPassword = ({ email, otp }) => {
             btnText={intl.formatMessage({
               id: "label.gobackToLoginBtn",
             })}
-            ImgElement={getImage("checkedBox")}
-            onCancel={() => setStatus("")}
+            closeIcon={false}
+            imgElement={getImage("CircleCheck")}
+            maskClosable={false}
+            onCancel={() => {
+              setStatus("");
+            }}
             onBtnClick={() => navigate(LOGIN)}
           />
         </div>
