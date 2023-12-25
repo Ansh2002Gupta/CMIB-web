@@ -99,4 +99,19 @@ cursor: pointer;
     flex: 1; 
     width: var(--fullWidth);
 }
+.periodText{
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--textBold);
+    padding-top: var(--gapXXSmall);
+    padding-bottom:var(--gapXXSmall) ;
+    padding-left: var(--gapSmallMedium);
+    padding-right: var(--gapSmallMedium);
+    margin-right: var(--gapXSmall);
+    margin-top: var(--gapXXSmall);
+    background-color: var(--lightBlueBg);
+    border-radius: var(--gapSmall);
+
+}
  

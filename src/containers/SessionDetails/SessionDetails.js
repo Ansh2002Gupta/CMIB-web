@@ -21,7 +21,7 @@ const SessionDetails = () => {
     sessionName: "Campus Placement Programme",
     natureOfGoods: "Services/goods",
     invoiceNumberFormat: "Augsept-***-2023",
-    examinationSessionPeriod: "May 2023",
+    examinationSessionPeriod: ["May 2023", "November 2023"],
     gmcsCompletetionDate: "10/10/2022",
     membershipCompletetionDate: "10/10/2022",
     articleshipCompletetionFromDate: "10/10/2022",
@@ -163,10 +163,16 @@ const SessionDetails = () => {
                         handleInputChange(val.target.value, item.headingIntl);
                       }}
                     />
-                  ) : (
+                  ) : item?.id !== 4 ? (
                     <Typography className={styles.blackText}>
                       {item.value}
                     </Typography>
+                  ) : (
+                    item.value.map((val) => (
+                      <Typography className={styles.periodText}>
+                        {val}
+                      </Typography>
+                    ))
                   )
                 }
               />
