@@ -1,14 +1,9 @@
 import { createContext, useReducer } from "react";
 import * as types from "./types";
 
-// const initialState = {
-//   userName: "",
-//   type: "",
-//   editable: false,
-//   userId: null,
-// };
+// TODO: Have to remove the default values once the routing issue is resolved.
 const initialState = {
-  userName: "Nihil",
+  userName: "Pankaj 9919",
   type: "user",
   editable: false,
   userId: 2,

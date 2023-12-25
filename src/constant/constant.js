@@ -16,16 +16,16 @@ export const STATUS_CODES = {
 
 export const ROW_PER_PAGE_OPTIONS = [
   {
-    value: "10",
-    label: "10",
+    value: 10,
+    label: 10,
   },
   {
-    value: "15",
-    label: "15",
+    value: 15,
+    label: 15,
   },
   {
-    value: "20",
-    label: "20",
+    value: 20,
+    label: 20,
   },
 ];
 

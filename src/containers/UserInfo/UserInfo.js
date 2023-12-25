@@ -1,11 +1,12 @@
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import moment from "moment";
-import { DatePicker, Typography, Descriptions } from "antd";
+import { DatePicker, Typography, Descriptions, Switch } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
 import CustomInput from "../../components/CustomInput";
-import { useIntl } from "react-intl";
+import { ACCESS_OPTIONS } from "../../constant/constant";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
@@ -17,8 +18,12 @@ const UserInfo = ({
   isDateDisable,
   isEditable,
   mobileNo,
+  mobilePrefix,
   name,
   updateUserData,
+  emailErrorMessage,
+  mobileErrorMessage,
+  is_two_factor,
 }) => {
   const intl = useIntl();
 
@@ -36,7 +41,7 @@ const UserInfo = ({
     {
       key: "3",
       label: `${intl.formatMessage({ id: "label.mobileNumber" })} *`,
-      children: mobileNo,
+      children: `+${mobilePrefix}-${mobileNo}`,
     },
     {
       key: "4",
@@ -46,7 +51,14 @@ const UserInfo = ({
     {
       key: "5",
       label: `${intl.formatMessage({ id: "label.dateCreatedOn" })} *`,
-      children: date,
+      children: moment(date).format("DD/MM/YYYY"),
+    },
+    {
+      key: "6",
+      label: `${intl.formatMessage({ id: "label.twoFactorAuth" })} *`,
+      children: intl.formatMessage({
+        id: `label.${is_two_factor ? "on" : "off"}`,
+      }),
     },
   ];
 
@@ -54,7 +66,12 @@ const UserInfo = ({
     <>
       {!isEditable && (
         <div className={styles.nonEditableContainer}>
-          <Descriptions title="User Details" layout="vertical" items={items} />
+          <Descriptions
+            className={styles.description}
+            title={intl.formatMessage({ id: "label.userDetails" })}
+            layout="vertical"
+            items={items}
+          />
         </div>
       )}
       {isEditable && (
@@ -79,6 +96,8 @@ const UserInfo = ({
             </div>
             <div>
               <CustomInput
+                isError={!!emailErrorMessage}
+                errorMessage={emailErrorMessage}
                 type={"email"}
                 label={intl.formatMessage({ id: "label.email" })}
                 isRequired
@@ -91,6 +110,9 @@ const UserInfo = ({
             </div>
             <div>
               <CustomInput
+                isError={!!mobileErrorMessage}
+                errorMessage={mobileErrorMessage}
+                isSelectBoxDisable
                 type="mobile"
                 label={intl.formatMessage({ id: "label.mobileNumber" })}
                 isRequired
@@ -105,16 +127,8 @@ const UserInfo = ({
                     value: "91",
                     label: "+91",
                   },
-                  {
-                    value: "135",
-                    label: "+135",
-                  },
-                  {
-                    value: "1",
-                    label: "+1",
-                  },
                 ]}
-                defaultSelectValue="+91"
+                defaultSelectValueString="+91"
                 onSelectItem={(e) =>
                   updateUserData("mobile_prefix", e.target.value)
                 }
@@ -124,25 +138,12 @@ const UserInfo = ({
               <CustomInput
                 type="select"
                 isMultiSelect
+                defaultSelectValueArray={access}
                 onSelectItem={(e) => updateUserData("access", e.target.value)}
-                defaultSelectValue={access}
                 label={intl.formatMessage({ id: "label.access" })}
                 isRequired
                 disabled={!isEditable}
-                selectOptions={[
-                  {
-                    value: "All",
-                    label: "All",
-                  },
-                  {
-                    value: "Placements",
-                    label: "Placements",
-                  },
-                  {
-                    value: "CA jobs",
-                    label: "CA jobs",
-                  },
-                ]}
+                selectOptions={ACCESS_OPTIONS}
                 customSelectInputStyles={[
                   styles.text,
                   styles.input,
@@ -160,12 +161,28 @@ const UserInfo = ({
                   updateUserData("date", dateString)
                 }
                 className={[styles.text, styles.input].join(" ")}
-                // Fix the below
                 defaultValue={moment(date)}
                 disabled={isDateDisable || !isEditable}
                 customInputStyles={[styles.text, styles.input].join(" ")}
                 customLabelStyles={styles.label}
               />
+            </div>
+            <div className={styles.twoFactorContainer}>
+              <Typography className={styles.label}>
+                {intl.formatMessage({ id: "label.twoFactorAuth" })}
+              </Typography>
+              <div className={styles.switchAndTextContainer}>
+                <Switch
+                  className={is_two_factor ? styles.active : ""}
+                  defaultChecked={is_two_factor}
+                  onChange={(value) => updateUserData("is_two_factor", value)}
+                />
+                <Typography>
+                  {intl.formatMessage({
+                    id: `label.${is_two_factor ? "on" : "off"}`,
+                  })}
+                </Typography>
+              </div>
             </div>
           </div>
         </Base>
@@ -175,25 +192,29 @@ const UserInfo = ({
 };
 
 UserInfo.defaultProps = {
-  access: "",
+  access: [],
   accessOptions: [],
   date: null,
   email: "",
   isDateDisable: false,
   isEditable: false,
   mobileNo: "",
+  mobilePrefix: "",
+  is_two_factor: false,
   name: "",
   updateUserData: () => {},
 };
 
 UserInfo.propTypes = {
-  access: PropTypes.string,
+  access: PropTypes.array,
   accessOptions: PropTypes.array,
   date: PropTypes.string,
   email: PropTypes.string,
   isDateDisable: PropTypes.bool,
   isEditable: PropTypes.bool,
   mobileNo: PropTypes.string,
+  mobilePrefix: PropTypes.string,
+  is_two_factor: PropTypes.bool,
   name: PropTypes.string,
   updateUserData: PropTypes.func,
 };

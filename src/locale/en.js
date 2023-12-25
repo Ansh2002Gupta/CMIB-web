@@ -87,6 +87,8 @@ const locale = {
   "label.networkError": "Network Error!",
   "label.error": "Error!",
   "label.tryAgain": "Try again!",
+  "label.enableToUpdateUserStatus":
+    "Enable to updated user status at the moment!",
 };
 
 export default locale;

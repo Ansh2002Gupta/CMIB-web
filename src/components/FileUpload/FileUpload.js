@@ -83,7 +83,8 @@ const FileUpload = ({
         // on Success
         onProgress({ percent: 100 });
         onSuccess({ body: result });
-        updateUserData("profile_photo", uploadImageData?.url);
+        const imageUrl = getImageSource(file?.file);
+        updateUserData("profile_photo", imageUrl);
       },
       (err) => {
         //  on Error

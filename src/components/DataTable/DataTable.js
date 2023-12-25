@@ -7,18 +7,16 @@ import PaginationItems from "./PaginationItems";
 import useQueryParams from "../../core/hooks/useQueryParams";
 import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
-import "./override.css"; // please check
+import "./override.css";
 
 const DataTable = ({
   columns,
   columnsToBeSearchFrom,
   currentDataLength,
-  currentTableData,
   customContainerStyles,
   originalData,
   searchedValue,
   setCurrentDataLength,
-  setCurrentTableData,
 }) => {
   const intl = useIntl();
 
@@ -29,6 +27,17 @@ const DataTable = ({
   const [current, setCurrent] = useState(
     Number(getQueryParams("current-page")) || 1
   );
+  const [currentTableData, setCurrentTableData] = useState(originalData);
+  console.log({originalData})
+
+  const handleOnChangePageSize = (size) => {
+    setPageSize(Number(size));
+    setCurrent(1);
+  };
+
+  useEffect(()=>{
+    setCurrentTableData(originalData);
+  },[originalData])
 
   useEffect(() => {
     const updatedData = originalData?.filter((item) => {
@@ -52,11 +61,6 @@ const DataTable = ({
       setCurrentDataLength(updatedData.length);
     }
   }, [searchedValue]);
-
-  const handleOnChangePageSize = (size) => {
-    setPageSize(Number(size));
-    setCurrent(1);
-  };
 
   useEffect(() => {
     const startIndex = (current - 1) * pageSize;
@@ -100,7 +104,7 @@ const DataTable = ({
             {intl.formatMessage({ id: "label.rowPerPage" })}
           </Typography>
           <Select
-            defaultValue={"10"}
+            defaultValue={PAGE_SIZE}
             className={styles.rowPerPageCount}
             onChange={handleOnChangePageSize}
             options={ROW_PER_PAGE_OPTIONS}
@@ -135,12 +139,10 @@ DataTable.propTypes = {
   columns: PropTypes.array,
   columnsToBeSearchFrom: PropTypes.array,
   currentDataLength: PropTypes.number,
-  currentTableData: PropTypes.array,
   customContainerStyles: PropTypes.string,
   originalData: PropTypes.array,
   searchedValue: PropTypes.string,
   setCurrentDataLength: PropTypes.func,
-  setCurrentTableData: PropTypes.func,
 };
 
 export default DataTable;
