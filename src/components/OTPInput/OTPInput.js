@@ -36,7 +36,6 @@ const OTPInput = ({
   const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
   const [showCountdown, setShowCountdown] = useState(1);
   const [noOfTimesOTPCanBeSend, setNoOfTimesOTPCanBeSend] = useState(4);
-  const [otpError, setOtpError] = useState("");
 
   const handleTimerEnd = useCallback((timerLength) => {
     setIsSendAgainBtnActive(true);
