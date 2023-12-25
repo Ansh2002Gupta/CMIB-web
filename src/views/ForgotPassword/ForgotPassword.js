@@ -13,6 +13,7 @@ import useForgotPassword from "../../core/hooks/useForgotPassword.js";
 import withCardView from "../../hocs/withCardView";
 import { LOGIN } from "../../routes/routeNames.js";
 import { EMAIL_REGEX } from "../../constant/regex.js";
+import { ADMIN_ROUTE, VERIFY_OTP } from "../../constant/apiEndpoints";
 import styles from "./ForgotPassword.module.scss";
 
 const ForgotPassword = () => {
@@ -49,8 +50,9 @@ const ForgotPassword = () => {
   };
   const handleOTPSubmit = (otp) => {
     handleCheckOTP({
-      payload: { email: userName, otp },
       onSuccess: () => setCurrentActiveScreen(3),
+      payload: { email: userName, otp },
+      url: ADMIN_ROUTE + VERIFY_OTP,
     });
   };
 

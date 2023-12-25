@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Modal, Typography, Image } from "antd";
+import { Image, Modal, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 

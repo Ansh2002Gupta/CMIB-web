@@ -14,6 +14,7 @@ import useLogin from "../../core/hooks/useLogin";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";
+import { ADMIN_ROUTE, CHECK_OTP_END_POINT } from "../../constant/apiEndpoints";
 import styles from "./loginForm.module.scss";
 
 const LoginForm = () => {
@@ -199,8 +200,9 @@ const LoginForm = () => {
             }}
             onSubmit={(otp) =>
               handleCheckOTP({
-                payload: { otp },
                 onSuccess: () => navigate(DASHBOARD),
+                payload: { otp },
+                url: ADMIN_ROUTE + CHECK_OTP_END_POINT,
               })
             }
           />

@@ -43,6 +43,7 @@ const OTPInput = ({
     }
     setShowCountdown(0);
   }, []);
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
     onSubmit(otpValues.join(""));
