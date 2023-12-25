@@ -6,7 +6,7 @@ import { Image, Typography, Upload, message } from "antd";
 import Base from "../../core/layouts/Base/Base";
 
 import UserImage from "../UserImage/UserImage";
-import useImageUpload from "../../core/hooks/useImageUpload";
+import useImageUpload from "../../services/api-services/Image/useImageUpload";
 import uploadImg from "../../themes/base/assets/images/Upload icon.svg";
 import styles from "./FileUpload.module.scss";
 
@@ -83,8 +83,7 @@ const FileUpload = ({
         // on Success
         onProgress({ percent: 100 });
         onSuccess({ body: result });
-        const imageUrl = getImageSource(file?.file);
-        updateUserData("profile_photo", imageUrl);
+        updateUserData("profile_photo", uploadImageData?.url);
       },
       (err) => {
         //  on Error
@@ -147,18 +146,18 @@ const FileUpload = ({
 
 FileUpload.defaultProps = {
   heading: "Sent To",
+  isFormEditable: false,
   subHeading: "Photo",
   updateUserData: () => {},
   userProfilePic: "",
-  isFormEditable: false,
 };
 
 FileUpload.propTypes = {
   heading: PropTypes.string,
+  isFormEditable: PropTypes.bool,
   subHeading: PropTypes.string,
   updateUserData: PropTypes.func,
   userProfilePic: PropTypes.string,
-  isFormEditable: PropTypes.bool,
 };
 
 export default FileUpload;

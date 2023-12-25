@@ -7,7 +7,7 @@ import { InputOTP } from "antd-input-otp";
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
-import useCheckOTP from "../../core/hooks/useCheckOTP";
+import useCheckOTP from "../../services/api-services/Otp/useCheckOTP";
 import { LOGIN } from "../../routes/routeNames";
 import { TIMER_OF_15_MINUTES } from "../../constant/constant";
 import styles from "./OTPInput.module.scss";

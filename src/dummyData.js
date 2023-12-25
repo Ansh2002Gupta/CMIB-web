@@ -98,6 +98,24 @@ export const DATA_SOURCE = [
     createdOn: "10/10/2010",
     status: true,
   },
+  {
+    id: 12,
+    UserName: "Mike",
+    email: "example@gmail.com",
+    mobile: 9999999999,
+    access: "All",
+    createdOn: "10/10/2010",
+    status: true,
+  },
+  {
+    id: 13,
+    UserName: "Mike last",
+    email: "example@gmail.com",
+    mobile: 9999999999,
+    access: "All",
+    createdOn: "10/10/2010",
+    status: true,
+  },
 ];
 
 export const ACCESS_FILTER_DATA = [

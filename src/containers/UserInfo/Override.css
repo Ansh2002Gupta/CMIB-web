@@ -6,12 +6,12 @@
 }
 
 .UserInfo_input__GyT0y.ant-picker-disabled {
-  border: 0px;
   background-color: #fff;
-  padding-left: 0px;
+  font-weight: 500 !important;
+  color: rgba(97, 108, 130, 0.40) !important;
 }
 
-/* causing problem (min-height) */
+/* causing problem (min-height) of manage users table */
 .ant-select-selector {
   min-height: 48px;
   min-width: 100%;

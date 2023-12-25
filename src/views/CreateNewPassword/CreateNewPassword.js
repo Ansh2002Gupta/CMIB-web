@@ -10,7 +10,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import PointsList from "../../components/PointsList";
-import useCreateNewPassword from "../../core/hooks/useCreateNewPassword";
+import useCreateNewPassword from "../../services/api-services/Password/useCreateNewPassword";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import {
   AT_LEAST_SIX_CHARACTERS_REGEX,

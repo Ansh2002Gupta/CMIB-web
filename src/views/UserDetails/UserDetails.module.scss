@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
+  background-color: var(--blueBg);
 }
 
 .headerContainer {
@@ -16,7 +17,7 @@
   width: 24px !important;
 }
 
-.description{
+.description {
   font-weight: var(--fontWeightMedium);
 }
 
@@ -67,7 +68,7 @@
 .saveAndCancelBtnContainer {
   display: flex;
   gap: var(--gapSmall);
-  padding: 0px var(--paddingSmall);
+  padding: var(--paddingMedium) var(--paddingSmall);
   justify-content: flex-end;
 }
 
