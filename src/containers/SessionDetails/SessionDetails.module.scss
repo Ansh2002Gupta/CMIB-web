@@ -67,14 +67,20 @@ cursor: pointer;
     color: var(--textBold) !important;
     font-size: var(--fontSizeSmall);
     font-weight: var(--fontWeightMedium);
-    padding: var(--paddingSmall);
-    border-radius: var(--radiusXLg);
+    padding-left: var(--paddingSmall);
+    padding-right: var(--paddingSmall);
+    padding-top: var(--paddingExtraSmall);
+    padding-bottom: var(--paddingExtraSmall);
+    border-radius: var(--radiusLg);
     border: var(--borderLight);
     background-color: var(--bodyBg);
-   
   }
   .buttonStyles{
     background-color: var(--bodyBg);
+}
+.mobileButtonStyles{
+    background-color: var(--bodyBg);
+    padding: var(--paddingSmall);
 }
 
 .textStyle{
@@ -82,5 +88,15 @@ cursor: pointer;
     font-size: var(--fontSizeSmall);
     font-weight: var(--fontWeightMedium);
     color: var(--textBold);
+}
+.saveButtonTextStyles{
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--bodyBg);
+}
+.customContainerStyles{ 
+    flex: 1; 
+    width: var(--fullWidth);
 }
  

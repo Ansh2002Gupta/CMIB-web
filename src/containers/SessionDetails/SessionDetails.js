@@ -8,7 +8,6 @@ import useResponsive from "core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
-import variables from "../../themes/base/styles/variables";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 
@@ -159,6 +158,7 @@ const SessionDetails = () => {
                       disabled={!edit}
                       customLabelStyles={styles.inputLabel}
                       customInputStyles={styles.input}
+                      customContainerStyles={styles.customContainerStyles}
                       onChange={(val) => {
                         handleInputChange(val.target.value, item.headingIntl);
                       }}
@@ -214,7 +214,11 @@ const SessionDetails = () => {
                 btnText={intl.formatMessage({
                   id: "label.cancel",
                 })}
-                customStyle={styles.buttonStyles}
+                customStyle={
+                  responsive.isMd
+                    ? styles.buttonStyles
+                    : styles.mobileButtonStyles
+                }
                 textStyle={styles.textStyle}
                 onClick={() => {
                   setEdit(false);
@@ -223,6 +227,7 @@ const SessionDetails = () => {
             }
             rightSection={
               <CustomButton
+                textStyle={styles.saveButtonTextStyles}
                 btnText={intl.formatMessage({
                   id: "session.saveChanges",
                 })}
