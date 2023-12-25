@@ -4,18 +4,19 @@ import { Alert, Button, Spin, Switch, Typography, message } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow";
 
+import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import ContentHeader from "../../containers/ContentHeader";
 import CustomButton from "../../components/CustomButton";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../../containers/UserInfo";
+import useAddNewUserApi from "../../services/api-services/Users/useAddNewUserApi";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
-import {
-  setUserDetails,
-} from "../../globalContext/userDetails/userDetailsActions";
+import { setUserDetails } from "../../globalContext/userDetails/userDetailsActions";
 import { UserDetailsContext } from "../../globalContext/userDetails/userDetailsProvider";
 import edit from "../../themes/base/assets/images/edit.svg";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
+import { FORM_STATES } from "../../constant/constant";
 import styles from "./UserDetails.module.scss";
 
 const UserDetails = () => {
@@ -44,6 +45,7 @@ const UserDetails = () => {
     userData: data,
     error: errorWhileGettingUsersData,
   } = useUserDetails();
+
   const {
     errorWhileUpdatingUserData,
     updateUserDetails,
@@ -52,7 +54,17 @@ const UserDetails = () => {
     setErrorWhileUpdatingUserData,
   } = useUpdateUserDetailsApi();
 
-  const isFormEditable = userDetailsState?.editable;
+  const {
+    addNewUserData,
+    errorWhileAddingNewUser,
+    addNewUserApiStatus,
+    addNewUser,
+    isLoading: isAddingUser,
+    isSuccess: isUserSuccessfullyAdded,
+    setErrorWhileAddingNewUser,
+  } = useAddNewUserApi();
+
+  const currentFormState = userDetailsState?.formState;
   const currentUserName = userDetailsState?.userName;
   const userId = userDetailsState?.userId;
 
@@ -68,7 +80,13 @@ const UserDetails = () => {
 
   const goBackToViewDetailsPage = () => {
     setErrorWhileUpdatingUserData("");
-    userDetailsDispatch(setUserDetails({ editable: false }));
+    userDetailsDispatch(setUserDetails({ formState: FORM_STATES.VIEW_ONLY }));
+  };
+
+  const goBackToManageUsersPage = () => {
+    // TODO: Redirect the user to manage users screen.
+    setErrorWhileUpdatingUserData("");
+    userDetailsDispatch(setUserDetails({ formState: FORM_STATES.VIEW_ONLY }));
   };
 
   const handleUpdateUserData = () => {
@@ -102,18 +120,6 @@ const UserDetails = () => {
       });
   };
 
-  useEffect(() => {
-    if (errorWhileUpdatingUserData) {
-      showErorrToUser();
-    }
-  }, [errorWhileUpdatingUserData]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      goBackToViewDetailsPage();
-    }
-  }, [isSuccess]);
-
   const updateUserData = (key, value) => {
     key === "email" && setIsEmailValid(true);
     key === "mobile" && setIsMobileNumberValid(true);
@@ -125,6 +131,40 @@ const UserDetails = () => {
       };
     });
   };
+
+  const getHeaderText = () => {
+    if (currentFormState === FORM_STATES.EDITABLE) {
+      return currentUserName;
+    }
+    if (currentFormState === FORM_STATES.VIEW_ONLY) {
+      return intl.formatMessage({ id: "label.editUserDetails" });
+    }
+    return intl.formatMessage({ id: "label.addNewUsers" });
+  };
+
+  const handleOnAddNewUser = () => {
+    addNewUser({
+      name: userData.name,
+      email: userData.email,
+      mobile_number: userData.mobile,
+      // profile_photo: userData.profile_photo,
+      created_by: 1, // from where I will get this id?
+      role: userData.access,
+      is_two_factor: userData.is_two_factor,
+    });
+  };
+
+  useEffect(() => {
+    if (errorWhileUpdatingUserData || errorWhileAddingNewUser) {
+      showErorrToUser();
+    }
+  }, [errorWhileUpdatingUserData, errorWhileAddingNewUser]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      goBackToViewDetailsPage();
+    }
+  }, [isSuccess]);
 
   useEffect(() => {
     !!data &&
@@ -154,23 +194,30 @@ const UserDetails = () => {
     };
   }, []);
 
+  // TODO: remove console.log
+  console.log({
+    isLoading,
+    data,
+    errorWhileGettingUsersData,
+    errorWhileUpdatingUserData,
+    isUpdatingUserData,
+    isSuccess,
+  });
+
   return (
     <div className={styles.container}>
       {contextHolder}
       <TwoRow
         topSection={
+          !isAddingUser &&
           !errorWhileGettingUsersData &&
           !isLoading && (
             <div className={styles.headerContainer}>
               <ContentHeader
-                headerText={
-                  !isFormEditable
-                    ? currentUserName
-                    : intl.formatMessage({ id: "label.editUserDetails" })
-                }
+                headerText={getHeaderText()}
                 rightSection={
                   <>
-                    {!isFormEditable ? (
+                    {currentFormState === FORM_STATES.VIEW_ONLY ? (
                       <div className={styles.activeSwitchAndBtnContainer}>
                         <div className={styles.switchAndTextContainer}>
                           <Switch
@@ -209,8 +256,8 @@ const UserDetails = () => {
         bottomSection={
           <>
             {!isLoading &&
+              !isAddingUser &&
               !errorWhileGettingUsersData &&
-              !!data &&
               !isUpdatingUserData && (
                 <div className={styles.bottomContainer}>
                   <UserInfo
@@ -228,7 +275,10 @@ const UserDetails = () => {
                           })
                         : ""
                     }
-                    isEditable={isFormEditable}
+                    isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
+                    shouldShowDatePickerOption={
+                      currentFormState !== FORM_STATES.EMPTY
+                    }
                     {...{ updateUserData }}
                     name={userData?.name}
                     email={userData?.email}
@@ -242,13 +292,14 @@ const UserDetails = () => {
                   <FileUpload
                     {...{
                       updateUserData,
-                      isFormEditable,
+                      isFormEditable:
+                        currentFormState !== FORM_STATES.VIEW_ONLY,
                     }}
                     userProfilePic={userData.profile_photo}
                   />
                 </div>
               )}
-            {(isLoading || isUpdatingUserData) && (
+            {(isLoading || isUpdatingUserData || isAddingUser) && (
               <div className={styles.loaderContainer}>
                 <Spin size="large" />
               </div>
@@ -282,21 +333,30 @@ const UserDetails = () => {
           </>
         }
       />
-      {isFormEditable && !isLoading && !isUpdatingUserData && (
-        <div className={styles.saveAndCancelBtnContainer}>
-          <Button
-            className={styles.cancelBtn}
-            onClick={goBackToViewDetailsPage}
-          >
-            {intl.formatMessage({ id: "label.cancel" })}
-          </Button>
-          <CustomButton
-            customStyle={styles.saveBtn}
-            btnText={intl.formatMessage({ id: "label.saveChanges" })}
-            onClick={handleUpdateUserData}
+      {currentFormState !== FORM_STATES.VIEW_ONLY &&
+        !isLoading &&
+        !isUpdatingUserData && (
+          <ActionAndCancelButtons
+            cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+            actionBtnText={intl.formatMessage({
+              id: `label.${
+                currentFormState === FORM_STATES.EDITABLE
+                  ? "saveChanges"
+                  : "add"
+              }`,
+            })}
+            onActionBtnClick={
+              currentFormState === FORM_STATES.EDITABLE
+                ? handleUpdateUserData
+                : handleOnAddNewUser
+            }
+            onCancelBtnClick={
+              currentFormState === FORM_STATES.EDITABLE
+                ? goBackToViewDetailsPage
+                : goBackToManageUsersPage
+            }
           />
-        </div>
-      )}
+        )}
     </div>
   );
 };

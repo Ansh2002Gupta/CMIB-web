@@ -93,6 +93,8 @@ const locale = {
   "label.networkError": "Network Error!",
   "label.error": "Error!",
   "label.tryAgain": "Try again!",
+  "label.addNewUsers": "Add New User",
+  "label.add": "Add",
   "label.enableToUpdateUserStatus":
     "Enable to updated user status at the moment!",
 };

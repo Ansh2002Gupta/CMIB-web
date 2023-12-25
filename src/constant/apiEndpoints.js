@@ -14,3 +14,4 @@ export const IMAGE_UPLOAD_END_POINT = "/save-logo";
 export const GET_USER_END_POINT = "/users";
 export const UPDATE_USER_END_POINT = "/users";
 export const FETCHING_USERS_END_POINT = "/users";
+export const ADD_NEW_USER_END_POINT = "/users";

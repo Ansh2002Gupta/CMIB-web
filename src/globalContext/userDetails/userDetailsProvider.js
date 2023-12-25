@@ -1,12 +1,19 @@
 import { createContext, useReducer } from "react";
 import * as types from "./types";
+import { FORM_STATES } from "../../constant/constant";
 
 // TODO: Have to remove the default values once the routing issue is resolved.
+// const initialState = {
+//   userName: "Pankaj 9919",
+//   type: "user",
+//   editable: false,
+//   userId: 2,
+// };
 const initialState = {
-  userName: "Pankaj 9919",
+  userName: "Empty",
   type: "user",
-  editable: false,
-  userId: 2,
+  formState: FORM_STATES.EDITABLE,
+  userId: 5,
 };
 
 const userDetailsReducer = (state, action) => {

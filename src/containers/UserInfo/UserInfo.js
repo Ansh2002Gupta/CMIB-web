@@ -12,7 +12,6 @@ import "./Override.css";
 
 const UserInfo = ({
   access,
-  accessOptions,
   date,
   email,
   isDateDisable,
@@ -24,6 +23,7 @@ const UserInfo = ({
   emailErrorMessage,
   mobileErrorMessage,
   is_two_factor,
+  shouldShowDatePickerOption,
 }) => {
   const intl = useIntl();
 
@@ -152,21 +152,23 @@ const UserInfo = ({
                 customLabelStyles={styles.label}
               />
             </div>
-            <div className={styles.dateContainer}>
-              <Typography className={styles.label}>
-                {intl.formatMessage({ id: "label.dateCreatedOn" })}
-              </Typography>
-              <DatePicker
-                onChange={(date, dateString) =>
-                  updateUserData("date", dateString)
-                }
-                className={[styles.text, styles.input].join(" ")}
-                defaultValue={moment(date)}
-                disabled={isDateDisable || !isEditable}
-                customInputStyles={[styles.text, styles.input].join(" ")}
-                customLabelStyles={styles.label}
-              />
-            </div>
+            {shouldShowDatePickerOption && date &&(
+              <div className={styles.dateContainer}>
+                <Typography className={styles.label}>
+                  {intl.formatMessage({ id: "label.dateCreatedOn" })}
+                </Typography>
+                <DatePicker
+                  onChange={(date, dateString) =>
+                    updateUserData("date", dateString)
+                  }
+                  className={[styles.text, styles.input].join(" ")}
+                  defaultValue={moment(date)}
+                  disabled={isDateDisable || !isEditable}
+                  customInputStyles={[styles.text, styles.input].join(" ")}
+                  customLabelStyles={styles.label}
+                />
+              </div>
+            )}
             <div className={styles.twoFactorContainer}>
               <Typography className={styles.label}>
                 {intl.formatMessage({ id: "label.twoFactorAuth" })}
@@ -193,7 +195,6 @@ const UserInfo = ({
 
 UserInfo.defaultProps = {
   access: [],
-  accessOptions: [],
   date: null,
   email: "",
   isDateDisable: false,
@@ -202,12 +203,12 @@ UserInfo.defaultProps = {
   mobilePrefix: "",
   is_two_factor: false,
   name: "",
+  shouldShowDatePickerOption: true,
   updateUserData: () => {},
 };
 
 UserInfo.propTypes = {
   access: PropTypes.array,
-  accessOptions: PropTypes.array,
   date: PropTypes.string,
   email: PropTypes.string,
   isDateDisable: PropTypes.bool,
@@ -216,6 +217,7 @@ UserInfo.propTypes = {
   mobilePrefix: PropTypes.string,
   is_two_factor: PropTypes.bool,
   name: PropTypes.string,
+  shouldShowDatePickerOption: PropTypes.bool,
   updateUserData: PropTypes.func,
 };
 

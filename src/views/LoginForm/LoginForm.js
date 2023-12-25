@@ -10,6 +10,7 @@ import OTPInput from "../../components/OTPInput/OTPInput";
 import withCardView from "../../hocs/withCardView";
 import useLogin from "../../services/api-services/Login/useLogin";
 import useAuthOTP from "../../services/api-services/Otp/useAuthOTP";
+import useCheckOTP from "../../services/api-services/Otp/useCheckOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";

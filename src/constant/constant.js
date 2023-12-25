@@ -51,3 +51,9 @@ export const ROLE_ID_MAPPING = {
 };
 
 export const ALL_ROLE_ID = [1, 2];
+
+export const FORM_STATES = {
+  VIEW_ONLY: "view only",
+  EDITABLE: "editable",
+  EMPTY: "empty",
+};
