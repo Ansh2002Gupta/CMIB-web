@@ -43,13 +43,14 @@ const LoginForm = () => {
     errorWhileSendingOTP,
     handleAuthOTP,
     isLoading: isOTPLoading,
+    setErrorWhileSendingOTP,
   } = useAuthOTP();
 
   const {
     errorWhileVerifyingOTP,
     handleCheckOTP,
     isLoading: isCheckingOTP,
-    isSuccess: isOTPCheckedSuccessfully,
+    setErrorWhileVeryingOTP,
   } = useCheckOTP();
 
   const handleOnLogin = (e) => {
@@ -195,8 +196,10 @@ const LoginForm = () => {
               errorWhileVerifyingOTP,
               handleAuthOTP,
               isOTPLoading,
-              setCurrentActiveScreen,
               isCheckingOTP,
+              setCurrentActiveScreen,
+              setErrorWhileSendingOTP,
+              setErrorWhileVeryingOTP,
             }}
             onSubmit={(otp) =>
               handleCheckOTP({

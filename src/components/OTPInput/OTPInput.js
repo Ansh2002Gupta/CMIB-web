@@ -26,6 +26,8 @@ const OTPInput = ({
   noOfBlocks,
   onSubmit,
   setCurrentActiveScreen,
+  setErrorWhileSendingOTP,
+  setErrorWhileVeryingOTP,
 }) => {
   const intl = useIntl();
 
@@ -68,7 +70,8 @@ const OTPInput = ({
       return;
     }
     setIsAllowedToSubmit(false);
-    setOtpError("");
+    setErrorWhileSendingOTP("");
+    setErrorWhileVeryingOTP("");
   }, [otpValues]);
 
   useEffect(() => {
@@ -79,12 +82,6 @@ const OTPInput = ({
       setNoOfTimesOTPCanBeSend(4);
     };
   }, []);
-
-  useEffect(() => {
-    if (errorWhileSendingOTP || errorWhileVerifyingOTP) {
-      setOtpError(errorWhileSendingOTP || errorWhileVerifyingOTP);
-    }
-  }, [errorWhileSendingOTP, errorWhileVerifyingOTP]);
 
   return (
     <Base className={styles.container}>
@@ -183,7 +180,7 @@ const OTPInput = ({
           </div>
         </div>
         <ButtonAndLink
-          error={otpError}
+          error={errorWhileSendingOTP || errorWhileVerifyingOTP}
           loading={isOTPLoading || isCheckingOTP}
           topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
           onTopBtnClick={handleOnSubmit}
@@ -207,6 +204,8 @@ OTPInput.defaultProps = {
   noOfBlocks: 4,
   onSubmit: () => {},
   setCurrentActiveScreen: () => {},
+  setErrorWhileSendingOTP: () => {},
+  setErrorWhileVeryingOTP: () => {},
 };
 
 OTPInput.propTypes = {
@@ -218,6 +217,8 @@ OTPInput.propTypes = {
   noOfBlocks: PropTypes.number,
   onSubmit: PropTypes.func,
   setCurrentActiveScreen: PropTypes.func,
+  setErrorWhileSendingOTP: PropTypes.func,
+  setErrorWhileVeryingOTP: PropTypes.func,
 };
 
 export default OTPInput;

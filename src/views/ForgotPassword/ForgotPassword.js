@@ -32,11 +32,11 @@ const ForgotPassword = () => {
   } = useForgotPassword();
 
   const {
-    errorWhileVerifyingOTP,
     checkOTPData,
+    errorWhileVerifyingOTP,
     handleCheckOTP,
     isLoading: isOTPLoading,
-    isSuccess: otpVerifiedSuccess,
+    setErrorWhileVeryingOTP,
   } = useCheckOTP();
 
   const handleOnSubmit = (event) => {
@@ -142,7 +142,12 @@ const ForgotPassword = () => {
           {currentActiveScreen === 2 && (
             <OTPInput
               errorWhileSendingOTP={errorWhileResetPassword}
-              {...{ isOTPLoading, errorWhileVerifyingOTP }}
+              setErrorWhileSendingOTP={setErrorWhileResetPassword}
+              {...{
+                isOTPLoading,
+                errorWhileVerifyingOTP,
+                setErrorWhileVeryingOTP,
+              }}
               handleAuthOTP={() => {
                 handleForgotPassword({ email: userName });
               }}
