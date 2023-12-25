@@ -14,7 +14,21 @@ axios.interceptors.request.use(
     //   }
     // }
     // ****** //
-    config.headers["Content-Type"] = "application/json";
+
+    if (config.data instanceof FormData) {
+      let fieldCount = 0;
+
+      // Iterate over the FormData entries to count the fields
+      for (let [key, value] of config.data.entries()) {
+        fieldCount++;
+      }
+      if (fieldCount > 1) {
+        config.headers["Content-Type"] = "application/json";
+      }
+    } else {
+      config.headers["Content-Type"] = "application/json";
+    }
+
     config.headers["api-version"] = API_VERSION_NUMBER;
     return config;
   },
