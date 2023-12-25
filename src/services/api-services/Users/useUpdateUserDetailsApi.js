@@ -24,7 +24,6 @@ const useUpdateUserDetailsApi = () => {
       setApiStatus(API_STATUS.LOADING);
       errorWhileUpdatingUserData && setErrorWhileUpdatingUserData("");
       const formData = new FormData();
-      console.log({ payload }); // remove console log.
       for (let [key, value] of Object.entries(payload)) {
         if (key?.toLowerCase() === "role") {
           if (value.includes("all")) {
@@ -34,6 +33,7 @@ const useUpdateUserDetailsApi = () => {
               item = item.toLowerCase();
               return ROLE_ID_MAPPING[`${item}`];
             });
+            value = value?.filter((item) => item);
           }
         }
         if (key === "profile_photo") {

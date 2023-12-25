@@ -11,7 +11,6 @@ import UserInfo from "../../containers/UserInfo";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
 import {
-  clearUserDetails,
   setUserDetails,
 } from "../../globalContext/userDetails/userDetailsActions";
 import { UserDetailsContext } from "../../globalContext/userDetails/userDetailsProvider";
@@ -283,7 +282,7 @@ const UserDetails = () => {
           </>
         }
       />
-      {isFormEditable && !isLoading && (
+      {isFormEditable && !isLoading && !isUpdatingUserData && (
         <div className={styles.saveAndCancelBtnContainer}>
           <Button
             className={styles.cancelBtn}

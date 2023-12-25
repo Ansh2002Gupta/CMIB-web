@@ -38,8 +38,8 @@ const CustomInput = ({
   type,
   value,
 }) => {
-
-    return (
+  
+  return (
     <Base className={[styles.container, customContainerStyles].join(" ")}>
       {!!label && (
         <div className={styles.inputLabelContainer}>
@@ -81,7 +81,7 @@ const CustomInput = ({
         )}
         {(type !== "select" || type === "mobile") && (
           <Input
-            type={type === "mobile" ? "number" : type || "text"}
+            type={type || "text"}
             className={[
               styles.inputField,
               type === "mobile" ? styles.mobileInput : "",

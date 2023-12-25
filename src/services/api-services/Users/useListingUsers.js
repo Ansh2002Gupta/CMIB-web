@@ -28,7 +28,6 @@ const useListingUsers = () => {
         "current=" +
         currentPage;
       const res = await Http.get(url);
-      console.log({ res });
       if (res.error) {
         setUsersFetchingAPIStatus(API_STATUS.ERROR);
         setErrorWhileFetchingUsers(res?.message);

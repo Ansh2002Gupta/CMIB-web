@@ -29,7 +29,6 @@ const FileUpload = ({
   } = useImageUpload();
 
   const beforeUpload = (file) => {
-    console.log({ file });
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
     const isAllowedType = allowedTypes.includes(file?.file?.type);
     const isLessThan5MB = file?.file?.size / 1024 / 1024 < 5;
