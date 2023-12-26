@@ -1,5 +1,3 @@
-import moment from "moment";
-
 export const DATA_SOURCE = [
   {
     id: 1,
