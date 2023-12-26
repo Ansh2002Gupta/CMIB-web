@@ -10,6 +10,7 @@ import useResponsive from "core/hooks/useResponsive";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import { FormatDate } from "../../constant/utils";
+import { SESSION_DETAILS } from "../../dummyData";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 
@@ -20,7 +21,8 @@ const SessionDetails = () => {
 
   const [formErrors, setFormErrors] = useState({});
   const [edit, setEdit] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(SESSION_DETAILS);
+  const hello = {
     sessionName: "Campus Placement Programme",
     natureOfGoods: "Services/goods",
     invoiceNumberFormat: "Augsept-***-2023",
@@ -32,14 +34,14 @@ const SessionDetails = () => {
     bankACNumberOffline: "1233 9344 0234 0234",
     bankACNumberOnline: "1233 9344 0234 0234",
     status: false,
-  });
+  };
 
   const FIELDSONE = [
     {
       id: 1,
       headingIntl: "sessionName",
       headingLabel: "Session Name *",
-      value: formData.sessionName,
+      value: formData.name,
       rules: [
         {
           required: true,
@@ -51,7 +53,7 @@ const SessionDetails = () => {
       id: 2,
       headingIntl: "natureOfGoods",
       headingLabel: "Nature of services/goods *",
-      value: formData.natureOfGoods,
+      value: formData.nature_of_service,
       rules: [
         {
           required: true,
@@ -63,7 +65,7 @@ const SessionDetails = () => {
       id: 3,
       headingIntl: "invoiceNumberFormat",
       headingLabel: "Performa Invoice Number Format *",
-      value: formData.invoiceNumberFormat,
+      value: formData.perform_invoice_no_format,
       rules: [
         {
           required: true,
@@ -75,7 +77,7 @@ const SessionDetails = () => {
       id: 4,
       headingIntl: "examinationSessionPeriod",
       headingLabel: "Examination Session Period *",
-      value: formData.examinationSessionPeriod,
+      value: formData.examination_session_period,
       selectOptions: [
         { label: "May 2025", value: "May 2025" },
         { label: "November 2025", value: "November 2025" },
@@ -101,7 +103,7 @@ const SessionDetails = () => {
       id: 5,
       headingIntl: "gmcsCompletetionDate",
       headingLabel: "GMCS Completetion Date *",
-      value: FormatDate(formData.gmcsCompletetionDate),
+      value: FormatDate(formData.gmcs_completion_date),
       rules: [
         {
           required: true,
@@ -113,7 +115,7 @@ const SessionDetails = () => {
       id: 6,
       headingIntl: "membershipCompletetionDate",
       headingLabel: "Membership Completetion Date *",
-      value: FormatDate(formData.membershipCompletetionDate),
+      value: FormatDate(formData.membership_completion_date),
       rules: [
         {
           required: true,
@@ -125,7 +127,7 @@ const SessionDetails = () => {
       id: 7,
       headingIntl: "articleshipCompletetionFromDate",
       headingLabel: "Articleship Completetion From Date *",
-      value: FormatDate(formData.articleshipCompletetionFromDate),
+      value: FormatDate(formData.session_start_date),
       rules: [
         {
           required: true,
@@ -137,7 +139,7 @@ const SessionDetails = () => {
       id: 8,
       headingIntl: "articleshipCompletetionToDate",
       headingLabel: "Articleship Completetion To Date *",
-      value: FormatDate(formData.articleshipCompletetionToDate),
+      value: FormatDate(formData.article_completion_from_date),
       rules: [
         {
           required: true,
@@ -149,7 +151,7 @@ const SessionDetails = () => {
       id: 9,
       headingIntl: "bankACNumberOffline",
       headingLabel: "Bank A/C number offline *",
-      value: formData.bankACNumberOffline,
+      value: formData.bank_account_offline,
       rules: [
         {
           required: true,
@@ -161,7 +163,7 @@ const SessionDetails = () => {
       id: 10,
       headingIntl: "bankACNumberOnline",
       headingLabel: "Bank A/C number online*",
-      value: formData.bankACNumberOnline,
+      value: formData.bank_account_online,
       rules: [
         {
           required: true,
