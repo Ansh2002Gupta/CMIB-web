@@ -49,7 +49,7 @@
 
 .mobile {
   display: flex;
-  gap: 8px;
+  gap: var(--gapXSmall);
   background-color: var(--bodyBg);
 }
 

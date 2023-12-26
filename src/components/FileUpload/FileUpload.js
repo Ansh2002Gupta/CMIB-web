@@ -7,26 +7,21 @@ import Base from "../../core/layouts/Base/Base";
 
 import UserImage from "../UserImage/UserImage";
 import useImageUpload from "../../services/api-services/Image/useImageUpload";
-import uploadImg from "../../themes/base/assets/images/Upload icon.svg";
+import { ReactComponent as UploadImageIcon } from "../../themes/base/assets/images/Upload icon.svg";
+import { classes } from "./FileUpload.styles";
 import styles from "./FileUpload.module.scss";
 
 const FileUpload = ({
   heading,
+  isFormEditable,
   subHeading,
   updateUserData,
   userProfilePic,
-  isFormEditable,
 }) => {
   const intl = useIntl();
   const [messageApi, contextHolder] = message.useMessage();
 
-  const {
-    imageUploadStatus,
-    errorWhileUploadingImage,
-    isUploadingImage,
-    uploadImageData,
-    uploadImage,
-  } = useImageUpload();
+  const { uploadImage, uploadImageData } = useImageUpload();
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -91,9 +86,7 @@ const FileUpload = ({
         messageApi.open({
           type: "error",
           content: intl.formatMessage({ id: "label.networkError" }),
-          style: {
-            marginTop: "20vh",
-          },
+          style: classes.errorMessage,
         });
       }
     );
@@ -118,11 +111,7 @@ const FileUpload = ({
             disabled={!isFormEditable}
           >
             <div className={styles.uploadTextContainer}>
-              <Image
-                src={uploadImg}
-                preview={false}
-                className={styles.uploadImage}
-              />
+              <UploadImageIcon className={styles.uploadImage} />
               <div>
                 <div className={styles.uploadHeadingContainer}>
                   <Typography className={styles.uploadText}>

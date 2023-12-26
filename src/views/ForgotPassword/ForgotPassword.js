@@ -8,7 +8,7 @@ import CreateNewPassword from "../CreateNewPassword/CreateNewPassword.js";
 import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
-import useCheckOTP from "../../core/hooks/useCheckOTP";
+import useCheckOTP from "../../services/api-services/Otp/useCheckOTP.js";
 import useForgotPassword from "../../services/api-services/Password/useForgotPassword.js";
 import withCardView from "../../hocs/withCardView";
 import { LOGIN } from "../../routes/routeNames.js";
