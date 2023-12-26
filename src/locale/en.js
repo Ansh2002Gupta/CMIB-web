@@ -82,8 +82,9 @@ const locale = {
   "label.browse": "Browse",
   "label.supportedFormat": "Supported formates: png, jpg, jpeg",
   "label.saveChanges": "Save Changes",
-  "label.onlyJpgAndPngFile": "You can only upload JPG/PNG file!",
-  "label.fileUpto5MB": "You can only file upto 5MB.",
+  "label.onlyJpgAndPngFile":
+    "Format not supported, only jpeg and png can be uploaded. Please upload again",
+  "label.fileUpto5MB": "Max size allowed is 5 mb, please upload again",
   "label.editUserDetails": "Edit User Details.",
   "label.twoFactorAuth": "Two factor authentication",
   "label.on": "ON",
@@ -94,9 +95,11 @@ const locale = {
   "label.error": "Error!",
   "label.tryAgain": "Try again!",
   "label.addNewUsers": "Add New User",
-  "label.add": "Add",
+  "label.userCreatedSuccessfully": "User has been created successfully",
   "label.enableToUpdateUserStatus":
-    "Enable to updated user status at the moment!",
+  "Enable to updated user status at the moment!",
+  "label.add": "Add",
+  "label.notification": "Notification",
 };
 
 export default locale;

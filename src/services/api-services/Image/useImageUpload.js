@@ -20,6 +20,8 @@ const useImageUpload = () => {
     try {
       const formData = new FormData();
       formData.append("company_logo", file?.file);
+      console.log({ CompanyFormData: formData.entries() });
+      console.log({ companyGetAll: formData.get("company_logo") });
       const url = COMPANY_ROUTE + IMAGE_UPLOAD_END_POINT;
       const res = await Http.post(url, formData);
       setIsUploadingImage(false);

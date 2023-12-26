@@ -98,6 +98,7 @@ const UserDetails = () => {
       EMAIL_REGEX.test(userData?.email) &&
       MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
     ) {
+      console.log({ val: userData?.profile_photo });
       updateUserDetails(userId, {
         name: userData?.name,
         email: userData?.email,
@@ -143,11 +144,12 @@ const UserDetails = () => {
   };
 
   const handleOnAddNewUser = () => {
+    console.log({ v: userData?.profile_photo });
     addNewUser({
       name: userData.name,
       email: userData.email,
       mobile_number: userData.mobile,
-      // profile_photo: userData.profile_photo,
+      profile_photo: userData.profile_photo,
       created_by: 1, // from where I will get this id?
       role: userData.access,
       is_two_factor: userData.is_two_factor,
@@ -235,7 +237,7 @@ const UserDetails = () => {
                         <CustomButton
                           isBtnDisable={isUpdatingUserData}
                           btnText={intl.formatMessage({ id: "label.edit" })}
-                          iconUrl={edit}
+                          iconUrl={edit} // change the way of importing images
                           onClick={() =>
                             userDetailsDispatch(
                               setUserDetails({ editable: true })
@@ -276,15 +278,12 @@ const UserDetails = () => {
                         : ""
                     }
                     isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
-                    shouldShowDatePickerOption={
-                      currentFormState !== FORM_STATES.EMPTY
-                    }
                     {...{ updateUserData }}
                     name={userData?.name}
                     email={userData?.email}
                     mobileNo={userData?.mobile}
                     mobilePrefix={userData?.mobile_prefix}
-                    date={userData?.date}
+                    date={userData?.date || new Date().toLocaleDateString()}
                     access={userData?.access}
                     is_two_factor={userData?.is_two_factor}
                     isDateDisable

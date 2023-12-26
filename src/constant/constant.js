@@ -57,3 +57,42 @@ export const FORM_STATES = {
   EDITABLE: "editable",
   EMPTY: "empty",
 };
+
+export const NOTIFICATION_PLACEMENTS = {
+  TOP_RIGHT: "topRight",
+  TOP_LEFT: "topLeft",
+  BOTTOM_RIGHT: "bottomRight",
+  BOTTOM_LEFT: "bottomLeft",
+};
+
+export const ADD_NEW_USER_ACCESS_OPTIONS = [
+  {
+    id: 1,
+    heading: "Placements",
+    options: [
+      "All",
+      "NQCA-Placement",
+      "Overseas-Placement",
+      "Career-Ascent",
+      "Women-Placement",
+    ],
+  },
+  {
+    id: 2,
+    heading: "CA-Jobs",
+    options: ["Ca-jobs"],
+  },
+  {
+    id: 3,
+    heading: "Controls",
+    options: [
+      "AlL",
+      "Bulk notification",
+      "User Management",
+      "Ticket Management",
+      "Query Management",
+      "Testimonial Management",
+      "Registered Companies",
+    ],
+  },
+];

@@ -12,8 +12,8 @@ import { FORM_STATES } from "../../constant/constant";
 const initialState = {
   userName: "Empty",
   type: "user",
-  formState: FORM_STATES.EDITABLE,
-  userId: 5,
+  formState: FORM_STATES.EMPTY,
+  userId: 0,
 };
 
 const userDetailsReducer = (state, action) => {

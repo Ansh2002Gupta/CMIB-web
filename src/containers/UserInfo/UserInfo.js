@@ -152,7 +152,7 @@ const UserInfo = ({
                 customLabelStyles={styles.label}
               />
             </div>
-            {shouldShowDatePickerOption && date &&(
+            {shouldShowDatePickerOption && date && (
               <div className={styles.dateContainer}>
                 <Typography className={styles.label}>
                   {intl.formatMessage({ id: "label.dateCreatedOn" })}

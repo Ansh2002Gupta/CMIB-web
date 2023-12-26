@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Image, Typography, Upload, message } from "antd";
+import { Image, Typography, Upload, message, notification } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
@@ -9,6 +9,7 @@ import UserImage from "../UserImage/UserImage";
 import useImageUpload from "../../services/api-services/Image/useImageUpload";
 import uploadImg from "../../themes/base/assets/images/Upload icon.svg";
 import styles from "./FileUpload.module.scss";
+import { NOTIFICATION_PLACEMENTS } from "../../constant/constant";
 
 const FileUpload = ({
   heading,
@@ -18,7 +19,8 @@ const FileUpload = ({
   isFormEditable,
 }) => {
   const intl = useIntl();
-  const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi, messageContextHolder] = message.useMessage();
+  const [api, notificationContextHolder] = notification.useNotification();
 
   const {
     imageUploadStatus,
@@ -67,7 +69,21 @@ const FileUpload = ({
     return "";
   };
 
+  const showNotification = (placement) => {
+    api.info({
+      message: intl.formatMessage({ id: "label.notification" }),
+      description: (
+        <Typography>
+          {intl.formatMessage({ id: "label.userCreatedSuccessfully" })}
+        </Typography>
+      ),
+      placement,
+    });
+  };
+
   const handleOnUploadImage = (file) => {
+    console.log({file})
+    updateUserData("profile_photo", file); // remove it
     const { onSuccess, onError, onProgress } = file;
     const isValid = beforeUpload(file);
     onProgress({ percent: 10 });
@@ -83,7 +99,8 @@ const FileUpload = ({
         onProgress({ percent: 100 });
         onSuccess({ body: result });
         const imageUrl = getImageSource(file?.file);
-        updateUserData("profile_photo", imageUrl);
+        updateUserData("profile_photo", file?.file);
+        showNotification(NOTIFICATION_PLACEMENTS.TOP_RIGHT);
       },
       (err) => {
         //  on Error
@@ -104,7 +121,8 @@ const FileUpload = ({
       <Typography className={styles.headingText}>{heading}</Typography>
       <div className={styles.uploadBottomContainer}>
         <Typography className={styles.subHeadingText}>{subHeading}</Typography>
-        {contextHolder}
+        {messageContextHolder}
+        {notificationContextHolder}
         {userProfilePic ? (
           <UserImage
             onTrashClick={() => updateUserData("profile_photo", "")}

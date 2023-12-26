@@ -23,25 +23,33 @@ const useAddNewUserApi = () => {
   const [errorWhileAddingNewUser, setErrorWhileAddingNewUser] = useState("");
 
   const addNewUser = async (payload) => {
-    let role = payload?.role ? payload.role : null;
-      if (role?.length) {
-        if (role.includes("all")) {
-          role = ALL_ROLE_ID;
-        } else {
-          role = role.map((item) => ROLE_ID_MAPPING[item]);
-        }
-        payload = {
-          ...payload,
-          role,
-        };
-      }
+    console.log({ payload });
+    const formData = new FormData();
+    formData.append("profile_photo", payload.profile_photo?.file);
+    formData.append("_method", "PATCH");
+    formData.append("is_two_factor", "1");
+    formData.append("role", "1");
+    console.log({ formData: formData.entries() });
+    console.log({ getAll: formData.get("profile_photo") });
+    // let role = payload?.role ? payload.role : null;
+    // if (role?.length) {
+    //   if (role.includes("all")) {
+    //     role = ALL_ROLE_ID;
+    //   } else {
+    //     role = role.map((item) => ROLE_ID_MAPPING[item]);
+    //   }
+    //   payload = {
+    //     ...payload,
+    //     role,
+    //   };
+    // }
     try {
       setAddNewUserApiStatus(API_STATUS.LOADING);
       setAddNewUserData(null);
       errorWhileAddingNewUser && setErrorWhileAddingNewUser("");
-      
+
       const url = ADMIN_ROUTE + ADD_NEW_USER_END_POINT;
-      const res = await Http.post(url, payload);
+      const res = await Http.post(url, formData);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setAddNewUserApiStatus(API_STATUS.SUCCESS);
         setAddNewUserData(res.data);
