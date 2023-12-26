@@ -75,7 +75,27 @@ cursor: pointer;
     border: var(--borderLight);
     background-color: var(--bodyBg);
   }
-  .buttonStyles{
+.dateInput{
+    color: var(--textBold) !important;
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    padding-left: var(--paddingSmall);
+    padding-right: var(--paddingSmall);
+    padding-top: var(--radiusMd);
+    padding-bottom: var(--paddingExtraSmall);
+    border-radius: var(--radiusLg);
+    border: var(--borderLight);
+    background-color: var(--bodyBg);
+    flex:1;
+    display: flex;
+}
+.multilpleInput{
+    color: var(--textBold) !important;
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    flex:1
+}
+.buttonStyles{
     background-color: var(--bodyBg);
 }
 .mobileButtonStyles{
@@ -112,6 +132,12 @@ cursor: pointer;
     margin-top: var(--gapXXSmall);
     background-color: var(--lightBlueBg);
     border-radius: var(--gapSmall);
-
+}
+.examinationFieldContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+.formInputStyles{   
+    flex:1;
 }
  

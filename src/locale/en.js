@@ -78,7 +78,7 @@ const locale = {
   "session.edit": "Edit",
   "session.sessionName": "Session Name",
   "session.natureOfGoods": "Nature of services/goods",
-  "session.invoiceNumberFormat": "Perfoma Invoice Number Format",
+  "session.invoiceNumberFormat": "Performa Invoice Number Format",
   "session.examinationSessionPeriod": "Examination Session Period",
   "session.gmcsCompletetionDate": "GMCS Completetion Date",
   "session.membershipCompletetionDate": "Membership Completetion Date",
