@@ -15,6 +15,7 @@ import styles from "./session.module.scss";
 function Session() {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState("1");
+  const [addSession, setAddSession] = useState(false);
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
 
@@ -22,7 +23,9 @@ function Session() {
     {
       key: "1",
       title: intl.formatMessage({ id: "session.sessionDetails" }),
-      children: <SessionDetails />,
+      children: (
+        <SessionDetails addSession={addSession} setAddSession={setAddSession} />
+      ),
     },
     {
       key: "2",
@@ -37,6 +40,8 @@ function Session() {
   ];
 
   const activeTabChildren = TabItems.find((tab) => tab.key === activeTab);
+
+  console.log("addSession...", addSession);
 
   return (
     <TwoRow
@@ -53,27 +58,43 @@ function Session() {
                 />
               }
               rightSection={
-                <CustomButton
-                  btnText={intl.formatMessage({
-                    id: "session.setUpNewSession",
-                  })}
-                  customStyle={!responsive.isMd && styles.buttonStyles}
-                  iconUrl={responsive.isMd && getImage("addIcon")}
-                  textStyle={styles.textStyle}
-                />
+                !addSession && (
+                  <CustomButton
+                    btnText={intl.formatMessage({
+                      id: "session.setUpNewSession",
+                    })}
+                    customStyle={!responsive.isMd && styles.buttonStyles}
+                    iconUrl={responsive.isMd && getImage("addIcon")}
+                    textStyle={styles.textStyle}
+                    onClick={() => {
+                      setAddSession(true);
+                    }}
+                  />
+                )
               }
             />
           }
           bottomSection={
-            <CustomTabs
-              tabs={TabItems}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
-            />
+            !addSession && (
+              <CustomTabs
+                tabs={TabItems}
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+              />
+            )
           }
         />
       }
-      bottomSection={!!activeTabChildren && activeTabChildren.children}
+      bottomSection={
+        addSession ? (
+          <SessionDetails
+            addSession={addSession}
+            setAddSession={setAddSession}
+          />
+        ) : (
+          !!activeTabChildren && activeTabChildren.children
+        )
+      }
       bottomSectionStyle={{
         padding: variables.fontSizeXlargeMedium,
       }}

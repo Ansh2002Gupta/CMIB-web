@@ -93,14 +93,23 @@ cursor: pointer;
     color: var(--textBold) !important;
     font-size: var(--fontSizeSmall);
     font-weight: var(--fontWeightMedium);
-    flex:1
+    flex:1;
+    min-width:'100%'
 }
 .buttonStyles{
     background-color: var(--bodyBg);
+    &:hover {
+        background-color: var(--bodyBg) !important;
+        color: var(--btnText) !important;
+      }
 }
 .mobileButtonStyles{
     background-color: var(--bodyBg);
     padding: var(--paddingSmall);
+    &:hover {
+        background-color: var(--bodyBg) !important;
+        color: var(--btnText) !important;
+      }
 }
 
 .textStyle{

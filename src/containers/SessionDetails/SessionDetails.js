@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { DatePicker, Form, Image, Select, Switch, Typography } from "antd";
-import moment from "moment";
 
 import { TwoRow, TwoColumn, ThreeRow } from "../../core/layouts";
 import useResponsive from "core/hooks/useResponsive";
@@ -14,21 +13,25 @@ import { SESSION_DETAILS } from "../../dummyData";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 
-const SessionDetails = () => {
+const SessionDetails = ({ addSession, setAddSession }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { getImage } = useContext(ThemeContext);
 
   const [formErrors, setFormErrors] = useState({});
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(addSession);
+  const [session, setSession] = useState(true);
   const [formData, setFormData] = useState(SESSION_DETAILS);
+
+  console.log("addSession", addSession);
+  console.log("session", session);
 
   const FIELDSONE = [
     {
       id: 1,
       headingIntl: "sessionName",
       label: "name",
-      value: formData.name,
+      value: formData?.name,
       rules: [
         {
           required: true,
@@ -40,7 +43,7 @@ const SessionDetails = () => {
       id: 2,
       headingIntl: "natureOfGoods",
       label: "nature_of_service",
-      value: formData.nature_of_service,
+      value: formData?.nature_of_service,
       rules: [
         {
           required: true,
@@ -52,7 +55,7 @@ const SessionDetails = () => {
       id: 3,
       headingIntl: "invoiceNumberFormat",
       label: "perform_invoice_no_format",
-      value: formData.perform_invoice_no_format,
+      value: formData?.perform_invoice_no_format,
       rules: [
         {
           required: true,
@@ -64,7 +67,7 @@ const SessionDetails = () => {
       id: 4,
       headingIntl: "examinationSessionPeriod",
       label: "examination_session_period",
-      value: formData.examination_session_period,
+      value: formData?.examination_session_period,
       selectOptions: [
         { label: "May 2025", value: "May 2025" },
         { label: "November 2025", value: "November 2025" },
@@ -90,7 +93,7 @@ const SessionDetails = () => {
       id: 5,
       headingIntl: "gmcsCompletetionDate",
       label: "gmcs_completion_date",
-      value: FormatDate(formData.gmcs_completion_date),
+      value: FormatDate(formData?.gmcs_completion_date),
       rules: [
         {
           required: true,
@@ -102,7 +105,7 @@ const SessionDetails = () => {
       id: 6,
       headingIntl: "membershipCompletetionDate",
       label: "membership_completion_date",
-      value: FormatDate(formData.membership_completion_date),
+      value: FormatDate(formData?.membership_completion_date),
       rules: [
         {
           required: true,
@@ -114,7 +117,7 @@ const SessionDetails = () => {
       id: 7,
       headingIntl: "articleshipCompletetionFromDate",
       label: "session_start_date",
-      value: FormatDate(formData.session_start_date),
+      value: FormatDate(formData?.session_start_date),
       rules: [
         {
           required: true,
@@ -126,7 +129,7 @@ const SessionDetails = () => {
       id: 8,
       headingIntl: "articleshipCompletetionToDate",
       label: "article_completion_from_date",
-      value: FormatDate(formData.article_completion_from_date),
+      value: FormatDate(formData?.article_completion_from_date),
       rules: [
         {
           required: true,
@@ -138,7 +141,7 @@ const SessionDetails = () => {
       id: 9,
       headingIntl: "bankACNumberOffline",
       label: "bank_account_offline",
-      value: formData.bank_account_offline,
+      value: formData?.bank_account_offline,
       rules: [
         {
           required: true,
@@ -150,7 +153,7 @@ const SessionDetails = () => {
       id: 10,
       headingIntl: "bankACNumberOnline",
       label: "bank_account_online",
-      value: formData.bank_account_online,
+      value: formData?.bank_account_online,
       rules: [
         {
           required: true,
@@ -159,6 +162,14 @@ const SessionDetails = () => {
       ],
     },
   ];
+
+  useEffect(() => {
+    setEdit(addSession);
+    setSession(addSession);
+    if (addSession) {
+      setFormData({});
+    }
+  }, [addSession]);
 
   const handleInputChange = (value, name) => {
     setFormData({
@@ -170,6 +181,15 @@ const SessionDetails = () => {
       ...formErrors,
       [name]: undefined,
     });
+  };
+
+  const handleCancel = () => {
+    setFormData(SESSION_DETAILS);
+    setEdit(false);
+    setAddSession(false);
+  };
+  const handleSave = () => {
+    setEdit(false);
   };
 
   return (
@@ -208,27 +228,32 @@ const SessionDetails = () => {
         />
       }
       middleSection={
-        <Form
-          onFieldsChange={(changedFields, allFields) => {
-            const errors = allFields.reduce((acc, field) => {
-              if (field.errors.length > 0) {
-                acc[field.name[0]] = field.errors;
-              }
-              return acc;
-            }, {});
-            setFormErrors(errors);
-          }}
-          onFinishFailed={(errorInfo) => {
-            const errors = errorInfo.errorFields.reduce((acc, field) => {
-              acc[field.name[0]] = field.errors;
-              return acc;
-            }, {});
-            setFormErrors(errors);
-          }}
+        // <Form
+        //   onFieldsChange={(changedFields, allFields) => {
+        //     const errors = allFields.reduce((acc, field) => {
+        //       if (field.errors.length > 0) {
+        //         acc[field.name[0]] = field.errors;
+        //       }
+        //       return acc;
+        //     }, {});
+        //     setFormErrors(errors);
+        //   }}
+        //   onFinishFailed={(errorInfo) => {
+        //     const errors = errorInfo.errorFields.reduce((acc, field) => {
+        //       acc[field.name[0]] = field.errors;
+        //       return acc;
+        //     }, {});
+        //     setFormErrors(errors);
+        //   }}
+        // className={
+        //   responsive.isMd ? styles.gridContainer : styles.mobileGridContainer
+        // }
+        //   initialValues={formData}
+        // >
+        <div
           className={
             responsive.isMd ? styles.gridContainer : styles.mobileGridContainer
           }
-          initialValues={formData}
         >
           {FIELDSONE.map((item) => {
             return (
@@ -245,17 +270,18 @@ const SessionDetails = () => {
                 }
                 bottomSection={
                   edit ? (
-                    <Form.Item
-                      name={item.label}
-                      rules={item.rules}
-                      className={styles.formInputStyles}
-                    >
+                    // <Form.Item
+                    //   name={item.label}
+                    //   rules={item.rules}
+                    //   className={styles.formInputStyles}
+                    // >
+                    <div className={styles.formInputStyles}>
                       {item.id === 5 ||
                       item.id === 6 ||
                       item.id === 7 ||
                       item.id === 8 ? (
                         <DatePicker
-                          value={item.value}
+                          //value={item.value}
                           className={styles.dateInput}
                           onChange={(val) => {
                             handleInputChange(val, item.label);
@@ -284,8 +310,9 @@ const SessionDetails = () => {
                           }}
                         />
                       )}
-                    </Form.Item>
-                  ) : item?.id !== 4 ? (
+                    </div>
+                  ) : //</Form.Item>
+                  item?.id !== 4 ? (
                     <Typography className={styles.blackText}>
                       {item.value}
                     </Typography>
@@ -337,7 +364,8 @@ const SessionDetails = () => {
               />
             }
           />
-        </Form>
+        </div>
+        //<Form/>
       }
       bottomSection={
         !!edit && (
@@ -354,18 +382,17 @@ const SessionDetails = () => {
                     : styles.mobileButtonStyles
                 }
                 textStyle={styles.textStyle}
-                onClick={() => {
-                  setEdit(false);
-                }}
+                onClick={handleCancel}
               />
             }
             rightSection={
               <CustomButton
-                isBtnDisable={Object.keys(formErrors).length > 0}
+                //isBtnDisable={Object.keys(formErrors).length > 0}
                 textStyle={styles.saveButtonTextStyles}
                 btnText={intl.formatMessage({
                   id: "session.saveChanges",
                 })}
+                onClick={handleSave}
               />
             }
           />
