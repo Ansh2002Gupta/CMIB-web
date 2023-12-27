@@ -1,0 +1,61 @@
+.parentContainer {
+  position: relative;
+}
+
+.container {
+  border: var(--borderLight);
+  border-radius: var(--radiusXLgMedium);
+  background-color: var(--bodyBg);
+  z-index: 5;
+  overflow: hidden;
+  max-height: 30vh;
+  overflow-y: scroll;
+  position: absolute;
+  width: 100%;
+  top: 60px;
+  left: 0px;
+}
+
+.section {
+  border-top: var(--borderLight);
+  padding: var(--paddingSmall);
+}
+
+.optionHeadingContainer {
+  padding: var(--paddingExtraSmall);
+}
+
+.icon {
+  min-width: 20px;
+}
+
+.optionContainer {
+  padding: var(--paddingExtraSmall);
+  display: flex;
+  gap: var(--gapSmall);
+  align-items: center;
+  justify-self: center;
+  cursor: pointer;
+}
+
+.optionsHeading {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--inputPlaceHolder);
+}
+
+.optionText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.labelContainer {
+  min-height: 50px;
+  max-height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: var(--borderLight);
+  border-radius: var(--radiusLg);
+}

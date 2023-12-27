@@ -6,7 +6,8 @@ import { DatePicker, Typography, Descriptions, Switch } from "antd";
 import Base from "../../core/layouts/Base/Base";
 
 import CustomInput from "../../components/CustomInput";
-import { ACCESS_OPTIONS } from "../../constant/constant";
+import CustomMultiSelect from "../../components/CustomMultiSelect";
+import { ADD_NEW_USER_ACCESS_OPTIONS } from "../../constant/constant";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
@@ -138,29 +139,19 @@ const UserInfo = ({
                 }
               />
             </div>
-            <div>
-              <CustomInput
-                type="select"
-                isError={!!userAccessErrorMessage}
-                errorMessage={userAccessErrorMessage}
-                isMultiSelect
-                defaultSelectValueArray={access}
-                onSelectItem={(e) => updateUserData("access", e.target.value)}
-                label={intl.formatMessage({ id: "label.access" })}
-                isRequired
-                disabled={!isEditable}
-                selectOptions={ACCESS_OPTIONS}
-                customSelectInputStyles={[
-                  styles.text,
-                  styles.input,
-                  styles.selectInput,
-                ].join(" ")}
-                customLabelStyles={styles.label}
+            <div className={styles.accessSelectContainer}>
+              <Typography className={styles.label}>
+                {intl.formatMessage({ id: "label.access" })}
+              </Typography>
+              <CustomMultiSelect
+                optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
+                selectedOptions={access}
+                setSelectedOptions={(value) => updateUserData("access", value)}
               />
             </div>
             {shouldShowDatePickerOption && date && (
               <div className={styles.dateContainer}>
-                <Typography className={styles.label}>
+                <Typography className={styles.accessSelectLabel}>
                   {intl.formatMessage({ id: "label.dateCreatedOn" })}
                 </Typography>
                 <DatePicker
@@ -176,9 +167,11 @@ const UserInfo = ({
               </div>
             )}
             <div className={styles.twoFactorContainer}>
-              <Typography className={styles.label}>
-                {intl.formatMessage({ id: "label.twoFactorAuth" })}
-              </Typography>
+              <div className={styles.accessSelectLabelContainer}>
+                <Typography className={styles.label}>
+                  {intl.formatMessage({ id: "label.twoFactorAuth" })}
+                </Typography>
+              </div>
               <div className={styles.switchAndTextContainer}>
                 <Switch
                   className={is_two_factor ? styles.active : ""}
