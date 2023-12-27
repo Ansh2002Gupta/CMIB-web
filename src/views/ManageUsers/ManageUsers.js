@@ -24,8 +24,6 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
-import { setUserDetails } from "../../globalContext/userDetails/userDetailsActions";
-import { UserDetailsContext } from "../../globalContext/userDetails/userDetailsProvider";
 import { VIEW_USER_DETAILS } from "../../routes/routeNames";
 import styles from "./ManageUsers.module.scss";
 
@@ -35,7 +33,6 @@ const ManageUsers = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
   const [messageApi, contextHolder] = message.useMessage();
-  const [, userDetailsDispatch] = useContext(UserDetailsContext);
 
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
@@ -62,9 +59,6 @@ const ManageUsers = () => {
   }, []);
 
   const goToUserDetailsPage = (userId, editable, userName) => {
-    userDetailsDispatch(
-      setUserDetails({ userName, editable, userId, type: "users" })
-    );
     navigate(VIEW_USER_DETAILS);
   };
 

@@ -1,34 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Image, Typography, Upload, message, notification } from "antd";
+import { Typography, Upload, message } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
 import UserImage from "../UserImage/UserImage";
-import useImageUpload from "../../services/api-services/Image/useImageUpload";
-import uploadImg from "../../themes/base/assets/images/Upload icon.svg";
+import { ReactComponent as UploadImg } from "../../themes/base/assets/images/Upload icon.svg";
+import { classes } from "./FileUpload.styles";
 import styles from "./FileUpload.module.scss";
-import { NOTIFICATION_PLACEMENTS } from "../../constant/constant";
 
 const FileUpload = ({
   heading,
   subHeading,
   updateUserData,
   userProfilePic,
+  userImageName,
   isFormEditable,
 }) => {
   const intl = useIntl();
   const [messageApi, messageContextHolder] = message.useMessage();
-  const [api, notificationContextHolder] = notification.useNotification();
-
-  const {
-    imageUploadStatus,
-    errorWhileUploadingImage,
-    isUploadingImage,
-    uploadImageData,
-    uploadImage,
-  } = useImageUpload();
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -50,9 +41,7 @@ const FileUpload = ({
       messageApi.open({
         type: "error",
         content: intl.formatMessage({ id: "label.fileUpto5MB" }),
-        style: {
-          marginTop: "20vh",
-        },
+        style: classes.message,
       });
       return Upload.LIST_IGNORE;
     }
@@ -69,51 +58,21 @@ const FileUpload = ({
     return "";
   };
 
-  const showNotification = (placement) => {
-    api.info({
-      message: intl.formatMessage({ id: "label.notification" }),
-      description: (
-        <Typography>
-          {intl.formatMessage({ id: "label.userCreatedSuccessfully" })}
-        </Typography>
-      ),
-      placement,
-    });
-  };
-
   const handleOnUploadImage = (file) => {
-    console.log({file})
-    updateUserData("profile_photo", file); // remove it
-    const { onSuccess, onError, onProgress } = file;
+    const { onError } = file;
     const isValid = beforeUpload(file);
-    onProgress({ percent: 10 });
     if (typeof isValid === "string" || !isValid) {
       onError("error", file?.file);
       return;
     }
-    onProgress({ percent: 50 });
-    uploadImage(
-      file,
-      (result) => {
-        // on Success
-        onProgress({ percent: 100 });
-        onSuccess({ body: result });
-        const imageUrl = getImageSource(file?.file);
-        updateUserData("profile_photo", file?.file);
-        showNotification(NOTIFICATION_PLACEMENTS.TOP_RIGHT);
-      },
-      (err) => {
-        //  on Error
-        onError("error", err);
-        messageApi.open({
-          type: "error",
-          content: intl.formatMessage({ id: "label.networkError" }),
-          style: {
-            marginTop: "20vh",
-          },
-        });
-      }
-    );
+    const imageUrl = getImageSource(file?.file);
+    updateUserData("profile_photo", file);
+    updateUserData("profile_photo_url", imageUrl);
+  };
+
+  const removeSelctedImage = () => {
+    updateUserData("profile_photo_url", "");
+    updateUserData("profile_photo", "");
   };
 
   return (
@@ -122,12 +81,12 @@ const FileUpload = ({
       <div className={styles.uploadBottomContainer}>
         <Typography className={styles.subHeadingText}>{subHeading}</Typography>
         {messageContextHolder}
-        {notificationContextHolder}
         {userProfilePic ? (
           <UserImage
-            onTrashClick={() => updateUserData("profile_photo", "")}
+            onTrashClick={removeSelctedImage}
             src={userProfilePic}
-            imageName={uploadImageData?.image_name}
+            imageName={userImageName}
+            editable={isFormEditable}
           />
         ) : (
           <Upload
@@ -136,11 +95,7 @@ const FileUpload = ({
             disabled={!isFormEditable}
           >
             <div className={styles.uploadTextContainer}>
-              <Image
-                src={uploadImg}
-                preview={false}
-                className={styles.uploadImage}
-              />
+              <UploadImg className={styles.uploadImage} />
               <div>
                 <div className={styles.uploadHeadingContainer}>
                   <Typography className={styles.uploadText}>
@@ -168,6 +123,7 @@ FileUpload.defaultProps = {
   subHeading: "Photo",
   updateUserData: () => {},
   userProfilePic: "",
+  userImageName: "",
 };
 
 FileUpload.propTypes = {
@@ -176,6 +132,7 @@ FileUpload.propTypes = {
   subHeading: PropTypes.string,
   updateUserData: PropTypes.func,
   userProfilePic: PropTypes.string,
+  userImageName: PropTypes.string,
 };
 
 export default FileUpload;

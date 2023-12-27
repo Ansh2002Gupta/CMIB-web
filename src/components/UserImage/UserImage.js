@@ -4,16 +4,18 @@ import PropTypes from "prop-types";
 import { ThemeContext } from "core/providers/theme";
 import { Image, Typography } from "antd";
 
-import { UserDetailsContext } from "../../globalContext/userDetails/userDetailsProvider";
 import { ReactComponent as Trash } from "../../themes/base/assets/images/trash.svg";
 import styles from "./UserImage.module.scss";
 
-const UserImage = ({ src, customImageStyles, imageName, onTrashClick }) => {
+const UserImage = ({
+  src,
+  customImageStyles,
+  imageName,
+  onTrashClick,
+  editable,
+}) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  const [userDetailsState] = useContext(UserDetailsContext);
-
-  const { editable } = userDetailsState;
 
   return (
     <div className={[styles.container].join(" ")}>
@@ -38,6 +40,7 @@ UserImage.defaultProps = {
   imageName: "",
   onTrashClick: () => {},
   src: "",
+  editable: false,
 };
 
 UserImage.propTypes = {
@@ -45,6 +48,7 @@ UserImage.propTypes = {
   imageName: PropTypes.string,
   onTrashClick: PropTypes.func,
   src: PropTypes.string,
+  editable: PropTypes.bool,
 };
 
 export default UserImage;

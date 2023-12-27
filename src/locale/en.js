@@ -3,9 +3,11 @@ const locale = {
   "label.signIn": "Sign In",
   "label.userName": "Username",
   "label.userName2": "User Name",
+  "label.userNameLeftEmpty": "user name cannot be left empty!",
   "label.email": "Email",
   "label.mobileNumber": "Mobile Number",
   "label.access": "Access",
+  "label.notValidUserAccess": "Please select a valid access type!",
   "label.status": "Status",
   "label.emailId": "Enter ID",
   "label.password": "Password",
@@ -97,9 +99,13 @@ const locale = {
   "label.addNewUsers": "Add New User",
   "label.userCreatedSuccessfully": "User has been created successfully",
   "label.enableToUpdateUserStatus":
-  "Enable to updated user status at the moment!",
+    "Enable to updated user status at the moment!",
   "label.add": "Add",
   "label.notification": "Notification",
+  "label.errorWhileUpdatingUserData":
+    "Some error occured while updating user details, please try again",
+  "label.errorWhileAddingNewUser":
+    "Some error occured while creating a new user, please try again!",
 };
 
 export default locale;

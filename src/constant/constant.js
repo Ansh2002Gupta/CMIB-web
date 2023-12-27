@@ -58,11 +58,18 @@ export const FORM_STATES = {
   EMPTY: "empty",
 };
 
-export const NOTIFICATION_PLACEMENTS = {
+export const NOTIFICATION_POSITIONS = {
   TOP_RIGHT: "topRight",
   TOP_LEFT: "topLeft",
   BOTTOM_RIGHT: "bottomRight",
   BOTTOM_LEFT: "bottomLeft",
+};
+
+export const NOTIFICATION_TYPES = {
+  SUCCESS: "success",
+  ERROR: "error",
+  WARNING: "warning",
+  INFO: "info",
 };
 
 export const ADD_NEW_USER_ACCESS_OPTIONS = [

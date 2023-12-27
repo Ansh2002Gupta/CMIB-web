@@ -19,11 +19,13 @@ const UserInfo = ({
   mobileNo,
   mobilePrefix,
   name,
-  updateUserData,
   emailErrorMessage,
   mobileErrorMessage,
   is_two_factor,
   shouldShowDatePickerOption,
+  updateUserData,
+  userAccessErrorMessage,
+  userNameErrorMessage,
 }) => {
   const intl = useIntl();
 
@@ -86,6 +88,8 @@ const UserInfo = ({
               <CustomInput
                 type={"text"}
                 label={intl.formatMessage({ id: "label.userName2" })}
+                isError={!!userNameErrorMessage}
+                errorMessage={userNameErrorMessage}
                 isRequired
                 value={name}
                 disabled={!isEditable}
@@ -137,6 +141,8 @@ const UserInfo = ({
             <div>
               <CustomInput
                 type="select"
+                isError={!!userAccessErrorMessage}
+                errorMessage={userAccessErrorMessage}
                 isMultiSelect
                 defaultSelectValueArray={access}
                 onSelectItem={(e) => updateUserData("access", e.target.value)}
@@ -205,6 +211,8 @@ UserInfo.defaultProps = {
   name: "",
   shouldShowDatePickerOption: true,
   updateUserData: () => {},
+  userAccessErrorMessage: "",
+  userNameErrorMessage: "",
 };
 
 UserInfo.propTypes = {
@@ -219,6 +227,8 @@ UserInfo.propTypes = {
   name: PropTypes.string,
   shouldShowDatePickerOption: PropTypes.bool,
   updateUserData: PropTypes.func,
+  userAccessErrorMessage: PropTypes.string,
+  userNameErrorMessage: PropTypes.string,
 };
 
 export default UserInfo;
