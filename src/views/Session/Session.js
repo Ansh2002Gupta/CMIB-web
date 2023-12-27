@@ -41,8 +41,6 @@ function Session() {
 
   const activeTabChildren = TabItems.find((tab) => tab.key === activeTab);
 
-  console.log("addSession...", addSession);
-
   return (
     <TwoRow
       className={styles.mainContainer}

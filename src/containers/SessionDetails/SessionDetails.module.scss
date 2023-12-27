@@ -1,3 +1,6 @@
+.mainContainer{
+    gap:var(--gapMedium)
+}
 .sessionDetails{
     background-color: var(--bodyBg);
     padding: var(--fontSizeXlargeMedium);
@@ -93,8 +96,8 @@ cursor: pointer;
     color: var(--textBold) !important;
     font-size: var(--fontSizeSmall);
     font-weight: var(--fontWeightMedium);
-    flex:1;
-    min-width:'100%'
+    border-radius: var(--radiusLg);
+    border: var(--borderLight);
 }
 .buttonStyles{
     background-color: var(--bodyBg);
@@ -149,4 +152,10 @@ cursor: pointer;
 .formInputStyles{   
     flex:1;
 }
+.errorText {
+    color: var(--error);
+    font-size: var(--fontSizeExtraSmall);
+    margin-top: var(--gapXXSmall);
+  }
+  
  

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
-import { DatePicker, Form, Image, Select, Switch, Typography } from "antd";
+import { DatePicker, Image, Select, Switch, Typography } from "antd";
 
 import { TwoRow, TwoColumn, ThreeRow } from "../../core/layouts";
 import useResponsive from "core/hooks/useResponsive";
@@ -20,13 +20,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
 
   const [formErrors, setFormErrors] = useState({});
   const [edit, setEdit] = useState(addSession);
-  const [session, setSession] = useState(true);
   const [formData, setFormData] = useState(SESSION_DETAILS);
 
-  console.log("addSession", addSession);
-  console.log("session", session);
-
-  const FIELDSONE = [
+  const FIELDS = [
     {
       id: 1,
       headingIntl: "sessionName",
@@ -165,7 +161,6 @@ const SessionDetails = ({ addSession, setAddSession }) => {
 
   useEffect(() => {
     setEdit(addSession);
-    setSession(addSession);
     if (addSession) {
       setFormData({});
     }
@@ -177,195 +172,195 @@ const SessionDetails = ({ addSession, setAddSession }) => {
       [name]: value,
     });
 
+    const fieldRules = FIELDS.find((field) => field.label === name)?.rules;
+    const error = validateField(value, fieldRules);
     setFormErrors({
       ...formErrors,
-      [name]: undefined,
+      [name]: error,
     });
+  };
+
+  const validateField = (value, rules) => {
+    if (!rules) return undefined;
+
+    for (const rule of rules) {
+      if (rule.required && !value) {
+        return rule.message;
+      }
+    }
+
+    return undefined;
   };
 
   const handleCancel = () => {
     setFormData(SESSION_DETAILS);
     setEdit(false);
     setAddSession(false);
+    setFormErrors({});
   };
   const handleSave = () => {
     setEdit(false);
   };
 
   return (
-    <ThreeRow
-      className={styles.sessionDetails}
+    <TwoRow
+      className={styles.mainContainer}
       topSection={
-        <TwoColumn
-          className={styles.headerContainer}
-          leftSection={
-            <Typography className={styles.headingText}>
-              {intl.formatMessage({ id: "session.sessionDetails" })}
-            </Typography>
-          }
-          rightSection={
-            !edit && (
-              <TwoColumn
-                onClick={() => {
-                  setEdit(true);
-                }}
-                className={styles.editContainer}
-                leftSection={
-                  <Image
-                    src={getImage("editIcon")}
-                    className={styles.editIcon}
-                    preview={false}
+        <ThreeRow
+          className={styles.sessionDetails}
+          topSection={
+            <TwoColumn
+              className={styles.headerContainer}
+              leftSection={
+                <Typography className={styles.headingText}>
+                  {intl.formatMessage({ id: "session.sessionDetails" })}
+                </Typography>
+              }
+              rightSection={
+                !edit && (
+                  <TwoColumn
+                    onClick={() => {
+                      setEdit(true);
+                    }}
+                    className={styles.editContainer}
+                    leftSection={
+                      <Image
+                        src={getImage("editIcon")}
+                        className={styles.editIcon}
+                        preview={false}
+                      />
+                    }
+                    rightSection={
+                      <Typography className={styles.blackText}>
+                        {intl.formatMessage({ id: "session.edit" })}
+                      </Typography>
+                    }
                   />
-                }
-                rightSection={
-                  <Typography className={styles.blackText}>
-                    {intl.formatMessage({ id: "session.edit" })}
-                  </Typography>
-                }
-              />
-            )
+                )
+              }
+            />
           }
-        />
-      }
-      middleSection={
-        // <Form
-        //   onFieldsChange={(changedFields, allFields) => {
-        //     const errors = allFields.reduce((acc, field) => {
-        //       if (field.errors.length > 0) {
-        //         acc[field.name[0]] = field.errors;
-        //       }
-        //       return acc;
-        //     }, {});
-        //     setFormErrors(errors);
-        //   }}
-        //   onFinishFailed={(errorInfo) => {
-        //     const errors = errorInfo.errorFields.reduce((acc, field) => {
-        //       acc[field.name[0]] = field.errors;
-        //       return acc;
-        //     }, {});
-        //     setFormErrors(errors);
-        //   }}
-        // className={
-        //   responsive.isMd ? styles.gridContainer : styles.mobileGridContainer
-        // }
-        //   initialValues={formData}
-        // >
-        <div
-          className={
-            responsive.isMd ? styles.gridContainer : styles.mobileGridContainer
-          }
-        >
-          {FIELDSONE.map((item) => {
-            return (
+          bottomSection={
+            <div
+              className={
+                responsive.isMd
+                  ? styles.gridContainer
+                  : styles.mobileGridContainer
+              }
+            >
+              {FIELDS.map((item) => (
+                <TwoRow
+                  key={item.id}
+                  className={styles.gridItem}
+                  topSection={
+                    <Typography className={styles.grayText}>
+                      {intl.formatMessage({
+                        id: `session.${item.headingIntl}`,
+                      })}
+                      <span className={styles.redText}>*</span>
+                    </Typography>
+                  }
+                  bottomSection={
+                    edit ? (
+                      <div className={styles.formInputStyles}>
+                        {item.id === 5 ||
+                        item.id === 6 ||
+                        item.id === 7 ||
+                        item.id === 8 ? (
+                          <DatePicker
+                            format="MM/DD/YYYY"
+                            className={styles.dateInput}
+                            onChange={(val, dateString) => {
+                              handleInputChange(dateString, item.label);
+                            }}
+                          />
+                        ) : item.id === 4 ? (
+                          <Select
+                            bordered={false}
+                            size={"large"}
+                            style={classes.multiSelectStyle}
+                            className={styles.multilpleInput}
+                            onChange={(val) => {
+                              handleInputChange(val, item.label);
+                            }}
+                            options={item.selectOptions}
+                            value={item.value}
+                            mode="multiple"
+                          />
+                        ) : (
+                          <CustomInput
+                            value={item.value}
+                            disabled={!edit}
+                            customLabelStyles={styles.inputLabel}
+                            customInputStyles={styles.input}
+                            customContainerStyles={styles.customContainerStyles}
+                            onChange={(val) => {
+                              handleInputChange(val.target.value, item.label);
+                            }}
+                          />
+                        )}
+                        {formErrors[item.label] && (
+                          <Typography className={styles.errorText}>
+                            {formErrors[item.label]}
+                          </Typography>
+                        )}
+                      </div>
+                    ) : item?.id !== 4 ? (
+                      <Typography className={styles.blackText}>
+                        {item.value}
+                      </Typography>
+                    ) : (
+                      <div className={styles.examinationFieldContainer}>
+                        {item.value?.map((val) => (
+                          <Typography className={styles.periodText}>
+                            {val}
+                          </Typography>
+                        ))}
+                      </div>
+                    )
+                  }
+                />
+              ))}
+
               <TwoRow
-                key={item.id}
                 className={styles.gridItem}
                 topSection={
                   <Typography className={styles.grayText}>
-                    {intl.formatMessage({
-                      id: `session.${item.headingIntl}`,
-                    })}
+                    {intl.formatMessage({ id: "label.status" })}
                     <span className={styles.redText}>*</span>
                   </Typography>
                 }
                 bottomSection={
-                  edit ? (
-                    // <Form.Item
-                    //   name={item.label}
-                    //   rules={item.rules}
-                    //   className={styles.formInputStyles}
-                    // >
-                    <div className={styles.formInputStyles}>
-                      {item.id === 5 ||
-                      item.id === 6 ||
-                      item.id === 7 ||
-                      item.id === 8 ? (
-                        <DatePicker
-                          //value={item.value}
-                          className={styles.dateInput}
-                          onChange={(val) => {
-                            handleInputChange(val, item.label);
-                          }}
-                        />
-                      ) : item.id === 4 ? (
-                        <Select
-                          size={"large"}
-                          className={styles.multilpleInput}
-                          onChange={(val) => {
-                            handleInputChange(val, item.label);
-                          }}
-                          options={item.selectOptions}
-                          value={item.value}
-                          mode="multiple"
-                        />
-                      ) : (
-                        <CustomInput
-                          value={item.value}
-                          disabled={!edit}
-                          customLabelStyles={styles.inputLabel}
-                          customInputStyles={styles.input}
-                          customContainerStyles={styles.customContainerStyles}
-                          onChange={(val) => {
-                            handleInputChange(val.target.value, item.label);
-                          }}
-                        />
-                      )}
-                    </div>
-                  ) : //</Form.Item>
-                  item?.id !== 4 ? (
-                    <Typography className={styles.blackText}>
-                      {item.value}
-                    </Typography>
-                  ) : (
-                    <div className={styles.examinationFieldContainer}>
-                      {item.value.map((val) => (
-                        <Typography className={styles.periodText}>
-                          {val}
-                        </Typography>
-                      ))}
-                    </div>
-                  )
-                }
-              />
-            );
-          })}
-
-          <TwoRow
-            className={styles.gridItem}
-            topSection={
-              <Typography className={styles.grayText}>
-                {intl.formatMessage({ id: "label.status" })}
-                <span className={styles.redText}>*</span>
-              </Typography>
-            }
-            bottomSection={
-              <TwoColumn
-                className={styles.statusContainer}
-                leftSection={
-                  <Switch
-                    style={formData?.status && classes.switchBackground}
-                    checked={formData?.status}
-                    onChange={() => {
-                      setFormData({
-                        ...formData,
-                        status: !formData.status,
-                      });
-                    }}
-                    disabled={!edit}
+                  <TwoColumn
+                    className={styles.statusContainer}
+                    leftSection={
+                      <Switch
+                        style={formData?.status && classes.switchBackground}
+                        checked={formData?.status}
+                        onChange={() => {
+                          setFormData({
+                            ...formData,
+                            status: !formData.status,
+                          });
+                        }}
+                        disabled={!edit}
+                      />
+                    }
+                    rightSection={
+                      <Typography className={styles.blackText}>
+                        {intl.formatMessage({
+                          id: `label.${
+                            formData?.status ? "active" : "inactive"
+                          }`,
+                        })}
+                      </Typography>
+                    }
                   />
                 }
-                rightSection={
-                  <Typography className={styles.blackText}>
-                    {intl.formatMessage({
-                      id: `label.${formData?.status ? "active" : "inactive"}`,
-                    })}
-                  </Typography>
-                }
               />
-            }
-          />
-        </div>
-        //<Form/>
+            </div>
+          }
+        />
       }
       bottomSection={
         !!edit && (
@@ -387,7 +382,19 @@ const SessionDetails = ({ addSession, setAddSession }) => {
             }
             rightSection={
               <CustomButton
-                //isBtnDisable={Object.keys(formErrors).length > 0}
+                isBtnDisable={
+                  Object.values(formErrors).some((error) => !!error) ||
+                  !formData?.name ||
+                  !formData?.session_start_date ||
+                  !formData?.nature_of_service ||
+                  !formData?.perform_invoice_no_format ||
+                  !formData?.examination_session_period ||
+                  !formData?.gmcs_completion_date ||
+                  !formData?.membership_completion_date ||
+                  !formData?.article_completion_from_date ||
+                  !formData?.bank_account_offline ||
+                  !formData?.bank_account_online
+                }
                 textStyle={styles.saveButtonTextStyles}
                 btnText={intl.formatMessage({
                   id: "session.saveChanges",
