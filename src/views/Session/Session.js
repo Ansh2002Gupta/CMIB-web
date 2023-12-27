@@ -85,10 +85,7 @@ function Session() {
       }
       bottomSection={
         addSession ? (
-          <SessionDetails
-            addSession={addSession}
-            setAddSession={setAddSession}
-          />
+          <SessionDetails {...{ addSession, setAddSession }} />
         ) : (
           !!activeTabChildren && activeTabChildren.children
         )

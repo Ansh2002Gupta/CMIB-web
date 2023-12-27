@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { DatePicker, Image, Select, Switch, Typography } from "antd";
@@ -184,7 +185,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     if (!rules) return undefined;
 
     for (const rule of rules) {
-      if (rule.required && !value) {
+      if (rule.required && (!value || value.length <= 0)) {
         return rule.message;
       }
     }
@@ -409,4 +410,15 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     />
   );
 };
+
+SessionDetails.defaultProps = {
+  addSession: false,
+  setAddSession: () => {},
+};
+
+SessionDetails.propTypes = {
+  addSession: PropTypes.bool,
+  setAddSession: PropTypes.func,
+};
+
 export default SessionDetails;
