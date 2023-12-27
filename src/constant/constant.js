@@ -30,21 +30,6 @@ export const ROW_PER_PAGE_OPTIONS = [
   },
 ];
 
-export const ACCESS_OPTIONS = [
-  {
-    value: "all",
-    label: "All",
-  },
-  {
-    value: "placements",
-    label: "Placements",
-  },
-  {
-    value: "CA-Jobs",
-    label: "CA-Jobs",
-  },
-];
-
 export const ROLE_ID_MAPPING = {
   placements: 1,
   "ca-jobs": 2,
@@ -75,31 +60,32 @@ export const NOTIFICATION_TYPES = {
 export const ADD_NEW_USER_ACCESS_OPTIONS = [
   {
     id: 1,
-    heading: "Placements",
+    heading: "Controls",
     options: [
-      "All",
-      "NQCA-Placement",
-      "Overseas-Placement",
-      "Career-Ascent",
-      "Women-Placement",
+      { text: "Bulk notification", id: 7 },
+      { text: "User Management", id: 8 },
+      { text: "Ticket Management", id: 9 },
+      { text: "Query Management", id: 10 },
+      { text: "Testimonial Management", id: 11 },
+      { text: "Registered Companies", id: 12 },
     ],
+    allOptionIds: [7, 8, 9, 10, 11, 12],
   },
   {
     id: 2,
     heading: "CA-Jobs",
-    options: ["Ca-jobs"],
+    options: [{ text: "Ca-jobs", id: 2 }],
+    allOptionIds: [2],
   },
   {
     id: 3,
-    heading: "Controls",
+    heading: "Placements",
     options: [
-      "AlL",
-      "Bulk notification",
-      "User Management",
-      "Ticket Management",
-      "Query Management",
-      "Testimonial Management",
-      "Registered Companies",
+      { text: "NQCA-Placement", id: 3 },
+      { text: "Overseas-Placement", id: 4 },
+      { text: "Career-Ascent", id: 5 },
+      { text: "Women-Placement", id: 6 },
     ],
+    allOptionIds: [3, 4, 5, 6],
   },
 ];

@@ -1,5 +1,6 @@
 const locale = {
   // en locale
+  "label.all": "All",
   "label.signIn": "Sign In",
   "label.userName": "Username",
   "label.userName2": "User Name",
@@ -69,7 +70,6 @@ const locale = {
   "label.previous": "Previous",
   "label.active": "Active",
   "label.inactive": "Inactive",
-  "label.addNewUsers": "Add New Users",
   "label.newUsers": "New Users",
   "label.users": "Users",
   "label.searchByUserNameAndEmail": "Search by user name and email",
