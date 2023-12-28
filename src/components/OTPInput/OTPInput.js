@@ -8,7 +8,6 @@ import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
 import CustomCountdown from "../CustomCountdown";
-import useCheckOTP from "../../services/api-services/Otp/useCheckOTP";
 import { LOGIN } from "../../routes/routeNames";
 import {
   TIMER_OF_1_MINUTES,

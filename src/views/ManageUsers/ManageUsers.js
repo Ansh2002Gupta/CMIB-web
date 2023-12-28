@@ -52,8 +52,6 @@ const ManageUsers = () => {
     errorWhileUpdatingUserData,
     updateUserDetails,
     isLoading: isUpdatingUserData,
-    isSuccess: isUserStatusUpdatedSuccesfully,
-    setErrorWhileUpdatingUserData,
   } = useUpdateUserDetailsApi();
   const [currentDataLength, setCurrentDataLength] = useState(usersList?.length);
 

@@ -9,7 +9,7 @@ import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
 import useCheckOTP from "../../services/api-services/Otp/useCheckOTP.js";
-import useForgotPassword from "../../services/api-services/Password/useForgotPassword.js";
+import useForgotPassword from "../../services/api-services/ForgotPassword/useForgotPassword.js";
 import withCardView from "../../hocs/withCardView";
 import { LOGIN } from "../../routes/routeNames.js";
 import { EMAIL_REGEX } from "../../constant/regex.js";
