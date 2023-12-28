@@ -355,6 +355,7 @@ const UserDetails = ({ currentFormState }) => {
       />
       {currentFormState !== FORM_STATES.VIEW_ONLY &&
         !isLoading &&
+        !isAddingUser &&
         !isUpdatingUserData && (
           <ActionAndCancelButtons
             cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
