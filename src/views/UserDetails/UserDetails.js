@@ -9,7 +9,6 @@ import ContentHeader from "../../containers/ContentHeader";
 import CustomButton from "../../components/CustomButton";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../../containers/UserInfo";
-import useAddNewUserApi from "../../services/api-services/Users/useAddNewUserApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
@@ -24,6 +23,7 @@ const UserDetails = ({ currentFormState }) => {
   const intl = useIntl();
   const [messageApi, contextHolder] = message.useMessage();
   const { userId } = useParams();
+  const { navigateScreen: navigate } = useNavigateScreen();
 
   const [active, setActive] = useState(false);
   const [userData, setUserData] = useState({
@@ -113,7 +113,7 @@ const UserDetails = ({ currentFormState }) => {
 
   useEffect(() => {
     if (errorWhileUpdatingUserData) {
-      showErorrToUser();
+      showErorrToUser(); // change this
     }
   }, [errorWhileUpdatingUserData]);
 
