@@ -61,6 +61,7 @@ const UserDetails = ({ currentFormState }) => {
   const goBackToViewDetailsPage = () => {
     setErrorWhileUpdatingUserData("");
     navigate(USERS + `/view/${userId}`);
+    getUserData(userId);
   };
 
   const handleUpdateUserData = () => {
@@ -271,8 +272,7 @@ const UserDetails = ({ currentFormState }) => {
                       isFormEditable:
                         currentFormState !== FORM_STATES.VIEW_ONLY,
                     }}
-                    userProfilePic={userData.profile_photo}
-                    // this as well
+                    userProfilePic={userData.profile_photo_url}
                     userImageName={userData.profile_photo?.file?.name}
                   />
                 </div>
