@@ -17,7 +17,9 @@ import {
   MANAGE_USERS,
   FORGOT_PASSWORD,
   ROOT,
+  CONFIGURE_CENTRES,
 } from "./routeNames";
+import ConfigureCentres from "../views/ConfigureCentres";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HomeWithPublicAccess = withPublicAccess(Home);
@@ -117,6 +119,17 @@ const config = [
       {
         viewPath: "",
         element: <ManageUsers />, // view
+      },
+    ],
+  },
+  {
+    pagePath: CONFIGURE_CENTRES,
+    element: <HomeWithPublicAccess noOuterPadding />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <ConfigureCentres />, // view
       },
     ],
   },

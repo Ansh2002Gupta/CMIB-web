@@ -1,0 +1,131 @@
+.baseLayout {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.headerContainer {
+  padding: var(--paddingMedium);
+  width: 100%;
+}
+
+.btnCustomStyles {
+  padding: var(--paddingSmall) 12px;
+  border-radius: var(--radiusXLg);
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
+}
+
+.btnIconStyles {
+  width: 24px !important;
+}
+
+.tableContainer {
+  background-color: var(--blueBg);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmall);
+  padding: var(--paddingMedium);
+  flex: 1;
+}
+
+.searchIcon {
+  width: 30px;
+  height: 30px;
+  padding-right: var(--paddingExtraSmall);
+  padding-bottom: 4px;
+}
+
+.editIcon {
+  cursor: pointer;
+}
+
+.searchBar {
+  width: 30%;
+  min-height: 44px;
+  border-radius: var(--radiusXLg);
+  input {
+    color: var(--inputText) !important;
+    font-size: var(--fontSizeSmall) !important;
+    font-weight: var(--fontWeightMedium) !important;
+  }
+}
+
+input::placeholder {
+  color: var(--inputPlaceHolder) !important;
+}
+
+.searchBarContainer {
+  display: flex;
+  justify-content: start;
+  gap: var(--gapSmall);
+  position: relative;
+}
+
+.switchBgColor {
+  background-color: var(--active2) !important;
+}
+
+.boldText {
+  font-weight: var(--fontWeightBold);
+}
+
+.textEllipsis {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.columnHeading {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+}
+
+.centreStatusContainer {
+  display: flex;
+  gap: var(--gapXSmall);
+}
+
+.padding {
+  padding: var(--paddingMedium);
+}
+
+@media screen and (max-width: 1535px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeXXlarge);
+  }
+  .btnCustomStyles {
+    font-size: var(--fontSizeExtraSmall);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .searchBar {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeXlargeMedium);
+  }
+  .btnCustomStyles {
+    min-height: 44px;
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .searchBarContainer {
+    flex-direction: column;
+  }
+  .searchBar {
+    width: 100%;
+    min-height: 50px;
+  }
+  .filterBtn {
+    max-width: 100px;
+    align-self: flex-end;
+  }
+}
