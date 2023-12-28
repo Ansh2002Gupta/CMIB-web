@@ -149,6 +149,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             placeholder={intl.formatMessage({
                               id: `session.placeholder.${item.headingIntl}`,
                             })}
+                            value={item.value}
                           />
                         ) : item.id === 4 ? (
                           //TODO:Replace this component with common component of custom input which contains multiselect
