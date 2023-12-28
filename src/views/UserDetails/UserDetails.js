@@ -38,7 +38,6 @@ const UserDetails = ({ currentFormState }) => {
     date: "",
     is_two_factor: false,
   });
-  console.log({v:userData.access}) // remove this
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isMobileNumber, setIsMobileNumberValid] = useState(true);
   const [isUserNameValid, setIsUserNameValid] = useState(true);
@@ -308,6 +307,7 @@ const UserDetails = ({ currentFormState }) => {
                         : ""
                     }
                     isDateDisable
+                    shouldShowDatePickerOption={false}
                   />
                   <FileUpload
                     {...{

@@ -3,9 +3,11 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Typography } from "antd";
 
+import useOutSideClick from "../../core/hooks/useOutSideClick";
 import { ReactComponent as CheckedBox } from "../../themes/base/assets/images/checkedBox.svg";
 import { ReactComponent as UnCheckedBox } from "../../themes/base/assets/images/unCheckedBox.svg";
-import useOutSideClick from "../../core/hooks/useOutSideClick";
+import { ReactComponent as DropdownArrow } from "../../themes/base/assets/images/arrow-down-admin.svg";
+import { ReactComponent as Cross } from "../../themes/base/assets/images/x.svg";
 import styles from "./CustomMultiSelect.module.scss";
 
 const CustomMultiSelect = ({
@@ -22,6 +24,7 @@ const CustomMultiSelect = ({
     return idsCount;
   }, []);
   const countOfAllOptionsIds = arrayOfAllOptionsIds.length;
+  const shouldShowAllOptionForEntireOptionArray = optionsArray?.length > 1;
 
   const [selectAll, setSelectAll] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -108,27 +111,43 @@ const CustomMultiSelect = ({
 
   return (
     <div className={styles.parentContainer}>
-      <div
-        onClick={() => setShowDropdown((prev) => !prev)}
-        ref={elementNotToBeConsideredRef}
-        className={styles.labelContainer}
-      >
-        <Typography>{combinedString}</Typography>
+      <div className={styles.labelContainer}>
+        <Typography>Access *</Typography>
+        <div
+          onClick={() => setShowDropdown((prev) => !prev)}
+          ref={elementNotToBeConsideredRef}
+          className={styles.optionDropdownPlaceHolderContaier}
+        >
+          <Typography>Select Modules</Typography>
+          <DropdownArrow />
+        </div>
+      </div>
+      <div className={styles.chipsListContainer}>
+        {combinedString?.split(",")?.map((item) => {
+          return (
+            <div className={styles.chips}>
+              <Typography className={styles.chipsText}>{item}</Typography>
+              <Cross />
+            </div>
+          );
+        })}
       </div>
       {showDropdown && (
         <div className={styles.container} ref={wrapperRef}>
-          <div className={styles.section}>
-            <div className={styles.optionContainer} onClick={selectAllOption}>
-              {selectAll ? (
-                <CheckedBox className={styles.icon} />
-              ) : (
-                <UnCheckedBox className={styles.icon} />
-              )}
-              <Typography className={styles.optionText}>
-                {intl.formatMessage({ id: "label.all" })}
-              </Typography>
+          {shouldShowAllOptionForEntireOptionArray && (
+            <div className={styles.section}>
+              <div className={styles.optionContainer} onClick={selectAllOption}>
+                {selectAll ? (
+                  <CheckedBox className={styles.icon} />
+                ) : (
+                  <UnCheckedBox className={styles.icon} />
+                )}
+                <Typography className={styles.optionText}>
+                  {intl.formatMessage({ id: "label.all" })}
+                </Typography>
+              </div>
             </div>
-          </div>
+          )}
           {optionsArray?.map((item, index) => {
             return (
               <div className={styles.section} key={index}>

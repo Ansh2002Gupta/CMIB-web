@@ -139,16 +139,11 @@ const UserInfo = ({
                 }
               />
             </div>
-            <div className={styles.accessSelectContainer}>
-              <Typography className={styles.label}>
-                {intl.formatMessage({ id: "label.access" })}
-              </Typography>
-              <CustomMultiSelect
-                optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
-                selectedOptions={access}
-                setSelectedOptions={(value) => updateUserData("access", value)}
-              />
-            </div>
+            <CustomMultiSelect
+              optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
+              selectedOptions={access}
+              setSelectedOptions={(value) => updateUserData("access", value)}
+            />
             {shouldShowDatePickerOption && date && (
               <div className={styles.dateContainer}>
                 <Typography className={styles.accessSelectLabel}>
