@@ -8,10 +8,10 @@ import { TwoRow, TwoColumn } from "../../core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton";
+import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
-import { FormatDate } from "../../constant/utils";
+import { FIELDS } from "./SessionDataLogic";
 import { SESSION_DETAILS } from "../../dummyData";
-import { SESSION_PERIOD } from "../../constant/constant";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 import "./Override.css";
@@ -25,129 +25,18 @@ const SessionDetails = ({ addSession, setAddSession }) => {
   const [edit, setEdit] = useState(addSession);
   const [formData, setFormData] = useState(SESSION_DETAILS);
 
-  const fields = [
-    {
-      id: 1,
-      headingIntl: "sessionName",
-      label: "name",
-      value: formData?.name,
-      rules: [
-        {
-          required: true,
-          message: "Please enter Session Name",
-        },
-      ],
-    },
-    {
-      id: 2,
-      headingIntl: "natureOfGoods",
-      label: "nature_of_service",
-      value: formData?.nature_of_service,
-      rules: [
-        {
-          required: true,
-          message: "Please enter services/goods",
-        },
-      ],
-    },
-    {
-      id: 3,
-      headingIntl: "invoiceNumberFormat",
-      label: "perform_invoice_no_format",
-      value: formData?.perform_invoice_no_format,
-      rules: [
-        {
-          required: true,
-          message: "Please enter Performa Invoice Number",
-        },
-      ],
-    },
-    {
-      id: 4,
-      headingIntl: "examinationSessionPeriod",
-      label: "examination_session_period",
-      value: formData?.examination_session_period,
-      selectOptions: SESSION_PERIOD,
-      rules: [
-        {
-          required: true,
-          message: "Please select atleast one Examination Session Period ",
-        },
-      ],
-    },
-    {
-      id: 5,
-      headingIntl: "gmcsCompletetionDate",
-      label: "gmcs_completion_date",
-      value: FormatDate(formData?.gmcs_completion_date),
-      rules: [
-        {
-          required: true,
-          message: "Please select GMCS Completetion Date",
-        },
-      ],
-    },
-    {
-      id: 6,
-      headingIntl: "membershipCompletetionDate",
-      label: "membership_completion_date",
-      value: FormatDate(formData?.membership_completion_date),
-      rules: [
-        {
-          required: true,
-          message: "Please select Membership Completetion Date",
-        },
-      ],
-    },
-    {
-      id: 7,
-      headingIntl: "articleshipCompletetionFromDate",
-      label: "session_start_date",
-      value: FormatDate(formData?.session_start_date),
-      rules: [
-        {
-          required: true,
-          message: "Please select Articleship Completetion From Date",
-        },
-      ],
-    },
-    {
-      id: 8,
-      headingIntl: "articleshipCompletetionToDate",
-      label: "article_completion_from_date",
-      value: FormatDate(formData?.article_completion_from_date),
-      rules: [
-        {
-          required: true,
-          message: "Please select Articleship Completetion From Date",
-        },
-      ],
-    },
-    {
-      id: 9,
-      headingIntl: "bankACNumberOffline",
-      label: "bank_account_offline",
-      value: formData?.bank_account_offline,
-      rules: [
-        {
-          required: true,
-          message: "Please enter Bank A/C number offline",
-        },
-      ],
-    },
-    {
-      id: 10,
-      headingIntl: "bankACNumberOnline",
-      label: "bank_account_online",
-      value: formData?.bank_account_online,
-      rules: [
-        {
-          required: true,
-          message: "Please enter Bank A/C number online",
-        },
-      ],
-    },
-  ];
+  const fields = FIELDS(
+    formData?.name,
+    formData?.nature_of_service,
+    formData?.perform_invoice_no_format,
+    formData?.examination_session_period,
+    formData?.gmcs_completion_date,
+    formData?.membership_completion_date,
+    formData?.session_start_date,
+    formData?.article_completion_from_date,
+    formData?.bank_account_offline,
+    formData?.bank_account_online
+  );
 
   useEffect(() => {
     setEdit(addSession);
@@ -231,13 +120,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
             />
           }
           bottomSection={
-            <div
-              className={
-                responsive.isMd
-                  ? styles.gridContainer
-                  : styles.mobileGridContainer
-              }
-            >
+            <CustomGrid>
               {fields.map((item) => (
                 <TwoRow
                   key={item.id}
@@ -356,7 +239,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   />
                 }
               />
-            </div>
+            </CustomGrid>
           }
         />
       }
