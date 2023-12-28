@@ -151,6 +151,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             })}
                           />
                         ) : item.id === 4 ? (
+                          //TODO:Replace this component with common component of custom input which contains multiselect
                           <Select
                             bordered={false}
                             size={"large"}
