@@ -13,7 +13,6 @@ import useForgotPassword from "../../services/api-services/ForgotPassword/useFor
 import withCardView from "../../hocs/withCardView";
 import { LOGIN } from "../../routes/routeNames.js";
 import { EMAIL_REGEX } from "../../constant/regex.js";
-import { ADMIN_ROUTE, VERIFY_OTP } from "../../constant/apiEndpoints";
 import styles from "./ForgotPassword.module.scss";
 
 const ForgotPassword = () => {
@@ -26,6 +25,7 @@ const ForgotPassword = () => {
     handleForgotPassword,
     isLoading,
     errorWhileResetPassword,
+    isSuccess: isForgotPasswordSuccessful,
     setErrorWhileResetPassword,
   } = useForgotPassword();
 
@@ -35,6 +35,7 @@ const ForgotPassword = () => {
     handleCheckOTP,
     isLoading: isOTPLoading,
     setErrorWhileVeryingOTP,
+    isSuccess: isCheckingOTPSuccessfull,
   } = useCheckOTP();
 
   const handleOnSubmit = (event) => {
@@ -44,23 +45,28 @@ const ForgotPassword = () => {
       return;
     }
     setStatus("success");
-    handleForgotPassword({
-      onSuccess: () => setCurrentActiveScreen(2),
-      payload: { email: userName },
-    });
+    handleForgotPassword({ email: userName });
   };
 
   const handleOTPSubmit = (otp) => {
-    handleCheckOTP({
-      onSuccess: () => setCurrentActiveScreen(3),
-      payload: { email: userName, otp },
-      url: ADMIN_ROUTE + VERIFY_OTP,
-    });
+    handleCheckOTP({ email: userName, otp });
   };
 
   useEffect(() => {
     setErrorWhileResetPassword("");
   }, [userName]);
+
+  useEffect(() => {
+    if (isCheckingOTPSuccessfull) {
+      setCurrentActiveScreen(3);
+    }
+  }, [isCheckingOTPSuccessfull]);
+
+  useEffect(() => {
+    if (isForgotPasswordSuccessful) {
+      setCurrentActiveScreen(2);
+    }
+  }, [isForgotPasswordSuccessful]);
 
   useEffect(() => {
     return () => {
@@ -139,7 +145,7 @@ const ForgotPassword = () => {
                 setErrorWhileVeryingOTP,
               }}
               handleAuthOTP={() => {
-                handleForgotPassword({ payload: { email: userName } });
+                handleForgotPassword({ email: userName });
               }}
               noOfBlocks={4}
               headingText={intl.formatMessage({

@@ -5,7 +5,7 @@ import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 import {
   ADMIN_ROUTE,
-  CHECK_OTP_END_POINT,
+  SEND_OTP,
 } from "../../../constant/apiEndpoints";
 
 const useForgotPassword = () => {
@@ -21,7 +21,7 @@ const useForgotPassword = () => {
       setForgotPasswordApiStatus(API_STATUS.LOADING);
       setForgotPasswordResult(null);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const url = ADMIN_ROUTE + CHECK_OTP_END_POINT;
+      const url = ADMIN_ROUTE + SEND_OTP;
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setForgotPasswordApiStatus(API_STATUS.SUCCESS);
