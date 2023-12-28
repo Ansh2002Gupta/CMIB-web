@@ -37,14 +37,9 @@ const useUpdateUserDetailsApi = () => {
           }
           value = value.join(",");
         }
-        // if (key === "profile_photo") {
-        //   // TODO: Not able to upload image at the moment
-        //   continue;
-        // }
         formData.append(key, value);
       }
       formData.append("_method", "PATCH");
-      console.log({ formData });
       const url = ADMIN_ROUTE + UPDATE_USER_END_POINT + "/" + userId;
       const res = await Http.post(url, formData);
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
