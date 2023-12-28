@@ -1,8 +1,8 @@
 import moment from "moment";
 
-export const FormatDate = (date) => {
+export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   if (date) {
-    return moment(date).format("MM/DD/YYYY");
+    return moment(new Date(date)).format(dateFormat);
   }
-  return moment().format("MM/DD/YYYY");
+  return moment(new Date()).format(dateFormat);
 };

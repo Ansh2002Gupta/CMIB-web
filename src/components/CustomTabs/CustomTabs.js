@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import { useNavigate, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Typography } from "antd";
 
 import styles from "./CustomTabs.module.scss";

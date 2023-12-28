@@ -18,4 +18,15 @@ const CustomGrid = ({ children, customStyle }) => {
     </div>
   );
 };
+
+CustomGrid.defaultProps = {
+  children: {},
+  customStyle: {},
+};
+
+CustomGrid.propTypes = {
+  children: PropTypes.object,
+  customStyle: PropTypes.object,
+};
+
 export default CustomGrid;

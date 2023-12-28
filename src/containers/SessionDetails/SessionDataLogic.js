@@ -1,5 +1,5 @@
 import { SESSION_PERIOD } from "../../constant/constant";
-import { FormatDate } from "../../constant/utils";
+import { formatDate } from "../../constant/utils";
 
 export const FIELDS = (
   name,
@@ -67,7 +67,7 @@ export const FIELDS = (
       id: 5,
       headingIntl: "gmcsCompletetionDate",
       label: "gmcs_completion_date",
-      value: FormatDate(gmcs_completion_date),
+      value: formatDate({ date: gmcs_completion_date }),
       rules: [
         {
           required: true,
@@ -79,7 +79,7 @@ export const FIELDS = (
       id: 6,
       headingIntl: "membershipCompletetionDate",
       label: "membership_completion_date",
-      value: FormatDate(membership_completion_date),
+      value: formatDate({ date: membership_completion_date }),
       rules: [
         {
           required: true,
@@ -91,7 +91,7 @@ export const FIELDS = (
       id: 7,
       headingIntl: "articleshipCompletetionFromDate",
       label: "session_start_date",
-      value: FormatDate(session_start_date),
+      value: formatDate({ date: session_start_date }),
       rules: [
         {
           required: true,
@@ -103,7 +103,7 @@ export const FIELDS = (
       id: 8,
       headingIntl: "articleshipCompletetionToDate",
       label: "article_completion_from_date",
-      value: FormatDate(article_completion_from_date),
+      value: formatDate({ date: article_completion_from_date }),
       rules: [
         {
           required: true,

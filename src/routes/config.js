@@ -116,7 +116,7 @@ const config = [
   },
   {
     pagePath: SESSION,
-    element: <HomeWithPrivateAccess />,
+    element: <HomeWithPublicAccess />,
     views: [
       {
         viewPath: "",

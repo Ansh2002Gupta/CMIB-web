@@ -10,7 +10,7 @@ import useResponsive from "core/hooks/useResponsive";
 import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
-import { FIELDS } from "./SessionDataLogic";
+import { FIELDS } from "./sessionDataLogic";
 import { SESSION_DETAILS } from "../../dummyData";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
@@ -204,7 +204,6 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   }
                 />
               ))}
-
               <TwoRow
                 className={styles.gridItem}
                 topSection={
