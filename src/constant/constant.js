@@ -51,3 +51,55 @@ export const ROLE_ID_MAPPING = {
 };
 
 export const ALL_ROLE_ID = [1, 2];
+
+export const FORM_STATES = {
+  VIEW_ONLY: "view only",
+  EDITABLE: "editable",
+  EMPTY: "empty",
+};
+
+export const NOTIFICATION_POSITIONS = {
+  TOP_RIGHT: "topRight",
+  TOP_LEFT: "topLeft",
+  BOTTOM_RIGHT: "bottomRight",
+  BOTTOM_LEFT: "bottomLeft",
+};
+
+export const NOTIFICATION_TYPES = {
+  SUCCESS: "success",
+  ERROR: "error",
+  WARNING: "warning",
+  INFO: "info",
+};
+
+export const ADD_NEW_USER_ACCESS_OPTIONS = [
+  {
+    id: 1,
+    heading: "Placements",
+    options: [
+      "All",
+      "NQCA-Placement",
+      "Overseas-Placement",
+      "Career-Ascent",
+      "Women-Placement",
+    ],
+  },
+  {
+    id: 2,
+    heading: "CA-Jobs",
+    options: ["Ca-jobs"],
+  },
+  {
+    id: 3,
+    heading: "Controls",
+    options: [
+      "AlL",
+      "Bulk notification",
+      "User Management",
+      "Ticket Management",
+      "Query Management",
+      "Testimonial Management",
+      "Registered Companies",
+    ],
+  },
+];

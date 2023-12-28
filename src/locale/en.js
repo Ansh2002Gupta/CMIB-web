@@ -3,9 +3,11 @@ const locale = {
   "label.signIn": "Sign In",
   "label.userName": "Username",
   "label.userName2": "User Name",
+  "label.userNameLeftEmpty": "user name cannot be left empty!",
   "label.email": "Email",
   "label.mobileNumber": "Mobile Number",
   "label.access": "Access",
+  "label.notValidUserAccess": "Please select a valid access type!",
   "label.status": "Status",
   "label.emailId": "Enter ID",
   "label.password": "Password",
@@ -82,8 +84,9 @@ const locale = {
   "label.browse": "Browse",
   "label.supportedFormat": "Supported formates: png, jpg, jpeg",
   "label.saveChanges": "Save Changes",
-  "label.onlyJpgAndPngFile": "You can only upload JPG/PNG file!",
-  "label.fileUpto5MB": "You can only file upto 5MB.",
+  "label.onlyJpgAndPngFile":
+    "Format not supported, only jpeg and png can be uploaded. Please upload again",
+  "label.fileUpto5MB": "Max size allowed is 5 mb, please upload again",
   "label.editUserDetails": "Edit User Details.",
   "label.twoFactorAuth": "Two factor authentication",
   "label.on": "ON",
@@ -93,8 +96,16 @@ const locale = {
   "label.networkError": "Network Error!",
   "label.error": "Error!",
   "label.tryAgain": "Try again!",
+  "label.addNewUsers": "Add New User",
+  "label.userCreatedSuccessfully": "User has been created successfully",
   "label.enableToUpdateUserStatus":
     "Enable to updated user status at the moment!",
+  "label.add": "Add",
+  "label.notification": "Notification",
+  "label.errorWhileUpdatingUserData":
+    "Some error occured while updating user details, please try again",
+  "label.errorWhileAddingNewUser":
+    "Some error occured while creating a new user, please try again!",
 };
 
 export default locale;
