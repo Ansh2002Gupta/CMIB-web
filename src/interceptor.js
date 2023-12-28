@@ -1,20 +1,19 @@
 import axios from "axios";
 import { API_VERSION_NUMBER } from "./constant/apiEndpoints";
-// import { StorageService } from './services'
+import { getItem } from "./services/encrypted-storage-service";
 
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     // *** Just an example *** //
-    // const token = StorageService.get('auth')
-    // if (token && token.access_token) {
-    //   config.headers = {
-    //     Authorization: `Bearer ${token.access_token}`
-    //   }
-    // }
+    const token = getItem("authToken");
+    if (token) {
+      config.headers = {
+        Authorization: `Bearer ${token}`,
+      };
+    }
     // ****** //
-    config.headers["Content-Type"] = "multipart/form-data";
     config.headers["api-version"] = API_VERSION_NUMBER;
     return config;
   },

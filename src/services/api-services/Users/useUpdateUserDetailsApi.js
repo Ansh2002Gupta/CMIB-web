@@ -41,7 +41,12 @@ const useUpdateUserDetailsApi = () => {
       }
       formData.append("_method", "PATCH");
       const url = ADMIN_ROUTE + UPDATE_USER_END_POINT + "/" + userId;
-      const res = await Http.post(url, formData);
+      const apiOptions = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const res = await Http.post(url, formData, apiOptions);
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
         setApiStatus(API_STATUS.SUCCESS);
         setUserDetails(res?.data);
