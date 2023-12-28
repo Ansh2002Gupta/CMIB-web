@@ -4,15 +4,17 @@ import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { DatePicker, Image, Select, Switch, Typography } from "antd";
 
-import { TwoRow, TwoColumn, ThreeRow } from "../../core/layouts";
+import { TwoRow, TwoColumn } from "../../core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import { FormatDate } from "../../constant/utils";
 import { SESSION_DETAILS } from "../../dummyData";
+import { SESSION_PERIOD } from "../../constant/constant";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
+import "./Override.css";
 
 const SessionDetails = ({ addSession, setAddSession }) => {
   const intl = useIntl();
@@ -23,7 +25,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
   const [edit, setEdit] = useState(addSession);
   const [formData, setFormData] = useState(SESSION_DETAILS);
 
-  const FIELDS = [
+  const fields = [
     {
       id: 1,
       headingIntl: "sessionName",
@@ -65,20 +67,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
       headingIntl: "examinationSessionPeriod",
       label: "examination_session_period",
       value: formData?.examination_session_period,
-      selectOptions: [
-        { label: "May 2025", value: "May 2025" },
-        { label: "November 2025", value: "November 2025" },
-        { label: "May 2024", value: "May 2024" },
-        { label: "November 2024", value: "November 2024" },
-        { label: "May 2023", value: "May 2023" },
-        { label: "November 2023", value: "November 2023" },
-        { label: "May 2022", value: "May 2022" },
-        { label: "November 2022", value: "November 2022" },
-        { label: "May 2021", value: "May 2021" },
-        { label: "November 2021", value: "November 2021" },
-        { label: "May 2020", value: "May 2020" },
-        { label: "November 2020", value: "November 2022" },
-      ],
+      selectOptions: SESSION_PERIOD,
       rules: [
         {
           required: true,
@@ -173,7 +162,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
       [name]: value,
     });
 
-    const fieldRules = FIELDS.find((field) => field.label === name)?.rules;
+    const fieldRules = fields.find((field) => field.label === name)?.rules;
     const error = validateField(value, fieldRules);
     setFormErrors({
       ...formErrors,
@@ -207,7 +196,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     <TwoRow
       className={styles.mainContainer}
       topSection={
-        <ThreeRow
+        <TwoRow
           className={styles.sessionDetails}
           topSection={
             <TwoColumn
@@ -249,7 +238,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   : styles.mobileGridContainer
               }
             >
-              {FIELDS.map((item) => (
+              {fields.map((item) => (
                 <TwoRow
                   key={item.id}
                   className={styles.gridItem}
@@ -258,7 +247,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                       {intl.formatMessage({
                         id: `session.${item.headingIntl}`,
                       })}
-                      <span className={styles.redText}>*</span>
+                      <span className={styles.redText}> *</span>
                     </Typography>
                   }
                   bottomSection={
@@ -274,6 +263,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             onChange={(val, dateString) => {
                               handleInputChange(dateString, item.label);
                             }}
+                            placeholder={intl.formatMessage({
+                              id: `session.placeholder.${item.headingIntl}`,
+                            })}
                           />
                         ) : item.id === 4 ? (
                           <Select
@@ -285,6 +277,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                               handleInputChange(val, item.label);
                             }}
                             options={item.selectOptions}
+                            placeholder={intl.formatMessage({
+                              id: `session.placeholder.${item.headingIntl}`,
+                            })}
                             value={item.value}
                             mode="multiple"
                           />
@@ -298,6 +293,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             onChange={(val) => {
                               handleInputChange(val.target.value, item.label);
                             }}
+                            placeholder={intl.formatMessage({
+                              id: `session.placeholder.${item.headingIntl}`,
+                            })}
                           />
                         )}
                         {formErrors[item.label] && (
@@ -312,8 +310,8 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                       </Typography>
                     ) : (
                       <div className={styles.examinationFieldContainer}>
-                        {item.value?.map((val) => (
-                          <Typography className={styles.periodText}>
+                        {item.value?.map((val, index) => (
+                          <Typography key={index} className={styles.periodText}>
                             {val}
                           </Typography>
                         ))}
@@ -328,7 +326,6 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                 topSection={
                   <Typography className={styles.grayText}>
                     {intl.formatMessage({ id: "label.status" })}
-                    <span className={styles.redText}>*</span>
                   </Typography>
                 }
                 bottomSection={

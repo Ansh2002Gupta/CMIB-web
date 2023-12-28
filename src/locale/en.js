@@ -87,6 +87,20 @@ const locale = {
   "session.articleshipCompletetionToDate": "Articleship Completetion To Date",
   "session.bankACNumberOffline": "Bank A/C number offline",
   "session.bankACNumberOnline": "Bank A/C number online",
+  "session.placeholder.sessionName": "Enter Session Name",
+  "session.placeholder.natureOfGoods": "Enter Nature of services/goods",
+  "session.placeholder.invoiceNumberFormat":
+    "Enter Performa Invoice Number Format",
+  "session.placeholder.examinationSessionPeriod": "Select Period",
+  "session.placeholder.gmcsCompletetionDate": "Select GMCS Completetion Date",
+  "session.placeholder.membershipCompletetionDate":
+    "Select Membership Completetion Date",
+  "session.placeholder.articleshipCompletetionFromDate":
+    "Select Articleship Completetion From Date",
+  "session.placeholder.articleshipCompletetionToDate":
+    "Select Articleship Completetion To Date",
+  "session.placeholder.bankACNumberOffline": "Enter Bank A/C number offline",
+  "session.placeholder.bankACNumberOnline": "Enter Bank A/C number online",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
   "session.saveChanges": "Save Changes",

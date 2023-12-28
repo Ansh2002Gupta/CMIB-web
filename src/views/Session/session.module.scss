@@ -6,13 +6,19 @@
     background-color: var(--bodyBg);
     gap:var(--gapMedium)
 }
-.spaceBetween{justify-content: space-between;}
+
+.spaceBetween{
+    justify-content: space-between;
+}
+
 .buttonStyles{
     padding: 0px var(--paddingExtraSmall);
 }
+
 .mainContainer{
      background-color: var(--blueBg);
 }
+
 .textStyle{
     font-family: var(--fontFamilyRegular);
     font-size: var(--fontSizeSmall);

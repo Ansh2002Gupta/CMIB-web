@@ -19,7 +19,7 @@ function Session() {
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
 
-  const TabItems = [
+  const tabItems = [
     {
       key: "1",
       title: intl.formatMessage({ id: "session.sessionDetails" }),
@@ -39,7 +39,7 @@ function Session() {
     },
   ];
 
-  const activeTabChildren = TabItems.find((tab) => tab.key === activeTab);
+  const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
   return (
     <TwoRow
@@ -48,20 +48,16 @@ function Session() {
         <TwoRow
           className={styles.topSectionStyle}
           topSection={
-            <TwoColumn
-              className={styles.spaceBetween}
-              leftSection={
-                <ContentHeader
-                  headerText={intl.formatMessage({ id: "label.session" })}
-                />
-              }
+            <ContentHeader
+              customStyles={styles.spaceBetween}
+              headerText={intl.formatMessage({ id: "label.session" })}
               rightSection={
                 !addSession && (
                   <CustomButton
                     btnText={intl.formatMessage({
                       id: "session.setUpNewSession",
                     })}
-                    customStyle={!responsive.isMd && styles.buttonStyles}
+                    customStyle={!responsive.isMd ? styles.buttonStyles : null}
                     iconUrl={responsive.isMd && getImage("addIcon")}
                     textStyle={styles.textStyle}
                     onClick={() => {
@@ -75,7 +71,7 @@ function Session() {
           bottomSection={
             !addSession && (
               <CustomTabs
-                tabs={TabItems}
+                tabs={tabItems}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
               />

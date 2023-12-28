@@ -31,13 +31,13 @@ const CustomTabs = ({ activeTab, setActiveTab, tabs }) => {
 CustomTabs.defaultProps = {
   activeTab: "",
   setActiveTab: () => {},
-  tabs: {},
+  tabs: [],
 };
 
 CustomTabs.propTypes = {
   activeTab: PropTypes.string,
   setActiveTab: PropTypes.func,
-  tabs: PropTypes.object,
+  tabs: PropTypes.array,
 };
 
 export default CustomTabs;
