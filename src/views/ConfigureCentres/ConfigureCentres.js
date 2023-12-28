@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import moment from "moment/moment";
 import { ThemeContext } from "core/providers/theme";
-import { Input, Switch, Image } from "antd";
+import { Image, Input } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
@@ -10,6 +9,7 @@ import ContentHeader from "../../containers/ContentHeader";
 import DataTable from "../../components/DataTable";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useResponsive from "../../core/hooks/useResponsive";
 import { CONFIGURE_CENTRES } from "../../dummyData";
 
@@ -27,14 +27,16 @@ const ConfigureCentres = () => {
     CONFIGURE_CENTRES.length
   );
 
-  const goToEditCentrePage = (centreId, editable) => {
-    navigate(`/view-centre-details?centreId=${centreId}&edit=${editable}`);
+  const { renderColumn } = useRenderColumn();
+
+  const goToEditCentrePage = (rowData) => {
+    navigate(`/view-centre-details?centreId=${rowData?.centreId}&edit=${true}`);
   };
 
-  const onHandleCentreStatus = (centreId) => {
+  const onHandleCentreStatus = (data) => {
     // TODO: do an api call for updating real data into the database.
     const updatedData = currentTableData.map((item) => {
-      if (centreId === item.centreId) {
+      if (data?.centreId === item.centreId) {
         return {
           ...item,
           status: !item.status,
@@ -46,96 +48,57 @@ const ConfigureCentres = () => {
   };
 
   const columns = [
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.centreName" })}
-        </p>
-      ),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.centreName" }),
       dataIndex: "centreName",
       key: "centreName",
-      sorter: (a, b) => a.centreName.localeCompare(b.centreName),
-      render: (text) => (
-        <p className={[styles.boldText, styles.textEllipsis].join(" ")}>
-          {text}
-        </p>
-      ),
-    },
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.centreId" })}
-        </p>
-      ),
+      sortTypeText: true,
+      sortKey: "centreName",
+      renderText: { isTextBold: true, visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.centreId" }),
       dataIndex: "centreId",
       key: "centreId",
-      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
-    },
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.bigSmallCentre" })}
-        </p>
-      ),
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.bigSmallCentre" }),
       dataIndex: "bigSmallCentre",
       key: "bigSmallCentre",
-      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
-    },
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.dateCreated" })}
-        </p>
-      ),
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.dateCreated" }),
       dataIndex: "createdOn",
       key: "createdOn",
-      render: (data) => moment(data).format("DD/MM/YYYY"),
-      sorter: (a, b) => moment(a.createdOn).unix() - moment(b.createdOn).unix(),
+      renderText: { isTypeDate: true, visible: true },
+      sortKey: "createdOn",
+      sortTypeDate: true,
       sortDirection: ["ascend"],
       defaultSortOrder: "ascend",
-    },
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.status" })}
-        </p>
-      ),
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.status" }),
       dataIndex: "status",
       key: "status",
-      render: (_, data) => {
-        const { status } = data;
-        return (
-          <div className={styles.centreStatusContainer}>
-            <Switch
-              checked={status}
-              onClick={() => onHandleCentreStatus(data.centreId)}
-              className={status ? styles.switchBgColor : ""}
-            />
-            <p>
-              {status
-                ? intl.formatMessage({ id: "label.active" })
-                : intl.formatMessage({ id: "label.inactive" })}
-            </p>
-          </div>
-        );
+      renderSwitch: {
+        dataKeyName: "centreId",
+        switchToggleHandler: (data) => onHandleCentreStatus(data),
+        visible: true,
       },
-    },
-    {
-      title: "",
+    }),
+    renderColumn({
       dataIndex: "edit",
       key: "edit",
-      render: (_, rowData) => {
-        const { id } = rowData;
-        return (
-          <Image
-            src={getImage("edit")}
-            preview={false}
-            className={styles.editIcon}
-            onClick={() => goToEditCentrePage(id, true)}
-          />
-        );
+      renderImage: {
+        alt: "edit",
+        onClick: (rowData) => goToEditCentrePage(rowData),
+        preview: false,
+        src: getImage("edit"),
+        visible: true,
       },
-    },
+    }),
   ];
 
   useEffect(() => {
