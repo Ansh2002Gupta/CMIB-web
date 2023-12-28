@@ -12,7 +12,6 @@ import "./Override.css";
 
 const UserInfo = ({
   access,
-  accessOptions,
   date,
   email,
   isDateDisable,
@@ -20,10 +19,13 @@ const UserInfo = ({
   mobileNo,
   mobilePrefix,
   name,
-  updateUserData,
   emailErrorMessage,
   mobileErrorMessage,
   is_two_factor,
+  shouldShowDatePickerOption,
+  updateUserData,
+  userAccessErrorMessage,
+  userNameErrorMessage,
 }) => {
   const intl = useIntl();
 
@@ -86,6 +88,8 @@ const UserInfo = ({
               <CustomInput
                 type={"text"}
                 label={intl.formatMessage({ id: "label.userName2" })}
+                isError={!!userNameErrorMessage}
+                errorMessage={userNameErrorMessage}
                 isRequired
                 value={name}
                 disabled={!isEditable}
@@ -137,6 +141,8 @@ const UserInfo = ({
             <div>
               <CustomInput
                 type="select"
+                isError={!!userAccessErrorMessage}
+                errorMessage={userAccessErrorMessage}
                 isMultiSelect
                 defaultSelectValueArray={access}
                 onSelectItem={(e) => updateUserData("access", e.target.value)}
@@ -152,21 +158,23 @@ const UserInfo = ({
                 customLabelStyles={styles.label}
               />
             </div>
-            <div className={styles.dateContainer}>
-              <Typography className={styles.label}>
-                {intl.formatMessage({ id: "label.dateCreatedOn" })}
-              </Typography>
-              <DatePicker
-                onChange={(date, dateString) =>
-                  updateUserData("date", dateString)
-                }
-                className={[styles.text, styles.input].join(" ")}
-                defaultValue={moment(date)}
-                disabled={isDateDisable || !isEditable}
-                customInputStyles={[styles.text, styles.input].join(" ")}
-                customLabelStyles={styles.label}
-              />
-            </div>
+            {shouldShowDatePickerOption && date && (
+              <div className={styles.dateContainer}>
+                <Typography className={styles.label}>
+                  {intl.formatMessage({ id: "label.dateCreatedOn" })}
+                </Typography>
+                <DatePicker
+                  onChange={(date, dateString) =>
+                    updateUserData("date", dateString)
+                  }
+                  className={[styles.text, styles.input].join(" ")}
+                  defaultValue={moment(date)}
+                  disabled={isDateDisable || !isEditable}
+                  customInputStyles={[styles.text, styles.input].join(" ")}
+                  customLabelStyles={styles.label}
+                />
+              </div>
+            )}
             <div className={styles.twoFactorContainer}>
               <Typography className={styles.label}>
                 {intl.formatMessage({ id: "label.twoFactorAuth" })}
@@ -193,7 +201,6 @@ const UserInfo = ({
 
 UserInfo.defaultProps = {
   access: [],
-  accessOptions: [],
   date: null,
   email: "",
   isDateDisable: false,
@@ -202,12 +209,14 @@ UserInfo.defaultProps = {
   mobilePrefix: "",
   is_two_factor: false,
   name: "",
+  shouldShowDatePickerOption: true,
   updateUserData: () => {},
+  userAccessErrorMessage: "",
+  userNameErrorMessage: "",
 };
 
 UserInfo.propTypes = {
   access: PropTypes.array,
-  accessOptions: PropTypes.array,
   date: PropTypes.string,
   email: PropTypes.string,
   isDateDisable: PropTypes.bool,
@@ -216,7 +225,10 @@ UserInfo.propTypes = {
   mobilePrefix: PropTypes.string,
   is_two_factor: PropTypes.bool,
   name: PropTypes.string,
+  shouldShowDatePickerOption: PropTypes.bool,
   updateUserData: PropTypes.func,
+  userAccessErrorMessage: PropTypes.string,
+  userNameErrorMessage: PropTypes.string,
 };
 
 export default UserInfo;

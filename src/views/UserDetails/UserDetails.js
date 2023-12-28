@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import { useParams } from "react-router-dom";
 import { Alert, Button, Spin, Switch, Typography, message } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow";
@@ -8,35 +9,40 @@ import ContentHeader from "../../containers/ContentHeader";
 import CustomButton from "../../components/CustomButton";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../../containers/UserInfo";
+import useAddNewUserApi from "../../services/api-services/Users/useAddNewUserApi";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
-import {
-  setUserDetails,
-} from "../../globalContext/userDetails/userDetailsActions";
-import { UserDetailsContext } from "../../globalContext/userDetails/userDetailsProvider";
-import edit from "../../themes/base/assets/images/edit.svg";
+import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
+import { FORM_STATES, NOTIFICATION_TYPES } from "../../constant/constant";
+import { MANAGE_USERS, USERS } from "../../routes/routeNames";
 import styles from "./UserDetails.module.scss";
 
-const UserDetails = () => {
-  const [messageApi, contextHolder] = message.useMessage();
+const UserDetails = ({ currentFormState }) => {
   const intl = useIntl();
+  const [messageApi, contextHolder] = message.useMessage();
+  const { userId } = useParams();
 
   const [active, setActive] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     mobile: "",
-    mobile_prefix: "",
+    mobile_prefix: "91",
     profile_photo: "",
+    profile_photo_url: "",
     access: [],
     date: "",
     is_two_factor: false,
   });
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isMobileNumber, setIsMobileNumberValid] = useState(true);
-  const [userDetailsState, userDetailsDispatch] =
-    useContext(UserDetailsContext);
+  const [isUserNameValid, setIsUserNameValid] = useState(true);
+  const [isAccessValid, setIsAccessValid] = useState(true);
+
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const {
     getUserData,
@@ -44,6 +50,7 @@ const UserDetails = () => {
     userData: data,
     error: errorWhileGettingUsersData,
   } = useUserDetails();
+
   const {
     errorWhileUpdatingUserData,
     updateUserDetails,
@@ -52,23 +59,19 @@ const UserDetails = () => {
     setErrorWhileUpdatingUserData,
   } = useUpdateUserDetailsApi();
 
-  const isFormEditable = userDetailsState?.editable;
-  const currentUserName = userDetailsState?.userName;
-  const userId = userDetailsState?.userId;
-
-  const showErorrToUser = () => {
-    messageApi.open({
-      type: "error",
-      content: intl.formatMessage({ id: "label.somethingWentWrong" }),
-      style: {
-        marginTop: "20vh",
-      },
-    });
-  };
+  // const showErorrToUser = () => {
+  //   messageApi.open({
+  //     type: "error",
+  //     content: intl.formatMessage({ id: "label.somethingWentWrong" }),
+  //     style: {
+  //       marginTop: "20vh",
+  //     },
+  //   });
+  // };
 
   const goBackToViewDetailsPage = () => {
     setErrorWhileUpdatingUserData("");
-    userDetailsDispatch(setUserDetails({ editable: false }));
+    navigate(USERS + `/view/${userId}`);
   };
 
   const handleUpdateUserData = () => {
@@ -76,19 +79,25 @@ const UserDetails = () => {
     setIsMobileNumberValid(
       MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
     );
+    setIsUserNameValid(userData.name?.trim()?.length !== 0);
+    setIsAccessValid(userData.access?.length !== 0);
     if (
       EMAIL_REGEX.test(userData?.email) &&
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
+      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`) &&
+      userData.name?.trim()?.length !== 0 &&
+      userData.access?.length !== 0
     ) {
-      updateUserDetails(userId, {
+      const payload = {
         name: userData?.name,
         email: userData?.email,
         mobile_number: userData?.mobile,
-        created_by: Number(userId), // user id basically
         role: userData?.access,
-        profile_photo: userData?.profile_photo,
         is_two_factor: userData?.is_two_factor ? 1 : 0,
-      });
+      };
+      if (userData?.profile_photo) {
+        payload["profile_photo"] = userData.profile_photo.file;
+      }
+      updateUserDetails(userId, payload);
     }
   };
 
@@ -117,6 +126,8 @@ const UserDetails = () => {
   const updateUserData = (key, value) => {
     key === "email" && setIsEmailValid(true);
     key === "mobile" && setIsMobileNumberValid(true);
+    key === "access" && setIsAccessValid(true);
+    key === "name" && setIsUserNameValid(true);
     setErrorWhileUpdatingUserData("");
     setUserData((prev) => {
       return {
@@ -125,6 +136,22 @@ const UserDetails = () => {
       };
     });
   };
+
+  const getHeaderText = () => {
+    // add this to en.js
+    if (currentFormState === FORM_STATES.VIEW_ONLY) {
+      return userData?.name;
+    }
+    if (currentFormState === FORM_STATES.EDITABLE) {
+      return intl.formatMessage({ id: "label.editUserDetails" });
+    }
+    return intl.formatMessage({ id: "label.addNewUsers" });
+  };
+
+  useEffect(() => {
+    errorWhileUpdatingUserData &&
+      showNotification(errorWhileUpdatingUserData, NOTIFICATION_TYPES.ERROR);
+  }, [errorWhileUpdatingUserData]);
 
   useEffect(() => {
     !!data &&
@@ -141,8 +168,14 @@ const UserDetails = () => {
   }, [data]);
 
   useEffect(() => {
+    if (isSuccess) {
+      goBackToViewDetailsPage();
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
     if (userId) {
-      getUserData(userDetailsState?.userId);
+      getUserData(userId);
     }
   }, [userId]);
 
@@ -156,21 +189,17 @@ const UserDetails = () => {
 
   return (
     <div className={styles.container}>
-      {contextHolder}
+      {notificationContextHolder}
       <TwoRow
         topSection={
           !errorWhileGettingUsersData &&
           !isLoading && (
             <div className={styles.headerContainer}>
               <ContentHeader
-                headerText={
-                  !isFormEditable
-                    ? currentUserName
-                    : intl.formatMessage({ id: "label.editUserDetails" })
-                }
+                headerText={getHeaderText()}
                 rightSection={
                   <>
-                    {!isFormEditable ? (
+                    {currentFormState === FORM_STATES.VIEW_ONLY ? (
                       <div className={styles.activeSwitchAndBtnContainer}>
                         <div className={styles.switchAndTextContainer}>
                           <Switch
@@ -188,12 +217,8 @@ const UserDetails = () => {
                         <CustomButton
                           isBtnDisable={isUpdatingUserData}
                           btnText={intl.formatMessage({ id: "label.edit" })}
-                          iconUrl={edit}
-                          onClick={() =>
-                            userDetailsDispatch(
-                              setUserDetails({ editable: true })
-                            )
-                          }
+                          IconElement={Edit} //change this
+                          onClick={() => navigate(USERS + `/edit/${userId}`)}
                           iconStyles={styles.btnIconStyles}
                           customStyle={styles.btnCustomStyles}
                         />
@@ -228,23 +253,41 @@ const UserDetails = () => {
                           })
                         : ""
                     }
-                    isEditable={isFormEditable}
+                    isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
                     {...{ updateUserData }}
                     name={userData?.name}
                     email={userData?.email}
                     mobileNo={userData?.mobile}
                     mobilePrefix={userData?.mobile_prefix}
-                    date={userData?.date}
+                    date={userData?.date || new Date().toLocaleDateString()}
                     access={userData?.access}
                     is_two_factor={userData?.is_two_factor}
                     isDateDisable
+                    // update this component
+                    userNameErrorMessage={
+                      !isUserNameValid
+                        ? intl.formatMessage({
+                            id: "label.userNameLeftEmpty",
+                          })
+                        : ""
+                    }
+                    userAccessErrorMessage={
+                      !isAccessValid
+                        ? intl.formatMessage({
+                            id: "label.notValidUserAccess",
+                          })
+                        : ""
+                    }
                   />
                   <FileUpload
                     {...{
                       updateUserData,
-                      isFormEditable,
+                      isFormEditable:
+                        currentFormState !== FORM_STATES.VIEW_ONLY,
                     }}
                     userProfilePic={userData.profile_photo}
+                    // this as well
+                    userImageName={userData.profile_photo?.file?.name}
                   />
                 </div>
               )}
@@ -282,21 +325,24 @@ const UserDetails = () => {
           </>
         }
       />
-      {isFormEditable && !isLoading && !isUpdatingUserData && (
-        <div className={styles.saveAndCancelBtnContainer}>
-          <Button
-            className={styles.cancelBtn}
-            onClick={goBackToViewDetailsPage}
-          >
-            {intl.formatMessage({ id: "label.cancel" })}
-          </Button>
-          <CustomButton
-            customStyle={styles.saveBtn}
-            btnText={intl.formatMessage({ id: "label.saveChanges" })}
-            onClick={handleUpdateUserData}
-          />
-        </div>
-      )}
+      {/* change constant and en.js */}
+      {currentFormState !== FORM_STATES.VIEW_ONLY &&
+        !isLoading &&
+        !isUpdatingUserData && (
+          <div className={styles.saveAndCancelBtnContainer}>
+            <Button
+              className={styles.cancelBtn}
+              onClick={goBackToViewDetailsPage}
+            >
+              {intl.formatMessage({ id: "label.cancel" })}
+            </Button>
+            <CustomButton
+              customStyle={styles.saveBtn}
+              btnText={intl.formatMessage({ id: "label.saveChanges" })}
+              onClick={handleUpdateUserData}
+            />
+          </div>
+        )}
     </div>
   );
 };
