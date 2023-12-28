@@ -1,19 +1,13 @@
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { ThemeContext } from "core/providers/theme";
 import { Image, Typography } from "antd";
 
-import { UserDetailsContext } from "../../globalContext/userDetails/userDetailsProvider";
 import { ReactComponent as Trash } from "../../themes/base/assets/images/trash.svg";
 import styles from "./UserImage.module.scss";
 
 const UserImage = ({ src, customImageStyles, imageName, onTrashClick }) => {
   const intl = useIntl();
-  const { getImage } = useContext(ThemeContext);
-  const [userDetailsState] = useContext(UserDetailsContext);
-
-  const { editable } = userDetailsState;
 
   return (
     <div className={[styles.container].join(" ")}>

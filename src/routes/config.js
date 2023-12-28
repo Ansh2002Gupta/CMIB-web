@@ -8,6 +8,7 @@ import ManageUsers from "../views/ManageUsers";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
+import UserDetails from "../views/UserDetails";
 import {
   DASHBOARD,
   SUBSCRIPTIONS,
@@ -16,8 +17,11 @@ import {
   FORGOT_PASSWORD,
   VIEW_USER_DETAILS,
   ROOT,
+  USERS,
+  EDIT_USER_DETAILS,
+  ADD_NEW_USER_DETAILS,
 } from "./routeNames";
-import UserDetails from "../views/UserDetails";
+import { FORM_STATES } from "../constant/constant";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HomeWithPublicAccess = withPublicAccess(Home);
@@ -110,13 +114,21 @@ const config = [
     ],
   },
   {
-    pagePath: VIEW_USER_DETAILS,
+    pagePath: USERS,
     element: <AuthWithPublicAccess />, // Page
     views: [
       // array of views under Page route
       {
-        viewPath: "",
-        element: <UserDetails />, // view
+        viewPath: VIEW_USER_DETAILS,
+        element: <UserDetails currentFormState={FORM_STATES.VIEW_ONLY} />, // view
+      },
+      {
+        viewPath: EDIT_USER_DETAILS,
+        element: <UserDetails currentFormState={FORM_STATES.EDITABLE} />, // view
+      },
+      {
+        viewPath: ADD_NEW_USER_DETAILS,
+        element: <UserDetails currentFormState={FORM_STATES.EMPTY} />, // view
       },
     ],
   },

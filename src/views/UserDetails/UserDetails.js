@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router-dom";
-import { Alert, Button, Spin, Switch, Typography, message } from "antd";
+import { Alert, Button, Spin, Switch, Typography } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow";
 
@@ -16,12 +16,11 @@ import useUserDetails from "../../services/api-services/Users/useUserDetails";
 import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES, NOTIFICATION_TYPES } from "../../constant/constant";
-import { MANAGE_USERS, USERS } from "../../routes/routeNames";
+import { USERS } from "../../routes/routeNames";
 import styles from "./UserDetails.module.scss";
 
 const UserDetails = ({ currentFormState }) => {
   const intl = useIntl();
-  const [messageApi, contextHolder] = message.useMessage();
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
@@ -31,7 +30,7 @@ const UserDetails = ({ currentFormState }) => {
     email: "",
     mobile: "",
     mobile_prefix: "91",
-    profile_photo: "",
+    profile_photo: null,
     profile_photo_url: "",
     access: [],
     date: "",
@@ -59,16 +58,6 @@ const UserDetails = ({ currentFormState }) => {
     setErrorWhileUpdatingUserData,
   } = useUpdateUserDetailsApi();
 
-  // const showErorrToUser = () => {
-  //   messageApi.open({
-  //     type: "error",
-  //     content: intl.formatMessage({ id: "label.somethingWentWrong" }),
-  //     style: {
-  //       marginTop: "20vh",
-  //     },
-  //   });
-  // };
-
   const goBackToViewDetailsPage = () => {
     setErrorWhileUpdatingUserData("");
     navigate(USERS + `/view/${userId}`);
@@ -94,9 +83,11 @@ const UserDetails = ({ currentFormState }) => {
         role: userData?.access,
         is_two_factor: userData?.is_two_factor ? 1 : 0,
       };
+      console.log({ payload, userData });
       if (userData?.profile_photo) {
         payload["profile_photo"] = userData.profile_photo.file;
       }
+      console.log({ payload });
       updateUserDetails(userId, payload);
     }
   };
@@ -110,12 +101,6 @@ const UserDetails = ({ currentFormState }) => {
         return value;
       });
   };
-
-  useEffect(() => {
-    if (errorWhileUpdatingUserData) {
-      showErorrToUser(); // change this
-    }
-  }, [errorWhileUpdatingUserData]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -160,7 +145,8 @@ const UserDetails = ({ currentFormState }) => {
         email: data?.email || "",
         mobile: data?.mobile_number || "",
         mobile_prefix: "91",
-        profile_photo: data?.profile_photo || "",
+        profile_photo_url: data?.profile_photo || "",
+        profile_photo: null,
         access: data?.role?.map((item) => item?.name) || "",
         date: data?.created_at || "",
         is_two_factor: data?.is_two_factor ? true : false,
