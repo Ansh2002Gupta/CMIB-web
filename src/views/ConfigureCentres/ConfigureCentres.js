@@ -11,23 +11,15 @@ import styles from "./ConfigureCentres.module.scss";
 
 const ConfigureCentres = () => {
   const intl = useIntl();
-  
+
   const { getImage } = useContext(ThemeContext);
 
   return (
     <TwoRow
       isBottomFillSpace
       className={styles.baseLayout}
-      topSection={<ConfigureCentreHeader
-        intl={intl}
-        getImage={getImage}
-      />}
-      bottomSection={
-        <ConfigureCentreContent
-          intl={intl}
-          getImage={getImage}
-        />
-      }
+      topSection={<ConfigureCentreHeader intl={intl} getImage={getImage} />}
+      bottomSection={<ConfigureCentreContent intl={intl} getImage={getImage} />}
     />
   );
 };
