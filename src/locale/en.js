@@ -109,6 +109,9 @@ const locale = {
   "label.companyProfile": "Company Profile",
   "label.logout": "Logout",
   "label.left": "left",
+  "setupCentres.heading": "Setup Centres",
+  "setupCentres.warning":
+    "*This cannot be edited once the registration for the Company/Candidate starts.",
 };
 
 export default locale;

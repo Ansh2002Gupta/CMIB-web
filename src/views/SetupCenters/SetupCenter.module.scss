@@ -1,0 +1,22 @@
+.mainContainer {
+  background-color: var(--blueBg);
+}
+
+.headerContainer {
+  padding: var(--gapMedium);
+  background-color: var(--bodyBg);
+}
+
+.headingText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeHeading);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.descriptionText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}

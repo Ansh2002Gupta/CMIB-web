@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 
-import { TwoRow, TwoColumn } from "core/layouts";
+import { TwoRow } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton";
