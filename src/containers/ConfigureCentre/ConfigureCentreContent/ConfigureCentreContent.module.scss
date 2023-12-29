@@ -9,8 +9,8 @@
 }
 
 .searchIcon {
-    width: 30px;
-    height: 30px;
+    width: var(--smallWidth);
+    height:var(--smallHeight);
     padding-right: var(--paddingExtraSmall);
     padding-bottom: 4px;
 }

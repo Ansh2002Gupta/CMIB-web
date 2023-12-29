@@ -4,7 +4,7 @@
 }
 
 .btnCustomStyles {
-    padding: var(--paddingSmall) 12px;
+    padding: var(--paddingMediumSmall);
     border-radius: var(--radiusXLg);
     font-size: var(--fontSizeSmall) !important;
     font-weight: var(--fontWeightMedium) !important;
@@ -14,16 +14,6 @@
     width: 24px !important;
 }
 
-@media screen and (max-width: 767px) {
-    .headerResponsiveStyle {
-        font-size: var(--fontSizeXlargeMedium);
-    }
-
-    .btnCustomStyles {
-        min-height: 44px;
-    }
-}
-
 @media screen and (max-width: 1535px) {
     .headerResponsiveStyle {
         font-size: var(--fontSizeXXlarge);
@@ -31,5 +21,15 @@
 
     .btnCustomStyles {
         font-size: var(--fontSizeExtraSmall);
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .headerResponsiveStyle {
+        font-size: var(--fontSizeXlargeMedium);
+    }
+
+    .btnCustomStyles {
+        min-height: 44px;
     }
 }
