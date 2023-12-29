@@ -1,0 +1,35 @@
+.mainContainer{
+    background-color: var(--bodyBg);
+    padding: var(--gapMedium);
+    border-radius: var(--gapSmall);
+    gap: var(--gapSmall);
+    justify-content: flex-end;
+    cursor: pointer;
+    &:hover {
+        border: var(--borderGreen) !important;
+        background: linear-gradient(0deg, var(--lightGreen) 0%, var(--lightGreen) 100%), var(--bodyBg);
+      }
+
+}
+
+.heading{
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeXlarge);
+    font-weight: var(--fontWeightBold);
+    color: var(--textBold);
+}
+
+.description{
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--darkGrey1);
+}
+
+.imageStyle{
+    height: var(--gapMedium);
+    width: var(--gapMedium);
+    padding: var(--gapXSmall);
+    background-color: var(--snow);
+    border-radius:var(--gapXSmall)
+}

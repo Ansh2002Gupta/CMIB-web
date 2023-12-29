@@ -11,6 +11,8 @@ const variables = {
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
   mobileBg1: colorPallets.white,
+  snow: colorPallets.snow,
+  lightGreen: colorPallets.lightGreen,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -80,6 +82,7 @@ const variables = {
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
   borderBlue: `2px solid ${colorPallets.darkBlue}`,
+  borderGreen: `1px solid ${colorPallets.green1}`,
   borderColor: colorPallets.ltGrey1,
 
   // Box shadow

@@ -109,6 +109,10 @@ const locale = {
   "label.companyProfile": "Company Profile",
   "label.logout": "Logout",
   "label.left": "left",
+  "session.rounds.selectCentres": "Select centres",
+  "session.rounds.centres": "Centres",
+  "session.roundOneStatus": "Round 1 Status",
+  "session.roundTwoStatus": "Round 2 Status",
 };
 
 export default locale;
