@@ -21,12 +21,12 @@ const CustomGrid = ({ children, customStyle }) => {
 };
 
 CustomGrid.defaultProps = {
-  children: {},
+  children: null,
   customStyle: {},
 };
 
 CustomGrid.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.node,
   customStyle: PropTypes.object,
 };
 
