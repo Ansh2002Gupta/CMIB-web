@@ -29,3 +29,19 @@ export const ROW_PER_PAGE_OPTIONS = [
     label: "20",
   },
 ];
+
+//TODO:need to implement it using api
+export const SESSION_PERIOD = [
+  { id: 101, label: "May 2025", value: "May 2025" },
+  { id: 102, label: "November 2025", value: "November 2025" },
+  { id: 103, label: "May 2024", value: "May 2024" },
+  { id: 104, label: "November 2024", value: "November 2024" },
+  { id: 105, label: "May 2023", value: "May 2023" },
+  { id: 106, label: "November 2023", value: "November 2023" },
+  { id: 107, label: "May 2022", value: "May 2022" },
+  { id: 108, label: "November 2022", value: "November 2022" },
+  { id: 109, label: "May 2021", value: "May 2021" },
+  { id: 110, label: "November 2021", value: "November 2021" },
+  { id: 111, label: "May 2020", value: "May 2020" },
+  { id: 112, label: "November 2020", value: "November 2020" },
+];

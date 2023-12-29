@@ -6,6 +6,7 @@ import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
+import Session from "../views/Session";
 import ManageUsers from "../views/ManageUsers";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -19,6 +20,7 @@ import {
   FORGOT_PASSWORD,
   ROOT,
   CONFIGURE_CENTRES,
+  SESSION,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -46,90 +48,91 @@ const config = [
   },
   {
     pagePath: LOGIN,
-    element: <HeaderContentWithFooterWithPublicAccess />, // Page
+    element: <HeaderContentWithFooterWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <LoginForm />, // view
+        element: <LoginForm />,
       },
     ],
   },
   {
     pagePath: FORGOT_PASSWORD,
-    element: <HeaderContentWithFooterWithPublicAccess />, // Page
+    element: <HeaderContentWithFooterWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <ForgotPassword />, // view
+        element: <ForgotPassword />,
       },
     ],
   },
   {
     pagePath: ROOT,
-    element: <HomeWithPublicAccess />, // Page
+    element: <HomeWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <DashboardView />, // view
+        element: <DashboardView />,
       },
     ],
   },
   {
     pagePath: DASHBOARD,
-    element: <HomeWithPrivateAccess />, // Page
-    // element: <AuthWithPublicAccess />, // Page
+    element: <HomeWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <DashboardView />, // view
+        element: <DashboardView />,
       },
     ],
   },
   {
     pagePath: SUBSCRIPTIONS,
-    element: <HomeWithPrivateAccess />, // Page
+    element: <HomeWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <Subscriptions />, // view
+        element: <Subscriptions />,
       },
     ],
   },
   {
     pagePath: ROUTE,
-    element: <HomeWithPrivateAccess />, // Page
+    element: <HomeWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <Configurations />, // view
+        element: <Configurations />,
       },
     ],
   },
   {
     pagePath: MANAGE_USERS,
-    element: <HomeWithPublicAccess noOuterPadding />, // Page
+    element: <HomeWithPublicAccess noOuterPadding />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <ManageUsers />, // view
+        element: <ManageUsers />,
+      },
+    ],
+  },
+  {
+    pagePath: SESSION,
+    element: <HomeWithPublicAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <Session />,
       },
     ],
   },
   {
     pagePath: CONFIGURE_CENTRES,
-    element: <HomeWithPublicAccess noOuterPadding />, // Page
+    element: <HomeWithPublicAccess noOuterPadding />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <ConfigureCentres />, // view
+        element: <ConfigureCentres />,
       },
     ],
   },

@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { Button, ConfigProvider, Menu, Space, Typography } from 'antd';
+import React, { useState } from "react";
+import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import {
   ArrowRightOutlined,
   GlobalOutlined,
   UpOutlined,
-} from '@ant-design/icons';
+} from "@ant-design/icons";
 
-import ModuleList from './ModuleList';
-import TwoRow from '../../core/layouts/TwoRow';
-import TwoColumn from '../../core/layouts/TwoColumn';
+import ModuleList from "./ModuleList";
+import TwoRow from "../../core/layouts/TwoRow";
+import TwoColumn from "../../core/layouts/TwoColumn";
 
-import useNavigateScreen from '../../core/hooks/useNavigateScreen';
-import modules from './sideMenuItems';
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import modules from "./sideMenuItems";
 
-import styles from './sideMenu.module.scss';
+import styles from "./sideMenu.module.scss";
 
 const SideMenu = ({ logo }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -32,15 +32,15 @@ const SideMenu = ({ logo }) => {
     <ConfigProvider
       theme={{
         token: {
-          colorText: 'var(--textPrimary, #fff)',
+          colorText: "var(--textPrimary, #fff)",
         },
         components: {
           Menu: {
-            darkItemSelectedBg: 'white',
-            darkItemSelectedColor: 'black',
+            darkItemSelectedBg: "white",
+            darkItemSelectedColor: "black",
           },
           Button: {
-            textHoverBg: 'var(--sideMenuColor)',
+            textHoverBg: "var(--sideMenuColor)",
           },
         },
       }}
@@ -55,27 +55,27 @@ const SideMenu = ({ logo }) => {
                 leftSection={
                   <div
                     className={
-                      openModuleSelector ? '' : styles.moduleSelectorHeading
+                      openModuleSelector ? "" : styles.moduleSelectorHeading
                     }
                   >
                     {openModuleSelector
-                      ? 'Choose a module'
+                      ? "Choose a module"
                       : selectedModule.label}
                   </div>
                 }
                 rightSection={
                   <Button
-                    size='small'
-                    shape='round'
-                    type='text'
+                    size="small"
+                    shape="round"
+                    type="text"
                     style={{
-                      color: 'var(--textPrimary,#fff)',
-                      background: '#262d52',
-                      fontSize: 'var(--fontSizeXSmall,12px)',
+                      color: "var(--textPrimary,#fff)",
+                      background: "#262d52",
+                      fontSize: "var(--fontSizeXSmall,12px)",
                     }}
                     onClick={() => setOpenModuleSelector((prev) => !prev)}
                   >
-                    {openModuleSelector ? <UpOutlined /> : 'Change'}
+                    {openModuleSelector ? <UpOutlined /> : "Change"}
                   </Button>
                 }
               />
@@ -93,9 +93,9 @@ const SideMenu = ({ logo }) => {
           {!openModuleSelector && selectedModule && (
             <Menu
               className={styles.sideMenuOptionsContainer}
-              theme='dark'
-              defaultSelectedKeys={['1']}
-              mode='inline'
+              theme="dark"
+              defaultSelectedKeys={["1"]}
+              mode="inline"
               items={selectedModule.children}
               expandIcon={<></>}
               openKeys={modules.map((module) => module.key)}
@@ -105,17 +105,17 @@ const SideMenu = ({ logo }) => {
         </div>
         <Space
           className={styles.sideMenuBottomSection}
-          align='center'
-          direction='horizontal'
+          align="center"
+          direction="horizontal"
         >
           <Button
             styles={{
               icon: {
-                paddingRight: 'var(--sizeXXSmall, 8px)',
+                paddingRight: "var(--sizeXXSmall, 8px)",
               },
             }}
-            size='large'
-            type='text'
+            size="large"
+            type="text"
             block
             icon={<GlobalOutlined />}
           >

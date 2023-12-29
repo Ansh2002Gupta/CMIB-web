@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Image } from "antd";
+import { Button, Image, Typography } from "antd";
 
 import styles from "./CustomButton.module.scss";
 
@@ -12,6 +12,7 @@ const CustomButton = ({
   isBtnDisable,
   loading,
   onClick,
+  textStyle,
   type,
 }) => {
   return (
@@ -28,7 +29,11 @@ const CustomButton = ({
         htmlType={type}
         block
       >
-        {btnText}
+        {textStyle ? (
+          <Typography className={textStyle}>{btnText}</Typography>
+        ) : (
+          btnText
+        )}
       </Button>
     </div>
   );
@@ -42,6 +47,7 @@ CustomButton.defaultProps = {
   isBtnDisable: false,
   loading: false,
   onClick: () => {},
+  textStyle: "",
   type: "",
 };
 
@@ -53,6 +59,7 @@ CustomButton.propTypes = {
   isBtnDisable: PropTypes.bool,
   loading: PropTypes.bool,
   onClick: PropTypes.func,
+  textStyle: PropTypes.string,
   type: PropTypes.string,
 };
 

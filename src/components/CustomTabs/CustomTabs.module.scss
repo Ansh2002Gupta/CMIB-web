@@ -1,0 +1,29 @@
+@use "core/themes/mixins/responsive.scss" as responsive;
+
+.tab {
+  color: var(--subHeadingColor);
+  padding-bottom: var(--gapXSmall);
+  text-align: center;
+  cursor: pointer;
+  font-weight: var(--fontWeightMedium);
+  font-family: var(--fontFamilyRegular);
+}
+
+.tab.active {
+  color: var(--textBold);
+  font-weight: var(--fontWeightBold);
+  border-bottom: var(--borderBlue);
+}
+
+.tab-content {
+  text-align: center;
+}
+
+.tab-container {
+  justify-content: center;
+}
+
+.tab-box {
+  display: flex;
+  gap: var(--gapMedium);
+}

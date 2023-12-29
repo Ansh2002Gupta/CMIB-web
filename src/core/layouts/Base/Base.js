@@ -1,36 +1,35 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Column, Row } from '../../components'
-import Styles from './base.module.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import { Column, Row } from "../../components";
+import Styles from "./base.module.scss";
 
-function Base({ className, style, children }) {
+function Base({ children, className, onClick, style }) {
   return (
     <div
       className={`${Styles.baseLayout} ${className}`}
       style={style}
+      {...{ onClick }}
     >
-      {
-        typeof children === 'function'
-        ? children({ Row, Column })
-        : children
-      }
+      {typeof children === "function" ? children({ Row, Column }) : children}
     </div>
-  )
+  );
 }
 
 Base.defaultProps = {
-  className: '',
+  className: "",
+  onClick: () => {},
   style: {},
-}
+};
 
 Base.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
-    PropTypes.func
+    PropTypes.func,
   ]).isRequired,
-}
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+  style: PropTypes.object,
+};
 
-export default Base
+export default Base;
