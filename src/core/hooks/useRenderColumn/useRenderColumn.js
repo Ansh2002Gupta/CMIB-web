@@ -2,7 +2,7 @@ import moment from "moment";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch } from "antd";
 import styles from "./renderColumn.module.scss";
-import "./Override.css"
+import "./Override.css";
 
 const useRenderColumn = () => {
   const intl = useIntl();
@@ -11,7 +11,7 @@ const useRenderColumn = () => {
     defaultSortOrder,
     key,
     renderImage = {},
-    renderMenu={},
+    renderMenu = {},
     renderText = {},
     renderSwitch = {},
     sortDirection,
@@ -30,10 +30,10 @@ const useRenderColumn = () => {
       preview,
     } = renderImage;
     const {
-        items = [],
-        menuSrc = "",
-        onMenuClick = () => {},
-        menuPreview,
+      items = [],
+      menuSrc = "",
+      onMenuClick = () => {},
+      menuPreview,
     } = renderMenu;
     const { dateFormat = "DD/MM/YYYY", isTextBold, isTypeDate } = renderText;
     const {
@@ -61,8 +61,8 @@ const useRenderColumn = () => {
       })());
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
     sortDirection && (columnObject.sortDirection = sortDirection);
-    items && 
-    renderText?.visible &&
+    items &&
+      renderText?.visible &&
       (columnObject.render = (text) => (
         <p
           className={[
@@ -104,27 +104,30 @@ const useRenderColumn = () => {
           />
         );
       });
-      renderMenu.visible &&
+    renderMenu.visible &&
       (columnObject.render = (_, rowData) => {
         const menuItems = {
           items: items.map((item) => ({
-              key: item.key,
-              label: (
-                  <div onClick={onMenuClick ? () => onMenuClick(rowData) : () => {}} className={styles.dropdownMenuItem}>
-                      {item.label}
-                  </div>
-              ),
+            key: item.key,
+            label: (
+              <div
+                onClick={onMenuClick ? () => onMenuClick(rowData) : () => {}}
+                className={styles.dropdownMenuItem}
+              >
+                {item.label}
+              </div>
+            ),
           })),
-      }; 
-      return (
+        };
+        return (
           <Dropdown menu={menuItems} trigger={["click"]}>
-              <Image
-                  src={menuSrc}
-                  className={styles.moreIcon}
-                  preview={menuPreview}
-              />
+            <Image
+              src={menuSrc}
+              className={styles.moreIcon}
+              preview={menuPreview}
+            />
           </Dropdown>
-      );
+        );
       });
     return columnObject;
   };

@@ -25,7 +25,7 @@
   background-color: var(--blueBg);
   color: var(--textBold);
   &:hover {
-    background-color:  var(--blueBg) !important;
+    background-color: var(--blueBg) !important;
     border: var(--borderLight) !important;
     color: var(--textBold) !important;
   }
@@ -94,7 +94,8 @@ input::placeholder {
   .headerResponsiveStyle {
     font-size: var(--fontSizeXXlarge);
   }
-  .btnCustomStyles, .greyBtnCustomStyles {
+  .btnCustomStyles,
+  .greyBtnCustomStyles {
     font-size: var(--fontSizeExtraSmall);
   }
 }
@@ -112,13 +113,14 @@ input::placeholder {
   .headerResponsiveStyle {
     font-size: var(--fontSizeXlargeMedium);
   }
-  .btnCustomStyles, .greyBtnCustomStyles {
+  .btnCustomStyles,
+  .greyBtnCustomStyles {
     min-height: 44px;
   }
 }
 
 @media screen and (max-width: 511px) {
-  .filterAndButtonContainer{
+  .filterAndButtonContainer {
     flex-direction: column-reverse;
   }
   .searchBarContainer {

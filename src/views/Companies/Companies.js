@@ -87,13 +87,18 @@ const Companies = () => {
       dataIndex: "more",
       key: "more",
       renderMenu: {
-        items: [{ key: 1, label: intl.formatMessage({ id: "label.manageCompanyDetails" }) }],
+        items: [
+          {
+            key: 1,
+            label: intl.formatMessage({ id: "label.manageCompanyDetails" }),
+          },
+        ],
         onMenuClick: (rowData) => goToUserDetailsPage(rowData),
         menuPreview: false,
         menuSrc: getImage("more"),
         visible: true,
       },
-    })
+    }),
   ];
 
   useEffect(() => {

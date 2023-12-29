@@ -1,33 +1,33 @@
 .columnHeading {
-    color: var(--subHeadingColor);
-    font-size: var(--fontSizeSmall);
-    font-weight: var(--fontWeightBold);
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
 }
 .boldText {
-    font-weight: var(--fontWeightBold);
+  font-weight: var(--fontWeightBold);
 }
 .textEllipsis {
-    max-width: 200px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .centreStatusContainer {
-    display: flex;
-    gap: var(--gapXSmall);
+  display: flex;
+  gap: var(--gapXSmall);
 }
 
 .switchBgColor {
-    background-color: var(--active2) !important;
+  background-color: var(--active2) !important;
 }
 
 .dropdownMenuItem {
-    padding: var(--paddingSmall, 16px);
-    font-size: var(--fontSizeSmall, 14px);
-    font-weight: var(--fontWeightMedium, 500);
+  padding: var(--paddingSmall, 16px);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
 }
 
-.editIcon, .moreIcon {
-    cursor: pointer;
+.editIcon,
+.moreIcon {
+  cursor: pointer;
 }
-
