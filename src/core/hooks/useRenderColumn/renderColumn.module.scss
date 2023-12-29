@@ -3,9 +3,11 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightBold);
 }
+
 .boldText {
   font-weight: var(--fontWeightBold);
 }
+
 .textEllipsis {
   max-width: 200px;
   text-overflow: ellipsis;

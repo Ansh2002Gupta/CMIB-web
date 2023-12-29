@@ -72,6 +72,7 @@ const variables = {
   // Widths
   sidemenuWidth: "74px",
   fullWidth: "100%",
+  smallWidth: "30px",
 
   // Heights
   btnHeight: "56px",

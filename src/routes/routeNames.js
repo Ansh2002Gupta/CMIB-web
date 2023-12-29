@@ -6,4 +6,5 @@ export const FORGOT_PASSWORD = "/forgot-password";
 export const COMPANIES = "/companies";
 export const MANAGE_USERS = "/manage-users";
 export const ROOT = "/";
+export const CONFIGURE_CENTRES = "/global-configurations";
 export const SESSION = "/session";

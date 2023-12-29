@@ -45,8 +45,11 @@ const useRenderColumn = () => {
       (columnObject.title = () => {
         return <p className={styles.columnHeading}>{title}</p>;
       });
+
     dataIndex && (columnObject.dataIndex = dataIndex);
+
     key && (columnObject.key = key);
+
     (sortTypeDate || sortTypeText || sorter) &&
       (columnObject.sorter = (() => {
         if (sortTypeDate) {
@@ -59,10 +62,12 @@ const useRenderColumn = () => {
         }
         return sorter;
       })());
+
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
+
     sortDirection && (columnObject.sortDirection = sortDirection);
-    items &&
-      renderText?.visible &&
+
+    renderText?.visible &&
       (columnObject.render = (text) => (
         <p
           className={[

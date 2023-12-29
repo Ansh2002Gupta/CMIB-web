@@ -1,6 +1,7 @@
 import Auth from "../pages/Auth";
 import Companies from "../views/Companies";
 import Configurations from "../views/Configurations/Configurations";
+import ConfigureCentres from "../views/ConfigureCentres";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
@@ -20,6 +21,7 @@ import {
   MANAGE_USERS,
   FORGOT_PASSWORD,
   ROOT,
+  CONFIGURE_CENTRES,
   SESSION,
 } from "./routeNames";
 
@@ -134,6 +136,16 @@ const config = [
       {
         viewPath: "",
         element: <Session />,
+      },
+    ],
+  },
+  {
+    pagePath: CONFIGURE_CENTRES,
+    element: <HomeWithPublicAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: "",
+        element: <ConfigureCentres />,
       },
     ],
   },
