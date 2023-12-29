@@ -1,4 +1,5 @@
 import Auth from "../pages/Auth";
+import Configurations from "../views/Configurations/Configurations";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
@@ -15,14 +16,13 @@ import {
   SUBSCRIPTIONS,
   LOGIN,
   FORGOT_PASSWORD,
-  VIEW_USER_DETAILS,
   ROOT,
   USERS,
   USER_DETAILS,
   ADD_NEW_USER_DETAILS,
   SESSION,
+  ROUTE,
 } from "./routeNames";
-import { FORM_STATES } from "../constant/constant";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HomeWithPublicAccess = withPublicAccess(Home);
