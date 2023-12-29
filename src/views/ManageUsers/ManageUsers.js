@@ -27,7 +27,6 @@ import useResponsive from "../../core/hooks/useResponsive";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
-import { VIEW_USER_DETAILS } from "../../routes/routeNames";
 import { classes } from "./ManageUsers.style";
 import {
   PAGE_SIZE,
@@ -97,8 +96,8 @@ const ManageUsers = () => {
     }
   }, [areUsersFetchedSuccessfully]);
 
-  const goToUserDetailsPage = () => {
-    navigate(VIEW_USER_DETAILS);
+  const goToUserDetailsPage = (userId) => {
+    navigate(`details/${userId}?mode=view`);
   };
 
   const onHandleUserStatus = (userId, currentStatus) => {
