@@ -23,7 +23,7 @@
 
 .btnCustomStyles {
   padding: var(--paddingSmall) 12px;
-  border-radius: 12px;
+  border-radius: var(--radiusXLg);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   background-color: var(--bodyBg) !important;

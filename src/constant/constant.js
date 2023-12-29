@@ -21,14 +21,20 @@ export const ROW_PER_PAGE_OPTIONS = [
     label: 10,
   },
   {
-    value: 15,
-    label: 15,
-  },
-  {
     value: 20,
     label: 20,
   },
+  {
+    value: 30,
+    label: 30,
+  },
+  {
+    value: 40,
+    label: 40,
+  },
 ];
+
+export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const ACCESS_OPTIONS = [
   {
@@ -53,8 +59,8 @@ export const ROLE_ID_MAPPING = {
 export const ALL_ROLE_ID = [1, 2];
 
 export const FORM_STATES = {
-  VIEW_ONLY: "view only",
-  EDITABLE: "editable",
+  VIEW_ONLY: "view",
+  EDITABLE: "edit",
   EMPTY: "empty",
 };
 
@@ -103,3 +109,8 @@ export const ADD_NEW_USER_ACCESS_OPTIONS = [
     ],
   },
 ];
+
+export const PAGINATION_PROPERTIES = {
+  CURRENT_PAGE: "current-page",
+  ROW_PER_PAGE: "row-per-page",
+};

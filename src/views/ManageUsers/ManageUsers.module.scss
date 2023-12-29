@@ -104,6 +104,16 @@ input::placeholder {
   width: 100%;
 }
 
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapXSmall);
+}
+
+.errorBox {
+  min-width: 200px;
+}
+
 @media screen and (max-width: 1535px) {
   .headerResponsiveStyle {
     font-size: var(--fontSizeXXlarge);

@@ -4,8 +4,10 @@ import PropTypes from "prop-types";
 import { Pagination, Select, Table, Typography } from "antd";
 
 import PaginationItems from "./PaginationItems";
-import useQueryParams from "../../core/hooks/useQueryParams";
-import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
+import {
+  PAGE_SIZE,
+  ROW_PER_PAGE_OPTIONS,
+} from "../../constant/constant";
 import styles from "./DataTable.module.scss";
 import "./override.css";
 
@@ -17,16 +19,13 @@ const DataTable = ({
   originalData,
   searchedValue,
   setCurrentDataLength,
+  setPageSize,
+  setCurrent,
+  current,
+  pageSize,
 }) => {
   const intl = useIntl();
 
-  const [pageSize, setPageSize] = useState(PAGE_SIZE);
-
-  const { setQueryParams, getQueryParams, removeQueryParams } =
-    useQueryParams();
-  const [current, setCurrent] = useState(
-    Number(getQueryParams("current-page")) || 1
-  );
   const [currentTableData, setCurrentTableData] = useState(originalData);
 
   const handleOnChangePageSize = (size) => {
@@ -34,58 +33,23 @@ const DataTable = ({
     setCurrent(1);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setCurrentTableData(originalData);
-  },[originalData])
+  }, [originalData]);
 
   useEffect(() => {
-    const updatedData = originalData?.filter((item) => {
-      let isPresent = false;
-      for (const [key, value] of Object.entries(item)) {
-        if (
-          columnsToBeSearchFrom.includes(key) &&
-          value.toLowerCase().includes(searchedValue.toLowerCase())
-        ) {
-          isPresent = true;
-        }
-      }
-      return isPresent;
-    });
-    setCurrentTableData(updatedData);
     searchedValue && setCurrent(1);
-    searchedValue && setQueryParams("current-page", 1);
-    if (!searchedValue?.trim()?.length) {
-      setCurrentDataLength(originalData.length);
-    } else {
-      setCurrentDataLength(updatedData.length);
-    }
   }, [searchedValue]);
-
-  useEffect(() => {
-    const startIndex = (current - 1) * pageSize;
-    const endIndex = current * pageSize;
-    const updatedData = originalData.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
-  }, [current, pageSize]);
 
   const rightPaginationConfig = {
     current,
     pageSize,
     total: currentDataLength,
     onChange: (page) => {
-      setQueryParams("current-page", page);
       setCurrent(page);
     },
     showSizeChanger: false,
   };
-
-  useEffect(() => {
-    return () => {
-      setCurrent(1);
-      setPageSize(PAGE_SIZE);
-      removeQueryParams();
-    };
-  }, []);
 
   return (
     <div className={customContainerStyles}>
@@ -96,6 +60,7 @@ const DataTable = ({
         rowClassName={styles.rowtext}
         scroll={{ x: "max-content" }}
         className={styles.table}
+        rowKey="id"
       />
       <div className={styles.rowPerPageOptionsAndPaginationContainer}>
         <div className={styles.rowPerPageContainer}>
@@ -132,6 +97,7 @@ DataTable.defaultProps = {
   searchedValue: "",
   setCurrentDataLength: () => {},
   setCurrentTableData: () => {},
+  paginationApi: () => {},
 };
 
 DataTable.propTypes = {
@@ -142,6 +108,7 @@ DataTable.propTypes = {
   originalData: PropTypes.array,
   searchedValue: PropTypes.string,
   setCurrentDataLength: PropTypes.func,
+  paginationApi: PropTypes.func,
 };
 
 export default DataTable;

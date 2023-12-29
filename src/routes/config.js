@@ -13,12 +13,11 @@ import {
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
-  MANAGE_USERS,
   FORGOT_PASSWORD,
   VIEW_USER_DETAILS,
   ROOT,
   USERS,
-  EDIT_USER_DETAILS,
+  USER_DETAILS,
   ADD_NEW_USER_DETAILS,
 } from "./routeNames";
 import { FORM_STATES } from "../constant/constant";
@@ -104,32 +103,21 @@ const config = [
     ],
   },
   {
-    pagePath: MANAGE_USERS,
-    element: <HomeWithPublicAccess noOuterPadding />, // Page
+    pagePath: USERS,
+    element: <AuthWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {
         viewPath: "",
         element: <ManageUsers />, // view
       },
-    ],
-  },
-  {
-    pagePath: USERS,
-    element: <AuthWithPrivateAccess />, // Page
-    views: [
-      // array of views under Page route
       {
-        viewPath: VIEW_USER_DETAILS,
-        element: <UserDetails currentFormState={FORM_STATES.VIEW_ONLY} />, // view
-      },
-      {
-        viewPath: EDIT_USER_DETAILS,
-        element: <UserDetails currentFormState={FORM_STATES.EDITABLE} />, // view
+        viewPath: USER_DETAILS,
+        element: <UserDetails />, // view
       },
       {
         viewPath: ADD_NEW_USER_DETAILS,
-        element: <UserDetails currentFormState={FORM_STATES.EMPTY} />, // view
+        element: <UserDetails />, // view
       },
     ],
   },

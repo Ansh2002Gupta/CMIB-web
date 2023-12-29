@@ -1,16 +1,16 @@
 import { useSearchParams } from "react-router-dom";
 
 const useQueryParams = () => {
-  const [serachParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const newSearchParams = new URLSearchParams(searchParams);
 
   const setQueryParams = (key, value) => {
-    let newSearchParams = new URLSearchParams(serachParams);
     newSearchParams.set(key, value);
     setSearchParams(newSearchParams);
   };
 
   const getQueryParams = (key) => {
-    return serachParams.get(key);
+    return searchParams.get(key);
   };
 
   const removeQueryParams = () => {

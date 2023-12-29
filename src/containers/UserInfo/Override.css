@@ -12,7 +12,7 @@
 }
 
 .ant-select-selector {
-  min-height: 48px !important;
+  /* min-height: 48px !important; */
   min-width: 100%;
   border: 0;
 }

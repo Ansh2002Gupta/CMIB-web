@@ -13,20 +13,24 @@ const useListingUsers = () => {
   const [usersFetchingAPIStatus, setUsersFetchingAPIStatus] = useState(
     API_STATUS.IDLE
   );
+  const [metaData, setMetaData] = useState(null);
 
-  const fetchUsers = async (pageSize, currentPage) => {
+  const fetchUsers = async (pageSize, currentPage, searchQuery) => {
     setIsFetchingUsers(true);
     setErrorWhileFetchingUsers("");
     setUsersFetchingAPIStatus(API_STATUS.LOADING);
     try {
-      const url =
+      let url =
         ADMIN_ROUTE +
         FETCHING_USERS_END_POINT +
         "?perPage=" +
         pageSize +
         "&" +
-        "current=" +
+        "page=" +
         currentPage;
+      if (searchQuery) {
+        url = url + `&q=${searchQuery}`;
+      }
       const res = await Http.get(url);
       if (res.error) {
         setUsersFetchingAPIStatus(API_STATUS.ERROR);
@@ -34,8 +38,10 @@ const useListingUsers = () => {
         return;
       }
       setIsFetchingUsers(false);
-      setUsersFetchingAPIStatus(API_STATUS.SUCCESS);
+      const { meta } = res?.data;
       setUsersList(res?.data?.records);
+      setMetaData(meta);
+      setUsersFetchingAPIStatus(API_STATUS.SUCCESS);
     } catch (err) {
       setUsersFetchingAPIStatus(API_STATUS.ERROR);
       setIsFetchingUsers(false);
@@ -45,8 +51,8 @@ const useListingUsers = () => {
     }
   };
 
-  const isSuccess = usersFetchingAPIStatus === "success";
-  const isError = usersFetchingAPIStatus === "error";
+  const isSuccess = usersFetchingAPIStatus === API_STATUS.SUCCESS;
+  const isError = usersFetchingAPIStatus === API_STATUS.ERROR;
 
   return {
     isSuccess,
@@ -57,6 +63,7 @@ const useListingUsers = () => {
     setUsersList,
     usersFetchingAPIStatus,
     fetchUsers,
+    metaData,
   };
 };
 

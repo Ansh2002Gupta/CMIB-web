@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Alert, Button, Spin, Switch, Typography } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow";
@@ -11,6 +11,7 @@ import FileUpload from "../../components/FileUpload";
 import UserInfo from "../../containers/UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import useQueryParams from "../../core/hooks/useQueryParams";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
 import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
@@ -19,10 +20,12 @@ import { FORM_STATES, NOTIFICATION_TYPES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
 import styles from "./UserDetails.module.scss";
 
-const UserDetails = ({ currentFormState }) => {
+const UserDetails = () => {
   const intl = useIntl();
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const { getQueryParams } = useQueryParams();
+  const currentFormState = getQueryParams("mode") || FORM_STATES.EMPTY;
 
   const [active, setActive] = useState(false);
   const [userData, setUserData] = useState({
@@ -84,11 +87,9 @@ const UserDetails = ({ currentFormState }) => {
         role: userData?.access,
         is_two_factor: userData?.is_two_factor ? 1 : 0,
       };
-      console.log({ payload, userData });
       if (userData?.profile_photo) {
         payload["profile_photo"] = userData.profile_photo.file;
       }
-      console.log({ payload });
       updateUserDetails(userId, payload);
     }
   };
@@ -124,7 +125,6 @@ const UserDetails = ({ currentFormState }) => {
   };
 
   const getHeaderText = () => {
-    // add this to en.js
     if (currentFormState === FORM_STATES.VIEW_ONLY) {
       return userData?.name;
     }
@@ -204,7 +204,7 @@ const UserDetails = ({ currentFormState }) => {
                         <CustomButton
                           isBtnDisable={isUpdatingUserData}
                           btnText={intl.formatMessage({ id: "label.edit" })}
-                          IconElement={Edit} //change this
+                          IconElement={Edit}
                           onClick={() => navigate(USERS + `/edit/${userId}`)}
                           iconStyles={styles.btnIconStyles}
                           customStyle={styles.btnCustomStyles}
@@ -250,7 +250,6 @@ const UserDetails = ({ currentFormState }) => {
                     access={userData?.access}
                     is_two_factor={userData?.is_two_factor}
                     isDateDisable
-                    // update this component
                     userNameErrorMessage={
                       !isUserNameValid
                         ? intl.formatMessage({
@@ -311,7 +310,6 @@ const UserDetails = ({ currentFormState }) => {
           </>
         }
       />
-      {/* change constant and en.js */}
       {currentFormState !== FORM_STATES.VIEW_ONLY &&
         !isLoading &&
         !isUpdatingUserData && (
