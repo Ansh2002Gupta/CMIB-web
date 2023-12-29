@@ -164,7 +164,7 @@ const UserInfo = ({
               </div>
             )}
             <div className={styles.twoFactorContainer}>
-              <div className={styles.accessSelectLabelContainer}>
+              <div>
                 <Typography className={styles.label}>
                   {intl.formatMessage({ id: "label.twoFactorAuth" })}
                 </Typography>

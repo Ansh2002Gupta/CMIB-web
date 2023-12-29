@@ -12,7 +12,7 @@
   overflow-y: scroll;
   position: absolute;
   width: 100%;
-  top: 60px;
+  top: 85px;
   left: 0px;
 }
 
@@ -69,7 +69,8 @@
 }
 
 .chipsListContainer {
-  // display: flex;
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   cursor: pointer;
   width: 100%;

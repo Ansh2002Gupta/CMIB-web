@@ -118,23 +118,23 @@ const CustomMultiSelect = ({
     setSelectedOptions(updatedData);
   };
 
-  // useEffect(() => {
-  //   const data = [];
-  //   console.log("indise effect",{selectedOptions})
-  //   for (let i = 0; i < selectedOptions.length; i++) {
-  //     for (let j = 0; j < allAccessIdObject.length; j++) {
-  //       console.log({ v1: selectedOptions[i], v2: allAccessIdObject[j] });
-  //       if (
-  //         selectedOptions[i]?.toLowerCase() ===
-  //         allAccessIdObject[j].text?.toLowerCase()
-  //       ) {
-  //         data.push(allAccessIdObject[j]);
-  //       }
-  //     }
-  //   }
-  //   console.log({ data });
-  //   setSelectedOptions(data);
-  // }, []);
+  useEffect(() => {
+    const data = [];
+    console.log("indise effect",{selectedOptions})
+    for (let i = 0; i < selectedOptions.length; i++) {
+      for (let j = 0; j < allAccessIdObject.length; j++) {
+        console.log({ v1: selectedOptions[i], v2: allAccessIdObject[j] });
+        if (
+          selectedOptions[i]?.toLowerCase() ===
+          allAccessIdObject[j].text?.toLowerCase()
+        ) {
+          data.push(allAccessIdObject[j]);
+        }
+      }
+    }
+    console.log({ data });
+    setSelectedOptions(data);
+  }, []);
 
   return (
     <div className={styles.parentContainer}>
