@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useRef, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import moment from "moment/moment";
+import * as _ from "lodash";
 import {
   Alert,
   Button,
@@ -21,12 +22,18 @@ import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
 import useListingUsers from "../../services/api-services/Users/useListingUsers";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useQueryParams from "../../core/hooks/useQueryParams";
 import useResponsive from "../../core/hooks/useResponsive";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
+import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
-import { setUserDetails } from "../../globalContext/userDetails/userDetailsActions";
-import { UserDetailsContext } from "../../globalContext/userDetails/userDetailsProvider";
 import { VIEW_USER_DETAILS } from "../../routes/routeNames";
+import { classes } from "./ManageUsers.style";
+import {
+  PAGE_SIZE,
+  PAGINATION_PROPERTIES,
+  VALID_ROW_PER_OPTIONS,
+} from "../../constant/constant";
 import styles from "./ManageUsers.module.scss";
 
 const ManageUsers = () => {
@@ -35,7 +42,14 @@ const ManageUsers = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
   const [messageApi, contextHolder] = message.useMessage();
-  const [, userDetailsDispatch] = useContext(UserDetailsContext);
+  const { setQueryParams, getQueryParams, removeQueryParams } =
+    useQueryParams();
+  const [current, setCurrent] = useState(
+    +getQueryParams(PAGINATION_PROPERTIES.CURRENT_PAGE) || 1
+  );
+  const [pageSize, setPageSize] = useState(
+    +getQueryParams(PAGINATION_PROPERTIES.ROW_PER_PAGE) || PAGE_SIZE
+  );
 
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
@@ -46,23 +60,44 @@ const ManageUsers = () => {
     errorWhileFetchingUsers,
     usersList,
     fetchUsers,
+    metaData,
   } = useListingUsers();
 
+  const debounceSearch = useMemo(() => _.debounce(fetchUsers, 300), []);
+  let doNotCallOnMount = useRef(false);
   const {
     errorWhileUpdatingUserData,
     updateUserDetails,
     isLoading: isUpdatingUserData,
   } = useUpdateUserDetailsApi();
-  const [currentDataLength, setCurrentDataLength] = useState(usersList?.length);
+  const [currentDataLength, setCurrentDataLength] = useState(0);
 
   useEffect(() => {
-    fetchUsers(10, 1);
+    const currentPage = +getQueryParams(PAGINATION_PROPERTIES.CURRENT_PAGE);
+    const currentPagePerRow = +getQueryParams(
+      PAGINATION_PROPERTIES.ROW_PER_PAGE
+    );
+    console.log({ current, currentPagePerRow });
+    if (!currentPage || isNaN(current)) {
+      setQueryParams(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+      setCurrent(1);
+    }
+    if (
+      !currentPagePerRow ||
+      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
+    ) {
+      setQueryParams(PAGINATION_PROPERTIES.ROW_PER_PAGE, PAGE_SIZE);
+      setPageSize(PAGE_SIZE);
+    }
   }, []);
 
-  const goToUserDetailsPage = (userId, editable, userName) => {
-    userDetailsDispatch(
-      setUserDetails({ userName, editable, userId, type: "users" })
-    );
+  useEffect(() => {
+    if (areUsersFetchedSuccessfully) {
+      setCurrentDataLength(+metaData?.total);
+    }
+  }, [areUsersFetchedSuccessfully]);
+
+  const goToUserDetailsPage = () => {
     navigate(VIEW_USER_DETAILS);
   };
 
@@ -81,9 +116,12 @@ const ManageUsers = () => {
       ),
       dataIndex: "name",
       key: "name",
-      sorter: (a, b) => a.UserName.localeCompare(b.UserName),
-      render: (text) => (
-        <p className={[styles.boldText, styles.textEllipsis].join(" ")}>
+      sorter: (a, b) => a?.name?.localeCompare(b?.name),
+      render: (text, { id }) => (
+        <p
+          key={id}
+          className={[styles.boldText, styles.textEllipsis].join(" ")}
+        >
           {text}
         </p>
       ),
@@ -96,7 +134,11 @@ const ManageUsers = () => {
       ),
       dataIndex: "email",
       key: "email",
-      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
+      render: (text, { id }) => (
+        <p key={id} className={styles.textEllipsis}>
+          {text}
+        </p>
+      ),
     },
     {
       title: () => (
@@ -106,7 +148,11 @@ const ManageUsers = () => {
       ),
       dataIndex: "mobile_number",
       key: "mobile_number",
-      render: (text) => <p className={styles.textEllipsis}>{text}</p>,
+      render: (text, { id }) => (
+        <p key={id} className={styles.textEllipsis}>
+          {text}
+        </p>
+      ),
     },
     {
       title: () => (
@@ -116,21 +162,29 @@ const ManageUsers = () => {
       ),
       dataIndex: "role",
       key: "role",
-      render: (textArray) => (
-        <p className={styles.textEllipsis}>
-          {textArray?.map((item) => item.name)?.join(", ")}
-        </p>
-      ),
+      render: (textArray, rowData) => {
+        const { id } = rowData;
+        const str = textArray?.map((item) => item.name)?.join(", ");
+        return (
+          <p className={styles.textEllipsis} key={id}>
+            {str ? str : "--"}
+          </p>
+        );
+      },
     },
     {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.dateCreatedOn" })}
-        </p>
-      ),
+      title: () => {
+        return (
+          <p className={styles.columnHeading}>
+            {intl.formatMessage({ id: "label.dateCreatedOn" })}
+          </p>
+        );
+      },
       dataIndex: "created_at",
       key: "created_at",
-      render: (data) => moment(data).format("DD/MM/YYYY"),
+      render: (data, { id }) => (
+        <div key={id}> {moment(data).format("DD/MM/YYYY")}</div>
+      ),
       sorter: (a, b) => moment(a.createdOn).unix() - moment(b.createdOn).unix(),
       sortDirection: ["ascend"],
       defaultSortOrder: "ascend",
@@ -144,9 +198,9 @@ const ManageUsers = () => {
       dataIndex: "status",
       key: "status",
       render: (_, data) => {
-        const { status } = data;
+        const { status, id } = data;
         return (
-          <div className={styles.userStatusContainer}>
+          <div className={styles.userStatusContainer} key={id}>
             <Switch
               checked={status}
               onClick={() => onHandleUserStatus(data.id, status)}
@@ -166,13 +220,14 @@ const ManageUsers = () => {
       dataIndex: "see",
       key: "see",
       render: (_, rowData) => {
-        const { id, UserName } = rowData;
+        const { id, name } = rowData;
         return (
           <Image
             src={getImage("eye")}
             className={styles.eyeIcon}
-            onClick={() => goToUserDetailsPage(id, false, UserName)}
+            onClick={goToUserDetailsPage}
             preview={false}
+            key={id}
           />
         );
       },
@@ -182,13 +237,13 @@ const ManageUsers = () => {
       dataIndex: "edit",
       key: "edit",
       render: (_, rowData) => {
-        const { id, UserName } = rowData;
+        const { id, name } = rowData;
         return (
           <Image
             src={getImage("edit")}
             preview={false}
             className={styles.editIcon}
-            onClick={() => goToUserDetailsPage(id, true, UserName)}
+            onClick={goToUserDetailsPage}
           />
         );
       },
@@ -200,9 +255,7 @@ const ManageUsers = () => {
       messageApi.open({
         type: "error",
         content: intl.formatMessage({ id: "label.enableToUpdateUserStatus" }),
-        style: {
-          marginTop: "20vh",
-        },
+        style: classes.message,
       });
     }
   }, [errorWhileUpdatingUserData]);
@@ -212,6 +265,25 @@ const ManageUsers = () => {
       setShowFilters(false);
       setSearchedValue("");
       setCurrentDataLength(0);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (doNotCallOnMount.current) {
+      setQueryParams(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
+      setQueryParams(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
+      fetchUsers(pageSize, current, searchedValue);
+    }
+    doNotCallOnMount.current = true;
+  }, [pageSize, current]);
+
+  useEffect(() => {
+    debounceSearch(pageSize, current, searchedValue);
+  }, [searchedValue]);
+
+  useEffect(() => {
+    return () => {
+      removeQueryParams();
     };
   }, []);
 
@@ -228,7 +300,7 @@ const ManageUsers = () => {
                 btnText={intl.formatMessage({
                   id: `label.${responsive.isMd ? "addNewUsers" : "newUsers"}`,
                 })}
-                iconUrl={getImage("plusIcon")}
+                IconElement={PlusIcon}
                 iconStyles={styles.btnIconStyles}
                 customStyle={styles.btnCustomStyles}
                 onClick={goToUserDetailsPage}
@@ -241,56 +313,60 @@ const ManageUsers = () => {
       bottomSection={
         <>
           {contextHolder}
-          {areUsersFetchedSuccessfully && (
-            <div className={styles.filterAndTableContainer}>
-              <div className={styles.searchBarContainer}>
-                <Input
-                  prefix={
-                    <Image
-                      src={getImage("searchIcon")}
-                      className={styles.searchIcon}
-                      preview={false}
-                    />
-                  }
-                  placeholder={intl.formatMessage({
-                    id: "label.searchByUserNameAndEmail",
-                  })}
-                  allowClear
-                  className={styles.searchBar}
-                  value={searchedValue}
-                  onChange={(e) => setSearchedValue(e.target.value)}
-                />
-                <SearchFilter
-                  filterPropertiesArray={ACCESS_FILTER_DATA}
-                  {...{ showFilters, setShowFilters }}
-                />
-              </div>
+          <div className={styles.filterAndTableContainer}>
+            <div className={styles.searchBarContainer}>
+              <Input
+                prefix={
+                  <Image
+                    src={getImage("searchIcon")}
+                    className={styles.searchIcon}
+                    preview={false}
+                  />
+                }
+                placeholder={intl.formatMessage({
+                  id: "label.searchByUserNameAndEmail",
+                })}
+                allowClear
+                className={styles.searchBar}
+                value={searchedValue}
+                onChange={(e) => setSearchedValue(e.target.value)}
+              />
+              <SearchFilter
+                filterPropertiesArray={ACCESS_FILTER_DATA}
+                {...{ showFilters, setShowFilters }}
+              />
+            </div>
+            {areUsersFetchedSuccessfully && (
               <DataTable
                 {...{
                   columns,
                   searchedValue,
                   currentDataLength,
                   setCurrentDataLength,
+                  pageSize,
+                  current,
+                  setCurrent,
+                  setPageSize,
                 }}
                 originalData={usersList || []}
-                columnsToBeSearchFrom={["UserName", "email"]}
+                paginationApi={fetchUsers}
               />
-            </div>
-          )}
-          {(isFetchingUsers || isUpdatingUserData) &&
-            !errorWhileFetchingUsers &&
-            !errorWhileUpdatingUserData && (
-              <div className={styles.loaderContainer}>
-                <Spin size="large" />
-              </div>
             )}
+            {(isFetchingUsers || isUpdatingUserData) &&
+              !errorWhileFetchingUsers &&
+              !errorWhileUpdatingUserData && (
+                <div className={styles.loaderContainer}>
+                  <Spin size="large" />
+                </div>
+              )}
+          </div>
           {errorWhileFetchingUsers && (
             <div>
               <Alert
                 type="error"
                 message="Error"
                 description={
-                  <div>
+                  <div className={styles.errorContainer}>
                     <Typography>{errorWhileFetchingUsers}</Typography>
                     <Button onClick={() => fetchUsers(10, 1)}>
                       {intl.formatMessage({

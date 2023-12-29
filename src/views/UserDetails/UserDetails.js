@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Alert, Button, Spin, Switch, Typography } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow";

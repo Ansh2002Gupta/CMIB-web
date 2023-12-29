@@ -13,12 +13,10 @@ import "./override.css";
 
 const DataTable = ({
   columns,
-  columnsToBeSearchFrom,
   currentDataLength,
   customContainerStyles,
   originalData,
   searchedValue,
-  setCurrentDataLength,
   setPageSize,
   setCurrent,
   current,
@@ -68,7 +66,7 @@ const DataTable = ({
             {intl.formatMessage({ id: "label.rowPerPage" })}
           </Typography>
           <Select
-            defaultValue={PAGE_SIZE}
+            defaultValue={pageSize}
             className={styles.rowPerPageCount}
             onChange={handleOnChangePageSize}
             options={ROW_PER_PAGE_OPTIONS}
@@ -89,25 +87,21 @@ const DataTable = ({
 
 DataTable.defaultProps = {
   columns: [],
-  columnsToBeSearchFrom: [],
   currentDataLength: 0,
   currentTableData: [],
   customContainerStyles: "",
   originalData: [],
   searchedValue: "",
-  setCurrentDataLength: () => {},
   setCurrentTableData: () => {},
   paginationApi: () => {},
 };
 
 DataTable.propTypes = {
   columns: PropTypes.array,
-  columnsToBeSearchFrom: PropTypes.array,
   currentDataLength: PropTypes.number,
   customContainerStyles: PropTypes.string,
   originalData: PropTypes.array,
   searchedValue: PropTypes.string,
-  setCurrentDataLength: PropTypes.func,
   paginationApi: PropTypes.func,
 };
 
