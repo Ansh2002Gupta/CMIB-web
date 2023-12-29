@@ -27,6 +27,7 @@ const newlyQualifiedPlacementsMenu = [
     key: "round-2-placements",
     icon: <UserOutlined />,
   },
+  { label: 'Companies', key: 'companies', icon: <UserOutlined /> },
 ];
 const caJobsMenu = [
   { label: "Dashboard", key: "dashboard", icon: <UserOutlined /> },

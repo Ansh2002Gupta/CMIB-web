@@ -76,6 +76,7 @@ const variables = {
   // Heights
   btnHeight: "56px",
   minBtnHeight: "45px",
+  smallHeight: "30px",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
@@ -100,6 +101,7 @@ const variables = {
 
   // Padding
   paddingExtraSmall: "8px",
+  paddingMediumSmall: "12px",
   paddingSmall: "16px",
   paddingMedium: "24px",
   paddingLarge: "32px",

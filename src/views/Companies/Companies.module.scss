@@ -1,0 +1,135 @@
+.baseLayout {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.headerContainer {
+  padding: var(--paddingMedium);
+  width: 100%;
+}
+
+.btnCustomStyles {
+  padding: var(--paddingSmall) var(--paddingMediumSmall);
+  border-radius: var(--radiusXLg);
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
+  background-color: var(--greenBtnBg);
+}
+
+.greyBtnCustomStyles {
+  padding: var(--paddingSmall) var(--paddingMediumSmall);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
+  background-color: var(--blueBg);
+  color: var(--textBold);
+  &:hover {
+    background-color:  var(--blueBg) !important;
+    border: var(--borderLight) !important;
+    color: var(--textBold) !important;
+  }
+}
+
+.btnIconStyles {
+  width: 24px !important;
+}
+
+.filterAndTableContainer {
+  background-color: var(--blueBg);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmall);
+  padding: var(--paddingMedium);
+  flex: 1;
+}
+
+.filterAndButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gapSmall);
+}
+
+.searchIcon {
+  width: var(--smallHeight);
+  height: var(--smallHeight);
+  padding-right: var(--paddingExtraSmall);
+  padding-bottom: 4px;
+}
+
+.searchBar {
+  width: 35%;
+  height: 44px;
+  border-radius: var(--radiusXLg);
+  input {
+    color: var(--inputText) !important;
+    font-size: var(--fontSizeSmall) !important;
+    font-weight: var(--fontWeightMedium) !important;
+  }
+}
+
+input::placeholder {
+  color: var(--inputPlaceHolder) !important;
+}
+
+.searchBarContainer {
+  display: flex;
+  justify-content: start;
+  gap: var(--gapSmall);
+  position: relative;
+  flex-grow: 1;
+}
+
+.userStatusContainer {
+  display: flex;
+  gap: var(--gapXSmall);
+}
+
+.padding {
+  padding: var(--paddingMedium);
+}
+
+@media screen and (max-width: 1535px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeXXlarge);
+  }
+  .btnCustomStyles, .greyBtnCustomStyles {
+    font-size: var(--fontSizeExtraSmall);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .searchBar {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .searchBar {
+    width: 80%;
+  }
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeXlargeMedium);
+  }
+  .btnCustomStyles, .greyBtnCustomStyles {
+    min-height: 44px;
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .filterAndButtonContainer{
+    flex-direction: column-reverse;
+  }
+  .searchBarContainer {
+    flex-direction: column;
+  }
+  .searchBar {
+    width: 100%;
+    min-height: 50px;
+  }
+  .filterBtn {
+    max-width: 100px;
+    align-self: flex-end;
+  }
+}

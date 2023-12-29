@@ -1,3 +1,4 @@
+import arrowDown from "./arrow-down.svg";
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import checkedBox from "./checkedBox.svg";
@@ -10,6 +11,7 @@ import gloPac from "./GloPac.svg";
 import greenCheckIcon from "./greenCheckIcon.svg";
 import Logo from "./Logo.svg"; // Capitalized Logo comes after lowercase imports
 import logo from "./logo.png"; // File extensions are also considered in sorting
+import more from "./more.svg";
 import plusIcon from "./plus icon.svg";
 import publicFooter from "./Public footer.svg";
 import searchIcon from "./search icon.svg";
@@ -22,6 +24,7 @@ import addIcon from "./add.png";
 import editIcon from "./edit.png";
 
 const images = {
+  arrowDown,
   arrowRight,
   arrowRightFilter,
   checkedBox,
@@ -34,6 +37,7 @@ const images = {
   greenCheckIcon,
   logo,
   Logo,
+  more,
   plusIcon,
   publicFooter,
   searchIcon,

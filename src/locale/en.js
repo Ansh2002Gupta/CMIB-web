@@ -109,6 +109,15 @@ const locale = {
   "label.companyProfile": "Company Profile",
   "label.logout": "Logout",
   "label.left": "left",
+  "label.addCompany": "Add Company",
+  "label.city": "City",
+  "label.companies": "Companies",
+  "label.companyName": "Company Name",
+  "label.entity": "Entity",
+  "label.generatePaymentMis": "Generate Payment MIS",
+  "label.manageCompanyDetails": "Manage company details",
+  "label.phoneNumber": "Phone Number",
+  "label.searchByComapnyName": "Search by company name",
 };
 
 export default locale;
