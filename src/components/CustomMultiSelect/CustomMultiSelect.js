@@ -9,6 +9,7 @@ import { ReactComponent as UnCheckedBox } from "../../themes/base/assets/images/
 import { ReactComponent as DropdownArrow } from "../../themes/base/assets/images/arrow-down-admin.svg";
 import { ReactComponent as Cross } from "../../themes/base/assets/images/x.svg";
 import styles from "./CustomMultiSelect.module.scss";
+import { allAccessIdObject } from "../../constant/constant";
 
 const CustomMultiSelect = ({
   optionsArray,
@@ -50,22 +51,19 @@ const CustomMultiSelect = ({
       optionsArray.forEach((item) => {
         data.push(...item.options);
       });
-      console.log({ data });
       setSelectedOptions(data);
       return;
     }
     setSelectedOptions([]);
   };
-  console.log({ selectedOptions });
 
   const toggleOptionId = (optionObject) => {
     let updatedData = [];
     if (Array.isArray(optionObject)) {
-      console.log("array inside");
       // optionObject is array of objects
-      updatedData = selectedOptions.filter(
-        (item) => !doesIncludes(optionsArray, item)
-      );
+      updatedData = selectedOptions.filter((item) => {
+        return !doesIncludes(optionObject, item);
+      });
       if (doesContainsAllIds(optionObject)) {
         setSelectAll(false);
         setSelectedOptions(updatedData);
@@ -114,9 +112,29 @@ const CustomMultiSelect = ({
   };
 
   const removeElement = (optionObject) => {
-    const updatedData = selectedOptions.filter(item=>item.id !== optionObject.id);
+    const updatedData = selectedOptions.filter(
+      (item) => item.id !== optionObject.id
+    );
     setSelectedOptions(updatedData);
   };
+
+  // useEffect(() => {
+  //   const data = [];
+  //   console.log("indise effect",{selectedOptions})
+  //   for (let i = 0; i < selectedOptions.length; i++) {
+  //     for (let j = 0; j < allAccessIdObject.length; j++) {
+  //       console.log({ v1: selectedOptions[i], v2: allAccessIdObject[j] });
+  //       if (
+  //         selectedOptions[i]?.toLowerCase() ===
+  //         allAccessIdObject[j].text?.toLowerCase()
+  //       ) {
+  //         data.push(allAccessIdObject[j]);
+  //       }
+  //     }
+  //   }
+  //   console.log({ data });
+  //   setSelectedOptions(data);
+  // }, []);
 
   return (
     <div className={styles.parentContainer}>
@@ -137,7 +155,7 @@ const CustomMultiSelect = ({
             <div
               className={styles.chips}
               key={index}
-              onClick={()=>removeElement(item)}
+              onClick={() => removeElement(item)}
             >
               <Typography className={styles.chipsText}>{item.text}</Typography>
               <Cross />

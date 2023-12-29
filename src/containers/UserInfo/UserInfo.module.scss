@@ -93,6 +93,10 @@
   overflow-x: scroll;
 }
 
+.spanOverAllColumns {
+  grid-column: 1 / -1;
+}
+
 @media screen and (max-width: 1023px) {
   .container {
     grid-template-columns: 1fr 1fr;

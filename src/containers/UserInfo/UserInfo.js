@@ -87,7 +87,7 @@ const UserInfo = ({
           <div className={styles.container}>
             <div>
               <CustomInput
-                type={"text"}
+                type="text"
                 label={intl.formatMessage({ id: "label.userName2" })}
                 isError={!!userNameErrorMessage}
                 errorMessage={userNameErrorMessage}
@@ -139,11 +139,13 @@ const UserInfo = ({
                 }
               />
             </div>
-            <CustomMultiSelect
-              optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
-              selectedOptions={access}
-              setSelectedOptions={(value) => updateUserData("access", value)}
-            />
+            <div className={styles.spanOverAllColumns}>
+              <CustomMultiSelect
+                optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
+                selectedOptions={access}
+                setSelectedOptions={(value) => updateUserData("access", value)}
+              />
+            </div>
             {shouldShowDatePickerOption && date && (
               <div className={styles.dateContainer}>
                 <Typography className={styles.accessSelectLabel}>

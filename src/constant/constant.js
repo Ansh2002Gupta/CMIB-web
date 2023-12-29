@@ -89,3 +89,18 @@ export const ADD_NEW_USER_ACCESS_OPTIONS = [
     allOptionIds: [3, 4, 5, 6],
   },
 ];
+
+export const allAccessIdObject = [
+  { text: "Bulk notification", id: 7 },
+  { text: "User Management", id: 8 },
+  { text: "Ticket Management", id: 9 },
+  { text: "Query Management", id: 10 },
+  { text: "Testimonial Management", id: 11 },
+  { text: "Registered Companies", id: 12 },
+  { text: "NQCA-Placement", id: 3 },
+  { text: "Overseas-Placement", id: 4 },
+  { text: "Career-Ascent", id: 5 },
+  { text: "Women-Placement", id: 6 },
+  { text: "Ca-jobs", id: 2 },
+  { text: "Control", id: 1 },
+];
