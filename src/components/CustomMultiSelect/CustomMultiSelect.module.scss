@@ -1,6 +1,5 @@
 .parentContainer {
   position: relative;
-  background-color: red;
 }
 
 .container {
@@ -72,9 +71,9 @@
 .chipsListContainer {
   // display: flex;
   gap: 8px;
-  background-color: blue;
   cursor: pointer;
   width: 100%;
+  padding: 8px;
 }
 
 .chips {

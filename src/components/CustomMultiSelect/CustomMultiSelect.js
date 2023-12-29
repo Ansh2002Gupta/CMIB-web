@@ -28,7 +28,6 @@ const CustomMultiSelect = ({
 
   const [selectAll, setSelectAll] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [combinedString, setCombinedString] = useState("");
 
   const elementNotToBeConsideredRef = useRef();
   const { wrapperRef } = useOutSideClick({
@@ -51,19 +50,21 @@ const CustomMultiSelect = ({
       optionsArray.forEach((item) => {
         data.push(...item.options);
       });
+      console.log({ data });
       setSelectedOptions(data);
       return;
     }
     setSelectedOptions([]);
   };
-  console.log({selectedOptions})
+  console.log({ selectedOptions });
 
   const toggleOptionId = (optionObject) => {
     let updatedData = [];
     if (Array.isArray(optionObject)) {
-      // optionObject is array of Number
+      console.log("array inside");
+      // optionObject is array of objects
       updatedData = selectedOptions.filter(
-        (item) => !optionObject.includes(item.id)
+        (item) => !doesIncludes(optionsArray, item)
       );
       if (doesContainsAllIds(optionObject)) {
         setSelectAll(false);
@@ -112,20 +113,10 @@ const CustomMultiSelect = ({
     setSelectAll(false);
   };
 
-  useEffect(() => {
-    if (selectedOptions?.length) {
-      let strArr = [];
-      optionsArray.forEach((item) => {
-        let tempStrArr = item.options
-          .filter((v) => selectedOptions.includes(v.id))
-          .map((v) => v.text);
-        strArr = [...strArr, ...tempStrArr];
-      });
-      setCombinedString(strArr.join(","));
-      return;
-    }
-    setCombinedString("");
-  }, [selectedOptions]);
+  const removeElement = (optionObject) => {
+    const updatedData = selectedOptions.filter(item=>item.id !== optionObject.id);
+    setSelectedOptions(updatedData);
+  };
 
   return (
     <div className={styles.parentContainer}>
@@ -141,10 +132,14 @@ const CustomMultiSelect = ({
         </div>
       </div>
       <div className={styles.chipsListContainer}>
-        {combinedString?.split(",")?.map((item, index) => {
+        {selectedOptions?.map((item, index) => {
           return (
-            <div className={styles.chips} key={index}>
-              <Typography className={styles.chipsText}>{item}</Typography>
+            <div
+              className={styles.chips}
+              key={index}
+              onClick={()=>removeElement(item)}
+            >
+              <Typography className={styles.chipsText}>{item.text}</Typography>
               <Cross />
             </div>
           );
@@ -178,7 +173,7 @@ const CustomMultiSelect = ({
                   <div
                     className={styles.optionContainer}
                     key={index}
-                    onClick={() => toggleOptionId(item.allOptionIds)}
+                    onClick={() => toggleOptionId(item.options)}
                   >
                     {doesContainsAllIds(item.allOptionIds) ? (
                       <CheckedBox className={styles.icon} />
@@ -196,7 +191,7 @@ const CustomMultiSelect = ({
                         key={index}
                         onClick={() => toggleOptionId(option)}
                       >
-                        {selectedOptions.includes(option.id) ? (
+                        {doesIncludes(selectedOptions, option) ? (
                           <CheckedBox className={styles.icon} />
                         ) : (
                           <UnCheckedBox className={styles.icon} />
