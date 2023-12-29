@@ -109,23 +109,13 @@ const config = [
     ],
   },
   {
-    pagePath: MANAGE_USERS,
-    element: <HomeWithPublicAccess noOuterPadding />,
-    views: [
-      {
-        viewPath: "",
-        element: <ManageUsers />,
-      },
-    ],
-  },
-   {
     pagePath: USERS,
     element: <AuthWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {
         viewPath: "",
-        element: <Session />,
+        element: <ManageUsers />, // view
       },
       {
         viewPath: USER_DETAILS,
@@ -145,16 +135,7 @@ const config = [
         viewPath: "",
         element: <Session />,
       },
-      {
-        viewPath: USER_DETAILS,
-        element: <UserDetails />, // view
-      },
-      {
-        viewPath: ADD_NEW_USER_DETAILS,
-        element: <UserDetails />, // view
-      },
     ],
-    
   },
 ];
 
