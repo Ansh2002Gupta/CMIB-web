@@ -36,54 +36,72 @@ const CustomMultiSelect = ({
     elementNotToBeConsidered: elementNotToBeConsideredRef,
   });
 
+  const doesIncludes = (arrayForSearching, objectToBeSerached) => {
+    return (
+      arrayForSearching.filter((item) => item.id === objectToBeSerached.id)
+        ?.length === 1
+    );
+  };
+
   const selectAllOption = () => {
     const updatedStateValue = !selectAll;
     setSelectAll(updatedStateValue);
     if (updatedStateValue) {
       let data = [];
       optionsArray.forEach((item) => {
-        data.push(...item.allOptionIds);
+        data.push(...item.options);
       });
       setSelectedOptions(data);
       return;
     }
     setSelectedOptions([]);
   };
+  console.log({selectedOptions})
 
-  const toggleOptionId = (optionId) => {
+  const toggleOptionId = (optionObject) => {
     let updatedData = [];
-    if (typeof optionId === "object") {
-      updatedData = selectedOptions.filter((item) => !optionId.includes(item));
-      if (doesContainsAllIds(optionId)) {
+    if (Array.isArray(optionObject)) {
+      // optionObject is array of Number
+      updatedData = selectedOptions.filter(
+        (item) => !optionObject.includes(item.id)
+      );
+      if (doesContainsAllIds(optionObject)) {
         setSelectAll(false);
         setSelectedOptions(updatedData);
         areAllOptionSelected(updatedData.length);
         return;
       }
-      updatedData = [...updatedData, ...optionId];
+      updatedData = [...updatedData, ...optionObject];
       areAllOptionSelected(updatedData.length);
       setSelectedOptions(updatedData);
       return;
     }
-    if (selectedOptions.includes(optionId)) {
-      updatedData = selectedOptions.filter((item) => item !== optionId);
+    if (doesIncludes(selectedOptions, optionObject)) {
+      updatedData = selectedOptions.filter(
+        (item) => item.id !== optionObject.id
+      );
       setSelectedOptions(updatedData);
       setSelectAll(false);
       areAllOptionSelected(updatedData.length);
       return;
     }
-    updatedData = [...selectedOptions, optionId];
+    updatedData = [...selectedOptions, optionObject];
     areAllOptionSelected(updatedData.length);
     setSelectedOptions(updatedData);
   };
 
-  const doesContainsAllIds = (idsArray) => {
+  const doesContainsAllIds = (idsObjectArray) => {
+    let isArrayOfObject = typeof idsObjectArray[0] === "object";
     let countOfValuesContains = 0;
     selectedOptions.forEach((item) => {
-      if (idsArray.includes(item)) countOfValuesContains++;
+      if (isArrayOfObject) {
+        if (doesIncludes(idsObjectArray, item)) countOfValuesContains++;
+        return;
+      }
+      if (idsObjectArray.includes(item.id)) countOfValuesContains++;
     });
 
-    return countOfValuesContains === idsArray?.length;
+    return countOfValuesContains === idsObjectArray?.length;
   };
 
   const areAllOptionSelected = (currentlySelectedOptionsCount) => {
@@ -123,9 +141,9 @@ const CustomMultiSelect = ({
         </div>
       </div>
       <div className={styles.chipsListContainer}>
-        {combinedString?.split(",")?.map((item) => {
+        {combinedString?.split(",")?.map((item, index) => {
           return (
-            <div className={styles.chips}>
+            <div className={styles.chips} key={index}>
               <Typography className={styles.chipsText}>{item}</Typography>
               <Cross />
             </div>
@@ -176,7 +194,7 @@ const CustomMultiSelect = ({
                       <div
                         className={styles.optionContainer}
                         key={index}
-                        onClick={() => toggleOptionId(option.id)}
+                        onClick={() => toggleOptionId(option)}
                       >
                         {selectedOptions.includes(option.id) ? (
                           <CheckedBox className={styles.icon} />
