@@ -6,6 +6,7 @@ import "./Override.css";
 
 const useRenderColumn = () => {
   const intl = useIntl();
+
   const renderColumn = ({
     dataIndex,
     defaultSortOrder,
@@ -22,6 +23,7 @@ const useRenderColumn = () => {
     title,
   }) => {
     const columnObject = {};
+  
     const {
       alt = "",
       customImageStyle = "",
@@ -29,18 +31,22 @@ const useRenderColumn = () => {
       onClick = () => {},
       preview,
     } = renderImage;
+
     const {
       items = [],
       menuSrc = "",
       onMenuClick = () => {},
       menuPreview,
     } = renderMenu;
+
     const { dateFormat = "DD/MM/YYYY", isTextBold, isTypeDate } = renderText;
+  
     const {
       swithActiveLabel,
       swithInActiveLabel,
       switchToggleHandler = () => {},
     } = renderSwitch;
+  
     title &&
       (columnObject.title = () => {
         return <p className={styles.columnHeading}>{title}</p>;
@@ -78,6 +84,7 @@ const useRenderColumn = () => {
           {isTypeDate ? moment(new Date(text)).format(dateFormat) : text}
         </p>
       ));
+  
     renderSwitch.visible &&
       (columnObject.render = (_, data) => {
         const { status } = data;
@@ -97,6 +104,7 @@ const useRenderColumn = () => {
           </div>
         );
       });
+
     renderImage.visible &&
       (columnObject.render = (_, rowData) => {
         return (
@@ -109,6 +117,7 @@ const useRenderColumn = () => {
           />
         );
       });
+
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {
         const menuItems = {
@@ -134,8 +143,11 @@ const useRenderColumn = () => {
           </Dropdown>
         );
       });
+
     return columnObject;
   };
+
   return { renderColumn };
 };
+
 export default useRenderColumn;
