@@ -7,3 +7,4 @@ export const ROOT = "/";
 export const USERS = "/users";
 export const USER_DETAILS = "details/:userId";
 export const ADD_NEW_USER_DETAILS = "add";
+export const SESSION = "/session";
