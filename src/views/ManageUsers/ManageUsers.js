@@ -358,25 +358,28 @@ const ManageUsers = () => {
                   <Spin size="large" />
                 </div>
               )}
+            {errorWhileFetchingUsers && (
+              <div className={styles.errorContainer}>
+                <Alert
+                  type="error"
+                  message="Error"
+                  className={styles.alertBox}
+                  description={
+                    <div className={styles.errorTextContainer}>
+                      <Typography className={styles.errorText}>
+                        {errorWhileFetchingUsers}
+                      </Typography>
+                      <Button onClick={() => fetchUsers(10, 1)}>
+                        {intl.formatMessage({
+                          id: "label.tryAgain",
+                        })}
+                      </Button>
+                    </div>
+                  }
+                />
+              </div>
+            )}
           </div>
-          {errorWhileFetchingUsers && (
-            <div>
-              <Alert
-                type="error"
-                message="Error"
-                description={
-                  <div className={styles.errorContainer}>
-                    <Typography>{errorWhileFetchingUsers}</Typography>
-                    <Button onClick={() => fetchUsers(10, 1)}>
-                      {intl.formatMessage({
-                        id: "label.tryAgain",
-                      })}
-                    </Button>
-                  </div>
-                }
-              />
-            </div>
-          )}
         </>
       }
     />
