@@ -1,5 +1,6 @@
 import Auth from "../pages/Auth";
 import Configurations from "../views/Configurations/Configurations";
+import ConfigureCentres from "../views/ConfigureCentres";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
@@ -19,7 +20,6 @@ import {
   ROOT,
   CONFIGURE_CENTRES,
 } from "./routeNames";
-import ConfigureCentres from "../views/ConfigureCentres";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HomeWithPublicAccess = withPublicAccess(Home);
