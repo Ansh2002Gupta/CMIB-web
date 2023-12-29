@@ -113,6 +113,14 @@ const locale = {
   "session.rounds.centres": "Centres",
   "session.roundOneStatus": "Round 1 Status",
   "session.roundTwoStatus": "Round 2 Status",
+  "label.centreName": "Centre Name",
+  "label.centreId": "Centre Id",
+  "label.bigSmallCentre": "Big/Small Centre",
+  "label.dateCreated": "Date Created",
+  "label.searchByCentreNameOrId": "Search by centre name or centre id",
+  "label.configureCentres": "Configure Centres",
+  "label.addNewCentre": "Add New Centre",
+  "label.newCentre": "New Centre",
 };
 
 export default locale;
