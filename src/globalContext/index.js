@@ -9,7 +9,6 @@ const providers = [
   authProvider,
   dashboardProvider,
   localeProviders,
-  UserDetailsProvider,
 ];
 
 const combineProviders = (components) => {
