@@ -146,6 +146,86 @@ export const SESSION_ITEMS = [
   },
 ];
 
+export const CONFIGURE_CENTRES = [
+  {
+    centreName: "Ghaziabad-I",
+    centreId: "1001",
+    bigSmallCentre: "Big Centre",
+    createdOn: "10/10/2010",
+    status: true,
+  },
+  {
+    centreName: "Ghaziabad-II",
+    centreId: "1002",
+    bigSmallCentre: "Small Centre",
+    createdOn: "10/10/2010",
+    status: true,
+  },
+  {
+    centreName: "Meerut-I",
+    centreId: "1003",
+    bigSmallCentre: "Big Centre",
+    createdOn: "10/10/2010",
+    status: true,
+  },
+  {
+    centreName: "Meerut-II",
+    centreId: "1004",
+    bigSmallCentre: "Big Centre",
+    createdOn: "10/10/2010",
+    status: true,
+  },
+  {
+    centreName: "Delhi-I",
+    centreId: "1005",
+    bigSmallCentre: "Big Centre",
+    createdOn: "10/10/2010",
+    status: true,
+  },
+  {
+    centreName: "Delhi-II",
+    centreId: "1006",
+    bigSmallCentre: "Small Centre",
+    createdOn: "10/10/2010",
+    status: true,
+  },
+  {
+    centreName: "Ahmedabad-I",
+    centreId: "1007",
+    bigSmallCentre: "Small Centre",
+    createdOn: "10/10/2012",
+    status: true,
+  },
+  {
+    centreName: "Ahmedabad-II",
+    centreId: "1008",
+    bigSmallCentre: "Big Centre",
+    createdOn: "10/10/2010",
+    status: true,
+  },
+  {
+    centreName: "Akola-I",
+    centreId: "1009",
+    bigSmallCentre: "Small Centre",
+    createdOn: "10/10/2013",
+    status: true,
+  },
+  {
+    centreName: "Akola-II",
+    centreId: "1010",
+    bigSmallCentre: "Small Centre",
+    createdOn: "10/10/2010",
+    status: true,
+  },
+  {
+    centreName: "Akola-III",
+    centreId: "1011",
+    bigSmallCentre: "Small Centre",
+    createdOn: "10/10/2022",
+    status: true,
+  },
+];
+
 export const SESSION_DETAILS = {
   name: "Jadyn Bartoletti",
   session_start_date: "2023-12-19T05:11:46.000000Z",
