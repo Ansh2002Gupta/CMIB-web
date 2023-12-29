@@ -6,7 +6,6 @@ import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
 import ConfigureCentreContent from "../../containers/ConfigureCentre/ConfigureCentreContent/ConfigureCentreContent";
 import ConfigureCentreHeader from "../../containers/ConfigureCentre/ConfigureCentreHeader";
-
 import styles from "./ConfigureCentres.module.scss";
 
 const ConfigureCentres = () => {

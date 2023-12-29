@@ -3,7 +3,6 @@ import React from "react";
 import ContentHeader from "../../ContentHeader";
 import CustomButton from "../../../components/CustomButton";
 import useResponsive from "../../../core/hooks/useResponsive";
-
 import styles from "./ConfigureCentreHeader.module.scss";
 
 const ConfigureCentreHeader = ({ intl, getImage }) => {
