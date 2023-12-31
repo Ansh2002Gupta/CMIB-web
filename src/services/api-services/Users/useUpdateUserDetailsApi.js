@@ -25,22 +25,7 @@ const useUpdateUserDetailsApi = () => {
       errorWhileUpdatingUserData && setErrorWhileUpdatingUserData("");
       const formData = new FormData();
       for (let [key, value] of Object.entries(payload)) {
-        if (key?.toLowerCase() === "role") {
-          if (value.includes("all")) {
-            value = ALL_ROLE_ID;
-          } else {
-            value = value.map((item) => {
-              item = item.toLowerCase();
-              return ROLE_ID_MAPPING[`${item}`];
-            });
-            value = value?.filter((item) => item);
-          }
-          value = value.join(",");
-        }
-        // if (key === "profile_photo") {
-        //   // TODO: Not able to upload image at the moment
-        //   continue;
-        // }
+        
         formData.append(key, value);
       }
       formData.append("_method", "PATCH");

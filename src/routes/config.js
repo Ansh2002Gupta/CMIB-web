@@ -26,6 +26,7 @@ import { FORM_STATES } from "../constant/constant";
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HomeWithPublicAccess = withPublicAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
+const AuthWithPrivateAccess = withPrivateAccess(Auth);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
   HeaderContentWithFooter
 );
@@ -115,7 +116,7 @@ const config = [
   },
   {
     pagePath: USERS,
-    element: <AuthWithPublicAccess />, // Page
+    element: <AuthWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {

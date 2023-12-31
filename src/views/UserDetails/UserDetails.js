@@ -93,7 +93,7 @@ const UserDetails = ({ currentFormState }) => {
         name: userData?.name,
         email: userData?.email,
         mobile_number: userData?.mobile,
-        role: userData?.access,
+        role: userData?.access?.map((item) => item.id)?.join(","),
         is_two_factor: userData?.is_two_factor ? 1 : 0,
       };
       if (userData?.profile_photo) {
@@ -206,7 +206,7 @@ const UserDetails = ({ currentFormState }) => {
     if (userId) {
       getUserData(userId);
     }
-  }, [userId]);
+  }, [userId, currentFormState]);
 
   useEffect(() => {
     return () => {
