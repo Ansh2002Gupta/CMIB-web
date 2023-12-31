@@ -78,7 +78,6 @@ const ManageUsers = () => {
     const currentPagePerRow = +getQueryParams(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
-    console.log({ current, currentPagePerRow });
     if (!currentPage || isNaN(current)) {
       setQueryParams(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       setCurrent(1);
