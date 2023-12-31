@@ -23,6 +23,7 @@ import SearchFilter from "../../components/SearchFilter";
 import useListingUsers from "../../services/api-services/Users/useListingUsers";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useQueryParams from "../../core/hooks/useQueryParams";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useResponsive from "../../core/hooks/useResponsive";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
@@ -37,6 +38,7 @@ import styles from "./ManageUsers.module.scss";
 
 const ManageUsers = () => {
   const intl = useIntl();
+  const { renderColumn } = useRenderColumn();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
@@ -96,63 +98,38 @@ const ManageUsers = () => {
     }
   }, [areUsersFetchedSuccessfully]);
 
-  const goToUserDetailsPage = (userId) => {
-    navigate(`details/${userId}?mode=view`);
+  const goToUserDetailsPage = (userId, mode) => {
+    navigate(`details/${userId}?mode=${mode ? "edit" : "view"}`);
   };
 
   const onHandleUserStatus = (userId, currentStatus) => {
     updateUserDetails(userId, {
-      status: !currentStatus,
+      status: currentStatus ? 0 : 1,
     });
+    debounceSearch(pageSize, current, searchedValue);
   };
 
   const columns = [
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.userName2" })}
-        </p>
-      ),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.userName2" }),
       dataIndex: "name",
       key: "name",
-      sorter: (a, b) => a?.name?.localeCompare(b?.name),
-      render: (text, { id }) => (
-        <p
-          key={id}
-          className={[styles.boldText, styles.textEllipsis].join(" ")}
-        >
-          {text}
-        </p>
-      ),
-    },
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.email" })}
-        </p>
-      ),
+      sortTypeText: true,
+      sortKey: "name",
+      renderText: { isTextBold: true, visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.email" }),
       dataIndex: "email",
       key: "email",
-      render: (text, { id }) => (
-        <p key={id} className={styles.textEllipsis}>
-          {text}
-        </p>
-      ),
-    },
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.mobileNumber" })}
-        </p>
-      ),
+      renderText: { isTextBold: true, visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.mobileNumber" }),
       dataIndex: "mobile_number",
       key: "mobile_number",
-      render: (text, { id }) => (
-        <p key={id} className={styles.textEllipsis}>
-          {text}
-        </p>
-      ),
-    },
+      renderText: { isTextBold: true, visible: true },
+    }),
     {
       title: () => (
         <p className={styles.columnHeading}>
@@ -171,82 +148,49 @@ const ManageUsers = () => {
         );
       },
     },
-    {
-      title: () => {
-        return (
-          <p className={styles.columnHeading}>
-            {intl.formatMessage({ id: "label.dateCreatedOn" })}
-          </p>
-        );
-      },
+    renderColumn({
+      title: intl.formatMessage({ id: "label.dateCreatedOn" }),
       dataIndex: "created_at",
       key: "created_at",
-      render: (data, { id }) => (
-        <div key={id}> {moment(data).format("DD/MM/YYYY")}</div>
-      ),
-      sorter: (a, b) => moment(a.createdOn).unix() - moment(b.createdOn).unix(),
+      sortTypeText: true,
+      sortKey: "created_at",
+      renderText: { isTypeDate: true, visible: true },
+      sortTypeDate: true,
       sortDirection: ["ascend"],
       defaultSortOrder: "ascend",
-    },
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.status" })}
-        </p>
-      ),
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.status" }),
       dataIndex: "status",
       key: "status",
-      render: (_, data) => {
-        const { status, id } = data;
-        return (
-          <div className={styles.userStatusContainer} key={id}>
-            <Switch
-              checked={status}
-              onClick={() => onHandleUserStatus(data.id, status)}
-              className={status ? styles.switchBgColor : ""}
-            />
-            <p>
-              {status
-                ? intl.formatMessage({ id: "label.active" })
-                : intl.formatMessage({ id: "label.inactive" })}
-            </p>
-          </div>
-        );
+      renderSwitch: {
+        switchToggleHandler: (data) =>
+          onHandleUserStatus(data?.id, data?.status),
+        visible: true,
       },
-    },
-    {
-      title: "",
+    }),
+    renderColumn({
       dataIndex: "see",
       key: "see",
-      render: (_, rowData) => {
-        const { id, name } = rowData;
-        return (
-          <Image
-            src={getImage("eye")}
-            className={styles.eyeIcon}
-            onClick={goToUserDetailsPage}
-            preview={false}
-            key={id}
-          />
-        );
+      renderImage: {
+        alt: "eye",
+        onClick: (rowData) => goToUserDetailsPage(rowData?.id, false),
+        preview: false,
+        src: getImage("eye"),
+        visible: true,
       },
-    },
-    {
-      title: "",
+    }),
+    renderColumn({
       dataIndex: "edit",
       key: "edit",
-      render: (_, rowData) => {
-        const { id, name } = rowData;
-        return (
-          <Image
-            src={getImage("edit")}
-            preview={false}
-            className={styles.editIcon}
-            onClick={goToUserDetailsPage}
-          />
-        );
+      renderImage: {
+        alt: "edit",
+        onClick: (rowData) => goToUserDetailsPage(rowData?.id, true),
+        preview: false,
+        src: getImage("edit"),
+        visible: true,
       },
-    },
+    }),
   ];
 
   useEffect(() => {
@@ -302,7 +246,7 @@ const ManageUsers = () => {
                 IconElement={PlusIcon}
                 iconStyles={styles.btnIconStyles}
                 customStyle={styles.btnCustomStyles}
-                onClick={goToUserDetailsPage}
+                onClick={() => navigate(`users/add`)}
               />
             }
           />
