@@ -10,8 +10,9 @@ import CustomMultiSelect from "../../components/CustomMultiSelect";
 import {
   ADD_NEW_USER_ACCESS_OPTIONS,
   ALLOWED_MOBILE_PREFIXES,
+  allAccessIdObject,
 } from "../../constant/constant";
-import { convertStringToObjectOfStringAndId } from "../../services/Utils";
+import { convertStringArrayToObjectOfStringAndIdArray } from "../../services/Utils";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
@@ -141,14 +142,17 @@ const UserInfo = ({
             <div className={styles.spanOverAllColumns}>
               <CustomMultiSelect
                 optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
-                selectedOptions={convertStringToObjectOfStringAndId(access)}
+                selectedOptions={convertStringArrayToObjectOfStringAndIdArray(
+                  access,
+                  allAccessIdObject
+                )}
                 setSelectedOptions={(value) => updateUserData("access", value)}
               />
               {!!userAccessErrorMessage && (
                 <div>
                   {" "}
                   <Typography className={styles.errorText}>
-                   * {intl.formatMessage({ id: "label.notValidUserAccess" })}
+                    * {intl.formatMessage({ id: "label.notValidUserAccess" })}
                   </Typography>
                 </div>
               )}
