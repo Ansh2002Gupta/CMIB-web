@@ -71,8 +71,8 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (loginApiStatus === "success" && loginResponse) {
-      if (loginResponse?.is_two_factor === 1) {
+    if (loginApiStatus === "success") {
+      if (!loginResponse) {
         setCurrentActiveScreen(2);
         return;
       }
