@@ -7,7 +7,11 @@ import Base from "../../core/layouts/Base/Base";
 
 import CustomInput from "../../components/CustomInput";
 import CustomMultiSelect from "../../components/CustomMultiSelect";
-import { ADD_NEW_USER_ACCESS_OPTIONS } from "../../constant/constant";
+import {
+  ADD_NEW_USER_ACCESS_OPTIONS,
+  ALLOWED_MOBILE_PREFIXES,
+} from "../../constant/constant";
+import { convertStringToObjectOfStringAndId } from "../../services/Utils";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
@@ -49,7 +53,7 @@ const UserInfo = ({
     {
       key: "4",
       label: `${intl.formatMessage({ id: "label.access" })} *`,
-      children: access,
+      children: access?.map((item) => item)?.join(","),
     },
     {
       key: "5",
@@ -127,12 +131,7 @@ const UserInfo = ({
                 customSelectInputStyles={[styles.selectInput].join(" ")}
                 customLabelStyles={styles.label}
                 onChange={(e) => updateUserData("mobile", e.target.value)}
-                selectOptions={[
-                  {
-                    value: "91",
-                    label: "+91",
-                  },
-                ]}
+                selectOptions={ALLOWED_MOBILE_PREFIXES}
                 defaultSelectValueString="+91"
                 onSelectItem={(e) =>
                   updateUserData("mobile_prefix", e.target.value)
@@ -142,9 +141,17 @@ const UserInfo = ({
             <div className={styles.spanOverAllColumns}>
               <CustomMultiSelect
                 optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
-                selectedOptions={access}
+                selectedOptions={convertStringToObjectOfStringAndId(access)}
                 setSelectedOptions={(value) => updateUserData("access", value)}
               />
+              {!!userAccessErrorMessage && (
+                <div>
+                  {" "}
+                  <Typography className={styles.errorText}>
+                   * {intl.formatMessage({ id: "label.notValidUserAccess" })}
+                  </Typography>
+                </div>
+              )}
             </div>
             {shouldShowDatePickerOption && date && (
               <div className={styles.dateContainer}>

@@ -9,7 +9,6 @@ import { ReactComponent as UnCheckedBox } from "../../themes/base/assets/images/
 import { ReactComponent as DropdownArrow } from "../../themes/base/assets/images/arrow-down-admin.svg";
 import { ReactComponent as Cross } from "../../themes/base/assets/images/x.svg";
 import styles from "./CustomMultiSelect.module.scss";
-import { allAccessIdObject } from "../../constant/constant";
 
 const CustomMultiSelect = ({
   optionsArray,
@@ -99,7 +98,6 @@ const CustomMultiSelect = ({
       }
       if (idsObjectArray.includes(item.id)) countOfValuesContains++;
     });
-
     return countOfValuesContains === idsObjectArray?.length;
   };
 
@@ -119,33 +117,22 @@ const CustomMultiSelect = ({
   };
 
   useEffect(() => {
-    const data = [];
-    console.log("indise effect",{selectedOptions})
-    for (let i = 0; i < selectedOptions.length; i++) {
-      for (let j = 0; j < allAccessIdObject.length; j++) {
-        console.log({ v1: selectedOptions[i], v2: allAccessIdObject[j] });
-        if (
-          selectedOptions[i]?.toLowerCase() ===
-          allAccessIdObject[j].text?.toLowerCase()
-        ) {
-          data.push(allAccessIdObject[j]);
-        }
-      }
-    }
-    console.log({ data });
-    setSelectedOptions(data);
+    selectAllOption();
+    selectAllOption();
   }, []);
 
   return (
     <div className={styles.parentContainer}>
       <div className={styles.labelContainer}>
-        <Typography>Access *</Typography>
+        <Typography>{intl.formatMessage({ id: "label.access" })} *</Typography>
         <div
           onClick={() => setShowDropdown((prev) => !prev)}
           ref={elementNotToBeConsideredRef}
           className={styles.optionDropdownPlaceHolderContaier}
         >
-          <Typography>Select Modules</Typography>
+          <Typography>
+            {intl.formatMessage({ id: "label.selectModules" })}
+          </Typography>
           <DropdownArrow />
         </div>
       </div>

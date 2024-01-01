@@ -26,7 +26,6 @@ const UserDetails = ({ currentFormState }) => {
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const [active, setActive] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -37,6 +36,7 @@ const UserDetails = ({ currentFormState }) => {
     access: [],
     date: "",
     is_two_factor: false,
+    status: 0,
   });
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isMobileNumber, setIsMobileNumberValid] = useState(true);
@@ -47,7 +47,7 @@ const UserDetails = ({ currentFormState }) => {
   const {
     getUserData,
     isLoading,
-    userData: data,
+    userData: userAccountInfo,
     error: errorWhileGettingUsersData,
   } = useUserDetails();
 
@@ -55,7 +55,7 @@ const UserDetails = ({ currentFormState }) => {
     errorWhileUpdatingUserData,
     updateUserDetails,
     isLoading: isUpdatingUserData,
-    isSuccess,
+    isSuccess: isUserUpdatedSuccesfully,
     setErrorWhileUpdatingUserData,
   } = useUpdateUserDetailsApi();
 
@@ -121,11 +121,11 @@ const UserDetails = ({ currentFormState }) => {
         email: userData.email,
         mobile_number: userData.mobile,
         created_by: 1, // from where I will get this id?
-        role: userData.access,
+        role: userData.access?.map((item) => item.id)?.join(","),
         is_two_factor: userData.is_two_factor ? 1 : 0,
       };
       if (userData?.profile_photo) {
-        payload["profile_photo"] = userData.profile_photo.file;
+        payload["profile_photo"] = userData.profile_photo?.file;
       }
       addNewUser(payload);
     }
@@ -135,10 +135,6 @@ const UserDetails = ({ currentFormState }) => {
     updateUserDetails(userId, {
       status: value ? 1 : 0,
     });
-    isSuccess &&
-      setActive(() => {
-        return value;
-      });
   };
 
   const updateUserData = (key, value) => {
@@ -182,35 +178,35 @@ const UserDetails = ({ currentFormState }) => {
   ]);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isUserUpdatedSuccesfully) {
       goBackToViewDetailsPage();
     }
-  }, [isSuccess]);
+  }, [isUserUpdatedSuccesfully]);
 
   useEffect(() => {
-    !!data &&
+    userAccountInfo &&
       setUserData({
-        name: data?.name || "",
-        email: data?.email || "",
-        mobile: data?.mobile_number || "",
+        name: userAccountInfo?.name || "",
+        email: userAccountInfo?.email || "",
+        mobile: userAccountInfo?.mobile_number || "",
         mobile_prefix: "91",
-        profile_photo_url: data?.profile_photo || "",
+        profile_photo_url: userAccountInfo?.profile_photo || "",
         profile_photo: null,
-        access: data?.role?.map((item) => item?.name) || "",
-        date: data?.created_at || "",
-        is_two_factor: data?.is_two_factor ? true : false,
+        access: userAccountInfo?.role?.map((item) => item?.name) || "",
+        date: userAccountInfo?.created_at || "",
+        is_two_factor: userAccountInfo?.is_two_factor ? true : false,
+        status: userAccountInfo?.status,
       });
-  }, [data]);
+  }, [userAccountInfo]);
 
   useEffect(() => {
     if (userId) {
       getUserData(userId);
     }
-  }, [userId, currentFormState]);
+  }, [userId, currentFormState, isUserUpdatedSuccesfully]);
 
   useEffect(() => {
     return () => {
-      setActive(false);
       setIsEmailValid(true);
       setIsMobileNumberValid(true);
     };
@@ -233,14 +229,18 @@ const UserDetails = ({ currentFormState }) => {
                       <div className={styles.activeSwitchAndBtnContainer}>
                         <div className={styles.switchAndTextContainer}>
                           <Switch
-                            className={active ? styles.switchBgColor : ""}
+                            className={
+                              userData?.status ? styles.switchBgColor : ""
+                            }
                             onClick={handleOnUserStatusChange}
                             disabled={isUpdatingUserData}
-                            checked={active}
+                            checked={userData?.status}
                           />
                           <Typography className={styles.text}>
                             {intl.formatMessage({
-                              id: `label.${active ? "active" : "inactive"}`,
+                              id: `label.${
+                                userData?.status ? "active" : "inactive"
+                              }`,
                             })}
                           </Typography>
                         </div>
@@ -356,7 +356,8 @@ const UserDetails = ({ currentFormState }) => {
       />
       {currentFormState !== FORM_STATES.VIEW_ONLY &&
         !isLoading &&
-        !isUpdatingUserData && (
+        !isUpdatingUserData &&
+        !isAddingUser && (
           <ActionAndCancelButtons
             cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
             actionBtnText={intl.formatMessage({

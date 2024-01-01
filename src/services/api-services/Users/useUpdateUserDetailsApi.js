@@ -4,8 +4,6 @@ import Http from "../../http-service";
 import {
   API_STATUS,
   STATUS_CODES,
-  ROLE_ID_MAPPING,
-  ALL_ROLE_ID,
 } from "../../../constant/constant";
 import { GENERAL_ERROR_MESSAGE } from "../../../constant/errorMessage";
 import {
@@ -29,7 +27,6 @@ const useUpdateUserDetailsApi = () => {
         formData.append(key, value);
       }
       formData.append("_method", "PATCH");
-      console.log({ formData });
       const url = ADMIN_ROUTE + UPDATE_USER_END_POINT + "/" + userId;
       const res = await Http.post(url, formData);
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {

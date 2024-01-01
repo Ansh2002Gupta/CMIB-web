@@ -104,3 +104,10 @@ export const allAccessIdObject = [
   { text: "Ca-jobs", id: 2 },
   { text: "Control", id: 1 },
 ];
+
+export const ALLOWED_MOBILE_PREFIXES = [
+  {
+    value: "91",
+    label: "+91",
+  },
+];

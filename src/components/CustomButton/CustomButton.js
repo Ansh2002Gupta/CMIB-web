@@ -45,7 +45,7 @@ CustomButton.propTypes = {
   btnText: PropTypes.string,
   customStyle: PropTypes.string,
   iconStyles: PropTypes.string,
-  IconElement: PropTypes.node,
+  IconElement: PropTypes.object,
   isBtnDisable: PropTypes.bool,
   loading: PropTypes.bool,
   onClick: PropTypes.func,

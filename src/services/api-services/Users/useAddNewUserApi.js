@@ -3,9 +3,7 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import {
-  ALL_ROLE_ID,
   API_STATUS,
-  ROLE_ID_MAPPING,
   STATUS_CODES,
 } from "../../../constant/constant";
 import {
@@ -25,29 +23,13 @@ const useAddNewUserApi = () => {
   const addNewUser = async (payload) => {
     console.log({ payload });
     const formData = new FormData();
-    formData.append("profile_photo", payload.profile_photo?.file);
-    formData.append("_method", "PATCH");
-    formData.append("is_two_factor", "1");
-    formData.append("role", "1");
-    console.log({ formData: formData.entries() });
-    console.log({ getAll: formData.get("profile_photo") });
-    // let role = payload?.role ? payload.role : null;
-    // if (role?.length) {
-    //   if (role.includes("all")) {
-    //     role = ALL_ROLE_ID;
-    //   } else {
-    //     role = role.map((item) => ROLE_ID_MAPPING[item]);
-    //   }
-    //   payload = {
-    //     ...payload,
-    //     role,
-    //   };
-    // }
+    for(let [key, val] of Object.entries(payload)){
+      formData.append(key, val);
+    }
     try {
       setAddNewUserApiStatus(API_STATUS.LOADING);
       setAddNewUserData(null);
       errorWhileAddingNewUser && setErrorWhileAddingNewUser("");
-
       const url = ADMIN_ROUTE + ADD_NEW_USER_END_POINT;
       const res = await Http.post(url, formData);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
@@ -78,10 +60,10 @@ const useAddNewUserApi = () => {
     addNewUserData,
     errorWhileAddingNewUser,
     addNewUserApiStatus,
-    addNewUser,
     isError,
     isLoading,
     isSuccess,
+    addNewUser,
     setErrorWhileAddingNewUser,
   };
 };

@@ -74,6 +74,12 @@
   background-color: var(--active2) !important ;
 }
 
+.errorText {
+  color: var(--error);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+}
+
 .switchAndTextContainer {
   display: flex;
   gap: var(--gapMedium);

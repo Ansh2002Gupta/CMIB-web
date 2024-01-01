@@ -106,6 +106,7 @@ const locale = {
     "Some error occured while updating user details, please try again",
   "label.errorWhileAddingNewUser":
     "Some error occured while creating a new user, please try again!",
+  "label.selectModules": "Select Modules",
 };
 
 export default locale;
