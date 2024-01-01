@@ -21,7 +21,6 @@ const useAddNewUserApi = () => {
   const [errorWhileAddingNewUser, setErrorWhileAddingNewUser] = useState("");
 
   const addNewUser = async (payload) => {
-    console.log({ payload });
     const formData = new FormData();
     for(let [key, val] of Object.entries(payload)){
       formData.append(key, val);
