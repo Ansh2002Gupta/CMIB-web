@@ -203,7 +203,9 @@ const LoginForm = () => {
               setCurrentActiveScreen,
               isCheckingOTP,
             }}
-            onSubmit={(otp) => handleCheckOTP({ otp })}
+            onSubmit={(otp) =>
+              handleCheckOTP({ email: formInputs.userName, otp })
+            }
           />
         )}
       </div>

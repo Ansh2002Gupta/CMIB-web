@@ -5,12 +5,12 @@ import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 import {
   ADMIN_ROUTE,
-  FORGOT_PASSWORD_END_POINT,
+  VERIFY_OTP,
 } from "../../../constant/apiEndpoints";
 
 const useCheckOTP = () => {
   const [otpAPIStatus, setOtpAPIStatus] = useState(API_STATUS.IDLE);
-  const [checkOTPData, setCheckOTPData] = useState([]);
+  const [checkOTPData, setCheckOTPData] = useState(null);
   const [errorWhileVerifyingOTP, setErrorWhileVeryingOTP] = useState("");
   const intl = useIntl();
 
@@ -18,7 +18,7 @@ const useCheckOTP = () => {
     try {
       setOtpAPIStatus(API_STATUS.LOADING);
       errorWhileVerifyingOTP && setErrorWhileVeryingOTP("");
-      const url = ADMIN_ROUTE + FORGOT_PASSWORD_END_POINT;
+      const url = ADMIN_ROUTE + VERIFY_OTP;
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setOtpAPIStatus(API_STATUS.SUCCESS);
