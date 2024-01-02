@@ -1,6 +1,7 @@
 import Auth from "../pages/Auth";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
+import ConfigureCentreView from "../views/ConfigureCentreView";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
@@ -128,11 +129,15 @@ const config = [
   },
   {
     pagePath: CONFIGURE_CENTRES,
-    element: <HomeWithPublicAccess noOuterPadding />,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
         element: <ConfigureCentres />,
+      },
+      {
+        viewPath: "add",
+        element: <ConfigureCentreView />,
       },
     ],
   },

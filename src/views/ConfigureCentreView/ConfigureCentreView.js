@@ -7,21 +7,23 @@ import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 import ConfigureCentreContent from "../../containers/ConfigureCentre/ConfigureCentreContent/ConfigureCentreContent";
 import ConfigureCentreHeader from "../../containers/ConfigureCentre/ConfigureCentreHeader";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import styles from "./ConfigureCentres.module.scss";
+import styles from "./ConfigureCentreView.module.scss";
+import ContentHeader from "../../containers/ContentHeader";
 
-const ConfigureCentres = () => {
+const ConfigureCentreView = () => {
   const intl = useIntl();
-  const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
+  const { navigateScreen: navigate } = useNavigateScreen();
 
   return (
     <TwoRow
       isBottomFillSpace
       className={styles.baseLayout}
-      topSection={<ConfigureCentreHeader intl={intl} getImage={getImage} navigate={navigate} headingLabel="configureCentres"/>}
-      bottomSection={<ConfigureCentreContent intl={intl} getImage={getImage} navigate={navigate} />}
+      topSection={<ConfigureCentreHeader intl={intl} headingLabel="addNewCentre" />}
+      bottomSection={<></>
+      }
     />
   );
 };
 
-export default ConfigureCentres;
+export default ConfigureCentreView;

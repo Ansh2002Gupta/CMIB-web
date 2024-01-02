@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Image, Input } from "antd";
 
 import DataTable from "../../../components/DataTable";
-import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { CONFIGURE_CENTRES } from "../../../dummyData";
 import styles from "./ConfigureCentreContent.module.scss";
 
-const ConfigureCentreContent = ({ intl, getImage }) => {
+const ConfigureCentreContent = ({ intl, getImage, navigate }) => {
   const { renderColumn } = useRenderColumn();
-  const { navigateScreen: navigate } = useNavigateScreen();
 
   const [searchedValue, setSearchedValue] = useState("");
   const [currentTableData, setCurrentTableData] = useState(CONFIGURE_CENTRES);

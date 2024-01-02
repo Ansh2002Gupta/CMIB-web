@@ -5,22 +5,23 @@ import CustomButton from "../../../components/CustomButton";
 import useResponsive from "../../../core/hooks/useResponsive";
 import styles from "./ConfigureCentreHeader.module.scss";
 
-const ConfigureCentreHeader = ({ intl, getImage }) => {
+const ConfigureCentreHeader = ({ intl, getImage, navigate, headingLabel }) => {
   const responsive = useResponsive();
 
   return (
     <div className={styles.headerContainer}>
       <ContentHeader
-        headerText={intl.formatMessage({ id: "label.configureCentres" })}
+        headerText={intl.formatMessage({ id: `label.${headingLabel}` })}
         customStyles={styles.headerResponsiveStyle}
         rightSection={
-          <CustomButton
+          !!getImage && <CustomButton
             btnText={intl.formatMessage({
               id: `label.${responsive.isMd ? "addNewCentre" : "newCentre"}`,
             })}
             iconUrl={getImage("plusIcon")}
             iconStyles={styles.btnIconStyles}
             customStyle={styles.btnCustomStyles}
+            onClick={()=>{navigate('add')}}
           />
         }
       />
