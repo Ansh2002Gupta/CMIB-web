@@ -23,10 +23,12 @@ const useLogin = () => {
       const url = ADMIN_ROUTE + LOGIN_END_POINT;
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
+        if (res?.data) {
+          const auth = res.data.access_token;
+          setItem("authToken", auth);
+          setData(res.data);
+        }
         setLoginApiStatus(API_STATUS.SUCCESS);
-        const auth = res.data.access_token;
-        setItem("authToken", auth);
-        setData(res.data);
         return;
       }
       setLoginApiStatus(API_STATUS.ERROR);

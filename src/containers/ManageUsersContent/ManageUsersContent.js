@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useMemo, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
 import { Alert, Button, Image, Input, Spin, Typography, message } from "antd";
@@ -9,7 +10,6 @@ import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
 import useListingUsers from "../../services/api-services/Users/useListingUsers";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import useQueryParams from "../../core/hooks/useQueryParams";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
@@ -27,15 +27,13 @@ const ManageUsersContent = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
   const [messageApi, contextHolder] = message.useMessage();
-
-  const { setQueryParams, getQueryParams, removeQueryParams } =
-    useQueryParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [current, setCurrent] = useState(
-    +getQueryParams(PAGINATION_PROPERTIES.CURRENT_PAGE) || 1
+    +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE) || 1
   );
   const [pageSize, setPageSize] = useState(
-    +getQueryParams(PAGINATION_PROPERTIES.ROW_PER_PAGE) || PAGE_SIZE
+    +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE) || PAGE_SIZE
   );
 
   const [showFilters, setShowFilters] = useState(false);
@@ -61,19 +59,25 @@ const ManageUsersContent = () => {
   let doNotCallOnMount = useRef(false);
 
   useEffect(() => {
-    const currentPage = +getQueryParams(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +getQueryParams(
+    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
+    const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
     if (!currentPage || isNaN(current)) {
-      setQueryParams(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+        return prev;
+      });
       setCurrent(1);
     }
     if (
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
     ) {
-      setQueryParams(PAGINATION_PROPERTIES.ROW_PER_PAGE, PAGE_SIZE);
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], PAGE_SIZE);
+        return prev;
+      });
       setPageSize(PAGE_SIZE);
     }
   }, []);
@@ -199,8 +203,11 @@ const ManageUsersContent = () => {
 
   useEffect(() => {
     if (doNotCallOnMount.current) {
-      setQueryParams(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
-      setQueryParams(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], current);
+        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], pageSize);
+        return prev;
+      });
       fetchUsers(pageSize, current, searchedValue);
     }
     doNotCallOnMount.current = true;
@@ -209,12 +216,6 @@ const ManageUsersContent = () => {
   useEffect(() => {
     debounceSearch(pageSize, current, searchedValue);
   }, [searchedValue]);
-
-  useEffect(() => {
-    return () => {
-      removeQueryParams();
-    };
-  }, []);
 
   return (
     <>

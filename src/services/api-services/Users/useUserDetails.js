@@ -17,17 +17,22 @@ const useUserDetails = () => {
     setIsLoading(true);
     try {
       const url = ADMIN_ROUTE + GET_USER_END_POINT + "/" + userId;
-      const res = await Http.get(url);
+      const apiOptions = {
+        headers: {
+          Accept: "application/json",
+        },
+      };
+      const res = await Http.get(url, apiOptions);
+      setIsLoading(false);
       if (res?.error) {
         setError(res.message);
         return;
       }
-      setIsLoading(false);
       setUsersData(res?.data);
     } catch (err) {
       setIsLoading(false);
-      if (err?.message) {
-        setError(err?.message);
+      if (err?.response?.data?.message) {
+        setError(err?.response?.data?.message);
         return;
       }
       setError(GENERAL_ERROR_MESSAGE);

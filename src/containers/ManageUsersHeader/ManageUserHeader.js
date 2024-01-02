@@ -26,7 +26,7 @@ const ManageUserHeader = () => {
             IconElement={PlusIcon}
             iconStyles={styles.btnIconStyles}
             customStyle={styles.btnCustomStyles}
-            onClick={() => navigate(`users/add`)}
+            onClick={() => navigate(`add`)}
           />
         }
       />

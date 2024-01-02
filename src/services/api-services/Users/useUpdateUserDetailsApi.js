@@ -19,7 +19,7 @@ const useUpdateUserDetailsApi = () => {
   const [errorWhileUpdatingUserData, setErrorWhileUpdatingUserData] =
     useState("");
 
-  const updateUserDetails = async (userId, payload) => {
+  const updateUserDetails = async (userId, payload, onSuccessCallback) => {
     try {
       setApiStatus(API_STATUS.LOADING);
       errorWhileUpdatingUserData && setErrorWhileUpdatingUserData("");
@@ -48,11 +48,13 @@ const useUpdateUserDetailsApi = () => {
       };
       const res = await Http.post(url, formData, apiOptions);
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
-        setApiStatus(API_STATUS.SUCCESS);
         setUserDetails(res?.data);
+        onSuccessCallback && onSuccessCallback();
+        setApiStatus(API_STATUS.SUCCESS);
         return;
       }
       setApiStatus(API_STATUS.ERROR);
+      setErrorWhileUpdatingUserData(GENERAL_ERROR_MESSAGE);
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);
       if (err?.response?.data?.message) {

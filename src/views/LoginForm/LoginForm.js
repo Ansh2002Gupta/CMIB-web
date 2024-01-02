@@ -14,7 +14,6 @@ import useCheckOTP from "../../services/api-services/Otp/useCheckOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";
-import { ADMIN_ROUTE, CHECK_OTP_END_POINT } from "../../constant/apiEndpoints";
 import styles from "./loginForm.module.scss";
 
 const LoginForm = () => {
@@ -67,8 +66,8 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (loginApiStatus === "success" && loginResponse) {
-      if (loginResponse?.is_two_factor === 1) {
+    if (loginApiStatus === "success") {
+      if (!loginResponse) {
         setCurrentActiveScreen(2);
         return;
       }
@@ -204,11 +203,10 @@ const LoginForm = () => {
               handleAuthOTP({ email: formInputs?.userName });
             }}
             onSubmit={(otp) =>
-              handleCheckOTP({
-                onSuccess: () => navigate(DASHBOARD),
-                payload: { otp },
-                url: ADMIN_ROUTE + CHECK_OTP_END_POINT,
-              })
+              handleCheckOTP(
+                { email: formInputs.userName, otp, two_factor_check: 1 },
+                () => navigate(DASHBOARD)
+              )
             }
           />
         )}

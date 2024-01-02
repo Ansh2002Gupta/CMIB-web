@@ -112,7 +112,7 @@ const config = [
   },
   {
     pagePath: USERS,
-    element: <AuthWithPrivateAccess />, // Page
+    element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {
