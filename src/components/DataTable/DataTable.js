@@ -4,10 +4,7 @@ import PropTypes from "prop-types";
 import { Pagination, Select, Table, Typography } from "antd";
 
 import PaginationItems from "./PaginationItems";
-import {
-  PAGE_SIZE,
-  ROW_PER_PAGE_OPTIONS,
-} from "../../constant/constant";
+import { ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
 import "./override.css";
 
@@ -94,6 +91,8 @@ DataTable.defaultProps = {
   searchedValue: "",
   setCurrentTableData: () => {},
   paginationApi: () => {},
+  pageSize: 0,
+  current: 1,
 };
 
 DataTable.propTypes = {
@@ -103,6 +102,8 @@ DataTable.propTypes = {
   originalData: PropTypes.array,
   searchedValue: PropTypes.string,
   paginationApi: PropTypes.func,
+  pageSize: PropTypes.number,
+  current: PropTypes.number,
 };
 
 export default DataTable;

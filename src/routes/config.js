@@ -141,7 +141,7 @@ const config = [
   },
   {
     pagePath: CONFIGURE_CENTRES,
-    element: <HomeWithPublicAccess noOuterPadding />,
+    element: <HomeWithPrivateAccess noOuterPadding />,
     views: [
       {
         viewPath: "",
