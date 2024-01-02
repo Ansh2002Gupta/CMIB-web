@@ -15,7 +15,7 @@ const useListingUsers = () => {
   );
   const [metaData, setMetaData] = useState(null);
 
-  const fetchUsers = async (pageSize, currentPage, searchQuery) => {
+  const fetchUsers = async (pageSize, currentPage, searchQuery, onSuccessCallback) => {
     setIsFetchingUsers(true);
     setErrorWhileFetchingUsers("");
     setUsersFetchingAPIStatus(API_STATUS.LOADING);
@@ -42,6 +42,7 @@ const useListingUsers = () => {
       setUsersList(res?.data?.records);
       setMetaData(meta);
       setUsersFetchingAPIStatus(API_STATUS.SUCCESS);
+      onSuccessCallback && onSuccessCallback();
     } catch (err) {
       setUsersFetchingAPIStatus(API_STATUS.ERROR);
       setIsFetchingUsers(false);

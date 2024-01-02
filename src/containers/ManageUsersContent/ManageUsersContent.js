@@ -83,10 +83,10 @@ const ManageUsersContent = () => {
   }, []);
 
   useEffect(() => {
-    if (areUsersFetchedSuccessfully) {
+    if (metaData?.total) {
       setCurrentDataLength(+metaData?.total);
     }
-  }, [areUsersFetchedSuccessfully]);
+  }, [metaData]);
 
   const goToUserDetailsPage = (userId, mode) => {
     navigate(`details/${userId}?mode=${mode ? "edit" : "view"}`);
