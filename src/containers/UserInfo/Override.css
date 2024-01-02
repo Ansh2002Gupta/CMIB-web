@@ -8,13 +8,16 @@
 .UserInfo_input__GyT0y.ant-picker-disabled {
   background-color: #fff;
   font-weight: 500 !important;
-  color: rgba(97, 108, 130, 0.40) !important;
+  color: rgba(97, 108, 130, 0.4) !important;
 }
 
 .ant-select-selector {
-  /* min-height: 48px !important; */
   min-width: 100%;
   border: 0;
+}
+
+.ant-select-customize-input.ant-select-selector {
+  min-height: 48px !important;
 }
 
 .ant-descriptions-item-label {
@@ -25,4 +28,8 @@
 
 .ant-descriptions-item-content {
   font-weight: 500 !important;
+}
+
+.ant-descriptions .ant-descriptions-view table {
+  table-layout: auto;
 }

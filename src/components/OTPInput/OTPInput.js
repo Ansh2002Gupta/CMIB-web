@@ -51,6 +51,8 @@ const OTPInput = ({
   };
 
   const sendOTP = () => {
+    setErrorWhileSendingOTP("");
+    setErrorWhileVeryingOTP("");
     setIsSendAgainBtnActive(false);
     if (noOfTimesOTPCanBeSend === 1) {
       setShowCountdown(2);
@@ -62,6 +64,8 @@ const OTPInput = ({
   };
 
   useEffect(() => {
+    setErrorWhileSendingOTP("");
+    setErrorWhileVeryingOTP("");
     const areAllFieldsFilled =
       otpValues.filter((item) => item === "").length === 0;
     if (areAllFieldsFilled) {
@@ -69,8 +73,6 @@ const OTPInput = ({
       return;
     }
     setIsAllowedToSubmit(false);
-    setErrorWhileSendingOTP("");
-    setErrorWhileVeryingOTP("");
   }, [otpValues]);
 
   useEffect(() => {

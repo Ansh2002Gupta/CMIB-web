@@ -9,7 +9,9 @@ axios.interceptors.request.use(
     // *** Just an example *** //
     const token = getItem("authToken");
     if (token) {
+      const alreadyPresentHeaders = config.headers;
       config.headers = {
+        ...alreadyPresentHeaders,
         Authorization: `Bearer ${token}`,
       };
     }
