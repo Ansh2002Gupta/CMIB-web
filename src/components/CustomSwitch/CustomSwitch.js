@@ -60,7 +60,7 @@ const CustomSwitch = ({ checked, customStyle, disabled, label, onChange }) => {
 
 CustomSwitch.defaultProps = {
   checked: false,
-  customStyle: {},
+  customStyle: "",
   disabled: false,
   label: "",
   onChange: () => {},
@@ -68,7 +68,7 @@ CustomSwitch.defaultProps = {
 
 CustomSwitch.propTypes = {
   checked: PropTypes.bool,
-  customStyle: PropTypes.object,
+  customStyle: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,

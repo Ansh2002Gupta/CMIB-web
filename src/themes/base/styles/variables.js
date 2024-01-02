@@ -75,11 +75,15 @@ const variables = {
   sidemenuWidth: "74px",
   fullWidth: "100%",
   smallWidth: "30px",
+  width_350: "350px",
+  width_24: "24px",
 
   // Heights
   btnHeight: "56px",
   minBtnHeight: "45px",
   smallHeight: "30px",
+  height_240: "240px",
+  height_24: "24px",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,

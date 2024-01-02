@@ -5,8 +5,8 @@ import { ThemeContext } from "core/providers/theme";
 import { TwoRow } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 
-import CustomButton from "../../components/CustomButton";
 import ContentHeader from "../../containers/ContentHeader";
+import CustomButton from "../../components/CustomButton";
 import CustomTabs from "../../components/CustomTabs";
 import SessionDetails from "../../containers/SessionDetails";
 import SessionRound from "../SessionRound";

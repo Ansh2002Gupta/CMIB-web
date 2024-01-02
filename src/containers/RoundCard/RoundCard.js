@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { ThemeContext } from "core/providers/theme";
+import { Image, Typography } from "antd";
 
 import { ThreeRow } from "../../core/layouts";
-import { Image, Typography } from "antd";
 import useResponsive from "core/hooks/useResponsive";
 
-import styles from "./RoundCard.module.scss";
 import { classes } from "./RoundCard.styles";
+import styles from "./RoundCard.module.scss";
 
 const RoundCard = ({ headingDescription, headingIntl, imageUrl }) => {
   const { getImage } = useContext(ThemeContext);
@@ -37,6 +38,18 @@ const RoundCard = ({ headingDescription, headingIntl, imageUrl }) => {
       }
     />
   );
+};
+
+RoundCard.defaultProps = {
+  headingDescription: "",
+  headingIntl: "",
+  imageUrl: "",
+};
+
+RoundCard.propTypes = {
+  headingDescription: PropTypes.string,
+  headingIntl: PropTypes.string,
+  imageUrl: PropTypes.string,
 };
 
 export default RoundCard;
