@@ -6,6 +6,7 @@ import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
+import QueriesListing from "../views/QueriesListing";
 import Session from "../views/Session";
 import ManageUsers from "../views/ManageUsers";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
@@ -21,6 +22,7 @@ import {
   ROOT,
   CONFIGURE_CENTRES,
   SESSION,
+  QUERIES,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -133,6 +135,16 @@ const config = [
       {
         viewPath: "",
         element: <ConfigureCentres />,
+      },
+    ],
+  },
+  {
+    pagePath: QUERIES,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: "",
+        element: <QueriesListing />,
       },
     ],
   },
