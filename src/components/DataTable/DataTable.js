@@ -4,54 +4,24 @@ import PropTypes from "prop-types";
 import { Pagination, Select, Table, Typography } from "antd";
 
 import PaginationItems from "./PaginationItems";
-import useQueryParams from "../../core/hooks/useQueryParams";
-import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
+import { ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
-import "./Override.css";
+import "./override.css";
 
 const DataTable = ({
   columns,
-  columnsToBeSearchFrom,
+  current,
   currentDataLength,
-  currentTableData,
   customContainerStyles,
   originalData,
+  pageSize,
   searchedValue,
-  setCurrentDataLength,
-  setCurrentTableData,
+  setCurrent,
+  setPageSize,
 }) => {
   const intl = useIntl();
 
-  const [pageSize, setPageSize] = useState(PAGE_SIZE);
-
-  const { setQueryParams, getQueryParams, removeQueryParams } =
-    useQueryParams();
-  const [current, setCurrent] = useState(
-    Number(getQueryParams("current-page")) || 1
-  );
-
-  useEffect(() => {
-    const updatedData = originalData?.filter((item) => {
-      let isPresent = false;
-      for (const [key, value] of Object.entries(item)) {
-        if (
-          columnsToBeSearchFrom.includes(key) &&
-          value.toLowerCase().includes(searchedValue.toLowerCase())
-        ) {
-          isPresent = true;
-        }
-      }
-      return isPresent;
-    });
-    setCurrentTableData(updatedData);
-    searchedValue && setCurrent(1);
-    searchedValue && setQueryParams("current-page", 1);
-    if (!searchedValue?.trim()?.length) {
-      setCurrentDataLength(originalData.length);
-    } else {
-      setCurrentDataLength(updatedData.length);
-    }
-  }, [searchedValue]);
+  const [currentTableData, setCurrentTableData] = useState(originalData);
 
   const handleOnChangePageSize = (size) => {
     setPageSize(Number(size));
@@ -59,30 +29,22 @@ const DataTable = ({
   };
 
   useEffect(() => {
-    const startIndex = (current - 1) * pageSize;
-    const endIndex = current * pageSize;
-    const updatedData = originalData.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
-  }, [current, pageSize]);
+    setCurrentTableData(originalData);
+  }, [originalData]);
+
+  useEffect(() => {
+    searchedValue && setCurrent(1);
+  }, [searchedValue]);
 
   const rightPaginationConfig = {
     current,
     pageSize,
     total: currentDataLength,
     onChange: (page) => {
-      setQueryParams("current-page", page);
       setCurrent(page);
     },
     showSizeChanger: false,
   };
-
-  useEffect(() => {
-    return () => {
-      setCurrent(1);
-      setPageSize(PAGE_SIZE);
-      removeQueryParams();
-    };
-  }, []);
 
   return (
     <div className={customContainerStyles}>
@@ -93,6 +55,7 @@ const DataTable = ({
         rowClassName={styles.rowtext}
         scroll={{ x: "max-content" }}
         className={styles.table}
+        rowKey="id"
       />
       <div className={styles.rowPerPageOptionsAndPaginationContainer}>
         <div className={styles.rowPerPageContainer}>
@@ -100,7 +63,7 @@ const DataTable = ({
             {intl.formatMessage({ id: "label.rowPerPage" })}
           </Typography>
           <Select
-            defaultValue={"10"}
+            defaultValue={pageSize}
             className={styles.rowPerPageCount}
             onChange={handleOnChangePageSize}
             options={ROW_PER_PAGE_OPTIONS}
@@ -121,26 +84,30 @@ const DataTable = ({
 
 DataTable.defaultProps = {
   columns: [],
-  columnsToBeSearchFrom: [],
+  current: 1,
   currentDataLength: 0,
-  currentTableData: [],
   customContainerStyles: "",
+  currentTableData: [],
   originalData: [],
   searchedValue: "",
-  setCurrentDataLength: () => {},
   setCurrentTableData: () => {},
+  pageSize: 10,
+  setCurrent: () => {},
+  setPageSize: () => {},
 };
 
 DataTable.propTypes = {
   columns: PropTypes.array,
-  columnsToBeSearchFrom: PropTypes.array,
+  current: PropTypes.number,
   currentDataLength: PropTypes.number,
-  currentTableData: PropTypes.array,
   customContainerStyles: PropTypes.string,
+  currentTableData: PropTypes.array,
   originalData: PropTypes.array,
   searchedValue: PropTypes.string,
-  setCurrentDataLength: PropTypes.func,
   setCurrentTableData: PropTypes.func,
+  pageSize: PropTypes.number,
+  setCurrent: PropTypes.func,
+  setPageSize: PropTypes.func,
 };
 
 export default DataTable;

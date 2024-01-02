@@ -52,3 +52,5 @@ export const PAGINATION_PROPERTIES = {
 };
 
 export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
+
+export const VALID_CONTACT_US_TABS_ID = [1, 2];
