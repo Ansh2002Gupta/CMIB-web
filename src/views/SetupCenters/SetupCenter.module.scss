@@ -20,3 +20,9 @@
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
 }
+
+.tableContainer {
+  margin: var(--gapMedium);
+  border: var(--borderLight);
+  border-radius: var(--gapMedium);
+}

@@ -120,6 +120,7 @@ const locale = {
   "label.configureCentres": "Configure Centres",
   "label.addNewCentre": "Add New Centre",
   "label.newCentre": "New Centre",
+  "label.actions": "Actions",
 };
 
 export default locale;
