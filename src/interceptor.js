@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_VERSION_NUMBER } from "./constant/apiEndpoints";
+import { getItem } from "./services/encrypted-storage-service";
 // import { StorageService } from './services'
 
 // Add a request interceptor
@@ -7,14 +8,15 @@ axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     // *** Just an example *** //
-    // const token = StorageService.get('auth')
-    // if (token && token.access_token) {
-    //   config.headers = {
-    //     Authorization: `Bearer ${token.access_token}`
-    //   }
-    // }
+    const token = getItem("authToken");
+    if (token) {
+      const alreadyPresentHeaders = config.headers;
+      config.headers = {
+        ...alreadyPresentHeaders,
+        Authorization: `Bearer ${token}`,
+      };
+    }
     // ****** //
-    config.headers["Content-Type"] = "application/json";
     config.headers["api-version"] = API_VERSION_NUMBER;
     return config;
   },

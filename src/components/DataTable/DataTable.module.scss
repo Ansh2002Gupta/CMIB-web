@@ -35,7 +35,7 @@
 }
 
 .table {
-  min-height: 50vh;
+  min-height: min(50vh, 300px);
 }
 
 .nextAndPrevText {
@@ -67,18 +67,6 @@
 .paginationContainer {
   display: flex;
   align-items: center;
-}
-
-// TODO: override the color of the sorting arrows based on active and non-active state
-.ant-table-column-sorter-up,
-.ant-table-column-sorter-down {
-  color: red; /* Light gray for non-active arrows */
-}
-
-/* Active sorting arrow styles */
-.ant-table-column-sorter-up.active .ant-table-column-sorter-up-inner,
-.ant-table-column-sorter-down.active .ant-table-column-sorter-down-inner {
-  color: #1890ff; /* Blue for active arrows */
 }
 
 @media (max-width: 1023px) {

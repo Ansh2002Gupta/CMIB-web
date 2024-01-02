@@ -45,3 +45,10 @@ export const SESSION_PERIOD = [
   { id: 111, label: "May 2020", value: "May 2020" },
   { id: 112, label: "November 2020", value: "November 2020" },
 ];
+
+export const PAGINATION_PROPERTIES = {
+  CURRENT_PAGE: "current-page",
+  ROW_PER_PAGE: "row-per-page",
+};
+
+export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];

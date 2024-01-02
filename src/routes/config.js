@@ -22,7 +22,7 @@ import {
   ROOT,
   CONFIGURE_CENTRES,
   SESSION,
-  QUERIES,
+  QUERIES_AND_TICKETS,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -139,7 +139,7 @@ const config = [
     ],
   },
   {
-    pagePath: QUERIES,
+    pagePath: QUERIES_AND_TICKETS,
     element: <HomeWithPrivateAccess noOuterPadding />,
     views: [
       {

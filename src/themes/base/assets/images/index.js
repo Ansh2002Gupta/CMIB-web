@@ -12,6 +12,7 @@ import Logo from "./Logo.svg"; // Capitalized Logo comes after lowercase imports
 import logo from "./logo.png"; // File extensions are also considered in sorting
 import plusIcon from "./plus icon.svg";
 import publicFooter from "./Public footer.svg";
+import rightIcon from "./check icon.svg";
 import searchIcon from "./search icon.svg";
 import seventyFive from "./75.svg"; // Numerical imports come before alphabetical
 import someFiltersAreSelected from "./some filters are selected.svg";
@@ -36,6 +37,7 @@ const images = {
   Logo,
   plusIcon,
   publicFooter,
+  rightIcon,
   searchIcon,
   seventyFive,
   someFiltersAreSelected,

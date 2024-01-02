@@ -117,6 +117,13 @@ const locale = {
   "label.configureCentres": "Configure Centres",
   "label.addNewCentre": "Add New Centre",
   "label.newCentre": "New Centre",
+  "label.queriesId": "Query ID",
+  "label.studentOrCompany": "Student/Company Name",
+  "label.nonRegisteredStudentOrCompany": "Non-Registered Student/Company",
+  "label.mobile": "Mobile",
+  "label.queryType": "Query Type",
+  "label.createdOn": "Created On",
+  "label.tryAgain": "Try again!",
 };
 
 export default locale;
