@@ -113,7 +113,7 @@ const SearchFilter = ({
                             {item.name}
                           </Typography>
                         </div>
-                        {item?.options && (
+                        {item?.options?.length && (
                           <div className={styles.filterRightArrow}>
                             <Image
                               src={getImage("arrowRightFilter")}

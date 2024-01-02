@@ -110,12 +110,11 @@ const config = [
   },
   {
     pagePath: COMPANIES,
-    element: <HomeWithPublicAccess noOuterPadding />, // Page
+    element: <HomeWithPublicAccess noOuterPadding />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <Companies />, // view
+        element: <Companies />,
       },
     ],
   },

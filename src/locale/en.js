@@ -117,7 +117,7 @@ const locale = {
   "label.generatePaymentMis": "Generate Payment MIS",
   "label.manageCompanyDetails": "Manage company details",
   "label.phoneNumber": "Phone Number",
-  "label.searchByComapnyName": "Search by company name",
+  "label.searchByComapanyName": "Search by company name",
   "label.centreName": "Centre Name",
   "label.centreId": "Centre Id",
   "label.bigSmallCentre": "Big/Small Centre",
