@@ -5,8 +5,9 @@ export const classes = {
   leftSectionStyle: { flex: 1 },
   rightSectionStyle: { flex: 2 },
   bottomSectionStyle: {
-    // flexWrap: "wrap",
-    // maxWidth: "70vw",
+    gap: variables.gapMedium,
+  },
+  mobileBottomSectionStyle: {
     gap: variables.gapMedium,
   },
 };

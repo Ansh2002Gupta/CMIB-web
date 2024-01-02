@@ -1,5 +1,6 @@
 import variables from "../../themes/base/styles/variables";
 
 export const classes = {
-  mainContainerStyle: { height: "240px" },
+  mainContainerStyle: { maxWidth: "350px", height: "240px" },
+  mobileContainerStyle: { height: "240px" },
 };

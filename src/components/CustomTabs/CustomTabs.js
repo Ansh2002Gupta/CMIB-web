@@ -25,10 +25,16 @@ const CustomTabs = ({ activeTab, setActiveTab, tabs }) => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const tabQueryParam = queryParams.get("tab");
-    if (tabQueryParam) {
+    if (tabs.some((tab) => tab.key === tabQueryParam)) {
       setActiveTab(tabQueryParam);
+    } else {
+      setActiveTab(tabs[0].key);
+      navigate({
+        pathname: location.pathname,
+        search: `?tab=${tabs[0].key}`,
+      });
     }
-  }, [location.search]);
+  }, [location.search, tabs, navigate, setActiveTab]);
 
   return (
     <div className={styles["tab-container"]}>

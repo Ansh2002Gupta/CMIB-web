@@ -1,5 +1,6 @@
 .mainContainer {
   gap: var(--gapMedium);
+  width: 50vw;
 }
 
 .cityContainer {
@@ -28,4 +29,8 @@
 
 .gridClass {
   gap: var(--gapMedium);
+  justify-content: center;
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
 }

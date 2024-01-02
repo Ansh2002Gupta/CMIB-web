@@ -4,9 +4,9 @@ import { useIntl } from "react-intl";
 import { Select, Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
+import useResponsive from "../../core/hooks/useResponsive";
 import CustomSwitch from "../../components/CustomSwitch";
 import { CITY_CENTERS } from "../../constant/constant";
-import CustomGrid from "../../components/CustomGrid";
 import RoundCard from "../../containers/RoundCard";
 
 import styles from "./SessionRound.module.scss";
@@ -14,6 +14,7 @@ import { classes } from "./SessionRound.styles";
 
 const SessionRound = ({ roundList, switchLabel }) => {
   const intl = useIntl();
+  const responsive = useResponsive();
 
   const [status, setStatus] = useState(false);
   const [city, setCity] = useState([]);
@@ -67,7 +68,7 @@ const SessionRound = ({ roundList, switchLabel }) => {
         />
       }
       bottomSection={
-        <CustomGrid customStyle={styles.gridClass}>
+        <div className={styles.gridClass}>
           {roundList.map((item) => {
             return (
               <RoundCard
@@ -78,9 +79,13 @@ const SessionRound = ({ roundList, switchLabel }) => {
               />
             );
           })}
-        </CustomGrid>
+        </div>
       }
-      bottomSectionStyle={classes.bottomSectionStyle}
+      bottomSectionStyle={
+        responsive?.isXl
+          ? classes.bottomSectionStyle
+          : classes.mobileBottomSectionStyle
+      }
     />
   );
 };
