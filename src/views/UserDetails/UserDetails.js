@@ -101,6 +101,20 @@ const UserDetails = () => {
     return () => {
       setIsEmailValid(true);
       setIsMobileNumberValid(true);
+      setIsAccessValid(true);
+      setIsUserNameValid(true);
+      setUserData({
+        name: "",
+        email: "",
+        mobile: "",
+        mobile_prefix: "91",
+        profile_photo: null,
+        profile_photo_url: "",
+        access: [],
+        date: "",
+        is_two_factor: false,
+        status: 0,
+      });
     };
   }, []);
 
