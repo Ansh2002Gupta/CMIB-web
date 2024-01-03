@@ -10,7 +10,6 @@ import { ThemeContext } from "core/providers/theme";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import SearchFilter from "../../components/SearchFilter";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useQueriesListingApi from "../../services/api-services/Queries/useQueriesListingApi";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
@@ -18,13 +17,15 @@ import {
   PAGE_SIZE,
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
+  VALID_CONTACT_US_TABS_ID,
 } from "../../constant/constant";
 import styles from "./QueriesListingContent.module.scss";
 
-const QueriesListingContent = ({ currentActiveTab }) => {
+const ACTIVE_TAB = "activeTab";
+
+const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
-  const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -56,7 +57,7 @@ const QueriesListingContent = ({ currentActiveTab }) => {
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
-    if (!currentPage || isNaN(current)) {
+    if (!currentPage || isNaN(currentPage)) {
       setSearchParams((prev) => {
         prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
         return prev;
@@ -76,14 +77,30 @@ const QueriesListingContent = ({ currentActiveTab }) => {
   }, []);
 
   useEffect(() => {
+    const currentTab = +searchParams.get(ACTIVE_TAB);
+    if (
+      !currentTab ||
+      isNaN(currentTab) ||
+      !VALID_CONTACT_US_TABS_ID.includes(currentTab)
+    ) {
+      setSearchParams((prev) => {
+        prev.set(ACTIVE_TAB, 1);
+        return prev;
+      });
+    } else {
+      setSearchParams((prev) => {
+        prev.set(ACTIVE_TAB, currentActiveTab);
+        return prev;
+      });
+      setCurrentActiveTab(currentActiveTab)
+    }
+  }, [currentActiveTab]);
+
+  useEffect(() => {
     if (metaData?.total) {
       setCurrentDataLength(+metaData?.total);
     }
   }, [metaData]);
-
-  const goToUserDetailsPage = (userId, mode) => {
-    navigate(`details/${userId}?mode=${mode ? "edit" : "view"}`);
-  };
 
   const columns = [
     renderColumn({
@@ -143,7 +160,6 @@ const QueriesListingContent = ({ currentActiveTab }) => {
       key: "see",
       renderImage: {
         alt: "eye",
-        onClick: (rowData) => goToUserDetailsPage(rowData?.id, false),
         preview: false,
         src: getImage("eye"),
         visible: true,
@@ -154,7 +170,6 @@ const QueriesListingContent = ({ currentActiveTab }) => {
       key: "check",
       renderImage: {
         alt: "check",
-        onClick: (rowData) => goToUserDetailsPage(rowData?.id, true),
         preview: false,
         src: getImage("rightIcon"),
         visible: true,

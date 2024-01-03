@@ -21,12 +21,16 @@ export const ROW_PER_PAGE_OPTIONS = [
     label: "10",
   },
   {
-    value: "15",
-    label: "15",
-  },
-  {
     value: "20",
     label: "20",
+  },
+  {
+    value: "30",
+    label: "30",
+  },
+  {
+    value: "40",
+    label: "40",
   },
 ];
 
