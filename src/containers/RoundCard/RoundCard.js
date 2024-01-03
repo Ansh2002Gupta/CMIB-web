@@ -9,12 +9,13 @@ import useResponsive from "core/hooks/useResponsive";
 import { classes } from "./RoundCard.styles";
 import styles from "./RoundCard.module.scss";
 
-const RoundCard = ({ headingDescription, headingIntl, imageUrl }) => {
+const RoundCard = ({ headingDescription, headingIntl, imageUrl, onClick }) => {
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
 
   return (
     <ThreeRow
+      {...{ onClick }}
       className={styles.mainContainer}
       style={
         responsive.isMd
@@ -44,12 +45,14 @@ RoundCard.defaultProps = {
   headingDescription: "",
   headingIntl: "",
   imageUrl: "",
+  onClick: () => {},
 };
 
 RoundCard.propTypes = {
   headingDescription: PropTypes.string,
   headingIntl: PropTypes.string,
   imageUrl: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default RoundCard;

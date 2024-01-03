@@ -60,7 +60,7 @@ const SetupCenter = () => {
         alt: "edit",
         onClick: (rowData) => goToEditCentrePage(rowData),
         preview: false,
-        src: getImage("edit"),
+        src: getImage(true ? "edit" : "eye"),
         visible: true,
       },
     }),

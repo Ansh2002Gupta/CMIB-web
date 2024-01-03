@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { Select, Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomSwitch from "../../components/CustomSwitch";
@@ -15,6 +16,7 @@ import styles from "./SessionRound.module.scss";
 const SessionRound = ({ roundList, switchLabel }) => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const { navigateScreen: navigate } = useNavigateScreen();
 
   const [status, setStatus] = useState(false);
   const [city, setCity] = useState([]);
@@ -77,6 +79,9 @@ const SessionRound = ({ roundList, switchLabel }) => {
                 headingDescription={item.headingDescription}
                 headingIntl={item.headingIntl}
                 imageUrl={item.imageUrl}
+                onClick={() => {
+                  navigate(item.onclickNaviagtion);
+                }}
               />
             );
           })}
