@@ -7,10 +7,10 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomSwitch from "../../components/CustomSwitch";
-import { CITY_CENTERS } from "../../constant/constant";
 import RoundCard from "../../containers/RoundCard";
-import styles from "./SessionRound.module.scss";
+import { CITY_CENTERS } from "../../constant/constant";
 import { classes } from "./SessionRound.styles";
+import styles from "./SessionRound.module.scss";
 
 const SessionRound = ({ roundList, switchLabel }) => {
   const intl = useIntl();
