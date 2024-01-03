@@ -1,5 +1,6 @@
 import Auth from "../pages/Auth";
 import Companies from "../views/Companies";
+import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import DashboardView from "../views/Dashboard/Dashboard";
@@ -18,6 +19,7 @@ import {
   SUBSCRIPTIONS,
   LOGIN,
   COMPANIES,
+  COMPANIES_DETAILS,
   MANAGE_USERS,
   FORGOT_PASSWORD,
   ROOT,
@@ -115,6 +117,10 @@ const config = [
       {
         viewPath: "",
         element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
       },
     ],
   },

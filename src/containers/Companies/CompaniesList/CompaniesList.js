@@ -27,7 +27,8 @@ const CompaniesContent = () => {
   );
 
   const goToUserDetailsPage = (data) => {
-    navigate(`/company-details?companyId=${data?.id}`);
+    const companyId = data?.id;
+    navigate(`company-details/${companyId}`);
   };
 
   const onHandleCompanyStatus = (data) => {

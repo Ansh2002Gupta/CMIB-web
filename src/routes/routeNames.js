@@ -4,6 +4,7 @@ export const SUBSCRIPTIONS = "/subscriptions";
 export const LOGIN = "/login";
 export const FORGOT_PASSWORD = "/forgot-password";
 export const COMPANIES = "/companies";
+export const COMPANIES_DETAILS = "company-details/:companyId";
 export const MANAGE_USERS = "/manage-users";
 export const ROOT = "/";
 export const CONFIGURE_CENTRES = "/global-configurations";
