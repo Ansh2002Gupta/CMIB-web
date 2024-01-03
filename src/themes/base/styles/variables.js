@@ -11,6 +11,8 @@ const variables = {
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
   mobileBg1: colorPallets.white,
+  snow: colorPallets.snow,
+  lightGreen: colorPallets.lightGreen,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -39,6 +41,7 @@ const variables = {
   radiusMd: "6px",
   radiusLg: "8px",
   radiusXLg: "12px",
+  radiusMLg: "16px",
   radiusXXLg: "24px",
 
   // Font-size
@@ -73,15 +76,21 @@ const variables = {
   sidemenuWidth: "74px",
   fullWidth: "100%",
   smallWidth: "30px",
+  width_350: "350px",
+  width_24: "24px",
 
   // Heights
   btnHeight: "56px",
   minBtnHeight: "45px",
   smallHeight: "30px",
+  height_240: "240px",
+  height_250: "250px",
+  height_24: "24px",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
   borderBlue: `2px solid ${colorPallets.darkBlue}`,
+  borderGreen: `1px solid ${colorPallets.green1}`,
   borderColor: colorPallets.ltGrey1,
 
   // Box shadow
@@ -101,6 +110,7 @@ const variables = {
   inputPlaceHolder: colorPallets.darkGrey1,
 
   // Padding
+  paddingXXSmall: "4px",
   paddingExtraSmall: "8px",
   paddingMediumSmall: "12px",
   paddingSmall: "16px",

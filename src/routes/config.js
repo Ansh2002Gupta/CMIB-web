@@ -1,4 +1,6 @@
 import Auth from "../pages/Auth";
+import Companies from "../views/Companies";
+import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import DashboardView from "../views/Dashboard/Dashboard";
@@ -17,6 +19,8 @@ import {
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
+  COMPANIES,
+  COMPANIES_DETAILS,
   MANAGE_USERS,
   FORGOT_PASSWORD,
   ROOT,
@@ -109,6 +113,20 @@ const config = [
     ],
   },
   {
+    pagePath: COMPANIES,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: "",
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
     pagePath: MANAGE_USERS,
     element: <HomeWithPublicAccess noOuterPadding />,
     views: [
@@ -120,7 +138,7 @@ const config = [
   },
   {
     pagePath: SESSION,
-    element: <HomeWithPublicAccess />,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",

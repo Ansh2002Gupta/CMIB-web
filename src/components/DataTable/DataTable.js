@@ -55,6 +55,7 @@ const DataTable = ({
 
   const handleOnChangePageSize = (size) => {
     setPageSize(Number(size));
+    setQueryParams("page-size", Number(size));
     setCurrent(1);
   };
 
