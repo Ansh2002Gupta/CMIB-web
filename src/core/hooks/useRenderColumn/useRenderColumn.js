@@ -23,7 +23,7 @@ const useRenderColumn = () => {
     title,
   }) => {
     const columnObject = {};
-  
+
     const {
       alt = "",
       customImageStyle = "",
@@ -37,16 +37,17 @@ const useRenderColumn = () => {
       menuSrc = "",
       onMenuClick = () => {},
       menuPreview,
+      triggerType = "",
     } = renderMenu;
 
     const { dateFormat = "DD/MM/YYYY", isTextBold, isTypeDate } = renderText;
-  
+
     const {
       swithActiveLabel,
       swithInActiveLabel,
       switchToggleHandler = () => {},
     } = renderSwitch;
-  
+
     title &&
       (columnObject.title = () => {
         return <p className={styles.columnHeading}>{title}</p>;
@@ -74,17 +75,24 @@ const useRenderColumn = () => {
     sortDirection && (columnObject.sortDirection = sortDirection);
 
     renderText?.visible &&
-      (columnObject.render = (text) => (
-        <p
-          className={[
-            isTextBold ? styles.boldText : "",
-            styles.textEllipsis,
-          ].join(" ")}
-        >
-          {isTypeDate ? moment(new Date(text)).format(dateFormat) : text}
-        </p>
-      ));
-  
+      (columnObject.render = (text) => {
+        return {
+          props: {
+            className: styles.tableCellStyles,
+          },
+          children: (
+            <p
+              className={[
+                isTextBold ? styles.boldText : "",
+                styles.textEllipsis,
+              ].join(" ")}
+            >
+              {isTypeDate ? moment(new Date(text)).format(dateFormat) : text}
+            </p>
+          ),
+        };
+      });
+
     renderSwitch.visible &&
       (columnObject.render = (_, data) => {
         const { status } = data;
@@ -134,7 +142,7 @@ const useRenderColumn = () => {
           })),
         };
         return (
-          <Dropdown menu={menuItems} trigger={["click"]}>
+          <Dropdown menu={menuItems} trigger={[triggerType || "click"]}>
             <Image
               src={menuSrc}
               className={styles.moreIcon}

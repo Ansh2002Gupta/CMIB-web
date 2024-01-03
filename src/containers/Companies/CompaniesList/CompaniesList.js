@@ -7,7 +7,7 @@ import SearchFilter from "../../../components/SearchFilter";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { COMPANY_DATA_SOURCE, COMPANIES_FILTER_DATA } from "../../../dummyData";
-import styles from "./CompaniesContent.module.scss";
+import styles from "./CompaniesList.module.scss";
 
 const CompaniesContent = ({ intl, getImage }) => {
   const { renderColumn } = useRenderColumn();
@@ -144,7 +144,7 @@ const CompaniesContent = ({ intl, getImage }) => {
           setCurrentDataLength,
         }}
         originalData={COMPANY_DATA_SOURCE}
-        columnsToBeSearchFrom={["UserName", "email"]}
+        columnsToBeSearchFrom={["companyName"]}
       />
     </div>
   );

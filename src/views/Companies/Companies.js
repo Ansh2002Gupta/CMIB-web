@@ -5,7 +5,7 @@ import { ThemeContext } from "core/providers/theme";
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
 import CompaniesHeader from "../../containers/Companies/CompaniesHeader/CompaniesHeader";
-import CompaniesContent from "../../containers/Companies/CompaniesContent/CompaniesContent";
+import CompaniesList from "../../containers/Companies/CompaniesList/CompaniesList";
 import styles from "./Companies.module.scss";
 
 const Companies = () => {
@@ -18,7 +18,7 @@ const Companies = () => {
       isBottomFillSpace
       className={styles.baseLayout}
       topSection={<CompaniesHeader intl={intl} getImage={getImage} />}
-      bottomSection={<CompaniesContent intl={intl} getImage={getImage} />}
+      bottomSection={<CompaniesList intl={intl} getImage={getImage} />}
     />
   );
 };

@@ -8,8 +8,11 @@
   font-weight: var(--fontWeightBold);
 }
 
-.textEllipsis {
+.tableCellStyles {
   max-width: 200px;
+}
+
+.textEllipsis {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

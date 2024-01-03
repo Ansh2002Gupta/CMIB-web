@@ -146,7 +146,7 @@ const SearchFilter = ({
                         )}
                         <Typography className={styles.filterOptionText}>
                           {item?.str}
-                          {item?.count && ` (${item?.count})`}
+                          {item?.count ? item?.count : ""}
                         </Typography>
                       </div>
                     );
