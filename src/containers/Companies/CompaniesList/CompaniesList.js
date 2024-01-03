@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useIntl } from "react-intl";
 import { Image, Input } from "antd";
+
+import { ThemeContext } from "core/providers/theme";
 
 import CustomButton from "../../../components/CustomButton/CustomButton";
 import DataTable from "../../../components/DataTable";
@@ -9,9 +12,12 @@ import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn
 import { COMPANY_DATA_SOURCE, COMPANIES_FILTER_DATA } from "../../../dummyData";
 import styles from "./CompaniesList.module.scss";
 
-const CompaniesContent = ({ intl, getImage }) => {
+const CompaniesContent = () => {
+  const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
+
+  const { getImage } = useContext(ThemeContext);
 
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");

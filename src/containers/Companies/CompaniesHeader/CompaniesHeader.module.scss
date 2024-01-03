@@ -33,3 +33,13 @@
     min-height: 44px;
   }
 }
+
+@media screen and (max-width: 363px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeLarge);
+  }
+
+  .btnCustomStyles {
+    padding: var(--paddingExtraSmall) var(--paddingMediumSmall);
+  }
+}

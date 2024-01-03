@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useIntl } from "react-intl";
+
+import { ThemeContext } from "core/providers/theme";
 
 import ContentHeader from "../../ContentHeader";
 import CustomButton from "../../../components/CustomButton";
 import styles from "./CompaniesHeader.module.scss";
 
-const CompaniesHeader = ({ intl, getImage }) => {
+const CompaniesHeader = () => {
+  const intl = useIntl();
+
+  const { getImage } = useContext(ThemeContext);
+
   return (
     <div className={styles.headerContainer}>
       <ContentHeader
