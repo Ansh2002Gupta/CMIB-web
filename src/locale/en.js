@@ -124,6 +124,7 @@ const locale = {
   "label.queryType": "Query Type",
   "label.createdOn": "Created On",
   "label.tryAgain": "Try again!",
+  "label.error": "Error",
 };
 
 export default locale;

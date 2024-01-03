@@ -16,12 +16,12 @@ const QueriesListing = () => {
   );
 
   useEffect(() => {
-    const currentTab = searchParams.get(ACTIVE_TAB);
+    const currentTab = +searchParams.get(ACTIVE_TAB);
     if (
       !currentTab ||
       isNaN(currentTab) ||
       !VALID_CONTACT_US_TABS_ID.includes(currentTab)
-    ) {
+      ) {
       setSearchParams((prev) => {
         prev.set(ACTIVE_TAB, 1);
         return prev;

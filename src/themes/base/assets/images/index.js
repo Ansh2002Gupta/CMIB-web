@@ -3,6 +3,7 @@ import arrowRightFilter from "./arrow-right-filter.svg";
 import checkedBox from "./checkedBox.svg";
 import CircleCheck from "./CircleCheck.svg";
 import edit from "./edit.svg";
+import errorIcon from "./error icon.svg";
 import eye from "./eye.svg";
 import filter from "./filter.svg";
 import g20 from "./G20.svg";
@@ -28,6 +29,7 @@ const images = {
   checkedBox,
   CircleCheck,
   edit,
+  errorIcon,
   eye,
   filter,
   g20,

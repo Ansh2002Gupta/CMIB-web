@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { API_STATUS } from "../../../constant/constant";
+import { useIntl } from "react-intl";
+
 import Http from "../../http-service";
 import { ADMIN_ROUTE, QUERIES_LIST } from "../../../constant/apiEndpoints";
+import { API_STATUS } from "../../../constant/constant";
 
 const useQueriesListingApi = () => {
+  const intl = useIntl();
+
   const [isFetchingQueries, setIsFetchingQueries] = useState(false);
   const [errorWhileFetchingQueries, setErrorWhileFetchingQueries] =
     useState("");
@@ -57,6 +61,9 @@ const useQueriesListingApi = () => {
       if (err?.response?.data?.message) {
         setErrorWhileFetchingQueries(err?.response?.data?.message);
       }
+      setErrorWhileFetchingQueries(
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+      );
     }
   };
 
