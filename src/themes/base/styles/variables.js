@@ -84,6 +84,7 @@ const variables = {
   minBtnHeight: "45px",
   smallHeight: "30px",
   height_240: "240px",
+  height_250: "250px",
   height_24: "24px",
 
   // Borders

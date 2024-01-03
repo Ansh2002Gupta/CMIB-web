@@ -1,7 +1,12 @@
+.mainContainer {
+  gap: var(--gapXSmall);
+}
+
 .statusContainer {
   gap: var(--gapXSmall);
   align-items: center;
 }
+
 .mobileContainer {
   gap: var(--gapXSmall);
 }
