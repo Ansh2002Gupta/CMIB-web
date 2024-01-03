@@ -1,0 +1,39 @@
+.mainContainer {
+  gap: var(--gapMedium);
+  width: 50vw;
+}
+
+.cityContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
+}
+
+.multilpleInput {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+}
+
+.redText {
+  color: var(--error);
+}
+.grayText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.gridClass {
+  gap: var(--gapMedium);
+  justify-content: center;
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.centerContainer {
+  overflow: unset;
+}
