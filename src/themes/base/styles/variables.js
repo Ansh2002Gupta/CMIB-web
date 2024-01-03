@@ -41,6 +41,7 @@ const variables = {
   radiusMd: "6px",
   radiusLg: "8px",
   radiusXLg: "12px",
+  radiusMLg: "16px",
   radiusXXLg: "24px",
 
   // Font-size

@@ -5,10 +5,10 @@ import { Select, Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
+
 import CustomSwitch from "../../components/CustomSwitch";
 import { CITY_CENTERS } from "../../constant/constant";
 import RoundCard from "../../containers/RoundCard";
-
 import styles from "./SessionRound.module.scss";
 import { classes } from "./SessionRound.styles";
 
@@ -38,6 +38,7 @@ const SessionRound = ({ roundList, switchLabel }) => {
           }
           rightSection={
             <TwoRow
+              className={styles.centerContainer}
               topSection={
                 <Typography className={styles.grayText}>
                   {intl.formatMessage({

@@ -5,8 +5,8 @@
 
 .cityContainer {
   background-color: var(--bodyBg);
-  padding: var(--gapMedium);
-  border-radius: var(--gapSmall);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
 }
 
 .multilpleInput {
@@ -33,4 +33,8 @@
   display: flex;
   flex: 1;
   flex-wrap: wrap;
+}
+
+.centerContainer {
+  overflow: unset;
 }
