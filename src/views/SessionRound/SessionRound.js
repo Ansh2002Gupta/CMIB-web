@@ -97,7 +97,7 @@ SessionRound.defaultProps = {
 };
 
 SessionRound.propTypes = {
-  bottomLinkText: PropTypes.array,
+  roundList: PropTypes.array,
   switchLabel: PropTypes.string,
 };
 

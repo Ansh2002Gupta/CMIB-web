@@ -1,7 +1,7 @@
 .mainContainer {
   background-color: var(--bodyBg);
-  padding: var(--gapMedium);
-  border-radius: var(--gapSmall);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
   gap: var(--gapXSmall);
   justify-content: flex-end;
   cursor: pointer;
@@ -17,14 +17,12 @@
 }
 
 .heading {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeXlarge);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
 }
 
 .description {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--darkGrey1);
@@ -33,7 +31,7 @@
 .imageStyle {
   height: var(--height_24);
   width: var(--width_24);
-  padding: var(--gapXSmall);
+  padding: var(--paddingExtraSmall);
   background-color: var(--snow);
   border-radius: var(--radiusLg);
   margin-bottom: var(--gapXSmall);
