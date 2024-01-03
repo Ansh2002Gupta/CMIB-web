@@ -130,6 +130,7 @@ export const SESSION_ITEMS = [
 
 export const CONFIGURE_CENTRES = [
   {
+    sNo: "1",
     centreName: "Ghaziabad-I",
     centreId: "1001",
     bigSmallCentre: "Big Centre",
@@ -137,6 +138,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "2",
     centreName: "Ghaziabad-II",
     centreId: "1002",
     bigSmallCentre: "Small Centre",
@@ -144,6 +146,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "3",
     centreName: "Meerut-I",
     centreId: "1003",
     bigSmallCentre: "Big Centre",
@@ -151,6 +154,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "4",
     centreName: "Meerut-II",
     centreId: "1004",
     bigSmallCentre: "Big Centre",
@@ -158,6 +162,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "5",
     centreName: "Delhi-I",
     centreId: "1005",
     bigSmallCentre: "Big Centre",
@@ -165,6 +170,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "6",
     centreName: "Delhi-II",
     centreId: "1006",
     bigSmallCentre: "Small Centre",
@@ -172,6 +178,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "7",
     centreName: "Ahmedabad-I",
     centreId: "1007",
     bigSmallCentre: "Small Centre",
@@ -179,6 +186,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "8",
     centreName: "Ahmedabad-II",
     centreId: "1008",
     bigSmallCentre: "Big Centre",
@@ -186,6 +194,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "9",
     centreName: "Akola-I",
     centreId: "1009",
     bigSmallCentre: "Small Centre",
@@ -193,6 +202,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "10",
     centreName: "Akola-II",
     centreId: "1010",
     bigSmallCentre: "Small Centre",
@@ -200,6 +210,7 @@ export const CONFIGURE_CENTRES = [
     status: true,
   },
   {
+    sNo: "11",
     centreName: "Akola-III",
     centreId: "1011",
     bigSmallCentre: "Small Centre",

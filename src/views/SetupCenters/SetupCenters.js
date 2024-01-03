@@ -9,6 +9,7 @@ import { CONFIGURE_CENTRES } from "../../dummyData";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 
+import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
 
 const SetupCenter = () => {
@@ -27,6 +28,12 @@ const SetupCenter = () => {
   };
 
   const columns = [
+    renderColumn({
+      title: intl.formatMessage({ id: "label.sNo" }),
+      dataIndex: "sNo",
+      key: "sNo",
+      renderText: { isTextBold: true, visible: true },
+    }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreName" }),
       dataIndex: "centreName",
@@ -90,6 +97,7 @@ const SetupCenter = () => {
           originalData={CONFIGURE_CENTRES}
         />
       }
+      bottomSectionStyle={classes.bottomSectionStyle}
       isBottomFillSpace
     />
   );

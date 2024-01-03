@@ -22,7 +22,9 @@
 }
 
 .tableContainer {
-  margin: var(--gapMedium);
   border: var(--borderLight);
-  border-radius: var(--gapMedium);
+  border-radius: var(--gapXSmall);
+  flex: 1;
+  width: var(--fullWidth);
+  flex-direction: column;
 }
