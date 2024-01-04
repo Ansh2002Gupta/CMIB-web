@@ -1,11 +1,13 @@
 import { useContext } from "react";
-import { IntlProvider } from "react-intl";
-import intl from "./locale";
-import { ThemeProvider } from "./core/providers/theme";
-import { LocaleContext } from "./globalContext/locale/localeProviders";
-import { ConfigProvider } from "antd";
 import { BrowserRouter } from "react-router-dom";
+import { IntlProvider } from "react-intl";
+import { ConfigProvider } from "antd";
+
+import { ThemeProvider } from "./core/providers/theme";
+
 import Routes from "./routes";
+import { LocaleContext } from "./globalContext/locale/localeProviders";
+import intl from "./locale";
 import variables from "./themes/base/styles/variables";
 
 /*

@@ -98,7 +98,7 @@ const SearchFilter = ({
               leftSectionStyle={classes.filterLeftSectionBorder}
               leftSection={
                 <div>
-                  {filterPropertiesArray?.map((item,index) => {
+                  {filterPropertiesArray?.map((item, index) => {
                     return (
                       <div
                         className={[
@@ -115,7 +115,10 @@ const SearchFilter = ({
                           </Typography>
                         </div>
                         <div className={styles.filterRightArrow}>
-                          <Image src={getImage("arrowRightFilter")} preview={false} />
+                          <Image
+                            src={getImage("arrowRightFilter")}
+                            preview={false}
+                          />
                         </div>
                       </div>
                     );
@@ -124,7 +127,7 @@ const SearchFilter = ({
               }
               rightSection={
                 <div>
-                  {filterPropertiesArray[0]?.options?.map((item,index) => {
+                  {filterPropertiesArray[0]?.options?.map((item, index) => {
                     return (
                       <div
                         className={[styles.filterSecondLevelOption].join(" ")}
@@ -161,6 +164,7 @@ const SearchFilter = ({
             <CustomButton
               btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
+              onClick={() => setShowFilters(false)}
             />
           </div>
         </div>

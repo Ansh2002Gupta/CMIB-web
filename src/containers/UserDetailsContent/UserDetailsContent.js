@@ -34,6 +34,12 @@ const UserDetailsContent = ({
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
 
+  const isSavedBtnDisable =
+    !userData?.name ||
+    !userData?.email ||
+    !userData?.mobile ||
+    !userData?.access?.length;
+
   const handleUpdateUserData = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
     setIsMobileNumberValid(
@@ -160,6 +166,7 @@ const UserDetailsContent = ({
             customStyle={styles.saveBtn}
             btnText={intl.formatMessage({ id: "label.saveChanges" })}
             onClick={handleUpdateUserData}
+            isBtnDisable={isSavedBtnDisable}
           />
         </div>
       )}
