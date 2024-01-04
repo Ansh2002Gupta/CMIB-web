@@ -75,6 +75,8 @@ const variables = {
   // Widths
   sidemenuWidth: "74px",
   fullWidth: "100%",
+  width_45: "45%",
+  width_30: "30%",
   smallWidth: "30px",
   width_350: "350px",
   width_24: "24px",

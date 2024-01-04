@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: unset;
+}
+
+.inputLabelContainer {
+  display: flex;
+  gap: 4px;
+  padding-bottom: 4px;
+}
+
+.isRequiredStar {
+  color: var(--requiredStarColor);
+}
+
+.timeInput {
+}
+.errorText {
+  color: var(--error);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  margin-top: 8px;
+}
+.bottomSectionStyle {
+}

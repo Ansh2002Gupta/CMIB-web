@@ -135,6 +135,14 @@ const locale = {
   "label.newCentre": "New Centre",
   "label.actions": "Actions",
   "label.sNo": "S. No",
+  "label.centreCode": "Centre code: ",
+  "label.writtenTestFee": "Written/Psychometric Test Fee",
+  "label.centreStartTime": "Centre Start Time",
+  "label.centreEndTime": "Centre End Time",
+  "label.placeholder.writtenTestFee": " Enter Written/Psychometric Test Fee",
+  "label.placeholder.centreStartTime": "Select Centre Start Time",
+  "label.placeholder.centreEndTime": " Select Centre End Time",
+  "label.configureInterviewDates": "Configure Interview Dates",
 };
 
 export default locale;
