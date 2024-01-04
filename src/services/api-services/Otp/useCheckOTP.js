@@ -12,11 +12,10 @@ const useCheckOTP = () => {
   const [errorWhileVerifyingOTP, setErrorWhileVeryingOTP] = useState("");
   const intl = useIntl();
 
-  const handleCheckOTP = async (payload, onSuccessCallback) => {
+  const handleCheckOTP = async ({ onSuccessCallback, payload, url }) => {
     try {
       setOtpAPIStatus(API_STATUS.LOADING);
       errorWhileVerifyingOTP && setErrorWhileVeryingOTP("");
-      const url = ADMIN_ROUTE + VERIFY_OTP;
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         if (res?.data?.token?.access_token) {
@@ -24,8 +23,8 @@ const useCheckOTP = () => {
           setItem("authToken", auth);
         }
         setCheckOTPData(res.data);
-        onSuccessCallback && onSuccessCallback();
         setOtpAPIStatus(API_STATUS.SUCCESS);
+        onSuccessCallback && onSuccessCallback();
         return;
       }
       setOtpAPIStatus(API_STATUS.ERROR);

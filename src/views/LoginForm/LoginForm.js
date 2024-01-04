@@ -203,10 +203,11 @@ const LoginForm = () => {
               handleAuthOTP({ email: formInputs?.userName });
             }}
             onSubmit={(otp) =>
-              handleCheckOTP(
-                { email: formInputs.userName, otp, two_factor_check: 1 },
-                () => navigate(DASHBOARD)
-              )
+              handleCheckOTP({
+                onSuccess: () => navigate(DASHBOARD),
+                payload: { otp },
+                url: ADMIN_ROUTE + CHECK_OTP_END_POINT,
+              })
             }
           />
         )}

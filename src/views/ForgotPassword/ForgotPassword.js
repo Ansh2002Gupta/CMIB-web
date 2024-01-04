@@ -45,11 +45,18 @@ const ForgotPassword = () => {
       return;
     }
     setStatus("success");
-    handleForgotPassword({ email: userName });
+    handleForgotPassword({
+      onSuccess: () => setCurrentActiveScreen(2),
+      payload: { email: userName },
+    });
   };
 
   const handleOTPSubmit = (otp) => {
-    handleCheckOTP({ email: userName, otp });
+    handleCheckOTP({
+      onSuccess: () => setCurrentActiveScreen(3),
+      payload: { email: userName, otp },
+      url: ADMIN_ROUTE + VERIFY_OTP,
+    });
   };
 
   useEffect(() => {
@@ -145,7 +152,7 @@ const ForgotPassword = () => {
                 setErrorWhileVeryingOTP,
               }}
               handleAuthOTP={() => {
-                handleForgotPassword({ email: userName });
+                handleForgotPassword({ payload: { email: userName } });
               }}
               noOfBlocks={4}
               headingText={intl.formatMessage({
