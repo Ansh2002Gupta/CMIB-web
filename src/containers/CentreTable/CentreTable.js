@@ -1,27 +1,74 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Table, InputNumber, Image, Typography } from "antd";
 import moment from "moment";
 
-import { SETUP_CENTRE_DETAILS } from "../../dummyData";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
-import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 
 import styles from "./CentreTable.module.scss";
 import "./Override.css";
+import { TwoColumn } from "../../core/layouts";
 
 const CentreTable = ({ tableData, setTableData }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  const { renderColumn } = useRenderColumn();
+  const [addTableData, setAddTableData] = useState({
+    id: Math.random().toString(),
+    isAddRow: true,
+    scheduleDate: null,
+    participationFee: "",
+    firmFee: "",
+    uptoPartners: "1",
+    firm: { firmFee: "", uptoPartners: "1" },
+    norm1: "",
+    norm2: "",
+    norm2MinVacancy: "",
+  });
 
-  const handleRemove = (rowData) => {
-    const filteredData = tableData.filter((item) => item.id !== rowData.id);
+  const handleRemove = (record) => {
+    const filteredData = tableData.filter((item) => item.id !== record.id);
     setTableData(filteredData);
   };
+
+  const handleAdd = (record) => {
+    delete record.isAddRow;
+    console.log(record, "record");
+    setTableData([...tableData, record]);
+    setAddTableData({
+      id: Math.random().toString(),
+      isAddRow: true,
+      scheduleDate: null,
+      participationFee: "",
+      firmFee: "",
+      uptoPartners: "1",
+      firm: { firmFee: "", uptoPartners: "1" },
+      norm1: "",
+      norm2: "",
+      norm2MinVacancy: "",
+    });
+  };
+
+  const handleInputChange = (value, name, nestedName) => {
+    if (nestedName) {
+      setAddTableData((prev) => ({
+        ...prev,
+        [name]: {
+          ...prev[name],
+          [nestedName]: value,
+        },
+      }));
+    } else {
+      setAddTableData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const extendedTableData = [...tableData, addTableData];
 
   const columns = [
     {
@@ -33,8 +80,18 @@ const CentreTable = ({ tableData, setTableData }) => {
       ),
       className: styles.tableHeader,
       key: "scheduleDate",
-      render: () => (
-        <CustomDateTimePicker value={moment()} type="date" disabled={true} />
+      render: (text, record) => (
+        <CustomDateTimePicker
+          value={text?.scheduleDate ? moment(text?.scheduleDate) : null}
+          type="date"
+          disabled={record.isAddRow ? false : true}
+          onChange={(val, dateString) => {
+            handleInputChange(val, "scheduleDate");
+          }}
+          placeholder={intl.formatMessage({
+            id: "centre.placeholder.selectDate",
+          })}
+        />
       ),
     },
     {
@@ -46,11 +103,17 @@ const CentreTable = ({ tableData, setTableData }) => {
       ),
       dataIndex: "participationFee",
       key: "participationFee",
-      render: (text) => (
+      render: (text, record) => (
         <CustomInput
           value={text}
-          disabled={true}
+          disabled={record.isAddRow ? false : true}
           customContainerStyles={styles.customContainerStyles}
+          onChange={(val) => {
+            handleInputChange(val.target.value, "participationFee");
+          }}
+          placeholder={intl.formatMessage({
+            id: "centre.placeholder.enterFee",
+          })}
         />
       ),
     },
@@ -63,11 +126,17 @@ const CentreTable = ({ tableData, setTableData }) => {
       ),
       dataIndex: "firmFee",
       key: "firmFee",
-      render: (text) => (
+      render: (text, record) => (
         <CustomInput
           value={text}
-          disabled={true}
+          disabled={record.isAddRow ? false : true}
           customContainerStyles={styles.customContainerStyles}
+          onChange={(val) => {
+            handleInputChange(val.target.value, "firmFee");
+          }}
+          placeholder={intl.formatMessage({
+            id: "centre.placeholder.enterFee",
+          })}
         />
       ),
     },
@@ -80,9 +149,74 @@ const CentreTable = ({ tableData, setTableData }) => {
       ),
       dataIndex: "uptoPartners",
       key: "uptoPartners",
-      render: (text) => (
-        <InputNumber min={0} max={10} value={text} disabled={true} />
+      render: (text, record) => (
+        <InputNumber
+          min={0}
+          max={10}
+          value={text}
+          disabled={record.isAddRow ? false : true}
+          onChange={(val) => {
+            handleInputChange(val, "uptoPartners");
+          }}
+          placeholder={intl.formatMessage({
+            id: "centre.placeholder.enterpartner",
+          })}
+        />
       ),
+    },
+    {
+      title: () => (
+        <TwoColumn
+          className={styles.twoJointContainer}
+          leftSection={
+            <Typography className={styles.tableHeader}>
+              {intl.formatMessage({ id: "centre.firmFee" })}
+              <span className={styles.redText}> *</span>
+            </Typography>
+          }
+          rightSection={
+            <Typography className={styles.tableHeader}>
+              {intl.formatMessage({ id: "centre.uptoPartners" })}
+              <span className={styles.redText}> *</span>
+            </Typography>
+          }
+        />
+      ),
+      dataIndex: "firm",
+      key: "firm",
+      render: (text, record) => {
+        return (
+          <TwoColumn
+            leftSection={
+              <CustomInput
+                value={text?.firmFee}
+                disabled={record.isAddRow ? false : true}
+                customContainerStyles={styles.customContainerStyles}
+                onChange={(val) => {
+                  handleInputChange(val.target.value, "firm", "firmFee");
+                }}
+                placeholder={intl.formatMessage({
+                  id: "centre.placeholder.enterFee",
+                })}
+              />
+            }
+            rightSection={
+              <InputNumber
+                min={0}
+                max={10}
+                value={text?.uptoPartners}
+                disabled={record.isAddRow ? false : true}
+                onChange={(val) => {
+                  handleInputChange(val, "firm", "uptoPartners");
+                }}
+                placeholder={intl.formatMessage({
+                  id: "centre.placeholder.enterpartner",
+                })}
+              />
+            }
+          />
+        );
+      },
     },
     {
       title: () => (
@@ -93,11 +227,17 @@ const CentreTable = ({ tableData, setTableData }) => {
       ),
       dataIndex: "norm1",
       key: "norm1",
-      render: (text) => (
+      render: (text, record) => (
         <CustomInput
           value={text}
-          disabled={true}
+          disabled={record.isAddRow ? false : true}
           customContainerStyles={styles.customContainerStyles}
+          onChange={(val) => {
+            handleInputChange(val.target.value, "norm1");
+          }}
+          placeholder={intl.formatMessage({
+            id: "centre.placeholder.enterNorm1",
+          })}
         />
       ),
     },
@@ -110,11 +250,17 @@ const CentreTable = ({ tableData, setTableData }) => {
       ),
       dataIndex: "norm2",
       key: "norm2",
-      render: (text) => (
+      render: (text, record) => (
         <CustomInput
           value={text}
-          disabled={true}
+          disabled={record.isAddRow ? false : true}
           customContainerStyles={styles.customContainerStyles}
+          onChange={(val) => {
+            handleInputChange(val.target.value, "norm2");
+          }}
+          placeholder={intl.formatMessage({
+            id: "centre.placeholder.enterNorm2",
+          })}
         />
       ),
     },
@@ -127,32 +273,45 @@ const CentreTable = ({ tableData, setTableData }) => {
       ),
       dataIndex: "norm2MinVacancy",
       key: "norm2MinVacancy",
-      render: (text) => (
+      render: (text, record) => (
         <CustomInput
           value={text}
-          disabled={true}
+          disabled={record.isAddRow ? false : true}
           customContainerStyles={styles.customContainerStyles}
+          onChange={(val) => {
+            handleInputChange(val.target.value, "norm2MinVacancy");
+          }}
+          placeholder={intl.formatMessage({
+            id: "centre.placeholder.enterVacancy",
+          })}
         />
       ),
     },
-    renderColumn({
+    {
       title: " ",
       dataIndex: "remove",
       key: "remove",
-      renderImage: {
-        alt: "edit",
-        onClick: (rowData) => handleRemove(rowData),
-        preview: false,
-        src: getImage("minusCircle"),
-        visible: true,
-      },
-    }),
+      render: (text, record) => (
+        <Image
+          src={getImage(record?.isAddRow ? "addCircle" : "minusCircle")}
+          alt="add/remove"
+          preview={false}
+          onClick={() => {
+            if (record?.isAddRow) {
+              handleAdd(record);
+            } else {
+              handleRemove(record);
+            }
+          }}
+        />
+      ),
+    },
   ];
 
   return (
     <Table
       columns={columns}
-      dataSource={tableData}
+      dataSource={extendedTableData}
       pagination={false}
       rowClassName={styles.rowtext}
       scroll={{ x: "max-content" }}

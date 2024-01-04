@@ -15,12 +15,11 @@
 }
 
 .timeInput {
+  background-color: var(--bodyBg);
 }
 .errorText {
   color: var(--error);
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
   margin-top: var(--paddingExtraSmall);
-}
-.bottomSectionStyle {
 }

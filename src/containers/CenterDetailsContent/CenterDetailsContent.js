@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Typography } from "antd";
+import moment from "moment";
 
 import { TwoRow, TwoColumn, ThreeRow } from "../../core/layouts";
 
@@ -17,8 +18,8 @@ import styles from "./CenterDetailsContent.module.scss";
 const CenterDetailsContent = ({ intl, responsive }) => {
   const [formData, setFormData] = useState({
     PsychometricFee: "1000",
-    centreStartTime: "",
-    centreEndTime: "",
+    centreStartTime: "2023-12-19T05:11:46.000000Z",
+    centreEndTime: "2023-12-19T05:11:46.000000Z",
   });
   const [tableData, setTableData] = useState(SETUP_CENTRE_DETAILS);
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -62,13 +63,13 @@ const CenterDetailsContent = ({ intl, responsive }) => {
             customContainerStyles={styles.customContainerStyles}
             isRequired
             label={intl.formatMessage({ id: "label.centreStartTime" })}
-            onChange={(val, timeString) => {
-              handleInputChange(val, "centreStartTime");
+            onChange={(momentValue, timeString) => {
+              handleInputChange(momentValue?.toISOString(), "centreStartTime");
             }}
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreStartTime",
             })}
-            value={formData?.centreStartTime}
+            value={moment(formData?.centreStartTime)}
           />
           <CustomDateTimePicker
             customLabelStyles={styles.inputLabel}
@@ -76,13 +77,13 @@ const CenterDetailsContent = ({ intl, responsive }) => {
             customContainerStyles={styles.customContainerStyles}
             isRequired
             label={intl.formatMessage({ id: "label.centreEndTime" })}
-            onChange={(val, timeString) => {
-              handleInputChange(val, "centreEndTime");
+            onChange={(momentValue, timeString) => {
+              handleInputChange(momentValue?.toISOString(), "centreEndTime");
             }}
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreEndTime",
             })}
-            value={formData.centreEndTime}
+            value={moment(formData.centreEndTime)}
           />
         </div>
       }
@@ -122,6 +123,11 @@ const CenterDetailsContent = ({ intl, responsive }) => {
               }
               rightSection={
                 <CustomButton
+                  isBtnDisable={
+                    !formData?.PsychometricFee ||
+                    !formData?.centreStartTime ||
+                    !formData?.centreEndTime
+                  }
                   textStyle={styles.saveButtonTextStyles}
                   btnText={intl.formatMessage({
                     id: "session.saveChanges",

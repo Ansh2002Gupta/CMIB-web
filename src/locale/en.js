@@ -150,6 +150,12 @@ const locale = {
   "centre.norm1": "Norm 1",
   "centre.norm2": "Norm 2",
   "centre.norm2MinVacancy": "Norm 2 Min Vacancy",
+  "centre.placeholder.selectDate": "Select date",
+  "centre.placeholder.enterFee": "Enter fee",
+  "centre.placeholder.enterpartner": "Enter Partner",
+  "centre.placeholder.enterNorm1": "Enter norm 1",
+  "centre.placeholder.enterNorm2": "Enter norm 2",
+  "centre.placeholder.enterVacancy": "Enter vacancy",
 };
 
 export default locale;
