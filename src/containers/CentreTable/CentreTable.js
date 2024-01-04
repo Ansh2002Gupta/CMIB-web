@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Table, InputNumber, Image, Typography } from "antd";
@@ -12,13 +13,14 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import styles from "./CentreTable.module.scss";
 import "./Override.css";
 
-const CentreTable = () => {
+const CentreTable = ({ tableData, setTableData }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
 
   const handleRemove = (rowData) => {
-    console.log(rowData);
+    const filteredData = tableData.filter((item) => item.id !== rowData.id);
+    setTableData(filteredData);
   };
 
   const columns = [
@@ -133,25 +135,24 @@ const CentreTable = () => {
         />
       ),
     },
-    {
+    renderColumn({
+      title: " ",
       dataIndex: "remove",
       key: "remove",
-      onClick: (rowData) => handleRemove(rowData),
-      render: () => (
-        <Image
-          src={getImage("minusCircle")}
-          alt="remove"
-          preview={false}
-          onClick={(rowData) => handleRemove(rowData)}
-        />
-      ),
-    },
+      renderImage: {
+        alt: "edit",
+        onClick: (rowData) => handleRemove(rowData),
+        preview: false,
+        src: getImage("minusCircle"),
+        visible: true,
+      },
+    }),
   ];
 
   return (
     <Table
       columns={columns}
-      dataSource={SETUP_CENTRE_DETAILS}
+      dataSource={tableData}
       pagination={false}
       rowClassName={styles.rowtext}
       scroll={{ x: "max-content" }}
@@ -159,4 +160,15 @@ const CentreTable = () => {
     />
   );
 };
+
+CentreTable.defaultProps = {
+  tableData: [],
+  setTableData: () => {},
+};
+
+CentreTable.propTypes = {
+  tableData: PropTypes.object,
+  setTableData: PropTypes.func,
+};
+
 export default CentreTable;

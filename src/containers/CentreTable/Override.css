@@ -1,8 +1,7 @@
  .customTable .ant-table-thead > tr > th {
     background-color: var(--bodyBg) !important; 
+    padding: var(--paddingNone) !important;
     border-bottom: none !important;
-    padding-top: var(--paddingNone) !important;
-    padding-bottom: var(--paddingNone) !important; 
   }
 
   .customTable .ant-table-tbody > tr > td {
@@ -10,15 +9,27 @@
     padding-top: var(--paddingNone) !important; 
     padding-bottom: var(--paddingSmall) !important;
   }
+  .customTable .ant-table-thead>tr > th .ant-table-cell {
+    padding-left: var(--paddingNone) !important;
+    padding-right:  var(--paddingNone) !important;
+    border: none !important;
+  }
+
+  .customTable .ant-table-tbody .ant-table-cell {
+   padding-left: var(--paddingNone) !important;
+  padding-right:  var(--paddingNone) !important;
+  }
 
   .ant-input-number-disabled{
     background-color: var(--bodyBg)!important;
     color: var(--textBold) !important;
   }
+
   .ant-input[disabled] {
     color: var(--textBold) !important; 
 
   }
+
 .ant-picker-disabled, .ant-picker-input > input[disabled] {
   color: var(--textBold) !important; 
   background-color: var(--bodyBg) !important; 

@@ -9,6 +9,7 @@ import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { SETUP_CENTRE_DETAILS } from "../../dummyData";
 import { SESSION } from "../../routes/routeNames";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
@@ -19,6 +20,7 @@ const CenterDetailsContent = ({ intl, responsive }) => {
     centreStartTime: "",
     centreEndTime: "",
   });
+  const [tableData, setTableData] = useState(SETUP_CENTRE_DETAILS);
   const { navigateScreen: navigate } = useNavigateScreen();
   const handleCancel = () => {
     navigate(-1);
@@ -96,7 +98,7 @@ const CenterDetailsContent = ({ intl, responsive }) => {
                   {intl.formatMessage({ id: "label.configureInterviewDates" })}
                 </Typography>
               }
-              middleSection={<CentreTable />}
+              middleSection={<CentreTable {...{ tableData, setTableData }} />}
               middleSectionStyle={classes.middleSectionStyle}
               bottomSection={<></>}
             />

@@ -1,0 +1,15 @@
+.mainContainer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.customContainerStyles {
+  width: var(--width_100);
+}
+
+.imageStyle {
+  margin-right: 8px;
+  margin-left: 25px;
+}
