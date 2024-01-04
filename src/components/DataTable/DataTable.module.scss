@@ -35,7 +35,7 @@
 }
 
 .table {
-  min-height: 50vh;
+  min-height: min(50vh, 300px);
 }
 
 .nextAndPrevText {

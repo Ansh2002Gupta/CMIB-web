@@ -1,9 +1,10 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import PropTypes from "prop-types";
 import { Switch, Typography } from "antd";
 
-import CustomButton from "../../components/CustomButton";
 import ContentHeader from "../ContentHeader";
+import CustomButton from "../../components/CustomButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
 import { FORM_STATES } from "../../constant/constant";
@@ -11,10 +12,11 @@ import { USERS } from "../../routes/routeNames";
 import styles from "./UserDetailsHeader.module.scss";
 
 const UserDetailsHeader = ({
-  userData,
-  isUpdatingUserData,
-  updateUserDetails,
   currentFormState,
+  isUpdatingUserData,
+  updateUserData,
+  updateUserDetails,
+  userData,
   userId,
 }) => {
   const intl = useIntl();
@@ -31,9 +33,15 @@ const UserDetailsHeader = ({
   };
 
   const handleOnUserStatusChange = (value) => {
-    updateUserDetails(userId, {
-      status: value ? 1 : 0,
-    });
+    updateUserDetails(
+      userId,
+      {
+        status: value ? 1 : 0,
+      },
+      () => {
+        updateUserData("status", !userData?.status);
+      }
+    );
   };
 
   return (
@@ -74,6 +82,24 @@ const UserDetailsHeader = ({
       />
     </div>
   );
+};
+
+UserDetailsHeader.defaultProps = {
+  currentFormState: 1,
+  isUpdatingUserData: false,
+  updateUserData: () => {},
+  updateUserDetails: () => {},
+  userData: {},
+  userId: 0,
+};
+
+UserDetailsHeader.propTypes = {
+  currentFormState: PropTypes.number,
+  isUpdatingUserData: PropTypes.bool,
+  updateUserData: PropTypes.func,
+  updateUserDetails: PropTypes.func,
+  userData: PropTypes.object,
+  userId: PropTypes.number,
 };
 
 export default UserDetailsHeader;

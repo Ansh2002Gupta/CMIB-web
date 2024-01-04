@@ -91,7 +91,7 @@ DataTable.defaultProps = {
   searchedValue: "",
   setCurrentTableData: () => {},
   paginationApi: () => {},
-  pageSize: 0,
+  pageSize: 10,
   current: 1,
 };
 

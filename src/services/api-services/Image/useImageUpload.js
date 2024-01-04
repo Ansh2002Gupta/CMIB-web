@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
@@ -6,9 +7,9 @@ import {
   COMPANY_ROUTE,
   IMAGE_UPLOAD_END_POINT,
 } from "../../../constant/apiEndpoints";
-import { GENERAL_ERROR_MESSAGE } from "../../../constant/errorMessage";
 
 const useImageUpload = () => {
+  const intl = useIntl();
   const [imageUploadStatus, setImageUploadStatus] = useState(API_STATUS.IDLE);
   const [errorWhileUploadingImage, setErrorWhileUploadingImage] = useState("");
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -38,7 +39,9 @@ const useImageUpload = () => {
         setErrorWhileUploadingImage(err?.response?.data?.message);
         return;
       }
-      setErrorWhileUploadingImage(GENERAL_ERROR_MESSAGE);
+      setErrorWhileUploadingImage(intl.formatMessage({
+        id: "label.generalGetApiFailedErrorMessage",
+      }));
     }
   };
 

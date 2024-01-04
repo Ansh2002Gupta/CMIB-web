@@ -131,6 +131,7 @@ const UserDetails = () => {
                 isUpdatingUserData,
                 updateUserDetails,
                 currentFormState,
+                updateUserData,
                 userId,
               }}
             />

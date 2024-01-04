@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
 
 import { TwoRow, TwoColumn } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
@@ -10,13 +9,14 @@ import ContentHeader from "../../containers/ContentHeader";
 import CustomTabs from "../../components/CustomTabs";
 import SessionDetails from "../../containers/SessionDetails";
 import variables from "../../themes/base/styles/variables";
+import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./session.module.scss";
 
 function Session() {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState("1");
   const [addSession, setAddSession] = useState(false);
-  const { getImage } = useContext(ThemeContext);
+
   const responsive = useResponsive();
 
   const tabItems = [
@@ -58,7 +58,7 @@ function Session() {
                       id: "session.setUpNewSession",
                     })}
                     customStyle={!responsive.isMd ? styles.buttonStyles : null}
-                    iconUrl={responsive.isMd && getImage("addIcon")}
+                    IconElement={responsive.isMd ? AddIcon : null}
                     textStyle={styles.textStyle}
                     onClick={() => {
                       setAddSession(true);

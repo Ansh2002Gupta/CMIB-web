@@ -80,6 +80,7 @@ const variables = {
   btnHeight: "56px",
   minBtnHeight: "45px",
   smallHeight: "30px",
+  fullHeight: "100%",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
@@ -128,6 +129,7 @@ const variables = {
 
   // margin
   marginMedium: "16px",
+  marginSmall: "8px",
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };

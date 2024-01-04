@@ -49,6 +49,7 @@ const SideMenu = ({ logo }) => {
         <div className={styles.sideMenuTopSection}>
           <div className={styles.appLogo}>{logo}</div>
           <TwoRow
+            style={{ overflow: "visible" }}
             topSection={
               <TwoColumn
                 className={styles.moduleSelector}

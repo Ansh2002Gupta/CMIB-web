@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { Typography, Upload, message } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
+import { TwoRow } from "../../core/layouts";
 
 import UserImage from "../UserImage/UserImage";
 import { ReactComponent as UploadImageIcon } from "../../themes/base/assets/images/Upload icon.svg";
@@ -12,11 +13,11 @@ import styles from "./FileUpload.module.scss";
 
 const FileUpload = ({
   heading,
+  isFormEditable,
   subHeading,
   updateUserData,
-  userProfilePic,
   userImageName,
-  isFormEditable,
+  userProfilePic,
 }) => {
   const intl = useIntl();
   const [messageApi, messageContextHolder] = message.useMessage();
@@ -92,22 +93,25 @@ const FileUpload = ({
             customRequest={handleOnUploadImage}
             disabled={!isFormEditable}
           >
-            <div className={styles.uploadTextContainer}>
-              <UploadImageIcon className={styles.uploadImage} />
-              <div>
-                <div className={styles.uploadHeadingContainer}>
-                  <Typography className={styles.uploadText}>
-                    {intl.formatMessage({ id: "label.dragNdrop" })}
-                  </Typography>
-                  <Typography className={styles.uploadGreenText}>
-                    {intl.formatMessage({ id: "label.browse" })}
+            <TwoRow
+              className={styles.uploadTextContainer}
+              topSection={<UploadImageIcon className={styles.uploadImage} />}
+              bottomSection={
+                <div>
+                  <div className={styles.uploadHeadingContainer}>
+                    <Typography className={styles.uploadText}>
+                      {intl.formatMessage({ id: "label.dragNdrop" })}
+                    </Typography>
+                    <Typography className={styles.uploadGreenText}>
+                      {intl.formatMessage({ id: "label.browse" })}
+                    </Typography>
+                  </div>
+                  <Typography className={styles.uploadInfo}>
+                    {intl.formatMessage({ id: "label.supportedFormat" })}
                   </Typography>
                 </div>
-                <Typography className={styles.uploadInfo}>
-                  {intl.formatMessage({ id: "label.supportedFormat" })}
-                </Typography>
-              </div>
-            </div>
+              }
+            />
           </Upload>
         )}
       </div>
@@ -120,8 +124,8 @@ FileUpload.defaultProps = {
   isFormEditable: false,
   subHeading: "Photo",
   updateUserData: () => {},
-  userProfilePic: "",
   userImageName: "",
+  userProfilePic: "",
 };
 
 FileUpload.propTypes = {
@@ -129,8 +133,8 @@ FileUpload.propTypes = {
   isFormEditable: PropTypes.bool,
   subHeading: PropTypes.string,
   updateUserData: PropTypes.func,
-  userProfilePic: PropTypes.string,
   userImageName: PropTypes.string,
+  userProfilePic: PropTypes.string,
 };
 
 export default FileUpload;

@@ -22,6 +22,8 @@ function MainLayout({
         className={`${styles.mainLayout} ${className}`}
         style={style}
         leftSection={menu}
+        leftSectionStyle={{ width: '20%' }}
+        rightSectionStyle={{ width: '80%' }}
         rightSection={
           <TwoRow
             className={`${[

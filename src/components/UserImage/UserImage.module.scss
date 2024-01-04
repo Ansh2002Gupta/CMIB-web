@@ -2,7 +2,7 @@
   border: var(--borderLight);
   border-radius: var(--radiusXLgMedium);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   width: 40vw;
   max-width: 400px;
@@ -10,9 +10,10 @@
 }
 
 .userImage {
-  width: 100%;
+  width: var(--fullWidth);
   object-fit: contain;
   max-height: 400px;
+  min-height: 250px;
 }
 
 .trashAndIconContainer {
@@ -20,6 +21,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--paddingSmall);
+  width: var(--fullWidth);
 }
 
 .trashIcon {
@@ -37,6 +39,6 @@
 @media screen and (max-width: 767px) {
   .container {
     max-width: none;
-    width: 100%;
+    width: var(--fullWidth);
   }
 }

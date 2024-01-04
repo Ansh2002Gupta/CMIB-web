@@ -3,6 +3,8 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Alert, Button, Spin, Typography } from "antd";
 
+import { TwoRow } from "../../core/layouts";
+
 import CustomButton from "../../components/CustomButton";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
@@ -10,6 +12,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
+import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 
 const UserDetailsContent = ({
@@ -70,107 +73,118 @@ const UserDetailsContent = ({
   };
 
   return (
-    <div className={styles.container}>
-      {!isLoading && !errorWhileGettingUsersData && (
-        <div className={styles.bottomContainer}>
-          <UserInfo
-            emailErrorMessage={
-              !isEmailValid
-                ? intl.formatMessage({
-                    id: "label.invalidEmail",
-                  })
-                : ""
-            }
-            mobileErrorMessage={
-              !isMobileNumber
-                ? intl.formatMessage({
-                    id: "label.invalidMobile",
-                  })
-                : ""
-            }
-            isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
-            {...{ updateUserData }}
-            name={userData?.name}
-            email={userData?.email}
-            mobileNo={userData?.mobile}
-            mobilePrefix={userData?.mobile_prefix}
-            date={userData?.date || new Date().toLocaleDateString()}
-            access={userData?.access}
-            is_two_factor={userData?.is_two_factor}
-            isDateDisable
-            userNameErrorMessage={
-              !isUserNameValid
-                ? intl.formatMessage({
-                    id: "label.userNameLeftEmpty",
-                  })
-                : ""
-            }
-            userAccessErrorMessage={
-              !isAccessValid
-                ? intl.formatMessage({
-                    id: "label.notValidUserAccess",
-                  })
-                : ""
-            }
-          />
-          <FileUpload
-            {...{
-              updateUserData,
-              isFormEditable: currentFormState !== FORM_STATES.VIEW_ONLY,
-            }}
-            userProfilePic={userData?.profile_photo_url}
-            userImageName={userData?.profile_photo?.file?.name}
-          />
-        </div>
-      )}
-      {isLoading && (
-        <div className={styles.loaderContainer}>
-          <Spin size="large" />
-        </div>
-      )}
-      {errorWhileGettingUsersData && (
-        <div className={styles.errorContainer}>
-          <Alert
-            message={
-              <Typography className={styles.errorText}>
-                {intl.formatMessage({ id: "label.error" })}
-              </Typography>
-            }
-            description={
-              <div className={styles.apiFailedErrorContainer}>
-                <Typography className={styles.errorText}>
-                  {errorWhileGettingUsersData}
-                </Typography>
-                <Button
-                  onClick={() => getUserData(userId)}
-                  className={styles.tryAgainButton}
-                >
-                  {intl.formatMessage({ id: "label.tryAgain" })}
-                </Button>
-              </div>
-            }
-            type="error"
-            showIcon
-          />
-        </div>
-      )}
-      {currentFormState !== FORM_STATES.VIEW_ONLY && !isLoading && (
-        <div className={styles.saveAndCancelBtnContainer}>
-          <Button
-            className={styles.cancelBtn}
-            onClick={goBackToViewDetailsPage}
-          >
-            {intl.formatMessage({ id: "label.cancel" })}
-          </Button>
-          <CustomButton
-            customStyle={styles.saveBtn}
-            btnText={intl.formatMessage({ id: "label.saveChanges" })}
-            onClick={handleUpdateUserData}
-            isBtnDisable={isSavedBtnDisable}
-          />
-        </div>
-      )}
-    </div>
+    <TwoRow
+      className={styles.container}
+      topSection={
+        <>
+          {!isLoading && !errorWhileGettingUsersData && (
+            <div className={styles.bottomContainer}>
+              <UserInfo
+                emailErrorMessage={
+                  !isEmailValid
+                    ? intl.formatMessage({
+                        id: "label.invalidEmail",
+                      })
+                    : ""
+                }
+                mobileErrorMessage={
+                  !isMobileNumber
+                    ? intl.formatMessage({
+                        id: "label.invalidMobile",
+                      })
+                    : ""
+                }
+                isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
+                {...{ updateUserData }}
+                name={userData?.name}
+                email={userData?.email}
+                mobileNo={userData?.mobile}
+                mobilePrefix={userData?.mobile_prefix}
+                date={userData?.date || new Date().toLocaleDateString()}
+                access={userData?.access}
+                is_two_factor={userData?.is_two_factor}
+                isDateDisable
+                userNameErrorMessage={
+                  !isUserNameValid
+                    ? intl.formatMessage({
+                        id: "label.userNameLeftEmpty",
+                      })
+                    : ""
+                }
+                userAccessErrorMessage={
+                  !isAccessValid
+                    ? intl.formatMessage({
+                        id: "label.notValidUserAccess",
+                      })
+                    : ""
+                }
+              />
+              <FileUpload
+                {...{
+                  updateUserData,
+                  isFormEditable: currentFormState !== FORM_STATES.VIEW_ONLY,
+                }}
+                userProfilePic={userData?.profile_photo_url}
+                userImageName={userData?.profile_photo?.file?.name}
+              />
+            </div>
+          )}
+          {isLoading && (
+            <div className={styles.loaderContainer}>
+              <Spin size="large" />
+            </div>
+          )}
+          {errorWhileGettingUsersData && (
+            <div className={styles.errorContainer}>
+              <Alert
+                message={
+                  <Typography className={styles.errorText}>
+                    {intl.formatMessage({ id: "label.error" })}
+                  </Typography>
+                }
+                description={
+                  <div className={styles.apiFailedErrorContainer}>
+                    <Typography className={styles.errorText}>
+                      {errorWhileGettingUsersData}
+                    </Typography>
+                    <Button
+                      onClick={() => getUserData(userId)}
+                      className={styles.tryAgainButton}
+                    >
+                      {intl.formatMessage({ id: "label.tryAgain" })}
+                    </Button>
+                  </div>
+                }
+                type="error"
+                showIcon
+              />
+            </div>
+          )}
+        </>
+      }
+      bottomSectionStyle={classes.bottomSectionStyles}
+      isBottomFillSpace
+      bottomSection={
+        <>
+          {currentFormState !== FORM_STATES.VIEW_ONLY && !isLoading && (
+            <div className={styles.saveAndCancelBtnContainer}>
+              <Button
+                className={styles.cancelBtn}
+                onClick={goBackToViewDetailsPage}
+              >
+                {intl.formatMessage({ id: "label.cancel" })}
+              </Button>
+              <CustomButton
+                customStyle={styles.saveBtn}
+                btnText={intl.formatMessage({ id: "label.saveChanges" })}
+                onClick={handleUpdateUserData}
+                isBtnDisable={isSavedBtnDisable}
+              />
+            </div>
+          )}
+        </>
+      }
+    />
   );
 };
 

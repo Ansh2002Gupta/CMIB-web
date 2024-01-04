@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Image, Typography } from "antd";
+import { Button, Typography } from "antd";
 
 import styles from "./CustomButton.module.scss";
 
@@ -15,7 +15,7 @@ const CustomButton = ({
   textStyle,
   type,
 }) => {
-
+  
   return (
     <div>
       <Button

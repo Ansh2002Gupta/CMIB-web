@@ -16,7 +16,7 @@
 }
 
 .loaderContainer {
-  width: 100%;
+  width: var(--fullWidth);
   height: 50vh;
   display: flex;
   justify-content: center;
@@ -24,7 +24,7 @@
 }
 
 .errorContainer {
-  width: 100%;
+  width: var(--fullWidth);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,7 +39,7 @@
 .apiFailedErrorContainer {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--gapMedium);
 }
 
 .description {
@@ -67,7 +67,7 @@
   justify-content: center;
   align-items: center;
   gap: var(--gapXSmall);
-  min-height: 56px;
+  min-height: var(--btnHeight);
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);

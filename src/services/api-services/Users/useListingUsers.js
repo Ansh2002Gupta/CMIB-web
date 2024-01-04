@@ -32,12 +32,12 @@ const useListingUsers = () => {
         url = url + `&q=${searchQuery}`;
       }
       const res = await Http.get(url);
+      setIsFetchingUsers(false);
       if (res.error) {
         setUsersFetchingAPIStatus(API_STATUS.ERROR);
         setErrorWhileFetchingUsers(res?.message);
         return;
       }
-      setIsFetchingUsers(false);
       const { meta } = res?.data;
       setUsersList(res?.data?.records);
       setMetaData(meta);
