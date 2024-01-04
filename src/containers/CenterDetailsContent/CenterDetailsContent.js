@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { Typography } from "antd";
 
 import { TwoRow, TwoColumn, ThreeRow } from "../../core/layouts";
 
 import CentreTable from "../CentreTable";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput/CustomInput";
-import CustomTimePicker from "../../components/CustomTimePicker";
+import CustomDateTimePicker from "../../components/CustomDateTimePicker";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { SESSION } from "../../routes/routeNames";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
-import { Typography } from "antd";
 
 const CenterDetailsContent = ({ intl, responsive }) => {
   const [formData, setFormData] = useState({
@@ -17,9 +19,14 @@ const CenterDetailsContent = ({ intl, responsive }) => {
     centreStartTime: "",
     centreEndTime: "",
   });
-  const handleCancel = () => {};
+  const { navigateScreen: navigate } = useNavigateScreen();
+  const handleCancel = () => {
+    navigate(-1);
+  };
 
-  const handleSave = () => {};
+  const handleSave = () => {
+    navigate(SESSION);
+  };
 
   const handleInputChange = (value, name) => {
     setFormData({
@@ -47,7 +54,7 @@ const CenterDetailsContent = ({ intl, responsive }) => {
             })}
             value={formData?.PsychometricFee}
           />
-          <CustomTimePicker
+          <CustomDateTimePicker
             customLabelStyles={styles.inputLabel}
             customTimeStyle={styles.timeInput}
             customContainerStyles={styles.customContainerStyles}
@@ -61,7 +68,7 @@ const CenterDetailsContent = ({ intl, responsive }) => {
             })}
             value={formData?.centreStartTime}
           />
-          <CustomTimePicker
+          <CustomDateTimePicker
             customLabelStyles={styles.inputLabel}
             customTimeStyle={styles.timeInput}
             customContainerStyles={styles.customContainerStyles}
@@ -90,6 +97,7 @@ const CenterDetailsContent = ({ intl, responsive }) => {
                 </Typography>
               }
               middleSection={<CentreTable />}
+              middleSectionStyle={classes.middleSectionStyle}
               bottomSection={<></>}
             />
           }

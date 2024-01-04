@@ -143,6 +143,13 @@ const locale = {
   "label.placeholder.centreStartTime": "Select Centre Start Time",
   "label.placeholder.centreEndTime": " Select Centre End Time",
   "label.configureInterviewDates": "Configure Interview Dates",
+  "centre.scheduleDate": "Schedule Date",
+  "centre.participationFee": "Participation Fee",
+  "centre.uptoPartners": "Upto Partners",
+  "centre.firmFee": "Firm Fee",
+  "centre.norm1": "Norm 1",
+  "centre.norm2": "Norm 2",
+  "centre.norm2MinVacancy": "Norm 2 Min Vacancy",
 };
 
 export default locale;

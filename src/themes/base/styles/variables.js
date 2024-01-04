@@ -80,6 +80,7 @@ const variables = {
   smallWidth: "30px",
   width_350: "350px",
   width_24: "24px",
+  width_100: "100px",
 
   // Heights
   btnHeight: "56px",
@@ -112,6 +113,7 @@ const variables = {
   inputPlaceHolder: colorPallets.darkGrey1,
 
   // Padding
+  paddingNone: "0px",
   paddingXXSmall: "4px",
   paddingExtraSmall: "8px",
   paddingMediumSmall: "12px",

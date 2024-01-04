@@ -1,0 +1,28 @@
+ .customTable .ant-table-thead > tr > th {
+    background-color: var(--bodyBg) !important; 
+    border-bottom: none !important;
+    padding-top: var(--paddingNone) !important;
+    padding-bottom: var(--paddingNone) !important; 
+  }
+
+  .customTable .ant-table-tbody > tr > td {
+    border-bottom: none !important;
+    padding-top: var(--paddingNone) !important; 
+    padding-bottom: var(--paddingSmall) !important;
+  }
+
+  .ant-input-number-disabled{
+    background-color: var(--bodyBg)!important;
+    color: var(--textBold) !important;
+  }
+  .ant-input[disabled] {
+    color: var(--textBold) !important; 
+
+  }
+.ant-picker-disabled, .ant-picker-input > input[disabled] {
+  color: var(--textBold) !important; 
+  background-color: var(--bodyBg) !important; 
+}
+
+  
+ 
