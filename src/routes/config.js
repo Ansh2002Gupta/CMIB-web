@@ -1,12 +1,12 @@
 import Auth from "../pages/Auth";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
+import ContactUsListing from "../views/ContactUsListing";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
-import QueriesListing from "../views/QueriesListing";
 import Session from "../views/Session";
 import ManageUsers from "../views/ManageUsers";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
@@ -144,7 +144,7 @@ const config = [
     views: [
       {
         viewPath: "",
-        element: <QueriesListing />,
+        element: <ContactUsListing />,
       },
     ],
   },

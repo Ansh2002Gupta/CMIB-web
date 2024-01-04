@@ -44,12 +44,12 @@ const useQueriesListingApi = () => {
         },
       };
       const res = await Http.get(url, apiOptions);
+      setIsFetchingQueries(false);
       if (res.error) {
         setQueriesFetchingAPIStatus(API_STATUS.ERROR);
         setErrorWhileFetchingQueries(res?.message);
         return;
       }
-      setIsFetchingQueries(false);
       const { meta } = res?.data;
       setQueriesList(res?.data?.records);
       setMetaData(meta);

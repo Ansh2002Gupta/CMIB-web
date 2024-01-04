@@ -3,15 +3,22 @@ import PropTypes from "prop-types";
 import { Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
-import styles from "./QueriesListingHeader.module.scss";
+import styles from "./ContactUsListingHeader.module.scss";
+import { useIntl } from "react-intl";
 
-const QueriesListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
+const ContactUsListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
+  const intl = useIntl();
+
   return (
     <TwoRow
-    className={styles.container}
+      className={styles.container}
       topSection={
         <div>
-          <Typography className={styles.heading}>Contact Us</Typography>
+          <Typography className={styles.heading}>
+            {intl.formatMessage({
+              id: "label.contactUs",
+            })}
+          </Typography>
         </div>
       }
       bottomSection={
@@ -29,7 +36,9 @@ const QueriesListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
                 currentActiveTab === 1 ? styles.activeText : "",
               ].join(" ")}
             >
-              Tickets
+              {intl.formatMessage({
+                id: "label.queries",
+              })}
             </Typography>
           </div>
           <div
@@ -45,7 +54,9 @@ const QueriesListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
                 currentActiveTab === 2 ? styles.activeText : "",
               ].join(" ")}
             >
-              Queries
+              {intl.formatMessage({
+                id: "label.tickets",
+              })}
             </Typography>
           </div>
         </div>
@@ -54,14 +65,14 @@ const QueriesListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
   );
 };
 
-QueriesListingHeader.defaultProps = {
+ContactUsListingHeader.defaultProps = {
   currentActiveTab: 1,
   setCurrentActiveTab: () => {},
 };
 
-QueriesListingHeader.propTypes = {
+ContactUsListingHeader.propTypes = {
   currentActiveTab: PropTypes.number,
   setCurrentActiveTab: PropTypes.func,
 };
 
-export default QueriesListingHeader;
+export default ContactUsListingHeader;

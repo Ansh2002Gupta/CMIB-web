@@ -11,6 +11,7 @@ import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import SearchFilter from "../../components/SearchFilter";
 import useQueriesListingApi from "../../services/api-services/Queries/useQueriesListingApi";
+import useTicketListingApi from "../../services/api-services/Tickets/useTicketsListingApi";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
 import {
@@ -19,11 +20,11 @@ import {
   VALID_ROW_PER_OPTIONS,
   VALID_CONTACT_US_TABS_ID,
 } from "../../constant/constant";
-import styles from "./QueriesListingContent.module.scss";
+import styles from "./ContactUsListingContent.module.scss";
 
 const ACTIVE_TAB = "activeTab";
 
-const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
+const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
@@ -46,10 +47,30 @@ const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
     errorWhileFetchingQueries,
     queriesList,
     fetchQueries,
-    metaData,
+    metaData: queriesMetaData,
   } = useQueriesListingApi();
 
-  const debounceSearch = useMemo(() => _.debounce(fetchQueries, 300), []);
+  const {
+    isSuccess: areTicketsFetchedSuccesfully,
+    isFetchingTickets,
+    errorWhileFetchingTickets,
+    ticketList,
+    fetchTickets,
+    metaData: ticketsMetaData,
+  } = useTicketListingApi();
+
+  const isLoading = isFetchingQueries || isFetchingTickets;
+  const error = errorWhileFetchingQueries || errorWhileFetchingTickets;
+  const listItemData = currentActiveTab === 1 ? ticketList : queriesList;
+  const isSuccessfullyFetched =
+    areTicketsFetchedSuccesfully || areQueriesFetchedSuccessfully;
+
+  const fetchItems = () => {
+    currentActiveTab === 1 && fetchTickets(pageSize, current, searchedValue);
+    currentActiveTab === 2 && fetchQueries(pageSize, current, searchedValue);
+  };
+
+  const debounceSearch = useMemo(() => _.debounce(fetchItems, 300), []);
   let doNotCallOnMount = useRef(false);
 
   useEffect(() => {
@@ -92,17 +113,21 @@ const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
         prev.set(ACTIVE_TAB, currentActiveTab);
         return prev;
       });
-      setCurrentActiveTab(currentActiveTab)
+      setCurrentActiveTab(currentActiveTab);
     }
+    fetchItems();
+    setPageSize(PAGE_SIZE);
+    setCurrent(1);
   }, [currentActiveTab]);
 
   useEffect(() => {
-    if (metaData?.total) {
-      setCurrentDataLength(+metaData?.total);
+    if (queriesMetaData?.total || ticketsMetaData?.total) {
+      currentActiveTab === 1 && setCurrentDataLength(+ticketsMetaData?.total);
+      currentActiveTab === 2 && setCurrentDataLength(+queriesMetaData?.total);
     }
-  }, [metaData]);
+  }, [queriesMetaData, ticketsMetaData, currentActiveTab]);
 
-  const columns = [
+  const queriesColumns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.queriesId" }),
       dataIndex: "id",
@@ -177,13 +202,84 @@ const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
     }),
   ];
 
-  useEffect(() => {
-    return () => {
-      setShowFilters(false);
-      setSearchedValue("");
-      setCurrentDataLength(0);
-    };
-  }, []);
+  const ticketColumns = [
+    renderColumn({
+      title: intl.formatMessage({ id: "label.ticketId" }),
+      dataIndex: "id",
+      key: "id",
+      renderText: { isTextBold: true, visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.createdBy" }),
+      dataIndex: "created_by",
+      key: "created_by",
+      // sortKey: "name",
+      // sortTypeText: true,
+      renderText: { isTextBold: true, visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.role" }),
+      dataIndex: "role",
+      key: "role",
+      renderText: { isTextBold: true, visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.registrationOrMembershipNumber" }),
+      dataIndex: "registration_no",
+      key: "registration_no",
+      renderText: { isTextBold: true, visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.queryType" }),
+      dataIndex: "query_type",
+      key: "query_type",
+      renderText: { isTypeDate: true, visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.status" }),
+      dataIndex: "status",
+      key: "status",
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.assignedTo" }),
+      dataIndex: "assigned_to",
+      key: "assigned_to",
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.createdOn" }),
+      dataIndex: "created_at",
+      key: "created_at",
+      renderText: { isTypeDate: true, visible: true },
+      sortDirection: ["ascend"],
+      sortKey: "created_at",
+      sortTypeDate: true,
+      defaultSortOrder: "ascend",
+    }),
+    renderColumn({
+      dataIndex: "see",
+      key: "see",
+      renderImage: {
+        alt: "eye",
+        preview: false,
+        src: getImage("eye"),
+        visible: true,
+      },
+    }),
+    renderColumn({
+      dataIndex: "check",
+      key: "check",
+      renderImage: {
+        alt: "check",
+        preview: false,
+        src: getImage("rightIcon"),
+        visible: true,
+      },
+    }),
+  ];
+
+  const columns = currentActiveTab === 1 ? ticketColumns : queriesColumns;
 
   useEffect(() => {
     if (doNotCallOnMount.current) {
@@ -192,7 +288,7 @@ const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
         prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], pageSize);
         return prev;
       });
-      fetchQueries(pageSize, current, searchedValue);
+      fetchItems();
     }
     doNotCallOnMount.current = true;
   }, [pageSize, current]);
@@ -200,6 +296,14 @@ const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
   useEffect(() => {
     debounceSearch(pageSize, current, searchedValue);
   }, [searchedValue]);
+
+  useEffect(() => {
+    return () => {
+      setShowFilters(false);
+      setSearchedValue("");
+      setCurrentDataLength(0);
+    };
+  }, []);
 
   return (
     <>
@@ -226,7 +330,7 @@ const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
             {...{ showFilters, setShowFilters }}
           />
         </div>
-        {areQueriesFetchedSuccessfully && (
+        {isSuccessfullyFetched && !isLoading && !error && (
           <DataTable
             {...{
               columns,
@@ -238,19 +342,19 @@ const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
               setCurrent,
               setPageSize,
             }}
-            originalData={currentActiveTab === 2 ? queriesList : []}
+            originalData={listItemData}
           />
         )}
-        {isFetchingQueries && !errorWhileFetchingQueries && (
+        {isLoading && !error && (
           <div className={styles.loaderContainer}>
             <Spin size="large" />
           </div>
         )}
-        {errorWhileFetchingQueries && (
+        {error && (
           <div className={styles.errorContainer}>
             <ErrorMessageBox
-              onClick={() => fetchQueries(10, 1)}
-              errorText={errorWhileFetchingQueries}
+              onClick={fetchItems}
+              errorText={error}
               errorHeading={intl.formatMessage({
                 id: "label.error",
               })}
@@ -262,12 +366,14 @@ const QueriesListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
   );
 };
 
-QueriesListingContent.defaultProps = {
+ContactUsListingContent.defaultProps = {
   currentActiveTab: 1,
+  setCurrentActiveTab: () => {},
 };
 
-QueriesListingContent.propTypes = {
+ContactUsListingContent.propTypes = {
   currentActiveTab: PropTypes.number,
+  setCurrentActiveTab: PropTypes.func,
 };
 
-export default QueriesListingContent;
+export default ContactUsListingContent;

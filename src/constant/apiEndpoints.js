@@ -13,3 +13,4 @@ export const VERIFY_OTP = "/verify-otp";
 export const RESET_ADMIN_PASSWORD = "/reset-admin-password";
 export const CHECK_OTP_END_POINT = "/two-factor-check";
 export const QUERIES_LIST = "/queries"
+export const TICKET_LIST = "/tickets"

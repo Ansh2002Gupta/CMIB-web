@@ -125,6 +125,14 @@ const locale = {
   "label.createdOn": "Created On",
   "label.tryAgain": "Try again!",
   "label.error": "Error",
+  "label.ticketId": "Ticket ID",
+  "label.createdBy": "Created By",
+  "label.role": "Role",
+  "label.registrationOrMembershipNumber": "Registration/Membership No.",
+  "label.assignedTo": "Assigned To",
+  "label.tickets": "Queries",
+  "label.queries": "Tickets",
+  "label.contactUs": "Contact Us",
 };
 
 export default locale;
