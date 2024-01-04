@@ -36,6 +36,7 @@ const variables = {
   sideMenuMaskBg: colorPallets.maskBlack,
 
   // Border-Radius
+  radiusNone: "0px",
   radiusXss: "2px",
   radiusSm: "4px",
   radiusMd: "6px",

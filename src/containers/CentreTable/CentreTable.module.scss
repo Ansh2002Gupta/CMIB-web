@@ -12,6 +12,15 @@
 .customContainerStyles {
   width: var(--width_100);
 }
+.joinedCustomContainerStyles {
+  width: var(--width_100);
+  border-top-right-radius: var(--radiusNone);
+  border-bottom-right-radius: var(--radiusNone);
+}
+.inputNumberStyle {
+  border-top-left-radius: var(--radiusNone);
+  border-bottom-left-radius: var(--radiusNone);
+}
 
 .tableHeader {
   font-weight: var(--fontWeightMedium);
@@ -26,5 +35,11 @@
 }
 
 .twoJointContainer {
-  justify-content: space-around;
+  gap: var(--gapXLarge);
+}
+
+.imageStyle {
+  cursor: pointer;
+  height: var(--height_24);
+  width: var(--width_24);
 }

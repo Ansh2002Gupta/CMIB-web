@@ -23,6 +23,8 @@ const CenterDetailsContent = ({ intl, responsive }) => {
   });
   const [tableData, setTableData] = useState(SETUP_CENTRE_DETAILS);
   const { navigateScreen: navigate } = useNavigateScreen();
+  const isEdit = true;
+
   const handleCancel = () => {
     navigate(-1);
   };
@@ -56,6 +58,7 @@ const CenterDetailsContent = ({ intl, responsive }) => {
               id: `label.placeholder.writtenTestFee`,
             })}
             value={formData?.PsychometricFee}
+            disabled={!isEdit}
           />
           <CustomDateTimePicker
             customLabelStyles={styles.inputLabel}
@@ -70,6 +73,7 @@ const CenterDetailsContent = ({ intl, responsive }) => {
               id: "label.placeholder.centreStartTime",
             })}
             value={moment(formData?.centreStartTime)}
+            disabled={!isEdit}
           />
           <CustomDateTimePicker
             customLabelStyles={styles.inputLabel}
@@ -84,6 +88,7 @@ const CenterDetailsContent = ({ intl, responsive }) => {
               id: "label.placeholder.centreEndTime",
             })}
             value={moment(formData.centreEndTime)}
+            disabled={!isEdit}
           />
         </div>
       }
@@ -99,43 +104,47 @@ const CenterDetailsContent = ({ intl, responsive }) => {
                   {intl.formatMessage({ id: "label.configureInterviewDates" })}
                 </Typography>
               }
-              middleSection={<CentreTable {...{ tableData, setTableData }} />}
+              middleSection={
+                <CentreTable {...{ isEdit, tableData, setTableData }} />
+              }
               middleSectionStyle={classes.middleSectionStyle}
               bottomSection={<></>}
             />
           }
           bottomSection={
-            <TwoColumn
-              className={styles.buttonContainer}
-              leftSection={
-                <CustomButton
-                  btnText={intl.formatMessage({
-                    id: "label.cancel",
-                  })}
-                  customStyle={
-                    responsive.isMd
-                      ? styles.buttonStyles
-                      : styles.mobileButtonStyles
-                  }
-                  textStyle={styles.textStyle}
-                  onClick={handleCancel}
-                />
-              }
-              rightSection={
-                <CustomButton
-                  isBtnDisable={
-                    !formData?.PsychometricFee ||
-                    !formData?.centreStartTime ||
-                    !formData?.centreEndTime
-                  }
-                  textStyle={styles.saveButtonTextStyles}
-                  btnText={intl.formatMessage({
-                    id: "session.saveChanges",
-                  })}
-                  onClick={handleSave}
-                />
-              }
-            />
+            isEdit && (
+              <TwoColumn
+                className={styles.buttonContainer}
+                leftSection={
+                  <CustomButton
+                    btnText={intl.formatMessage({
+                      id: "label.cancel",
+                    })}
+                    customStyle={
+                      responsive.isMd
+                        ? styles.buttonStyles
+                        : styles.mobileButtonStyles
+                    }
+                    textStyle={styles.textStyle}
+                    onClick={handleCancel}
+                  />
+                }
+                rightSection={
+                  <CustomButton
+                    isBtnDisable={
+                      !formData?.PsychometricFee ||
+                      !formData?.centreStartTime ||
+                      !formData?.centreEndTime
+                    }
+                    textStyle={styles.saveButtonTextStyles}
+                    btnText={intl.formatMessage({
+                      id: "session.saveChanges",
+                    })}
+                    onClick={handleSave}
+                  />
+                }
+              />
+            )
           }
           bottomSectionStyle={classes.bottomSectionStyle}
         />

@@ -66,7 +66,7 @@ const CustomDateTimePicker = ({
                 * {errorMessage}
               </Typography>
             ) : (
-              <></>
+              <Typography></Typography>
             )
           }
         />
@@ -90,7 +90,7 @@ CustomDateTimePicker.defaultProps = {
   onChange: () => {},
   placeholder: "",
   type: "time",
-  value: "",
+  value: {},
 };
 
 CustomDateTimePicker.propTypes = {
@@ -108,7 +108,7 @@ CustomDateTimePicker.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.object,
 };
 
 export default CustomDateTimePicker;

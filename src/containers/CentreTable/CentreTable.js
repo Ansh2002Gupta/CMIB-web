@@ -12,7 +12,7 @@ import styles from "./CentreTable.module.scss";
 import "./Override.css";
 import { TwoColumn } from "../../core/layouts";
 
-const CentreTable = ({ tableData, setTableData }) => {
+const CentreTable = ({ isEdit, tableData, setTableData }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const [addTableData, setAddTableData] = useState({
@@ -20,8 +20,14 @@ const CentreTable = ({ tableData, setTableData }) => {
     isAddRow: true,
     scheduleDate: null,
     participationFee: "",
-    firmFee: "",
-    uptoPartners: "1",
+    firm: { firmFee: "", uptoPartners: "1" },
+    norm1: "",
+    norm2: "",
+    norm2MinVacancy: "",
+  });
+  const [errors, setErrors] = useState({
+    scheduleDate: "",
+    participationFee: "",
     firm: { firmFee: "", uptoPartners: "1" },
     norm1: "",
     norm2: "",
@@ -34,21 +40,38 @@ const CentreTable = ({ tableData, setTableData }) => {
   };
 
   const handleAdd = (record) => {
-    delete record.isAddRow;
-    console.log(record, "record");
-    setTableData([...tableData, record]);
-    setAddTableData({
-      id: Math.random().toString(),
-      isAddRow: true,
-      scheduleDate: null,
-      participationFee: "",
-      firmFee: "",
-      uptoPartners: "1",
-      firm: { firmFee: "", uptoPartners: "1" },
-      norm1: "",
-      norm2: "",
-      norm2MinVacancy: "",
-    });
+    if (validate()) {
+      delete record.isAddRow;
+      console.log(record, "record");
+      setTableData([...tableData, record]);
+      setAddTableData({
+        id: Math.random().toString(),
+        isAddRow: true,
+        scheduleDate: null,
+        participationFee: "",
+        firm: { firmFee: "", uptoPartners: "1" },
+        norm1: "",
+        norm2: "",
+        norm2MinVacancy: "",
+      });
+    }
+  };
+
+  const handleSetError = (error, name, nestedName) => {
+    if (nestedName) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: {
+          ...prev[name],
+          [nestedName]: error,
+        },
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: error,
+      }));
+    }
   };
 
   const handleInputChange = (value, name, nestedName) => {
@@ -60,15 +83,85 @@ const CentreTable = ({ tableData, setTableData }) => {
           [nestedName]: value,
         },
       }));
+      setErrors((prev) => ({
+        ...prev,
+        [name]: {
+          ...prev[name],
+          [nestedName]: "",
+        },
+      }));
     } else {
       setAddTableData((prev) => ({
         ...prev,
         [name]: value,
       }));
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
     }
   };
 
-  const extendedTableData = [...tableData, addTableData];
+  const validate = () => {
+    let errorCount = 0;
+    if (!addTableData?.scheduleDate) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.selectDate" }),
+        "scheduleDate"
+      );
+      errorCount += 1;
+    }
+    if (!addTableData?.participationFee) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterParticipationFee" }),
+        "participationFee"
+      );
+      errorCount += 1;
+    }
+    if (!addTableData?.firm?.firmFee) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterFirmFee" }),
+        "firm",
+        "firmFee"
+      );
+      errorCount += 1;
+    }
+    if (!addTableData?.firm?.uptoPartners) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterpartner" }),
+        "firm",
+        "uptoPartners"
+      );
+      errorCount += 1;
+    }
+    if (!addTableData?.norm1) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterNorm1" }),
+        "norm1"
+      );
+      errorCount += 1;
+    }
+    if (!addTableData?.norm2) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterNorm2" }),
+        "norm2"
+      );
+      errorCount += 1;
+    }
+    if (!addTableData?.norm2MinVacancy) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterVacancy" }),
+        "norm2MinVacancy"
+      );
+      errorCount += 1;
+    }
+
+    if (errorCount > 0) return false;
+
+    return true;
+  };
+
+  const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;
 
   const columns = [
     {
@@ -91,6 +184,7 @@ const CentreTable = ({ tableData, setTableData }) => {
           placeholder={intl.formatMessage({
             id: "centre.placeholder.selectDate",
           })}
+          errorMessage={record.isAddRow && errors?.scheduleDate}
         />
       ),
     },
@@ -114,56 +208,12 @@ const CentreTable = ({ tableData, setTableData }) => {
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterFee",
           })}
+          errorMessage={record.isAddRow && errors?.participationFee}
+          isError={record.isAddRow && errors?.participationFee}
         />
       ),
     },
-    {
-      title: () => (
-        <Typography className={styles.tableHeader}>
-          {intl.formatMessage({ id: "centre.firmFee" })}
-          <span className={styles.redText}> *</span>
-        </Typography>
-      ),
-      dataIndex: "firmFee",
-      key: "firmFee",
-      render: (text, record) => (
-        <CustomInput
-          value={text}
-          disabled={record.isAddRow ? false : true}
-          customContainerStyles={styles.customContainerStyles}
-          onChange={(val) => {
-            handleInputChange(val.target.value, "firmFee");
-          }}
-          placeholder={intl.formatMessage({
-            id: "centre.placeholder.enterFee",
-          })}
-        />
-      ),
-    },
-    {
-      title: () => (
-        <Typography className={styles.tableHeader}>
-          {intl.formatMessage({ id: "centre.uptoPartners" })}
-          <span className={styles.redText}> *</span>
-        </Typography>
-      ),
-      dataIndex: "uptoPartners",
-      key: "uptoPartners",
-      render: (text, record) => (
-        <InputNumber
-          min={0}
-          max={10}
-          value={text}
-          disabled={record.isAddRow ? false : true}
-          onChange={(val) => {
-            handleInputChange(val, "uptoPartners");
-          }}
-          placeholder={intl.formatMessage({
-            id: "centre.placeholder.enterpartner",
-          })}
-        />
-      ),
-    },
+
     {
       title: () => (
         <TwoColumn
@@ -192,16 +242,20 @@ const CentreTable = ({ tableData, setTableData }) => {
                 value={text?.firmFee}
                 disabled={record.isAddRow ? false : true}
                 customContainerStyles={styles.customContainerStyles}
+                customInputStyles={styles.joinedCustomContainerStyles}
                 onChange={(val) => {
                   handleInputChange(val.target.value, "firm", "firmFee");
                 }}
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterFee",
                 })}
+                errorMessage={record.isAddRow && errors?.firm?.firmFee}
+                isError={record.isAddRow && errors?.firm?.firmFee}
               />
             }
             rightSection={
               <InputNumber
+                className={styles.inputNumberStyle}
                 min={0}
                 max={10}
                 value={text?.uptoPartners}
@@ -212,6 +266,8 @@ const CentreTable = ({ tableData, setTableData }) => {
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterpartner",
                 })}
+                errorMessage={record.isAddRow && errors?.firm?.uptoPartners}
+                isError={record.isAddRow && errors?.firm?.uptoPartners}
               />
             }
           />
@@ -238,6 +294,8 @@ const CentreTable = ({ tableData, setTableData }) => {
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterNorm1",
           })}
+          errorMessage={record.isAddRow && errors?.norm1}
+          isError={record.isAddRow && errors?.norm1}
         />
       ),
     },
@@ -261,6 +319,8 @@ const CentreTable = ({ tableData, setTableData }) => {
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterNorm2",
           })}
+          errorMessage={record.isAddRow && errors?.norm2}
+          isError={record.isAddRow && errors?.norm2}
         />
       ),
     },
@@ -284,27 +344,32 @@ const CentreTable = ({ tableData, setTableData }) => {
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterVacancy",
           })}
+          errorMessage={record.isAddRow && errors?.norm2MinVacancy}
+          isError={record.isAddRow && errors?.norm2MinVacancy}
         />
       ),
     },
+
     {
       title: " ",
       dataIndex: "remove",
       key: "remove",
-      render: (text, record) => (
-        <Image
-          src={getImage(record?.isAddRow ? "addCircle" : "minusCircle")}
-          alt="add/remove"
-          preview={false}
-          onClick={() => {
-            if (record?.isAddRow) {
-              handleAdd(record);
-            } else {
-              handleRemove(record);
-            }
-          }}
-        />
-      ),
+      render: (text, record) =>
+        isEdit && (
+          <Image
+            className={styles.imageStyle}
+            src={getImage(record?.isAddRow ? "addCircle" : "minusCircle")}
+            alt="add/remove"
+            preview={false}
+            onClick={() => {
+              if (record?.isAddRow) {
+                handleAdd(record);
+              } else {
+                handleRemove(record);
+              }
+            }}
+          />
+        ),
     },
   ];
 
@@ -321,12 +386,14 @@ const CentreTable = ({ tableData, setTableData }) => {
 };
 
 CentreTable.defaultProps = {
+  isEdit: true,
   tableData: [],
   setTableData: () => {},
 };
 
 CentreTable.propTypes = {
-  tableData: PropTypes.object,
+  isEdit: PropTypes.bool,
+  tableData: PropTypes.array,
   setTableData: PropTypes.func,
 };
 
