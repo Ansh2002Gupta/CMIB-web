@@ -114,12 +114,14 @@ const SearchFilter = ({
                             {item.name}
                           </Typography>
                         </div>
-                        <div className={styles.filterRightArrow}>
-                          <Image
-                            src={getImage("arrowRightFilter")}
-                            preview={false}
-                          />
-                        </div>
+                        {item?.options?.length && (
+                          <div className={styles.filterRightArrow}>
+                            <Image
+                              src={getImage("arrowRightFilter")}
+                              preview={false}
+                            />
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -145,7 +147,8 @@ const SearchFilter = ({
                           />
                         )}
                         <Typography className={styles.filterOptionText}>
-                          {`${item?.str} (${item?.count})`}
+                          {item?.str}
+                          {item?.count ? item?.count : ""}
                         </Typography>
                       </div>
                     );

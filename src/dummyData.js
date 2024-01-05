@@ -118,6 +118,97 @@ export const DATA_SOURCE = [
   },
 ];
 
+export const COMPANY_DATA_SOURCE = [
+  {
+    id: 1,
+    companyName: "Google",
+    entity: "Corporate",
+    city: "Gurgaon",
+    phoneNumber: "+91-1234 5678 21",
+    status: true,
+  },
+  {
+    id: 2,
+    companyName: "Microsoft",
+    entity: "Corporate",
+    city: "Hyderabad",
+    phoneNumber: "+91-1234 5678 21",
+    status: false,
+  },
+  {
+    id: 3,
+    companyName: "Farmaco",
+    entity: "Non-corporate",
+    city: "Gurgaon",
+    phoneNumber: "+91-1234 5678 21",
+    status: true,
+  },
+  {
+    id: 4,
+    companyName: "Phylo",
+    entity: "Firm of Chartered Accountants",
+    city: "Gurgaon",
+    phoneNumber: "+91-1234 5678 21",
+    status: true,
+  },
+  {
+    id: 5,
+    companyName: "Daffodils",
+    entity: "Corporate",
+    city: "Gurgaon",
+    phoneNumber: "+91-1234 5678 21",
+    status: false,
+  },
+  {
+    id: 6,
+    companyName: "Sprinklr",
+    entity: "Non-corporate",
+    city: "Gurgaon",
+    phoneNumber: "+91-1234 5678 21",
+    status: true,
+  },
+  {
+    id: 7,
+    companyName: "Sprinklr",
+    entity: "Corporate",
+    city: "Hyderabad",
+    phoneNumber: "+91-1234 5678 21",
+    status: true,
+  },
+  {
+    id: 8,
+    companyName: "Sprinklr",
+    entity: "Corporate",
+    city: "Gurgaon",
+    phoneNumber: "+91-1234 5678 21",
+    status: true,
+  },
+  {
+    id: 9,
+    companyName: "Sprinklr",
+    entity: "Corporate",
+    city: "Gurgaon",
+    phoneNumber: "+91-1234 5678 21",
+    status: false,
+  },
+  {
+    id: 10,
+    companyName: "Sprinklr",
+    entity: "Corporate",
+    city: "Gurgaon",
+    phoneNumber: "+91-1234 5678 21",
+    status: false,
+  },
+  {
+    id: 11,
+    companyName: "Sprinklr",
+    entity: "Corporate",
+    city: "Gurgaon",
+    phoneNumber: "+91-1234 5678 21",
+    status: false,
+  },
+];
+
 export const ACCESS_FILTER_DATA = [
   {
     id: 1,
@@ -128,6 +219,24 @@ export const ACCESS_FILTER_DATA = [
       { optionId: 2, str: "Placements", count: 100 },
       { optionId: 3, str: "CA Jobs", count: 100 },
     ],
+  },
+];
+
+export const COMPANIES_FILTER_DATA = [
+  {
+    id: 1,
+    name: "Entity",
+    isSelected: false,
+    options: [
+      { optionId: 1, str: "Corporate" },
+      { optionId: 2, str: "Non-corporate" },
+      { optionId: 3, str: "Firm of Chartered Accountants" },
+    ],
+  },
+  {
+    id: 2,
+    name: "More than 10 Partners",
+    isSelected: false,
   },
 ];
 

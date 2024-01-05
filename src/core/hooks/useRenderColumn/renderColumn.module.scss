@@ -8,8 +8,11 @@
   font-weight: var(--fontWeightBold);
 }
 
-.textEllipsis {
+.tableCellStyles {
   max-width: 200px;
+}
+
+.textEllipsis {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -24,6 +27,13 @@
   background-color: var(--active2) !important;
 }
 
-.editIcon {
+.dropdownMenuItem {
+  padding: var(--paddingSmall, 16px);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+}
+
+.editIcon,
+.moreIcon {
   cursor: pointer;
 }

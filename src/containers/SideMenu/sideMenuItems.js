@@ -32,17 +32,7 @@ const newlyQualifiedPlacementsMenu = [
     key: "global-configurations",
     icon: <UserOutlined />,
   },
-  { label: "Dashboard", key: "dashboard", icon: <UserOutlined /> },
-  {
-    label: "Round 1 Placements",
-    key: "round-1-placements",
-    icon: <UserOutlined />,
-  },
-  {
-    label: "Round 1 Placements",
-    key: "round-2-placements",
-    icon: <UserOutlined />,
-  },
+  { label: 'Companies', key: 'companies', icon: <UserOutlined /> },
 ];
 const caJobsMenu = [
   { label: "Dashboard", key: "dashboard", icon: <UserOutlined /> },

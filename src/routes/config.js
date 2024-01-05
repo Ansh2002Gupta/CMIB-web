@@ -1,4 +1,6 @@
 import Auth from "../pages/Auth";
+import Companies from "../views/Companies";
+import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import DashboardView from "../views/Dashboard/Dashboard";
@@ -16,6 +18,8 @@ import {
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
+  COMPANIES,
+  COMPANIES_DETAILS,
   FORGOT_PASSWORD,
   ROOT,
   USERS,
@@ -111,6 +115,52 @@ const config = [
     ],
   },
   {
+    pagePath: COMPANIES,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: "",
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
+    pagePath: COMPANIES,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
+    pagePath: COMPANIES,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      // array of views under Page route
+      {
+        
+        viewPath: "",
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
     pagePath: USERS,
     element: <HomeWithPrivateAccess />, // Page
     views: [
@@ -131,7 +181,7 @@ const config = [
   },
   {
     pagePath: SESSION,
-    element: <HomeWithPublicAccess />,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
