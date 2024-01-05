@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Pagination, Select, Table, Typography } from "antd";
 
 import PaginationItems from "./PaginationItems";
-import { ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
+import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
 import "./override.css";
 
@@ -21,16 +21,10 @@ const DataTable = ({
 }) => {
   const intl = useIntl();
 
-  const [currentTableData, setCurrentTableData] = useState(originalData);
-
   const handleOnChangePageSize = (size) => {
     setPageSize(Number(size));
     setCurrent(1);
   };
-
-  useEffect(() => {
-    setCurrentTableData(originalData);
-  }, [originalData]);
 
   useEffect(() => {
     searchedValue && setCurrent(1);
@@ -50,7 +44,7 @@ const DataTable = ({
     <div className={[styles.container, customContainerStyles].join(" ")}>
       <Table
         columns={columns}
-        dataSource={currentTableData}
+        dataSource={originalData}
         pagination={false}
         rowClassName={styles.rowtext}
         scroll={{ x: "max-content" }}
@@ -85,13 +79,11 @@ const DataTable = ({
 DataTable.defaultProps = {
   columns: [],
   currentDataLength: 0,
-  currentTableData: [],
   customContainerStyles: "",
   originalData: [],
   searchedValue: "",
-  setCurrentTableData: () => {},
   paginationApi: () => {},
-  pageSize: 10,
+  pageSize: PAGE_SIZE,
   current: 1,
 };
 
