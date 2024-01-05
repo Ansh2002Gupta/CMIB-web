@@ -42,7 +42,7 @@ const useRenderColumn = () => {
 
     const {
       dateFormat = "DD/MM/YYYY",
-      isDot,
+      includeDotAfterText,
       isTextBold,
       isTypeDate,
       textStyles,
@@ -53,6 +53,16 @@ const useRenderColumn = () => {
       swithInActiveLabel,
       switchToggleHandler = () => {},
     } = renderSwitch;
+
+    const textRenderFormat = ({ text }) => {
+      if (isTypeDate) {
+        return moment(new Date(text)).format(dateFormat);
+      }
+      if (includeDotAfterText) {
+        return `${text} .`;
+      }
+      return text;
+    };
 
     title &&
       (columnObject.title = () => {
@@ -94,11 +104,7 @@ const useRenderColumn = () => {
                 styles.textEllipsis,
               ].join(" ")}
             >
-              {isTypeDate
-                ? moment(new Date(text)).format(dateFormat)
-                : isDot
-                ? `${text} .`
-                : text}
+              {textRenderFormat({ text })}
             </p>
           ),
         };
