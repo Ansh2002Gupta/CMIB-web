@@ -46,6 +46,7 @@ const useRenderColumn = () => {
       isTextBold,
       isTypeDate,
       textStyles,
+      isCapitalize,
     } = renderText;
 
     const {
@@ -102,6 +103,7 @@ const useRenderColumn = () => {
                 textStyles,
                 isTextBold ? styles.boldText : "",
                 styles.textEllipsis,
+                isCapitalize ? styles.capitalize : "",
               ].join(" ")}
             >
               {textRenderFormat({ text })}

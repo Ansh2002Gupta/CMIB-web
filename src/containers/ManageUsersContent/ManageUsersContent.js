@@ -1,4 +1,11 @@
-import React, { useContext, useState, useEffect, useMemo, useRef,useLayoutEffect } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  useLayoutEffect,
+} from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
@@ -117,19 +124,19 @@ const ManageUsersContent = () => {
       key: "name",
       sortTypeText: true,
       sortKey: "name",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { isTextBold: true, visible: true, isCapitalize: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.email" }),
       dataIndex: "email",
       key: "email",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.mobileNumber" }),
       dataIndex: "mobile_number",
       key: "mobile_number",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { visible: true },
     }),
     {
       title: () => (
