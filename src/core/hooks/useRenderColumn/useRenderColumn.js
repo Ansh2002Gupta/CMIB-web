@@ -31,7 +31,13 @@ const useRenderColumn = () => {
       preview,
     } = renderImage;
 
-    const { dateFormat = "DD/MM/YYYY", isTextBold, isTypeDate } = renderText;
+    const {
+      dateFormat = "DD/MM/YYYY",
+      isDot,
+      isTextBold,
+      isTypeDate,
+      textStyles,
+    } = renderText;
 
     const {
       swithActiveLabel,
@@ -69,11 +75,16 @@ const useRenderColumn = () => {
       (columnObject.render = (text) => (
         <p
           className={[
+            textStyles,
             isTextBold ? styles.boldText : "",
             styles.textEllipsis,
           ].join(" ")}
         >
-          {isTypeDate ? moment(new Date(text)).format(dateFormat) : text}
+          {isTypeDate
+            ? moment(new Date(text)).format(dateFormat)
+            : isDot
+            ? `${text} .`
+            : text}
         </p>
       ));
 
