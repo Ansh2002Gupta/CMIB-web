@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useMemo, useRef } from "react";
+import React, { useContext, useState, useEffect, useMemo, useRef,useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
@@ -29,12 +29,17 @@ const ManageUsersContent = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [current, setCurrent] = useState(
-    +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE) || 1
-  );
-  const [pageSize, setPageSize] = useState(
-    +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE) || PAGE_SIZE
-  );
+  let validPageSize = +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE);
+  let validCurrentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
+  if (isNaN(validPageSize) || !VALID_ROW_PER_OPTIONS.includes(validPageSize)) {
+    validPageSize = PAGE_SIZE;
+  }
+  if (isNaN(validCurrentPage) || validCurrentPage < 0) {
+    validCurrentPage = 1;
+  }
+
+  const [current, setCurrent] = useState(validCurrentPage);
+  const [pageSize, setPageSize] = useState(validPageSize);
 
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
@@ -58,18 +63,24 @@ const ManageUsersContent = () => {
   const debounceSearch = useMemo(() => _.debounce(fetchUsers, 300), []);
   let doNotCallOnMount = useRef(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
-    if (!currentPage || isNaN(current)) {
+    if (
+      !currentPage ||
+      isNaN(current) ||
+      current > metaData?.total ||
+      current < 0
+    ) {
       setSearchParams((prev) => {
         prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
         return prev;
       });
       setCurrent(1);
     }
+
     if (
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
@@ -80,7 +91,7 @@ const ManageUsersContent = () => {
       });
       setPageSize(PAGE_SIZE);
     }
-  }, []);
+  }, [areUsersFetchedSuccessfully]);
 
   useEffect(() => {
     if (metaData?.total) {

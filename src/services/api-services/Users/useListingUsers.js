@@ -15,7 +15,12 @@ const useListingUsers = () => {
   );
   const [metaData, setMetaData] = useState(null);
 
-  const fetchUsers = async (pageSize, currentPage, searchQuery, onSuccessCallback) => {
+  const fetchUsers = async (
+    pageSize,
+    currentPage,
+    searchQuery,
+    onSuccessCallback
+  ) => {
     setIsFetchingUsers(true);
     setErrorWhileFetchingUsers("");
     setUsersFetchingAPIStatus(API_STATUS.LOADING);
