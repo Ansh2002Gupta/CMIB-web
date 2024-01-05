@@ -13,14 +13,18 @@ const CustomInput = ({
   customErrorTextStyles,
   customInputStyles,
   customLabelStyles,
+  customSelectInputStyles,
+  defaultSelectValueArray,
+  defaultSelectValueString,
   disabled,
-  defaultSelectValue,
   errorMessage,
   isError,
+  isMultiSelect,
   isRequired,
   isPrefixRequired,
   isSuffixRequiredForPassword,
   isTextVisible,
+  isSelectBoxDisable,
   label,
   messageStyles: customMessageStyles,
   messageToShow,
@@ -34,6 +38,7 @@ const CustomInput = ({
   type,
   value,
 }) => {
+  
   return (
     <Base className={[styles.container, customContainerStyles].join(" ")}>
       {!!label && (
@@ -44,11 +49,45 @@ const CustomInput = ({
           )}
         </div>
       )}
-      <div className={styles.formContainer}>
-        {type !== "select" && (
+      <div
+        className={[
+          styles.formContainer,
+          type === "mobile" ? styles.mobile : "",
+        ].join(" ")}
+      >
+        {(type === "select" || type === "mobile") && (
+          <>
+            <Select
+              mode={isMultiSelect ? "multiple" : ""}
+              className={[styles.selectInput, customSelectInputStyles].join(
+                " "
+              )}
+              onChange={(changedValue) => {
+                onSelectItem({
+                  target: {
+                    value: changedValue,
+                  },
+                });
+              }}
+              options={selectOptions}
+              defaultValue={
+                isMultiSelect
+                  ? defaultSelectValueArray
+                  : defaultSelectValueString
+              }
+              disabled={isSelectBoxDisable}
+            />
+          </>
+        )}
+        {(type !== "select" || type === "mobile") && (
           <Input
             type={type || "text"}
-            className={[styles.inputField, customInputStyles].join(" ")}
+            className={[
+              styles.inputField,
+              type === "mobile" ? styles.mobileInput : "",
+              ,
+              customInputStyles,
+            ].join(" ")}
             {...{
               value,
               placeholder,
@@ -89,15 +128,6 @@ const CustomInput = ({
             }
           />
         )}
-        {type === "select" && (
-          <Select
-            className={customInputStyles}
-            onChange={(e) => onSelectItem(e)}
-            options={selectOptions}
-            defaultValue={"1"}
-            value={currentSelectedValue}
-          />
-        )}
       </div>
       {isError && (
         <div>
@@ -127,14 +157,18 @@ CustomInput.defaultProps = {
   customErrorTextStyles: "",
   customInputStyles: "",
   customLabelStyles: "",
+  customSelectInputStyles: "",
+  defaultSelectValueArray: [],
+  defaultSelectValueString: "",
   disabled: false,
-  defaultSelectValue: "",
   errorMessage: "",
   isError: false,
+  isMultiSelect: false,
   isPrefixRequired: false,
   isRequired: false,
   isSuffixRequiredForPassword: false,
   isTextVisible: true,
+  isSelectBoxDisable: false,
   label: "",
   messageStyles: "",
   messageToShow: "",
@@ -155,14 +189,18 @@ CustomInput.propTypes = {
   customErrorTextStyles: PropTypes.string,
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
+  customSelectInputStyles: PropTypes.string,
+  defaultSelectValueArray: PropTypes.array,
+  defaultSelectValueString: PropTypes.string,
   disabled: PropTypes.bool,
-  defaultSelectValue: PropTypes.string,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
+  isMultiSelect: PropTypes.bool,
   isPrefixRequired: PropTypes.bool,
   isRequired: PropTypes.bool,
   isSuffixRequiredForPassword: PropTypes.bool,
   isTextVisible: PropTypes.bool,
+  isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,

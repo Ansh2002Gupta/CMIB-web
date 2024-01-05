@@ -11,6 +11,7 @@ const variables = {
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
   mobileBg1: colorPallets.white,
+  uploadBg: colorPallets.white1,
   snow: colorPallets.snow,
   lightGreen: colorPallets.lightGreen,
 
@@ -41,6 +42,7 @@ const variables = {
   radiusMd: "6px",
   radiusLg: "8px",
   radiusXLg: "12px",
+  radiusXLgMedium: "16px",
   radiusMLg: "16px",
   radiusXXLg: "24px",
 
@@ -75,17 +77,33 @@ const variables = {
   // Widths
   sidemenuWidth: "74px",
   fullWidth: "100%",
+  halfWidth: "50%",
   smallWidth: "30px",
+  width_400: "400px",
   width_350: "350px",
+  width_300: "300px",
+  width_200: "200px",
+  width_120: "120px",
+  width_100: "100px",
+  width_30: "30px",
   width_24: "24px",
+  width_20: "20px",
 
   // Heights
   btnHeight: "56px",
   minBtnHeight: "45px",
   smallHeight: "30px",
+  fullHeight: "100%",
+  halfHeight: "50%",
+  height_400: "400px",
+  height_300: "300px",
   height_240: "240px",
   height_250: "250px",
+  height_50: "50px",
+  height_30: "30px",
   height_24: "24px",
+  height_20: "20px",
+  height_50vh: "50vh",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
@@ -136,6 +154,7 @@ const variables = {
 
   // margin
   marginMedium: "16px",
+  marginSmall: "8px",
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };
