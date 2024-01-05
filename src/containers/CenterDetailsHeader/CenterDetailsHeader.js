@@ -5,7 +5,7 @@ import { TwoRow } from "../../core/layouts";
 
 import styles from "./CenterDetailsHeader.module.scss";
 
-const CenterDetailsHeader = ({ centerId, intl }) => {
+const CenterDetailsHeader = ({ centreId, intl }) => {
   return (
     <TwoRow
       className={styles.topSectionStyle}
@@ -19,7 +19,7 @@ const CenterDetailsHeader = ({ centerId, intl }) => {
           {intl.formatMessage({
             id: "label.centreCode",
           })}
-          <span className={styles.blackTitle}>{centerId}</span>
+          <span className={styles.blackTitle}>{centreId}</span>
         </Typography>
       }
     />

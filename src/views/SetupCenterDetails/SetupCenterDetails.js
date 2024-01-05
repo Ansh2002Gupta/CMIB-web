@@ -11,17 +11,15 @@ import useResponsive from "../../core/hooks/useResponsive";
 
 const SetupCenterDetails = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { centerId } = useParams();
+  const { centreId } = useParams();
   const isEdit = searchParams.get("edit") === "true";
   const intl = useIntl();
   const responsive = useResponsive();
 
-  console.log(centerId, "centerId");
-
   return (
     <TwoRow
       className={styles.mainContainer}
-      topSection={<CenterDetailsHeader {...{ centerId, intl }} />}
+      topSection={<CenterDetailsHeader {...{ centreId, intl }} />}
       bottomSection={<CenterDetailsContent {...{ isEdit, intl, responsive }} />}
     />
   );
