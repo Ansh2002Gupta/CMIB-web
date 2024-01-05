@@ -151,7 +151,7 @@ const config = [
         element: <SetupCenter />,
       },
       {
-        viewPath: SETUP_CENTERS_DETAILS,
+        viewPath: SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
     ],

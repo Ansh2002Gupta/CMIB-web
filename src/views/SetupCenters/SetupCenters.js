@@ -23,9 +23,9 @@ const SetupCenter = () => {
     CONFIGURE_CENTRES.length
   );
 
-  const goToEditCentrePage = (rowData) => {
+  const goToEditCentrePage = (rowData, isEdit) => {
     const centreId = rowData?.centreId;
-    navigate(`details/${centreId}`);
+    navigate(`/session/setup-centers/details/${centreId}?edit=${isEdit}`);
   };
 
   const columns = [
@@ -63,7 +63,7 @@ const SetupCenter = () => {
       key: "edit",
       renderImage: {
         alt: "edit",
-        onClick: (rowData) => goToEditCentrePage(rowData),
+        onClick: (rowData) => goToEditCentrePage(rowData, true),
         preview: false,
         src: getImage(true ? "edit" : "eye"),
         visible: true,

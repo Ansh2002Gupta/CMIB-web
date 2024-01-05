@@ -15,7 +15,7 @@ import { SESSION } from "../../routes/routeNames";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
 
-const CenterDetailsContent = ({ intl, responsive }) => {
+const CenterDetailsContent = ({ intl, isEdit, responsive }) => {
   const [formData, setFormData] = useState({
     PsychometricFee: "1000",
     centreStartTime: "2023-12-19T05:11:46.000000Z",
@@ -23,7 +23,6 @@ const CenterDetailsContent = ({ intl, responsive }) => {
   });
   const [tableData, setTableData] = useState(SETUP_CENTRE_DETAILS);
   const { navigateScreen: navigate } = useNavigateScreen();
-  const isEdit = true;
 
   const handleCancel = () => {
     navigate(-1);
@@ -153,8 +152,10 @@ const CenterDetailsContent = ({ intl, responsive }) => {
   );
 };
 
-CenterDetailsContent.defaultProps = {};
+CenterDetailsContent.defaultProps = {
+  isEdit: true,
+};
 
-CenterDetailsContent.propTypes = {};
+CenterDetailsContent.propTypes = { isEdit: PropTypes.bool };
 
 export default CenterDetailsContent;

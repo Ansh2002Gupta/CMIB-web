@@ -1,6 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -10,15 +10,19 @@ import styles from "./SetupCenterDetails.module.scss";
 import useResponsive from "../../core/hooks/useResponsive";
 
 const SetupCenterDetails = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { centerId } = useParams();
+  const isEdit = searchParams.get("edit") === "true";
   const intl = useIntl();
   const responsive = useResponsive();
+
+  console.log(centerId, "centerId");
 
   return (
     <TwoRow
       className={styles.mainContainer}
       topSection={<CenterDetailsHeader {...{ centerId, intl }} />}
-      bottomSection={<CenterDetailsContent {...{ intl, responsive }} />}
+      bottomSection={<CenterDetailsContent {...{ isEdit, intl, responsive }} />}
     />
   );
 };

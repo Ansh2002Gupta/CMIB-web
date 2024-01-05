@@ -81,7 +81,7 @@ const DataTable = ({
     return () => {
       setCurrent(1);
       setPageSize(PAGE_SIZE);
-      removeQueryParams();
+      //removeQueryParams();
     };
   }, []);
 
