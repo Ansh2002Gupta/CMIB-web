@@ -40,13 +40,29 @@ const useRenderColumn = () => {
       triggerType = "",
     } = renderMenu;
 
-    const { dateFormat = "DD/MM/YYYY", isTextBold, isTypeDate } = renderText;
+    const {
+      dateFormat = "DD/MM/YYYY",
+      includeDotAfterText,
+      isTextBold,
+      isTypeDate,
+      textStyles,
+    } = renderText;
 
     const {
       swithActiveLabel,
       swithInActiveLabel,
       switchToggleHandler = () => {},
     } = renderSwitch;
+
+    const textRenderFormat = ({ text }) => {
+      if (isTypeDate) {
+        return moment(new Date(text)).format(dateFormat);
+      }
+      if (includeDotAfterText) {
+        return `${text} .`;
+      }
+      return text;
+    };
 
     title &&
       (columnObject.title = () => {
@@ -83,11 +99,12 @@ const useRenderColumn = () => {
           children: (
             <p
               className={[
+                textStyles,
                 isTextBold ? styles.boldText : "",
                 styles.textEllipsis,
               ].join(" ")}
             >
-              {isTypeDate ? moment(new Date(text)).format(dateFormat) : text}
+              {textRenderFormat({ text })}
             </p>
           ),
         };

@@ -4,12 +4,12 @@ import { useIntl } from "react-intl";
 import { Select, Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomSwitch from "../../components/CustomSwitch";
 import RoundCard from "../../containers/RoundCard";
 import { CITY_CENTERS } from "../../constant/constant";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./SessionRound.styles";
 import styles from "./SessionRound.module.scss";
 
@@ -80,7 +80,7 @@ const SessionRound = ({ roundList, switchLabel }) => {
                 headingIntl={item.headingIntl}
                 imageUrl={item.imageUrl}
                 onClick={() => {
-                  navigate(item.onclickNaviagtion);
+                  navigate(item.onClickNaviagtion);
                 }}
               />
             );
