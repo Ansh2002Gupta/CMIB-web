@@ -43,7 +43,7 @@
 }
 
 .uploadImage {
-  max-width: 120px;
+  max-width: var(--width_120);
   overflow: hidden;
 }
 

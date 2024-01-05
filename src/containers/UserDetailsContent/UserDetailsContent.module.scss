@@ -1,8 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  width: var(--fullWidth);
+  height: var(--fullHeight);
   background-color: var(--blueBg);
 }
 
@@ -17,7 +17,7 @@
 
 .loaderContainer {
   width: var(--fullWidth);
-  height: 50vh;
+  height: var(--height_50vh);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,7 +63,7 @@
 
 .cancelBtn {
   display: flex;
-  padding: 12px var(--paddingSmall);
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
   justify-content: center;
   align-items: center;
   gap: var(--gapXSmall);
@@ -79,7 +79,7 @@
 }
 
 .tryAgainButton {
-  min-height: 30px;
+  min-height: var(--height_30);
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
   border: var(--borderLight);
@@ -92,6 +92,6 @@
 @media screen and (max-width: 511px) {
   .cancelBtn,
   .saveBtn {
-    min-height: 48px;
+    min-height: var(--minBtnHeight);
   }
 }

@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { API_STATUS } from "../../../constant/constant";
 import Http from "../../http-service";
-import {
-  ADMIN_ROUTE,
-  FETCHING_USERS_END_POINT,
-} from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, USERS_END_POINT } from "../../../constant/apiEndpoints";
 
 const useListingUsers = () => {
   const [isFetchingUsers, setIsFetchingUsers] = useState(false);
@@ -27,7 +24,7 @@ const useListingUsers = () => {
     try {
       let url =
         ADMIN_ROUTE +
-        FETCHING_USERS_END_POINT +
+        USERS_END_POINT +
         "?perPage=" +
         pageSize +
         "&" +

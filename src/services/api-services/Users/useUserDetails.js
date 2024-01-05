@@ -2,10 +2,7 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
-import {
-  ADMIN_ROUTE,
-  GET_USER_END_POINT,
-} from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, USERS_END_POINT } from "../../../constant/apiEndpoints";
 
 const useUserDetails = () => {
   const intl = useIntl();
@@ -17,7 +14,7 @@ const useUserDetails = () => {
     setError("");
     setIsLoading(true);
     try {
-      const url = ADMIN_ROUTE + GET_USER_END_POINT + "/" + userId;
+      const url = ADMIN_ROUTE + USERS_END_POINT + "/" + userId;
       const apiOptions = {
         headers: {
           Accept: "application/json",

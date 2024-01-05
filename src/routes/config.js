@@ -148,20 +148,19 @@ const config = [
   },
   {
     pagePath: USERS,
-    element: <HomeWithPrivateAccess />, // Page
+    element: <HomeWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <ManageUsers />, // view
+        element: <ManageUsers />,
       },
       {
         viewPath: USER_DETAILS,
-        element: <UserDetails />, // view
+        element: <UserDetails />,
       },
       {
         viewPath: ADD_NEW_USER_DETAILS,
-        element: <UserDetails />, // view
+        element: <UserDetails />,
       },
     ],
   },

@@ -10,7 +10,7 @@ import {
 } from "../../../constant/constant";
 import {
   ADMIN_ROUTE,
-  UPDATE_USER_END_POINT,
+  USERS_END_POINT,
 } from "../../../constant/apiEndpoints";
 
 const useUpdateUserDetailsApi = () => {
@@ -43,7 +43,7 @@ const useUpdateUserDetailsApi = () => {
       formData.append("_method", "PATCH");
       // TODO: remove the below code once we start getting current user permissions.
       formData.append("permissions", "1");
-      const url = ADMIN_ROUTE + UPDATE_USER_END_POINT + "/" + userId;
+      const url = ADMIN_ROUTE + USERS_END_POINT + "/" + userId;
       const apiOptions = {
         headers: {
           "Content-Type": "multipart/form-data",

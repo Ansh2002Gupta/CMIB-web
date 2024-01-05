@@ -8,11 +8,11 @@ import { ReactComponent as Trash } from "../../themes/base/assets/images/trash.s
 import styles from "./UserImage.module.scss";
 
 const UserImage = ({
-  src,
   customImageStyles,
+  editable,
   imageName,
   onTrashClick,
-  editable,
+  src,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -37,18 +37,18 @@ const UserImage = ({
 
 UserImage.defaultProps = {
   customImageStyles: "",
+  editable: false,
   imageName: "",
   onTrashClick: () => {},
   src: "",
-  editable: false,
 };
 
 UserImage.propTypes = {
   customImageStyles: PropTypes.string,
+  editable: PropTypes.bool,
   imageName: PropTypes.string,
   onTrashClick: PropTypes.func,
   src: PropTypes.string,
-  editable: PropTypes.bool,
 };
 
 export default UserImage;
