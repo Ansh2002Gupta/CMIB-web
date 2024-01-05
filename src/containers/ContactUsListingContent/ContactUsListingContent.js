@@ -128,14 +128,13 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
   }, [queriesMetaData, ticketsMetaData, currentActiveTab]);
 
   const getStatusStyles = (status) => {
-    // TODO: please complete the below code functionality.
-    if (status === "closed") {
-      return ["statusContainer_success","statusText_success"];
+    if (status === "Closed") {
+      return ["statusContainer_success", "statusText_success"];
     }
-    if (status === "pending") {
+    if (status === "Pending") {
       return ["statusContainer_progress", "statusText_progress"];
     }
-    return "statusContainer_failed";
+    return ["statusContainer_failed", "statusText_failed"];
   };
 
   const queriesColumns = [
@@ -224,8 +223,8 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       title: intl.formatMessage({ id: "label.createdBy" }),
       dataIndex: "created_by",
       key: "created_by",
-      // sortKey: "name",
-      // sortTypeText: true,
+      sortKey: "created_by",
+      sortTypeText: true,
       renderText: { isTextBold: true, visible: true },
     }),
     renderColumn({
@@ -252,10 +251,17 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       key: "status",
       render: (data, rowData) => {
         const { status } = rowData;
-        const styleClass = getStatusStyles(status);
+        const styleClassForContainer = getStatusStyles(status)[0];
+        const styleClassForText = getStatusStyles(status)[1];
         return (
-          <div className={[styles.statusBox, styles[styleClass]].join(" ")}>
-            <Typography>{status}</Typography>
+          <div
+            className={[styles.statusBox, styles[styleClassForContainer]].join(
+              " "
+            )}
+          >
+            <Typography className={styles[styleClassForText]}>
+              {status}
+            </Typography>
           </div>
         );
       },
