@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Pagination, Select, Table, Typography } from "antd";
 
 import PaginationItems from "./PaginationItems";
-import { ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
+import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
 import "./override.css";
 
@@ -83,7 +83,7 @@ DataTable.defaultProps = {
   originalData: [],
   searchedValue: "",
   paginationApi: () => {},
-  pageSize: 10,
+  pageSize: PAGE_SIZE,
   current: 1,
 };
 
