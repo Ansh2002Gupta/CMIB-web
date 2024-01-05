@@ -41,7 +41,7 @@ const DataTable = ({
   };
 
   return (
-    <div className={customContainerStyles}>
+    <div className={[styles.container, customContainerStyles].join(" ")}>
       <Table
         columns={columns}
         dataSource={originalData}

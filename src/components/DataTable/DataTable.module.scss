@@ -1,3 +1,8 @@
+.container {
+  background-color: var(--bodyBg);
+  border-radius: var(--radiusXLg);
+}
+
 .rowPerPageOptionsAndPaginationContainer {
   display: flex;
   justify-content: space-between;
@@ -35,7 +40,7 @@
 }
 
 .table {
-  min-height: min(50vh, 300px);
+  min-height: min(var(--height_50vh), var(--height_300));
 }
 
 .nextAndPrevText {
