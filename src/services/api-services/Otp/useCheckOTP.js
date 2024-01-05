@@ -3,7 +3,6 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import { ADMIN_ROUTE, VERIFY_OTP } from "../../../constant/apiEndpoints";
 import { setItem } from "../../encrypted-storage-service";
 
 const useCheckOTP = () => {
