@@ -89,6 +89,7 @@ const useRenderColumn = () => {
           children: (
             <p
               className={[
+                textStyles,
                 isTextBold ? styles.boldText : "",
                 styles.textEllipsis,
               ].join(" ")}
