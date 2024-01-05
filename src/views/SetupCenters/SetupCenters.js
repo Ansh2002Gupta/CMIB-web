@@ -32,7 +32,7 @@ const SetupCenter = () => {
       title: intl.formatMessage({ id: "label.sNo" }),
       dataIndex: "sNo",
       key: "sNo",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { visible: true, isDot: true, textStyles: styles.textStyles },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreName" }),
