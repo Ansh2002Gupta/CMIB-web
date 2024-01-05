@@ -45,3 +45,8 @@ export const SESSION_PERIOD = [
   { id: 111, label: "May 2020", value: "May 2020" },
   { id: 112, label: "November 2020", value: "November 2020" },
 ];
+
+export const CENTRE_TYPE = [
+  { id: 1, label: "Small Centre", value: "Small Centre" },
+  { id: 2, label: "Big Centre", value: "Big Centre" },
+];

@@ -1,0 +1,155 @@
+.mainContainer {
+  gap: var(--gapMedium);
+  margin: 0 24px;
+}
+
+.centreDetails {
+  background-color: var(--bodyBg);
+  padding: var(--fontSizeXlargeMedium);
+  border-radius: var(--lineHeightExtraSmall);
+  border: var(--borderLight);
+  gap: var(--gapMedium);
+  
+}
+
+.headingText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.headerContainer {
+  justify-content: space-between;
+}
+
+.grayText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.blackText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.redText {
+  color: var(--error);
+}
+
+.editIcon {
+  width: var(--lineHeightNormal);
+  height: var(--lineHeightNormal);
+}
+
+.editContainer {
+  align-items: center;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  column-gap: var(--gapSmall);
+  flex: 1;
+}
+
+.mobileGridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  column-gap: var(--gapSmall);
+  flex: 1;
+}
+
+.gridItem {
+  padding-bottom: var(--gapMedium);
+}
+
+.statusContainer {
+  gap: var(--gapXSmall);
+  align-items: center;
+}
+
+.Switch {
+  background-color: var(--greenBtnBg);
+}
+
+.inputLabel {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.input {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  padding-left: var(--paddingSmall);
+  padding-right: var(--paddingSmall);
+  padding-top: var(--paddingExtraSmall);
+  padding-bottom: var(--paddingExtraSmall);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: red !important;
+  }
+}
+
+.selectInput {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+}
+
+.buttonStyles {
+  background-color: var(--bodyBg);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--btnText) !important;
+  }
+}
+
+.mobileButtonStyles {
+  background-color: var(--bodyBg);
+  padding: var(--paddingSmall);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--btnText) !important;
+  }
+}
+
+.formInputStyles {
+  flex: 1;
+}
+
+.textStyle {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.saveButtonTextStyles {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--bodyBg);
+}
+
+.customContainerStyles {
+  width: var(--fullWidth);
+}
+
+.errorText {
+  color: var(--error);
+  font-size: var(--fontSizeExtraSmall);
+  margin-top: var(--gapXXSmall);
+}

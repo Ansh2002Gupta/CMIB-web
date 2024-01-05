@@ -117,6 +117,11 @@ const locale = {
   "label.configureCentres": "Configure Centres",
   "label.addNewCentre": "Add New Centre",
   "label.newCentre": "New Centre",
+  "label.add": "Add",
+  "label.centreDetails": "Centre Details",
+  "centre.placeholder.centreName": "Enter Centre Name",
+  "centre.placeholder.bigSmallCentre": "Choose Centre Type",
+  "centre.placeholder.centreId": "Enter Centre Id",
 };
 
 export default locale;

@@ -224,3 +224,9 @@ export const SESSION_DETAILS = {
   created_at: "2023-12-19T05:11:46.000000Z",
   updated_at: "2023-12-19T05:11:46.000000Z",
 };
+
+export const INITIAL_CENTRE_DETAILS = {
+  centreName: "",
+  centreId: "",
+  status: true,
+}
