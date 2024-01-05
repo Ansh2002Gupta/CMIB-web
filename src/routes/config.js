@@ -145,22 +145,6 @@ const config = [
     ],
   },
   {
-    pagePath: COMPANIES,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
-      // array of views under Page route
-      {
-        
-        viewPath: "",
-        element: <Companies />,
-      },
-      {
-        viewPath: COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
-      },
-    ],
-  },
-  {
     pagePath: USERS,
     element: <HomeWithPrivateAccess />, // Page
     views: [
