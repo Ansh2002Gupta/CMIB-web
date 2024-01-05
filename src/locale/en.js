@@ -109,6 +109,9 @@ const locale = {
   "label.companyProfile": "Company Profile",
   "label.logout": "Logout",
   "label.left": "left",
+  "setupCentres.heading": "Setup Centres",
+  "setupCentres.warning":
+    "*This cannot be edited once the registration for the Company/Candidate starts.",
   "session.rounds.selectCentres": "Select centres",
   "session.rounds.centres": "Centres",
   "session.roundOneStatus": "Round 1 Status",
@@ -130,6 +133,8 @@ const locale = {
   "label.configureCentres": "Configure Centres",
   "label.addNewCentre": "Add New Centre",
   "label.newCentre": "New Centre",
+  "label.actions": "Actions",
+  "label.sNo": "S. No",
 };
 
 export default locale;

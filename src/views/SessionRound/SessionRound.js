@@ -9,12 +9,14 @@ import useResponsive from "../../core/hooks/useResponsive";
 import CustomSwitch from "../../components/CustomSwitch";
 import RoundCard from "../../containers/RoundCard";
 import { CITY_CENTERS } from "../../constant/constant";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./SessionRound.styles";
 import styles from "./SessionRound.module.scss";
 
 const SessionRound = ({ roundList, switchLabel }) => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const { navigateScreen: navigate } = useNavigateScreen();
 
   const [status, setStatus] = useState(false);
   const [city, setCity] = useState([]);
@@ -77,6 +79,9 @@ const SessionRound = ({ roundList, switchLabel }) => {
                 headingDescription={item.headingDescription}
                 headingIntl={item.headingIntl}
                 imageUrl={item.imageUrl}
+                onClick={() => {
+                  navigate(item.onClickNaviagtion);
+                }}
               />
             );
           })}
