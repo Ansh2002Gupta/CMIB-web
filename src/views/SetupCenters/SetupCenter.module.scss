@@ -1,0 +1,38 @@
+.mainContainer {
+  background-color: var(--blueBg);
+}
+
+.headerContainer {
+  padding: var(--gapMedium);
+  background-color: var(--bodyBg);
+}
+
+.headingText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeHeading);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.descriptionText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.tableContainer {
+  border: var(--borderLight);
+  border-radius: var(--gapXSmall);
+  flex: 1;
+  width: var(--fullWidth);
+  flex-direction: column;
+}
+
+.textStyles {
+  padding-left: var(--paddingSmall);
+}
+
+.serialHeader {
+  padding-left: var(--paddingSmall);
+}

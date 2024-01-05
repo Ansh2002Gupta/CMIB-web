@@ -1,4 +1,6 @@
 import Auth from "../pages/Auth";
+import Companies from "../views/Companies";
+import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import ConfigureCentreView from "../views/ConfigureCentreView";
@@ -7,8 +9,9 @@ import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
-import Session from "../views/Session";
 import ManageUsers from "../views/ManageUsers";
+import Session from "../views/Session";
+import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -17,11 +20,14 @@ import {
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
+  COMPANIES,
+  COMPANIES_DETAILS,
   MANAGE_USERS,
   FORGOT_PASSWORD,
   ROOT,
   CONFIGURE_CENTRES,
   SESSION,
+  SETUP_CENTERS,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -108,6 +114,20 @@ const config = [
     ],
   },
   {
+    pagePath: COMPANIES,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: "",
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
     pagePath: MANAGE_USERS,
     element: <HomeWithPublicAccess noOuterPadding />,
     views: [
@@ -119,11 +139,15 @@ const config = [
   },
   {
     pagePath: SESSION,
-    element: <HomeWithPublicAccess />,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
         element: <Session />,
+      },
+      {
+        viewPath: SETUP_CENTERS,
+        element: <SetupCenter />,
       },
     ],
   },

@@ -109,6 +109,22 @@ const locale = {
   "label.companyProfile": "Company Profile",
   "label.logout": "Logout",
   "label.left": "left",
+  "setupCentres.heading": "Setup Centres",
+  "setupCentres.warning":
+    "*This cannot be edited once the registration for the Company/Candidate starts.",
+  "session.rounds.selectCentres": "Select centres",
+  "session.rounds.centres": "Centres",
+  "session.roundOneStatus": "Round 1 Status",
+  "session.roundTwoStatus": "Round 2 Status",
+  "label.addCompany": "Add Company",
+  "label.city": "City",
+  "label.companies": "Companies",
+  "label.companyName": "Company Name",
+  "label.entity": "Entity",
+  "label.generatePaymentMis": "Generate Payment MIS",
+  "label.manageCompanyDetails": "Manage company details",
+  "label.phoneNumber": "Phone Number",
+  "label.searchByComapanyName": "Search by company name",
   "label.centreName": "Centre Name",
   "label.centreId": "Centre Id",
   "label.bigSmallCentre": "Big/Small Centre",
@@ -122,6 +138,8 @@ const locale = {
   "centre.placeholder.centreName": "Enter Centre Name",
   "centre.placeholder.bigSmallCentre": "Choose Centre Type",
   "centre.placeholder.centreId": "Enter Centre Id",
+  "label.actions": "Actions",
+  "label.sNo": "S. No",
 };
 
 export default locale;
