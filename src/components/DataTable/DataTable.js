@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Pagination, Select, Table, Typography } from "antd";
