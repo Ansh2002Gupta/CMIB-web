@@ -96,6 +96,7 @@ const variables = {
   fullHeight: "100%",
   halfHeight: "50%",
   height_400: "400px",
+  height_300: "300px",
   height_240: "240px",
   height_250: "250px",
   height_50: "50px",
