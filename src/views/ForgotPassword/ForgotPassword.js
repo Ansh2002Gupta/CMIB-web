@@ -65,18 +65,6 @@ const ForgotPassword = () => {
   }, [userName]);
 
   useEffect(() => {
-    if (isCheckingOTPSuccessfull) {
-      setCurrentActiveScreen(3);
-    }
-  }, [isCheckingOTPSuccessfull]);
-
-  useEffect(() => {
-    if (isForgotPasswordSuccessful) {
-      setCurrentActiveScreen(2);
-    }
-  }, [isForgotPasswordSuccessful]);
-
-  useEffect(() => {
     return () => {
       setUserName("");
       setStatus("");
