@@ -11,6 +11,9 @@ const variables = {
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
   mobileBg1: colorPallets.white,
+  lightGreenBg: colorPallets.lightGreen,
+  lightBlueBg: colorPallets.skyBlue,
+  lightRedBg: colorPallets.lightOrange,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -32,6 +35,9 @@ const variables = {
   error: colorPallets.red1,
   requiredStarColor: colorPallets.red1,
   sideMenuMaskBg: colorPallets.maskBlack,
+  greenText: colorPallets.darkGreen,
+  blueText: colorPallets.darkBlue2,
+  redText: colorPallets.darkOrange,
 
   // Border-Radius
   radiusXss: "2px",

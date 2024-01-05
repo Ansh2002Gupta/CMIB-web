@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import * as _ from "lodash";
-import { Image, Input, Spin } from "antd";
+import { Image, Input, Spin, Typography } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
@@ -127,6 +127,17 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
     }
   }, [queriesMetaData, ticketsMetaData, currentActiveTab]);
 
+  const getStatusStyles = (status) => {
+    // TODO: please complete the below code functionality.
+    if (status === "closed") {
+      return ["statusContainer_success","statusText_success"];
+    }
+    if (status === "pending") {
+      return ["statusContainer_progress", "statusText_progress"];
+    }
+    return "statusContainer_failed";
+  };
+
   const queriesColumns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.queriesId" }),
@@ -239,7 +250,15 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       title: intl.formatMessage({ id: "label.status" }),
       dataIndex: "status",
       key: "status",
-      renderText: { visible: true },
+      render: (data, rowData) => {
+        const { status } = rowData;
+        const styleClass = getStatusStyles(status);
+        return (
+          <div className={[styles.statusBox, styles[styleClass]].join(" ")}>
+            <Typography>{status}</Typography>
+          </div>
+        );
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.assignedTo" }),
@@ -263,17 +282,7 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       renderImage: {
         alt: "eye",
         preview: false,
-        src: getImage("eye"),
-        visible: true,
-      },
-    }),
-    renderColumn({
-      dataIndex: "check",
-      key: "check",
-      renderImage: {
-        alt: "check",
-        preview: false,
-        src: getImage("rightIcon"),
+        src: getImage("messageText"),
         visible: true,
       },
     }),

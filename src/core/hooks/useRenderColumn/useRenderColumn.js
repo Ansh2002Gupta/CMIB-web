@@ -11,6 +11,7 @@ const useRenderColumn = () => {
     dataIndex,
     defaultSortOrder,
     key,
+    render,
     renderImage = {},
     renderText = {},
     renderSwitch = {},
@@ -109,6 +110,8 @@ const useRenderColumn = () => {
           />
         );
       });
+
+    render && (columnObject.render = render);
 
     return columnObject;
   };

@@ -54,6 +54,38 @@
   justify-content: center;
   align-items: center;
 }
+
+.statusBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radiusXLg);
+}
+
+.statusContainer_success {
+  background-color: var(--lightGreenBg);
+}
+
+.statusContainer_failed {
+  background-color: var(--lightRedBg);
+}
+
+.statusContainer_progress {
+  background-color: var(--lightBlueBg);
+}
+
+.statusText_success {
+  color: var(--greenText);
+}
+
+.statusText_failed {
+  color: var(--redText);
+}
+
+.statusText_progress {
+  color: var(--blueText);
+}
+
 .errorText {
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
