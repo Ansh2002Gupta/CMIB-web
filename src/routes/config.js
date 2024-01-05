@@ -8,8 +8,9 @@ import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
-import Session from "../views/Session";
 import ManageUsers from "../views/ManageUsers";
+import Session from "../views/Session";
+import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -28,6 +29,7 @@ import {
   CONFIGURE_CENTRES,
   SESSION,
   ROUTE,
+  SETUP_CENTERS,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -170,6 +172,10 @@ const config = [
       {
         viewPath: "",
         element: <Session />,
+      },
+      {
+        viewPath: SETUP_CENTERS,
+        element: <SetupCenter />,
       },
     ],
   },

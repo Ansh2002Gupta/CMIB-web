@@ -64,7 +64,7 @@ function Session() {
           className={styles.topSectionStyle}
           topSection={
             <ContentHeader
-              customStyles={!responsive?.isMd && styles.customStyles}
+              customStyles={!responsive?.isMd ? styles.customStyles : ""}
               headerText={intl.formatMessage({ id: "label.session" })}
               rightSection={
                 !addSession && (
@@ -72,7 +72,7 @@ function Session() {
                     btnText={intl.formatMessage({
                       id: "session.setUpNewSession",
                     })}
-                    customStyle={!responsive.isMd ? styles.buttonStyles : null}
+                    customStyle={!responsive.isMd ? styles.buttonStyles : ""}
                     IconElement={responsive.isMd ? AddIcon : null}
                     textStyle={styles.textStyle}
                     onClick={() => {

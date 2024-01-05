@@ -111,6 +111,9 @@ const locale = {
   "label.companyProfile": "Company Profile",
   "label.logout": "Logout",
   "label.left": "left",
+  "setupCentres.heading": "Setup Centres",
+  "setupCentres.warning":
+    "*This cannot be edited once the registration for the Company/Candidate starts.",
   "label.dragNdrop": "Drag & drop files or",
   "label.browse": "Browse",
   "label.supportedFormat": "Supported formates: png, jpg, jpeg",
@@ -158,6 +161,8 @@ const locale = {
   "label.configureCentres": "Configure Centres",
   "label.addNewCentre": "Add New Centre",
   "label.newCentre": "New Centre",
+  "label.actions": "Actions",
+  "label.sNo": "S. No",
 };
 
 export default locale;

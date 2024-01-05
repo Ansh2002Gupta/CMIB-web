@@ -12,3 +12,4 @@ export const ADD_NEW_USER_DETAILS = "add";
 export const CONFIGURE_CENTRES = "/global-configurations";
 export const SESSION = "/session";
 export const ROUTE = "/configurations";
+export const SETUP_CENTERS = "setup-centers";

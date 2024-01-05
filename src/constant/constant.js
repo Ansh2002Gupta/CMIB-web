@@ -1,3 +1,5 @@
+import { SETUP_CENTERS } from "../routes/routeNames";
+
 export const PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
@@ -138,6 +140,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
+    onClickNaviagtion: SETUP_CENTERS,
   },
   {
     id: 2,
@@ -145,6 +148,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
     headingIntl: "Mock Interviews",
+    onClickNaviagtion: SETUP_CENTERS,
   },
   {
     id: 3,
@@ -152,6 +156,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
     headingIntl: "Orientation Centres",
+    onClickNaviagtion: SETUP_CENTERS,
   },
   {
     id: 4,
@@ -159,6 +164,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
+    onClickNaviagtion: SETUP_CENTERS,
   },
   {
     id: 5,
@@ -166,6 +172,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
+    onClickNaviagtion: SETUP_CENTERS,
   },
 ];
 
@@ -176,6 +183,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
+    onClickNaviagtion: SETUP_CENTERS,
   },
   {
     id: 2,
@@ -183,6 +191,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
+    onClickNaviagtion: SETUP_CENTERS,
   },
   {
     id: 3,
@@ -190,6 +199,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
+    onClickNaviagtion: SETUP_CENTERS,
   },
 ];
 
