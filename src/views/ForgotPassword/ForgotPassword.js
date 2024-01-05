@@ -11,6 +11,7 @@ import OTPInput from "../../components/OTPInput/OTPInput";
 import useCheckOTP from "../../services/api-services/Otp/useCheckOTP.js";
 import useForgotPassword from "../../services/api-services/ForgotPassword/useForgotPassword.js";
 import withCardView from "../../hocs/withCardView";
+import { ADMIN_ROUTE, VERIFY_OTP } from "../../constant/apiEndpoints.js";
 import { LOGIN } from "../../routes/routeNames.js";
 import { EMAIL_REGEX } from "../../constant/regex.js";
 import styles from "./ForgotPassword.module.scss";
