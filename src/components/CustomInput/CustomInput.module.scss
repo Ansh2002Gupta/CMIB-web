@@ -21,7 +21,7 @@
   margin-top: 8px;
 }
 
-.messageText{
+.messageText {
   margin-top: 8px;
 }
 
@@ -34,11 +34,12 @@
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightMedium);
+
   &::placeholder {
     color: var(--inputPlaceHolder) !important;
   }
 }
 
-.suffixElement{
-    cursor: pointer;
+.suffixElement {
+  cursor: pointer;
 }

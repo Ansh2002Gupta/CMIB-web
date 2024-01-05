@@ -24,7 +24,8 @@ const SetupCenter = () => {
   );
 
   const goToEditCentrePage = (rowData) => {
-    navigate(`/view-centre-details?centreId=${rowData?.centreId}&edit=${true}`);
+    const centreId = rowData?.centreId;
+    navigate(`details/${centreId}`);
   };
 
   const columns = [

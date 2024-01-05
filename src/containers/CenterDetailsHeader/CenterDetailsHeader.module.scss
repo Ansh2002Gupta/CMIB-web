@@ -1,0 +1,23 @@
+.topSectionStyle {
+  padding: var(--paddingMedium);
+  background-color: var(--bodyBg);
+  border-bottom: var(--borderLight);
+}
+
+.heading {
+  font-size: var(--fontSizeHeading);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.title {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--inputPlaceHolder);
+}
+
+.blackTitle {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}

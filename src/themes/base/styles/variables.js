@@ -36,6 +36,7 @@ const variables = {
   sideMenuMaskBg: colorPallets.maskBlack,
 
   // Border-Radius
+  radiusNone: "0px",
   radiusXss: "2px",
   radiusSm: "4px",
   radiusMd: "6px",
@@ -75,9 +76,12 @@ const variables = {
   // Widths
   sidemenuWidth: "74px",
   fullWidth: "100%",
+  width_45: "45%",
+  width_30: "30%",
   smallWidth: "30px",
   width_350: "350px",
   width_24: "24px",
+  width_100: "100px",
 
   // Heights
   btnHeight: "56px",
@@ -110,6 +114,7 @@ const variables = {
   inputPlaceHolder: colorPallets.darkGrey1,
 
   // Padding
+  paddingNone: "0px",
   paddingXXSmall: "4px",
   paddingExtraSmall: "8px",
   paddingMediumSmall: "12px",
