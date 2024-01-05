@@ -96,6 +96,7 @@ const SearchFilter = ({
               isLeftFillSpace
               isRightFillSpace
               leftSectionStyle={classes.filterLeftSectionBorder}
+              className={styles.filterOptionContainer}
               leftSection={
                 <div>
                   {filterPropertiesArray?.map((item, index) => {
