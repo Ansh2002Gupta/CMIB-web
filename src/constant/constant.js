@@ -1,3 +1,5 @@
+import { SETUP_CENTERS } from "../routes/routeNames";
+
 export const PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
@@ -44,4 +46,83 @@ export const SESSION_PERIOD = [
   { id: 110, label: "November 2021", value: "November 2021" },
   { id: 111, label: "May 2020", value: "May 2020" },
   { id: 112, label: "November 2020", value: "November 2020" },
+];
+
+export const ROUND_ONE_CARD_LIST = [
+  {
+    id: 1,
+    imageUrl: "Building",
+    headingDescription:
+      "Streamline interview center management. Customize locations and logistics effortlessly.",
+    headingIntl: "Setup Centres",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 2,
+    imageUrl: "DeviceMessage",
+    headingDescription:
+      "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
+    headingIntl: "Mock Interviews",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 3,
+    imageUrl: "Key",
+    headingDescription:
+      "Foster smooth transitions. Create welcoming spaces with essential information.",
+    headingIntl: "Orientation Centres",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 4,
+    imageUrl: "Document",
+    headingDescription:
+      "Simplify onboarding. Gather participant info and ensure consent compliance.",
+    headingIntl: "Registration and Consent Marking Schedule",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 5,
+    imageUrl: "Monitor",
+    headingDescription:
+      "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
+    headingIntl: "Campus Interview Settings",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+];
+
+export const ROUND_TWO_CARD_LIST = [
+  {
+    id: 1,
+    imageUrl: "Building",
+    headingDescription:
+      "Streamline interview center management. Customize locations and logistics effortlessly.",
+    headingIntl: "Setup Centres",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 2,
+    imageUrl: "Document",
+    headingDescription:
+      "Simplify onboarding. Gather participant info and ensure consent compliance.",
+    headingIntl: "Registration and Consent Marking Schedule",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 3,
+    imageUrl: "Monitor",
+    headingDescription:
+      "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
+    headingIntl: "Campus Interview Settings",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+];
+
+export const CITY_CENTERS = [
+  { id: 101, label: "Delhi", value: "Delhi" },
+  { id: 102, label: "Mumbai", value: "Mumbai" },
+  { id: 103, label: "Gurugram", value: "Gurugram" },
+  { id: 104, label: "Pune", value: "Pune" },
+  { id: 105, label: "Banglore", value: "Banglore" },
+  { id: 106, label: "Goa", value: "Goa" },
 ];
