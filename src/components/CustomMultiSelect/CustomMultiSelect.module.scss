@@ -1,0 +1,94 @@
+.parentContainer {
+  position: relative;
+}
+
+.container {
+  border: var(--borderLight);
+  border-radius: var(--radiusXLgMedium);
+  background-color: var(--bodyBg);
+  z-index: 5;
+  overflow: hidden;
+  max-height: 30vh;
+  overflow-y: scroll;
+  position: absolute;
+  width: 100%;
+  top: 85px;
+  left: 0px;
+}
+
+.section {
+  border-top: var(--borderLight);
+  padding: var(--paddingSmall);
+}
+
+.optionHeadingContainer {
+  padding: var(--paddingExtraSmall);
+}
+
+.icon {
+  min-width: 20px;
+}
+
+.optionContainer {
+  padding: var(--paddingExtraSmall);
+  display: flex;
+  gap: var(--gapSmall);
+  align-items: center;
+  justify-self: center;
+  cursor: pointer;
+}
+
+.optionsHeading {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--inputPlaceHolder);
+}
+
+.optionText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.optionDropdownPlaceHolderContaier {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px var(--paddingMedium);
+  border: var(--borderLight);
+  border-radius: var(--radiusLg);
+  cursor: pointer;
+  min-height: 50px;
+}
+
+.labelContainer {
+  // change this to variable
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chipsListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  cursor: pointer;
+  width: 100%;
+  padding: 8px;
+}
+
+.chips {
+  border-radius: 24px;
+  background-color: #f2f4fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  width: fit-content;
+}
+
+.chipsText {
+  color: #000833;
+  font-size: 12px;
+}

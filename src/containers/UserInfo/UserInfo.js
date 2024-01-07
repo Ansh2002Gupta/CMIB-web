@@ -6,7 +6,13 @@ import { DatePicker, Typography, Descriptions, Switch } from "antd";
 import Base from "../../core/layouts/Base/Base";
 
 import CustomInput from "../../components/CustomInput";
-import { ACCESS_OPTIONS } from "../../constant/constant";
+import CustomMultiSelect from "../../components/CustomMultiSelect";
+import {
+  ADD_NEW_USER_ACCESS_OPTIONS,
+  ALLOWED_MOBILE_PREFIXES,
+  allAccessIdObject,
+} from "../../constant/constant";
+import { convertStringArrayToObjectOfStringAndIdArray } from "../../services/Utils";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
@@ -48,7 +54,9 @@ const UserInfo = ({
     {
       key: "4",
       label: `${intl.formatMessage({ id: "label.access" })} *`,
-      children: access,
+      children:
+        access?.map((item) => item)?.join(",") ||
+        intl.formatMessage({ id: "label.none" }),
     },
     {
       key: "5",
@@ -86,7 +94,7 @@ const UserInfo = ({
           <div className={styles.container}>
             <div>
               <CustomInput
-                type={"text"}
+                type="text"
                 label={intl.formatMessage({ id: "label.userName2" })}
                 isError={!!userNameErrorMessage}
                 errorMessage={userNameErrorMessage}
@@ -126,41 +134,34 @@ const UserInfo = ({
                 customSelectInputStyles={[styles.selectInput].join(" ")}
                 customLabelStyles={styles.label}
                 onChange={(e) => updateUserData("mobile", e.target.value)}
-                selectOptions={[
-                  {
-                    value: "91",
-                    label: "+91",
-                  },
-                ]}
+                selectOptions={ALLOWED_MOBILE_PREFIXES}
                 defaultSelectValueString="+91"
                 onSelectItem={(e) =>
                   updateUserData("mobile_prefix", e.target.value)
                 }
               />
             </div>
-            <div>
-              <CustomInput
-                type="select"
-                isError={!!userAccessErrorMessage}
-                errorMessage={userAccessErrorMessage}
-                isMultiSelect
-                defaultSelectValueArray={access}
-                onSelectItem={(e) => updateUserData("access", e.target.value)}
-                label={intl.formatMessage({ id: "label.access" })}
-                isRequired
-                disabled={!isEditable}
-                selectOptions={ACCESS_OPTIONS}
-                customSelectInputStyles={[
-                  styles.text,
-                  styles.input,
-                  styles.selectInput,
-                ].join(" ")}
-                customLabelStyles={styles.label}
+            <div className={styles.spanOverAllColumns}>
+              <CustomMultiSelect
+                optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
+                selectedOptions={convertStringArrayToObjectOfStringAndIdArray(
+                  access,
+                  allAccessIdObject
+                )}
+                setSelectedOptions={(value) => updateUserData("access", value)}
               />
+              {!!userAccessErrorMessage && (
+                <div>
+                  {" "}
+                  <Typography className={styles.errorText}>
+                    * {intl.formatMessage({ id: "label.notValidUserAccess" })}
+                  </Typography>
+                </div>
+              )}
             </div>
             {shouldShowDatePickerOption && date && (
               <div className={styles.dateContainer}>
-                <Typography className={styles.label}>
+                <Typography className={styles.accessSelectLabel}>
                   {intl.formatMessage({ id: "label.dateCreatedOn" })}
                 </Typography>
                 <DatePicker
@@ -176,9 +177,11 @@ const UserInfo = ({
               </div>
             )}
             <div className={styles.twoFactorContainer}>
-              <Typography className={styles.label}>
-                {intl.formatMessage({ id: "label.twoFactorAuth" })}
-              </Typography>
+              <div>
+                <Typography className={styles.label}>
+                  {intl.formatMessage({ id: "label.twoFactorAuth" })}
+                </Typography>
+              </div>
               <div className={styles.switchAndTextContainer}>
                 <Switch
                   className={is_two_factor ? styles.active : ""}

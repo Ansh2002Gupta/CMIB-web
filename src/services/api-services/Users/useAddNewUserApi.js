@@ -2,12 +2,7 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
-import {
-  ALL_ROLE_ID,
-  API_STATUS,
-  ROLE_ID_MAPPING,
-  STATUS_CODES,
-} from "../../../constant/constant";
+import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 import { USERS_END_POINT, ADMIN_ROUTE } from "../../../constant/apiEndpoints";
 
 const useAddNewUserApi = () => {
@@ -23,15 +18,7 @@ const useAddNewUserApi = () => {
     const formData = new FormData();
     for (let [key, value] of Object.entries(payload)) {
       if (key?.toLowerCase() === "role") {
-        if (value.includes("all")) {
-          value = ALL_ROLE_ID;
-        } else {
-          value = value.map((item) => {
-            item = item.toLowerCase();
-            return ROLE_ID_MAPPING[`${item}`];
-          });
-          value = value?.filter((item) => item);
-        }
+        value = value.map((item) => item.id);
         value = value.join(",");
       }
       formData.append(key, value);
@@ -77,10 +64,10 @@ const useAddNewUserApi = () => {
     addNewUserData,
     errorWhileAddingNewUser,
     addNewUserApiStatus,
-    addNewUser,
     isError,
     isLoading,
     isSuccess,
+    addNewUser,
     setErrorWhileAddingNewUser,
   };
 };
