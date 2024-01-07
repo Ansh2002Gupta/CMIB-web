@@ -90,7 +90,7 @@ UserDetailsHeader.defaultProps = {
   updateUserData: () => {},
   updateUserDetails: () => {},
   userData: {},
-  userId: 0,
+  userId: "",
 };
 
 UserDetailsHeader.propTypes = {
@@ -99,7 +99,7 @@ UserDetailsHeader.propTypes = {
   updateUserData: PropTypes.func,
   updateUserDetails: PropTypes.func,
   userData: PropTypes.object,
-  userId: PropTypes.number,
+  userId: PropTypes.string,
 };
 
 export default UserDetailsHeader;

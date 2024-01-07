@@ -246,7 +246,7 @@ UserDetailsContent.defaultProps = {
   setIsUserNameValid: () => {},
   updateUserData: () => {},
   updateUserDetails: () => {},
-  userId: 0,
+  userId: "",
   userData: {},
 };
 
@@ -266,7 +266,7 @@ UserDetailsContent.propTypes = {
   setIsUserNameValid: PropTypes.func,
   updateUserData: PropTypes.func,
   updateUserDetails: PropTypes.func,
-  userId: PropTypes.number,
+  userId: PropTypes.string,
   userData: PropTypes.object,
 };
 
