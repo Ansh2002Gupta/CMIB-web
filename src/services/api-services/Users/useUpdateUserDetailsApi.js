@@ -5,8 +5,6 @@ import Http from "../../http-service";
 import {
   API_STATUS,
   STATUS_CODES,
-  ROLE_ID_MAPPING,
-  ALL_ROLE_ID,
 } from "../../../constant/constant";
 import {
   ADMIN_ROUTE,

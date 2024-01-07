@@ -3,9 +3,7 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import {
-  ALL_ROLE_ID,
   API_STATUS,
-  ROLE_ID_MAPPING,
   STATUS_CODES,
 } from "../../../constant/constant";
 import { USERS_END_POINT, ADMIN_ROUTE } from "../../../constant/apiEndpoints";
@@ -77,10 +75,10 @@ const useAddNewUserApi = () => {
     addNewUserData,
     errorWhileAddingNewUser,
     addNewUserApiStatus,
-    addNewUser,
     isError,
     isLoading,
     isSuccess,
+    addNewUser,
     setErrorWhileAddingNewUser,
   };
 };

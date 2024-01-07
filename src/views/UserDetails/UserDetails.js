@@ -121,7 +121,7 @@ const UserDetails = () => {
     if (userId) {
       getUserData(userId);
     }
-  }, [userId]);
+  }, [userId, currentFormState, isUserUpdatedSuccesfully]);
 
   useEffect(() => {
     return () => {
