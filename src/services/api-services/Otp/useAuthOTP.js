@@ -2,11 +2,8 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
-import { ADMIN_ROUTE, AUTHENTICATE_OTP_ROUTE } from "../../../constant/apiEndpoints" 
-import {
-  API_STATUS,
-  STATUS_CODES,
-} from "../../../constant/constant";
+import { ADMIN_ROUTE, SEND_OTP } from "../../../constant/apiEndpoints";
+import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 
 const useAuthOTP = () => {
   const [authOTPApiStatus, setAuthOTPApiStatus] = useState(API_STATUS.IDLE);
@@ -18,7 +15,7 @@ const useAuthOTP = () => {
     try {
       setAuthOTPApiStatus(API_STATUS.LOADING);
       errorWhileSendingOTP && setErrorWhileSendingOTP("");
-      const url = ADMIN_ROUTE + AUTHENTICATE_OTP_ROUTE;
+      const url = ADMIN_ROUTE + SEND_OTP;
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setAuthOTPApiStatus(API_STATUS.SUCCESS);
@@ -52,6 +49,7 @@ const useAuthOTP = () => {
     isError,
     isLoading,
     isSuccess,
+    setErrorWhileSendingOTP,
   };
 };
 

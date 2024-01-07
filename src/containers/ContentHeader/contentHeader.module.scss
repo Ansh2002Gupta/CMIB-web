@@ -4,6 +4,7 @@
 }
 
 .contentHeaderText {
+  font-family: var(--fontFamilyRegular);
   color: var(--textBold);
   font-size: var(--fontSizeHeading);
   font-weight: var(--fontWeightBold);
@@ -12,6 +13,6 @@
 
 @media screen and (max-width: 767px) {
   .contentHeaderText {
-    font-size: 24px;
+    font-size: var(--fontSizeXlargeMedium);
   }
 }

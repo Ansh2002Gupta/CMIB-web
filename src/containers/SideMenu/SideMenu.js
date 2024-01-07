@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
-import { ROUTE, DASHBOARD, SUBSCRIPTIONS } from "../../routes/routeNames";
 import {
   ArrowRightOutlined,
   GlobalOutlined,
   UpOutlined,
 } from "@ant-design/icons";
+
 import ModuleList from "./ModuleList";
 import TwoRow from "../../core/layouts/TwoRow";
 import TwoColumn from "../../core/layouts/TwoColumn";
+
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import modules from "./sideMenuItems";
+
 import styles from "./sideMenu.module.scss";
 
 const SideMenu = ({ logo }) => {
@@ -47,6 +49,7 @@ const SideMenu = ({ logo }) => {
         <div className={styles.sideMenuTopSection}>
           <div className={styles.appLogo}>{logo}</div>
           <TwoRow
+            style={{ overflow: "visible" }}
             topSection={
               <TwoColumn
                 className={styles.moduleSelector}

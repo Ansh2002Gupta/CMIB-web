@@ -1,4 +1,4 @@
-import { colorPallets } from '../../../constant/colors';
+import { colorPallets } from "../../../constant/colors";
 
 const variables = {
   // Background colors
@@ -8,10 +8,12 @@ const variables = {
   blueBg: colorPallets.lightBlue1,
   lightBlueBg: colorPallets.lightBlue2,
   headerBg: colorPallets.whiteSmoke,
-  sidemenuBgColor: 'var(--primaryBg)',
+  sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
   mobileBg1: colorPallets.white,
   uploadBg: colorPallets.white1,
+  snow: colorPallets.snow,
+  lightGreen: colorPallets.lightGreen,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -41,30 +43,31 @@ const variables = {
   radiusLg: "8px",
   radiusXLg: "12px",
   radiusXLgMedium: "16px",
+  radiusMLg: "16px",
   radiusXXLg: "24px",
 
   // Font-size
-  fontSizeExtraSmall: '12px',
-  fontSizeSmall: '14px',
-  fontSizeNormal: '16px',
-  fontSizeLarge: '18px',
-  fontSizeXlarge: '20px',
-  fontSizeXlargeMedium: '24px',
-  fontSizeXXlarge: '28px',
-  fontSizeHeading: '32px',
-  fontSizeLargeHeading: '36px',
-  fontSizeExtraLargeHeading: '40px',
+  fontSizeExtraSmall: "12px",
+  fontSizeSmall: "14px",
+  fontSizeNormal: "16px",
+  fontSizeLarge: "18px",
+  fontSizeXlarge: "20px",
+  fontSizeXlargeMedium: "24px",
+  fontSizeXXlarge: "28px",
+  fontSizeHeading: "32px",
+  fontSizeLargeHeading: "36px",
+  fontSizeExtraLargeHeading: "40px",
 
   // Font-height
-  lineHeightExtraSmall: '16px',
-  lineHeightSmall: '18px',
-  lineHeightNormal: '20px',
-  lineHeightLarge: '22px',
-  lineHeightXlarge: '24px',
-  lineHeightXXlarge: '32px',
-  lineHeightHeading: '40px',
-  lineHeightLargeHeading: '44px',
-  lineHeightExtraLargeHeading: '48px',
+  lineHeightExtraSmall: "16px",
+  lineHeightSmall: "18px",
+  lineHeightNormal: "20px",
+  lineHeightLarge: "22px",
+  lineHeightXlarge: "24px",
+  lineHeightXXlarge: "32px",
+  lineHeightHeading: "40px",
+  lineHeightLargeHeading: "44px",
+  lineHeightExtraLargeHeading: "48px",
 
   // Font-weights
   fontWeightSmall: 400,
@@ -72,14 +75,40 @@ const variables = {
   fontWeightBold: 600,
 
   // Widths
-  sidemenuWidth: '74px',
+  sidemenuWidth: "74px",
+  fullWidth: "100%",
+  halfWidth: "50%",
+  smallWidth: "30px",
+  width_400: "400px",
+  width_350: "350px",
+  width_300: "300px",
+  width_200: "200px",
+  width_120: "120px",
+  width_100: "100px",
+  width_30: "30px",
+  width_24: "24px",
+  width_20: "20px",
 
   // Heights
-  btnHeight: '56px',
-  minBtnHeight: '45px',
+  btnHeight: "56px",
+  minBtnHeight: "45px",
+  smallHeight: "30px",
+  fullHeight: "100%",
+  halfHeight: "50%",
+  height_400: "400px",
+  height_300: "300px",
+  height_240: "240px",
+  height_250: "250px",
+  height_50: "50px",
+  height_30: "30px",
+  height_24: "24px",
+  height_20: "20px",
+  height_50vh: "50vh",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
+  borderBlue: `2px solid ${colorPallets.darkBlue}`,
+  borderGreen: `1px solid ${colorPallets.green1}`,
   borderColor: colorPallets.ltGrey1,
 
   // Box shadow
@@ -88,7 +117,7 @@ const variables = {
   boxShadowColor: colorPallets.shadowBlack,
 
   // Font-family
-  fontFamilyRegular: 'General Sans',
+  fontFamilyRegular: "General Sans",
 
   // Z-index
   maxZIndex: 99,
@@ -99,32 +128,35 @@ const variables = {
   inputPlaceHolder: colorPallets.darkGrey1,
 
   // Padding
-  paddingExtraSmall: '8px',
-  paddingSmall: '16px',
-  paddingMedium: '24px',
-  paddingLarge: '32px',
-  paddingXLarge: '40px',
-  paddingXXLarge: '48px',
-  paddingForSection: '72px',
+  paddingXXSmall: "4px",
+  paddingExtraSmall: "8px",
+  paddingMediumSmall: "12px",
+  paddingSmall: "16px",
+  paddingMedium: "24px",
+  paddingLarge: "32px",
+  paddingXLarge: "40px",
+  paddingXXLarge: "48px",
+  paddingForSection: "72px",
 
   // Bullet points
   bulletPoint: colorPallets.ltGrey1,
   bulletPointText: colorPallets.darkGrey2,
 
   // Gap
-  gapXXLarge: '56px',
-  gapXLarge: '40px',
-  gapLarge: '32px',
-  gapMedium: '24px',
-  gapSmall: '16px',
-  gapSmallMedium: '12px',
-  gapXSmall: '8px',
-  gapXXSmall: '4px',
+  gapXXLarge: "56px",
+  gapXLarge: "40px",
+  gapLarge: "32px",
+  gapMedium: "24px",
+  gapSmall: "16px",
+  gapSmallMedium: "12px",
+  gapXSmall: "8px",
+  gapXXSmall: "4px",
 
   // margin
-  marginMedium: '16px',
+  marginMedium: "16px",
+  marginSmall: "8px",
 
-  profileBoxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)',
+  profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };
 
 export default variables;

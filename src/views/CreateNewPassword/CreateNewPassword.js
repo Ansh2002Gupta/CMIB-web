@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
+
 import { ThemeContext } from "core/providers/theme";
 
 import Base from "../../core/layouts/Base/Base";
@@ -10,7 +11,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import PointsList from "../../components/PointsList";
-import useCreateNewPassword from "../../services/api-services/Password/useCreateNewPassword";
+import useCreateNewPassword from "../../services/api-services/ResetPassword/useCreateNewPassword";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import {
   AT_LEAST_SIX_CHARACTERS_REGEX,
@@ -22,7 +23,7 @@ import {
 import { LOGIN } from "../../routes/routeNames";
 import styles from "./CreateNewPassword.module.scss";
 
-const CreateNewPassword = ({ email, otp }) => {
+const CreateNewPassword = ({ token }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
@@ -94,10 +95,8 @@ const CreateNewPassword = ({ email, otp }) => {
     }
     setStatus("label.newPasswordAndConfirmPasswordMatched");
     await handleCreateNewPassword({
-      email: email,
       password: formInputs.password,
-      password_confirmation: formInputs.confirmPassword,
-      otp: otp,
+      token,
     });
   };
 
@@ -260,8 +259,12 @@ const CreateNewPassword = ({ email, otp }) => {
             btnText={intl.formatMessage({
               id: "label.gobackToLoginBtn",
             })}
-            ImgElement={getImage("checkedBox")}
-            onCancel={() => setStatus("")}
+            closeIcon={false}
+            imgElement={getImage("CircleCheck")}
+            maskClosable={false}
+            onCancel={() => {
+              setStatus("");
+            }}
             onBtnClick={() => navigate(LOGIN)}
           />
         </div>

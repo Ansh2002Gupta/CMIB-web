@@ -6,7 +6,7 @@
 
 .inputLabelContainer {
   display: flex;
-  gap: 4px;
+  gap: var(--gapXXSmall);
   padding-bottom: 4px;
 }
 
@@ -18,11 +18,11 @@
   color: var(--error);
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
-  margin-top: 8px;
+  margin-top: var(--marginSmall);
 }
 
 .messageText {
-  margin-top: 8px;
+  margin-top: var(--marginSmall);
 }
 
 .formContainer {
@@ -49,7 +49,7 @@
 
 .mobile {
   display: flex;
-  gap: 8px;
+  gap: var(--gapXSmall);
   background-color: var(--bodyBg);
 }
 

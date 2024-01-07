@@ -19,7 +19,7 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
       }}
     >
       <Layout.Sider
-        width={240}
+        width="100%"
         breakpoint='md'
         collapsedWidth={0}
         trigger={null}

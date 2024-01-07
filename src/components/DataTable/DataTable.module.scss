@@ -1,3 +1,8 @@
+.container {
+  background-color: var(--bodyBg);
+  border-radius: var(--radiusXLg);
+}
+
 .rowPerPageOptionsAndPaginationContainer {
   display: flex;
   justify-content: space-between;
@@ -35,7 +40,7 @@
 }
 
 .table {
-  min-height: 50vh;
+  min-height: min(var(--height_50vh), var(--height_300));
 }
 
 .nextAndPrevText {
@@ -84,6 +89,7 @@
 @media (max-width: 1023px) {
   .nextAndPrevArrowContainer {
     padding: 4px var(--paddingExtraSmall);
+    align-items: center;
   }
 }
 
@@ -92,7 +98,7 @@
     flex-direction: column-reverse;
     gap: var(--gapSmall);
     justify-content: center;
-    padding: var(--paddingSmall) 0px var(--paddingSmall)
+    padding: var(--paddingSmall) var(--paddingExtraSmall) var(--paddingSmall)
       var(--paddingExtraSmall);
   }
   .rowPerPageContainer {
@@ -101,6 +107,6 @@
   .paginationContainer {
     width: 100%;
     justify-content: space-between;
-    padding: 0px 8px;
+    padding: 0px var(--paddingExtraSmall);
   }
 }

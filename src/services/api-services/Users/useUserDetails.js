@@ -1,13 +1,11 @@
 import { useState } from "react";
+import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
-import { GENERAL_ERROR_MESSAGE } from "../../../constant/errorMessage";
-import {
-  ADMIN_ROUTE,
-  GET_USER_END_POINT,
-} from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, USERS_END_POINT } from "../../../constant/apiEndpoints";
 
 const useUserDetails = () => {
+  const intl = useIntl();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [userData, setUsersData] = useState(null);
@@ -16,21 +14,30 @@ const useUserDetails = () => {
     setError("");
     setIsLoading(true);
     try {
-      const url = ADMIN_ROUTE + GET_USER_END_POINT + "/" + userId;
-      const res = await Http.get(url);
+      const url = ADMIN_ROUTE + USERS_END_POINT + "/" + userId;
+      const apiOptions = {
+        headers: {
+          Accept: "application/json",
+        },
+      };
+      const res = await Http.get(url, apiOptions);
+      setIsLoading(false);
       if (res?.error) {
         setError(res.message);
         return;
       }
-      setIsLoading(false);
       setUsersData(res?.data);
     } catch (err) {
       setIsLoading(false);
-      if (err?.message) {
-        setError(err?.message);
+      if (err?.response?.data?.message) {
+        setError(err?.response?.data?.message);
         return;
       }
-      setError(GENERAL_ERROR_MESSAGE);
+      setError(
+        intl.formatMessage({
+          id: "label.generalGetApiFailedErrorMessage",
+        })
+      );
     }
   };
 

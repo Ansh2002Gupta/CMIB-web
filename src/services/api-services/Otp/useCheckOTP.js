@@ -3,26 +3,27 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import {
-  ADMIN_ROUTE,
-  FORGOT_PASSWORD_END_POINT,
-} from "../../../constant/apiEndpoints";
+import { setItem } from "../../encrypted-storage-service";
 
 const useCheckOTP = () => {
   const [otpAPIStatus, setOtpAPIStatus] = useState(API_STATUS.IDLE);
-  const [checkOTPData, setCheckOTPData] = useState([]);
+  const [checkOTPData, setCheckOTPData] = useState(null);
   const [errorWhileVerifyingOTP, setErrorWhileVeryingOTP] = useState("");
   const intl = useIntl();
 
-  const handleCheckOTP = async (payload) => {
+  const handleCheckOTP = async ({ onSuccessCallback, payload, url }) => {
     try {
       setOtpAPIStatus(API_STATUS.LOADING);
       errorWhileVerifyingOTP && setErrorWhileVeryingOTP("");
-      const url = ADMIN_ROUTE + FORGOT_PASSWORD_END_POINT;
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
-        setOtpAPIStatus(API_STATUS.SUCCESS);
+        if (res?.data?.token?.access_token) {
+          const auth = res?.data?.token?.access_token;
+          setItem("authToken", auth);
+        }
         setCheckOTPData(res.data);
+        setOtpAPIStatus(API_STATUS.SUCCESS);
+        onSuccessCallback && onSuccessCallback();
         return;
       }
       setOtpAPIStatus(API_STATUS.ERROR);

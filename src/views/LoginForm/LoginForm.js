@@ -12,6 +12,7 @@ import useLogin from "../../services/api-services/Login/useLogin";
 import useAuthOTP from "../../services/api-services/Otp/useAuthOTP";
 import useCheckOTP from "../../services/api-services/Otp/useCheckOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { ADMIN_ROUTE, CHECK_OTP_END_POINT } from "../../constant/apiEndpoints";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";
 import styles from "./loginForm.module.scss";
@@ -42,20 +43,15 @@ const LoginForm = () => {
     errorWhileSendingOTP,
     handleAuthOTP,
     isLoading: isOTPLoading,
+    setErrorWhileSendingOTP,
   } = useAuthOTP();
 
   const {
     errorWhileVerifyingOTP,
     handleCheckOTP,
     isLoading: isCheckingOTP,
-    isSuccess: isOTPCheckedSuccessfully,
+    setErrorWhileVeryingOTP,
   } = useCheckOTP();
-
-  useEffect(() => {
-    if (isOTPCheckedSuccessfully) {
-      navigate(DASHBOARD);
-    }
-  }, [isOTPCheckedSuccessfully]);
 
   const handleOnLogin = (e) => {
     e?.preventDefault();
@@ -71,8 +67,8 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (loginApiStatus === "success" && loginResponse) {
-      if (loginResponse?.is_two_factor === 1) {
+    if (loginApiStatus === "success") {
+      if (!loginResponse) {
         setCurrentActiveScreen(2);
         return;
       }
@@ -198,12 +194,22 @@ const LoginForm = () => {
             {...{
               errorWhileSendingOTP,
               errorWhileVerifyingOTP,
-              handleAuthOTP,
               isOTPLoading,
-              setCurrentActiveScreen,
               isCheckingOTP,
+              setCurrentActiveScreen,
+              setErrorWhileSendingOTP,
+              setErrorWhileVeryingOTP,
             }}
-            onSubmit={(otp) => handleCheckOTP({ otp })}
+            handleAuthOTP={() => {
+              handleAuthOTP({ email: formInputs?.userName });
+            }}
+            onSubmit={(otp) =>
+              handleCheckOTP({
+                onSuccess: () => navigate(DASHBOARD),
+                payload: { otp },
+                url: ADMIN_ROUTE + CHECK_OTP_END_POINT,
+              })
+            }
           />
         )}
       </div>

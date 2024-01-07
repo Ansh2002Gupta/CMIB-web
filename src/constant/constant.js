@@ -1,3 +1,5 @@
+import { SETUP_CENTERS } from "../routes/routeNames";
+
 export const PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
@@ -21,14 +23,20 @@ export const ROW_PER_PAGE_OPTIONS = [
     label: 10,
   },
   {
-    value: 15,
-    label: 15,
-  },
-  {
     value: 20,
     label: 20,
   },
+  {
+    value: 30,
+    label: 30,
+  },
+  {
+    value: 40,
+    label: 40,
+  },
 ];
+
+export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const ACCESS_OPTIONS = [
   {
@@ -53,8 +61,8 @@ export const ROLE_ID_MAPPING = {
 export const ALL_ROLE_ID = [1, 2];
 
 export const FORM_STATES = {
-  VIEW_ONLY: "view only",
-  EDITABLE: "editable",
+  VIEW_ONLY: "view",
+  EDITABLE: "edit",
   EMPTY: "empty",
 };
 
@@ -102,4 +110,104 @@ export const ADD_NEW_USER_ACCESS_OPTIONS = [
       "Registered Companies",
     ],
   },
+];
+
+export const PAGINATION_PROPERTIES = {
+  CURRENT_PAGE: "current-page",
+  ROW_PER_PAGE: "row-per-page",
+};
+
+//TODO:need to implement it using api
+export const SESSION_PERIOD = [
+  { id: 101, label: "May 2025", value: "May 2025" },
+  { id: 102, label: "November 2025", value: "November 2025" },
+  { id: 103, label: "May 2024", value: "May 2024" },
+  { id: 104, label: "November 2024", value: "November 2024" },
+  { id: 105, label: "May 2023", value: "May 2023" },
+  { id: 106, label: "November 2023", value: "November 2023" },
+  { id: 107, label: "May 2022", value: "May 2022" },
+  { id: 108, label: "November 2022", value: "November 2022" },
+  { id: 109, label: "May 2021", value: "May 2021" },
+  { id: 110, label: "November 2021", value: "November 2021" },
+  { id: 111, label: "May 2020", value: "May 2020" },
+  { id: 112, label: "November 2020", value: "November 2020" },
+];
+
+export const ROUND_ONE_CARD_LIST = [
+  {
+    id: 1,
+    imageUrl: "Building",
+    headingDescription:
+      "Streamline interview center management. Customize locations and logistics effortlessly.",
+    headingIntl: "Setup Centres",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 2,
+    imageUrl: "DeviceMessage",
+    headingDescription:
+      "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
+    headingIntl: "Mock Interviews",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 3,
+    imageUrl: "Key",
+    headingDescription:
+      "Foster smooth transitions. Create welcoming spaces with essential information.",
+    headingIntl: "Orientation Centres",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 4,
+    imageUrl: "Document",
+    headingDescription:
+      "Simplify onboarding. Gather participant info and ensure consent compliance.",
+    headingIntl: "Registration and Consent Marking Schedule",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 5,
+    imageUrl: "Monitor",
+    headingDescription:
+      "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
+    headingIntl: "Campus Interview Settings",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+];
+
+export const ROUND_TWO_CARD_LIST = [
+  {
+    id: 1,
+    imageUrl: "Building",
+    headingDescription:
+      "Streamline interview center management. Customize locations and logistics effortlessly.",
+    headingIntl: "Setup Centres",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 2,
+    imageUrl: "Document",
+    headingDescription:
+      "Simplify onboarding. Gather participant info and ensure consent compliance.",
+    headingIntl: "Registration and Consent Marking Schedule",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+  {
+    id: 3,
+    imageUrl: "Monitor",
+    headingDescription:
+      "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
+    headingIntl: "Campus Interview Settings",
+    onClickNaviagtion: SETUP_CENTERS,
+  },
+];
+
+export const CITY_CENTERS = [
+  { id: 101, label: "Delhi", value: "Delhi" },
+  { id: 102, label: "Mumbai", value: "Mumbai" },
+  { id: 103, label: "Gurugram", value: "Gurugram" },
+  { id: 104, label: "Pune", value: "Pune" },
+  { id: 105, label: "Banglore", value: "Banglore" },
+  { id: 106, label: "Goa", value: "Goa" },
 ];

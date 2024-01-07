@@ -4,32 +4,40 @@ import { useIntl } from "react-intl";
 import Base from "../../core/layouts/Base/Base";
 
 import ButtonAndLink from "../../components/ButtonAndLink";
-import withCardView from "../../hocs/withCardView";
 import CreateNewPassword from "../CreateNewPassword/CreateNewPassword.js";
 import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
-import useForgotPassword from "../../services/api-services/Password/useForgotPassword.js";
-import { EMAIL_REGEX } from "../../constant/regex.js";
+import useCheckOTP from "../../services/api-services/Otp/useCheckOTP.js";
+import useForgotPassword from "../../services/api-services/ForgotPassword/useForgotPassword.js";
+import withCardView from "../../hocs/withCardView";
+import { ADMIN_ROUTE, VERIFY_OTP } from "../../constant/apiEndpoints.js";
 import { LOGIN } from "../../routes/routeNames.js";
+import { EMAIL_REGEX } from "../../constant/regex.js";
 import styles from "./ForgotPassword.module.scss";
 
 const ForgotPassword = () => {
   const intl = useIntl();
-
   const [currentActiveScreen, setCurrentActiveScreen] = useState(1);
   const [userName, setUserName] = useState("");
-  const [userEnteredOTP, setUserEnteredOTP] = useState(null);
   const [status, setStatus] = useState("");
-  const [isAllowedToSubmit, setIsAllowedToSubmit] = useState(false);
 
   const {
     handleForgotPassword,
     isLoading,
     errorWhileResetPassword,
-    isSuccess: forgotPasswordSuccess,
+    isSuccess: isForgotPasswordSuccessful,
     setErrorWhileResetPassword,
   } = useForgotPassword();
+
+  const {
+    checkOTPData,
+    errorWhileVerifyingOTP,
+    handleCheckOTP,
+    isLoading: isOTPLoading,
+    setErrorWhileVeryingOTP,
+    isSuccess: isCheckingOTPSuccessfull,
+  } = useCheckOTP();
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -38,29 +46,28 @@ const ForgotPassword = () => {
       return;
     }
     setStatus("success");
-    handleForgotPassword({ email: userName });
+    handleForgotPassword({
+      onSuccess: () => setCurrentActiveScreen(2),
+      payload: { email: userName },
+    });
+  };
+
+  const handleOTPSubmit = (otp) => {
+    handleCheckOTP({
+      onSuccess: () => setCurrentActiveScreen(3),
+      payload: { email: userName, otp },
+      url: ADMIN_ROUTE + VERIFY_OTP,
+    });
   };
 
   useEffect(() => {
-    if (forgotPasswordSuccess) {
-      setCurrentActiveScreen(2);
-    }
-  }, [forgotPasswordSuccess]);
-
-  useEffect(() => {
     setErrorWhileResetPassword("");
-    if (userName) {
-      setIsAllowedToSubmit(true);
-      return;
-    }
-    setIsAllowedToSubmit(false);
   }, [userName]);
 
   useEffect(() => {
     return () => {
       setUserName("");
       setStatus("");
-      setIsAllowedToSubmit(false);
     };
   }, []);
 
@@ -117,7 +124,7 @@ const ForgotPassword = () => {
                   bottomLinkText={intl.formatMessage({
                     id: "label.backToLoginBtn",
                   })}
-                  isTopBtnDisable={!isAllowedToSubmit}
+                  isTopBtnDisable={!userName}
                   onTopBtnClick={handleOnSubmit}
                   linkRedirection={LOGIN}
                 />
@@ -126,22 +133,28 @@ const ForgotPassword = () => {
           )}
           {currentActiveScreen === 2 && (
             <OTPInput
+              errorWhileSendingOTP={errorWhileResetPassword}
+              setErrorWhileSendingOTP={setErrorWhileResetPassword}
+              {...{
+                isOTPLoading,
+                errorWhileVerifyingOTP,
+                setErrorWhileVeryingOTP,
+              }}
+              handleAuthOTP={() => {
+                handleForgotPassword({ payload: { email: userName } });
+              }}
               noOfBlocks={4}
               headingText={intl.formatMessage({
                 id: "label.forgotPasswordOTP",
               })}
               onSubmit={(otp) => {
-                setCurrentActiveScreen(3);
-                setUserEnteredOTP(otp);
-              }}
-              {...{
-                errorWhileResetPassword,
+                handleOTPSubmit(otp);
               }}
             />
           )}
         </Base>
       ) : (
-        <CreateNewPassword otp={userEnteredOTP?.join("")} email={userName} />
+        <CreateNewPassword token={checkOTPData?.token} />
       )}
     </>
   );

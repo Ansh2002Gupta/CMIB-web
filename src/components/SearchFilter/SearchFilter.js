@@ -96,9 +96,10 @@ const SearchFilter = ({
               isLeftFillSpace
               isRightFillSpace
               leftSectionStyle={classes.filterLeftSectionBorder}
+              className={styles.filterOptionContainer}
               leftSection={
                 <div>
-                  {filterPropertiesArray?.map((item) => {
+                  {filterPropertiesArray?.map((item, index) => {
                     return (
                       <div
                         className={[
@@ -106,6 +107,7 @@ const SearchFilter = ({
                           item.isSelected ? styles.active : "",
                         ].join(" ")}
                         onClick={selectOrRemoveAll}
+                        key={index}
                       >
                         <div className={styles.filterTextAndCheckContainer}>
                           <Image src={getCheckBoxes()} preview={false} />
@@ -113,9 +115,14 @@ const SearchFilter = ({
                             {item.name}
                           </Typography>
                         </div>
-                        <div className={styles.filterRightArrow}>
-                          <Image src={getImage("arrowRightFilter")} preview={false} />
-                        </div>
+                        {item?.options?.length && (
+                          <div className={styles.filterRightArrow}>
+                            <Image
+                              src={getImage("arrowRightFilter")}
+                              preview={false}
+                            />
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -123,13 +130,14 @@ const SearchFilter = ({
               }
               rightSection={
                 <div>
-                  {filterPropertiesArray[0]?.options?.map((item) => {
+                  {filterPropertiesArray[0]?.options?.map((item, index) => {
                     return (
                       <div
                         className={[styles.filterSecondLevelOption].join(" ")}
                         onClick={() =>
                           handleOnUpdateAccessFilterStatus(item.optionId)
                         }
+                        key={index}
                       >
                         {currentFilterStatus.includes(item.optionId) ? (
                           <Image src={getImage("checkedBox")} preview={false} />
@@ -140,7 +148,8 @@ const SearchFilter = ({
                           />
                         )}
                         <Typography className={styles.filterOptionText}>
-                          {`${item?.str} (${item?.count})`}
+                          {item?.str}
+                          {item?.count ? item?.count : ""}
                         </Typography>
                       </div>
                     );
@@ -159,6 +168,7 @@ const SearchFilter = ({
             <CustomButton
               btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
+              onClick={() => setShowFilters(false)}
             />
           </div>
         </div>

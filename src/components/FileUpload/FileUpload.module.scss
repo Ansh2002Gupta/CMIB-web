@@ -10,7 +10,7 @@
 
 .uploadContainer {
   width: 50%;
-  height: 100%;
+  height: var(--fullHeight);
   border-radius: var(--radiusXLg);
   background-color: var(--lightBlueBg);
   display: flex;
@@ -18,6 +18,7 @@
   flex-direction: column;
   align-items: center;
   padding: var(--paddingMedium);
+  min-height: 250px;
 }
 
 .headingText {
@@ -42,7 +43,7 @@
 }
 
 .uploadImage {
-  max-width: 120px;
+  max-width: var(--width_120);
   overflow: hidden;
 }
 
@@ -81,6 +82,6 @@
 
 @media screen and (max-width: 767px) {
   .uploadContainer {
-    width: 100%;
+    width: var(--fullWidth);
   }
 }

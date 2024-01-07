@@ -2,17 +2,18 @@
   border: var(--borderLight);
   border-radius: var(--radiusXLgMedium);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   width: 40vw;
-  max-width: 400px;
+  max-width: var(--width_400);
   overflow: hidden;
 }
 
 .userImage {
-  width: 100%;
+  width: var(--fullWidth);
   object-fit: contain;
-  max-height: 400px;
+  max-height: var(--height_400);
+  min-height: var(--height_250);
 }
 
 .trashAndIconContainer {
@@ -20,11 +21,12 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--paddingSmall);
+  width: var(--fullWidth);
 }
 
 .trashIcon {
-  width: 20px;
-  height: 20px;
+  width: var(--width_20);
+  height: var(--height_20);
   cursor: pointer;
 }
 
@@ -37,6 +39,6 @@
 @media screen and (max-width: 767px) {
   .container {
     max-width: none;
-    width: 100%;
+    width: var(--fullWidth);
   }
 }

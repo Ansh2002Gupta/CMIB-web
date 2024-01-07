@@ -1,5 +1,5 @@
 export const classes = {
-  message: {
+  errorMessage: {
     marginTop: "20vh",
   },
 };

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
-import Http from "../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../constants/constants";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../constants/errorMessages";
+import Http from "../../services/http-service";
+import { API_STATUS, STATUS_CODES } from "../../constant/constant";
 
 /** 
  * 1. useFetch will initiate the API call on component mount automatically so that you don't require to use the useEffect hook in your component explicitly just to call the API.
@@ -26,11 +26,17 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../constants/errorMessages
  * */
 
 const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
+  const intl = useIntl();
+
   const [data, setData] = useState(null);
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
   const [error, setError] = useState(null);
 
   const { skipApiCallOnMount } = otherOptions || {};
+
+  const GENERIC_GET_API_FAILED_ERROR_MESSAGE = intl.formatMessage({
+    id: "label.generalGetApiFailedErrorMessage",
+  });
 
   const fetchData = async () => {
     try {
