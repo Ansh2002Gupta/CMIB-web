@@ -33,7 +33,17 @@ const SetupCenter = () => {
     const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
   }, [current, pageSize]);
-  console.log({ currentTableData });
+
+  const handleOnChangePageSize = (size) => {
+    //NOTE: if you want to do anything on changing of page size please consider doing it here
+    setPageSize(Number(size));
+    setCurrent(1);
+  };
+
+  const handleOnChangeCurrentPage = (newPageNumber) => {
+    //NOTE: if you want to do anything on changing of current page number please consider doing it here
+    setCurrent(newPageNumber);
+  };
 
   const columns = [
     renderColumn({
@@ -101,9 +111,9 @@ const SetupCenter = () => {
           {...{
             columns,
             current,
-            setCurrent,
             pageSize,
-            setPageSize,
+            handleOnChangePageSize,
+            handleOnChangeCurrentPage,
           }}
           currentDataLength={CONFIGURE_CENTRES.length}
           customContainerStyles={styles.tableContainer}

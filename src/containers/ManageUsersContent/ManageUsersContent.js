@@ -3,7 +3,6 @@ import React, {
   useState,
   useEffect,
   useMemo,
-  useRef,
   useLayoutEffect,
 } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -21,7 +20,7 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
 import {
-  PAGE_SIZE,
+  DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
@@ -36,18 +35,8 @@ const ManageUsersContent = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  let validPageSize = +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE);
-  let validCurrentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-  if (isNaN(validPageSize) || !VALID_ROW_PER_OPTIONS.includes(validPageSize)) {
-    validPageSize = PAGE_SIZE;
-  }
-  if (isNaN(validCurrentPage) || validCurrentPage < 0) {
-    validCurrentPage = 1;
-  }
-
-  const [current, setCurrent] = useState(validCurrentPage);
-  const [pageSize, setPageSize] = useState(validPageSize);
-
+  const [current, setCurrent] = useState(getValidPageNumber());
+  const [pageSize, setPageSize] = useState(getValidPageSize());
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
   const [currentDataLength, setCurrentDataLength] = useState(0);
@@ -68,43 +57,28 @@ const ManageUsersContent = () => {
   } = useUpdateUserDetailsApi();
 
   const debounceSearch = useMemo(() => _.debounce(fetchUsers, 300), []);
-  let doNotCallOnMount = useRef(false);
 
-  useLayoutEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
-      PAGINATION_PROPERTIES.ROW_PER_PAGE
+  function getValidPageNumber() {
+    let validCurrentPage = +searchParams.get(
+      PAGINATION_PROPERTIES.CURRENT_PAGE
     );
-    if (
-      !currentPage ||
-      isNaN(current) ||
-      current > metaData?.total ||
-      current < 0
-    ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-        return prev;
-      });
-      setCurrent(1);
+    if (isNaN(validCurrentPage) || validCurrentPage < 0) {
+      validCurrentPage = 1;
     }
 
-    if (
-      !currentPagePerRow ||
-      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
-    ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], PAGE_SIZE);
-        return prev;
-      });
-      setPageSize(PAGE_SIZE);
-    }
-  }, [areUsersFetchedSuccessfully]);
+    return validCurrentPage;
+  }
 
-  useEffect(() => {
-    if (metaData?.total) {
-      setCurrentDataLength(+metaData?.total);
+  function getValidPageSize() {
+    let validPageSize = +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE);
+    if (
+      isNaN(validPageSize) ||
+      !VALID_ROW_PER_OPTIONS.includes(validPageSize)
+    ) {
+      validPageSize = DEFAULT_PAGE_SIZE;
     }
-  }, [metaData]);
+    return validPageSize;
+  }
 
   const goToUserDetailsPage = (userId, mode) => {
     navigate(`details/${userId}?mode=${mode ? "edit" : "view"}`);
@@ -115,6 +89,34 @@ const ManageUsersContent = () => {
       status: currentStatus ? 0 : 1,
     });
     debounceSearch(pageSize, current, searchedValue);
+  };
+
+  const handleOnChangePageSize = (size) => {
+    setPageSize(Number(size));
+    setCurrent(1);
+    setSearchParams((prev) => {
+      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
+      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+      return prev;
+    });
+  };
+
+  const handleOnChangeCurrentPage = (newPageNumber) => {
+    setCurrent(newPageNumber);
+    setSearchParams((prev) => {
+      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
+      return prev;
+    });
+  };
+
+  const handleOnUserSearch = (event) => {
+    setSearchedValue(event.target.value);
+    debounceSearch(pageSize, current, event.target.value);
+    setCurrent(1);
+    setSearchParams((prev) => {
+      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+      return prev;
+    });
   };
 
   const columns = [
@@ -201,6 +203,45 @@ const ManageUsersContent = () => {
     }),
   ];
 
+  useLayoutEffect(() => {
+    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
+    const currentPagePerRow = +searchParams.get(
+      PAGINATION_PROPERTIES.ROW_PER_PAGE
+    );
+    if (!currentPage || isNaN(current) || current < 0) {
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+        return prev;
+      });
+    }
+
+    if (
+      !currentPagePerRow ||
+      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
+    ) {
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
+        return prev;
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (metaData?.total) {
+      setCurrentDataLength(+metaData?.total);
+    }
+    const totalNumberOfValidPages = Math.ceil(
+      metaData?.total / metaData?.perPage
+    );
+    if (current > totalNumberOfValidPages) {
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+        return prev;
+      });
+      setCurrent(1);
+    }
+  }, [metaData]);
+
   useEffect(() => {
     if (errorWhileUpdatingUserData) {
       messageApi.open({
@@ -212,28 +253,16 @@ const ManageUsersContent = () => {
   }, [errorWhileUpdatingUserData]);
 
   useEffect(() => {
+    fetchUsers(pageSize, current, searchedValue);
+  }, [pageSize, current]);
+
+  useEffect(() => {
     return () => {
       setShowFilters(false);
       setSearchedValue("");
       setCurrentDataLength(0);
     };
   }, []);
-
-  useEffect(() => {
-    if (doNotCallOnMount.current) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], current);
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], pageSize);
-        return prev;
-      });
-      fetchUsers(pageSize, current, searchedValue);
-    }
-    doNotCallOnMount.current = true;
-  }, [pageSize, current]);
-
-  useEffect(() => {
-    debounceSearch(pageSize, current, searchedValue);
-  }, [searchedValue]);
 
   return (
     <>
@@ -254,7 +283,7 @@ const ManageUsersContent = () => {
             allowClear
             className={styles.searchBar}
             value={searchedValue}
-            onChange={(e) => setSearchedValue(e.target.value)}
+            onChange={handleOnUserSearch}
           />
           <SearchFilter
             filterPropertiesArray={ACCESS_FILTER_DATA}
@@ -265,16 +294,13 @@ const ManageUsersContent = () => {
           <DataTable
             {...{
               columns,
-              searchedValue,
               currentDataLength,
-              setCurrentDataLength,
               pageSize,
               current,
-              setCurrent,
-              setPageSize,
+              handleOnChangePageSize,
+              handleOnChangeCurrentPage,
             }}
             originalData={usersList || []}
-            paginationApi={fetchUsers}
           />
         )}
         {(isFetchingUsers || isUpdatingUserData) &&

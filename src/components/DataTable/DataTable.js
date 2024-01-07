@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 import { Pagination, Select, Table, Typography } from "antd";
 
 import PaginationItems from "./PaginationItems";
-import { PAGE_SIZE, ROW_PER_PAGE_OPTIONS } from "../../constant/constant";
+import {
+  DEFAULT_PAGE_SIZE,
+  ROW_PER_PAGE_OPTIONS,
+} from "../../constant/constant";
 import styles from "./DataTable.module.scss";
 import "./override.css";
 
@@ -13,30 +16,18 @@ const DataTable = ({
   currentDataLength,
   customContainerStyles,
   originalData,
-  searchedValue,
-  setPageSize,
-  setCurrent,
   current,
   pageSize,
+  handleOnChangePageSize,
+  handleOnChangeCurrentPage,
 }) => {
   const intl = useIntl();
-
-  const handleOnChangePageSize = (size) => {
-    setPageSize(Number(size));
-    setCurrent(1);
-  };
-
-  useEffect(() => {
-    searchedValue && setCurrent(1);
-  }, [searchedValue]);
 
   const rightPaginationConfig = {
     current,
     pageSize,
     total: currentDataLength,
-    onChange: (page) => {
-      setCurrent(page);
-    },
+    onChange: handleOnChangeCurrentPage,
     showSizeChanger: false,
   };
 
@@ -47,7 +38,7 @@ const DataTable = ({
         dataSource={originalData}
         pagination={false}
         rowClassName={styles.rowtext}
-        scroll={{ x: "max-content" }}
+        scroll={{ x: "max-content", y: 600 }}
         className={styles.table}
         rowKey="id"
       />
@@ -83,8 +74,10 @@ DataTable.defaultProps = {
   originalData: [],
   searchedValue: "",
   paginationApi: () => {},
-  pageSize: PAGE_SIZE,
+  pageSize: DEFAULT_PAGE_SIZE,
   current: 1,
+  handleOnChangePageSize: () => {},
+  handleOnChangeCurrentPage: () => {},
 };
 
 DataTable.propTypes = {
@@ -96,6 +89,8 @@ DataTable.propTypes = {
   paginationApi: PropTypes.func,
   pageSize: PropTypes.number,
   current: PropTypes.number,
+  handleOnChangePageSize: PropTypes.func,
+  handleOnChangeCurrentPage: PropTypes.func,
 };
 
 export default DataTable;

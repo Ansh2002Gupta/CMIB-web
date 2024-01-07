@@ -48,6 +48,17 @@ const CompaniesContent = () => {
     setCurrentTableData(updatedData);
   };
 
+  const handleOnChangePageSize = (size) => {
+    //NOTE: if you want to do anything on changing of page size please consider doing it here
+    setPageSize(Number(size));
+    setCurrent(1);
+  };
+
+  const handleOnChangeCurrentPage = (newPageNumber) => {
+    //NOTE: if you want to do anything on changing of current page number please consider doing it here
+    setCurrent(newPageNumber);
+  };
+
   // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
   useEffect(() => {
     const startIndex = (current - 1) * pageSize;
@@ -155,15 +166,13 @@ const CompaniesContent = () => {
       <DataTable
         {...{
           columns,
-          searchedValue,
           currentDataLength,
           current,
-          setCurrent,
           pageSize,
-          setPageSize,
+          handleOnChangePageSize,
+          handleOnChangeCurrentPage,
         }}
         originalData={currentTableData}
-        columnsToBeSearchFrom={["companyName"]}
       />
     </div>
   );
