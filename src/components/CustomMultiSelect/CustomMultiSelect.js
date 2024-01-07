@@ -59,7 +59,6 @@ const CustomMultiSelect = ({
   const toggleOptionId = (optionObject) => {
     let updatedData = [];
     if (Array.isArray(optionObject)) {
-      // optionObject is array of objects
       updatedData = selectedOptions.filter((item) => {
         return !doesIncludes(optionObject, item);
       });
@@ -115,11 +114,6 @@ const CustomMultiSelect = ({
     );
     setSelectedOptions(updatedData);
   };
-
-  useEffect(() => {
-    selectAllOption();
-    selectAllOption();
-  }, []);
 
   return (
     <div className={styles.parentContainer}>

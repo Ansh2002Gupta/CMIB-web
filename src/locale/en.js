@@ -166,6 +166,7 @@ const locale = {
   "label.actions": "Actions",
   "label.sNo": "S. No",
   "label.add": "Add",
+  "label.none": "None",
 };
 
 export default locale;

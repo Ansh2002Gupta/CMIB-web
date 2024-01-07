@@ -54,7 +54,9 @@ const UserInfo = ({
     {
       key: "4",
       label: `${intl.formatMessage({ id: "label.access" })} *`,
-      children: access?.map((item) => item)?.join(","),
+      children:
+        access?.map((item) => item)?.join(",") ||
+        intl.formatMessage({ id: "label.none" }),
     },
     {
       key: "5",

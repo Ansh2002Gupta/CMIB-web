@@ -72,6 +72,9 @@ const UserDetails = () => {
     key === "access" && setIsAccessValid(true);
     key === "name" && setIsUserNameValid(true);
     setErrorWhileUpdatingUserData("");
+    if (key === "mobile") {
+      value = value.slice(0, 10);
+    }
     setUserData((prev) => {
       return {
         ...prev,
@@ -121,7 +124,7 @@ const UserDetails = () => {
     if (userId) {
       getUserData(userId);
     }
-  }, [userId, currentFormState, isUserUpdatedSuccesfully]);
+  }, [userId, currentFormState]);
 
   useEffect(() => {
     return () => {
