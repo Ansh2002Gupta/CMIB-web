@@ -1,4 +1,6 @@
 import Auth from "../pages/Auth";
+import Companies from "../views/Companies";
+import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import ContactUsListing from "../views/ContactUsListing";
@@ -7,27 +9,35 @@ import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
-import Session from "../views/Session";
 import ManageUsers from "../views/ManageUsers";
+import Session from "../views/Session";
+import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
+import UserDetails from "../views/UserDetails";
 import {
-  ROUTE,
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
-  MANAGE_USERS,
+  COMPANIES,
+  COMPANIES_DETAILS,
   FORGOT_PASSWORD,
   ROOT,
+  USERS,
+  USER_DETAILS,
+  ADD_NEW_USER_DETAILS,
   CONFIGURE_CENTRES,
   SESSION,
   QUERIES_AND_TICKETS,
+  ROUTE,
+  SETUP_CENTERS,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HomeWithPublicAccess = withPublicAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
+const AuthWithPrivateAccess = withPrivateAccess(Auth);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
   HeaderContentWithFooter
 );
@@ -109,28 +119,70 @@ const config = [
     ],
   },
   {
-    pagePath: MANAGE_USERS,
-    element: <HomeWithPublicAccess noOuterPadding />,
+    pagePath: COMPANIES,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: "",
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
+    pagePath: COMPANIES,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
+    pagePath: USERS,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
         element: <ManageUsers />,
       },
+      {
+        viewPath: USER_DETAILS,
+        element: <UserDetails />,
+      },
+      {
+        viewPath: ADD_NEW_USER_DETAILS,
+        element: <UserDetails />,
+      },
     ],
   },
   {
     pagePath: SESSION,
-    element: <HomeWithPublicAccess />,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
         element: <Session />,
       },
+      {
+        viewPath: SETUP_CENTERS,
+        element: <SetupCenter />,
+      },
     ],
   },
   {
     pagePath: CONFIGURE_CENTRES,
-    element: <HomeWithPublicAccess noOuterPadding />,
+    element: <HomeWithPrivateAccess noOuterPadding />,
     views: [
       {
         viewPath: "",

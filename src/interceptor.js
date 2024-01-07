@@ -1,7 +1,6 @@
 import axios from "axios";
 import { API_VERSION_NUMBER } from "./constant/apiEndpoints";
 import { getItem } from "./services/encrypted-storage-service";
-// import { StorageService } from './services'
 
 // Add a request interceptor
 axios.interceptors.request.use(

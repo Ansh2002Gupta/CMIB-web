@@ -3,6 +3,7 @@ import React from "react";
 import ContentHeader from "../../ContentHeader";
 import CustomButton from "../../../components/CustomButton";
 import useResponsive from "../../../core/hooks/useResponsive";
+import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/plus icon.svg";
 import styles from "./ConfigureCentreHeader.module.scss";
 
 const ConfigureCentreHeader = ({ intl, getImage }) => {
@@ -18,7 +19,7 @@ const ConfigureCentreHeader = ({ intl, getImage }) => {
             btnText={intl.formatMessage({
               id: `label.${responsive.isMd ? "addNewCentre" : "newCentre"}`,
             })}
-            iconUrl={getImage("plusIcon")}
+            IconElement={PlusIcon}
             iconStyles={styles.btnIconStyles}
             customStyle={styles.btnCustomStyles}
           />

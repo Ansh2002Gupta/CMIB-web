@@ -1,22 +1,27 @@
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
 
-import { TwoRow, TwoColumn } from "core/layouts";
+import { TwoRow } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 
-import CustomButton from "../../components/CustomButton";
 import ContentHeader from "../../containers/ContentHeader";
+import CustomButton from "../../components/CustomButton";
 import CustomTabs from "../../components/CustomTabs";
 import SessionDetails from "../../containers/SessionDetails";
+import SessionRound from "../SessionRound";
+import {
+  ROUND_ONE_CARD_LIST,
+  ROUND_TWO_CARD_LIST,
+} from "../../constant/constant";
 import variables from "../../themes/base/styles/variables";
+import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./session.module.scss";
 
 function Session() {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState("1");
   const [addSession, setAddSession] = useState(false);
-  const { getImage } = useContext(ThemeContext);
+
   const responsive = useResponsive();
 
   const tabItems = [
@@ -30,12 +35,22 @@ function Session() {
     {
       key: "2",
       title: intl.formatMessage({ id: "session.roundOne" }),
-      children: <div>Round 1</div>,
+      children: (
+        <SessionRound
+          roundList={ROUND_ONE_CARD_LIST}
+          switchLabel={intl.formatMessage({ id: "session.roundOneStatus" })}
+        />
+      ),
     },
     {
       key: "3",
       title: intl.formatMessage({ id: "session.roundTwo" }),
-      children: <div>Round 2</div>,
+      children: (
+        <SessionRound
+          roundList={ROUND_TWO_CARD_LIST}
+          switchLabel={intl.formatMessage({ id: "session.roundTwoStatus" })}
+        />
+      ),
     },
   ];
 
@@ -49,7 +64,7 @@ function Session() {
           className={styles.topSectionStyle}
           topSection={
             <ContentHeader
-              customStyles={styles.spaceBetween}
+              customStyles={!responsive?.isMd ? styles.customStyles : ""}
               headerText={intl.formatMessage({ id: "label.session" })}
               rightSection={
                 !addSession && (
@@ -57,8 +72,8 @@ function Session() {
                     btnText={intl.formatMessage({
                       id: "session.setUpNewSession",
                     })}
-                    customStyle={!responsive.isMd ? styles.buttonStyles : null}
-                    iconUrl={responsive.isMd && getImage("addIcon")}
+                    customStyle={!responsive.isMd ? styles.buttonStyles : ""}
+                    IconElement={responsive.isMd ? AddIcon : null}
                     textStyle={styles.textStyle}
                     onClick={() => {
                       setAddSession(true);

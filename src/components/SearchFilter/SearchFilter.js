@@ -96,6 +96,7 @@ const SearchFilter = ({
               isLeftFillSpace
               isRightFillSpace
               leftSectionStyle={classes.filterLeftSectionBorder}
+              className={styles.filterOptionContainer}
               leftSection={
                 <div>
                   {filterPropertiesArray?.map((item, index) => {
@@ -114,9 +115,14 @@ const SearchFilter = ({
                             {item.name}
                           </Typography>
                         </div>
-                        <div className={styles.filterRightArrow}>
-                          <Image src={getImage("arrowRightFilter")} preview={false} />
-                        </div>
+                        {item?.options?.length && (
+                          <div className={styles.filterRightArrow}>
+                            <Image
+                              src={getImage("arrowRightFilter")}
+                              preview={false}
+                            />
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -142,7 +148,8 @@ const SearchFilter = ({
                           />
                         )}
                         <Typography className={styles.filterOptionText}>
-                          {`${item?.str} (${item?.count})`}
+                          {item?.str}
+                          {item?.count ? item?.count : ""}
                         </Typography>
                       </div>
                     );
@@ -161,6 +168,7 @@ const SearchFilter = ({
             <CustomButton
               btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
+              onClick={() => setShowFilters(false)}
             />
           </div>
         </div>

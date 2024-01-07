@@ -1,8 +1,8 @@
 import moment from "moment";
 import { useIntl } from "react-intl";
-import { Image, Switch } from "antd";
-
+import { Dropdown, Image, Switch } from "antd";
 import styles from "./renderColumn.module.scss";
+import "./Override.css";
 
 const useRenderColumn = () => {
   const intl = useIntl();
@@ -13,6 +13,7 @@ const useRenderColumn = () => {
     key,
     render,
     renderImage = {},
+    renderMenu = {},
     renderText = {},
     renderSwitch = {},
     sortDirection,
@@ -32,13 +33,38 @@ const useRenderColumn = () => {
       preview,
     } = renderImage;
 
-    const { dateFormat = "DD/MM/YYYY", isTextBold, isTypeDate } = renderText;
+    const {
+      items = [],
+      menuSrc = "",
+      onMenuClick = () => {},
+      menuPreview,
+      triggerType = "",
+    } = renderMenu;
+
+    const {
+      dateFormat = "DD/MM/YYYY",
+      includeDotAfterText,
+      isTextBold,
+      isTypeDate,
+      textStyles,
+      isCapitalize,
+    } = renderText;
 
     const {
       swithActiveLabel,
       swithInActiveLabel,
       switchToggleHandler = () => {},
     } = renderSwitch;
+
+    const textRenderFormat = ({ text }) => {
+      if (isTypeDate) {
+        return moment(new Date(text)).format(dateFormat);
+      }
+      if (includeDotAfterText) {
+        return `${text} .`;
+      }
+      return text;
+    };
 
     title &&
       (columnObject.title = () => {
@@ -67,16 +93,25 @@ const useRenderColumn = () => {
     sortDirection && (columnObject.sortDirection = sortDirection);
 
     renderText?.visible &&
-      (columnObject.render = (text) => (
-        <p
-          className={[
-            isTextBold ? styles.boldText : "",
-            styles.textEllipsis,
-          ].join(" ")}
-        >
-          {isTypeDate ? moment(new Date(text)).format(dateFormat) : text}
-        </p>
-      ));
+      (columnObject.render = (text) => {
+        return {
+          props: {
+            className: styles.tableCellStyles,
+          },
+          children: (
+            <p
+              className={[
+                textStyles,
+                isTextBold ? styles.boldText : "",
+                styles.textEllipsis,
+                isCapitalize ? styles.capitalize : "",
+              ].join(" ")}
+            >
+              {textRenderFormat({ text })}
+            </p>
+          ),
+        };
+      });
 
     renderSwitch.visible &&
       (columnObject.render = (_, data) => {
@@ -111,7 +146,33 @@ const useRenderColumn = () => {
         );
       });
 
-    render && (columnObject.render = render);
+    render && (columnObject.render = render); // correct this
+
+    renderMenu.visible &&
+      (columnObject.render = (_, rowData) => {
+        const menuItems = {
+          items: items.map((item) => ({
+            key: item.key,
+            label: (
+              <div
+                onClick={onMenuClick ? () => onMenuClick(rowData) : () => {}}
+                className={styles.dropdownMenuItem}
+              >
+                {item.label}
+              </div>
+            ),
+          })),
+        };
+        return (
+          <Dropdown menu={menuItems} trigger={[triggerType || "click"]}>
+            <Image
+              src={menuSrc}
+              className={styles.moreIcon}
+              preview={menuPreview}
+            />
+          </Dropdown>
+        );
+      });
 
     return columnObject;
   };
