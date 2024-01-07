@@ -16,6 +16,7 @@ import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 
 const UserDetailsContent = ({
+  addNewUser,
   currentFormState,
   errorWhileGettingUsersData,
   getUserData,
@@ -70,6 +71,41 @@ const UserDetailsContent = ({
         navigate(USERS);
       });
     }
+  };
+
+  const handleOnAddNewUser = () => {
+    setIsEmailValid(EMAIL_REGEX.test(userData?.email));
+    setIsMobileNumberValid(
+      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
+    );
+    setIsUserNameValid(userData.name?.trim()?.length !== 0);
+    setIsAccessValid(userData.access?.length !== 0);
+    if (
+      EMAIL_REGEX.test(userData?.email) &&
+      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`) &&
+      userData.name?.trim()?.length !== 0 &&
+      userData.access?.length !== 0
+    ) {
+      const payload = {
+        name: userData.name,
+        email: userData.email,
+        mobile_number: userData.mobile,
+        created_by: 1, // from where I will get this id?
+        role: userData.access,
+        is_two_factor: userData.is_two_factor ? 1 : 0,
+      };
+      if (userData?.profile_photo) {
+        payload["profile_photo"] = userData.profile_photo.file;
+      }
+      addNewUser(payload, () => {
+        goBackToViewDetailsPage();
+      });
+    }
+  };
+
+  const handleOnSubmit = () => {
+    FORM_STATES.EDITABLE === currentFormState && handleUpdateUserData();
+    FORM_STATES.EMPTY === currentFormState && handleOnAddNewUser();
   };
 
   return (
@@ -176,8 +212,14 @@ const UserDetailsContent = ({
               </Button>
               <CustomButton
                 customStyle={styles.saveBtn}
-                btnText={intl.formatMessage({ id: "label.saveChanges" })}
-                onClick={handleUpdateUserData}
+                btnText={intl.formatMessage({
+                  id: `label.${
+                    currentFormState === FORM_STATES.EDITABLE
+                      ? "saveChanges"
+                      : "add"
+                  }`,
+                })}
+                onClick={handleOnSubmit}
                 isBtnDisable={isSavedBtnDisable}
               />
             </div>

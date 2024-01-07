@@ -8,10 +8,7 @@ import {
   ROLE_ID_MAPPING,
   STATUS_CODES,
 } from "../../../constant/constant";
-import {
-  ADD_NEW_USER_END_POINT,
-  ADMIN_ROUTE,
-} from "../../../constant/apiEndpoints";
+import { USERS_END_POINT, ADMIN_ROUTE } from "../../../constant/apiEndpoints";
 
 const useAddNewUserApi = () => {
   const intl = useIntl();
@@ -22,36 +19,39 @@ const useAddNewUserApi = () => {
   const [addNewUserData, setAddNewUserData] = useState(null);
   const [errorWhileAddingNewUser, setErrorWhileAddingNewUser] = useState("");
 
-  const addNewUser = async (payload) => {
-    let role = payload?.role ? payload.role : null;
-    if (role?.length) {
-      if (role.includes("all")) {
-        role = ALL_ROLE_ID;
-      } else {
-        role = role.map((item) => ROLE_ID_MAPPING[item]);
-      }
-      payload = {
-        ...payload,
-        role,
-      };
-    }
+  const addNewUser = async (payload, onSuccessCallback) => {
     const formData = new FormData();
     for (let [key, value] of Object.entries(payload)) {
+      if (key?.toLowerCase() === "role") {
+        if (value.includes("all")) {
+          value = ALL_ROLE_ID;
+        } else {
+          value = value.map((item) => {
+            item = item.toLowerCase();
+            return ROLE_ID_MAPPING[`${item}`];
+          });
+          value = value?.filter((item) => item);
+        }
+        value = value.join(",");
+      }
       formData.append(key, value);
     }
+    formData.append("permissions", "1");
     try {
-      const headers = {
-        "Content-Type": "multipart/form-data",
+      const apiOptions = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       };
       setAddNewUserApiStatus(API_STATUS.LOADING);
       setAddNewUserData(null);
       errorWhileAddingNewUser && setErrorWhileAddingNewUser("");
-
-      const url = ADMIN_ROUTE + ADD_NEW_USER_END_POINT;
-      const res = await Http.post(url, formData, headers);
+      const url = ADMIN_ROUTE + USERS_END_POINT;
+      const res = await Http.post(url, formData, apiOptions);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setAddNewUserApiStatus(API_STATUS.SUCCESS);
         setAddNewUserData(res.data);
+        onSuccessCallback && onSuccessCallback();
         return;
       }
       setAddNewUserApiStatus(API_STATUS.ERROR);

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 import { useParams, useSearchParams } from "react-router-dom";
 
 import TwoRow from "../../core/layouts/TwoRow";
 
 import UserDetailsContent from "../../containers/UserDetailsContent/UserDetailsContent";
 import UserDetailsHeader from "../../containers/UserDetailsHeader";
+import useAddNewUserApi from "../../services/api-services/Users/useAddNewUserApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
@@ -13,6 +15,7 @@ import { FORM_STATES, NOTIFICATION_TYPES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
 
 const UserDetails = () => {
+  const intl = useIntl();
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams] = useSearchParams();
@@ -37,7 +40,6 @@ const UserDetails = () => {
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  // const { showNotification, notificationContextHolder } = useShowNotification();
   const {
     getUserData,
     isLoading,
@@ -57,67 +59,12 @@ const UserDetails = () => {
     setErrorWhileUpdatingUserData,
   } = useUpdateUserDetailsApi();
 
-  const isFormEditable = userDetailsState?.editable;
-  const currentUserName = userDetailsState?.userName;
-  // const userId = userDetailsState?.userId;
-
-  const showErorrToUser = () => {
-    messageApi.open({
-      type: "error",
-      content: intl.formatMessage({ id: "label.somethingWentWrong" }),
-      style: {
-        marginTop: "20vh",
-      },
-    });
-  };
-
-  // const goBackToViewDetailsPage = () => {
-  //   setErrorWhileUpdatingUserData("");
-  //   userDetailsDispatch(setUserDetails({ editable: false }));
-  // };
-
-  const handleUpdateUserData = () => {
-    setIsEmailValid(EMAIL_REGEX.test(userData?.email));
-    setIsMobileNumberValid(
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
-    );
-    if (
-      EMAIL_REGEX.test(userData?.email) &&
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
-    ) {
-      updateUserDetails(userId, {
-        name: userData?.name,
-        email: userData?.email,
-        mobile_number: userData?.mobile,
-        created_by: Number(userId), // user id basically
-        role: userData?.access,
-        profile_photo: userData?.profile_photo,
-        is_two_factor: userData?.is_two_factor ? 1 : 0,
-      });
-    }
-  };
-
-  const handleOnUserStatusChange = (value) => {
-    updateUserDetails(userId, {
-      status: value ? 1 : 0,
-    });
-    isSuccess &&
-      setActive(() => {
-        return value;
-      });
-  };
-
-  useEffect(() => {
-    if (errorWhileUpdatingUserData) {
-      showErorrToUser();
-    }
-  }, [errorWhileUpdatingUserData]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      goBackToViewDetailsPage();
-    }
-  }, [isSuccess]);
+  const {
+    errorWhileAddingNewUser,
+    addNewUser,
+    isLoading: isAddingUser,
+    isSuccess: isNewUserSuccessfullyAdded,
+  } = useAddNewUserApi();
 
   const updateUserData = (key, value) => {
     key === "email" && setIsEmailValid(true);
@@ -131,16 +78,6 @@ const UserDetails = () => {
         [key]: value,
       };
     });
-  };
-
-  const getHeaderText = () => {
-    if (currentFormState === FORM_STATES.VIEW_ONLY) {
-      return userData?.name;
-    }
-    if (currentFormState === FORM_STATES.EDITABLE) {
-      return intl.formatMessage({ id: "label.editUserDetails" });
-    }
-    return intl.formatMessage({ id: "label.addNewUsers" });
   };
 
   useEffect(() => {
@@ -160,19 +97,12 @@ const UserDetails = () => {
   ]);
 
   useEffect(() => {
-    if (isSuccess) {
-      goBackToViewDetailsPage();
-    }
-  }, [isSuccess]);
-
-  useEffect(() => {
     errorWhileUpdatingUserData &&
       showNotification(errorWhileUpdatingUserData, NOTIFICATION_TYPES.ERROR);
   }, [errorWhileUpdatingUserData]);
 
   useEffect(() => {
     !!userAccountInfo &&
-
       setUserData({
         name: userAccountInfo?.name || "",
         email: userAccountInfo?.email || "",
@@ -254,8 +184,9 @@ const UserDetails = () => {
               setIsUserNameValid,
               isAccessValid,
               setIsAccessValid,
+              addNewUser,
             }}
-            isLoading={isLoading || isUpdatingUserData}
+            isLoading={isLoading || isUpdatingUserData || isAddingUser}
           />
         }
       />
