@@ -126,19 +126,24 @@ const ManageUsersContent = () => {
       key: "name",
       sortTypeText: true,
       sortKey: "name",
-      renderText: { isTextBold: true, visible: true, isCapitalize: true },
+      renderText: {
+        isTextBold: true,
+        visible: true,
+        isCapitalize: true,
+        textStyles: styles.tableCell,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.email" }),
       dataIndex: "email",
       key: "email",
-      renderText: { visible: true },
+      renderText: { visible: true,textStyles: styles.tableCell, },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.mobileNumber" }),
       dataIndex: "mobile_number",
       key: "mobile_number",
-      renderText: { visible: true },
+      renderText: { visible: true,textStyles: styles.tableCell, },
     }),
     {
       title: () => (
@@ -164,7 +169,7 @@ const ManageUsersContent = () => {
       key: "created_at",
       sortTypeText: true,
       sortKey: "created_at",
-      renderText: { isTypeDate: true, visible: true },
+      renderText: { isTypeDate: true, visible: true,textStyles: styles.tableCell, },
       sortTypeDate: true,
       sortDirection: ["ascend"],
       defaultSortOrder: "ascend",
@@ -177,6 +182,7 @@ const ManageUsersContent = () => {
         switchToggleHandler: (data) =>
           onHandleUserStatus(data?.id, data?.status),
         visible: true,
+        textStyles: styles.tableCell,
       },
     }),
     renderColumn({
