@@ -26,12 +26,14 @@ const CustomDateTimePicker = ({
     <TwoRow
       className={[styles.container, customContainerStyles].join(" ")}
       topSection={
-        <div className={styles.inputLabelContainer}>
-          <Typography className={customLabelStyles}>{label}</Typography>
-          {isRequired && (
-            <Typography className={styles.isRequiredStar}>*</Typography>
-          )}
-        </div>
+        label && (
+          <div className={styles.inputLabelContainer}>
+            <Typography className={customLabelStyles}>{label}</Typography>
+            {isRequired && (
+              <Typography className={styles.isRequiredStar}>*</Typography>
+            )}
+          </div>
+        )
       }
       bottomSection={
         <TwoRow
