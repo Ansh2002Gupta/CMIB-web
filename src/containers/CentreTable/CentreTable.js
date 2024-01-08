@@ -28,7 +28,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
   const [errors, setErrors] = useState({
     scheduleDate: "",
     participationFee: "",
-    firm: { firmFee: "", uptoPartners: "1" },
+    firm: { firmFee: "", uptoPartners: "" },
     norm1: "",
     norm2: "",
     norm2MinVacancy: "",
@@ -175,6 +175,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       key: "scheduleDate",
       render: (text, record) => (
         <CustomDateTimePicker
+          customContainerStyles={styles.customDateContainerStyles}
           value={text?.scheduleDate ? moment(text?.scheduleDate) : null}
           type="date"
           disabled={record.isAddRow ? false : true}
@@ -209,7 +210,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             id: "centre.placeholder.enterFee",
           })}
           errorMessage={record.isAddRow && errors?.participationFee}
-          isError={record.isAddRow && errors?.participationFee}
+          isError={record.isAddRow && errors?.participationFee ? true : false}
         />
       ),
     },
@@ -250,14 +251,16 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
                   id: "centre.placeholder.enterFee",
                 })}
                 errorMessage={record.isAddRow && errors?.firm?.firmFee}
-                isError={record.isAddRow && errors?.firm?.firmFee}
+                isError={
+                  record.isAddRow && errors?.firm?.firmFee ? true : false
+                }
               />
             }
             rightSection={
-              <InputNumber
-                className={styles.inputNumberStyle}
-                min={0}
-                max={10}
+              <CustomInput
+                type="inputNumber"
+                customContainerStyles={styles.customContainerStyles}
+                customInputNumberStyles={styles.inputNumberStyle}
                 value={text?.uptoPartners}
                 disabled={record.isAddRow ? false : true}
                 onChange={(val) => {
@@ -267,7 +270,9 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
                   id: "centre.placeholder.enterpartner",
                 })}
                 errorMessage={record.isAddRow && errors?.firm?.uptoPartners}
-                isError={record.isAddRow && errors?.firm?.uptoPartners}
+                isError={
+                  record.isAddRow && errors?.firm?.uptoPartners ? true : false
+                }
               />
             }
           />
@@ -295,7 +300,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             id: "centre.placeholder.enterNorm1",
           })}
           errorMessage={record.isAddRow && errors?.norm1}
-          isError={record.isAddRow && errors?.norm1}
+          isError={record.isAddRow && errors?.norm1 ? true : false}
         />
       ),
     },
@@ -320,7 +325,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             id: "centre.placeholder.enterNorm2",
           })}
           errorMessage={record.isAddRow && errors?.norm2}
-          isError={record.isAddRow && errors?.norm2}
+          isError={record.isAddRow && errors?.norm2 ? true : false}
         />
       ),
     },
@@ -345,7 +350,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             id: "centre.placeholder.enterVacancy",
           })}
           errorMessage={record.isAddRow && errors?.norm2MinVacancy}
-          isError={record.isAddRow && errors?.norm2MinVacancy}
+          isError={record.isAddRow && errors?.norm2MinVacancy ? true : false}
         />
       ),
     },

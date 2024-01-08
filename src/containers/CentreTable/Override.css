@@ -8,8 +8,9 @@
   border-bottom: none !important;
   padding-top: var(--paddingNone) !important;
   padding-bottom: var(--paddingSmall) !important;
-
 }
+
+
 .customTable .ant-table-thead > tr > th .ant-table-cell {
   padding-left: var(--paddingNone) !important;
   padding-right: var(--paddingNone) !important;
@@ -19,9 +20,8 @@
 
 .customTable .ant-table-tbody .ant-table-cell {
   padding-left: var(--paddingNone) !important;
-  padding-right: var(--paddingNone) !important;
+  padding-right: var(--paddingMedium) !important;
   vertical-align: top !important;
- 
 }
 
 .ant-input-number-disabled {

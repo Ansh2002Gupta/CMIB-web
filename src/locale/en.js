@@ -187,7 +187,7 @@ const locale = {
   "centre.error.selectDate": "Enter valid date",
   "centre.error.enterParticipationFee": "Enter fee",
   "centre.error.enterFirmFee": "Enter fee",
-  "centre.error.enterpartner": "Enter valid Upto Partner",
+  "centre.error.enterpartner": "Enter Partner",
   "centre.error.enterNorm1": "Enter Norm 1",
   "centre.error.enterNorm2": "Enter Norm 2",
   "centre.error.enterVacancy": "Error",

@@ -90,8 +90,8 @@ const variables = {
   width_100: "100px",
   width_30: "30px",
   width_24: "24px",
-  width_100: "100px",
   width_20: "20px",
+  width_80: "80px",
 
   // Heights
   btnHeight: "56px",
