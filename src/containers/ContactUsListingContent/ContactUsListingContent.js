@@ -10,12 +10,13 @@ import { ThemeContext } from "core/providers/theme";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import SearchFilter from "../../components/SearchFilter";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useQueriesListingApi from "../../services/api-services/Queries/useQueriesListingApi";
 import useTicketListingApi from "../../services/api-services/Tickets/useTicketsListingApi";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
 import {
-  PAGE_SIZE,
+  DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
   VALID_CONTACT_US_TABS_ID,
@@ -29,13 +30,32 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { navigateScreen: navigate } = useNavigateScreen();
 
-  const [current, setCurrent] = useState(
-    +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE) || 1
-  );
-  const [pageSize, setPageSize] = useState(
-    +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE) || PAGE_SIZE
-  );
+  const [current, setCurrent] = useState(getValidPageNumber());
+  const [pageSize, setPageSize] = useState(getValidPageSize());
+
+  function getValidPageNumber() {
+    let validCurrentPage = +searchParams.get(
+      PAGINATION_PROPERTIES.CURRENT_PAGE
+    );
+    if (isNaN(validCurrentPage) || validCurrentPage < 0) {
+      validCurrentPage = 1;
+    }
+
+    return validCurrentPage;
+  }
+
+  function getValidPageSize() {
+    let validPageSize = +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE);
+    if (
+      isNaN(validPageSize) ||
+      !VALID_ROW_PER_OPTIONS.includes(validPageSize)
+    ) {
+      validPageSize = DEFAULT_PAGE_SIZE;
+    }
+    return validPageSize;
+  }
 
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
@@ -78,22 +98,21 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
-    if (!currentPage || isNaN(currentPage)) {
+    if (!currentPage || isNaN(current) || current < 0) {
       setSearchParams((prev) => {
         prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
         return prev;
       });
-      setCurrent(1);
     }
+
     if (
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
     ) {
       setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], PAGE_SIZE);
+        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
         return prev;
       });
-      setPageSize(PAGE_SIZE);
     }
   }, []);
 
@@ -116,14 +135,40 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       setCurrentActiveTab(currentActiveTab);
     }
     fetchItems();
-    setPageSize(PAGE_SIZE);
-    setCurrent(1);
   }, [currentActiveTab]);
 
   useEffect(() => {
     if (queriesMetaData?.total || ticketsMetaData?.total) {
       currentActiveTab === 1 && setCurrentDataLength(+ticketsMetaData?.total);
       currentActiveTab === 2 && setCurrentDataLength(+queriesMetaData?.total);
+    }
+
+    console.error({ queriesMetaData, ticketsMetaData });
+
+    if (queriesMetaData?.total) {
+      const totalNumberOfValidPages = Math.ceil(
+        queriesMetaData?.total / queriesMetaData?.perPage
+      );
+      if (current > totalNumberOfValidPages) {
+        setSearchParams((prev) => {
+          prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+          return prev;
+        });
+        setCurrent(1);
+      }
+    }
+
+    if (ticketsMetaData?.total) {
+      const totalNumberOfValidPages = Math.ceil(
+        ticketsMetaData?.total / ticketsMetaData?.perPage
+      );
+      if (current > totalNumberOfValidPages) {
+        setSearchParams((prev) => {
+          prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+          return prev;
+        });
+        setCurrent(1);
+      }
     }
   }, [queriesMetaData, ticketsMetaData, currentActiveTab]);
 
@@ -132,9 +177,27 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       return ["statusContainer_success", "statusText_success"];
     }
     if (status === "Pending") {
-      return ["statusContainer_progress", "statusText_progress"];
+      return ["statusContainer_failed", "statusText_failed"];
     }
-    return ["statusContainer_failed", "statusText_failed"];
+    return ["statusContainer_progress", "statusText_progress"];
+  };
+
+  const handleOnChangePageSize = (size) => {
+    setPageSize(Number(size));
+    setCurrent(1);
+    setSearchParams((prev) => {
+      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
+      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+      return prev;
+    });
+  };
+
+  const handleOnChangeCurrentPage = (newPageNumber) => {
+    setCurrent(newPageNumber);
+    setSearchParams((prev) => {
+      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
+      return prev;
+    });
   };
 
   const queriesColumns = [
@@ -156,7 +219,11 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       title: intl.formatMessage({ id: "label.nonRegisteredStudentOrCompany" }),
       dataIndex: "type",
       key: "type",
-      renderText: { isTextBold: true, visible: true },
+      renderText: {
+        isTextBold: true,
+        visible: true,
+        textStyles: styles.centerText,
+      },
     }),
     {
       title: () => (
@@ -172,7 +239,7 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       title: intl.formatMessage({ id: "label.queryType" }),
       dataIndex: "query_type",
       key: "query_type",
-      renderText: { isTypeDate: true, visible: true },
+      renderText: { visible: true, textStyles: styles.centerText },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.email" }),
@@ -198,6 +265,7 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
         preview: false,
         src: getImage("eye"),
         visible: true,
+        onClick: () => navigate("/query/1"), // TODO: change it once the query details page have been integrated
       },
     }),
     renderColumn({
@@ -297,6 +365,7 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
   const columns = currentActiveTab === 1 ? ticketColumns : queriesColumns;
 
   useEffect(() => {
+    // correct the way according to the new way
     if (doNotCallOnMount.current) {
       setSearchParams((prev) => {
         prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], current);
@@ -309,6 +378,7 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
   }, [pageSize, current]);
 
   useEffect(() => {
+    // same here change it just like manage users
     debounceSearch(pageSize, current, searchedValue);
   }, [searchedValue]);
 
@@ -349,15 +419,13 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
           <DataTable
             {...{
               columns,
-              searchedValue,
               currentDataLength,
-              setCurrentDataLength,
               pageSize,
               current,
-              setCurrent,
-              setPageSize,
+              handleOnChangePageSize,
+              handleOnChangeCurrentPage,
             }}
-            originalData={listItemData}
+            originalData={listItemData || []}
           />
         )}
         {isLoading && !error && (

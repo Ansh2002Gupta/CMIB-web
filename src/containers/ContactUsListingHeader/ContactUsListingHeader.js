@@ -1,13 +1,30 @@
 import React from "react";
+import { useIntl } from "react-intl";
+import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
+
+import { DEFAULT_PAGE_SIZE, PAGINATION_PROPERTIES } from "../../constant/constant";
 import styles from "./ContactUsListingHeader.module.scss";
-import { useIntl } from "react-intl";
 
 const ContactUsListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
   const intl = useIntl();
+  const [, setSearchParams] = useSearchParams();
+
+  const setPageSizeAndNumberToDefault = () => {
+    setSearchParams((prev) => {
+      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
+      return prev;
+    });
+  };
+
+  const handleOnTabSwitch = (tabId) => {
+    setPageSizeAndNumberToDefault();
+    setCurrentActiveTab(tabId);
+  };
 
   return (
     <TwoRow
@@ -28,7 +45,7 @@ const ContactUsListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
               styles.box,
               currentActiveTab === 1 ? styles.activeBox : "",
             ].join(" ")}
-            onClick={() => setCurrentActiveTab(1)}
+            onClick={() => handleOnTabSwitch(1)}
           >
             <Typography
               className={[
@@ -46,7 +63,7 @@ const ContactUsListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
               styles.box,
               currentActiveTab === 2 ? styles.activeBox : "",
             ].join(" ")}
-            onClick={() => setCurrentActiveTab(2)}
+            onClick={() => handleOnTabSwitch(2)}
           >
             <Typography
               className={[

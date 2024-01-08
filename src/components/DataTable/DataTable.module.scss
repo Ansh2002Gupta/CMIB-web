@@ -21,8 +21,8 @@
 }
 
 .rowPerPageCount {
-  width: 70px;
-  color: var(--On-background, var(--textBold));
+  width: var(--height_70);
+  color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }
@@ -54,7 +54,7 @@
   gap: var(--gapXSmall);
   justify-content: space-between;
   align-items: baseline;
-  min-height: 44px;
+  min-height: var(--minBtnHeight);
   flex-direction: row-reverse;
   padding: var(--paddingExtraSmall) var(--paddingMedium);
   border: var(--borderLight);
@@ -76,7 +76,7 @@
 
 @media (max-width: 1023px) {
   .nextAndPrevArrowContainer {
-    padding: 4px var(--paddingExtraSmall);
+    padding: var(--paddingXXSmall) var(--paddingExtraSmall);
     align-items: center;
   }
 }
@@ -93,7 +93,7 @@
     margin-top: var(--marginMedium);
   }
   .paginationContainer {
-    width: 100%;
+    width: var(--fullWidth);
     justify-content: space-between;
     padding: 0px var(--paddingExtraSmall);
   }

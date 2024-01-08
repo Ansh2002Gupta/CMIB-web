@@ -14,3 +14,4 @@ export const SESSION = "/session";
 export const QUERIES_AND_TICKETS = "/queries-and-tickets";
 export const ROUTE = "/configurations";
 export const SETUP_CENTERS = "setup-centers";
+export const QUERY_DETAILS = "/query/:queryId";

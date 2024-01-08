@@ -100,6 +100,13 @@
   flex-direction: column;
   gap: var(--gapXSmall);
 }
+
+.centerText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 input::placeholder {
   color: var(--inputPlaceHolder) !important;
 }

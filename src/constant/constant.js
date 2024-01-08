@@ -1,6 +1,6 @@
 import { SETUP_CENTERS } from "../routes/routeNames";
 
-export const PAGE_SIZE = 10;
+export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
 
@@ -40,6 +40,7 @@ export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = [1, 2];
 
+// TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
   {
     value: "all",

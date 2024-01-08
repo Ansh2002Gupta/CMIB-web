@@ -16,6 +16,7 @@ import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
+import QueryDetails from "../views/QueryDetails";
 import {
   DASHBOARD,
   SUBSCRIPTIONS,
@@ -32,6 +33,7 @@ import {
   QUERIES_AND_TICKETS,
   ROUTE,
   SETUP_CENTERS,
+  QUERY_DETAILS,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -197,6 +199,16 @@ const config = [
       {
         viewPath: "",
         element: <ContactUsListing />,
+      },
+    ],
+  },
+  {
+    pagePath: QUERY_DETAILS,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: "",
+        element: <QueryDetails />,
       },
     ],
   },

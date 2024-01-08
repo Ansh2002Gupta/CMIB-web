@@ -21,7 +21,7 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
 import {
-  PAGE_SIZE,
+  DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
@@ -39,7 +39,7 @@ const ManageUsersContent = () => {
   let validPageSize = +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE);
   let validCurrentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
   if (isNaN(validPageSize) || !VALID_ROW_PER_OPTIONS.includes(validPageSize)) {
-    validPageSize = PAGE_SIZE;
+    validPageSize = DEFAULT_PAGE_SIZE;
   }
   if (isNaN(validCurrentPage) || validCurrentPage < 0) {
     validCurrentPage = 1;
@@ -93,10 +93,10 @@ const ManageUsersContent = () => {
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
     ) {
       setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], PAGE_SIZE);
+        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
         return prev;
       });
-      setPageSize(PAGE_SIZE);
+      setPageSize(DEFAULT_PAGE_SIZE);
     }
   }, [areUsersFetchedSuccessfully]);
 
