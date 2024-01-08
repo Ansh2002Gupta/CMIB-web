@@ -62,7 +62,7 @@ const ManageUsersContent = () => {
     let validCurrentPage = +searchParams.get(
       PAGINATION_PROPERTIES.CURRENT_PAGE
     );
-    if (isNaN(validCurrentPage) || validCurrentPage < 0) {
+    if (isNaN(validCurrentPage) || validCurrentPage <= 0) {
       validCurrentPage = 1;
     }
 
