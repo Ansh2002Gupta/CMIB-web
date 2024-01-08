@@ -1,4 +1,4 @@
-import { SETUP_CENTERS } from "../routes/routeNames";
+import { SETUP_CENTERS, CONSENT_MARKING } from "../routes/routeNames";
 
 export const PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
@@ -164,7 +164,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: CONSENT_MARKING,
   },
   {
     id: 5,
@@ -191,7 +191,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: CONSENT_MARKING,
   },
   {
     id: 3,

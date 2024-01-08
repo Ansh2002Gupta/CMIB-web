@@ -163,6 +163,10 @@ const locale = {
   "label.newCentre": "New Centre",
   "label.actions": "Actions",
   "label.sNo": "S. No",
+  "label.registrationConsentSchedule":
+    "Registration and Consent Marking Schedule",
+  "label.consentMarkingScheduleWarning":
+    "*This cannot be edited once this section data is submitted.",
 };
 
 export default locale;

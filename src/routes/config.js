@@ -5,6 +5,7 @@ import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
+import ConsentMarking from "../views/ConsentMarking";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
@@ -30,6 +31,7 @@ import {
   SESSION,
   ROUTE,
   SETUP_CENTERS,
+  CONSENT_MARKING,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -176,6 +178,7 @@ const config = [
         viewPath: SETUP_CENTERS,
         element: <SetupCenter />,
       },
+      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
     ],
   },
   {
