@@ -27,7 +27,6 @@ const ContactUsListingHeader = ({
   const { fetchQueries } = queryListingProps;
 
   const fetchItems = (tabId, pageSize, current) => {
-    console.log({ tabId, pageSize, current });
     tabId === 1 && fetchTickets(pageSize, current);
     tabId === 2 && fetchQueries(pageSize, current);
   };

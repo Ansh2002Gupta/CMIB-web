@@ -33,7 +33,6 @@ const SetupCenter = () => {
     const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
   }, [current, pageSize]);
-  console.log({ currentTableData });
 
   const columns = [
     renderColumn({
