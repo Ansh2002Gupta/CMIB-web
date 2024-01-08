@@ -1,0 +1,44 @@
+.container {
+  border: var(--borderLight);
+  border-radius: var(--radiusXLgMedium);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 40vw;
+  max-width: var(--width_400);
+  overflow: hidden;
+}
+
+.userImage {
+  width: var(--fullWidth);
+  object-fit: contain;
+  max-height: var(--height_400);
+  min-height: var(--height_250);
+}
+
+.trashAndIconContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--paddingSmall);
+  width: var(--fullWidth);
+}
+
+.trashIcon {
+  width: var(--width_20);
+  height: var(--height_20);
+  cursor: pointer;
+}
+
+.text {
+  color: var(--linkColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    max-width: none;
+    width: var(--fullWidth);
+  }
+}

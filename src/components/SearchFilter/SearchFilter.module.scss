@@ -122,3 +122,9 @@
     text-decoration: underline !important;
   }
 }
+
+@media screen and (max-width: 1279px) {
+  .filterOptionContainer {
+    flex-direction: column;
+  }
+}

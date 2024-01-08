@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Image, Typography } from "antd";
+import { Button, Typography } from "antd";
 
 import styles from "./CustomButton.module.scss";
 
@@ -8,21 +8,18 @@ const CustomButton = ({
   btnText,
   customStyle,
   iconStyles,
-  iconUrl,
+  IconElement,
   isBtnDisable,
   loading,
   onClick,
   textStyle,
   type,
 }) => {
+  
   return (
     <div>
       <Button
-        icon={
-          iconUrl ? (
-            <Image src={iconUrl} className={iconStyles} preview={false} />
-          ) : null
-        }
+        icon={IconElement ? <IconElement className={iconStyles} /> : null}
         className={[styles.btn, customStyle].join(" ")}
         disabled={isBtnDisable}
         {...{ onClick, loading }}
@@ -43,7 +40,7 @@ CustomButton.defaultProps = {
   btnText: "",
   customStyle: "",
   iconStyles: "",
-  iconUrl: "",
+  IconElement: null,
   isBtnDisable: false,
   loading: false,
   onClick: () => {},
@@ -55,7 +52,7 @@ CustomButton.propTypes = {
   btnText: PropTypes.string,
   customStyle: PropTypes.string,
   iconStyles: PropTypes.string,
-  iconUrl: PropTypes.string,
+  IconElement: PropTypes.object,
   isBtnDisable: PropTypes.bool,
   loading: PropTypes.bool,
   onClick: PropTypes.func,

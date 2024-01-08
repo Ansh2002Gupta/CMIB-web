@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../constant/constant";
-import { ADMIN_ROUTE, RESET_ADMIN_PASSWORD } from "../../constant/apiEndpoints";
+import Http from "../../http-service";
+import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
+import {
+  ADMIN_ROUTE,
+  RESET_ADMIN_PASSWORD,
+} from "../../../constant/apiEndpoints";
 
 const useCreateNewPassword = () => {
   const intl = useIntl();
@@ -33,10 +36,13 @@ const useCreateNewPassword = () => {
       );
     } catch (err) {
       setCreateNewPasswordApiStatus(API_STATUS.ERROR);
-      const errorMessage =
-        err.response?.data?.message ||
-        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" });
-      setErrorWhileCreatingPassword(errorMessage);
+      if (err.response?.data?.message) {
+        setErrorWhileCreatingPassword(err.response?.data?.message);
+        return;
+      }
+      setErrorWhileCreatingPassword(
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+      );
     }
   };
 

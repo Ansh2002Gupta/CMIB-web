@@ -1,0 +1,52 @@
+.headerContainer {
+  padding: var(--paddingMedium);
+  border: var(--borderLight);
+  width: 100%;
+  background-color: var(--bodyBg);
+}
+
+.activeSwitchAndBtnContainer {
+  display: flex;
+  gap: var(--gapMedium);
+  align-items: center;
+}
+
+.switchAndTextContainer {
+  display: flex;
+  gap: var(--gapSmall);
+  align-items: center;
+}
+
+.switchBgColor {
+  background-color: var(--active2) !important;
+}
+
+.text {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.btnIconStyles {
+  width: 24px !important;
+}
+
+.btnCustomStyles {
+  padding: var(--paddingSmall) 12px;
+  border-radius: var(--radiusXLg);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  background-color: var(--bodyBg) !important;
+  color: var(--textBold);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--textBold) !important;
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .activeSwitchAndBtnContainer {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}

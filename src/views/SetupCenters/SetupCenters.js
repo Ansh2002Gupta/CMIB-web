@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Typography } from "antd";
@@ -19,14 +19,22 @@ const SetupCenter = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
 
   const [currentTableData, setCurrentTableData] = useState(CONFIGURE_CENTRES);
-  const [currentDataLength, setCurrentDataLength] = useState(
-    CONFIGURE_CENTRES.length
-  );
+  const [current, setCurrent] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const goToEditCentrePage = (rowData, isEdit) => {
     const centreId = rowData?.centreId;
     navigate(`/session/setup-centers/details/${centreId}?edit=${isEdit}`);
   };
+
+  // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
+  useEffect(() => {
+    const startIndex = (current - 1) * pageSize;
+    const endIndex = current * pageSize;
+    const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
+    setCurrentTableData(updatedData);
+  }, [current, pageSize]);
+  console.log({ currentTableData });
 
   const columns = [
     renderColumn({
@@ -93,13 +101,14 @@ const SetupCenter = () => {
         <DataTable
           {...{
             columns,
-            currentTableData,
-            setCurrentTableData,
-            currentDataLength,
-            setCurrentDataLength,
+            current,
+            setCurrent,
+            pageSize,
+            setPageSize,
           }}
+          currentDataLength={CONFIGURE_CENTRES.length}
           customContainerStyles={styles.tableContainer}
-          originalData={CONFIGURE_CENTRES}
+          originalData={currentTableData}
         />
       }
       bottomSectionStyle={classes.bottomSectionStyle}

@@ -16,6 +16,8 @@ const ConfigureCentreContent = ({ intl, getImage }) => {
   const [currentDataLength, setCurrentDataLength] = useState(
     CONFIGURE_CENTRES.length
   );
+  const [current, setCurrent] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const goToEditCentrePage = (rowData) => {
     navigate(`/view-centre-details?centreId=${rowData?.centreId}&edit=${true}`);
@@ -34,6 +36,14 @@ const ConfigureCentreContent = ({ intl, getImage }) => {
     });
     setCurrentTableData(updatedData);
   };
+
+  // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
+  useEffect(() => {
+    const startIndex = (current - 1) * pageSize;
+    const endIndex = current * pageSize;
+    const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
+    setCurrentTableData(updatedData);
+  }, [current, pageSize]);
 
   const columns = [
     renderColumn({
@@ -121,12 +131,13 @@ const ConfigureCentreContent = ({ intl, getImage }) => {
         {...{
           columns,
           searchedValue,
-          currentTableData,
-          setCurrentTableData,
           currentDataLength,
-          setCurrentDataLength,
+          current,
+          setCurrent,
+          pageSize,
+          setPageSize,
         }}
-        originalData={CONFIGURE_CENTRES}
+        originalData={currentTableData}
         columnsToBeSearchFrom={["centreName", "centreId"]}
       />
     </div>

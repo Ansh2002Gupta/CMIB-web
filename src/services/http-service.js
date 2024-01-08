@@ -18,13 +18,14 @@ export default class Http {
     }
   }
 
-  static async post(_url, data, handleDiscard = () => {}) {
+  static async post(_url, data, apiOptions = {}, handleDiscard = () => {}) {
     const url = `${baseUrl}${_url}`;
     try {
       const cancelPostRequest = axios.CancelToken.source();
       handleDiscard(cancelPostRequest);
       const response = await axios.post(url, data, {
         cancelToken: cancelPostRequest.token,
+        ...apiOptions,
       });
       return response.data;
     } catch (error) {

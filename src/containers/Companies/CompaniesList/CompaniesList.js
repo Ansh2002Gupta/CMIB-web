@@ -9,6 +9,7 @@ import DataTable from "../../../components/DataTable";
 import SearchFilter from "../../../components/SearchFilter";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
+import { ReactComponent as ArrowDown } from "../../../themes/base/assets/images/arrow-down.svg";
 import { COMPANY_DATA_SOURCE, COMPANIES_FILTER_DATA } from "../../../dummyData";
 import styles from "./CompaniesList.module.scss";
 
@@ -25,6 +26,8 @@ const CompaniesContent = () => {
   const [currentDataLength, setCurrentDataLength] = useState(
     COMPANY_DATA_SOURCE.length
   );
+  const [current, setCurrent] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const goToUserDetailsPage = (data) => {
     const companyId = data?.id;
@@ -44,6 +47,14 @@ const CompaniesContent = () => {
     });
     setCurrentTableData(updatedData);
   };
+
+  // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
+  useEffect(() => {
+    const startIndex = (current - 1) * pageSize;
+    const endIndex = current * pageSize;
+    const updatedData = COMPANY_DATA_SOURCE.slice(startIndex, endIndex);
+    setCurrentTableData(updatedData);
+  }, [current, pageSize]);
 
   const columns = [
     renderColumn({
@@ -136,7 +147,7 @@ const CompaniesContent = () => {
         </div>
         <CustomButton
           btnText={intl.formatMessage({ id: "label.generatePaymentMis" })}
-          iconUrl={getImage("arrowDown")}
+          IconElement={ArrowDown}
           iconStyles={styles.btnIconStyles}
           customStyle={styles.greyBtnCustomStyles}
         />
@@ -145,12 +156,13 @@ const CompaniesContent = () => {
         {...{
           columns,
           searchedValue,
-          currentTableData,
-          setCurrentTableData,
           currentDataLength,
-          setCurrentDataLength,
+          current,
+          setCurrent,
+          pageSize,
+          setPageSize,
         }}
-        originalData={COMPANY_DATA_SOURCE}
+        originalData={currentTableData}
         columnsToBeSearchFrom={["companyName"]}
       />
     </div>
