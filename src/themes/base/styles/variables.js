@@ -79,7 +79,7 @@ const variables = {
   sidemenuWidth: "74px",
   fullWidth: "100%",
   width_45: "45%",
-  width_30: "30%",
+  width_30Per: "30%",
   halfWidth: "50%",
   smallWidth: "30px",
   width_400: "400px",
