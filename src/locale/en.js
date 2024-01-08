@@ -167,6 +167,12 @@ const locale = {
     "Registration and Consent Marking Schedule",
   "label.consentMarkingScheduleWarning":
     "*This cannot be edited once this section data is submitted.",
+  "label.consent.startDateCompanies": "Registration Start Date for Companies",
+  "label.consent.startDateCandidates": "Registration Start Date for Candidates",
+  "label.consent.lastDateBigCentres":
+    "Last Date of Registration for Candidates for Big Centres",
+  "label.consent.lastDateSmallCentres":
+    "Last Date of Registration for Candidates for Small Centres",
 };
 
 export default locale;
