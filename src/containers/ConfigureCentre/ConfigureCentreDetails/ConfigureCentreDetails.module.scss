@@ -1,19 +1,17 @@
 .mainContainer {
   gap: var(--gapMedium);
-  margin: 0 24px;
+  margin: 0 var(--marginLarge);
 }
 
 .centreDetails {
   background-color: var(--bodyBg);
-  padding: var(--fontSizeXlargeMedium);
-  border-radius: var(--lineHeightExtraSmall);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
   border: var(--borderLight);
   gap: var(--gapMedium);
-  
 }
 
 .headingText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
@@ -24,14 +22,12 @@
 }
 
 .grayText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
 }
 
 .blackText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
@@ -39,11 +35,6 @@
 
 .redText {
   color: var(--error);
-}
-
-.editIcon {
-  width: var(--lineHeightNormal);
-  height: var(--lineHeightNormal);
 }
 
 .editContainer {
@@ -89,16 +80,10 @@
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
-  padding-left: var(--paddingSmall);
-  padding-right: var(--paddingSmall);
-  padding-top: var(--paddingExtraSmall);
-  padding-bottom: var(--paddingExtraSmall);
+  padding: var(--paddingExtraSmall) var(--paddingSmall);
   border-radius: var(--radiusLg);
   border: var(--borderLight);
   background-color: var(--bodyBg);
-  &::placeholder {
-    color: red !important;
-  }
 }
 
 .selectInput {
@@ -151,5 +136,5 @@
 .errorText {
   color: var(--error);
   font-size: var(--fontSizeExtraSmall);
-  margin-top: var(--gapXXSmall);
+  margin-top: var(--marginSmall);
 }

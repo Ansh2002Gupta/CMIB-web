@@ -135,7 +135,9 @@ const variables = {
   gapXXSmall: "4px",
 
   // margin
+  marginLarge: "24px",
   marginMedium: "16px",
+  marginSmall: "8px",
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };

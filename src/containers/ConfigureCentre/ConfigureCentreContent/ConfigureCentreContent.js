@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 import { Image, Input } from "antd";
 
 import DataTable from "../../../components/DataTable";
@@ -6,7 +7,8 @@ import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn
 import { CONFIGURE_CENTRES } from "../../../dummyData";
 import styles from "./ConfigureCentreContent.module.scss";
 
-const ConfigureCentreContent = ({ intl, getImage, navigate }) => {
+const ConfigureCentreContent = ({ getImage, navigate }) => {
+  const intl = useIntl();
   const { renderColumn } = useRenderColumn();
 
   const [searchedValue, setSearchedValue] = useState("");

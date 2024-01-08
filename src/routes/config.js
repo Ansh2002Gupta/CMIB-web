@@ -16,6 +16,7 @@ import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import {
+  ADD,
   ROUTE,
   DASHBOARD,
   SUBSCRIPTIONS,
@@ -160,7 +161,7 @@ const config = [
         element: <ConfigureCentres />,
       },
       {
-        viewPath: "add",
+        viewPath: ADD,
         element: <ConfigureCentreView />,
       },
     ],

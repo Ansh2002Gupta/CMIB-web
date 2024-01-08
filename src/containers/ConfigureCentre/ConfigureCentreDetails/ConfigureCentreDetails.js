@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 import { Select, Switch, Typography } from "antd";
 
-import { TwoColumn, TwoRow } from "../../../core/layouts";
+import { Base, TwoColumn, TwoRow } from "../../../core/layouts";
 
 import CustomButton from "../../../components/CustomButton";
 import CustomGrid from "../../../components/CustomGrid";
@@ -12,8 +13,10 @@ import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
 import { classes } from "./ConfigureCentreDetails.styles";
 import styles from "./ConfigureCentreDetails.module.scss";
 
-const ConfigureCentreDetails = ({ intl }) => {
+const ConfigureCentreDetails = () => {
+  const intl = useIntl();
   const responsive = useResponsive();
+
   const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState(INITIAL_CENTRE_DETAILS);
 
@@ -24,29 +27,31 @@ const ConfigureCentreDetails = ({ intl }) => {
   );
 
   const handleInputChange = (value, name) => {
-    setFormData({
-      ...formData,
-      [name]: value,
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
     });
 
     const fieldRules = fields.find((field) => field.label === name)?.rules;
     const error = validateField(value, fieldRules);
-    setFormErrors({
-      ...formErrors,
-      [name]: error,
+    setFormErrors((prev) => {
+      return {
+        ...prev,
+        [name]: error,
+      };
     });
   };
 
   const validateField = (value, rules) => {
-    if (!rules) return undefined;
-
     for (const rule of rules) {
       if (rule.required && (!value || value.length <= 0)) {
         return rule.message;
       }
     }
 
-    return undefined;
+    return "";
   };
 
   const handleCancel = () => {
@@ -64,15 +69,11 @@ const ConfigureCentreDetails = ({ intl }) => {
         <TwoRow
           className={styles.centreDetails}
           topSection={
-            <TwoColumn
-              className={styles.headerContainer}
-              leftSection={
-                <Typography className={styles.headingText}>
-                  {intl.formatMessage({ id: "label.centreDetails" })}
-                </Typography>
-              }
-              rightSection={<></>}
-            />
+            <Base className={styles.headerContainer}>
+              <Typography className={styles.headingText}>
+                {intl.formatMessage({ id: "label.centreDetails" })}
+              </Typography>
+            </Base>
           }
           bottomSection={
             <CustomGrid>
@@ -95,9 +96,7 @@ const ConfigureCentreDetails = ({ intl }) => {
                         size={"large"}
                         style={classes.selectStyle}
                         className={styles.selectInput}
-                        onChange={(val) => {
-                          handleInputChange(val, item.label);
-                        }}
+                        onChange={(val) => handleInputChange(val, item.label)}
                         options={item.selectOptions}
                         placeholder={intl.formatMessage({
                           id: `centre.placeholder.${item.headingIntl}`,
@@ -111,9 +110,9 @@ const ConfigureCentreDetails = ({ intl }) => {
                           customLabelStyles={styles.inputLabel}
                           customInputStyles={styles.input}
                           customContainerStyles={styles.customContainerStyles}
-                          onChange={(val) => {
-                            handleInputChange(val.target.value, item.label);
-                          }}
+                          onChange={(val) =>
+                            handleInputChange(val.target.value, item.label)
+                          }
                           placeholder={intl.formatMessage({
                             id: `centre.placeholder.${item.headingIntl}`,
                           })}

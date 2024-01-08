@@ -5,7 +5,7 @@ export const classes = {
   bottomSectionStyle: {
     alignSelf: "flex-end",
     position: "fixed",
-    bottom: "24px",
+    bottom: variables.gapMedium,
   },
   selectStyle: { width: variables.fullWidth },
   mainTopSection: { height: "calc(100% - 102px)" },

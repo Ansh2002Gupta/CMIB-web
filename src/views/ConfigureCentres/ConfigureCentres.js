@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
@@ -10,7 +9,6 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import styles from "./ConfigureCentres.module.scss";
 
 const ConfigureCentres = () => {
-  const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
 
@@ -18,8 +16,8 @@ const ConfigureCentres = () => {
     <TwoRow
       isBottomFillSpace
       className={styles.baseLayout}
-      topSection={<ConfigureCentreHeader intl={intl} getImage={getImage} navigate={navigate} headingLabel="configureCentres"/>}
-      bottomSection={<ConfigureCentreContent intl={intl} getImage={getImage} navigate={navigate} />}
+      topSection={<ConfigureCentreHeader getImage={getImage} navigate={navigate} headingLabel="configureCentres"/>}
+      bottomSection={<ConfigureCentreContent getImage={getImage} navigate={navigate} />}
     />
   );
 };
