@@ -8,11 +8,11 @@
   background-color: var(--bodyBg);
   z-index: 5;
   overflow: hidden;
-  max-height: 30vh;
+  max-height: var(--height_30vh);
   overflow-y: scroll;
   position: absolute;
-  width: 100%;
-  top: 85px;
+  width: var(--fullWidth);
+  top: var(--distance_85);
   left: 0px;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .icon {
-  min-width: 20px;
+  min-width: var(--width_20);
 }
 
 .optionContainer {
@@ -58,37 +58,36 @@
   border: var(--borderLight);
   border-radius: var(--radiusLg);
   cursor: pointer;
-  min-height: 50px;
+  min-height: var(--height_50);
 }
 
 .labelContainer {
-  // change this to variable
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--gapXSmall);
 }
 
 .chipsListContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--gapXSmall);
   cursor: pointer;
-  width: 100%;
-  padding: 8px;
+  width: var(--fullWidth);
+  padding: var(--paddingExtraSmall);
 }
 
 .chips {
-  border-radius: 24px;
-  background-color: #f2f4fc;
+  border-radius: var(--radiusXXLg);
+  background-color: var(--lightBlueBg);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
+  gap: var(--gapXXSmall);
+  padding: var(--paddingXXSmall) var(--paddingExtraSmall);
   width: fit-content;
 }
 
 .chipsText {
-  color: #000833;
-  font-size: 12px;
+  color: var(--textBold);
+  font-size: var(--fontSizeExtraSmall);
 }
