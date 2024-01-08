@@ -143,8 +143,6 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       currentActiveTab === 2 && setCurrentDataLength(+queriesMetaData?.total);
     }
 
-    console.error({ queriesMetaData, ticketsMetaData });
-
     if (queriesMetaData?.total) {
       const totalNumberOfValidPages = Math.ceil(
         queriesMetaData?.total / queriesMetaData?.perPage
@@ -213,14 +211,13 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       key: "name",
       sortKey: "name",
       sortTypeText: true,
-      renderText: { isTextBold: true, visible: true },
+      renderText: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.nonRegisteredStudentOrCompany" }),
       dataIndex: "type",
       key: "type",
       renderText: {
-        isTextBold: true,
         visible: true,
         textStyles: styles.centerText,
       },
@@ -233,7 +230,7 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       ),
       dataIndex: "mobile",
       key: "mobile",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { visible: true },
     },
     renderColumn({
       title: intl.formatMessage({ id: "label.queryType" }),
@@ -293,25 +290,25 @@ const ContactUsListingContent = ({ currentActiveTab, setCurrentActiveTab }) => {
       key: "created_by",
       sortKey: "created_by",
       sortTypeText: true,
-      renderText: { isTextBold: true, visible: true },
+      renderText: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.role" }),
       dataIndex: "role",
       key: "role",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.registrationOrMembershipNumber" }),
       dataIndex: "registration_no",
       key: "registration_no",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.queryType" }),
       dataIndex: "query_type",
       key: "query_type",
-      renderText: { isTypeDate: true, visible: true },
+      renderText: { visible: true, textStyles: styles.centerText },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.status" }),
