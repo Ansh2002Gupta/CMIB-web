@@ -107,6 +107,10 @@
   align-items: center;
 }
 
+.tableCell {
+  min-width: var(--width_100);
+}
+
 input::placeholder {
   color: var(--inputPlaceHolder) !important;
 }

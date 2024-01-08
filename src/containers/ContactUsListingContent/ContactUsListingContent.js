@@ -114,7 +114,11 @@ const ContactUsListingContent = ({
       title: intl.formatMessage({ id: "label.queriesId" }),
       dataIndex: "id",
       key: "id",
-      renderText: { isTextBold: true, visible: true },
+      renderText: {
+        isTextBold: true,
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.studentOrCompany" }),
@@ -122,7 +126,10 @@ const ContactUsListingContent = ({
       key: "name",
       sortKey: "name",
       sortTypeText: true,
-      renderText: { visible: true },
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.nonRegisteredStudentOrCompany" }),
@@ -130,7 +137,7 @@ const ContactUsListingContent = ({
       key: "type",
       renderText: {
         visible: true,
-        textStyles: styles.centerText,
+        textStyles: [styles.tableCell].join(" "),
       },
     }),
     {
@@ -141,25 +148,38 @@ const ContactUsListingContent = ({
       ),
       dataIndex: "mobile",
       key: "mobile",
-      renderText: { visible: true },
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+      },
     },
     renderColumn({
       title: intl.formatMessage({ id: "label.queryType" }),
       dataIndex: "query_type",
       key: "query_type",
-      renderText: { visible: true, textStyles: styles.centerText },
+      renderText: {
+        visible: true,
+        textStyles: [styles.centerText, styles.tableCell].join(" "),
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.email" }),
       dataIndex: "email",
       key: "email",
-      renderText: { visible: true },
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.createdOn" }),
       dataIndex: "created_at",
       key: "created_at",
-      renderText: { isTypeDate: true, visible: true },
+      renderText: {
+        isTypeDate: true,
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+      },
       sortDirection: ["ascend"],
       sortKey: "created_at",
       sortTypeDate: true,
@@ -193,7 +213,11 @@ const ContactUsListingContent = ({
       title: intl.formatMessage({ id: "label.ticketId" }),
       dataIndex: "id",
       key: "id",
-      renderText: { isTextBold: true, visible: true },
+      renderText: {
+        isTextBold: true,
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.createdBy" }),
@@ -201,25 +225,28 @@ const ContactUsListingContent = ({
       key: "created_by",
       sortKey: "created_by",
       sortTypeText: true,
-      renderText: { visible: true },
+      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.role" }),
       dataIndex: "role",
       key: "role",
-      renderText: { visible: true },
+      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.registrationOrMembershipNumber" }),
       dataIndex: "registration_no",
       key: "registration_no",
-      renderText: { visible: true },
+      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.queryType" }),
       dataIndex: "query_type",
       key: "query_type",
-      renderText: { visible: true, textStyles: styles.centerText },
+      renderText: {
+        visible: true,
+        textStyles: [styles.centerText, styles.tableCell].join(" "),
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.status" }),
@@ -231,9 +258,11 @@ const ContactUsListingContent = ({
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <div
-            className={[styles.statusBox, styles[styleClassForContainer]].join(
-              " "
-            )}
+            className={[
+              styles.statusBox,
+              styles[styleClassForContainer],
+              styles.tableCell,
+            ].join(" ")}
           >
             <Typography className={styles[styleClassForText]}>
               {status}
@@ -246,13 +275,17 @@ const ContactUsListingContent = ({
       title: intl.formatMessage({ id: "label.assignedTo" }),
       dataIndex: "assigned_to",
       key: "assigned_to",
-      renderText: { visible: true },
+      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.createdOn" }),
       dataIndex: "created_at",
       key: "created_at",
-      renderText: { isTypeDate: true, visible: true },
+      renderText: {
+        isTypeDate: true,
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+      },
       sortDirection: ["ascend"],
       sortKey: "created_at",
       sortTypeDate: true,
