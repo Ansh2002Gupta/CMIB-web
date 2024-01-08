@@ -42,7 +42,6 @@ const CustomDateTimePicker = ({
             type === "time" ? (
               <TimePicker
                 {...{
-                  value,
                   format,
                   defaultValue,
                   onChange,
