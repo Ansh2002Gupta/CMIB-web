@@ -8,13 +8,13 @@ import CustomInput from "../../components/CustomInput";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import OTPInput from "../../components/OTPInput/OTPInput";
 import withCardView from "../../hocs/withCardView";
-import useAuthOTP from "../../core/hooks/useAuthOTP";
-import useCheckOTP from "../../core/hooks/useCheckOTP";
-import useLogin from "../../core/hooks/useLogin";
+import useLogin from "../../services/api-services/Login/useLogin";
+import useAuthOTP from "../../services/api-services/Otp/useAuthOTP";
+import useCheckOTP from "../../services/api-services/Otp/useCheckOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { ADMIN_ROUTE, CHECK_OTP_END_POINT } from "../../constant/apiEndpoints";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";
-import { ADMIN_ROUTE, CHECK_OTP_END_POINT } from "../../constant/apiEndpoints";
 import styles from "./loginForm.module.scss";
 
 const LoginForm = () => {
@@ -67,8 +67,8 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (loginApiStatus === "success" && loginResponse) {
-      if (loginResponse?.is_two_factor === 1) {
+    if (loginApiStatus === "success") {
+      if (!loginResponse) {
         setCurrentActiveScreen(2);
         return;
       }

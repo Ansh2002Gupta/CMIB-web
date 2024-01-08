@@ -1,26 +1,29 @@
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../constant/constant";
+import Http from "../../http-service";
+import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
+import { setItem } from "../../encrypted-storage-service";
 
 const useCheckOTP = () => {
   const [otpAPIStatus, setOtpAPIStatus] = useState(API_STATUS.IDLE);
   const [checkOTPData, setCheckOTPData] = useState(null);
   const [errorWhileVerifyingOTP, setErrorWhileVeryingOTP] = useState("");
-
   const intl = useIntl();
 
-  const handleCheckOTP = async ({ onSuccess, payload, url }) => {
+  const handleCheckOTP = async ({ onSuccessCallback, payload, url }) => {
     try {
       setOtpAPIStatus(API_STATUS.LOADING);
       errorWhileVerifyingOTP && setErrorWhileVeryingOTP("");
       const res = await Http.post(url, payload);
-
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
-        setOtpAPIStatus(API_STATUS.SUCCESS);
+        if (res?.data?.token?.access_token) {
+          const auth = res?.data?.token?.access_token;
+          setItem("authToken", auth);
+        }
         setCheckOTPData(res.data);
-        onSuccess();
+        setOtpAPIStatus(API_STATUS.SUCCESS);
+        onSuccessCallback && onSuccessCallback();
         return;
       }
       setOtpAPIStatus(API_STATUS.ERROR);
@@ -50,7 +53,6 @@ const useCheckOTP = () => {
     isError,
     isLoading,
     isSuccess,
-    setErrorWhileVeryingOTP,
   };
 };
 

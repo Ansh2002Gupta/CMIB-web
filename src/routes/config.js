@@ -15,25 +15,29 @@ import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
+import UserDetails from "../views/UserDetails";
 import {
   ADD,
-  ROUTE,
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
   COMPANIES,
   COMPANIES_DETAILS,
-  MANAGE_USERS,
   FORGOT_PASSWORD,
   ROOT,
+  USERS,
+  USER_DETAILS,
+  ADD_NEW_USER_DETAILS,
   CONFIGURE_CENTRES,
   SESSION,
+  ROUTE,
   SETUP_CENTERS,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HomeWithPublicAccess = withPublicAccess(Home);
 const AuthWithPublicAccess = withPublicAccess(Auth);
+const AuthWithPrivateAccess = withPrivateAccess(Auth);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
   HeaderContentWithFooter
 );
@@ -129,12 +133,36 @@ const config = [
     ],
   },
   {
-    pagePath: MANAGE_USERS,
-    element: <HomeWithPublicAccess noOuterPadding />,
+    pagePath: COMPANIES,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
+    pagePath: USERS,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
         element: <ManageUsers />,
+      },
+      {
+        viewPath: USER_DETAILS,
+        element: <UserDetails />,
+      },
+      {
+        viewPath: ADD_NEW_USER_DETAILS,
+        element: <UserDetails />,
       },
     ],
   },
@@ -154,7 +182,7 @@ const config = [
   },
   {
     pagePath: CONFIGURE_CENTRES,
-    element: <HomeWithPrivateAccess />,
+    element: <HomeWithPrivateAccess noOuterPadding />,
     views: [
       {
         viewPath: "",

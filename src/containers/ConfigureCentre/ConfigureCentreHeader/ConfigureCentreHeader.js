@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import ContentHeader from "../../ContentHeader";
 import CustomButton from "../../../components/CustomButton";
 import useResponsive from "../../../core/hooks/useResponsive";
+import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/plus icon.svg";
 import styles from "./ConfigureCentreHeader.module.scss";
 
 const ConfigureCentreHeader = ({ getImage, headingLabel, navigate }) => {
@@ -21,7 +22,7 @@ const ConfigureCentreHeader = ({ getImage, headingLabel, navigate }) => {
               btnText={intl.formatMessage({
                 id: `label.${responsive.isMd ? "addNewCentre" : "newCentre"}`,
               })}
-              iconUrl={getImage("plusIcon")}
+              IconElement={PlusIcon}
               iconStyles={styles.btnIconStyles}
               customStyle={styles.btnCustomStyles}
               onClick={() => {

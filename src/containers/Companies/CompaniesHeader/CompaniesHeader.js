@@ -1,16 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
-
-import { ThemeContext } from "core/providers/theme";
 
 import ContentHeader from "../../ContentHeader";
 import CustomButton from "../../../components/CustomButton";
+import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/plus icon.svg";
 import styles from "./CompaniesHeader.module.scss";
 
 const CompaniesHeader = () => {
   const intl = useIntl();
-
-  const { getImage } = useContext(ThemeContext);
 
   return (
     <div className={styles.headerContainer}>
@@ -20,7 +17,7 @@ const CompaniesHeader = () => {
         rightSection={
           <CustomButton
             btnText={intl.formatMessage({ id: "label.addCompany" })}
-            iconUrl={getImage("plusIcon")}
+            IconElement={PlusIcon}
             iconStyles={styles.btnIconStyles}
             customStyle={styles.btnCustomStyles}
           />

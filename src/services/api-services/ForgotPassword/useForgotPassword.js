@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../constant/constant";
-import { ADMIN_ROUTE, SEND_OTP } from "../../constant/apiEndpoints";
+import Http from "../../http-service";
+import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
+import {
+  ADMIN_ROUTE,
+  SEND_OTP,
+} from "../../../constant/apiEndpoints";
 
 const useForgotPassword = () => {
   const intl = useIntl();
@@ -22,7 +25,7 @@ const useForgotPassword = () => {
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setForgotPasswordApiStatus(API_STATUS.SUCCESS);
-        onSuccess();
+        onSuccess && onSuccess();
         return;
       }
       setForgotPasswordApiStatus(API_STATUS.ERROR);
@@ -44,7 +47,6 @@ const useForgotPassword = () => {
   const isLoading = forgotPasswordApiStatus === API_STATUS.LOADING;
   const isSuccess = forgotPasswordApiStatus === API_STATUS.SUCCESS;
   const isError = forgotPasswordApiStatus === API_STATUS.ERROR;
-
   return {
     forgotPasswordResult,
     errorWhileResetPassword,
