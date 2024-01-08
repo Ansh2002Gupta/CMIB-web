@@ -7,11 +7,11 @@
 
 .cancelBtn {
   display: flex;
-  padding: 12px var(--paddingSmall);
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
   justify-content: center;
   align-items: center;
   gap: var(--gapXSmall);
-  min-height: 56px;
+  min-height: var(--btnHeight);
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);

@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "antd";
 
+import { TwoColumn } from "../../core/layouts";
+
 import CustomButton from "../CustomButton";
 import styles from "./ActionAndCancelButtons.module.scss";
 
@@ -13,22 +15,24 @@ const ActionAndCancelButtons = ({
   onActionBtnClick,
   onCancelBtnClick,
 }) => {
-  
   return (
-    <div
+    <TwoColumn
       className={[styles.saveAndCancelBtnContainer, customCancelBtnStyles].join(
         " "
       )}
-    >
-      <Button className={styles.cancelBtn} onClick={onCancelBtnClick}>
-        {cancelBtnText}
-      </Button>
-      <CustomButton
-        customStyle={[styles.saveBtn, customActionBtnStyles].join(" ")}
-        btnText={actionBtnText}
-        onClick={onActionBtnClick}
-      />
-    </div>
+      leftSection={
+        <Button className={styles.cancelBtn} onClick={onCancelBtnClick}>
+          {cancelBtnText}
+        </Button>
+      }
+      rightSection={
+        <CustomButton
+          customStyle={[styles.saveBtn, customActionBtnStyles].join(" ")}
+          btnText={actionBtnText}
+          onClick={onActionBtnClick}
+        />
+      }
+    />
   );
 };
 

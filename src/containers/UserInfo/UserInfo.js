@@ -12,7 +12,7 @@ import {
   ALLOWED_MOBILE_PREFIXES,
   allAccessIdObject,
 } from "../../constant/constant";
-import { convertStringArrayToObjectOfStringAndIdArray } from "../../services/Utils";
+import { convertStringArrayToObjectOfStringAndIdArray } from "../../constant/utils";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
@@ -61,7 +61,7 @@ const UserInfo = ({
     {
       key: "5",
       label: `${intl.formatMessage({ id: "label.dateCreatedOn" })} *`,
-      children: moment(date).format("DD/MM/YYYY"),
+      children: moment(new Date(date)).format("DD/MM/YYYY"),
     },
     {
       key: "6",
@@ -104,6 +104,9 @@ const UserInfo = ({
                 customInputStyles={[styles.text, styles.input].join(" ")}
                 customLabelStyles={styles.label}
                 onChange={(e) => updateUserData("name", e.target.value)}
+                placeholder={intl.formatMessage({
+                  id: "label.userNamePlaceholder",
+                })}
               />
             </div>
             <div>
@@ -118,6 +121,9 @@ const UserInfo = ({
                 customInputStyles={[styles.text, styles.input].join(" ")}
                 customLabelStyles={styles.label}
                 onChange={(e) => updateUserData("email", e.target.value)}
+                placeholder={intl.formatMessage({
+                  id: "label.emailPlaceholder",
+                })}
               />
             </div>
             <div>
@@ -139,6 +145,9 @@ const UserInfo = ({
                 onSelectItem={(e) =>
                   updateUserData("mobile_prefix", e.target.value)
                 }
+                placeholder={intl.formatMessage({
+                  id: "label.mobilePlaceholder",
+                })}
               />
             </div>
             <div className={styles.spanOverAllColumns}>
@@ -169,7 +178,7 @@ const UserInfo = ({
                     updateUserData("date", dateString)
                   }
                   className={[styles.text, styles.input].join(" ")}
-                  defaultValue={moment(date)}
+                  defaultValue={moment(new Date(date)).format("DD/MM/YYYY")}
                   disabled={isDateDisable || !isEditable}
                   customInputStyles={[styles.text, styles.input].join(" ")}
                   customLabelStyles={styles.label}
@@ -177,11 +186,9 @@ const UserInfo = ({
               </div>
             )}
             <div className={styles.twoFactorContainer}>
-              <div>
-                <Typography className={styles.label}>
-                  {intl.formatMessage({ id: "label.twoFactorAuth" })}
-                </Typography>
-              </div>
+              <Typography className={styles.label}>
+                {intl.formatMessage({ id: "label.twoFactorAuth" })}
+              </Typography>
               <div className={styles.switchAndTextContainer}>
                 <Switch
                   className={is_two_factor ? styles.active : ""}

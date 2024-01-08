@@ -167,6 +167,9 @@ const locale = {
   "label.sNo": "S. No",
   "label.add": "Add",
   "label.none": "None",
+  "label.userNamePlaceholder": "Please enter your username",
+  "label.mobilePlaceholder": "Please enter your mobile number",
+  "label.emailPlaceholder": "Please enter your email",
 };
 
 export default locale;
