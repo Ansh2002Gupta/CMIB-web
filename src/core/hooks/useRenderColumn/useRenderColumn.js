@@ -92,7 +92,7 @@ const useRenderColumn = () => {
     sortDirection && (columnObject.sortDirection = sortDirection);
 
     renderText?.visible &&
-      (columnObject.render = (text) => {
+      (columnObject.onCell = (text) => {
         return {
           props: {
             className: styles.tableCellStyles,

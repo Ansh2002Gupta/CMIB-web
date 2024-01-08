@@ -10,3 +10,7 @@
 iframe#webpack-dev-server-client-overlay {
   display: none !important;
 }
+
+.ant-table-expanded-row-fixed, .table-layout {
+  min-height: 500px; 
+}
