@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Typography, TimePicker, DatePicker } from "antd";
 
-import styles from "./CustomDateTimePicker.module.scss";
 import { TwoRow } from "../../core/layouts";
+
+import styles from "./CustomDateTimePicker.module.scss";
 
 const CustomDateTimePicker = ({
   customContainerStyles,
@@ -40,35 +41,31 @@ const CustomDateTimePicker = ({
           topSection={
             type === "time" ? (
               <TimePicker
-                value={value}
-                format={format}
+                {...{
+                  value,
+                  format,
+                  defaultValue,
+                  onChange,
+                  placeholder,
+                  disabled,
+                }}
                 className={[styles.timeInput, customTimeStyle]}
-                defaultValue={defaultValue}
-                onChange={onChange}
-                placeholder={placeholder}
-                disabled={disabled}
               />
             ) : (
               <DatePicker
-                value={value}
+                {...{ value, defaultValue, onChange, placeholder, disabled }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle]}
-                defaultValue={defaultValue}
-                onChange={onChange}
-                placeholder={placeholder}
-                disabled={disabled}
               />
             )
           }
           bottomSection={
-            errorMessage ? (
+            errorMessage && (
               <Typography
                 className={[styles.errorText, customErrorTextStyles].join(" ")}
               >
                 * {errorMessage}
               </Typography>
-            ) : (
-              <Typography></Typography>
             )
           }
         />

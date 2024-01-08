@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
-import { Table, InputNumber, Image, Typography } from "antd";
+import { Image, Table, Typography } from "antd";
 import moment from "moment";
 
 import CustomInput from "../../components/CustomInput/CustomInput";
@@ -41,9 +41,12 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
 
   const handleAdd = (record) => {
     if (validate()) {
-      delete record.isAddRow;
-      console.log(record, "record");
-      setTableData([...tableData, record]);
+      setTableData((prevTableData) => {
+        const newRecord = { ...record };
+        delete newRecord.isAddRow;
+        return [...prevTableData, newRecord];
+      });
+
       setAddTableData({
         id: Math.random().toString(),
         isAddRow: true,

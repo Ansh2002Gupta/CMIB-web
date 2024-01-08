@@ -23,10 +23,7 @@
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
-  padding-left: var(--paddingSmall);
-  padding-right: var(--paddingSmall);
-  padding-top: var(--paddingExtraSmall);
-  padding-bottom: var(--paddingExtraSmall);
+  padding: var(--paddingExtraSmall) var(--paddingSmall);
   border-radius: var(--radiusLg);
   border: var(--borderLight);
   background-color: var(--bodyBg);
@@ -69,7 +66,7 @@
 
 .bottomSectionStyle {
   gap: var(--gapMedium);
-  width: 50vw;
+  width: var(--widthHalfViewPort);
 }
 .formContainer {
   border: var(--borderLight);
@@ -104,14 +101,12 @@
 }
 
 .textStyle {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
 }
 
 .saveButtonTextStyles {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--bodyBg);

@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import { Typography } from "antd";
 import moment from "moment";
 
-import { TwoRow, TwoColumn, ThreeRow } from "../../core/layouts";
+import { TwoRow, TwoColumn } from "../../core/layouts";
 
 import CentreTable from "../CentreTable";
 import CustomButton from "../../components/CustomButton";
-import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
+import CustomInput from "../../components/CustomInput/CustomInput";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { SETUP_CENTRE_DETAILS } from "../../dummyData";
 import { SESSION } from "../../routes/routeNames";
+import useResponsive from "../../core/hooks/useResponsive";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
 
-const CenterDetailsContent = ({ intl, isEdit, responsive }) => {
+const CenterDetailsContent = ({ isEdit }) => {
+  const intl = useIntl();
+  const responsive = useResponsive();
+
   const [formData, setFormData] = useState({
     PsychometricFee: "1000",
     centreStartTime: "2023-12-19T05:11:46.000000Z",
@@ -33,10 +38,10 @@ const CenterDetailsContent = ({ intl, isEdit, responsive }) => {
   };
 
   const handleInputChange = (value, name) => {
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    });
+    }));
   };
 
   return (
@@ -96,18 +101,17 @@ const CenterDetailsContent = ({ intl, isEdit, responsive }) => {
         <TwoRow
           className={styles.bottomSectionStyle}
           topSection={
-            <ThreeRow
+            <TwoRow
               className={styles.formContainer}
               topSection={
                 <Typography className={styles.title}>
                   {intl.formatMessage({ id: "label.configureInterviewDates" })}
                 </Typography>
               }
-              middleSection={
+              bottomSection={
                 <CentreTable {...{ isEdit, tableData, setTableData }} />
               }
-              middleSectionStyle={classes.middleSectionStyle}
-              bottomSection={<></>}
+              bottomSectionStyle={classes.bottomStyle}
             />
           }
           bottomSection={

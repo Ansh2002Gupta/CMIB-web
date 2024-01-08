@@ -92,6 +92,7 @@ const variables = {
   width_24: "24px",
   width_20: "20px",
   width_80: "80px",
+  widthHalfViewPort: "50vw",
 
   // Heights
   btnHeight: "56px",
