@@ -31,6 +31,11 @@ const DataTable = ({
     showSizeChanger: false,
   };
 
+  const responsiveStyle =
+    originalData?.length !== 0
+      ? { x: "max-content", y: 600 }
+      : { x: "max-content" };
+
   return (
     <div className={[styles.container, customContainerStyles].join(" ")}>
       <Table
@@ -38,7 +43,7 @@ const DataTable = ({
         dataSource={originalData}
         pagination={false}
         rowClassName={styles.rowtext}
-        scroll={{ x: "max-content", y: 600 }}
+        scroll={responsiveStyle}
         className={styles.table}
         rowKey="id"
       />
