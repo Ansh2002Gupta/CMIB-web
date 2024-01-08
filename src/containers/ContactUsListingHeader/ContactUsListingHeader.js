@@ -6,12 +6,31 @@ import { Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
-import { DEFAULT_PAGE_SIZE, PAGINATION_PROPERTIES } from "../../constant/constant";
+import {
+  DEFAULT_PAGE_SIZE,
+  PAGINATION_PROPERTIES,
+} from "../../constant/constant";
 import styles from "./ContactUsListingHeader.module.scss";
 
-const ContactUsListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
+const ContactUsListingHeader = ({
+  currentActiveTab,
+  queryListingProps,
+  setCurrent,
+  setCurrentActiveTab,
+  setPageSize,
+  ticketListingProps,
+}) => {
   const intl = useIntl();
   const [, setSearchParams] = useSearchParams();
+
+  const { fetchTickets } = ticketListingProps;
+  const { fetchQueries } = queryListingProps;
+
+  const fetchItems = (tabId, pageSize, current) => {
+    console.log({ tabId, pageSize, current });
+    tabId === 1 && fetchTickets(pageSize, current);
+    tabId === 2 && fetchQueries(pageSize, current);
+  };
 
   const setPageSizeAndNumberToDefault = () => {
     setSearchParams((prev) => {
@@ -19,11 +38,14 @@ const ContactUsListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
       return prev;
     });
+    setCurrent(1);
+    setPageSize(DEFAULT_PAGE_SIZE);
   };
 
   const handleOnTabSwitch = (tabId) => {
     setPageSizeAndNumberToDefault();
     setCurrentActiveTab(tabId);
+    fetchItems(tabId, DEFAULT_PAGE_SIZE, 1);
   };
 
   return (
@@ -84,12 +106,20 @@ const ContactUsListingHeader = ({ currentActiveTab, setCurrentActiveTab }) => {
 
 ContactUsListingHeader.defaultProps = {
   currentActiveTab: 1,
+  queryListingProps: {},
+  setCurrent: () => {},
   setCurrentActiveTab: () => {},
+  setPageSize: () => {},
+  ticketListingProps: {},
 };
 
 ContactUsListingHeader.propTypes = {
   currentActiveTab: PropTypes.number,
+  queryListingProps: PropTypes.object,
+  setCurrent: PropTypes.func,
   setCurrentActiveTab: PropTypes.func,
+  setPageSize: PropTypes.func,
+  ticketListingProps: PropTypes.object,
 };
 
 export default ContactUsListingHeader;
