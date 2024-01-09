@@ -9,7 +9,7 @@ import {
   ROW_PER_PAGE_OPTIONS,
 } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
-import "./override.css";
+import "./overrides.css";
 
 const DataTable = ({
   columns,
