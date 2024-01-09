@@ -3,8 +3,8 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 import { TwoRow } from "../../core/layouts";
 
-import CenterDetailsHeader from "../../containers/CenterDetailsHeader";
 import CenterDetailsContent from "../../containers/CenterDetailsContent";
+import CenterDetailsHeader from "../../containers/CenterDetailsHeader";
 import styles from "./SetupCenterDetails.module.scss";
 
 const SetupCenterDetails = () => {

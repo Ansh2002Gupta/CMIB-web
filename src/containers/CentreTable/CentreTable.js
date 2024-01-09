@@ -389,6 +389,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       rowClassName={styles.rowtext}
       scroll={{ x: "max-content" }}
       className={[styles.table, "customTable"]}
+      rowKey="id"
     />
   );
 };
