@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
 
 import ContentHeader from "../../ContentHeader";
 import CustomButton from "../../../components/CustomButton";
@@ -9,11 +8,10 @@ import useResponsive from "../../../core/hooks/useResponsive";
 import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/plus icon.svg";
 import styles from "./ConfigureCentreHeader.module.scss";
 
-const ConfigureCentreHeader = ({ headingLabel }) => {
+const ConfigureCentreHeader = ({ headingLabel, showButton }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const { getImage } = useContext(ThemeContext);
 
   return (
     <div className={styles.headerContainer}>
@@ -21,7 +19,7 @@ const ConfigureCentreHeader = ({ headingLabel }) => {
         headerText={intl.formatMessage({ id: `label.${headingLabel}` })}
         customStyles={styles.headerResponsiveStyle}
         rightSection={
-          !!getImage && (
+          showButton && (
             <CustomButton
               btnText={intl.formatMessage({
                 id: `label.${responsive.isMd ? "addNewCentre" : "newCentre"}`,
