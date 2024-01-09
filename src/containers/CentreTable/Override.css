@@ -17,6 +17,9 @@
   border: none !important;
 
 }
+.customTable .ant-table-tbody > tr:hover > td {
+  background-color: transparent !important; /* or use the same color as the row's normal background */
+}
 
 .customTable .ant-table-tbody .ant-table-cell {
   padding-left: var(--paddingNone) !important;
