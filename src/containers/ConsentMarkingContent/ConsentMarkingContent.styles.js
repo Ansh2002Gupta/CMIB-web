@@ -7,4 +7,5 @@ export const classes = {
     border: variables.borderLight,
     borderRadius: variables.radiusXLgMedium,
   },
+  bottomSectionStyle: { alignSelf: "flex-end" },
 };

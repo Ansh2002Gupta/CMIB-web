@@ -1,3 +1,57 @@
 .mainContainer {
   padding: var(--paddingMedium);
+  gap: var(--gapMedium);
+}
+.customTimeStyle {
+  width: 100%;
+}
+.customContainerStyles {
+  justify-content: space-between;
+}
+
+.customStyle {
+  gap: var(--gapMedium);
+}
+
+.customLabelStyles {
+  color: var(--inputPlaceHolder);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeExtraSmall);
+}
+
+.buttonContainer {
+  align-items: center;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+}
+
+.buttonStyles {
+  background-color: var(--bodyBg);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--btnText) !important;
+  }
+}
+
+.mobileButtonStyles {
+  background-color: var(--bodyBg);
+  padding: var(--paddingSmall);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--btnText) !important;
+  }
+}
+
+.textStyle {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.saveButtonTextStyles {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--bodyBg);
 }

@@ -28,10 +28,10 @@ const CustomDateTimePicker = ({
       className={[styles.container, customContainerStyles].join(" ")}
       topSection={
         <div className={styles.inputLabelContainer}>
-          <Typography className={customLabelStyles}>{label}</Typography>
-          {isRequired && (
-            <Typography className={styles.isRequiredStar}>*</Typography>
-          )}
+          <Typography className={customLabelStyles}>
+            {label}
+            {isRequired && <span className={styles.isRequiredStar}> *</span>}
+          </Typography>
         </div>
       }
       bottomSection={
