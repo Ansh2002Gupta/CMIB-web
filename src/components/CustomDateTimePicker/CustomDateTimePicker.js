@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Typography, TimePicker, DatePicker } from "antd";
-import moment from "moment";
+
+import { TwoRow } from "../../core/layouts";
 
 import styles from "./CustomDateTimePicker.module.scss";
-import { TwoRow } from "../../core/layouts";
 
 const CustomDateTimePicker = ({
   customContainerStyles,
@@ -27,47 +27,44 @@ const CustomDateTimePicker = ({
     <TwoRow
       className={[styles.container, customContainerStyles].join(" ")}
       topSection={
-        <div className={styles.inputLabelContainer}>
-          <Typography className={customLabelStyles}>
-            {label}
-            {isRequired && <span className={styles.isRequiredStar}> *</span>}
-          </Typography>
-        </div>
+        label && (
+          <div className={styles.inputLabelContainer}>
+            <Typography className={customLabelStyles}>{label}</Typography>
+            {isRequired && (
+              <Typography className={styles.isRequiredStar}>*</Typography>
+            )}
+          </div>
+        )
       }
       bottomSection={
         <TwoRow
           topSection={
             type === "time" ? (
               <TimePicker
-                value={value}
-                format={format}
+                {...{
+                  format,
+                  defaultValue,
+                  onChange,
+                  placeholder,
+                  disabled,
+                }}
                 className={[styles.timeInput, customTimeStyle]}
-                defaultValue={defaultValue}
-                onChange={onChange}
-                placeholder={placeholder}
-                disabled={disabled}
               />
             ) : (
               <DatePicker
-                value={value}
+                {...{ value, defaultValue, onChange, placeholder, disabled }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle]}
-                defaultValue={defaultValue}
-                onChange={onChange}
-                placeholder={placeholder}
-                disabled={disabled}
               />
             )
           }
           bottomSection={
-            errorMessage ? (
+            errorMessage && (
               <Typography
                 className={[styles.errorText, customErrorTextStyles].join(" ")}
               >
                 * {errorMessage}
               </Typography>
-            ) : (
-              <Typography></Typography>
             )
           }
         />
@@ -82,7 +79,7 @@ CustomDateTimePicker.defaultProps = {
   customLabelStyles: "",
   customTimeStyle: "",
   dateFormat: "DD/MM/YYYY",
-  defaultValue: moment(),
+  defaultValue: "",
   disabled: false,
   errorMessage: "",
   format: "h:mm a",
@@ -91,7 +88,7 @@ CustomDateTimePicker.defaultProps = {
   onChange: () => {},
   placeholder: "",
   type: "time",
-  value: moment(),
+  value: {},
 };
 
 CustomDateTimePicker.propTypes = {

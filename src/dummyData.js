@@ -362,3 +362,51 @@ export const SESSION_DETAILS = {
   created_at: "2023-12-19T05:11:46.000000Z",
   updated_at: "2023-12-19T05:11:46.000000Z",
 };
+
+export const SETUP_CENTRE_DETAILS = [
+  {
+    id: 1,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    participationFee: "1000",
+    firm: { firmFee: "2300", uptoPartners: "3" },
+    norm1: "17000",
+    norm2: "54000",
+    norm2MinVacancy: "23",
+  },
+  {
+    id: 2,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    participationFee: "1000",
+    firm: { firmFee: "2300", uptoPartners: "3" },
+    norm1: "17000",
+    norm2: "54000",
+    norm2MinVacancy: "23",
+  },
+  {
+    id: 3,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    participationFee: "1000",
+    firm: { firmFee: "2300", uptoPartners: "3" },
+    norm1: "17000",
+    norm2: "54000",
+    norm2MinVacancy: "23",
+  },
+  {
+    id: 4,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    participationFee: "1000",
+    firm: { firmFee: "2300", uptoPartners: "3" },
+    norm1: "17000",
+    norm2: "54000",
+    norm2MinVacancy: "23",
+  },
+  {
+    id: 5,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    participationFee: "1000",
+    firm: { firmFee: "2300", uptoPartners: "3" },
+    norm1: "17000",
+    norm2: "54000",
+    norm2MinVacancy: "23",
+  },
+];
