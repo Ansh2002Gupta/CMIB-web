@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import { ThemeContext } from "core/providers/theme";
 import { Image, Input } from "antd";
 
 import DataTable from "../../../components/DataTable";
+import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { CONFIGURE_CENTRES } from "../../../dummyData";
 import styles from "./ConfigureCentreContent.module.scss";
 
-const ConfigureCentreContent = ({ getImage, navigate }) => {
+const ConfigureCentreContent = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
+  const { navigateScreen: navigate } = useNavigateScreen();
+  const { getImage } = useContext(ThemeContext);
 
   const [searchedValue, setSearchedValue] = useState("");
   const [currentTableData, setCurrentTableData] = useState(CONFIGURE_CENTRES);

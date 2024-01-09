@@ -1,4 +1,5 @@
 import { CENTRE_TYPE } from "../../../constant/constant";
+import { NUMERIC_VALUE_REGEX } from "../../../constant/regex";
 
 export const FIELDS = (centreName, bigSmallCentre, centreId) => {
   return [
@@ -36,6 +37,10 @@ export const FIELDS = (centreName, bigSmallCentre, centreId) => {
         {
           required: true,
           message: "Please enter Centre Id",
+        },
+        {
+          pattern: NUMERIC_VALUE_REGEX,
+          message: "Please enter valid Centre Id",
         },
       ],
     },

@@ -1,13 +1,17 @@
+import { isEmpty } from "lodash";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
-import { Select, Switch, Typography } from "antd";
+import { Select, Typography } from "antd";
 
 import { Base, TwoColumn, TwoRow } from "../../../core/layouts";
 
 import CustomButton from "../../../components/CustomButton";
 import CustomGrid from "../../../components/CustomGrid";
 import CustomInput from "../../../components/CustomInput";
+import CustomSwitch from "../../../components/CustomSwitch";
+import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useResponsive from "../../../core/hooks/useResponsive";
+import { CONFIGURE_CENTRES } from "../../../routes/routeNames";
 import { FIELDS } from "./configureCentreDetailsFields";
 import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
 import { classes } from "./ConfigureCentreDetails.styles";
@@ -16,9 +20,14 @@ import styles from "./ConfigureCentreDetails.module.scss";
 const ConfigureCentreDetails = () => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const { navigateScreen: navigate } = useNavigateScreen();
 
   const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState(INITIAL_CENTRE_DETAILS);
+
+  const isAddBtnDisable = Boolean(
+    isEmpty(formErrors) || Object.values(formErrors).join("").length
+  );
 
   const fields = FIELDS(
     formData?.centreName,
@@ -49,14 +58,16 @@ const ConfigureCentreDetails = () => {
       if (rule.required && (!value || value.length <= 0)) {
         return rule.message;
       }
+      if (rule.pattern && !rule.pattern.test(value)) {
+        return rule.message;
+      }
     }
 
     return "";
   };
 
   const handleCancel = () => {
-    setFormData(INITIAL_CENTRE_DETAILS);
-    setFormErrors({});
+    navigate(CONFIGURE_CENTRES);
   };
 
   const handleSave = () => {};
@@ -127,39 +138,17 @@ const ConfigureCentreDetails = () => {
                   }
                 />
               ))}
-              <TwoRow
-                className={styles.gridItem}
-                topSection={
-                  <Typography className={styles.grayText}>
-                    {intl.formatMessage({ id: "label.status" })}
-                  </Typography>
-                }
-                bottomSection={
-                  <TwoColumn
-                    className={styles.statusContainer}
-                    leftSection={
-                      <Switch
-                        style={formData?.status && classes.switchBackground}
-                        checked={formData?.status}
-                        onChange={() => {
-                          setFormData({
-                            ...formData,
-                            status: !formData.status,
-                          });
-                        }}
-                      />
-                    }
-                    rightSection={
-                      <Typography className={styles.blackText}>
-                        {intl.formatMessage({
-                          id: `label.${
-                            formData?.status ? "active" : "inactive"
-                          }`,
-                        })}
-                      </Typography>
-                    }
-                  />
-                }
+              <CustomSwitch
+                checked={formData?.status}
+                label={intl.formatMessage({ id: "label.status" })}
+                onChange={() => {
+                  setFormData((prev) => {
+                    return {
+                      ...prev,
+                      status: !prev.status,
+                    };
+                  });
+                }}
               />
             </CustomGrid>
           }
@@ -189,6 +178,7 @@ const ConfigureCentreDetails = () => {
                 id: "label.add",
               })}
               onClick={handleSave}
+              isBtnDisable={isAddBtnDisable}
             />
           }
         />

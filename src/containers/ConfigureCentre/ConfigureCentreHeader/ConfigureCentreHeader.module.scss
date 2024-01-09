@@ -1,6 +1,7 @@
 .headerContainer {
   padding: var(--paddingMedium);
-  width: 100%;
+  width: var(--fullWidth);
+  border: var(--borderLight);
 }
 
 .btnCustomStyles {
