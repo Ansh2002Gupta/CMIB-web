@@ -13,3 +13,4 @@ export const CONFIGURE_CENTRES = "/global-configurations";
 export const SESSION = "/session";
 export const ROUTE = "/configurations";
 export const SETUP_CENTERS = "setup-centers";
+export const SETUP_CENTERS_DETAILS = "/details/:centreId";
