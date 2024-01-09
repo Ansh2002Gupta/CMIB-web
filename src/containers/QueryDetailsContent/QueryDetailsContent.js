@@ -1,21 +1,12 @@
 import React from "react";
-import { Descriptions } from "antd";
 
-import { getLayout } from "./QueryDetailsConfig";
-import styles from "./QueryDetailsContent.module.scss";
+import QueryDetailsContentTemplate from "./QueryDetailsContentTemplate";
+import useTableColumns from "./controllers/useTableColumns";
 
 const QueryDetailsContent = ({ type, data }) => {
-  const items = getLayout(type, data);
+  const { getLayout } = useTableColumns();
 
-  return (
-    <div className={styles.container}>
-      <Descriptions
-        className={styles.description}
-        layout="vertical"
-        items={items}
-      />
-    </div>
-  );
+  return <QueryDetailsContentTemplate {...{ type, data, getLayout }} />;
 };
 
 export default QueryDetailsContent;

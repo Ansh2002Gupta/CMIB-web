@@ -20,6 +20,7 @@ const QueryDetails = () => {
 
   const GET_QUERY_URL =
     ADMIN_ROUTE + QUERY_END_POINT + "/" + queryId + "/details";
+    
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: GET_QUERY_URL,
     apiOptions: {
