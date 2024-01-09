@@ -1,6 +1,6 @@
 import { SETUP_CENTERS } from "../routes/routeNames";
 
-export const PAGE_SIZE = 10;
+export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
 

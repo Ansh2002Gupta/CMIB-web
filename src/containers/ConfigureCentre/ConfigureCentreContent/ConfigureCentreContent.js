@@ -41,13 +41,25 @@ const ConfigureCentreContent = () => {
     setCurrentTableData(updatedData);
   };
 
-  // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
-  useEffect(() => {
-    const startIndex = (current - 1) * pageSize;
-    const endIndex = current * pageSize;
+  const updateTableData = (currentPageNumber, currentPageSize) =>{
+    const startIndex = (currentPageNumber - 1) * currentPageSize;
+    const endIndex = currentPageNumber * currentPageSize;
     const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
-  }, [current, pageSize]);
+  }
+
+  const onChangePageSize = (size) => {
+    //NOTE: if you want to do anything on changing of page size please consider doing it here
+    setPageSize(Number(size));
+    setCurrent(1);
+    updateTableData(1, size);
+  };
+
+  const onChangeCurrentPage = (newPageNumber) => {
+    //NOTE: if you want to do anything on changing of current page number please consider doing it here
+    setCurrent(newPageNumber);
+    updateTableData(newPageNumber, pageSize);
+  };
 
   const columns = [
     renderColumn({
@@ -137,12 +149,11 @@ const ConfigureCentreContent = () => {
           searchedValue,
           currentDataLength,
           current,
-          setCurrent,
           pageSize,
-          setPageSize,
+          onChangePageSize,
+          onChangeCurrentPage,
         }}
         originalData={currentTableData}
-        columnsToBeSearchFrom={["centreName", "centreId"]}
       />
     </div>
   );
