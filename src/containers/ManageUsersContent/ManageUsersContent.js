@@ -18,6 +18,7 @@ import useListingUsers from "../../services/api-services/Users/useListingUsers";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
+import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
 import {
   DEFAULT_PAGE_SIZE,
@@ -35,8 +36,12 @@ const ManageUsersContent = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [current, setCurrent] = useState(getValidPageNumber());
-  const [pageSize, setPageSize] = useState(getValidPageSize());
+  const [current, setCurrent] = useState(
+    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+  );
+  const [pageSize, setPageSize] = useState(
+    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+  );
   const [showFilters, setShowFilters] = useState(false);
   const [searchedValue, setSearchedValue] = useState("");
   const [currentDataLength, setCurrentDataLength] = useState(0);
@@ -58,28 +63,6 @@ const ManageUsersContent = () => {
 
   const debounceSearch = useMemo(() => _.debounce(fetchUsers, 300), []);
 
-  function getValidPageNumber() {
-    let validCurrentPage = +searchParams.get(
-      PAGINATION_PROPERTIES.CURRENT_PAGE
-    );
-    if (isNaN(validCurrentPage) || validCurrentPage <= 0) {
-      validCurrentPage = 1;
-    }
-
-    return validCurrentPage;
-  }
-
-  function getValidPageSize() {
-    let validPageSize = +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE);
-    if (
-      isNaN(validPageSize) ||
-      !VALID_ROW_PER_OPTIONS.includes(validPageSize)
-    ) {
-      validPageSize = DEFAULT_PAGE_SIZE;
-    }
-    return validPageSize;
-  }
-
   const goToUserDetailsPage = (userId, mode) => {
     navigate(`details/${userId}?mode=${mode ? "edit" : "view"}`);
   };
@@ -91,7 +74,7 @@ const ManageUsersContent = () => {
     debounceSearch(pageSize, current, searchedValue);
   };
 
-  const handleOnChangePageSize = (size) => {
+  const onChangePageSize = (size) => {
     setPageSize(Number(size));
     setCurrent(1);
     setSearchParams((prev) => {
@@ -99,14 +82,16 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
+    fetchUsers(size, 1, searchedValue);
   };
 
-  const handleOnChangeCurrentPage = (newPageNumber) => {
+  const onChangeCurrentPage = (newPageNumber) => {
     setCurrent(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
+    fetchUsers(pageSize, newPageNumber, searchedValue);
   };
 
   const handleOnUserSearch = (event) => {
@@ -137,13 +122,13 @@ const ManageUsersContent = () => {
       title: intl.formatMessage({ id: "label.email" }),
       dataIndex: "email",
       key: "email",
-      renderText: { visible: true,textStyles: styles.tableCell, },
+      renderText: { visible: true, textStyles: styles.tableCell },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.mobileNumber" }),
       dataIndex: "mobile_number",
       key: "mobile_number",
-      renderText: { visible: true,textStyles: styles.tableCell, },
+      renderText: { visible: true, textStyles: styles.tableCell },
     }),
     {
       title: () => (
@@ -169,7 +154,11 @@ const ManageUsersContent = () => {
       key: "created_at",
       sortTypeText: true,
       sortKey: "created_at",
-      renderText: { isTypeDate: true, visible: true,textStyles: styles.tableCell, },
+      renderText: {
+        isTypeDate: true,
+        visible: true,
+        textStyles: styles.tableCell,
+      },
       sortTypeDate: true,
       sortDirection: ["ascend"],
       defaultSortOrder: "ascend",
@@ -214,7 +203,7 @@ const ManageUsersContent = () => {
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
-    if (!currentPage || isNaN(current) || current < 0) {
+    if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
       setSearchParams((prev) => {
         prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
         return prev;
@@ -246,7 +235,7 @@ const ManageUsersContent = () => {
       });
       setCurrent(1);
     }
-  }, [metaData]);
+  }, [metaData?.total, metaData?.perPage]);
 
   useEffect(() => {
     if (errorWhileUpdatingUserData) {
@@ -260,13 +249,15 @@ const ManageUsersContent = () => {
 
   useEffect(() => {
     fetchUsers(pageSize, current, searchedValue);
-  }, [pageSize, current]);
+  }, []);
 
   useEffect(() => {
     return () => {
       setShowFilters(false);
       setSearchedValue("");
       setCurrentDataLength(0);
+      setPageSize(DEFAULT_PAGE_SIZE);
+      setCurrent(1);
     };
   }, []);
 
@@ -303,8 +294,8 @@ const ManageUsersContent = () => {
               currentDataLength,
               pageSize,
               current,
-              handleOnChangePageSize,
-              handleOnChangeCurrentPage,
+              onChangePageSize,
+              onChangeCurrentPage,
             }}
             originalData={usersList || []}
           />

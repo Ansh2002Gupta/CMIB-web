@@ -18,8 +18,8 @@ const DataTable = ({
   originalData,
   current,
   pageSize,
-  handleOnChangePageSize,
-  handleOnChangeCurrentPage,
+  onChangePageSize,
+  onChangeCurrentPage,
 }) => {
   const intl = useIntl();
 
@@ -27,7 +27,7 @@ const DataTable = ({
     current,
     pageSize,
     total: currentDataLength,
-    onChange: handleOnChangeCurrentPage,
+    onChange: onChangeCurrentPage,
     showSizeChanger: false,
   };
 
@@ -55,7 +55,7 @@ const DataTable = ({
           <Select
             defaultValue={pageSize}
             className={styles.rowPerPageCount}
-            onChange={handleOnChangePageSize}
+            onChange={onChangePageSize}
             options={ROW_PER_PAGE_OPTIONS}
           />
         </div>

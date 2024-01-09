@@ -48,13 +48,13 @@ const CompaniesContent = () => {
     setCurrentTableData(updatedData);
   };
 
-  const handleOnChangePageSize = (size) => {
+  const onChangePageSize = (size) => {
     //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
   };
 
-  const handleOnChangeCurrentPage = (newPageNumber) => {
+  const onChangeCurrentPage = (newPageNumber) => {
     //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
   };
@@ -169,8 +169,8 @@ const CompaniesContent = () => {
           currentDataLength,
           current,
           pageSize,
-          handleOnChangePageSize,
-          handleOnChangeCurrentPage,
+          onChangePageSize,
+          onChangeCurrentPage,
         }}
         originalData={currentTableData}
       />
