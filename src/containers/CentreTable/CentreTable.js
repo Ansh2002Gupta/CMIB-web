@@ -1,16 +1,16 @@
 import React, { useContext, useState } from "react";
+import moment from "moment";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Image, Table, Typography } from "antd";
-import moment from "moment";
 
-import CustomInput from "../../components/CustomInput/CustomInput";
+import { TwoColumn } from "../../core/layouts";
+
 import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
-
+import CustomInput from "../../components/CustomInput/CustomInput";
 import styles from "./CentreTable.module.scss";
 import "./Override.css";
-import { TwoColumn } from "../../core/layouts";
 
 const CentreTable = ({ isEdit, tableData, setTableData }) => {
   const intl = useIntl();

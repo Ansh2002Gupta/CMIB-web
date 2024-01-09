@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import moment from "moment";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
-import moment from "moment";
 
 import { TwoRow, TwoColumn } from "../../core/layouts";
 
@@ -11,9 +11,9 @@ import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useResponsive from "../../core/hooks/useResponsive";
 import { SETUP_CENTRE_DETAILS } from "../../dummyData";
 import { SESSION } from "../../routes/routeNames";
-import useResponsive from "../../core/hooks/useResponsive";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
 
