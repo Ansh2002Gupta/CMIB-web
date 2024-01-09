@@ -105,7 +105,7 @@ export const getTicketOrQueryColumn = (
           preview: false,
           src: getImage("eye"),
           visible: true,
-          onClick: (rowData) => navigate(`query/${rowData?.id}/details`),
+          onClick: (rowData) => navigate(`query/${rowData?.id}`),
         },
       }),
       renderColumn({
