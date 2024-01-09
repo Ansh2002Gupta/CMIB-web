@@ -89,7 +89,7 @@ const ContactUsListingContent = ({
     return ["statusContainer_progress", "statusText_progress"];
   };
 
-  const handleOnChangePageSize = (size) => {
+  const onChangePageSize = (size) => {
     setPageSize(Number(size));
     setCurrent(1);
     setSearchParams((prev) => {
@@ -100,7 +100,7 @@ const ContactUsListingContent = ({
     fetchItems(size, 1, searchedValue);
   };
 
-  const handleOnChangeCurrentPage = (newPageNumber) => {
+  const onChangeCurrentPage = (newPageNumber) => {
     setCurrent(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
@@ -425,8 +425,8 @@ const ContactUsListingContent = ({
               currentDataLength,
               pageSize,
               current,
-              handleOnChangePageSize,
-              handleOnChangeCurrentPage,
+              onChangePageSize,
+              onChangeCurrentPage,
             }}
             originalData={listItemData || []}
           />
