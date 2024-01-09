@@ -27,22 +27,24 @@ const SetupCenter = () => {
   };
 
   // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
-  useEffect(() => {
-    const startIndex = (current - 1) * pageSize;
-    const endIndex = current * pageSize;
+  const updateTableData = (currentPageNumber, currentPageSize) =>{
+    const startIndex = (currentPageNumber - 1) * currentPageSize;
+    const endIndex = currentPageNumber * currentPageSize;
     const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
-  }, [current, pageSize]);
+  }
 
-  const handleOnChangePageSize = (size) => {
+  const onChangePageSize = (size) => {
     //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
+    updateTableData(1, size);
   };
 
-  const handleOnChangeCurrentPage = (newPageNumber) => {
+  const onChangeCurrentPage = (newPageNumber) => {
     //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
+    updateTableData(newPageNumber, pageSize);
   };
 
   const columns = [
@@ -112,8 +114,8 @@ const SetupCenter = () => {
             columns,
             current,
             pageSize,
-            handleOnChangePageSize,
-            handleOnChangeCurrentPage,
+            onChangePageSize,
+            onChangeCurrentPage,
           }}
           currentDataLength={CONFIGURE_CENTRES.length}
           customContainerStyles={styles.tableContainer}
