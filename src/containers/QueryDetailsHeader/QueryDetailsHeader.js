@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
 import CustomButton from "../../components/CustomButton/CustomButton";
 import ContentHeader from "../ContentHeader/ContentHeader";
@@ -6,15 +7,31 @@ import StatusChip from "../../components/StatusChip";
 import { ReactComponent as CheckIconWhite } from "../../themes/base/assets/images/check-white.svg";
 import styles from "./QueryDetailsHeader.module.scss";
 
-const QueryDetailsHeader = () => {
+// TODO: update by taking pull from development
+const QueryDetailsHeader = ({ id }) => {
+  const intl = useIntl();
+
   return (
-    <ContentHeader
-      headerText="Q623738137"
-      headerComponent={<StatusChip isPending statusText={"Pending"} />}
-      rightSection={
-        <CustomButton IconElement={CheckIconWhite} btnText={"Mark Answered"} />
-      }
-    />
+    <div className={styles.container}>
+      <ContentHeader
+        headerText={id}
+        headerComponent={
+          <StatusChip
+            isPending
+            // TODO as per API.
+            statusText={intl.formatMessage({
+              id: "label.pending",
+            })}
+          />
+        }
+        rightSection={
+          <CustomButton
+            IconElement={CheckIconWhite}
+            btnText={"Mark Answered"}
+          />
+        }
+      />
+    </div>
   );
 };
 

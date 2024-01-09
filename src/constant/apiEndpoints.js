@@ -17,3 +17,4 @@ export const QUERIES_LIST = "/queries";
 export const TICKET_LIST = "/tickets";
 export const IMAGE_UPLOAD_END_POINT = "/save-logo";
 export const USERS_END_POINT = "/users";
+export const QUERY_END_POINT = "/queries";

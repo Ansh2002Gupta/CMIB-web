@@ -179,6 +179,9 @@ const locale = {
   "label.contactUs": "Contact Us",
   "label.actions": "Actions",
   "label.sNo": "S. No",
+  "label.pending": "Pending",
+  "label.progress": "Progress",
+  "label.answered": "Answered",
 };
 
 export default locale;

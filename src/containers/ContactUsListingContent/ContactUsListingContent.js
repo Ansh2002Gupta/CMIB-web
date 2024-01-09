@@ -13,6 +13,7 @@ import SearchFilter from "../../components/SearchFilter";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
+import { QUERY_END_POINT } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
@@ -193,7 +194,10 @@ const ContactUsListingContent = ({
         preview: false,
         src: getImage("eye"),
         visible: true,
-        onClick: () => navigate("/query/1"), // TODO: change it once the query details page have been integrated
+        // TODO
+        onClick: (rowData) => {
+          navigate(QUERY_END_POINT + "/" + rowData?.id);
+        },
       },
     }),
     renderColumn({

@@ -139,7 +139,6 @@ const config = [
     element: <HomeWithPrivateAccess noOuterPadding />,
 
     views: [
-      // array of views under Page route
       {
         viewPath: "",
         element: <Companies />,
@@ -200,14 +199,8 @@ const config = [
         viewPath: "",
         element: <ContactUsListing />,
       },
-    ],
-  },
-  {
-    pagePath: QUERY_DETAILS,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
       {
-        viewPath: "",
+        viewPath: QUERY_DETAILS,
         element: <QueryDetails />,
       },
     ],

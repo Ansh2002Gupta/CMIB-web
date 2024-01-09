@@ -1,0 +1,12 @@
+.container {
+  padding: var(--paddingMedium);
+  width: var(--fullWidth);
+}
+
+.description {
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusXLgMedium);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  width: var(--fullWidth);
+}
