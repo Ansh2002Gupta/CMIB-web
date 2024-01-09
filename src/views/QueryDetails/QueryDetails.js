@@ -13,14 +13,13 @@ import { getErrorMessage } from "../../constant/utils";
 import { ADMIN_ROUTE, QUERY_END_POINT } from "../../constant/apiEndpoints";
 import styles from "./QueryDetails.module.scss";
 
-// TODO: change folder structure to new structure as we are using in cmib_app repository.
 const QueryDetails = () => {
   const { queryId } = useParams();
   const intl = useIntl();
 
   const GET_QUERY_URL =
     ADMIN_ROUTE + QUERY_END_POINT + "/" + queryId + "/details";
-    
+
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: GET_QUERY_URL,
     apiOptions: {
