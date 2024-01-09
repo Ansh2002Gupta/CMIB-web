@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect, useMemo, useRef } from "react";
+import React, { useContext, useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import * as _ from "lodash";
-import { Image, Input, Spin, Typography } from "antd";
+import { Image, Input, Spin } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
@@ -12,6 +12,7 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import SearchFilter from "../../components/SearchFilter";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { getTicketOrQueryColumn } from "./ContactUsListingContentConfig";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
 import { QUERY_END_POINT } from "../../constant/apiEndpoints";
 import {
@@ -67,6 +68,13 @@ const ContactUsListingContent = ({
   const listItemData = currentActiveTab === 1 ? ticketList : queriesList;
   const isSuccessfullyFetched =
     areTicketsFetchedSuccesfully || areQueriesFetchedSuccessfully;
+  const columns = getTicketOrQueryColumn(
+    currentActiveTab,
+    intl,
+    getImage,
+    navigate,
+    renderColumn
+  );
 
   const fetchItems = (currentPageSize, currentPage, str) => {
     currentActiveTab === 1 && fetchTickets(currentPageSize, currentPage, str);
@@ -80,17 +88,7 @@ const ContactUsListingContent = ({
     debounceSearch(pageSize, current, str);
   };
 
-  const getStatusStyles = (status) => {
-    if (status === "Closed") {
-      return ["statusContainer_success", "statusText_success"];
-    }
-    if (status === "Pending") {
-      return ["statusContainer_failed", "statusText_failed"];
-    }
-    return ["statusContainer_progress", "statusText_progress"];
-  };
-
-  const handleOnChangePageSize = (size) => {
+  const onChangePageSize = (size) => {
     setPageSize(Number(size));
     setCurrent(1);
     setSearchParams((prev) => {
@@ -101,7 +99,7 @@ const ContactUsListingContent = ({
     fetchItems(size, 1, searchedValue);
   };
 
-  const handleOnChangeCurrentPage = (newPageNumber) => {
+  const onChangeCurrentPage = (newPageNumber) => {
     setCurrent(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
@@ -109,205 +107,6 @@ const ContactUsListingContent = ({
     });
     fetchItems(pageSize, newPageNumber, searchedValue);
   };
-
-  const queriesColumns = [
-    renderColumn({
-      title: intl.formatMessage({ id: "label.queriesId" }),
-      dataIndex: "id",
-      key: "id",
-      renderText: {
-        isTextBold: true,
-        visible: true,
-        textStyles: [styles.tableCell].join(" "),
-      },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.studentOrCompany" }),
-      dataIndex: "name",
-      key: "name",
-      sortKey: "name",
-      sortTypeText: true,
-      renderText: {
-        visible: true,
-        textStyles: [styles.tableCell].join(" "),
-      },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.nonRegisteredStudentOrCompany" }),
-      dataIndex: "type",
-      key: "type",
-      renderText: {
-        visible: true,
-        textStyles: [styles.tableCell].join(" "),
-      },
-    }),
-    {
-      title: () => (
-        <p className={styles.columnHeading}>
-          {intl.formatMessage({ id: "label.mobile" })}
-        </p>
-      ),
-      dataIndex: "mobile",
-      key: "mobile",
-      renderText: {
-        visible: true,
-        textStyles: [styles.tableCell].join(" "),
-      },
-    },
-    renderColumn({
-      title: intl.formatMessage({ id: "label.queryType" }),
-      dataIndex: "query_type",
-      key: "query_type",
-      renderText: {
-        visible: true,
-        textStyles: [styles.centerText, styles.tableCell].join(" "),
-      },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.email" }),
-      dataIndex: "email",
-      key: "email",
-      renderText: {
-        visible: true,
-        textStyles: [styles.tableCell].join(" "),
-      },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.createdOn" }),
-      dataIndex: "created_at",
-      key: "created_at",
-      renderText: {
-        isTypeDate: true,
-        visible: true,
-        textStyles: [styles.tableCell].join(" "),
-      },
-      sortDirection: ["ascend"],
-      sortKey: "created_at",
-      sortTypeDate: true,
-      defaultSortOrder: "ascend",
-    }),
-    renderColumn({
-      dataIndex: "see",
-      key: "see",
-      renderImage: {
-        alt: "eye",
-        preview: false,
-        src: getImage("eye"),
-        visible: true,
-        // TODO
-        onClick: (rowData) => {
-          navigate(QUERY_END_POINT + "/" + rowData?.id);
-        },
-      },
-    }),
-    renderColumn({
-      dataIndex: "check",
-      key: "check",
-      renderImage: {
-        alt: "check",
-        preview: false,
-        src: getImage("rightIcon"),
-        visible: true,
-      },
-    }),
-  ];
-
-  const ticketColumns = [
-    renderColumn({
-      title: intl.formatMessage({ id: "label.ticketId" }),
-      dataIndex: "id",
-      key: "id",
-      renderText: {
-        isTextBold: true,
-        visible: true,
-        textStyles: [styles.tableCell].join(" "),
-      },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.createdBy" }),
-      dataIndex: "created_by",
-      key: "created_by",
-      sortKey: "created_by",
-      sortTypeText: true,
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.role" }),
-      dataIndex: "role",
-      key: "role",
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.registrationOrMembershipNumber" }),
-      dataIndex: "registration_no",
-      key: "registration_no",
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.queryType" }),
-      dataIndex: "query_type",
-      key: "query_type",
-      renderText: {
-        visible: true,
-        textStyles: [styles.centerText, styles.tableCell].join(" "),
-      },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.status" }),
-      dataIndex: "status",
-      key: "status",
-      render: (data, rowData) => {
-        const { status } = rowData;
-        const styleClassForContainer = getStatusStyles(status)[0];
-        const styleClassForText = getStatusStyles(status)[1];
-        return (
-          <div
-            className={[
-              styles.statusBox,
-              styles[styleClassForContainer],
-              styles.tableCell,
-            ].join(" ")}
-          >
-            <Typography className={styles[styleClassForText]}>
-              {status}
-            </Typography>
-          </div>
-        );
-      },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.assignedTo" }),
-      dataIndex: "assigned_to",
-      key: "assigned_to",
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.createdOn" }),
-      dataIndex: "created_at",
-      key: "created_at",
-      renderText: {
-        isTypeDate: true,
-        visible: true,
-        textStyles: [styles.tableCell].join(" "),
-      },
-      sortDirection: ["ascend"],
-      sortKey: "created_at",
-      sortTypeDate: true,
-      defaultSortOrder: "ascend",
-    }),
-    renderColumn({
-      dataIndex: "see",
-      key: "see",
-      renderImage: {
-        alt: "eye",
-        preview: false,
-        src: getImage("messageText"),
-        visible: true,
-      },
-    }),
-  ];
-
-  const columns = currentActiveTab === 1 ? ticketColumns : queriesColumns;
 
   useEffect(() => {
     const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
@@ -429,8 +228,8 @@ const ContactUsListingContent = ({
               currentDataLength,
               pageSize,
               current,
-              handleOnChangePageSize,
-              handleOnChangeCurrentPage,
+              onChangePageSize,
+              onChangeCurrentPage,
             }}
             originalData={listItemData || []}
           />

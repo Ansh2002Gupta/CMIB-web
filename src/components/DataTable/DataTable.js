@@ -9,7 +9,7 @@ import {
   ROW_PER_PAGE_OPTIONS,
 } from "../../constant/constant";
 import styles from "./DataTable.module.scss";
-import "./override.css";
+import "./overrides.css";
 
 const DataTable = ({
   columns,
@@ -18,8 +18,8 @@ const DataTable = ({
   originalData,
   current,
   pageSize,
-  handleOnChangePageSize,
-  handleOnChangeCurrentPage,
+  onChangePageSize,
+  onChangeCurrentPage,
 }) => {
   const intl = useIntl();
 
@@ -27,9 +27,14 @@ const DataTable = ({
     current,
     pageSize,
     total: currentDataLength,
-    onChange: handleOnChangeCurrentPage,
+    onChange: onChangeCurrentPage,
     showSizeChanger: false,
   };
+
+  const responsiveStyle =
+    originalData?.length !== 0
+      ? { x: "max-content", y: 600 }
+      : { x: "max-content" };
 
   return (
     <div className={[styles.container, customContainerStyles].join(" ")}>
@@ -38,7 +43,7 @@ const DataTable = ({
         dataSource={originalData}
         pagination={false}
         rowClassName={styles.rowtext}
-        scroll={{ x: "max-content", y: 600 }}
+        scroll={responsiveStyle}
         className={styles.table}
         rowKey="id"
       />
@@ -50,7 +55,7 @@ const DataTable = ({
           <Select
             defaultValue={pageSize}
             className={styles.rowPerPageCount}
-            onChange={handleOnChangePageSize}
+            onChange={onChangePageSize}
             options={ROW_PER_PAGE_OPTIONS}
           />
         </div>

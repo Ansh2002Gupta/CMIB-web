@@ -34,6 +34,7 @@
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightMedium);
+
   &::placeholder {
     color: var(--inputPlaceHolder) !important;
   }
@@ -55,4 +56,15 @@
 
 .selectInput {
   padding: 0px;
+}
+
+.inputNumberStyles {
+  min-width: 100%;
+  color: var(--inputText) !important;
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
+
+  &::placeholder {
+    color: var(--inputPlaceHolder) !important;
+  }
 }
