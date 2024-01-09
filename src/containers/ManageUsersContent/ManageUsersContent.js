@@ -222,7 +222,7 @@ const ManageUsersContent = () => {
   }, []);
 
   useEffect(() => {
-    if (metaData?.total) {
+    if (+metaData?.total >= 0) {
       setCurrentDataLength(+metaData?.total);
     }
     const totalNumberOfValidPages = Math.ceil(
