@@ -3,6 +3,7 @@ import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
+import checkIconWhite from "./check-white.svg";
 import CircleCheck from "./CircleCheck.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
@@ -40,6 +41,7 @@ const images = {
   checkedBox,
   dummyPerson,
   CircleCheck,
+  checkIconWhite,
   DeviceMessage,
   Document,
   edit,

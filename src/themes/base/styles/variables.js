@@ -135,6 +135,7 @@ const variables = {
   inputPlaceHolder: colorPallets.darkGrey1,
 
   // Padding
+  paddingXXXSmall: "2px",
   paddingXXSmall: "4px",
   paddingExtraSmall: "8px",
   paddingMediumSmall: "12px",

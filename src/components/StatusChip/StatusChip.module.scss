@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radiusXLgMedium);
+}
+
+.text {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+// TODO: add var instead of passing values directly
+.pending_bg {
+  background-color: #ffefe5;
+}
+
+.pending_color {
+  color: #d76200;
+}
+
+.progress_bg {
+  background-color: #e8fcff;
+}
+
+.progress_color {
+  color: #0099ca;
+}
+
+.success_bg {
+  background-color: #dfffdc;
+}
+
+.success_color {
+  color: #258b01;
+}
