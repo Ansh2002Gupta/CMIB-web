@@ -8,7 +8,9 @@ import styles from "./CustomLoader.module.scss";
 
 const CustomLoader = ({ customLoaderContainer }) => {
   return (
-    <Base className={[styles.loadingContainer, customLoaderContainer]}>
+    <Base
+      className={[styles.loadingContainer, customLoaderContainer].join(" ")}
+    >
       <Spin size="large" />
     </Base>
   );
