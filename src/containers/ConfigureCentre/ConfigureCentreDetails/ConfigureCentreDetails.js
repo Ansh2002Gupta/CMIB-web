@@ -1,4 +1,3 @@
-import { isEmpty } from "lodash";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { Select, Typography } from "antd";
@@ -25,9 +24,11 @@ const ConfigureCentreDetails = () => {
   const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState(INITIAL_CENTRE_DETAILS);
 
-  const isAddBtnDisable = Boolean(
-    isEmpty(formErrors) || Object.values(formErrors).join("").length
-  );
+  const isAddBtnDisable =
+    !formData.centreId ||
+    !formData.centreName ||
+    !formData.bigSmallCentre ||
+    Object.values(formErrors).join("").length > 0;
 
   const fields = FIELDS(
     formData?.centreName,
