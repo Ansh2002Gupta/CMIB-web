@@ -13,7 +13,7 @@ import CustomInput from "../../components/CustomInput/CustomInput";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 import { SETUP_CENTRE_DETAILS } from "../../dummyData";
-import { SESSION } from "../../routes/routeNames";
+import { SESSION, SETUP_CENTERS } from "../../routes/routeNames";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
 
@@ -34,7 +34,7 @@ const CenterDetailsContent = ({ isEdit }) => {
   };
 
   const handleSave = () => {
-    navigate(SESSION);
+    navigate(`${SESSION}/${SETUP_CENTERS}`);
   };
 
   const handleInputChange = (value, name) => {
