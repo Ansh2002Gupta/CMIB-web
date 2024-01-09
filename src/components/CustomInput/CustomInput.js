@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Input, Select, Typography } from "antd";
+import { Input, Select, Typography, InputNumber } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Base from "../../core/layouts/Base/Base";
@@ -11,6 +11,7 @@ const CustomInput = ({
   currentSelectedValue,
   customContainerStyles,
   customErrorTextStyles,
+  customInputNumberStyles,
   customInputStyles,
   customLabelStyles,
   customSelectInputStyles,
@@ -26,8 +27,10 @@ const CustomInput = ({
   isTextVisible,
   isSelectBoxDisable,
   label,
+  max,
   messageStyles: customMessageStyles,
   messageToShow,
+  min,
   onChange,
   onSelectItem,
   onSuffixElementClick,
@@ -38,7 +41,6 @@ const CustomInput = ({
   type,
   value,
 }) => {
-  
   return (
     <Base className={[styles.container, customContainerStyles].join(" ")}>
       {!!label && (
@@ -79,7 +81,8 @@ const CustomInput = ({
             />
           </>
         )}
-        {(type !== "select" || type === "mobile") && (
+        {((type !== "select" && type !== "inputNumber") ||
+          type === "mobile") && (
           <Input
             type={type || "text"}
             className={[
@@ -128,6 +131,19 @@ const CustomInput = ({
             }
           />
         )}
+        {type === "inputNumber" && (
+          <InputNumber
+            className={[styles.inputNumberStyles, customInputNumberStyles]}
+            {...{
+              value,
+              placeholder,
+              onChange,
+              disabled,
+              min,
+              max,
+            }}
+          />
+        )}
       </div>
       {isError && (
         <div>
@@ -155,6 +171,7 @@ CustomInput.defaultProps = {
   currentSelectedValue: "",
   customContainerStyles: "",
   customErrorTextStyles: "",
+  customInputNumberStyles: "",
   customInputStyles: "",
   customLabelStyles: "",
   customSelectInputStyles: "",
@@ -170,8 +187,10 @@ CustomInput.defaultProps = {
   isTextVisible: true,
   isSelectBoxDisable: false,
   label: "",
+  max: 10,
   messageStyles: "",
   messageToShow: "",
+  min: 0,
   onChange: () => {},
   onSelectItem: () => {},
   onSuffixElementClick: () => {},
@@ -187,6 +206,7 @@ CustomInput.propTypes = {
   currentSelectedValue: PropTypes.string,
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
+  customInputNumberStyles: PropTypes.string,
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   customSelectInputStyles: PropTypes.string,
@@ -202,8 +222,10 @@ CustomInput.propTypes = {
   isTextVisible: PropTypes.bool,
   isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
+  max: PropTypes.number,
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
+  min: PropTypes.number,
   onChange: PropTypes.func,
   onSelectItem: PropTypes.func,
   onSuffixElementClick: PropTypes.func,
