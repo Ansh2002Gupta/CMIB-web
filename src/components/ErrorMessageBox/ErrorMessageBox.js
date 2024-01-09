@@ -6,7 +6,8 @@ import { Button, Typography } from "antd";
 import { ReactComponent as ErrorIcon } from "../../themes/base/assets/images/error icon.svg";
 import styles from "./ErrorMessageBox.module.scss";
 
-const ErrorModal = ({ onClick, errorText, errorHeading, btnText }) => {
+const ErrorMessageBox = ({ onClick, errorText, errorHeading, btnText }) => {
+  // TODO: change name in the prev branch as well
   const intl = useIntl();
 
   return (
@@ -43,18 +44,18 @@ const ErrorModal = ({ onClick, errorText, errorHeading, btnText }) => {
   );
 };
 
-ErrorModal.defaultProps = {
+ErrorMessageBox.defaultProps = {
   btnText: "",
   errorHeading: "",
   errorText: "",
   onClick: () => {},
 };
 
-ErrorModal.propTypes = {
+ErrorMessageBox.propTypes = {
   btnText: PropTypes.string,
   errorHeading: PropTypes.string,
   errorText: PropTypes.string,
   onClick: PropTypes.func,
 };
 
-export default ErrorModal;
+export default ErrorMessageBox;

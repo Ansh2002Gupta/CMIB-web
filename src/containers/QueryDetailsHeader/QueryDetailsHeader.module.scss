@@ -5,3 +5,8 @@
   border-top: var(--borderLight);
   border-bottom: var(--borderLight);
 }
+
+.buttonStyles {
+  padding: var(--paddingExtraSmall);
+  min-height: var(--minBtnHeight);
+}

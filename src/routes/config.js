@@ -30,7 +30,7 @@ import {
   ADD_NEW_USER_DETAILS,
   CONFIGURE_CENTRES,
   SESSION,
-  QUERIES_AND_TICKETS,
+  CONTACT_US,
   ROUTE,
   SETUP_CENTERS,
   QUERY_DETAILS,
@@ -192,7 +192,7 @@ const config = [
     ],
   },
   {
-    pagePath: QUERIES_AND_TICKETS,
+    pagePath: CONTACT_US,
     element: <HomeWithPrivateAccess noOuterPadding />,
     views: [
       {

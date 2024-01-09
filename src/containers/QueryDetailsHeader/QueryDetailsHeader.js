@@ -4,12 +4,14 @@ import { useIntl } from "react-intl";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import ContentHeader from "../ContentHeader/ContentHeader";
 import StatusChip from "../../components/StatusChip";
+import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as CheckIconWhite } from "../../themes/base/assets/images/check-white.svg";
 import styles from "./QueryDetailsHeader.module.scss";
 
 // TODO: update by taking pull from development
 const QueryDetailsHeader = ({ id }) => {
   const intl = useIntl();
+  const responsive = useResponsive();
 
   return (
     <div className={styles.container}>
@@ -18,7 +20,7 @@ const QueryDetailsHeader = ({ id }) => {
         headerComponent={
           <StatusChip
             isPending
-            // TODO as per API.
+            // TODO : status will come from API.
             statusText={intl.formatMessage({
               id: "label.pending",
             })}
@@ -26,8 +28,11 @@ const QueryDetailsHeader = ({ id }) => {
         }
         rightSection={
           <CustomButton
-            IconElement={CheckIconWhite}
-            btnText={"Mark Answered"}
+            IconElement={responsive?.isSm ? CheckIconWhite : null}
+            customStyle={!responsive?.isSm ? styles.buttonStyles : ""}
+            btnText={intl.formatMessage({
+              id: "label.markAnswered",
+            })}
           />
         }
       />

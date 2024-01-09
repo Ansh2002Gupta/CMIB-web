@@ -25,7 +25,7 @@ export const getLayout = (type, data) => {
         children: data?.query,
       },
       {
-        // TODO: Please remove hardcode value,
+        // TODO: Please remove hardcode value once this value starts coming from API,
         key: "5",
         label: `Entity`,
         children: "Firm of Chartered Accountants",
@@ -38,7 +38,7 @@ export const getLayout = (type, data) => {
       {
         key: "7",
         label: `Partners (No.) *`,
-        children: data?.partners_number,
+        children: data?.partners_number || 0,
       },
       {
         key: "8",

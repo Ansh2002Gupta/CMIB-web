@@ -182,6 +182,8 @@ const locale = {
   "label.pending": "Pending",
   "label.progress": "Progress",
   "label.answered": "Answered",
+  "label.markAnswered": "Mark Answered",
+  "label.errorOccured": "Error Occured",
 };
 
 export default locale;

@@ -4,7 +4,7 @@ import { UserOutlined } from "@ant-design/icons";
 const controlMenu = [
   { label: "Users", key: "users", icon: <UserOutlined /> },
   { label: "Notifications", key: "notifications", icon: <UserOutlined /> },
-  { label: "Contact Us", key: "contact-us", icon: <UserOutlined /> },
+  { label: "Contact Us", key: "/contact-us", icon: <UserOutlined /> },
   { label: "Session", key: "session", icon: <UserOutlined /> },
   { label: "Feedback", key: "feedback", icon: <UserOutlined /> },
   { label: "Testimonials", key: "testimonials", icon: <UserOutlined /> },
@@ -32,7 +32,7 @@ const newlyQualifiedPlacementsMenu = [
     key: "global-configurations",
     icon: <UserOutlined />,
   },
-  { label: 'Companies', key: 'companies', icon: <UserOutlined /> },
+  { label: "Companies", key: "companies", icon: <UserOutlined /> },
 ];
 const caJobsMenu = [
   { label: "Dashboard", key: "dashboard", icon: <UserOutlined /> },

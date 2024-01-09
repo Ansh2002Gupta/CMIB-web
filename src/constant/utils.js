@@ -6,3 +6,10 @@ export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   }
   return moment(new Date()).format(dateFormat);
 };
+
+export const getErrorMessage = (errorObjectOrMessage) => {
+  if (typeof errorObjectOrMessage === "string") {
+    return errorObjectOrMessage;
+  }
+  return errorObjectOrMessage?.data?.message;
+};
