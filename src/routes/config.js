@@ -78,7 +78,7 @@ const config = [
   },
   {
     pagePath: ROOT,
-    element: <HomeWithPublicAccess />,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
