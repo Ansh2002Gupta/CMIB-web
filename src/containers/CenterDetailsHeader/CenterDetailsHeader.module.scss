@@ -9,11 +9,6 @@
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
 }
-@media screen and (max-width: 767px) {
-  .heading {
-    font-size: var(--fontSizeXlargeMedium);
-  }
-}
 
 .title {
   font-size: var(--fontSizeSmall);
@@ -25,4 +20,10 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
+}
+
+@media screen and (max-width: 767px) {
+  .heading {
+    font-size: var(--fontSizeXlargeMedium);
+  }
 }

@@ -18,7 +18,7 @@
 
 }
 .customTable .ant-table-tbody > tr:hover > td {
-  background-color: transparent !important; /* or use the same color as the row's normal background */
+  background-color: transparent !important; 
 }
 
 .customTable .ant-table-tbody .ant-table-cell {
