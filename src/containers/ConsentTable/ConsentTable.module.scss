@@ -1,0 +1,14 @@
+.table {
+  flex: 1;
+  width: var(--fullWidth);
+}
+
+.rowtext {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.textStyles {
+  padding-left: var(--paddingSmall);
+}

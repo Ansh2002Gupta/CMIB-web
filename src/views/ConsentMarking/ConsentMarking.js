@@ -9,7 +9,7 @@ import styles from "./ConsentMarking.module.scss";
 
 const ConsentMarking = () => {
   const intl = useIntl();
-  const isEdit = true;
+  const isEdit = false;
 
   return (
     <TwoRow

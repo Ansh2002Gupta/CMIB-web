@@ -10,6 +10,7 @@ import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
+import ConsentTable from "../ConsentTable";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
@@ -38,7 +39,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
     {
       key: "1",
       title: intl.formatMessage({ id: "session.roundOne" }),
-      children: <>Round1</>,
+      children: <ConsentTable />,
     },
     {
       key: "2",
@@ -110,36 +111,39 @@ const ConsentMarkingContent = ({ isEdit }) => {
           }
           topSectionStyle={classes.tabTopSectionStyle}
           bottomSection={activeTabChildren.children}
+          bottomSectionStyle={classes.tabBottomSectionStyle}
         />
       }
       bottomSection={
-        <TwoColumn
-          className={styles.buttonContainer}
-          leftSection={
-            <CustomButton
-              btnText={intl.formatMessage({
-                id: "label.cancel",
-              })}
-              customStyle={
-                responsive.isMd
-                  ? styles.buttonStyles
-                  : styles.mobileButtonStyles
-              }
-              textStyle={styles.textStyle}
-              onClick={handleCancel}
-            />
-          }
-          rightSection={
-            <CustomButton
-              isBtnDisable={false}
-              textStyle={styles.saveButtonTextStyles}
-              btnText={intl.formatMessage({
-                id: "session.saveChanges",
-              })}
-              onClick={handleSave}
-            />
-          }
-        />
+        isEdit && (
+          <TwoColumn
+            className={styles.buttonContainer}
+            leftSection={
+              <CustomButton
+                btnText={intl.formatMessage({
+                  id: "label.cancel",
+                })}
+                customStyle={
+                  responsive.isMd
+                    ? styles.buttonStyles
+                    : styles.mobileButtonStyles
+                }
+                textStyle={styles.textStyle}
+                onClick={handleCancel}
+              />
+            }
+            rightSection={
+              <CustomButton
+                isBtnDisable={false}
+                textStyle={styles.saveButtonTextStyles}
+                btnText={intl.formatMessage({
+                  id: "session.saveChanges",
+                })}
+                onClick={handleSave}
+              />
+            }
+          />
+        )
       }
       bottomSectionStyle={classes.bottomSectionStyle}
     />

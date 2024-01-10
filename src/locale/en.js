@@ -216,6 +216,10 @@ const locale = {
     "Select Last Date for Big Centres",
   "label.consent.placeholder.lastDateSmallCentres":
     " Select Last Date for Small Centres",
+  "label.companyStartDate": "Shortlist By Company Start Date",
+  "label.companyEndDate": "Shortlist By Company end Date",
+  "label.consentFromDate": "Consent From Date for Candidate",
+  "label.consentToDate": "Consent To Date for Candidate",
 };
 
 export default locale;

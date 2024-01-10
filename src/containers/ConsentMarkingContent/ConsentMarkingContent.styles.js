@@ -9,4 +9,10 @@ export const classes = {
   },
   bottomSectionStyle: { alignSelf: "flex-end" },
   tabTopSectionStyle: { borderBottom: variables.borderLight },
+  tabBottomSectionStyle: {
+    border: variables.borderLight,
+    borderRadius: variables.radiusMLg,
+    padding: variables.paddingSmall,
+    backgroundColor: variables.bodyBg,
+  },
 };
