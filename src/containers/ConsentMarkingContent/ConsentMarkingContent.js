@@ -9,12 +9,14 @@ import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
 
 const ConsentMarkingContent = () => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const [activeTab, setActiveTab] = useState("1");
 
   const RegistrationDates = [
@@ -38,7 +40,9 @@ const ConsentMarkingContent = () => {
   ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    navigate(-2);
+  };
 
   const handleSave = () => {};
 
@@ -66,6 +70,7 @@ const ConsentMarkingContent = () => {
       topSectionStyle={classes.topSectionStyle}
       middleSection={
         <TwoRow
+          className={styles.tabContainer}
           topSection={
             <CustomTabs
               tabs={tabItems}
@@ -73,6 +78,7 @@ const ConsentMarkingContent = () => {
               setActiveTab={setActiveTab}
             />
           }
+          topSectionStyle={classes.tabTopSectionStyle}
           bottomSection={activeTabChildren.children}
         />
       }

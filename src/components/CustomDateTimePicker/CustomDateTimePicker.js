@@ -29,10 +29,10 @@ const CustomDateTimePicker = ({
       topSection={
         label && (
           <div className={styles.inputLabelContainer}>
-            <Typography className={customLabelStyles}>{label}</Typography>
-            {isRequired && (
-              <Typography className={styles.isRequiredStar}>*</Typography>
-            )}
+            <Typography className={customLabelStyles}>
+              {label}
+              {isRequired && <span className={styles.isRequiredStar}> *</span>}
+            </Typography>
           </div>
         )
       }
@@ -52,7 +52,7 @@ const CustomDateTimePicker = ({
               />
             ) : (
               <DatePicker
-                {...{ value, defaultValue, onChange, placeholder, disabled }}
+                {...{ defaultValue, onChange, placeholder, disabled }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle]}
               />
