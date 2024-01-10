@@ -2,12 +2,12 @@ import { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
-import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import {
   setErrorGetingUserDetails,
   setIsGettingUserDetails,
   setUserDetails,
 } from "../../../globalContext/userProfile/userProfileActions";
+import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import {
   ADMIN_ROUTE,
   GET_USER_PROFILE_DETAILS,

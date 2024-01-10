@@ -46,7 +46,7 @@ const caJobsMenu = [
   { label: "Candidates", key: "/candidates", icon: <UserOutlined /> },
   { label: "Companies", key: "/companies", icon: <UserOutlined /> },
   { label: "All Jobs", key: "/all-jobs", icon: <UserOutlined /> },
-  { label: "Report", key: "r/eport", icon: <UserOutlined /> },
+  { label: "Report", key: "/report", icon: <UserOutlined /> },
 ];
 const experiencedMembersMenu = [
   { label: "Dashboard", key: "/dashboard", icon: <UserOutlined /> },

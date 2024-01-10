@@ -44,11 +44,7 @@ export default function CardDropdownOverlay({
         <Button
           className={styles.logoutBtn}
           type="text"
-          icon={
-            <span>
-              <LogoutIcon />
-            </span>
-          }
+          icon={<LogoutIcon />}
           onClick={onLogout}
         >
           {intl.formatMessage({ id: "label.logout" })}

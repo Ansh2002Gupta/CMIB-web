@@ -9,12 +9,12 @@ import { UserProfileContext } from '../../globalContext/userProfile/userProfileP
 import styles from './profileDropdown.module.scss'
 
 const ProfileDropdown = ({ onLogout }) => {
-    // TODO: need to add  logic for getting user data
+    // TODO: To find logic to put Role base on Role ID
     const [userProfileState] = useContext(UserProfileContext);
 
     const loggedInUserInfo = userProfileState.userDetails || {};    
     const userName = loggedInUserInfo?.name;
-    const userRole = 'Admin'; // TODO : To find logic to put Role base on Role ID
+    const userRole = 'Admin'; 
     const userEmail = loggedInUserInfo?.email;
     const userProfilePic = loggedInUserInfo?.profile_photo;
 

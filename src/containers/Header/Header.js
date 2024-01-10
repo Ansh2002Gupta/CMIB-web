@@ -21,7 +21,7 @@ function useHeader() {
 
   const onLogout = () => {
     authDispatch(clearAuthAndLogout());
-    navigate(LOGIN);
+    window.location.reload();
   };
 
   return {
