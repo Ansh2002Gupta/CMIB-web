@@ -208,6 +208,14 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.consent.placeholder.startDateCompanies":
+    " Select Start Date for Companies",
+  "label.consent.placeholder.startDateCandidates":
+    "Select Start Date for Candidates",
+  "label.consent.placeholder.lastDateBigCentres":
+    "Select Last Date for Big Centres",
+  "label.consent.placeholder.lastDateSmallCentres":
+    " Select Last Date for Small Centres",
 };
 
 export default locale;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
@@ -12,12 +13,19 @@ import CustomTabs from "../../components/CustomTabs";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
+import moment from "moment";
 
-const ConsentMarkingContent = () => {
+const ConsentMarkingContent = ({ isEdit }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [activeTab, setActiveTab] = useState("1");
+  const [RegistrationDatesData, setRegistrationDatesData] = useState({
+    startDateCompanies: "2023-12-19T05:11:46.000000Z",
+    startDateCandidates: "2023-12-19T05:11:46.000000Z",
+    lastDateBigCentres: "2023-12-19T05:11:46.000000Z",
+    lastDateSmallCentres: "2023-12-19T05:11:46.000000Z",
+  });
 
   const RegistrationDates = [
     { id: 1, labeIntl: "startDateCompanies" },
@@ -40,6 +48,13 @@ const ConsentMarkingContent = () => {
   ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
+  const handleInputChange = (value, name) => {
+    setRegistrationDatesData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
   const handleCancel = () => {
     navigate(-2);
   };
@@ -54,14 +69,29 @@ const ConsentMarkingContent = () => {
           {RegistrationDates.map((item) => {
             return (
               <CustomDateTimePicker
+                key={item?.id}
                 customLabelStyles={styles.customLabelStyles}
                 customContainerStyles={styles.customContainerStyles}
                 customTimeStyle={styles.customTimeStyle}
+                isEditable={isEdit}
                 type="date"
                 isRequired={true}
                 label={intl.formatMessage({
                   id: `label.consent.${item?.labeIntl}`,
                 })}
+                placeholder={intl.formatMessage({
+                  id: `label.consent.placeholder.${item?.labeIntl}`,
+                })}
+                value={
+                  RegistrationDatesData[item?.labeIntl]
+                    ? isEdit
+                      ? moment(RegistrationDatesData[item?.labeIntl])
+                      : RegistrationDatesData[item?.labeIntl]
+                    : null
+                }
+                onChange={(val) => {
+                  handleInputChange(item?.labeIntl, val);
+                }}
               />
             );
           })}
@@ -114,6 +144,14 @@ const ConsentMarkingContent = () => {
       bottomSectionStyle={classes.bottomSectionStyle}
     />
   );
+};
+
+ConsentMarkingContent.defaultProps = {
+  isEdit: false,
+};
+
+ConsentMarkingContent.propTypes = {
+  isEdit: PropTypes.bool,
 };
 
 export default ConsentMarkingContent;

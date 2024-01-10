@@ -410,3 +410,26 @@ export const SETUP_CENTRE_DETAILS = [
     norm2MinVacancy: "23",
   },
 ];
+
+export const CONSENT_MARKING_REGESTRATION_DETAILS = [
+  {
+    id: 1,
+    labeIntl: "startDateCompanies",
+    value: "2023-12-19T05:11:46.000000Z",
+  },
+  {
+    id: 2,
+    labeIntl: "startDateCandidates",
+    value: "2023-12-19T05:11:46.000000Z",
+  },
+  {
+    id: 3,
+    labeIntl: "lastDateBigCentres",
+    value: "2023-12-19T05:11:46.000000Z",
+  },
+  {
+    id: 4,
+    labeIntl: "lastDateSmallCentres",
+    value: "2023-12-19T05:11:46.000000Z",
+  },
+];

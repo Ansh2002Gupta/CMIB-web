@@ -9,6 +9,7 @@ import styles from "./ConsentMarking.module.scss";
 
 const ConsentMarking = () => {
   const intl = useIntl();
+  const isEdit = true;
 
   return (
     <TwoRow
@@ -23,7 +24,7 @@ const ConsentMarking = () => {
           })}
         />
       }
-      bottomSection={<ConsentMarkingContent />}
+      bottomSection={<ConsentMarkingContent {...{ isEdit }} />}
     />
   );
 };

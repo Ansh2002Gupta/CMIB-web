@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 import { Typography, TimePicker, DatePicker } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
+import { formatDate } from "../../constant/utils";
 import styles from "./CustomDateTimePicker.module.scss";
 
 const CustomDateTimePicker = ({
@@ -16,6 +18,7 @@ const CustomDateTimePicker = ({
   disabled,
   errorMessage,
   format,
+  isEditable,
   isRequired,
   label,
   onChange,
@@ -50,12 +53,16 @@ const CustomDateTimePicker = ({
                 }}
                 className={[styles.timeInput, customTimeStyle]}
               />
-            ) : (
+            ) : isEditable ? (
               <DatePicker
-                {...{ defaultValue, onChange, placeholder, disabled }}
+                {...{ defaultValue, onChange, placeholder, disabled, value }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle]}
               />
+            ) : (
+              <Typography className={styles.dateText}>
+                {formatDate(value)}
+              </Typography>
             )
           }
           bottomSection={
@@ -79,16 +86,17 @@ CustomDateTimePicker.defaultProps = {
   customLabelStyles: "",
   customTimeStyle: "",
   dateFormat: "DD/MM/YYYY",
-  defaultValue: "",
+  defaultValue: null,
   disabled: false,
   errorMessage: "",
   format: "h:mm a",
+  isEditable: true,
   isRequired: false,
   label: "",
   onChange: () => {},
   placeholder: "",
   type: "time",
-  value: {},
+  value: null,
 };
 
 CustomDateTimePicker.propTypes = {
@@ -101,6 +109,7 @@ CustomDateTimePicker.propTypes = {
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   format: PropTypes.string,
+  isEditable: PropTypes.bool,
   isRequired: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
