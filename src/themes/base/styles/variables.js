@@ -37,6 +37,7 @@ const variables = {
   sideMenuMaskBg: colorPallets.maskBlack,
 
   // Border-Radius
+  radiusNone: "0px",
   radiusXss: "2px",
   radiusSm: "4px",
   radiusMd: "6px",
@@ -77,6 +78,8 @@ const variables = {
   // Widths
   sidemenuWidth: "74px",
   fullWidth: "100%",
+  width_45: "45%",
+  width_30Per: "30%",
   halfWidth: "50%",
   smallWidth: "30px",
   width_400: "400px",
@@ -88,6 +91,8 @@ const variables = {
   width_30: "30px",
   width_24: "24px",
   width_20: "20px",
+  width_80: "80px",
+  widthHalfViewPort: "50vw",
 
   // Heights
   btnHeight: "56px",
@@ -105,6 +110,10 @@ const variables = {
   height_24: "24px",
   height_20: "20px",
   height_50vh: "50vh",
+  height_30vh: "30vh",
+
+  // Distance for top, left, bottom and right
+  distance_85: "85px",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
@@ -129,6 +138,7 @@ const variables = {
   inputPlaceHolder: colorPallets.darkGrey1,
 
   // Padding
+  paddingNone: "0px",
   paddingXXSmall: "4px",
   paddingExtraSmall: "8px",
   paddingMediumSmall: "12px",

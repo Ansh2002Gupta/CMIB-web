@@ -1,3 +1,4 @@
+import addCircle from "./addCircle.svg";
 import arrowDown from "./arrow-down.svg";
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
@@ -17,6 +18,7 @@ import Key from "./Key.svg";
 import Logo from "./Logo.svg";
 import logo from "./logo.png";
 import Monitor from "./Monitor.svg";
+import minusCircle from "./minusCircle.svg";
 import more from "./more.svg";
 import plusIcon from "./plus icon.svg";
 import publicFooter from "./Public footer.svg";
@@ -30,6 +32,7 @@ import addIcon from "./add.png";
 import editIcon from "./edit.png";
 
 const images = {
+  addCircle,
   arrowDown,
   arrowRight,
   arrowRightFilter,
@@ -49,6 +52,7 @@ const images = {
   logo,
   Logo,
   Monitor,
+  minusCircle,
   more,
   plusIcon,
   publicFooter,

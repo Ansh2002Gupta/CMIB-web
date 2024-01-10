@@ -85,21 +85,21 @@ const UserDetailsHeader = ({
 };
 
 UserDetailsHeader.defaultProps = {
-  currentFormState: 1,
+  currentFormState: "",
   isUpdatingUserData: false,
   updateUserData: () => {},
   updateUserDetails: () => {},
   userData: {},
-  userId: 0,
+  userId: "",
 };
 
 UserDetailsHeader.propTypes = {
-  currentFormState: PropTypes.number,
+  currentFormState: PropTypes.string,
   isUpdatingUserData: PropTypes.bool,
   updateUserData: PropTypes.func,
   updateUserDetails: PropTypes.func,
   userData: PropTypes.object,
-  userId: PropTypes.number,
+  userId: PropTypes.string,
 };
 
 export default UserDetailsHeader;
