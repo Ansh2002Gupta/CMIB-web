@@ -15,7 +15,6 @@ const CustomButton = ({
   textStyle,
   type,
 }) => {
-  
   return (
     <div>
       <Button

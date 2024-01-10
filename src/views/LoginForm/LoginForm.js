@@ -206,7 +206,7 @@ const LoginForm = () => {
             onSubmit={(otp) =>
               handleCheckOTP({
                 onSuccess: () => navigate(DASHBOARD),
-                payload: { otp },
+                payload: { email: formInputs.userName, otp },
                 url: ADMIN_ROUTE + CHECK_OTP_END_POINT,
               })
             }

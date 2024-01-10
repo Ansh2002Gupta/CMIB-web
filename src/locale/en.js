@@ -1,5 +1,6 @@
 const locale = {
   // en locale
+  "label.all": "All",
   "label.signIn": "Sign In",
   "label.userName": "Username",
   "label.userName2": "User Name",
@@ -140,6 +141,7 @@ const locale = {
     "Some error occured while updating user details, please try again",
   "label.errorWhileAddingNewUser":
     "Some error occured while creating a new user, please try again!",
+  "label.selectModules": "Select Modules",
   "session.rounds.selectCentres": "Select centres",
   "session.rounds.centres": "Centres",
   "session.roundOneStatus": "Round 1 Status",
@@ -207,6 +209,11 @@ const locale = {
   "centre.error.enterNorm1": "Enter Norm 1",
   "centre.error.enterNorm2": "Enter Norm 2",
   "centre.error.enterVacancy": "Error",
+  "label.add": "Add",
+  "label.none": "None",
+  "label.userNamePlaceholder": "Please enter your username",
+  "label.mobilePlaceholder": "Please enter your mobile number",
+  "label.emailPlaceholder": "Please enter your email",
   "label.pending": "Pending",
   "label.progress": "Progress",
   "label.answered": "Answered",
