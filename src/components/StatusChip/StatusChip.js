@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Typography } from "antd";
 
 import styles from "./StatusChip.module.scss";
-import { Typography } from "antd";
 
 const StatusChip = ({
   customContainerStyles,

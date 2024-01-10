@@ -5,12 +5,13 @@ import { useIntl } from "react-intl";
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
 import CustomSpinner from "../../components/CustomSpinner";
+import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import QueryDetailsContent from "../../containers/QueryDetailsContent";
 import QueryDetailsHeader from "../../containers/QueryDetailsHeader";
-import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
 import { getErrorMessage } from "../../constant/utils";
 import { ADMIN_ROUTE, QUERY_END_POINT } from "../../constant/apiEndpoints";
+import { classes } from "./QueryDetails.styles";
 import styles from "./QueryDetails.module.scss";
 
 const QueryDetails = () => {
@@ -47,6 +48,8 @@ const QueryDetails = () => {
           bottomSection={
             <QueryDetailsContent type={data?.type} {...{ data }} />
           }
+          isBottomFillSpace
+          bottomSectionStyle={classes.bottomContainer}
         />
       )}
     </>

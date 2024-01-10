@@ -11,27 +11,26 @@
   font-weight: var(--fontWeightMedium);
 }
 
-// TODO: add var instead of passing values directly
 .pending_bg {
-  background-color: #ffefe5;
+  background-color: var(--lightRedBg);
 }
 
 .pending_color {
-  color: #d76200;
+  color: var(--redText);
 }
 
 .progress_bg {
-  background-color: #e8fcff;
+  background-color: var(--lightBlueBg);
 }
 
 .progress_color {
-  color: #0099ca;
+  color: var(--blueText);
 }
 
 .success_bg {
-  background-color: #dfffdc;
+  background-color: var(--lightGreenBg);
 }
 
 .success_color {
-  color: #258b01;
+  color: var(--greenText);
 }

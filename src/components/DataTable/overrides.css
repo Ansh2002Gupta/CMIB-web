@@ -14,3 +14,7 @@ iframe#webpack-dev-server-client-overlay {
 .ant-table-expanded-row-fixed, .table-layout {
   min-height: 50vh;
 }
+
+.ant-table-body{
+  overflow: auto !important;
+}
