@@ -22,7 +22,7 @@ const ConfigureCentreContent = ({ intl, getImage }) => {
   const goToEditCentrePage = (rowData) => {
     navigate(
       `/view-centre-details?centreId=${rowData?.centreId}&mode=${
-        isEdit ? "edit" : "view"
+        true ? "edit" : "view"
       }`
     );
   };
