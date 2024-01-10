@@ -140,7 +140,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
 };
 
-//TODO:need to implement it using api 
+//TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
   { id: 102, label: "November 2025", value: "November 2025" },
@@ -234,3 +234,108 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const PERMISION_AND_ROLE = {
+  error: false,
+  code: 200,
+  message: "OK",
+  data: [
+    {
+      name: "Control",
+      slug: "control",
+      id: 1,
+      permissions: [
+        {
+          id: 19,
+          name: "User Management",
+          slug: "user-management",
+        },
+        {
+          id: 20,
+          name: "Bulk Notifications",
+          slug: "bulk-notifications",
+        },
+        {
+          id: 21,
+          name: "Ticket Management",
+          slug: "ticket-management",
+        },
+        {
+          id: 22,
+          name: "Query Management",
+          slug: "query-management",
+        },
+        {
+          id: 23,
+          name: "Testimonial Management",
+          slug: "testimonial-management",
+        },
+        {
+          id: 24,
+          name: "Registered Companies",
+          slug: "registered-companies",
+        },
+      ],
+    },
+    {
+      name: "CA-Jobs",
+      slug: "ca-jobs",
+      id: 2,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+    {
+      name: "NQCA-Placement",
+      slug: "nqca-placement",
+      id: 3,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+    {
+      name: "Overseas-Placement",
+      slug: "overseas-placement",
+      id: 4,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+    {
+      name: "Career-Ascent",
+      slug: "career-ascent",
+      id: 5,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+    {
+      name: "Women-Placement",
+      slug: "women-placement",
+      id: 6,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+  ],
+};
