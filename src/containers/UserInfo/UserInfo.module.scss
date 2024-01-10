@@ -74,6 +74,12 @@
   background-color: var(--active2) !important ;
 }
 
+.errorText {
+  color: var(--error);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+}
+
 .switchAndTextContainer {
   display: flex;
   gap: var(--gapMedium);
@@ -85,8 +91,12 @@
   border-bottom-left-radius: 0px !important;
 }
 
-.saveAndCancelBtnContainer{
+.saveAndCancelBtnContainer {
   padding-bottom: var(--paddingMedium);
+}
+
+.spanOverAllColumns {
+  grid-column: 1 / -1;
 }
 
 @media screen and (max-width: 1279px) {

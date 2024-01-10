@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 import { useParams, useSearchParams } from "react-router-dom";
 
 import TwoRow from "../../core/layouts/TwoRow";
 
 import UserDetailsContent from "../../containers/UserDetailsContent/UserDetailsContent";
 import UserDetailsHeader from "../../containers/UserDetailsHeader";
+import useAddNewUserApi from "../../services/api-services/Users/useAddNewUserApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
@@ -13,6 +15,7 @@ import { FORM_STATES, NOTIFICATION_TYPES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
 
 const UserDetails = () => {
+  const intl = useIntl();
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams] = useSearchParams();
@@ -56,12 +59,22 @@ const UserDetails = () => {
     setErrorWhileUpdatingUserData,
   } = useUpdateUserDetailsApi();
 
+  const {
+    errorWhileAddingNewUser,
+    addNewUser,
+    isLoading: isAddingUser,
+    isSuccess: isNewUserSuccessfullyAdded,
+  } = useAddNewUserApi();
+
   const updateUserData = (key, value) => {
     key === "email" && setIsEmailValid(true);
     key === "mobile" && setIsMobileNumberValid(true);
     key === "access" && setIsAccessValid(true);
     key === "name" && setIsUserNameValid(true);
     setErrorWhileUpdatingUserData("");
+    if (key === "mobile") {
+      value = value.slice(0, 10);
+    }
     setUserData((prev) => {
       return {
         ...prev,
@@ -69,6 +82,22 @@ const UserDetails = () => {
       };
     });
   };
+
+  useEffect(() => {
+    errorWhileUpdatingUserData &&
+      showNotification(errorWhileUpdatingUserData, NOTIFICATION_TYPES.ERROR);
+    errorWhileAddingNewUser &&
+      showNotification(errorWhileAddingNewUser, NOTIFICATION_TYPES.ERROR);
+    isNewUserSuccessfullyAdded &&
+      showNotification(
+        intl.formatMessage({ id: "label.userCreatedSuccessfully" }),
+        NOTIFICATION_TYPES.SUCCESS
+      );
+  }, [
+    errorWhileUpdatingUserData,
+    errorWhileAddingNewUser,
+    isNewUserSuccessfullyAdded,
+  ]);
 
   useEffect(() => {
     errorWhileUpdatingUserData &&
@@ -95,7 +124,7 @@ const UserDetails = () => {
     if (userId) {
       getUserData(userId);
     }
-  }, [userId]);
+  }, [userId, currentFormState]);
 
   useEffect(() => {
     return () => {
@@ -123,6 +152,7 @@ const UserDetails = () => {
       {notificationContextHolder}
       <TwoRow
         topSection={
+          !isAddingUser &&
           !errorWhileGettingUsersData &&
           !isLoading && (
             <UserDetailsHeader
@@ -157,8 +187,9 @@ const UserDetails = () => {
               setIsUserNameValid,
               isAccessValid,
               setIsAccessValid,
+              addNewUser,
             }}
-            isLoading={isLoading || isUpdatingUserData}
+            isLoading={isLoading || isUpdatingUserData || isAddingUser}
           />
         }
       />
