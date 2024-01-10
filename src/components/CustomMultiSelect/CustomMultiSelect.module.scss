@@ -1,0 +1,93 @@
+.parentContainer {
+  position: relative;
+}
+
+.container {
+  border: var(--borderLight);
+  border-radius: var(--radiusXLgMedium);
+  background-color: var(--bodyBg);
+  z-index: 5;
+  overflow: hidden;
+  max-height: var(--height_30vh);
+  overflow-y: scroll;
+  position: absolute;
+  width: var(--fullWidth);
+  top: var(--distance_85);
+  left: 0px;
+}
+
+.section {
+  border-top: var(--borderLight);
+  padding: var(--paddingSmall);
+}
+
+.optionHeadingContainer {
+  padding: var(--paddingExtraSmall);
+}
+
+.icon {
+  min-width: var(--width_20);
+}
+
+.optionContainer {
+  padding: var(--paddingExtraSmall);
+  display: flex;
+  gap: var(--gapSmall);
+  align-items: center;
+  justify-self: center;
+  cursor: pointer;
+}
+
+.optionsHeading {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--inputPlaceHolder);
+}
+
+.optionText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.optionDropdownPlaceHolderContaier {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px var(--paddingMedium);
+  border: var(--borderLight);
+  border-radius: var(--radiusLg);
+  cursor: pointer;
+  min-height: var(--height_50);
+}
+
+.labelContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapXSmall);
+}
+
+.chipsListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+  width: var(--fullWidth);
+  padding: var(--paddingExtraSmall);
+}
+
+.chips {
+  border-radius: var(--radiusXXLg);
+  background-color: var(--lightBlueBg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gapXXSmall);
+  padding: var(--paddingXXSmall) var(--paddingExtraSmall);
+  width: fit-content;
+}
+
+.chipsText {
+  color: var(--textBold);
+  font-size: var(--fontSizeExtraSmall);
+}
