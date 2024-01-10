@@ -90,7 +90,7 @@ const UserDetailsContent = ({
         name: userData.name,
         email: userData.email,
         mobile_number: userData.mobile,
-        created_by: 1, // from where I will get this id?
+        created_by: 1, // TODO: Get this id from get-Logged-In-User-details API (once it is integrated)
         role: userData.access,
         is_two_factor: userData.is_two_factor ? 1 : 0,
       };

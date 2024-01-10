@@ -124,7 +124,6 @@ FileUpload.defaultProps = {
   isFormEditable: false,
   subHeading: "Photo",
   updateUserData: () => {},
-  userImageName: "",
   userProfilePic: "",
   userImageName: "",
 };
@@ -134,7 +133,6 @@ FileUpload.propTypes = {
   isFormEditable: PropTypes.bool,
   subHeading: PropTypes.string,
   updateUserData: PropTypes.func,
-  userImageName: PropTypes.string,
   userProfilePic: PropTypes.string,
   userImageName: PropTypes.string,
 };

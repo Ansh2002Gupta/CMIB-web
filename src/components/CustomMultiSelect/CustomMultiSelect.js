@@ -35,11 +35,8 @@ const CustomMultiSelect = ({
     elementNotToBeConsidered: elementNotToBeConsideredRef,
   });
 
-  const doesIncludes = (arrayForSearching, objectToBeSerached) => {
-    return (
-      arrayForSearching.filter((item) => item.id === objectToBeSerached.id)
-        ?.length === 1
-    );
+  const doesArrayContainsValidId = (arrayForSearching, idToBeSearched) => {
+    return !!arrayForSearching.find((item) => item.id === idToBeSearched);
   };
 
   const selectAllOption = () => {
@@ -56,11 +53,25 @@ const CustomMultiSelect = ({
     setSelectedOptions([]);
   };
 
+  const doesContainsAllIds = (idsObjectArray) => {
+    let isArrayOfObject = typeof idsObjectArray[0] === "object";
+    let countOfValuesContains = 0;
+    selectedOptions.forEach((item) => {
+      if (isArrayOfObject) {
+        if (doesArrayContainsValidId(idsObjectArray, item?.id))
+          countOfValuesContains++;
+        return;
+      }
+      if (idsObjectArray.includes(item.id)) countOfValuesContains++;
+    });
+    return countOfValuesContains === idsObjectArray?.length;
+  };
+
   const toggleOptionId = (optionObject) => {
     let updatedData = [];
     if (Array.isArray(optionObject)) {
       updatedData = selectedOptions.filter((item) => {
-        return !doesIncludes(optionObject, item);
+        return !doesArrayContainsValidId(optionObject, item?.id);
       });
       if (doesContainsAllIds(optionObject)) {
         setSelectAll(false);
@@ -73,7 +84,7 @@ const CustomMultiSelect = ({
       setSelectedOptions(updatedData);
       return;
     }
-    if (doesIncludes(selectedOptions, optionObject)) {
+    if (doesArrayContainsValidId(selectedOptions, optionObject?.id)) {
       updatedData = selectedOptions.filter(
         (item) => item.id !== optionObject.id
       );
@@ -85,19 +96,6 @@ const CustomMultiSelect = ({
     updatedData = [...selectedOptions, optionObject];
     areAllOptionSelected(updatedData.length);
     setSelectedOptions(updatedData);
-  };
-
-  const doesContainsAllIds = (idsObjectArray) => {
-    let isArrayOfObject = typeof idsObjectArray[0] === "object";
-    let countOfValuesContains = 0;
-    selectedOptions.forEach((item) => {
-      if (isArrayOfObject) {
-        if (doesIncludes(idsObjectArray, item)) countOfValuesContains++;
-        return;
-      }
-      if (idsObjectArray.includes(item.id)) countOfValuesContains++;
-    });
-    return countOfValuesContains === idsObjectArray?.length;
   };
 
   const areAllOptionSelected = (currentlySelectedOptionsCount) => {
@@ -190,7 +188,10 @@ const CustomMultiSelect = ({
                         key={index}
                         onClick={() => toggleOptionId(option)}
                       >
-                        {doesIncludes(selectedOptions, option) ? (
+                        {doesArrayContainsValidId(
+                          selectedOptions,
+                          option?.id
+                        ) ? (
                           <CheckedBox className={styles.icon} />
                         ) : (
                           <UnCheckedBox className={styles.icon} />

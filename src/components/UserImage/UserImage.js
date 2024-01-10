@@ -41,7 +41,6 @@ UserImage.defaultProps = {
   imageName: "",
   onTrashClick: () => {},
   src: "",
-  editable: false,
 };
 
 UserImage.propTypes = {
@@ -50,7 +49,6 @@ UserImage.propTypes = {
   imageName: PropTypes.string,
   onTrashClick: PropTypes.func,
   src: PropTypes.string,
-  editable: PropTypes.bool,
 };
 
 export default UserImage;
