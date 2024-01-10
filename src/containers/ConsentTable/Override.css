@@ -6,7 +6,6 @@
     padding-left: var(--paddingNone) !important;
     padding-right: var(--paddingNone) !important;
     border: none !important;
-  
   }
  
   .customConsentTable .ant-table-tbody > tr:hover > td {

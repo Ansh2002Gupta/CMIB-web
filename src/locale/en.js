@@ -106,6 +106,8 @@ const locale = {
   "session.placeholder.bankACNumberOnline": "Enter Bank A/C number online",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
+  "session.lastDateRegistrationCompanies":
+    "Last date of registration for companies",
   "session.saveChanges": "Save Changes",
   "label.viewProfile": "View Profile",
   "label.changePassword": "Change Password",
@@ -220,6 +222,10 @@ const locale = {
   "label.companyEndDate": "Shortlist By Company end Date",
   "label.consentFromDate": "Consent From Date for Candidate",
   "label.consentToDate": "Consent To Date for Candidate",
+  "label.placeholder.companyStartDate": "Select Company Start Date",
+  "label.placeholder.companyEndDate": "Select Company end Date",
+  "label.placeholder.consentFromDate": "Select From Date for Candidate",
+  "label.placeholder.consentToDate": "Select To Date for Candidate",
 };
 
 export default locale;

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import moment from "moment";
 import { Typography, TimePicker, DatePicker } from "antd";
 
 import { TwoRow } from "../../core/layouts";
@@ -50,6 +49,7 @@ const CustomDateTimePicker = ({
                   onChange,
                   placeholder,
                   disabled,
+                  value,
                 }}
                 className={[styles.timeInput, customTimeStyle]}
               />

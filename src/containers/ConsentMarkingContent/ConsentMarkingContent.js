@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Typography } from "antd";
 
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "core/hooks/useResponsive";
@@ -11,10 +11,11 @@ import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
 import ConsentTable from "../ConsentTable";
+import { CONSENT_MARKING_REGESTRATION_DETAILS } from "../../dummyData";
+import { SESSION } from "../../routes/routeNames";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
-import moment from "moment";
 
 const ConsentMarkingContent = ({ isEdit }) => {
   const intl = useIntl();
@@ -27,6 +28,16 @@ const ConsentMarkingContent = ({ isEdit }) => {
     lastDateBigCentres: "2023-12-19T05:11:46.000000Z",
     lastDateSmallCentres: "2023-12-19T05:11:46.000000Z",
   });
+  const initialData = CONSENT_MARKING_REGESTRATION_DETAILS.map((item) => ({
+    ...item,
+    sNo: item.sNo,
+    centreName: item.centreName,
+    companyStartDate: dayjs(item.companyStartDate),
+    companyEndDate: dayjs(item.companyEndDate),
+    consentFromDate: dayjs(item.consentFromDate),
+    consentToDate: dayjs(item.consentToDate),
+  }));
+  const [tableData, setTableData] = useState(initialData);
 
   const RegistrationDates = [
     { id: 1, labeIntl: "startDateCompanies" },
@@ -39,12 +50,19 @@ const ConsentMarkingContent = ({ isEdit }) => {
     {
       key: "1",
       title: intl.formatMessage({ id: "session.roundOne" }),
-      children: <ConsentTable />,
+      children: <ConsentTable {...{ isEdit, tableData, setTableData }} />,
     },
     {
       key: "2",
       title: intl.formatMessage({ id: "session.roundTwo" }),
       children: <>Round2</>,
+    },
+    {
+      key: "3",
+      title: intl.formatMessage({
+        id: "session.lastDateRegistrationCompanies",
+      }),
+      children: <>Last date of registration for companies</>,
     },
   ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
@@ -60,7 +78,9 @@ const ConsentMarkingContent = ({ isEdit }) => {
     navigate(-2);
   };
 
-  const handleSave = () => {};
+  const handleSave = () => {
+    navigate(`${SESSION}?tab=2`);
+  };
 
   return (
     <ThreeRow
@@ -86,7 +106,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
                 value={
                   RegistrationDatesData[item?.labeIntl]
                     ? isEdit
-                      ? moment(RegistrationDatesData[item?.labeIntl])
+                      ? dayjs(RegistrationDatesData[item?.labeIntl])
                       : RegistrationDatesData[item?.labeIntl]
                     : null
                 }

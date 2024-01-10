@@ -16,6 +16,7 @@ import { SETUP_CENTRE_DETAILS } from "../../dummyData";
 import { SESSION, SETUP_CENTERS } from "../../routes/routeNames";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
+import dayjs from "dayjs";
 
 const CenterDetailsContent = ({ isEdit }) => {
   const intl = useIntl();
@@ -71,12 +72,12 @@ const CenterDetailsContent = ({ isEdit }) => {
             isRequired
             label={intl.formatMessage({ id: "label.centreStartTime" })}
             onChange={(momentValue, timeString) => {
-              handleInputChange(momentValue?.toISOString(), "centreStartTime");
+              handleInputChange(momentValue, "centreStartTime");
             }}
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreStartTime",
             })}
-            value={moment(formData?.centreStartTime)}
+            value={dayjs(formData?.centreStartTime)}
             disabled={!isEdit}
           />
           <CustomDateTimePicker
@@ -86,12 +87,12 @@ const CenterDetailsContent = ({ isEdit }) => {
             isRequired
             label={intl.formatMessage({ id: "label.centreEndTime" })}
             onChange={(momentValue, timeString) => {
-              handleInputChange(momentValue?.toISOString(), "centreEndTime");
+              handleInputChange(momentValue, "centreEndTime");
             }}
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreEndTime",
             })}
-            value={moment(formData.centreEndTime)}
+            value={dayjs(formData.centreEndTime)}
             disabled={!isEdit}
           />
         </div>
