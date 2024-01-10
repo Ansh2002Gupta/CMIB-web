@@ -8,6 +8,27 @@ export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   return moment(new Date()).format(dateFormat);
 };
 
+export const convertStringArrayToObjectOfStringAndIdArray = (
+  stringArray,
+  arrayOfObjectWithTextAndId
+) => {
+  const data = [];
+  for (let i = 0; i < stringArray.length; i++) {
+    for (let j = 0; j < arrayOfObjectWithTextAndId.length; j++) {
+      if (typeof stringArray[i] === "object") {
+        data.push(stringArray[i]);
+        break;
+      } else if (
+        stringArray[i]?.toLowerCase() ===
+        arrayOfObjectWithTextAndId[j].text?.toLowerCase()
+      ) {
+        data.push(arrayOfObjectWithTextAndId[j]);
+      }
+    }
+  }
+  return data;
+};
+
 export function getValidPageNumber(currentPageNumber) {
   let validCurrentPage = +currentPageNumber;
   if (!validCurrentPage || isNaN(validCurrentPage) || validCurrentPage <= 0) {

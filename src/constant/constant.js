@@ -86,32 +86,55 @@ export const NOTIFICATION_TYPES = {
 export const ADD_NEW_USER_ACCESS_OPTIONS = [
   {
     id: 1,
-    heading: "Placements",
+    heading: "Controls",
     options: [
-      "All",
-      "NQCA-Placement",
-      "Overseas-Placement",
-      "Career-Ascent",
-      "Women-Placement",
+      { text: "Bulk notification", id: 7 },
+      { text: "User Management", id: 8 },
+      { text: "Ticket Management", id: 9 },
+      { text: "Query Management", id: 10 },
+      { text: "Testimonial Management", id: 11 },
+      { text: "Registered Companies", id: 12 },
     ],
+    allOptionIds: [7, 8, 9, 10, 11, 12],
   },
   {
     id: 2,
     heading: "CA-Jobs",
-    options: ["Ca-jobs"],
+    options: [{ text: "Ca-jobs", id: 2 }],
+    allOptionIds: [2],
   },
   {
     id: 3,
-    heading: "Controls",
+    heading: "Placements",
     options: [
-      "AlL",
-      "Bulk notification",
-      "User Management",
-      "Ticket Management",
-      "Query Management",
-      "Testimonial Management",
-      "Registered Companies",
+      { text: "NQCA-Placement", id: 3 },
+      { text: "Overseas-Placement", id: 4 },
+      { text: "Career-Ascent", id: 5 },
+      { text: "Women-Placement", id: 6 },
     ],
+    allOptionIds: [3, 4, 5, 6],
+  },
+];
+
+export const allAccessIdObject = [
+  { text: "Bulk notification", id: 7 },
+  { text: "User Management", id: 8 },
+  { text: "Ticket Management", id: 9 },
+  { text: "Query Management", id: 10 },
+  { text: "Testimonial Management", id: 11 },
+  { text: "Registered Companies", id: 12 },
+  { text: "NQCA-Placement", id: 3 },
+  { text: "Overseas-Placement", id: 4 },
+  { text: "Career-Ascent", id: 5 },
+  { text: "Women-Placement", id: 6 },
+  { text: "Ca-jobs", id: 2 },
+  { text: "Control", id: 1 },
+];
+
+export const ALLOWED_MOBILE_PREFIXES = [
+  {
+    value: "91",
+    label: "+91",
   },
 ];
 
@@ -120,7 +143,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
 };
 
-//TODO:need to implement it using api
+//TODO:need to implement it using api 
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
   { id: 102, label: "November 2025", value: "November 2025" },

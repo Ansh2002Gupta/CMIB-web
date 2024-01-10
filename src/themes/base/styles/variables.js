@@ -122,6 +122,10 @@ const variables = {
   height_24: "24px",
   height_20: "20px",
   height_50vh: "50vh",
+  height_30vh: "30vh",
+
+  // Distance for top, left, bottom and right
+  distance_85: "85px",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,

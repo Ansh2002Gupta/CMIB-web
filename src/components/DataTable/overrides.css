@@ -23,3 +23,8 @@ iframe#webpack-dev-server-client-overlay {
 .ant-table-wrapper td.ant-table-column-sort {
   background-color: #ffffff !important;
 }
+
+
+.ant-table-body {
+  overflow: auto !important;
+}

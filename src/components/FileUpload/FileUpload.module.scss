@@ -84,4 +84,9 @@
   .uploadContainer {
     width: var(--fullWidth);
   }
+  .uploadHeadingContainer{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
