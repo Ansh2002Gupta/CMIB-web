@@ -20,7 +20,11 @@ const ConfigureCentreContent = ({ intl, getImage }) => {
   const [pageSize, setPageSize] = useState(10);
 
   const goToEditCentrePage = (rowData) => {
-    navigate(`/view-centre-details?centreId=${rowData?.centreId}&edit=${true}`);
+    navigate(
+      `/view-centre-details?centreId=${rowData?.centreId}&mode=${
+        isEdit ? "edit" : "view"
+      }`
+    );
   };
 
   const onHandleCentreStatus = (data) => {
@@ -37,12 +41,12 @@ const ConfigureCentreContent = ({ intl, getImage }) => {
     setCurrentTableData(updatedData);
   };
 
-  const updateTableData = (currentPageNumber, currentPageSize) =>{
+  const updateTableData = (currentPageNumber, currentPageSize) => {
     const startIndex = (currentPageNumber - 1) * currentPageSize;
     const endIndex = currentPageNumber * currentPageSize;
     const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
-  }
+  };
 
   const onChangePageSize = (size) => {
     //NOTE: if you want to do anything on changing of page size please consider doing it here
