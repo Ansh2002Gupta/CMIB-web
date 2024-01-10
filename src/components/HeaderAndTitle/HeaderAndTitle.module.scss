@@ -18,3 +18,9 @@
   color: var(--subHeadingColor);
   font-style: italic;
 }
+
+@media screen and (max-width: 767px) {
+  .headingText {
+    font-size: var(--fontSizeXlargeMedium);
+  }
+}
