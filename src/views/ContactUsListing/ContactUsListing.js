@@ -8,13 +8,12 @@ import ContactUsListingHeader from "../../containers/ContactUsListingHeader";
 import useQueriesListingApi from "../../services/api-services/Queries/useQueriesListingApi";
 import useTicketListingApi from "../../services/api-services/Tickets/useTicketsListingApi";
 import {
+  ACTIVE_TAB,
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
   VALID_CONTACT_US_TABS_ID,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
-
-const ACTIVE_TAB = "activeTab";
 
 const ContactUsListing = () => {
   const [searchParams] = useSearchParams();
@@ -109,7 +108,6 @@ const ContactUsListing = () => {
         <ContactUsListingContent
           {...{
             currentActiveTab,
-            setCurrentActiveTab,
             setCurrent,
             setPageSize,
             current,

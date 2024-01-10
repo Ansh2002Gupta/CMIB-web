@@ -4,29 +4,34 @@
   font-weight: var(--fontWeightBold);
 }
 .textEllipsis {
-  max-width: 200px;
+  max-width: var(--width_200);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 .filterAndTableContainer {
   background-color: var(--blueBg);
-  width: 100%;
+  width: var(--fullWidth);
   display: flex;
   flex-direction: column;
   gap: var(--gapSmall);
   padding: var(--paddingMedium);
   flex: 1;
 }
+.tableContainer {
+  border-radius: var(--radiusXLgMedium) !important;
+  overflow: hidden !important;
+  border: var(--borderLight);
+}
 .searchIcon {
-  width: 30px;
-  height: 30px;
+  width: var(--width_30);
+  height: var(--height_30);
   padding-right: var(--paddingExtraSmall);
-  padding-bottom: 4px;
+  padding-bottom: var(--paddingXXSmall);
 }
 .searchBar {
-  width: 30%;
-  min-height: 44px;
+  width: var(--width_30Per);
+  min-height: var(--minBtnHeight);
   border-radius: var(--radiusXLg);
   input {
     color: var(--inputText) !important;
@@ -38,8 +43,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
-  width: 100%;
+  height: var(--height_50vh);
+  width: var(--fullWidth);
 }
 .searchBarContainer {
   display: flex;
@@ -48,8 +53,8 @@
   position: relative;
 }
 .errorContainer {
-  width: 100%;
-  height: 100%;
+  width: var(--fullWidth);
+  height: var(--fullHeight);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,7 +65,7 @@
   justify-content: center;
   align-items: center;
   border-radius: var(--radiusXLg);
-  padding: 2px 8px;
+  padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
 }
 
 .statusContainer_success {
@@ -92,7 +97,7 @@
   font-weight: var(--fontWeightMedium);
 }
 .alertBox {
-  max-width: 300px;
+  max-width: var(--width_300);
   font-weight: var(--fontWeightBold);
 }
 .errorTextContainer {
@@ -116,7 +121,7 @@ input::placeholder {
 }
 @media screen and (max-width: 1023px) {
   .searchBar {
-    width: 50%;
+    width: var(--halfWidth);
   }
 }
 @media screen and (max-width: 511px) {
@@ -124,11 +129,11 @@ input::placeholder {
     flex-direction: column;
   }
   .searchBar {
-    width: 100%;
-    min-height: 50px;
+    width: var(--fullWidth);
+    min-height: var(--height_50);
   }
   .filterBtn {
-    max-width: 100px;
+    max-width: var(--width_100);
     align-self: flex-end;
   }
 }

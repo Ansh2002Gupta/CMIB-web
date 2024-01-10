@@ -5,8 +5,8 @@
   flex-direction: column;
   gap: var(--gapLarge);
   border-radius: var(--radiusXLg);
-  width: 35vw;
-  max-width: 500px;
+  width: var(--widthViewPort_35);
+  max-width: var(--width_500);
   border: var(--borderLight);
 }
 
@@ -17,8 +17,8 @@
 }
 
 .errorIcon {
-  width: 48px;
-  height: 48px;
+  width: var(--width_48);
+  height: var(--height_48);
 }
 
 .headingAndSubHeadingContainer {
@@ -62,7 +62,7 @@
 
 @media screen and (max-width: 767px) {
   .btn {
-    min-height: 32px;
+    min-height: var(--width_32);
     font-size: var(--fontSizeExtraSmall);
   }
 
@@ -76,6 +76,6 @@
 
   .container {
     padding: var(--paddingSmall);
-    width: 65vw;
+    width: var(--widthViewPort_65);
   }
 }

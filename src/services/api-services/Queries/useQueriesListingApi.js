@@ -71,15 +71,15 @@ const useQueriesListingApi = () => {
   const isError = queriesFetchingAPIStatus === API_STATUS.ERROR;
 
   return {
-    isSuccess,
+    errorWhileFetchingQueries,
+    fetchQueries,
     isError,
     isFetchingQueries,
-    errorWhileFetchingQueries,
+    isSuccess,
+    metaData,
+    queriesFetchingAPIStatus,
     queriesList,
     setQueriesList,
-    queriesFetchingAPIStatus,
-    fetchQueries,
-    metaData,
   };
 };
 

@@ -88,17 +88,22 @@ const variables = {
   width_30Per: "30%",
   halfWidth: "50%",
   smallWidth: "30px",
+  width_500: "500px",
   width_400: "400px",
   width_350: "350px",
   width_300: "300px",
   width_200: "200px",
   width_120: "120px",
   width_100: "100px",
+  width_48: "48px",
+  width_32: "32px",
   width_30: "30px",
   width_24: "24px",
   width_20: "20px",
   width_80: "80px",
+  widthViewPort_65: "65vw",
   widthHalfViewPort: "50vw",
+  widthViewPort_35: "35vw",
 
   // Heights
   btnHeight: "56px",
@@ -112,6 +117,7 @@ const variables = {
   height_250: "250px",
   height_70: "70px",
   height_50: "50px",
+  height_48: "48px",
   height_30: "30px",
   height_24: "24px",
   height_20: "20px",
@@ -141,6 +147,7 @@ const variables = {
 
   // Padding
   paddingNone: "0px",
+  paddingXXXSmall: "2px",
   paddingXXSmall: "4px",
   paddingExtraSmall: "8px",
   paddingMediumSmall: "12px",

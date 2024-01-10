@@ -1,27 +1,27 @@
 .baseLayout {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: var(--paddingNone);
+    padding-right: var(--paddingNone);
   }
   
   .headerContainer {
     padding: var(--paddingMedium);
-    width: 100%;
+    width: var(--fullWidth);
   }
   
   .btnCustomStyles {
-    padding: var(--paddingSmall) 12px;
+    padding: var(--paddingSmall) var(--paddingMediumSmall);
     border-radius: var(--radiusXLg);
     font-size: var(--fontSizeSmall) !important;
     font-weight: var(--fontWeightMedium) !important;
   }
   
   .btnIconStyles {
-    width: 24px !important;
+    width: var(--width_24) !important;
   }
   
   .filterAndTableContainer {
     background-color: var(--blueBg);
-    width: 100%;
+    width: var(--fullWidth);
     display: flex;
     flex-direction: column;
     gap: var(--gapSmall);
@@ -30,10 +30,10 @@
   }
   
   .searchIcon {
-    width: 30px;
-    height: 30px;
+    width: var(--width_30);
+    height: var(--height_30);
     padding-right: var(--paddingExtraSmall);
-    padding-bottom: 4px;
+    padding-bottom: var(--paddingXXSmall);
   }
   
   .eyeIcon {
@@ -45,8 +45,8 @@
   }
   
   .searchBar {
-    width: 30%;
-    min-height: 44px;
+    width: var(--width_30Per);
+    min-height: var(--minBtnHeight);
     border-radius: var(--radiusXLg);
     input {
       color: var(--inputText) !important;
@@ -75,7 +75,7 @@
   }
   
   .textEllipsis {
-    max-width: 200px;
+    max-width: var(--width_200);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -107,7 +107,7 @@
   
   @media screen and (max-width: 1023px) {
     .searchBar {
-      width: 50%;
+      width: var(--halfWidth);
     }
   }
   
@@ -116,7 +116,7 @@
       font-size: var(--fontSizeXlargeMedium);
     }
     .btnCustomStyles {
-      min-height: 44px;
+      min-height: var(--minBtnHeight);
     }
   }
   
@@ -125,11 +125,11 @@
       flex-direction: column;
     }
     .searchBar {
-      width: 100%;
-      min-height: 50px;
+      width: var(--fullWidth);
+      min-height: var(--height_50);
     }
     .filterBtn {
-      max-width: 100px;
+      max-width: var(--width_100);
       align-self: flex-end;
     }
   }

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import * as _ from "lodash";
 import { Image, Input, Spin } from "antd";
 
@@ -19,10 +19,9 @@ import {
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
   VALID_CONTACT_US_TABS_ID,
+  ACTIVE_TAB,
 } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
-
-const ACTIVE_TAB = "activeTab";
 
 const ContactUsListingContent = ({
   current,
@@ -30,7 +29,6 @@ const ContactUsListingContent = ({
   pageSize,
   queryListingProps,
   setCurrent,
-  setCurrentActiveTab,
   setPageSize,
   ticketListingProps,
 }) => {
@@ -146,7 +144,6 @@ const ContactUsListingContent = ({
         prev.set(ACTIVE_TAB, currentActiveTab);
         return prev;
       });
-      setCurrentActiveTab(currentActiveTab);
     }
   }, [currentActiveTab]);
 
@@ -231,6 +228,7 @@ const ContactUsListingContent = ({
               onChangeCurrentPage,
             }}
             originalData={listItemData || []}
+            customContainerStyles={styles.tableContainer}
           />
         )}
         {isLoading && !error && (
@@ -260,7 +258,6 @@ ContactUsListingContent.defaultProps = {
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
   setCurrent: () => {},
-  setCurrentActiveTab: () => {},
   setPageSize: () => {},
   ticketListingProps: {},
 };
@@ -271,7 +268,6 @@ ContactUsListingContent.propTypes = {
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
   setCurrent: PropTypes.func,
-  setCurrentActiveTab: PropTypes.func,
   setPageSize: PropTypes.func,
   ticketListingProps: PropTypes.object,
 };

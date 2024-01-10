@@ -214,3 +214,5 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const ACTIVE_TAB = "activeTab";

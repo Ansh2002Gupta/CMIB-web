@@ -188,7 +188,11 @@ export const getTicketOrQueryColumn = (
       title: intl.formatMessage({ id: "label.assignedTo" }),
       dataIndex: "assigned_to",
       key: "assigned_to",
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+        isCapitalize: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.createdOn" }),
