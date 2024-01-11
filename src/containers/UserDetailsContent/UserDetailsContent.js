@@ -38,7 +38,7 @@ const UserDetailsContent = ({
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const isSavedBtnDisable =
+  const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
 
   const handleUpdateUserData = () => {
@@ -59,6 +59,7 @@ const UserDetailsContent = ({
         email: userData?.email,
         mobile_number: userData?.mobile,
         role: userData?.access,
+        permissions: userData.permissions,
         is_two_factor: userData?.is_two_factor ? 1 : 0,
       };
       if (userData?.profile_photo) {
@@ -89,6 +90,7 @@ const UserDetailsContent = ({
         mobile_number: userData.mobile,
         created_by: 1, // TODO: Get this id from get-Logged-In-User-details API (once it is integrated)
         role: userData.access,
+        permissions: userData.permissions,
         is_two_factor: userData.is_two_factor ? 1 : 0,
       };
       if (userData?.profile_photo) {
@@ -135,6 +137,7 @@ const UserDetailsContent = ({
                 mobilePrefix={userData?.mobile_prefix}
                 date={userData?.date || new Date().toLocaleDateString()}
                 access={userData?.access}
+                permissions={userData?.permissions}
                 is_two_factor={userData?.is_two_factor}
                 isDateDisable
                 userNameErrorMessage={
@@ -218,7 +221,7 @@ const UserDetailsContent = ({
                   }`,
                 })}
                 onClick={handleOnSubmit}
-                isBtnDisable={isSavedBtnDisable}
+                isBtnDisable={isActionBtnDisable}
               />
             </div>
           )}

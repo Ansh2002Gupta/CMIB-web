@@ -17,13 +17,15 @@ const useAddNewUserApi = () => {
   const addNewUser = async (payload, onSuccessCallback) => {
     const formData = new FormData();
     for (let [key, value] of Object.entries(payload)) {
-      if (key?.toLowerCase() === "role") {
-        value = value.map((item) => item.id);
+      if (
+        key?.toLowerCase() === "role" ||
+        key?.toLowerCase() === "permissions"
+      ) {
         value = value.join(",");
       }
       formData.append(key, value);
     }
-    formData.append("permissions", "1");
+    formData.append("permissions", "1"); // TODO: Please remove this once the ADD NEW USER API is updated.
     try {
       const apiOptions = {
         headers: {

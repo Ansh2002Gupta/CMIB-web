@@ -5,8 +5,8 @@ import { DatePicker, Typography, Descriptions, Switch } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
-import CustomInput from "../../components/CustomInput";
 import CheckBoxList from "../CheckBoxList";
+import CustomInput from "../../components/CustomInput";
 import { ALLOWED_MOBILE_PREFIXES } from "../../constant/constant";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
@@ -23,10 +23,10 @@ const UserInfo = ({
   mobileNo,
   mobilePrefix,
   name,
+  permissions,
   setIsAccessValid,
   shouldShowDatePickerOption,
   updateUserData,
-  userAccessErrorMessage,
   userNameErrorMessage,
 }) => {
   const intl = useIntl();
@@ -147,15 +147,15 @@ const UserInfo = ({
               />
             </div>
             <div className={styles.spanOverAllColumns}>
-              <CheckBoxList {...{ setIsAccessValid }} />
-              {!!userAccessErrorMessage && (
-                <div>
-                  {" "}
-                  <Typography className={styles.errorText}>
-                    * {intl.formatMessage({ id: "label.notValidUserAccess" })}
-                  </Typography>
-                </div>
-              )}
+              <CheckBoxList
+                {...{ setIsAccessValid }}
+                selectedModules={access}
+                setSelectedModules={(value) => updateUserData("access", value)}
+                selectedControls={permissions}
+                setSelectedControls={(value) =>
+                  updateUserData("permissions", value)
+                }
+              />
             </div>
             {shouldShowDatePickerOption && date && (
               <div className={styles.dateContainer}>
@@ -208,10 +208,10 @@ UserInfo.defaultProps = {
   mobileNo: "",
   mobilePrefix: "",
   name: "",
+  permissions: [],
   setIsAccessValid: () => {},
   shouldShowDatePickerOption: true,
   updateUserData: () => {},
-  userAccessErrorMessage: "",
   userNameErrorMessage: "",
 };
 
@@ -225,10 +225,10 @@ UserInfo.propTypes = {
   mobileNo: PropTypes.string,
   mobilePrefix: PropTypes.string,
   name: PropTypes.string,
+  permissions: PropTypes.array,
   setIsAccessValid: () => {},
   shouldShowDatePickerOption: PropTypes.bool,
   updateUserData: PropTypes.func,
-  userAccessErrorMessage: PropTypes.string,
   userNameErrorMessage: PropTypes.string,
 };
 

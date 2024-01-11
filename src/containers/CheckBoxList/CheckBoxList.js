@@ -10,11 +10,15 @@ import { ReactComponent as CheckedBox } from "../../themes/base/assets/images/ch
 import { ReactComponent as UncheckedBox } from "../../themes/base/assets/images/unCheckedBox.svg";
 import styles from "./CheckBoxList.module.scss";
 
-const CheckBoxList = ({ setIsAccessValid }) => {
+const CheckBoxList = ({
+  selectedControls,
+  selectedModules,
+  setIsAccessValid,
+  setSelectedControls,
+  setSelectedModules,
+}) => {
   const intl = useIntl();
-  const [selectedModules, setSelectedModules] = useState([]);
   const [areAllModulesSelected, setAreAllModulesSelected] = useState(false);
-  const [selectedControls, setSelectedControls] = useState([]);
   const [areAllControlsSelected, setAreAllControlsSelected] = useState(false);
   const controlModuleId = useMemo(() => {
     return PERMISION_AND_ROLE?.data?.filter(
@@ -30,7 +34,7 @@ const CheckBoxList = ({ setIsAccessValid }) => {
       setSelectedOptionArray(updatedData);
       return;
     }
-    setSelectedOptionArray((prev) => [...prev, id]);
+    setSelectedOptionArray([...selectedOptionArray, id]);
   };
 
   const handleSelectAll = (
@@ -155,10 +159,18 @@ const CheckBoxList = ({ setIsAccessValid }) => {
 
 CheckBoxList.defaultProps = {
   setIsAccessValid: () => {},
+  selectedControls: [],
+  selectedModules: [],
+  setSelectedControls: () => {},
+  setSelectedModules: () => {},
 };
 
 CheckBoxList.propTypes = {
-  CheckBoxList: PropTypes.func,
+  setIsAccessValid: PropTypes.func,
+  selectedControls: PropTypes.array,
+  selectedModules: PropTypes.array,
+  setSelectedControls: PropTypes.func,
+  setSelectedModules: PropTypes.func,
 };
 
 export default CheckBoxList;

@@ -33,6 +33,7 @@ const UserDetails = () => {
     profile_photo: null,
     profile_photo_url: "",
     access: [],
+    permissions: [],
     date: "",
     is_two_factor: false,
     status: 0,
