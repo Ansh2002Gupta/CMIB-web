@@ -17,7 +17,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: var(--paddingMedium);
+  overflow: hidden;
   min-height: 250px;
 }
 
@@ -39,6 +39,8 @@
   justify-content: center;
   align-items: center;
   gap: var(--gapMedium);
+  width: var(--fullWidth);
+  height: var(--fullHeight);
   cursor: pointer;
 }
 
@@ -84,7 +86,7 @@
   .uploadContainer {
     width: var(--fullWidth);
   }
-  .uploadHeadingContainer{
+  .uploadHeadingContainer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
