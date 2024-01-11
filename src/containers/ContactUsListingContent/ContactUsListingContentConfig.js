@@ -18,7 +18,7 @@ export const getTicketOrQueryColumn = (
   navigate,
   renderColumn
 ) => {
-  if (type === 2) {
+  if (type === '2') {
     return [
       renderColumn({
         title: intl.formatMessage({ id: "label.queriesId" }),

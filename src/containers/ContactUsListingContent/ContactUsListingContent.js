@@ -62,7 +62,7 @@ const ContactUsListingContent = ({
 
   const isLoading = isFetchingQueries || isFetchingTickets;
   const error = errorWhileFetchingQueries || errorWhileFetchingTickets;
-  const listItemData = currentActiveTab === 1 ? ticketList : queriesList;
+  const listItemData = currentActiveTab === "1" ? ticketList : queriesList;
   const isSuccessfullyFetched =
     areTicketsFetchedSuccesfully || areQueriesFetchedSuccessfully;
   const columns = getTicketOrQueryColumn(
@@ -74,8 +74,8 @@ const ContactUsListingContent = ({
   );
 
   const fetchItems = (currentPageSize, currentPage, str) => {
-    currentActiveTab === 1 && fetchTickets(currentPageSize, currentPage, str);
-    currentActiveTab === 2 && fetchQueries(currentPageSize, currentPage, str);
+    currentActiveTab === "1" && fetchTickets(currentPageSize, currentPage, str);
+    currentActiveTab === "2" && fetchQueries(currentPageSize, currentPage, str);
   };
 
   const debounceSearch = useMemo(() => _.debounce(fetchItems, 300), []);
@@ -86,7 +86,7 @@ const ContactUsListingContent = ({
   };
 
   const onChangePageSize = (size) => {
-    setPageSize(Number(size));
+    setPageSize(size);
     setCurrent(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
@@ -128,29 +128,11 @@ const ContactUsListingContent = ({
     }
   }, []);
 
-  useEffect(() => {
-    const currentTab = +searchParams.get(ACTIVE_TAB);
-    if (
-      !currentTab ||
-      isNaN(currentTab) ||
-      !VALID_CONTACT_US_TABS_ID.includes(currentTab)
-    ) {
-      setSearchParams((prev) => {
-        prev.set(ACTIVE_TAB, 1);
-        return prev;
-      });
-    } else {
-      setSearchParams((prev) => {
-        prev.set(ACTIVE_TAB, currentActiveTab);
-        return prev;
-      });
-    }
-  }, [currentActiveTab]);
 
   useEffect(() => {
     if (queriesMetaData?.total || ticketsMetaData?.total) {
-      currentActiveTab === 1 && setCurrentDataLength(+ticketsMetaData?.total);
-      currentActiveTab === 2 && setCurrentDataLength(+queriesMetaData?.total);
+      currentActiveTab === "1" && setCurrentDataLength(+ticketsMetaData?.total);
+      currentActiveTab === "2" && setCurrentDataLength(+queriesMetaData?.total);
     }
 
     if (queriesMetaData?.total) {
@@ -254,7 +236,7 @@ const ContactUsListingContent = ({
 
 ContactUsListingContent.defaultProps = {
   current: 1,
-  currentActiveTab: 1,
+  currentActiveTab: "1",
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
   setCurrent: () => {},
@@ -264,7 +246,7 @@ ContactUsListingContent.defaultProps = {
 
 ContactUsListingContent.propTypes = {
   current: PropTypes.number,
-  currentActiveTab: PropTypes.number,
+  currentActiveTab: PropTypes.string,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
   setCurrent: PropTypes.func,

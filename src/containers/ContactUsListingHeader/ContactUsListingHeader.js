@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -6,7 +6,9 @@ import { Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
+import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import {
+  ACTIVE_TAB,
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
 } from "../../constant/constant";
@@ -27,8 +29,8 @@ const ContactUsListingHeader = ({
   const { fetchQueries } = queryListingProps;
 
   const fetchItems = (tabId, pageSize, current) => {
-    tabId === 1 && fetchTickets(pageSize, current);
-    tabId === 2 && fetchQueries(pageSize, current);
+    tabId === "1" && fetchTickets(pageSize, current);
+    tabId === "2" && fetchQueries(pageSize, current);
   };
 
   const setPageSizeAndNumberToDefault = () => {
@@ -41,11 +43,25 @@ const ContactUsListingHeader = ({
     setPageSize(DEFAULT_PAGE_SIZE);
   };
 
-  const handleOnTabSwitch = (tabId) => {
+  const handleOnTabSwitch = useCallback((tabId) => {
     setPageSizeAndNumberToDefault();
     setCurrentActiveTab(tabId);
     fetchItems(tabId, DEFAULT_PAGE_SIZE, 1);
-  };
+  }, []);
+
+  const tabItems = useMemo(
+    () => [
+      {
+        key: "1",
+        title: intl.formatMessage({ id: "label.tickets" }),
+      },
+      {
+        key: "2",
+        title: intl.formatMessage({ id: "label.queries" }),
+      },
+    ],
+    []
+  );
 
   return (
     <TwoRow
@@ -60,51 +76,19 @@ const ContactUsListingHeader = ({
         </div>
       }
       bottomSection={
-        <div className={styles.tabsContainer}>
-          <div
-            className={[
-              styles.box,
-              currentActiveTab === 1 ? styles.activeBox : "",
-            ].join(" ")}
-            onClick={() => handleOnTabSwitch(1)}
-          >
-            <Typography
-              className={[
-                styles.tabsText,
-                currentActiveTab === 1 ? styles.activeText : "",
-              ].join(" ")}
-            >
-              {intl.formatMessage({
-                id: "label.queries",
-              })}
-            </Typography>
-          </div>
-          <div
-            className={[
-              styles.box,
-              currentActiveTab === 2 ? styles.activeBox : "",
-            ].join(" ")}
-            onClick={() => handleOnTabSwitch(2)}
-          >
-            <Typography
-              className={[
-                styles.tabsText,
-                currentActiveTab === 2 ? styles.activeText : "",
-              ].join(" ")}
-            >
-              {intl.formatMessage({
-                id: "label.tickets",
-              })}
-            </Typography>
-          </div>
-        </div>
+        <CustomTabs
+          tabs={tabItems}
+          activeTab={currentActiveTab}
+          setActiveTab={handleOnTabSwitch}
+          tabsKeyText={ACTIVE_TAB}
+        />
       }
     />
   );
 };
 
 ContactUsListingHeader.defaultProps = {
-  currentActiveTab: 1,
+  currentActiveTab: "1",
   queryListingProps: {},
   setCurrent: () => {},
   setCurrentActiveTab: () => {},
@@ -113,7 +97,7 @@ ContactUsListingHeader.defaultProps = {
 };
 
 ContactUsListingHeader.propTypes = {
-  currentActiveTab: PropTypes.number,
+  currentActiveTab: PropTypes.string,
   queryListingProps: PropTypes.object,
   setCurrent: PropTypes.func,
   setCurrentActiveTab: PropTypes.func,

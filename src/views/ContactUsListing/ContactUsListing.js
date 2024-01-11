@@ -42,7 +42,7 @@ const ContactUsListing = () => {
   } = useTicketListingApi();
 
   function getCurrentActiveTab() {
-    let validCurrentActiveTab = +searchParams.get(ACTIVE_TAB);
+    let validCurrentActiveTab = searchParams.get(ACTIVE_TAB);
     if (
       isNaN(validCurrentActiveTab) ||
       !VALID_CONTACT_US_TABS_ID.includes(validCurrentActiveTab)

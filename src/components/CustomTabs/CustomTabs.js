@@ -5,8 +5,16 @@ import { Typography } from "antd";
 
 import styles from "./CustomTabs.module.scss";
 
-const CustomTabs = ({ activeTab, setActiveTab, tabs }) => {
+const CustomTabs = ({
+  activeTab,
+  setActiveTab,
+  tabs,
+  tabsKeyText,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const tabsKeyName = tabsKeyText || "tab";
+
   const tabClass = (tabKey) => {
     let classes = `${styles.tab}`;
     if (activeTab === tabKey) classes += ` ${styles.active}`;
@@ -16,19 +24,19 @@ const CustomTabs = ({ activeTab, setActiveTab, tabs }) => {
   const handleSelectTab = (tabName) => {
     setActiveTab(tabName);
     setSearchParams((params) => {
-      params.set("tab", tabName);
+      params.set(tabsKeyName, tabName);
       return params;
     });
   };
 
   useEffect(() => {
-    const tabQueryParam = searchParams.get("tab");
+    let tabQueryParam = searchParams.get(tabsKeyName);
     if (tabs.some((tab) => tab.key === tabQueryParam)) {
       setActiveTab(tabQueryParam);
     } else {
       setActiveTab(tabs[0].key);
       setSearchParams((params) => {
-        params.set("tab", tabs[0].key);
+        params.set(tabsKeyName, tabs[0].key);
         return params;
       });
     }
@@ -55,12 +63,14 @@ CustomTabs.defaultProps = {
   activeTab: "",
   setActiveTab: () => {},
   tabs: [],
+  tabsKeyText: "",
 };
 
 CustomTabs.propTypes = {
   activeTab: PropTypes.string,
   setActiveTab: PropTypes.func,
   tabs: PropTypes.array,
+  tabsKeyText: PropTypes.string,
 };
 
 export default CustomTabs;
