@@ -174,9 +174,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             customLabelStyles={styles.inputLabel}
                             customInputStyles={styles.input}
                             customContainerStyles={styles.customContainerStyles}
-                            onChange={(val) => {
-                              handleInputChange(val.target.value, item.label);
-                            }}
+                            onChange={(val) => handleInputChange(val.target.value, item.label)}
                             placeholder={intl.formatMessage({
                               id: `session.placeholder.${item.headingIntl}`,
                             })}

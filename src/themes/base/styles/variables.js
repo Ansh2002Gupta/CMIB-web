@@ -119,6 +119,7 @@ const variables = {
   height_50: "50px",
   height_48: "48px",
   height_30: "30px",
+  height_44: "44px",
   height_24: "24px",
   height_20: "20px",
   height_50vh: "50vh",
@@ -177,6 +178,7 @@ const variables = {
   gapXXSmall: "4px",
 
   // margin
+  marginLarge: "24px",
   marginMedium: "16px",
   marginSmall: "8px",
 
