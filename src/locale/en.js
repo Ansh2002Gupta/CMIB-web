@@ -231,6 +231,11 @@ const locale = {
   "label.placeholder.companyEndDate": "Select Company end Date",
   "label.placeholder.consentFromDate": "Select From Date for Candidate",
   "label.placeholder.consentToDate": "Select To Date for Candidate",
+  "label.lastRegistrationDate": "Last date of registration for companies",
+  "label.psychometricTestDate": "psychometric test/written test date",
+  "label.placeholder.lastRegistrationDate": "Select Last Date for registration",
+  "label.placeholder.psychometricTestDate":
+    "Select To Date for psychometric test",
 };
 
 export default locale;

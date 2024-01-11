@@ -11,7 +11,10 @@ import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
 import ConsentTable from "../ConsentTable";
-import { CONSENT_MARKING_REGESTRATION_DETAILS } from "../../dummyData";
+import {
+  CONSENT_MARKING_REGESTRATION_DETAILS,
+  LAST_MARKING_REGESTRATION_DETAILS,
+} from "../../dummyData";
 import { SESSION } from "../../routes/routeNames";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./ConsentMarkingContent.styles";
@@ -32,12 +35,32 @@ const ConsentMarkingContent = ({ isEdit }) => {
     ...item,
     sNo: item.sNo,
     centreName: item.centreName,
-    companyStartDate: dayjs(item.companyStartDate),
-    companyEndDate: dayjs(item.companyEndDate),
-    consentFromDate: dayjs(item.consentFromDate),
-    consentToDate: dayjs(item.consentToDate),
+    companyStartDate: item.companyStartDate
+      ? dayjs(item.companyStartDate)
+      : null,
+    companyEndDate: item.companyEndDate ? dayjs(item.companyEndDate) : null,
+    consentFromDate: item.consentFromDate ? dayjs(item.consentFromDate) : null,
+    consentToDate: item.consentToDate ? dayjs(item.consentToDate) : null,
   }));
+
+  const registrationInitialData = LAST_MARKING_REGESTRATION_DETAILS.map(
+    (item) => ({
+      ...item,
+      sNo: item.sNo,
+      centreName: item.centreName,
+      lastRegistrationDate: item.lastRegistrationDate
+        ? dayjs(item.lastRegistrationDate)
+        : null,
+      psychometricTestDate: item.psychometricTestDate
+        ? dayjs(item.psychometricTestDate)
+        : null,
+    })
+  );
+
   const [tableData, setTableData] = useState(initialData);
+  const [registrationTableData, setRegistrationTableData] = useState(
+    registrationInitialData
+  );
 
   const RegistrationDates = [
     { id: 1, labeIntl: "startDateCompanies" },
@@ -62,7 +85,13 @@ const ConsentMarkingContent = ({ isEdit }) => {
       title: intl.formatMessage({
         id: "session.lastDateRegistrationCompanies",
       }),
-      children: <>Last date of registration for companies</>,
+      children: (
+        <ConsentTable
+          {...{ isEdit, registration: true, tableData, setTableData }}
+          tableData={registrationTableData}
+          setTableData={setRegistrationTableData}
+        />
+      ),
     },
   ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
@@ -111,7 +140,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
                     : null
                 }
                 onChange={(val) => {
-                  handleInputChange(item?.labeIntl, val);
+                  handleInputChange(val, item?.labeIntl);
                 }}
               />
             );

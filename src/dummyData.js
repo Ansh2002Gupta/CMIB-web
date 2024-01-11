@@ -367,7 +367,7 @@ export const INITIAL_CENTRE_DETAILS = {
   centreName: "",
   centreId: "",
   status: true,
-}
+};
 
 export const SETUP_CENTRE_DETAILS = [
   {
@@ -505,5 +505,74 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     companyEndDate: "2023-12-19T05:11:46.000000Z",
     consentFromDate: "2023-12-19T05:11:46.000000Z",
     consentToDate: "2023-12-19T05:11:46.000000Z",
+  },
+];
+
+export const LAST_MARKING_REGESTRATION_DETAILS = [
+  {
+    sNo: "1",
+    centreName: "Ghaziabad-I",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "2",
+    centreName: "Ghaziabad-II",
+    lastRegistrationDate: null,
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "3",
+    centreName: "Meerut-I",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "4",
+    centreName: "Meerut-II",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "5",
+    centreName: "Delhi-I",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "6",
+    centreName: "Delhi-II",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "7",
+    centreName: "Ahmedabad-I",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "8",
+    centreName: "Ahmedabad-II",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "9",
+    centreName: "Akola-I",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "10",
+    centreName: "Akola-II",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "11",
+    centreName: "Akola-III",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
 ];
