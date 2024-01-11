@@ -212,34 +212,8 @@ const config = [
         viewPath: "",
         element: <ContactUsListing />,
       },
-    ],
-  },
-  {
-    pagePath: QUERY_DETAILS,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
       {
-        viewPath: "",
-        element: <QueryDetails />,
-      },
-    ],
-  },
-  {
-    pagePath: CONTACT_US,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
-      {
-        viewPath: "",
-        element: <ContactUsListing />,
-      },
-    ],
-  },
-  {
-    pagePath: QUERY_DETAILS,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
-      {
-        viewPath: "",
+        viewPath: QUERY_DETAILS,
         element: <QueryDetails />,
       },
     ],
