@@ -64,7 +64,7 @@ const locale = {
   "label.dateCreatedOn": "Date Created On",
   "label.clearAll": "Clear all",
   "label.cancel": "Cancel",
-  "label.rowPerPage": "Row per page",
+  "label.rowPerPage": "Rows per page",
   "label.searchResult": "Search result",
   "label.next": "Next",
   "label.previous": "Previous",
