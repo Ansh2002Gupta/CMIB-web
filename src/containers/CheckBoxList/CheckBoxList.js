@@ -68,6 +68,7 @@ const CheckBoxList = ({
     if (selectedModules.includes(controlModuleId)) {
       setIsAccessValid(!!selectedControls?.length);
     } else {
+      setSelectedControls([]);
       setIsAccessValid(!!selectedModules?.length);
     }
   }, [selectedModules?.length, selectedControls?.length]);

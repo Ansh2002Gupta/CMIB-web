@@ -200,31 +200,33 @@ const UserDetailsContent = ({
         </>
       }
       bottomSectionStyle={classes.bottomSectionStyles}
-      isBottomFillSpace
+      isTopFillSpace
       bottomSection={
         <>
-          {currentFormState !== FORM_STATES.VIEW_ONLY && !isLoading && (
-            <div className={styles.saveAndCancelBtnContainer}>
-              <Button
-                className={styles.cancelBtn}
-                onClick={goBackToViewDetailsPage}
-              >
-                {intl.formatMessage({ id: "label.cancel" })}
-              </Button>
-              <CustomButton
-                customStyle={styles.saveBtn}
-                btnText={intl.formatMessage({
-                  id: `label.${
-                    currentFormState === FORM_STATES.EDITABLE
-                      ? "saveChanges"
-                      : "add"
-                  }`,
-                })}
-                onClick={handleOnSubmit}
-                isBtnDisable={isActionBtnDisable}
-              />
-            </div>
-          )}
+          {currentFormState !== FORM_STATES.VIEW_ONLY &&
+            !isLoading &&
+            !errorWhileGettingUsersData && (
+              <div className={styles.saveAndCancelBtnContainer}>
+                <Button
+                  className={styles.cancelBtn}
+                  onClick={goBackToViewDetailsPage}
+                >
+                  {intl.formatMessage({ id: "label.cancel" })}
+                </Button>
+                <CustomButton
+                  customStyle={styles.saveBtn}
+                  btnText={intl.formatMessage({
+                    id: `label.${
+                      currentFormState === FORM_STATES.EDITABLE
+                        ? "saveChanges"
+                        : "add"
+                    }`,
+                  })}
+                  onClick={handleOnSubmit}
+                  isBtnDisable={isActionBtnDisable}
+                />
+              </div>
+            )}
         </>
       }
     />
