@@ -14,4 +14,5 @@ export const SESSION = "/session";
 export const ROUTE = "/configurations";
 export const SETUP_CENTERS = "setup-centers";
 export const CONSENT_MARKING = "consent-marking";
+export const ADD = "add";
 export const SETUP_CENTERS_DETAILS = "/details/:centreId";

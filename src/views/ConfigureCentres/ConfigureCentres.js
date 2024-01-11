@@ -1,6 +1,4 @@
-import React, { useContext } from "react";
-import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
+import React from "react";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
@@ -9,16 +7,12 @@ import ConfigureCentreHeader from "../../containers/ConfigureCentre/ConfigureCen
 import styles from "./ConfigureCentres.module.scss";
 
 const ConfigureCentres = () => {
-  const intl = useIntl();
-
-  const { getImage } = useContext(ThemeContext);
-
   return (
     <TwoRow
       isBottomFillSpace
       className={styles.baseLayout}
-      topSection={<ConfigureCentreHeader intl={intl} getImage={getImage} />}
-      bottomSection={<ConfigureCentreContent intl={intl} getImage={getImage} />}
+      topSection={<ConfigureCentreHeader headingLabel="configureCentres" showButton={true}/>}
+      bottomSection={<ConfigureCentreContent />}
     />
   );
 };
