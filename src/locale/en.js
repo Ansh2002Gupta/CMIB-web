@@ -198,6 +198,8 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.controlAccessHeading": " Control Access *",
+  "label.moduleAccess": "Module Access *",
 };
 
 export default locale;

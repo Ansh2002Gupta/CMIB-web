@@ -1,0 +1,38 @@
+.parentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapMedium);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: var(--gapMedium);
+  column-gap: var(--gapSmall);
+}
+
+.box {
+  display: flex;
+  gap: var(--gapSmall);
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}
+
+@media (max-width: 1023px) {
+  .container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 511px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}

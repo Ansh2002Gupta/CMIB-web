@@ -6,13 +6,8 @@ import { DatePicker, Typography, Descriptions, Switch } from "antd";
 import Base from "../../core/layouts/Base/Base";
 
 import CustomInput from "../../components/CustomInput";
-import CustomMultiSelect from "../../components/CustomMultiSelect";
-import {
-  ADD_NEW_USER_ACCESS_OPTIONS,
-  ALLOWED_MOBILE_PREFIXES,
-  allAccessIdObject,
-} from "../../constant/constant";
-import { convertStringArrayToObjectOfStringAndIdArray } from "../../constant/utils";
+import CheckBoxList from "../CheckBoxList";
+import { ALLOWED_MOBILE_PREFIXES } from "../../constant/constant";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
@@ -28,6 +23,7 @@ const UserInfo = ({
   mobileNo,
   mobilePrefix,
   name,
+  setIsAccessValid,
   shouldShowDatePickerOption,
   updateUserData,
   userAccessErrorMessage,
@@ -151,14 +147,7 @@ const UserInfo = ({
               />
             </div>
             <div className={styles.spanOverAllColumns}>
-              <CustomMultiSelect
-                optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
-                selectedOptions={convertStringArrayToObjectOfStringAndIdArray(
-                  access,
-                  allAccessIdObject
-                )}
-                setSelectedOptions={(value) => updateUserData("access", value)}
-              />
+              <CheckBoxList {...{ setIsAccessValid }} />
               {!!userAccessErrorMessage && (
                 <div>
                   {" "}
@@ -219,6 +208,7 @@ UserInfo.defaultProps = {
   mobileNo: "",
   mobilePrefix: "",
   name: "",
+  setIsAccessValid: () => {},
   shouldShowDatePickerOption: true,
   updateUserData: () => {},
   userAccessErrorMessage: "",
@@ -235,6 +225,7 @@ UserInfo.propTypes = {
   mobileNo: PropTypes.string,
   mobilePrefix: PropTypes.string,
   name: PropTypes.string,
+  setIsAccessValid: () => {},
   shouldShowDatePickerOption: PropTypes.bool,
   updateUserData: PropTypes.func,
   userAccessErrorMessage: PropTypes.string,

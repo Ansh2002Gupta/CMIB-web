@@ -39,10 +39,7 @@ const UserDetailsContent = ({
   const { navigateScreen: navigate } = useNavigateScreen();
 
   const isSavedBtnDisable =
-    !userData?.name ||
-    !userData?.email ||
-    !userData?.mobile ||
-    !userData?.access?.length;
+    !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
 
   const handleUpdateUserData = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
@@ -131,7 +128,7 @@ const UserDetailsContent = ({
                     : ""
                 }
                 isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
-                {...{ updateUserData }}
+                {...{ updateUserData, setIsAccessValid }}
                 name={userData?.name}
                 email={userData?.email}
                 mobileNo={userData?.mobile}
