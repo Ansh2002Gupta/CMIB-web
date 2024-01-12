@@ -1,0 +1,108 @@
+.topSectionWithFRN {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--gapSmall);
+}
+
+.bottomSection {
+    padding: var(--paddingMediumSmall);
+}
+
+.customStyles {
+    justify-content: space-between;
+    font-size: var(--fontSizeXlargeMedium);
+}
+
+.buttonStyles {
+    padding: 0px var(--paddingExtraSmall);
+    font-size: var(--fontSizeSmall);
+}
+
+.headerRightSection {
+    display: flex;
+    align-items: center;
+    gap: var(--gapMedium);
+}
+
+.statusContainer {
+    gap: var(--gapXSmall);
+    align-items: center;
+}
+
+.textStyle {
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--bodyBg);
+}
+
+.blackText {
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--textBold);
+}
+
+.blackBoldText {
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightBold);
+    color: var(--textBold);
+}
+
+.btnIconStyles {
+    width: 24px !important;
+}
+
+.grayText {
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--darkGrey1);
+}
+
+.greyBtnCustomStyles {
+    padding: var(--paddingSmall) var(--paddingMediumSmall);
+    border-radius: var(--radiusXLg);
+    border: var(--borderLight);
+    font-size: var(--fontSizeSmall) !important;
+    font-weight: var(--fontWeightMedium) !important;
+    background-color: var(--bodyBg) !important;
+    color: var(--textBold);
+    min-width: 20px;
+
+    &:hover {
+        background-color: var(--bodyBg) !important;
+        border: var(--borderLight) !important;
+        color: var(--textBold) !important;
+    }
+}
+
+.greySmallBtnCustomStyles {
+    padding: var(--paddingSmall) var(--paddingMediumSmall);
+    border-radius: var(--radiusXLg);
+    border: var(--borderLight);
+    background-color: var(--bodyBg) !important;
+    min-width: 40px;
+    min-height: 40px;
+
+    &:hover {
+        background-color: var(--bodyBg) !important;
+        border: var(--borderLight) !important;
+    }
+}
+
+@media (max-width: 500px) {
+    .headerRightSection {
+        gap: var(--gapXSmall);
+    }
+
+    .customStyles {
+        font-size: var(--fontSizeXlarge);
+    }
+
+    .statusContainer {
+        gap: var(--gapXXSmall);
+    }
+}

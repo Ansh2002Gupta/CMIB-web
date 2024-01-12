@@ -1,0 +1,12 @@
+.topSectionStyle {
+  padding-top: var(--gapMedium);
+  padding-left: var(--gapMedium);
+  padding-right: var(--gapMedium);
+  border-bottom: var(--borderLight);
+  background-color: var(--bodyBg);
+  gap: var(--gapMedium);
+}
+
+.mainContainer {
+  background-color: var(--blueBg);
+}

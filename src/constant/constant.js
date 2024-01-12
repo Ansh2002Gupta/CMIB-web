@@ -231,6 +231,26 @@ export const ROUND_TWO_CARD_LIST = [
   },
 ];
 
+export const COMPANY_ROUND_ONE = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Billing Info",
+  "Payment",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
+];
+
+export const COMPANY_ROUND_TWO = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
+];
+
 export const CITY_CENTERS = [
   { id: 101, label: "Delhi", value: "Delhi" },
   { id: 102, label: "Mumbai", value: "Mumbai" },

@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.scrollBox::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollBox {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  width: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.arrow {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--blackBg);
+  cursor: pointer;
+}
+
+.arrowOutline {
+  color: white;
+}

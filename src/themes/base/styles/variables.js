@@ -14,6 +14,7 @@ const variables = {
   uploadBg: colorPallets.white1,
   snow: colorPallets.snow,
   lightGreen: colorPallets.lightGreen,
+  blackBg: colorPallets.black1,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -82,6 +83,7 @@ const variables = {
   width_30Per: "30%",
   halfWidth: "50%",
   smallWidth: "30px",
+  xSmallWidth: "16px",
   width_400: "400px",
   width_350: "350px",
   width_300: "300px",
@@ -98,6 +100,7 @@ const variables = {
   btnHeight: "56px",
   minBtnHeight: "45px",
   smallHeight: "30px",
+  xSmallHeight: "16px",
   fullHeight: "100%",
   halfHeight: "50%",
   height_400: "400px",
@@ -167,6 +170,7 @@ const variables = {
   marginLarge: "24px",
   marginMedium: "16px",
   marginSmall: "8px",
+  marginXSmall: "6px",
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };
