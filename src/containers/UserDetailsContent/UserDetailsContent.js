@@ -5,7 +5,7 @@ import { Alert, Button, Spin, Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
-import CustomButton from "../../components/CustomButton";
+import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -91,7 +91,7 @@ const UserDetailsContent = ({
         email: userData.email,
         mobile_number: userData.mobile,
         created_by: 1, // TODO: Get this id from get-Logged-In-User-details API (once it is integrated)
-        role: userData.access,
+        roles: userData.access,
         is_two_factor: userData.is_two_factor ? 1 : 0,
       };
       if (userData?.profile_photo) {
@@ -206,26 +206,19 @@ const UserDetailsContent = ({
           {currentFormState !== FORM_STATES.VIEW_ONLY &&
             !isLoading &&
             !errorWhileGettingUsersData && (
-              <div className={styles.saveAndCancelBtnContainer}>
-                <Button
-                  className={styles.cancelBtn}
-                  onClick={goBackToViewDetailsPage}
-                >
-                  {intl.formatMessage({ id: "label.cancel" })}
-                </Button>
-                <CustomButton
-                  customStyle={styles.saveBtn}
-                  btnText={intl.formatMessage({
-                    id: `label.${
-                      currentFormState === FORM_STATES.EDITABLE
-                        ? "saveChanges"
-                        : "add"
-                    }`,
-                  })}
-                  onClick={handleOnSubmit}
-                  isBtnDisable={isSavedBtnDisable}
-                />
-              </div>
+              <ActionAndCancelButtons
+                cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                actionBtnText={intl.formatMessage({
+                  id: `label.${
+                    currentFormState === FORM_STATES.EDITABLE
+                      ? "saveChanges"
+                      : "add"
+                  }`,
+                })}
+                onActionBtnClick={handleOnSubmit}
+                onCancelBtnClick={goBackToViewDetailsPage}
+                isActionBtnDisable={isSavedBtnDisable}
+              />
             )}
         </>
       }

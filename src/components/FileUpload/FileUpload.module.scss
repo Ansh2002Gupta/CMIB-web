@@ -18,7 +18,7 @@
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  min-height: 250px;
+  min-height: var(--height_250);
 }
 
 .headingText {
