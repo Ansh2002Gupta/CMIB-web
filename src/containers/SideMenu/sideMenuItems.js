@@ -39,7 +39,7 @@ const caJobsMenu = [
   { label: "Subscriptions", key: "subscriptions", icon: <UserOutlined /> },
   {
     label: "Global Configurations",
-    key: "/global-configurations",
+    key: "global-configurations",
     icon: <UserOutlined />,
   },
   { label: "Payments", key: "payments", icon: <UserOutlined /> },
