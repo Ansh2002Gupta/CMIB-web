@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -6,11 +6,11 @@ import { useIntl } from "react-intl";
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 
+import ConsentTable from "../ConsentTable";
 import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
-import ConsentTable from "../ConsentTable";
 import {
   CONSENT_MARKING_REGESTRATION_DETAILS,
   LAST_MARKING_REGESTRATION_DETAILS,
@@ -31,20 +31,24 @@ const ConsentMarkingContent = ({ isEdit }) => {
     lastDateBigCentres: "2023-12-19T05:11:46.000000Z",
     lastDateSmallCentres: "2023-12-19T05:11:46.000000Z",
   });
-  const initialData = CONSENT_MARKING_REGESTRATION_DETAILS.map((item) => ({
-    ...item,
-    sNo: item.sNo,
-    centreName: item.centreName,
-    companyStartDate: item.companyStartDate
-      ? dayjs(item.companyStartDate)
-      : null,
-    companyEndDate: item.companyEndDate ? dayjs(item.companyEndDate) : null,
-    consentFromDate: item.consentFromDate ? dayjs(item.consentFromDate) : null,
-    consentToDate: item.consentToDate ? dayjs(item.consentToDate) : null,
-  }));
+  const initialData = useMemo(() => {
+    return CONSENT_MARKING_REGESTRATION_DETAILS.map((item) => ({
+      ...item,
+      sNo: item.sNo,
+      centreName: item.centreName,
+      companyStartDate: item.companyStartDate
+        ? dayjs(item.companyStartDate)
+        : null,
+      companyEndDate: item.companyEndDate ? dayjs(item.companyEndDate) : null,
+      consentFromDate: item.consentFromDate
+        ? dayjs(item.consentFromDate)
+        : null,
+      consentToDate: item.consentToDate ? dayjs(item.consentToDate) : null,
+    }));
+  }, [CONSENT_MARKING_REGESTRATION_DETAILS]);
 
-  const registrationInitialData = LAST_MARKING_REGESTRATION_DETAILS.map(
-    (item) => ({
+  const registrationInitialData = useMemo(() => {
+    return LAST_MARKING_REGESTRATION_DETAILS.map((item) => ({
       ...item,
       sNo: item.sNo,
       centreName: item.centreName,
@@ -54,8 +58,8 @@ const ConsentMarkingContent = ({ isEdit }) => {
       psychometricTestDate: item.psychometricTestDate
         ? dayjs(item.psychometricTestDate)
         : null,
-    })
-  );
+    }));
+  }, [LAST_MARKING_REGESTRATION_DETAILS]);
 
   const [tableData, setTableData] = useState(initialData);
   const [registrationTableData, setRegistrationTableData] = useState(
@@ -69,31 +73,41 @@ const ConsentMarkingContent = ({ isEdit }) => {
     { id: 4, labeIntl: "lastDateSmallCentres" },
   ];
 
-  const tabItems = [
-    {
-      key: "1",
-      title: intl.formatMessage({ id: "session.roundOne" }),
-      children: <ConsentTable {...{ isEdit, tableData, setTableData }} />,
-    },
-    {
-      key: "2",
-      title: intl.formatMessage({ id: "session.roundTwo" }),
-      children: <>Round2</>,
-    },
-    {
-      key: "3",
-      title: intl.formatMessage({
-        id: "session.lastDateRegistrationCompanies",
-      }),
-      children: (
-        <ConsentTable
-          {...{ isEdit, registration: true, tableData, setTableData }}
-          tableData={registrationTableData}
-          setTableData={setRegistrationTableData}
-        />
-      ),
-    },
-  ];
+  const tabItems = useMemo(
+    () => [
+      {
+        key: "1",
+        title: intl.formatMessage({ id: "session.roundOne" }),
+        children: <ConsentTable {...{ isEdit, tableData, setTableData }} />,
+      },
+      {
+        key: "2",
+        title: intl.formatMessage({ id: "session.roundTwo" }),
+        children: <>Round2</>,
+      },
+      {
+        key: "3",
+        title: intl.formatMessage({
+          id: "session.lastDateRegistrationCompanies",
+        }),
+        children: (
+          <ConsentTable
+            {...{ isEdit, registration: true, tableData, setTableData }}
+            tableData={registrationTableData}
+            setTableData={setRegistrationTableData}
+          />
+        ),
+      },
+    ],
+    [
+      intl,
+      isEdit,
+      tableData,
+      setTableData,
+      registrationTableData,
+      setRegistrationTableData,
+    ]
+  );
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
   const handleInputChange = (value, name) => {
@@ -104,7 +118,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
   };
 
   const handleCancel = () => {
-    navigate(-2);
+    navigate(`${SESSION}?tab=2`);
   };
 
   const handleSave = () => {
@@ -125,7 +139,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
                 customTimeStyle={styles.customTimeStyle}
                 isEditable={isEdit}
                 type="date"
-                isRequired={true}
+                isRequired
                 label={intl.formatMessage({
                   id: `label.consent.${item?.labeIntl}`,
                 })}
@@ -164,7 +178,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
         />
       }
       bottomSection={
-        isEdit && (
+        isEdit ? (
           <TwoColumn
             className={styles.buttonContainer}
             leftSection={
@@ -192,7 +206,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
               />
             }
           />
-        )
+        ) : null
       }
       bottomSectionStyle={classes.bottomSectionStyle}
     />

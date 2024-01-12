@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
 import { DatePicker, Image, Select, Switch, Typography } from "antd";
 
 import { TwoRow, TwoColumn } from "../../core/layouts";
+import { ThemeContext } from "core/providers/theme";
 import useResponsive from "core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton";
@@ -176,7 +176,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             customLabelStyles={styles.inputLabel}
                             customInputStyles={styles.input}
                             customContainerStyles={styles.customContainerStyles}
-                            onChange={(val) => handleInputChange(val.target.value, item.label)}
+                            onChange={(val) =>
+                              handleInputChange(val.target.value, item.label)
+                            }
                             placeholder={intl.formatMessage({
                               id: `session.placeholder.${item.headingIntl}`,
                             })}

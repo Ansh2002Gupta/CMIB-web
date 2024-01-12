@@ -1,18 +1,16 @@
 .headerContainer {
-  padding: var(--gapMedium);
+  padding: var(--paddingMedium);
   background-color: var(--bodyBg);
   border-bottom: var(--borderLight);
 }
 
 .headingText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeHeading);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
 }
 
 .titleText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);

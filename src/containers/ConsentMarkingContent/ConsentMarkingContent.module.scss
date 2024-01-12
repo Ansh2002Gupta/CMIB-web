@@ -3,7 +3,7 @@
   gap: var(--gapMedium);
 }
 .customTimeStyle {
-  width: 100%;
+  width: var(--fullWidth);
 }
 .customContainerStyles {
   justify-content: space-between;
@@ -43,14 +43,12 @@
 }
 
 .textStyle {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
 }
 
 .saveButtonTextStyles {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--bodyBg);

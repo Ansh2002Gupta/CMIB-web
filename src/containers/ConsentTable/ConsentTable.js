@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Table } from "antd";
 
@@ -174,4 +175,19 @@ const ConsentTable = ({
     />
   );
 };
+
+ConsentTable.defaultProps = {
+  isEdit: false,
+  registration: false,
+  setTableData: () => {},
+  tableData: [],
+};
+
+ConsentTable.propTypes = {
+  isEdit: PropTypes.bool,
+  registration: PropTypes.bool,
+  setTableData: PropTypes.func,
+  tableData: PropTypes.array,
+};
+
 export default ConsentTable;
