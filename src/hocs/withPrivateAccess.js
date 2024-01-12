@@ -4,9 +4,7 @@ import _ from "lodash";
 
 import { getItem } from "../services/encrypted-storage-service";
 import useGetUserDetails from "../services/api-services/UserProfile/useGetUserProfile";
-import { AuthContext } from "../globalContext/auth/authProvider";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
-import { clearAuthAndLogout } from "../globalContext/auth/authActions";
 import CustomLoader from "../components/CustomLoader";
 import { LOGIN } from "../routes/routeNames";
 
@@ -14,7 +12,6 @@ function withPrivateAccess(Component) {
   return (props) => {
     const auth = getItem("authToken");
     const navigate = useNavigate();
-    const [, authDispatch] = useContext(AuthContext);
     const [userProfileDetails] = useContext(UserProfileContext);
     const { getUserDetails } = useGetUserDetails();
 
@@ -28,9 +25,6 @@ function withPrivateAccess(Component) {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth]);
 
-    if (userProfileDetails.errorGettingUserDetails) {
-      authDispatch(clearAuthAndLogout());
-    }
     if (userProfileDetails.isGettingUserDetails) {
       return <CustomLoader />;
     }

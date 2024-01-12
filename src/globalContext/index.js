@@ -2,14 +2,14 @@
 import authProvider from "./auth/authProvider";
 import localeProviders from "./locale/localeProviders";
 import dashboardProvider from "./dashboard/dashboardProvider";
-import UserProfileProvider from "./userProfile/userProfileProvider";
+import userProfileProvider from "./userProfile/userProfileProvider";
 
 // Import other created Providers and add them here -
 const providers = [
   authProvider,
   dashboardProvider,
   localeProviders,
-  UserProfileProvider,
+  userProfileProvider,
 ];
 
 const combineProviders = (components) => {

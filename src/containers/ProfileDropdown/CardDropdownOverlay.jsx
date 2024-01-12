@@ -4,7 +4,7 @@ import { Avatar, Space, Card, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
-
+import useHeader from "../../core/hooks/useHeader";
 import headerActionItems from "../../constants/headerActionItems";
 
 import styles from "./profileDropdown.module.scss";
@@ -13,9 +13,9 @@ export default function CardDropdownOverlay({
   userName,
   userEmail,
   userProfile,
-  onLogout,
 }) {
   const intl = useIntl();
+  const { onLogout } = useHeader();
 
   return (
     <Card

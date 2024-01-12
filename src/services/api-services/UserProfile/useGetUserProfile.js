@@ -8,6 +8,7 @@ import {
   setUserDetails,
 } from "../../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
+import useHeader from "../../../core/hooks/useHeader";
 import {
   ADMIN_ROUTE,
   GET_USER_PROFILE_DETAILS,
@@ -16,6 +17,7 @@ import { STATUS_CODES } from "../../../constant/constant";
 
 const useGetUserDetails = () => {
   const intl = useIntl();
+  const { onLogout } = useHeader();
   const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const getUserDetails = async () => {
@@ -36,11 +38,13 @@ const useGetUserDetails = () => {
           intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
         )
       );
+      onLogout();
     } catch (err) {
       const errorMessage =
         err.response?.data?.message ||
         intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" });
       userProfileDispatch(setErrorGetingUserDetails(errorMessage));
+      onLogout();
     }
   };
   return { getUserDetails };
