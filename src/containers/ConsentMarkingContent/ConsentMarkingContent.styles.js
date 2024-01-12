@@ -8,11 +8,12 @@ export const classes = {
     borderRadius: variables.radiusXLgMedium,
   },
   bottomSectionStyle: { alignSelf: "flex-end" },
-  tabTopSectionStyle: { borderBottom: variables.borderLight },
+  tabTopSectionStyle: {
+    borderBottom: variables.borderLight,
+  },
   tabBottomSectionStyle: {
     border: variables.borderLight,
-    borderRadius: variables.radiusMLg,
-    padding: variables.paddingSmall,
+    borderRadius: variables.radiusLg,
     backgroundColor: variables.bodyBg,
   },
 };

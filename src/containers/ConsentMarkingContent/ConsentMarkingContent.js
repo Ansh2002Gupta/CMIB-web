@@ -78,7 +78,12 @@ const ConsentMarkingContent = ({ isEdit }) => {
       {
         key: "1",
         title: intl.formatMessage({ id: "session.roundOne" }),
-        children: <ConsentTable {...{ isEdit, tableData, setTableData }} />,
+        children: (
+          <ConsentTable
+            {...{ isEdit, tableData, setTableData }}
+            originalData={CONSENT_MARKING_REGESTRATION_DETAILS}
+          />
+        ),
       },
       {
         key: "2",
@@ -95,6 +100,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
             {...{ isEdit, registration: true, tableData, setTableData }}
             tableData={registrationTableData}
             setTableData={setRegistrationTableData}
+            originalData={LAST_MARKING_REGESTRATION_DETAILS}
           />
         ),
       },

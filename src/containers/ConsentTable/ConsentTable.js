@@ -4,11 +4,13 @@ import { useIntl } from "react-intl";
 import { Table } from "antd";
 
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import DataTable from "../../components/DataTable/DataTable";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
 const ConsentTable = ({
   isEdit,
+  originalData,
   registration = false,
   setTableData,
   tableData,
@@ -173,11 +175,23 @@ const ConsentTable = ({
       className={[styles.table, "customConsentTable"]}
       rowKey="id"
     />
+    // <DataTable
+    //   {...{
+    //     columns,
+    //     // current,
+    //     // pageSize,
+    //     // onChangePageSize,
+    //     // onChangeCurrentPage,
+    //   }}
+    //   currentDataLength={tableData.length}
+    //   originalData={tableData}
+    // />
   );
 };
 
 ConsentTable.defaultProps = {
   isEdit: false,
+  originalData: [],
   registration: false,
   setTableData: () => {},
   tableData: [],
@@ -185,6 +199,7 @@ ConsentTable.defaultProps = {
 
 ConsentTable.propTypes = {
   isEdit: PropTypes.bool,
+  originalData: PropTypes.array,
   registration: PropTypes.bool,
   setTableData: PropTypes.func,
   tableData: PropTypes.array,

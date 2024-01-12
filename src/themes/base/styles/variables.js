@@ -14,6 +14,7 @@ const variables = {
   uploadBg: colorPallets.white1,
   snow: colorPallets.snow,
   lightGreen: colorPallets.lightGreen,
+  greyBlue: colorPallets.greyBlue,
 
   // Text-colors
   textDefault: colorPallets.black,

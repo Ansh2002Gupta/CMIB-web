@@ -1,11 +1,12 @@
 .customConsentTable .ant-table-thead > tr > th {
-    background-color: var(--bodyBg) !important;
+    background-color: var(--greyBlue) !important;
   }
    
   .customConsentTable .ant-table-thead > tr > th .ant-table-cell {
     padding-left: var(--paddingNone) !important;
     padding-right: var(--paddingNone) !important;
     border: none !important;
+
   }
  
   .customConsentTable .ant-table-tbody > tr:hover > td {

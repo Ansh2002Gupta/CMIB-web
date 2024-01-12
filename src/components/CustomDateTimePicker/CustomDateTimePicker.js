@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { Typography, TimePicker, DatePicker } from "antd";
+import { Image, Typography, TimePicker, DatePicker } from "antd";
 
 import { TwoRow } from "../../core/layouts";
+import { ThemeContext } from "core/providers/theme";
 
 import { formatDate } from "../../constant/utils";
 import styles from "./CustomDateTimePicker.module.scss";
@@ -25,6 +26,8 @@ const CustomDateTimePicker = ({
   type,
   value,
 }) => {
+  const { getImage } = useContext(ThemeContext);
+
   return (
     <TwoRow
       className={[styles.container, customContainerStyles].join(" ")}
@@ -58,6 +61,7 @@ const CustomDateTimePicker = ({
                 {...{ defaultValue, onChange, placeholder, disabled, value }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle]}
+                suffixIcon={<Image src={getImage("calendar")} />}
               />
             ) : (
               <Typography className={styles.dateText}>
