@@ -16,7 +16,6 @@ function useHeader() {
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
     navigate(LOGIN);
-    window.location.reload();
   };
 
   return {
