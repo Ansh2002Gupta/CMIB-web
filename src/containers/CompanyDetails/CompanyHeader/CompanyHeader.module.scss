@@ -52,7 +52,7 @@
 }
 
 .btnIconStyles {
-    width: 24px !important;
+    width: var(--width_24) !important;
 }
 
 .grayText {
@@ -84,8 +84,8 @@
     border-radius: var(--radiusXLg);
     border: var(--borderLight);
     background-color: var(--bodyBg) !important;
-    min-width: 40px;
-    min-height: 40px;
+    min-width: var(--width_40);
+    min-height: var(--width_40);
 
     &:hover {
         background-color: var(--bodyBg) !important;

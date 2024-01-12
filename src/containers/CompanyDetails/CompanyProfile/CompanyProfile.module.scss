@@ -103,7 +103,7 @@ a {
 
 .logoBox {
   display: flex;
-  padding: 9px;
+  padding: var(--padding_9);
   width: 347px;
   justify-content: center;
   align-items: center;

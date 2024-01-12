@@ -9,7 +9,7 @@
 
 .scrollBox {
   display: flex;
-  gap: 10px;
+  gap: var(--gap_10);
   overflow-x: auto;
   width: 100%;
   -ms-overflow-style: none;
@@ -18,8 +18,8 @@
 
 .arrow {
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: var(--width_32);
+  height: var(--height_32);
   display: flex;
   align-items: center;
   justify-content: center;

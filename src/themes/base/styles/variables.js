@@ -46,6 +46,7 @@ const variables = {
   radiusXLg: "12px",
   radiusXLgMedium: "16px",
   radiusMLg: "16px",
+  radius_18: "18px",
   radiusXXLg: "24px",
 
   // Font-size
@@ -90,6 +91,8 @@ const variables = {
   width_200: "200px",
   width_120: "120px",
   width_100: "100px",
+  width_40: "40px",
+  width_32: "32px",
   width_30: "30px",
   width_24: "24px",
   width_20: "20px",
@@ -108,6 +111,7 @@ const variables = {
   height_240: "240px",
   height_250: "250px",
   height_50: "50px",
+  height_32: "32px",
   height_30: "30px",
   height_44: "44px",
   height_24: "24px",
@@ -144,6 +148,7 @@ const variables = {
   paddingNone: "0px",
   paddingXXSmall: "4px",
   paddingExtraSmall: "8px",
+  padding_9: "9px",
   paddingMediumSmall: "12px",
   paddingSmall: "16px",
   paddingMedium: "24px",
@@ -163,6 +168,7 @@ const variables = {
   gapMedium: "24px",
   gapSmall: "16px",
   gapSmallMedium: "12px",
+  gap_10: "10px",
   gapXSmall: "8px",
   gapXXSmall: "4px",
 
