@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
-import { Image, Input } from "antd";
+import { Image, Input, Spin } from "antd";
 
 import DataTable from "../../../components/DataTable";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
+import useFetch from "../../../core/hooks/useFetch";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { CONFIGURE_CENTRES } from "../../../dummyData";
+import {
+  CENTER_LISTING_END_POINT,
+  PLACEMENT_ROUTE,
+} from "../../../constant/apiEndpoints";
 import styles from "./ConfigureCentreContent.module.scss";
 
 const ConfigureCentreContent = () => {
@@ -22,6 +27,11 @@ const ConfigureCentreContent = () => {
   );
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+
+  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
+    url: PLACEMENT_ROUTE + CENTER_LISTING_END_POINT,
+  });
+  console.log({ data });
 
   const goToEditCentrePage = (rowData) => {
     navigate(`/view-centre-details?centreId=${rowData?.centreId}&edit=${true}`);
@@ -41,12 +51,13 @@ const ConfigureCentreContent = () => {
     setCurrentTableData(updatedData);
   };
 
-  const updateTableData = (currentPageNumber, currentPageSize) =>{
+  //TODO: remove this
+  const updateTableData = (currentPageNumber, currentPageSize) => {
     const startIndex = (currentPageNumber - 1) * currentPageSize;
     const endIndex = currentPageNumber * currentPageSize;
     const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
-  }
+  };
 
   const onChangePageSize = (size) => {
     //NOTE: if you want to do anything on changing of page size please consider doing it here
@@ -64,30 +75,30 @@ const ConfigureCentreContent = () => {
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.centreName" }),
-      dataIndex: "centreName",
-      key: "centreName",
+      dataIndex: "center_name",
+      key: "center_name",
       sortTypeText: true,
-      sortKey: "centreName",
+      sortKey: "center_name",
       renderText: { isTextBold: true, visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreId" }),
-      dataIndex: "centreId",
-      key: "centreId",
+      dataIndex: "center_code",
+      key: "center_code",
       renderText: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.bigSmallCentre" }),
-      dataIndex: "bigSmallCentre",
-      key: "bigSmallCentre",
+      dataIndex: "center_type",
+      key: "center_type",
       renderText: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.dateCreated" }),
-      dataIndex: "createdOn",
-      key: "createdOn",
+      dataIndex: "created_at",
+      key: "created_at",
       renderText: { isTypeDate: true, visible: true },
-      sortKey: "createdOn",
+      sortKey: "created_at",
       sortTypeDate: true,
       sortDirection: ["ascend"],
       defaultSortOrder: "ascend",
@@ -124,38 +135,50 @@ const ConfigureCentreContent = () => {
   }, []);
 
   return (
-    <div className={styles.tableContainer}>
-      <div className={styles.searchBarContainer}>
-        <Input
-          prefix={
-            <Image
-              src={getImage("searchIcon")}
-              className={styles.searchIcon}
-              preview={false}
+    <>
+      {isLoading && (
+        <div className={styles.loaderContainer}>
+          <Spin size="large" />
+        </div>
+      )}
+      {
+        !!error && <></>//TODO:
+      }
+      {isSuccess && (
+        <div className={styles.tableContainer}>
+          <div className={styles.searchBarContainer}>
+            <Input
+              prefix={
+                <Image
+                  src={getImage("searchIcon")}
+                  className={styles.searchIcon}
+                  preview={false}
+                />
+              }
+              placeholder={intl.formatMessage({
+                id: "label.searchByCentreNameOrId",
+              })}
+              allowClear
+              className={styles.searchBar}
+              value={searchedValue}
+              onChange={(e) => setSearchedValue(e.target.value)}
             />
-          }
-          placeholder={intl.formatMessage({
-            id: "label.searchByCentreNameOrId",
-          })}
-          allowClear
-          className={styles.searchBar}
-          value={searchedValue}
-          onChange={(e) => setSearchedValue(e.target.value)}
-        />
-      </div>
-      <DataTable
-        {...{
-          columns,
-          searchedValue,
-          currentDataLength,
-          current,
-          pageSize,
-          onChangePageSize,
-          onChangeCurrentPage,
-        }}
-        originalData={currentTableData}
-      />
-    </div>
+          </div>
+          <DataTable
+            {...{
+              columns,
+              searchedValue,
+              currentDataLength,
+              current,
+              pageSize,
+              onChangePageSize,
+              onChangeCurrentPage,
+            }}
+            originalData={data}
+          />
+        </div>
+      )}
+    </>
   );
 };
 
