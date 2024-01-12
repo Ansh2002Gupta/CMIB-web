@@ -4,6 +4,7 @@ import { ThemeContext } from "core/providers/theme";
 import { Image, Input, Spin } from "antd";
 
 import DataTable from "../../../components/DataTable";
+import ErrorMessageBox from "../../../components/ErrorMessageBox/ErrorMessageBox";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useFetch from "../../../core/hooks/useFetch";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
@@ -22,16 +23,16 @@ const ConfigureCentreContent = () => {
 
   const [searchedValue, setSearchedValue] = useState("");
   const [currentTableData, setCurrentTableData] = useState(CONFIGURE_CENTRES);
-  const [currentDataLength, setCurrentDataLength] = useState(
-    CONFIGURE_CENTRES.length
-  );
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: PLACEMENT_ROUTE + CENTER_LISTING_END_POINT,
   });
-  console.log({ data });
+  let errorString = error;
+  if (typeof error === "object") {
+    errorString = error?.data?.message;
+  }
 
   const goToEditCentrePage = (rowData) => {
     navigate(`/view-centre-details?centreId=${rowData?.centreId}&edit=${true}`);
@@ -51,25 +52,15 @@ const ConfigureCentreContent = () => {
     setCurrentTableData(updatedData);
   };
 
-  //TODO: remove this
-  const updateTableData = (currentPageNumber, currentPageSize) => {
-    const startIndex = (currentPageNumber - 1) * currentPageSize;
-    const endIndex = currentPageNumber * currentPageSize;
-    const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
-  };
-
   const onChangePageSize = (size) => {
     //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
-    updateTableData(1, size);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
     //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
-    updateTableData(newPageNumber, pageSize);
   };
 
   const columns = [
@@ -137,13 +128,19 @@ const ConfigureCentreContent = () => {
   return (
     <>
       {isLoading && (
-        <div className={styles.loaderContainer}>
+        <div className={styles.box}>
           <Spin size="large" />
         </div>
       )}
-      {
-        !!error && <></>//TODO:
-      }
+      {isError && (
+        <div className={styles.box}>
+          <ErrorMessageBox
+            onClick={fetchData}
+            errorText={errorString}
+            errorHeading={intl.formatMessage({ id: "label.error" })}
+          />
+        </div>
+      )}
       {isSuccess && (
         <div className={styles.tableContainer}>
           <div className={styles.searchBarContainer}>
@@ -168,12 +165,12 @@ const ConfigureCentreContent = () => {
             {...{
               columns,
               searchedValue,
-              currentDataLength,
               current,
               pageSize,
               onChangePageSize,
               onChangeCurrentPage,
             }}
+            currentDataLength={data?.length}
             originalData={data}
           />
         </div>
