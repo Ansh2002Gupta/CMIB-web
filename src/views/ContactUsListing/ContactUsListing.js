@@ -47,7 +47,7 @@ const ContactUsListing = () => {
       isNaN(validCurrentActiveTab) ||
       !VALID_CONTACT_US_TABS_ID.includes(validCurrentActiveTab)
     ) {
-      validCurrentActiveTab = 1;
+      validCurrentActiveTab = '1';
     }
 
     return validCurrentActiveTab;
