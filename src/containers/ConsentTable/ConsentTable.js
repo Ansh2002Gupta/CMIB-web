@@ -6,6 +6,7 @@ import {
   useConsentTableColumns,
   onDateChange as handleDateChange,
 } from "./ConsentTableConfig";
+import DataTable from "../../components/DataTable/DataTable";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
@@ -23,14 +24,27 @@ const ConsentTable = ({
   );
 
   return (
-    <Table
-      columns={columns}
-      dataSource={tableData}
-      pagination={false}
-      rowClassName={styles.rowtext}
-      scroll={{ x: "max-content" }}
-      className={[styles.table, "customConsentTable"]}
-      rowKey="id"
+    // <Table
+    //   columns={columns}
+    //   dataSource={tableData}
+    //   pagination={false}
+    //   rowClassName={styles.rowtext}
+    //   scroll={{ x: "max-content" }}
+    //   className={[styles.table, "customConsentTable"]}
+    //   rowKey="id"
+    // />
+    <DataTable
+      {...{
+        columns,
+        // current,
+        // pageSize,
+        // onChangePageSize,
+        // onChangeCurrentPage,
+        originalData,
+      }}
+      currentDataLength={originalData.length}
+      customContainerStyles={[styles.table]}
+      // customContainerStyles={styles.tableContainer}
     />
   );
 };
