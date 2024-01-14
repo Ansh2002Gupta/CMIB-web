@@ -12,6 +12,7 @@ const ActionAndCancelButtons = ({
   cancelBtnText,
   customActionBtnStyles,
   customCancelBtnStyles,
+  isActionBtnDisable,
   onActionBtnClick,
   onCancelBtnClick,
 }) => {
@@ -30,6 +31,7 @@ const ActionAndCancelButtons = ({
           customStyle={[styles.saveBtn, customActionBtnStyles].join(" ")}
           btnText={actionBtnText}
           onClick={onActionBtnClick}
+          isBtnDisable={isActionBtnDisable}
         />
       }
     />
@@ -41,6 +43,7 @@ ActionAndCancelButtons.defaultProps = {
   cancelBtnText: "",
   customActionBtnStyles: "",
   customCancelBtnStyles: "",
+  isActionBtnDisable: false,
   onActionBtnClick: () => {},
   onCancelBtnClick: () => {},
 };
@@ -50,6 +53,7 @@ ActionAndCancelButtons.propTypes = {
   cancelBtnText: PropTypes.string,
   customActionBtnStyles: PropTypes.string,
   customCancelBtnStyles: PropTypes.string,
+  isActionBtnDisable: PropTypes.bool,
   onActionBtnClick: PropTypes.func,
   onCancelBtnClick: PropTypes.func,
 };

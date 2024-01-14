@@ -234,3 +234,5 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const CONTROL_MODULE_ID = 1;
