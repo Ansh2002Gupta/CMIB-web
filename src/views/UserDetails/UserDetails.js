@@ -11,7 +11,11 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
-import { FORM_STATES, NOTIFICATION_TYPES } from "../../constant/constant";
+import {
+  CONTROL_MODULE_ID,
+  FORM_STATES,
+  NOTIFICATION_TYPES,
+} from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
 
 const UserDetails = () => {
@@ -100,10 +104,15 @@ const UserDetails = () => {
     isNewUserSuccessfullyAdded,
   ]);
 
-  useEffect(() => {
-    errorWhileUpdatingUserData &&
-      showNotification(errorWhileUpdatingUserData, NOTIFICATION_TYPES.ERROR);
-  }, [errorWhileUpdatingUserData]);
+  const getPermissions = (rolesObjectArray) => {
+    const controlObject = rolesObjectArray?.filter(
+      (item) => item?.id === CONTROL_MODULE_ID
+    );
+    if (controlObject?.length) {
+      return controlObject[0].permissions?.map((item) => item.id);
+    }
+    return [];
+  };
 
   useEffect(() => {
     !!userAccountInfo &&
@@ -114,7 +123,8 @@ const UserDetails = () => {
         mobile_prefix: "91",
         profile_photo_url: userAccountInfo?.profile_photo || "",
         profile_photo: null,
-        access: userAccountInfo?.role?.map((item) => item?.name) || "",
+        access: userAccountInfo?.role?.map((item) => item?.id) || [],
+        permissions: getPermissions(userAccountInfo?.role),
         date: userAccountInfo?.created_at || "",
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,
         status: userAccountInfo?.status,

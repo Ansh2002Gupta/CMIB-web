@@ -1,9 +1,10 @@
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import moment from "moment";
+import moment from "moment/moment";
 import { DatePicker, Typography, Descriptions, Switch } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
+import { TwoRow } from "../../core/layouts";
 
 import CheckBoxList from "../CheckBoxList";
 import CustomInput from "../../components/CustomInput";
@@ -158,21 +159,26 @@ const UserInfo = ({
               />
             </div>
             {shouldShowDatePickerOption && date && (
-              <div className={styles.dateContainer}>
-                <Typography className={styles.accessSelectLabel}>
-                  {intl.formatMessage({ id: "label.dateCreatedOn" })}
-                </Typography>
-                <DatePicker
-                  onChange={(date, dateString) =>
-                    updateUserData("date", dateString)
-                  }
-                  className={[styles.text, styles.input].join(" ")}
-                  defaultValue={moment(new Date(date)).format("DD/MM/YYYY")}
-                  disabled={isDateDisable || !isEditable}
-                  customInputStyles={[styles.text, styles.input].join(" ")}
-                  customLabelStyles={styles.label}
-                />
-              </div>
+              <TwoRow
+                className={styles.dateContainer}
+                topSection={
+                  <Typography className={styles.accessSelectLabel}>
+                    {intl.formatMessage({ id: "label.dateCreatedOn" })}
+                  </Typography>
+                }
+                bottomSection={
+                  <DatePicker
+                    onChange={(date, dateString) =>
+                      updateUserData("date", dateString)
+                    }
+                    className={[styles.text, styles.input].join(" ")}
+                    defaultValue={moment(date).format("YYYY-MM-DD")}
+                    disabled={isDateDisable || !isEditable}
+                    customInputStyles={[styles.text, styles.input].join(" ")}
+                    customLabelStyles={styles.label}
+                  />
+                }
+              />
             )}
             <div className={styles.twoFactorContainer}>
               <Typography className={styles.label}>
