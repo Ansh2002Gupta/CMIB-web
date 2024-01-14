@@ -164,7 +164,6 @@ const ConfigureCentreContent = () => {
           <DataTable
             {...{
               columns,
-              searchedValue,
               current,
               pageSize,
               onChangePageSize,
