@@ -10,7 +10,7 @@ import useFetch from "../../../core/hooks/useFetch";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { CONFIGURE_CENTRES } from "../../../dummyData";
 import {
-  CENTER_LISTING_END_POINT,
+  CENTER_END_POINT,
   PLACEMENT_ROUTE,
 } from "../../../constant/apiEndpoints";
 import styles from "./ConfigureCentreContent.module.scss";
@@ -27,7 +27,7 @@ const ConfigureCentreContent = () => {
   const [pageSize, setPageSize] = useState(10);
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: PLACEMENT_ROUTE + CENTER_LISTING_END_POINT,
+    url: PLACEMENT_ROUTE + CENTER_END_POINT,
   });
   let errorString = error;
   if (typeof error === "object") {

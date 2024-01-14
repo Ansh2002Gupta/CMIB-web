@@ -157,8 +157,8 @@ export const SESSION_PERIOD = [
 ];
 
 export const CENTRE_TYPE = [
-  { id: 1, label: "Small Centre", value: "Small Centre" },
-  { id: 2, label: "Big Centre", value: "Big Centre" },
+  { id: 1, label: "Small Centre", value: "small" },
+  { id: 2, label: "Big Centre", value: "big" },
 ];
 
 export const ROUND_ONE_CARD_LIST = [
