@@ -28,10 +28,7 @@ const ConfigureCentreDetails = () => {
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const {
-    isLoading,
-    addNewCenter,
-  } = useAddNewCenterApi();
+  const { isLoading, addNewCenter } = useAddNewCenterApi();
 
   const isAddBtnDisable =
     !formData.centreId ||

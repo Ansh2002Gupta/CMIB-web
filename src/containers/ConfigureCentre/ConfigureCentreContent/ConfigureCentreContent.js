@@ -5,9 +5,11 @@ import { Image, Input, Spin } from "antd";
 
 import DataTable from "../../../components/DataTable";
 import ErrorMessageBox from "../../../components/ErrorMessageBox/ErrorMessageBox";
-import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useFetch from "../../../core/hooks/useFetch";
+import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
+import useShowNotification from "../../../core/hooks/useShowNotification";
+import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import { CONFIGURE_CENTRES } from "../../../dummyData";
 import {
   CENTER_END_POINT,
@@ -26,6 +28,13 @@ const ConfigureCentreContent = () => {
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
+  const { showNotification, notificationContextHolder } = useShowNotification();
+
+  const {
+    isLoading: isUpdatingCenterDetails,
+    updateCenterDetails,
+  } = useUpdateCenterDetailsApi();
+
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: PLACEMENT_ROUTE + CENTER_END_POINT,
   });
@@ -39,17 +48,21 @@ const ConfigureCentreContent = () => {
   };
 
   const onHandleCentreStatus = (data) => {
-    // TODO: do an api call for updating real data into the database.
-    const updatedData = currentTableData.map((item) => {
-      if (data?.centreId === item.centreId) {
-        return {
-          ...item,
-          status: !item.status,
-        };
+    const { id } = data;
+    const payload = {
+      status: !data?.status,
+    };
+
+    updateCenterDetails(
+      id,
+      payload,
+      () => {
+        fetchData();
+      },
+      (errorMessage) => {
+        showNotification(errorMessage, "error");
       }
-      return item;
-    });
-    setCurrentTableData(updatedData);
+    );
   };
 
   const onChangePageSize = (size) => {
@@ -127,7 +140,8 @@ const ConfigureCentreContent = () => {
 
   return (
     <>
-      {isLoading && (
+      {notificationContextHolder}
+      {(isLoading || isUpdatingCenterDetails) && (
         <div className={styles.box}>
           <Spin size="large" />
         </div>
@@ -141,7 +155,7 @@ const ConfigureCentreContent = () => {
           />
         </div>
       )}
-      {isSuccess && (
+      {isSuccess && !isUpdatingCenterDetails && (
         <div className={styles.tableContainer}>
           <div className={styles.searchBarContainer}>
             <Input

@@ -27,7 +27,10 @@ const useAddNewCenterApi = () => {
       const url =
         PLACEMENT_ROUTE + CENTER_END_POINT + ADD_NEW_CENTERS_END_POINT;
       const res = await Http.post(url, payload);
-      if (res.code === STATUS_CODES.SUCCESS_STATUS) {
+      if (
+        res.code === STATUS_CODES.SUCCESS_STATUS ||
+        res.status === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setAddNewCenterApiStatus(API_STATUS.SUCCESS);
         setAddNewCenterData(res.data);
         onSuccessCallback && onSuccessCallback();
@@ -37,6 +40,10 @@ const useAddNewCenterApi = () => {
       setErrorWhileAddingNewCenter(
         intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
       );
+      onErrorCallback &&
+        onErrorCallback(
+          intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+        );
     } catch (err) {
       setAddNewCenterApiStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
