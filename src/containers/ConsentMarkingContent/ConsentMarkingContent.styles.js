@@ -12,8 +12,6 @@ export const classes = {
     borderBottom: variables.borderLight,
   },
   tabBottomSectionStyle: {
-    // border: variables.borderLight,
-    // borderRadius: variables.radiusLg,
     backgroundColor: variables.bodyBg,
   },
 };

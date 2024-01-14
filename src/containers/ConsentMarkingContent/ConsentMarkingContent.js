@@ -45,7 +45,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
         : null,
       consentToDate: item.consentToDate ? dayjs(item.consentToDate) : null,
     }));
-  }, [CONSENT_MARKING_REGESTRATION_DETAILS]);
+  }, []);
 
   const registrationInitialData = useMemo(() => {
     return LAST_MARKING_REGESTRATION_DETAILS.map((item) => ({
@@ -59,7 +59,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
         ? dayjs(item.psychometricTestDate)
         : null,
     }));
-  }, [LAST_MARKING_REGESTRATION_DETAILS]);
+  }, []);
 
   const [tableData, setTableData] = useState(initialData);
   const [registrationTableData, setRegistrationTableData] = useState(

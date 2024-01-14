@@ -19,7 +19,7 @@ import "./Override.css";
 const ConsentTable = ({
   isEdit,
   originalData,
-  registration = false,
+  registration,
   setTableData,
   tableData,
 }) => {
