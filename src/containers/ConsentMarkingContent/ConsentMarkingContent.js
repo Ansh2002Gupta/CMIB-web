@@ -81,7 +81,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
         children: (
           <ConsentTable
             {...{ isEdit, tableData, setTableData }}
-            originalData={CONSENT_MARKING_REGESTRATION_DETAILS}
+            originalData={initialData}
           />
         ),
       },
@@ -100,7 +100,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
             {...{ isEdit, registration: true, tableData, setTableData }}
             tableData={registrationTableData}
             setTableData={setRegistrationTableData}
-            originalData={LAST_MARKING_REGESTRATION_DETAILS}
+            originalData={registrationInitialData}
           />
         ),
       },

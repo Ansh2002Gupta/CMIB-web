@@ -112,6 +112,7 @@ export const useConsentTableColumns = (isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "psychometricTestDate",
           renderDateTime: {
+            isEditable: isEdit,
             visible: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
@@ -121,7 +122,7 @@ export const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             onChange: (date, record) =>
               onDateChange(record, "psychometricTestDate", date),
           },
-          renderText: { visible: true, isTypeDate: true },
+          renderText: { visible: !isEdit, isTypeDate: true },
         }),
       ]
     : [
@@ -173,7 +174,7 @@ export const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             onChange: (date, record) =>
               onDateChange(record, "companyEndDate", date),
           },
-          renderText: { visible: true, isTypeDate: true },
+          renderText: { visible: !isEdit, isTypeDate: true },
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.consentFromDate" }),
@@ -190,7 +191,7 @@ export const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             onChange: (date, record) =>
               onDateChange(record, "consentFromDate", date),
           },
-          renderText: { visible: true, isTypeDate: true },
+          renderText: { visible: !isEdit, isTypeDate: true },
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.consentToDate" }),
@@ -207,7 +208,7 @@ export const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             onChange: (date, record) =>
               onDateChange(record, "consentToDate", date),
           },
-          renderText: { visible: true, isTypeDate: true },
+          renderText: { visible: !isEdit, isTypeDate: true },
         }),
       ];
 
