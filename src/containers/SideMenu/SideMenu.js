@@ -16,9 +16,11 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import modules from "./sideMenuItems";
 
 import styles from "./sideMenu.module.scss";
+import { useIntl } from "react-intl";
 
 const SideMenu = ({ logo }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
+  const intl = useIntl();
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [selectedModule, setSelectedModule] = useState(modules[0]);
 
@@ -134,7 +136,9 @@ const SideMenu = ({ logo }) => {
             block
             icon={<GlobalOutlined />}
           >
-            <Typography.Text>Visit Website</Typography.Text>
+            <Typography.Text className={styles.visitText}>
+              {intl.formatMessage({ id: "label.visitWebsite" })}
+            </Typography.Text>
           </Button>
           <ArrowRightOutlined />
         </Space>
