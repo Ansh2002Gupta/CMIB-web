@@ -53,15 +53,6 @@ const ConsentTable = ({
 
   usePaginationEffect(searchParams, setSearchParams);
 
-  console.log(
-    "current..",
-    current,
-    "pageSize..",
-    pageSize,
-    "tableData..",
-    tableData
-  );
-
   useEffect(() => {
     const startIndex = (current - 1) * pageSize;
     const endIndex = current * pageSize;
