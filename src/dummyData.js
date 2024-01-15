@@ -506,6 +506,12 @@ export const TICKET_DATA_LIST = [
   },
 ];
 
+export const INITIAL_CENTRE_DETAILS = {
+  centreName: "",
+  centreId: "",
+  status: true,
+}
+
 export const SETUP_CENTRE_DETAILS = [
   {
     id: 1,

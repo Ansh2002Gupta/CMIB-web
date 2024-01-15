@@ -1,52 +1,61 @@
-import React, { useState } from 'react';
-import { Avatar, Dropdown, Space } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import React, { useState, useContext } from "react";
+import { Avatar, Dropdown, Space } from "antd";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
-import CardDropdownOverlay from './CardDropdownOverlay';
-import useResponsive from '../../core/hooks/useResponsive';
+import CardDropdownOverlay from "./CardDropdownOverlay";
+import useResponsive from "../../core/hooks/useResponsive";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import styles from "./profileDropdown.module.scss";
 
-import styles from './profileDropdown.module.scss'
+const ProfileDropdown = () => {
+  // TODO: To find logic to put Role base on Role ID
+  const [userProfileState] = useContext(UserProfileContext);
 
-const ProfileDropdown = ({ onLogout }) => {
-    // TODO: need to add  logic for getting user data
-    const userName = 'Nitin';
-    const userRole = 'Admin';
-    const userEmail = 'nitin@gmail.com';
-    const userProfilePic = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnxlbnwwfHwwfHx8MA%3D%3D'
+  const loggedInUserInfo = userProfileState.userDetails || {};
+  const userName = loggedInUserInfo?.name;
+  const userRole = "Admin";
+  const userEmail = loggedInUserInfo?.email;
+  const userProfilePic = loggedInUserInfo?.profile_photo;
 
-    const [dropdownVisible, setDropdownVisible] = useState(false);
-    const responsive = useResponsive();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const responsive = useResponsive();
 
-    return <Dropdown
-        dropdownRender={() =>
-            <CardDropdownOverlay
-                userName={userName}
-                userEmail={userEmail}
-                userProfile={userProfilePic}
-                onLogout={onLogout}
-            />}
-        trigger={['click']}
-        onOpenChange={(visible) => setDropdownVisible(visible)}
-        open={dropdownVisible}
+  return (
+    <Dropdown
+      dropdownRender={() => (
+        <CardDropdownOverlay
+          userName={userName}
+          userEmail={userEmail}
+          userProfile={userProfilePic}
+        />
+      )}
+      trigger={["click"]}
+      onOpenChange={(visible) => setDropdownVisible(visible)}
+      open={dropdownVisible}
     >
-        <Space className={styles.profileDropdown}>
-            <Avatar
-                src={userProfilePic}
-                icon={<UserOutlined />}
-                size='large'
-                className='profileAvatar'
+      <Space className={styles.profileDropdown}>
+        <Avatar
+          src={userProfilePic}
+          icon={<UserOutlined />}
+          size="large"
+          className="profileAvatar"
+        />
+        {responsive.isMd && (
+          <Space size={16}>
+            <Space direction="vertical" size="1">
+              <span className={styles.profileName}>{userName}</span>
+              <span className={styles.profileRole}>{userRole}</span>
+            </Space>
+            <DownOutlined
+              className={`${styles.downIcon} ${
+                dropdownVisible ? styles.arrowRotated : ""
+              }`}
             />
-            {
-                responsive.isMd && <Space size={16}>
-                    <Space direction="vertical" size='1' >
-                        <span className={styles.profileName} >{userName}</span>
-                        <span className={styles.profileRole}>{userRole}</span>
-                    </Space>
-                    <DownOutlined className={`${styles.downIcon} ${dropdownVisible ? styles.arrowRotated : ''}`} />
-                </Space>
-            }
-        </Space>
+          </Space>
+        )}
+      </Space>
     </Dropdown>
+  );
 };
 
 export default ProfileDropdown;

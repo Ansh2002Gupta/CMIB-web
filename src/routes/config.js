@@ -4,6 +4,7 @@ import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import ContactUsListing from "../views/ContactUsListing";
+import ConfigureCentreView from "../views/ConfigureCentreView";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
@@ -19,6 +20,7 @@ import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
 import QueryDetails from "../views/QueryDetails";
 import {
+  ADD,
   DASHBOARD,
   SUBSCRIPTIONS,
   LOGIN,
@@ -48,21 +50,6 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 
 const config = [
   {
-    pagePath: "/example/:id",
-    element: <HomeWithPrivateAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "route",
-        element: <div>Example Route</div>,
-      },
-      {
-        viewPath: "route1",
-        element: <div>Example Route1</div>,
-      },
-    ],
-  },
-  {
     pagePath: LOGIN,
     element: <HeaderContentWithFooterWithPublicAccess />,
     views: [
@@ -84,7 +71,7 @@ const config = [
   },
   {
     pagePath: ROOT,
-    element: <HomeWithPublicAccess />,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
@@ -194,6 +181,24 @@ const config = [
       {
         viewPath: "",
         element: <ConfigureCentres />,
+      },
+      {
+        viewPath: ADD,
+        element: <ConfigureCentreView />,
+      },
+    ],
+  },
+  {
+    pagePath: CONTACT_US,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: "",
+        element: <ContactUsListing />,
+      },
+      {
+        viewPath: QUERY_DETAILS,
+        element: <QueryDetails />,
       },
     ],
   },

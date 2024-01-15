@@ -159,6 +159,11 @@ export const SESSION_PERIOD = [
   { id: 112, label: "November 2020", value: "November 2020" },
 ];
 
+export const CENTRE_TYPE = [
+  { id: 1, label: "Small Centre", value: "Small Centre" },
+  { id: 2, label: "Big Centre", value: "Big Centre" },
+];
+
 export const ROUND_ONE_CARD_LIST = [
   {
     id: 1,
