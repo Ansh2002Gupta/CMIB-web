@@ -14,6 +14,7 @@ import Session from "../views/Session";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import SetupCenterDetails from "../views/SetupCenterDetails";
+import SetupMockInterview from "../views/SetupMockInterview";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
@@ -34,6 +35,7 @@ import {
   ROUTE,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
+  SETUP_MOCK_INTERVIEW,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -168,6 +170,10 @@ const config = [
       {
         viewPath: SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
+      },
+      {
+        viewPath: SETUP_MOCK_INTERVIEW,
+        element: <SetupMockInterview />,
       },
     ],
   },

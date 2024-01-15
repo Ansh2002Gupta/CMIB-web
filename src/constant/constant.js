@@ -1,4 +1,4 @@
-import { SETUP_CENTERS } from "../routes/routeNames";
+import { SETUP_CENTERS, SETUP_MOCK_INTERVIEW } from "../routes/routeNames";
 
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
@@ -140,7 +140,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
 };
 
-//TODO:need to implement it using api 
+//TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
   { id: 102, label: "November 2025", value: "November 2025" },
@@ -176,7 +176,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
     headingIntl: "Mock Interviews",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: SETUP_MOCK_INTERVIEW,
   },
   {
     id: 3,
