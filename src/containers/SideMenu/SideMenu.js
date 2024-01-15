@@ -75,7 +75,7 @@ const SideMenu = ({ logo }) => {
                   >
                     {openModuleSelector
                       ? "Choose a module"
-                      : selectedModule.label}
+                      : selectedModule?.label}
                   </div>
                 }
                 rightSection={
