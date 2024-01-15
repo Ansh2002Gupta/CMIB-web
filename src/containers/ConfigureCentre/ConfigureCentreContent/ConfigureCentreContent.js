@@ -121,7 +121,6 @@ const ConfigureCentreContent = () => {
     return () => {
       setSearchedValue("");
       setCurrentTableData(CONFIGURE_CENTRES);
-      setCurrentDataLength(CONFIGURE_CENTRES.length);
     };
   }, []);
 
