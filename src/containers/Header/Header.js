@@ -1,34 +1,16 @@
-import React, { useContext } from 'react';
-import useResponsive from '../../core/hooks/useResponsive';
-import { TwoColumn } from 'core/layouts';
-import { Badge, Button, Space } from 'antd';
-import { BellOutlined } from '@ant-design/icons';
+import React, { useContext } from "react";
+import { Badge, Button, Space } from "antd";
+import { BellOutlined } from "@ant-design/icons";
 
-import ProfileDropdown from '../ProfileDropdown';
-import Sessions from '../Sessions/Sessions';
+import { TwoColumn } from "core/layouts";
 
-import { AuthContext } from '../../globalContext/auth/authProvider';
-import { clearAuthAndLogout } from './../../globalContext/auth/authActions';
-
-import { ReactComponent as MenuIcon } from '../../themes/base/assets/icons/menu.svg';
-
-import styles from './header.module.scss';
-
-function useHeader() {
-  const [, authDispatch] = useContext(AuthContext);
-
-  const onLogout = () => {
-    authDispatch(clearAuthAndLogout());
-  };
-
-  return {
-    onLogout,
-  };
-}
+import ProfileDropdown from "../ProfileDropdown";
+import Sessions from "../Sessions/Sessions";
+import useResponsive from "../../core/hooks/useResponsive";
+import { ReactComponent as MenuIcon } from "../../themes/base/assets/icons/menu.svg";
+import styles from "./header.module.scss";
 
 function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
-  const { onLogout } = useHeader();
-
   const responsive = useResponsive();
 
   return (
@@ -38,18 +20,18 @@ function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
         !responsive.isMd && (
           <Button
             icon={<MenuIcon />}
-            type='text'
+            type="text"
             onClick={() => setOpenSideMenu(true)}
           />
         )
       }
       rightSection={
-        <Space size='large'>
+        <Space size="large">
           {responsive.isMd && <Sessions />}
           <Badge dot offset={[-6, 4]}>
             <BellOutlined className={styles.notificationIcon} />
           </Badge>
-          <ProfileDropdown onLogout={onLogout} />
+          <ProfileDropdown />
         </Space>
       }
     />

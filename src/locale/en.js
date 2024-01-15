@@ -170,6 +170,7 @@ const locale = {
   "centre.placeholder.centreId": "Enter Centre Id",
   "label.actions": "Actions",
   "label.sNo": "S. No",
+  "label.tryAgain": "Try Again",
   "label.centreCode": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
   "label.centreStartTime": "Centre Start Time",
