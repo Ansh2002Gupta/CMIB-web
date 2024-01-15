@@ -50,21 +50,6 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 
 const config = [
   {
-    pagePath: "/example/:id",
-    element: <HomeWithPrivateAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "route",
-        element: <div>Example Route</div>,
-      },
-      {
-        viewPath: "route1",
-        element: <div>Example Route1</div>,
-      },
-    ],
-  },
-  {
     pagePath: LOGIN,
     element: <HeaderContentWithFooterWithPublicAccess />,
     views: [
@@ -86,7 +71,7 @@ const config = [
   },
   {
     pagePath: ROOT,
-    element: <HomeWithPublicAccess />,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",

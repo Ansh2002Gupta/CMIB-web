@@ -100,11 +100,6 @@ const UserDetails = () => {
   ]);
 
   useEffect(() => {
-    errorWhileUpdatingUserData &&
-      showNotification(errorWhileUpdatingUserData, NOTIFICATION_TYPES.ERROR);
-  }, [errorWhileUpdatingUserData]);
-
-  useEffect(() => {
     !!userAccountInfo &&
       setUserData({
         name: userAccountInfo?.name || "",

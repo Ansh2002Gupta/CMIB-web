@@ -10,7 +10,7 @@ import styles from "./SetupCenterDetails.module.scss";
 const SetupCenterDetails = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { centreId } = useParams();
-  const isEdit = searchParams.get("edit") === "true";
+  const isEdit = searchParams.get("mode") === "edit";
 
   return (
     <TwoRow
