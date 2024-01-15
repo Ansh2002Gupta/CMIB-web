@@ -1,9 +1,9 @@
 import React from "react";
 import { useIntl } from "react-intl";
 
+import Chip from "../../components/StatusChip";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import ContentHeader from "../ContentHeader/ContentHeader";
-import StatusChip from "../../components/StatusChip";
 import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as CheckIconWhite } from "../../themes/base/assets/images/check-white.svg";
 import styles from "./QueryDetailsHeader.module.scss";
@@ -18,12 +18,13 @@ const QueryDetailsHeader = ({ id }) => {
       <ContentHeader
         headerText={id}
         headerComponent={
-          <StatusChip
-            isPending
+          <Chip
             // TODO : status will come from API.
-            statusText={intl.formatMessage({
+            label={intl.formatMessage({
               id: "label.pending",
             })}
+            textColor={styles.pending_color}
+            bgColor={styles.pending_bg}
           />
         }
         rightSection={

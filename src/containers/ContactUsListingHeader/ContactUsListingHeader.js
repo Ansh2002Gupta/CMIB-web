@@ -15,7 +15,7 @@ import styles from "./ContactUsListingHeader.module.scss";
 const ContactUsListingHeader = ({
   currentActiveTab,
   queryListingProps,
-  setCurrent,
+  setCurrentPage,
   setCurrentActiveTab,
   setPageSize,
   ticketListingProps,
@@ -37,7 +37,7 @@ const ContactUsListingHeader = ({
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
       return prev;
     });
-    setCurrent(1);
+    setCurrentPage(1);
     setPageSize(DEFAULT_PAGE_SIZE);
   };
 
@@ -106,7 +106,7 @@ const ContactUsListingHeader = ({
 ContactUsListingHeader.defaultProps = {
   currentActiveTab: 1,
   queryListingProps: {},
-  setCurrent: () => {},
+  setCurrentPage: () => {},
   setCurrentActiveTab: () => {},
   setPageSize: () => {},
   ticketListingProps: {},
@@ -115,7 +115,7 @@ ContactUsListingHeader.defaultProps = {
 ContactUsListingHeader.propTypes = {
   currentActiveTab: PropTypes.number,
   queryListingProps: PropTypes.object,
-  setCurrent: PropTypes.func,
+  setCurrentPage: PropTypes.func,
   setCurrentActiveTab: PropTypes.func,
   setPageSize: PropTypes.func,
   ticketListingProps: PropTypes.object,

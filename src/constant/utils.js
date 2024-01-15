@@ -56,3 +56,19 @@ export const getErrorMessage = (errorObjectOrMessage) => {
   }
   return errorObjectOrMessage?.data?.message;
 };
+
+export function getCurrentActiveTab(
+  validIdsArray,
+  searchParams,
+  ACTIVE_TAB_TEXT,
+) {
+  let validCurrentActiveTab = +searchParams.get(ACTIVE_TAB_TEXT);
+  if (
+    isNaN(validCurrentActiveTab) ||
+    !validIdsArray.includes(validCurrentActiveTab)
+  ) {
+    validCurrentActiveTab = 1;
+  }
+
+  return validCurrentActiveTab;
+}

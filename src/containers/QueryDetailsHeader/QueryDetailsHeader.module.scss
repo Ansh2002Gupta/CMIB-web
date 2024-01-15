@@ -10,3 +10,27 @@
   padding: var(--paddingExtraSmall);
   min-height: var(--minBtnHeight);
 }
+
+.pending_bg {
+  background-color: var(--orangeBg);
+}
+
+.pending_color {
+  color: var(--orangeText);
+}
+
+.progress_bg {
+  background-color: var(--blueBg2);
+}
+
+.progress_color {
+  color: var(--blueText);
+}
+
+.success_bg {
+  background-color: var(--greenBg);
+}
+
+.success_color {
+  color: var(--greenText);
+}

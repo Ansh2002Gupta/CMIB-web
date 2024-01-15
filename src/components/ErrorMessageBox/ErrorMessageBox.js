@@ -3,59 +3,69 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Button, Typography } from "antd";
 
+import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 import { ReactComponent as ErrorIcon } from "../../themes/base/assets/images/error icon.svg";
 import styles from "./ErrorMessageBox.module.scss";
 
-const ErrorMessageBox = ({ onClick, errorText, errorHeading, btnText }) => {
-  // TODO: change name in the prev branch as well
+const ErrorMessageBox = ({
+  onRetry,
+  errorText,
+  errorHeading,
+  retryBtnText,
+}) => {
   const intl = useIntl();
 
   return (
-    <div className={styles.container}>
-      <div className={styles.topSection}>
-        <div>
-          <ErrorIcon className={styles.errorIcon} />
-        </div>
-        <div className={styles.headingAndSubHeadingContainer}>
+    <TwoRow
+      className={styles.container}
+      topSection={
+        <div className={styles.topSection}>
           <div>
-            <Typography className={styles.errorHeading}>
-              {errorHeading}
-            </Typography>
+            <ErrorIcon className={styles.errorIcon} />
           </div>
-          <div>
-            <Typography className={styles.errorSubHeading}>
-              {errorText}
-            </Typography>
+          <div className={styles.headingAndSubHeadingContainer}>
+            <div>
+              <Typography className={styles.errorHeading}>
+                {errorHeading}
+              </Typography>
+            </div>
+            {!!errorText && (
+              <div>
+                <Typography className={styles.errorSubHeading}>
+                  {errorText}
+                </Typography>
+              </div>
+            )}
           </div>
         </div>
-      </div>
-      <div>
-        <Button
-          block
-          onClick={() => {
-            onClick && onClick();
-          }}
-          className={styles.btn}
-        >
-          {btnText || intl.formatMessage({ id: "label.tryAgain" })}
-        </Button>
-      </div>
-    </div>
+      }
+      bottomSection={
+        <>
+          {onRetry ? (
+            <div>
+              <Button block onClick={onRetry} className={styles.btn}>
+                {retryBtnText || intl.formatMessage({ id: "label.tryAgain" })}
+              </Button>
+            </div>
+          ) : null}
+        </>
+      }
+    />
   );
 };
 
 ErrorMessageBox.defaultProps = {
-  btnText: "",
+  retryBtnText: "",
   errorHeading: "",
   errorText: "",
-  onClick: () => {},
+  onRetry: null,
 };
 
 ErrorMessageBox.propTypes = {
-  btnText: PropTypes.string,
+  retryBtnText: PropTypes.string,
   errorHeading: PropTypes.string,
   errorText: PropTypes.string,
-  onClick: PropTypes.func,
+  onRetry: PropTypes.func,
 };
 
 export default ErrorMessageBox;

@@ -8,21 +8,27 @@ import ContactUsListingHeader from "../../containers/ContactUsListingHeader";
 import useQueriesListingApi from "../../services/api-services/Queries/useQueriesListingApi";
 import useTicketListingApi from "../../services/api-services/Tickets/useTicketsListingApi";
 import {
-  DEFAULT_PAGE_SIZE,
+  ACTIVE_TAB,
   PAGINATION_PROPERTIES,
   VALID_CONTACT_US_TABS_ID,
-  VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
-
-const ACTIVE_TAB = "activeTab";
+import {
+  getCurrentActiveTab,
+  getValidPageNumber,
+  getValidPageSize,
+} from "../../constant/utils";
 
 const ContactUsListing = () => {
   const [searchParams] = useSearchParams();
   const [currentActiveTab, setCurrentActiveTab] = useState(
-    getCurrentActiveTab()
+    getCurrentActiveTab(VALID_CONTACT_US_TABS_ID, searchParams, ACTIVE_TAB)
   );
-  const [current, setCurrent] = useState(getValidPageNumber());
-  const [pageSize, setPageSize] = useState(getValidPageSize());
+  const [currentPage, setCurrentPage] = useState(
+    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+  );
+  const [pageSize, setPageSize] = useState(
+    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+  );
 
   const {
     isSuccess: areQueriesFetchedSuccessfully,
@@ -42,40 +48,6 @@ const ContactUsListing = () => {
     metaData: ticketsMetaData,
   } = useTicketListingApi();
 
-  function getCurrentActiveTab() {
-    let validCurrentActiveTab = +searchParams.get(ACTIVE_TAB);
-    if (
-      isNaN(validCurrentActiveTab) ||
-      !VALID_CONTACT_US_TABS_ID.includes(validCurrentActiveTab)
-    ) {
-      validCurrentActiveTab = 1;
-    }
-
-    return validCurrentActiveTab;
-  }
-
-  function getValidPageNumber() {
-    let validCurrentPage = +searchParams.get(
-      PAGINATION_PROPERTIES.CURRENT_PAGE
-    );
-    if (isNaN(validCurrentPage) || validCurrentPage <= 0) {
-      validCurrentPage = 1;
-    }
-
-    return validCurrentPage;
-  }
-
-  function getValidPageSize() {
-    let validPageSize = +searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE);
-    if (
-      isNaN(validPageSize) ||
-      !VALID_ROW_PER_OPTIONS.includes(validPageSize)
-    ) {
-      validPageSize = DEFAULT_PAGE_SIZE;
-    }
-    return validPageSize;
-  }
-
   return (
     <TwoRow
       topSection={
@@ -83,7 +55,7 @@ const ContactUsListing = () => {
           {...{
             currentActiveTab,
             setCurrentActiveTab,
-            setCurrent,
+            setCurrentPage,
             setPageSize,
           }}
           queryListingProps={{
@@ -110,9 +82,9 @@ const ContactUsListing = () => {
           {...{
             currentActiveTab,
             setCurrentActiveTab,
-            setCurrent,
+            setCurrentPage,
             setPageSize,
-            current,
+            current: currentPage,
             pageSize,
           }}
           queryListingProps={{

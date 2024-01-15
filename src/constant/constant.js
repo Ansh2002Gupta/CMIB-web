@@ -143,7 +143,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
 };
 
-//TODO:need to implement it using api 
+//TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
   { id: 102, label: "November 2025", value: "November 2025" },
@@ -237,3 +237,12 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const ACTIVE_TAB = "activeTab";
+
+export const STATUS = {
+  CLOSED: "Closed",
+  PENDING: "Pending",
+  SUCCESS: "Success",
+  ANSWERED: "Answered",
+};

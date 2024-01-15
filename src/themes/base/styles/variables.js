@@ -13,10 +13,11 @@ const variables = {
   mobileBg1: colorPallets.white,
   uploadBg: colorPallets.white1,
   snow: colorPallets.snow,
-  lightGreen: colorPallets.lightGreen, // correct this
-  lightGreenBg: colorPallets.lightGreen,
-  lightBlueBg: colorPallets.skyBlue,
-  lightRedBg: colorPallets.lightOrange,
+  lightGreen: colorPallets.green3,
+  orangeBg: colorPallets.orange1,
+  blueBg2: colorPallets.blue4,
+  greenBg: colorPallets.green3,
+  greyBg: colorPallets.ltGrey1,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -38,9 +39,10 @@ const variables = {
   error: colorPallets.red1,
   requiredStarColor: colorPallets.red1,
   sideMenuMaskBg: colorPallets.maskBlack,
-  greenText: colorPallets.darkGreen,
-  blueText: colorPallets.darkBlue2,
-  redText: colorPallets.darkOrange,
+  orangeText: colorPallets.orange2,
+  blueText: colorPallets.blue5,
+  greenText: colorPallets.green4,
+  redText: colorPallets.red1,
 
   // Border-Radius
   radiusNone: "0px",
@@ -88,17 +90,21 @@ const variables = {
   width_30Per: "30%",
   halfWidth: "50%",
   smallWidth: "30px",
+  width_500: "500px",
   width_400: "400px",
   width_350: "350px",
   width_300: "300px",
   width_200: "200px",
   width_120: "120px",
   width_100: "100px",
+  width_48: "48px",
   width_30: "30px",
   width_24: "24px",
   width_20: "20px",
   width_80: "80px",
   widthHalfViewPort: "50vw",
+  widthViewPort_65: "65vw",
+  widthViewPort_35: "35vw",
 
   // Heights
   btnHeight: "56px",
@@ -110,9 +116,11 @@ const variables = {
   height_300: "300px",
   height_240: "240px",
   height_250: "250px",
-  height_70: "70px",
   height_50: "50px",
   height_30: "30px",
+  height_48: "48px",
+  height_44: "44px",
+  height_32: "32px",
   height_24: "24px",
   height_20: "20px",
   height_50vh: "50vh",
@@ -171,10 +179,9 @@ const variables = {
   gapXXSmall: "4px",
 
   // margin
+  marginLarge: "24px",
   marginMedium: "16px",
   marginSmall: "8px",
-
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };
-
 export default variables;

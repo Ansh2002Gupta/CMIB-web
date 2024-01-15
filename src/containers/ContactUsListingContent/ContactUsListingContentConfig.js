@@ -1,11 +1,13 @@
 import { Typography } from "antd";
+
+import { STATUS } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
 
 const getStatusStyles = (status) => {
-  if (status === "Closed") {
+  if (status === STATUS.CLOSED) {
     return ["statusContainer_success", "statusText_success"];
   }
-  if (status === "Pending") {
+  if (status === STATUS.PENDING) {
     return ["statusContainer_failed", "statusText_failed"];
   }
   return ["statusContainer_progress", "statusText_progress"];

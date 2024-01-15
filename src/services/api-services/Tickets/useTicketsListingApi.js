@@ -28,14 +28,7 @@ const useTicketListingApi = () => {
     setErrorWhileFetchingTickets("");
     setTicketsFetchingAPIStatus(API_STATUS.LOADING);
     try {
-      let url =
-        ADMIN_ROUTE +
-        TICKET_LIST +
-        "?perPage=" +
-        pageSize +
-        "&" +
-        "page=" +
-        currentPage;
+      let url = `${ADMIN_ROUTE}${TICKET_LIST}?perPage=${pageSize}&page=${currentPage}`;
       if (searchQuery) {
         url = url + `&q=${searchQuery}`;
       }
@@ -52,7 +45,7 @@ const useTicketListingApi = () => {
         return;
       }
       const { meta } = res?.data;
-      // TODO: removed dummy data once we start getting data from backend
+      // TODO: Remove dummy data once we start getting data from backend
       //   setTicketList(res?.data?.records);
       // setMetaData(meta);
       const data = TICKET_DATA_LIST.slice(

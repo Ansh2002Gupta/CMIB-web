@@ -3,10 +3,12 @@ import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import * as _ from "lodash";
-import { Image, Input, Spin } from "antd";
+import { Image } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
+import CustomInput from "../../components/CustomInput/CustomInput";
+import CustomSpinner from "../../components/CustomSpinner/CustomSpinner";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import SearchFilter from "../../components/SearchFilter";
@@ -14,8 +16,8 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { getTicketOrQueryColumn } from "./ContactUsListingContentConfig";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
-import { QUERY_END_POINT } from "../../constant/apiEndpoints";
 import {
+  ACTIVE_TAB,
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
@@ -23,14 +25,12 @@ import {
 } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
 
-const ACTIVE_TAB = "activeTab";
-
 const ContactUsListingContent = ({
   current,
   currentActiveTab,
   pageSize,
   queryListingProps,
-  setCurrent,
+  setCurrentPage,
   setCurrentActiveTab,
   setPageSize,
   ticketListingProps,
@@ -90,7 +90,7 @@ const ContactUsListingContent = ({
 
   const onChangePageSize = (size) => {
     setPageSize(Number(size));
-    setCurrent(1);
+    setCurrentPage(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
@@ -100,7 +100,7 @@ const ContactUsListingContent = ({
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
-    setCurrent(newPageNumber);
+    setCurrentPage(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
@@ -166,7 +166,7 @@ const ContactUsListingContent = ({
           prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
           return prev;
         });
-        setCurrent(1);
+        setCurrentPage(1);
       }
     }
 
@@ -179,7 +179,7 @@ const ContactUsListingContent = ({
           prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
           return prev;
         });
-        setCurrent(1);
+        setCurrentPage(1);
       }
     }
   }, [queriesMetaData, ticketsMetaData, currentActiveTab]);
@@ -200,8 +200,9 @@ const ContactUsListingContent = ({
     <>
       <div className={styles.filterAndTableContainer}>
         <div className={styles.searchBarContainer}>
-          <Input
-            prefix={
+          <CustomInput
+            isPrefixRequired
+            prefixElement={
               <Image
                 src={getImage("searchIcon")}
                 className={styles.searchIcon}
@@ -211,8 +212,7 @@ const ContactUsListingContent = ({
             placeholder={intl.formatMessage({
               id: "label.searchByUserNameAndEmail",
             })}
-            allowClear
-            className={styles.searchBar}
+            customContainerStyles={styles.searchBar}
             value={searchedValue}
             onChange={(e) => handleOnUserSearch(e.target.value)}
           />
@@ -234,15 +234,11 @@ const ContactUsListingContent = ({
             originalData={listItemData || []}
           />
         )}
-        {isLoading && !error && (
-          <div className={styles.loaderContainer}>
-            <Spin size="large" />
-          </div>
-        )}
+        {isLoading && !error && <CustomSpinner />}
         {error && (
           <div className={styles.errorContainer}>
             <ErrorMessageBox
-              onClick={() => fetchItems(DEFAULT_PAGE_SIZE, 1)}
+              onRetry={() => fetchItems(DEFAULT_PAGE_SIZE, 1)}
               errorText={error}
               errorHeading={intl.formatMessage({
                 id: "label.error",
@@ -260,7 +256,7 @@ ContactUsListingContent.defaultProps = {
   currentActiveTab: 1,
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
-  setCurrent: () => {},
+  setCurrentPage: () => {},
   setCurrentActiveTab: () => {},
   setPageSize: () => {},
   ticketListingProps: {},
@@ -271,7 +267,7 @@ ContactUsListingContent.propTypes = {
   currentActiveTab: PropTypes.number,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
-  setCurrent: PropTypes.func,
+  setCurrentPage: PropTypes.func,
   setCurrentActiveTab: PropTypes.func,
   setPageSize: PropTypes.func,
   ticketListingProps: PropTypes.object,

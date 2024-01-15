@@ -1,3 +1,3 @@
-import StatusChip from "./StatusChip";
+import Chip from "./Chip";
 
-export default StatusChip;
+export default Chip;

@@ -6,8 +6,8 @@ export const colorPallets = {
   lightBlue1: "#F6F8F9",
   lightBlue2: "#f2f4fc",
   darkBlue: "#00137E",
-  skyBlue: "#E8FCFF",
-  darkBlue2: "#0099CA",
+  blue4: "#E8FCFF",
+  blue5: "#0099CA",
 
   // Red color shades
   red1: "#D93400",
@@ -28,8 +28,8 @@ export const colorPallets = {
   // Green color shades
   green1: "#04AF55",
   green2: "#00873E",
-  lightGreen: "#DFFFDC",
-  darkGreen: "#258B01",
+  green3: "#DFFFDC",
+  green4: "#258B01",
 
   // White color shades
   white: "#FBFCFF",
@@ -38,6 +38,6 @@ export const colorPallets = {
   whiteSmoke: "#f5f5f5",
 
   // Orange color shades
-  lightOrange: "#FFEFE5",
-  darkOrange: "#D76200",
+  orange1: "#FFEFE5",
+  orange2: "#D76200",
 };

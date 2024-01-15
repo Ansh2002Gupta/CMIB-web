@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
-import { ADMIN_ROUTE, QUERIES_LIST } from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, QUERY_END_POINT } from "../../../constant/apiEndpoints";
 import { API_STATUS } from "../../../constant/constant";
 
 const useQueriesListingApi = () => {
@@ -29,7 +29,7 @@ const useQueriesListingApi = () => {
     try {
       let url =
         ADMIN_ROUTE +
-        QUERIES_LIST +
+        QUERY_END_POINT +
         "?perPage=" +
         pageSize +
         "&" +
