@@ -50,11 +50,24 @@ export function getValidPageSize(currentPageSize) {
   return validPageSize;
 }
 
-export function getAccessibleModules(userDetails, modules) {
-  const userRoles = userDetails?.role?.map((role) => role?.slug);
-  const accessibleModules = modules?.filter((module) => {
-    return userRoles?.includes(module?.key);
-  });
+export function getAccessibleModules(role, modules) {
+  function isModuleAccessible(module, role) {
+    const moduleInRole = role?.role?.find(
+      (roleModule) => roleModule?.slug === module.key
+    );
+    if (moduleInRole) {
+      return true;
+    }
+    if (module?.subMenu) {
+      return module.subMenu?.some((childModule) =>
+        isModuleAccessible(childModule, role)
+      );
+    }
+    return false;
+  }
+  const filteredModules = modules?.filter((module) =>
+    isModuleAccessible(module, role)
+  );
 
-  return accessibleModules;
+  return filteredModules;
 }
