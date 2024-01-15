@@ -50,24 +50,27 @@ export function getValidPageSize(currentPageSize) {
   return validPageSize;
 }
 
-export function getAccessibleModules(role, modules) {
-  function isModuleAccessible(module, role) {
-    const moduleInRole = role?.role?.find(
-      (roleModule) => roleModule?.slug === module.key
-    );
-    if (moduleInRole) {
+export const getAccessibleModules = (useRoles, modules) => {
+  const filteredModules = modules?.filter((module) => {
+    const hasPermission = useRoles?.some((roleModule) => {
+      return roleModule?.slug?.toLowerCase() === module?.key?.toLowerCase();
+    });
+    if (hasPermission) {
       return true;
     }
-    if (module?.subMenu) {
-      return module.subMenu?.some((childModule) =>
-        isModuleAccessible(childModule, role)
-      );
+    if (module.subMenu) {
+      module.subMenu = module.subMenu?.filter((subModule) => {
+        return useRoles?.some((roleModule) => {
+          return (
+            roleModule?.name?.toLowerCase() === subModule?.key?.toLowerCase()
+          );
+        });
+      });
+      return module.subMenu.length > 0;
     }
+
     return false;
-  }
-  const filteredModules = modules?.filter((module) =>
-    isModuleAccessible(module, role)
-  );
+  });
 
   return filteredModules;
-}
+};
