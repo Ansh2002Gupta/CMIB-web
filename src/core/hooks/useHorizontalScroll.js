@@ -29,12 +29,16 @@ const useHorizontalScroll = ({ ref }) => {
     }
   };
 
- useEffect(() => {
-   return () => {
-     setIsScrollToEnd(false);
-     setScrollX(0);
-   };
- }, []);
+  useEffect(() => {
+    checkOverflow(); // Initial check for overflow
+    window.addEventListener("resize", checkOverflow); // Update overflow state on window resize
+
+    return () => {
+      window.removeEventListener("resize", checkOverflow); // Clean up the event listener
+      setIsScrollToEnd(false);
+      setScrollX(0);
+    };
+  }, [ref.current]); // Added ref.current as a dependency
 
   return {
     isScrollToEnd,

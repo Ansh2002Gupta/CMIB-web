@@ -223,8 +223,12 @@ const locale = {
   "label.website": "Website",
   "label.natureOfSupplier": "Nature of Supplier",
   "label.companyType": "Company Type",
-  "label.sourceOfInformation": "Source of information about ICAI Career Ascent Programme",
-  "label.companyLogo":"Company Logo"
+  "label.sourceOfInformation":
+    "Source of information about ICAI Career Ascent Programme",
+  "label.companyLogo": "Company Logo",
+  "label.frn": "FRN",
+  "label.companyIciaMessage":
+    "We wish to use your company logo in ICAI’s future Promotional materials stating that your company has participated in the Career Ascent programme of ICAI",
 };
 
 export default locale;

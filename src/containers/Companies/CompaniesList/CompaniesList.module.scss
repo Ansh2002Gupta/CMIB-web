@@ -16,7 +16,7 @@
 
 .filterAndTableContainer {
   background-color: var(--blueBg);
-  width: 100%;
+  width: var(--fullWidth);
   display: flex;
   flex-direction: column;
   gap: var(--gapSmall);

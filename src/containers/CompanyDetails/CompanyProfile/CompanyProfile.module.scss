@@ -2,38 +2,35 @@
   display: flex;
   flex-direction: column;
   gap: var(--gapSmall);
-  width: 100%;
+  width: var(--fullWidth);
 }
 
 .companyDetails {
   background-color: var(--bodyBg);
-  padding: var(--fontSizeXlargeMedium);
+  padding: var(--paddingMedium);
   padding-bottom: 0;
-  border-radius: var(--lineHeightExtraSmall);
+  border-radius: var(--radiusXLgMedium);
   border: var(--borderLight);
   gap: var(--gapMedium);
 }
 
 .headingText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
 }
 
 .gridItem {
-  padding-bottom: var(--gapMedium);
+  padding-bottom: var(--paddingMedium);
 }
 
 .blackText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
 }
 
 .grayText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
@@ -50,7 +47,6 @@
 
 a {
   color: var(--linkColor);
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }
@@ -62,25 +58,24 @@ a {
 }
 
 .periodText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
-  padding-top: var(--gapXXSmall);
-  padding-bottom: var(--gapXXSmall);
+  padding-top: var(--paddingXXSmall);
+  padding-bottom: var(--paddingXXSmall);
   padding-left: var(--gapSmallMedium);
   padding-right: var(--gapSmallMedium);
   margin-right: var(--gapXSmall);
-  margin-top: var(--gapXXSmall);
+  margin-top: var(--marginXXSmall);
   background-color: var(--lightBlueBg);
-  border-radius: var(--gapSmall);
+  border-radius: var(--radiusMLg);
 }
 
 .passwordDetails {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: var(--fullWidth);
 }
 
 .customIcon {
@@ -90,12 +85,11 @@ a {
 }
 
 .logo {
-  width: 100%;
+  width: var(--fullWidth);
 }
 
 .logoText {
   color: var(--subHeadingColor);
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   padding-top: var(--paddingExtraSmall);
@@ -104,7 +98,7 @@ a {
 .logoBox {
   display: flex;
   padding: var(--padding_9);
-  width: 347px;
+  width: var(--width_347);
   justify-content: center;
   align-items: center;
   flex: 1 0 0;
@@ -118,13 +112,12 @@ a {
 .logoName {
   display: flex;
   padding: var(--paddingSmall);
-  width: 347px;
+  width: var(--width_347);
   align-items: flex-end;
   gap: var(--gapXSmall);
   border: var(--borderLight);
   border-top: 0;
   color: var(--linkColor);
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightBold);
   border-bottom-left-radius: var(--radiusMd);
@@ -134,9 +127,12 @@ a {
 
 @media screen and (max-width: 450px) {
   .logoBox {
-    width: 100%;
+    width: var(--fullWidth);
   }
   .logoName {
-    width: 100%;
+    width: var(--fullWidth);
+  }
+  .sourceOfInformation {
+    gap: var(--gapXSmall);
   }
 }

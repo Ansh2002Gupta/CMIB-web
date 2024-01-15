@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
 import { Image, Typography } from "antd";
 
 import { TwoRow } from "../../../core/layouts";
+import { ThemeContext } from "core/providers/theme";
 
 import CustomGrid from "../../../components/CustomGrid";
 import {
@@ -122,7 +122,7 @@ const CompanyProfile = () => {
         bottomSection={
           <CustomGrid>
             {other_details.map((item, index) => {
-              const itemStyle = index === 0 ? styles.fullWidthItem : "";
+              const itemStyle = !index ? styles.fullWidthItem : "";
               return (
                 <TwoRow
                   key={item.id}
@@ -173,9 +173,7 @@ const CompanyProfile = () => {
               {intl.formatMessage({ id: "label.companyLogo" })}
             </Typography>
             <Typography className={styles.logoText}>
-              We wish to use your company logo in ICAI’s future Promotional
-              materials stating that your company has participated in the Career
-              Ascent programme of ICAI
+              {intl.formatMessage({ id: "label.companyIciaMessage" })}
             </Typography>
           </div>
         }

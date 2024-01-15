@@ -4,6 +4,7 @@ import { Button } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 import useHorizontalScroll from "../../core/hooks/useHorizontalScroll";
+import { SLIDE_BY } from "../../constant/constant";
 import styles from "./ContentSlider.module.scss";
 
 const ContentSlider = ({ children, containerCustomStyle, roundList }) => {
@@ -16,8 +17,6 @@ const ContentSlider = ({ children, containerCustomStyle, roundList }) => {
     isOverflowing,
     checkOverflow,
   } = useHorizontalScroll({ ref: containerBoxRef });
-
-  const SLIDE_BY = 300;
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

@@ -1,108 +1,104 @@
 .topSectionWithFRN {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: var(--gapSmall);
+  width: var(--fullWidth);
+  gap: var(--gapSmall);
 }
 
 .bottomSection {
-    padding: var(--paddingMediumSmall);
+  padding: var(--paddingMediumSmall);
 }
 
 .customStyles {
-    justify-content: space-between;
-    font-size: var(--fontSizeXlargeMedium);
+  justify-content: space-between;
+  font-size: var(--fontSizeXlargeMedium);
 }
 
 .buttonStyles {
-    padding: 0px var(--paddingExtraSmall);
-    font-size: var(--fontSizeSmall);
+  padding: 0px var(--paddingExtraSmall);
+  font-size: var(--fontSizeSmall);
 }
 
 .headerRightSection {
-    display: flex;
-    align-items: center;
-    gap: var(--gapMedium);
+  display: flex;
+  align-items: center;
+  gap: var(--gapMedium);
 }
 
 .statusContainer {
-    gap: var(--gapXSmall);
-    align-items: center;
+  gap: var(--gapXSmall);
+  align-items: center;
 }
 
 .textStyle {
-    font-family: var(--fontFamilyRegular);
-    font-size: var(--fontSizeSmall);
-    font-weight: var(--fontWeightMedium);
-    color: var(--bodyBg);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--bodyBg);
 }
 
 .blackText {
-    font-family: var(--fontFamilyRegular);
-    font-size: var(--fontSizeSmall);
-    font-weight: var(--fontWeightMedium);
-    color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
 }
 
 .blackBoldText {
-    font-family: var(--fontFamilyRegular);
-    font-size: var(--fontSizeSmall);
-    font-weight: var(--fontWeightBold);
-    color: var(--textBold);
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
 }
 
 .btnIconStyles {
-    width: var(--width_24) !important;
+  width: var(--width_24) !important;
 }
 
 .grayText {
-    font-family: var(--fontFamilyRegular);
-    font-size: var(--fontSizeSmall);
-    font-weight: var(--fontWeightMedium);
-    color: var(--darkGrey1);
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--darkGrey1);
 }
 
 .greyBtnCustomStyles {
-    padding: var(--paddingSmall) var(--paddingMediumSmall);
-    border-radius: var(--radiusXLg);
-    border: var(--borderLight);
-    font-size: var(--fontSizeSmall) !important;
-    font-weight: var(--fontWeightMedium) !important;
-    background-color: var(--bodyBg) !important;
-    color: var(--textBold);
-    min-width: 20px;
+  padding: var(--paddingSmall) var(--paddingMediumSmall);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
+  background-color: var(--bodyBg) !important;
+  color: var(--textBold);
+  min-width: var(--width_20);
 
-    &:hover {
-        background-color: var(--bodyBg) !important;
-        border: var(--borderLight) !important;
-        color: var(--textBold) !important;
-    }
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    border: var(--borderLight) !important;
+    color: var(--textBold) !important;
+  }
 }
 
 .greySmallBtnCustomStyles {
-    padding: var(--paddingSmall) var(--paddingMediumSmall);
-    border-radius: var(--radiusXLg);
-    border: var(--borderLight);
-    background-color: var(--bodyBg) !important;
-    min-width: var(--width_40);
-    min-height: var(--width_40);
+  padding: var(--paddingSmall) var(--paddingMediumSmall);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg) !important;
+  min-width: var(--width_40);
+  min-height: var(--width_40);
 
-    &:hover {
-        background-color: var(--bodyBg) !important;
-        border: var(--borderLight) !important;
-    }
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    border: var(--borderLight) !important;
+  }
 }
 
 @media (max-width: 500px) {
-    .headerRightSection {
-        gap: var(--gapXSmall);
-    }
+  .headerRightSection {
+    gap: var(--gapXSmall);
+  }
 
-    .customStyles {
-        font-size: var(--fontSizeXlarge);
-    }
+  .customStyles {
+    font-size: var(--fontSizeXlarge);
+  }
 
-    .statusContainer {
-        gap: var(--gapXXSmall);
-    }
+  .statusContainer {
+    gap: var(--gapXXSmall);
+  }
 }

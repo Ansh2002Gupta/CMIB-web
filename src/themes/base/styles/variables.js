@@ -86,6 +86,7 @@ const variables = {
   smallWidth: "30px",
   xSmallWidth: "16px",
   width_400: "400px",
+  width_347: "347px",
   width_350: "350px",
   width_300: "300px",
   width_200: "200px",
@@ -177,6 +178,7 @@ const variables = {
   marginMedium: "16px",
   marginSmall: "8px",
   marginXSmall: "6px",
+  marginXXSmall: "4px",
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };

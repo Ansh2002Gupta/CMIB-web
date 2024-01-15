@@ -11,13 +11,13 @@
   display: flex;
   gap: var(--gap_10);
   overflow-x: auto;
-  width: 100%;
+  width: var(--fullWidth);
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 .arrow {
-  border-radius: 50%;
+  border-radius: var(--halfWidth);
   width: var(--width_32);
   height: var(--height_32);
   display: flex;

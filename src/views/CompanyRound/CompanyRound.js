@@ -49,7 +49,7 @@ const CompanyRound = ({ roundList }) => {
           })}
         </ContentSlider>
       }
-      bottomSection={!!activeTabChildren && activeTabChildren.children}
+      bottomSection={!!activeTabChildren ? activeTabChildren.children : <></>}
     />
   );
 };
