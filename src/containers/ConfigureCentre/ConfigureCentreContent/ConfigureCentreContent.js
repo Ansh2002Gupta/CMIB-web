@@ -35,7 +35,11 @@ const ConfigureCentreContent = () => {
   }
 
   const goToEditCentrePage = (rowData) => {
-    navigate(`/view-centre-details?centreId=${rowData?.centreId}&edit=${true}`);
+    navigate(
+      `/view-centre-details?centreId=${rowData?.centreId}&mode=${
+        true ? "edit" : "view"
+      }`
+    );
   };
 
   const onHandleCentreStatus = (data) => {
