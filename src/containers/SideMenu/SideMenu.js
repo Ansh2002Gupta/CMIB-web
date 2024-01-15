@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import {
   ArrowRightOutlined,
@@ -10,6 +10,8 @@ import ModuleList from "./ModuleList";
 import TwoRow from "../../core/layouts/TwoRow";
 import TwoColumn from "../../core/layouts/TwoColumn";
 
+import { getAccessibleModules } from "../../constant/utils";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import modules from "./sideMenuItems";
 
@@ -20,6 +22,8 @@ const SideMenu = ({ logo }) => {
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [selectedModule, setSelectedModule] = useState(modules[0]);
 
+  const [userProfileState] = useContext(UserProfileContext);
+
   // TODO: need to create context for it if needed
   const handleOnSelectItem = (item) => {
     setSelectedModule(item);
@@ -28,6 +32,16 @@ const SideMenu = ({ logo }) => {
   const handleOnClickMenuItem = ({ key }) => {
     navigate(key);
   };
+
+  const accessibleModules = getAccessibleModules(
+    userProfileState?.userDetails,
+    modules
+  );
+
+  useEffect(() => {
+    setSelectedModule(accessibleModules[0]);
+  }, [userProfileState]);
+
   return (
     <ConfigProvider
       theme={{
@@ -84,7 +98,7 @@ const SideMenu = ({ logo }) => {
             bottomSection={
               openModuleSelector && (
                 <ModuleList
-                  modules={modules}
+                  modules={accessibleModules}
                   onSelectItem={handleOnSelectItem}
                 />
               )
@@ -99,7 +113,7 @@ const SideMenu = ({ logo }) => {
               mode="inline"
               items={selectedModule.children}
               expandIcon={<></>}
-              openKeys={modules.map((module) => module.key)}
+              openKeys={accessibleModules.map((module) => module.key)}
               onSelect={handleOnClickMenuItem}
             />
           )}
