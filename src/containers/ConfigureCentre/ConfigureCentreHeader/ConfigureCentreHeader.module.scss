@@ -1,6 +1,7 @@
 .headerContainer {
   padding: var(--paddingMedium);
-  width: 100%;
+  width: var(--fullWidth);
+  border: var(--borderLight);
 }
 
 .btnCustomStyles {
@@ -30,6 +31,18 @@
   }
 
   .btnCustomStyles {
-    min-height: 44px;
+    min-height: var(--height_44);
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeLarge);
+  }
+
+  .btnCustomStyles {
+    min-height: var(--height_20);
+    padding: var(--paddingXXSmall) var(--paddingExtraSmall);
+    border-radius: var(--radiusLg);
   }
 }
