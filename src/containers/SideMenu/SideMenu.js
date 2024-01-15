@@ -34,7 +34,7 @@ const SideMenu = ({ logo }) => {
   };
 
   const accessibleModules = getAccessibleModules(
-    userProfileState?.userDetails,
+    userProfileState?.userDetails?.role,
     modules
   );
 
