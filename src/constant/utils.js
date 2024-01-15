@@ -53,7 +53,7 @@ export function getValidPageSize(currentPageSize) {
 export function getAccessibleModules(userDetails, modules) {
   const userRoles = userDetails?.role?.map((role) => role?.slug);
   const accessibleModules = modules?.filter((module) => {
-    return userRoles?.includes(module?.key?.slice(1));
+    return userRoles?.includes(module?.key);
   });
 
   return accessibleModules;
