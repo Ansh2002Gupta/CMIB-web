@@ -17,7 +17,7 @@
 
 .loaderContainer {
   width: var(--fullWidth);
-  height: var(--height_50vh);
+  height: var(--fullHeight);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,6 +25,7 @@
 
 .errorContainer {
   width: var(--fullWidth);
+  height: var(--fullHeight);
   display: flex;
   justify-content: center;
   align-items: center;

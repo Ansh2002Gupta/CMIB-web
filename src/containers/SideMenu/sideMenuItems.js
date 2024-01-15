@@ -31,7 +31,7 @@ const newlyQualifiedPlacementsMenu = [
     icon: <UserOutlined />,
   },
   {
-    label: "Round 1 Placements",
+    label: "Round 2 Placements",
     key: "/round-2-placements",
     icon: <UserOutlined />,
   },
