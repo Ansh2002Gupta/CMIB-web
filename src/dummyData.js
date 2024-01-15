@@ -506,6 +506,14 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentFromDate: "2023-12-19T05:11:46.000000Z",
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
+  {
+    sNo: "12",
+    centreName: "Akola-III",
+    companyStartDate: "2023-12-19T05:11:46.000000Z",
+    companyEndDate: "2023-12-19T05:11:46.000000Z",
+    consentFromDate: "2023-12-19T05:11:46.000000Z",
+    consentToDate: "2023-12-19T05:11:46.000000Z",
+  },
 ];
 
 export const LAST_MARKING_REGESTRATION_DETAILS = [
@@ -571,6 +579,12 @@ export const LAST_MARKING_REGESTRATION_DETAILS = [
   },
   {
     sNo: "11",
+    centreName: "Akola-III",
+    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
+    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
+  },
+  {
+    sNo: "12",
     centreName: "Akola-III",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",

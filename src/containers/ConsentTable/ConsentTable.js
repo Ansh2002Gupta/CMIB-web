@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -52,6 +52,24 @@ const ConsentTable = ({
   );
 
   usePaginationEffect(searchParams, setSearchParams);
+
+  console.log(
+    "current..",
+    current,
+    "pageSize..",
+    pageSize,
+    "tableData..",
+    tableData
+  );
+
+  useEffect(() => {
+    const startIndex = (current - 1) * pageSize;
+    const endIndex = current * pageSize;
+    const updatedData = originalData.slice(startIndex, endIndex);
+    setTableData(updatedData);
+
+    console.log(updatedData, "updatedData");
+  }, [current, pageSize, searchParams]);
 
   return (
     <DataTable
