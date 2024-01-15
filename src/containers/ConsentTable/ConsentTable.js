@@ -58,8 +58,6 @@ const ConsentTable = ({
     const endIndex = current * pageSize;
     const updatedData = originalData.slice(startIndex, endIndex);
     setTableData(updatedData);
-
-    console.log(updatedData, "updatedData");
   }, [current, pageSize, searchParams]);
 
   return (
