@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import {
   ArrowRightOutlined,
@@ -6,17 +7,14 @@ import {
   UpOutlined,
 } from "@ant-design/icons";
 
-import ModuleList from "./ModuleList";
-import TwoRow from "../../core/layouts/TwoRow";
-import TwoColumn from "../../core/layouts/TwoColumn";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import { getAccessibleModules } from "../../constant/utils";
+import ModuleList from "./ModuleList";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { getAccessibleModules } from "../../constant/utils";
 import modules from "./sideMenuItems";
-
 import styles from "./sideMenu.module.scss";
-import { useIntl } from "react-intl";
 
 const SideMenu = ({ logo }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
