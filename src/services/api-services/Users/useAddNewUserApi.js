@@ -17,7 +17,7 @@ const useAddNewUserApi = () => {
   const addNewUser = async (payload, onSuccessCallback) => {
     const formData = new FormData();
     for (let [key, value] of Object.entries(payload)) {
-      if (key?.toLowerCase() === "role") {
+      if (key?.toLowerCase() === "roles") {
         value = value.map((item) => item.id);
         value = value.join(",");
       }
