@@ -182,6 +182,7 @@ const locale = {
     "Last Date of Registration for Candidates for Big Centres",
   "label.consent.lastDateSmallCentres":
     "Last Date of Registration for Candidates for Small Centres",
+  "label.tryAgain": "Try Again",
   "label.centreCode": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
   "label.centreStartTime": "Centre Start Time",
