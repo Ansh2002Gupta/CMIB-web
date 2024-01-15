@@ -1,6 +1,8 @@
 .container {
   background-color: var(--bodyBg);
   border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  overflow: hidden;
 }
 
 .rowPerPageOptionsAndPaginationContainer {

@@ -17,5 +17,5 @@ export const CHECK_OTP_END_POINT = "/two-factor-check";
 export const IMAGE_UPLOAD_END_POINT = "/save-logo";
 export const USERS_END_POINT = "/users";
 export const CENTER_END_POINT = "/centers";
-export const ADD_NEW_CENTERS_END_POINT = "/create";
+export const CREATE = "/create";
 export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
