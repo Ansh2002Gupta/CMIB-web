@@ -141,6 +141,7 @@ export const ALLOWED_MOBILE_PREFIXES = [
 export const PAGINATION_PROPERTIES = {
   CURRENT_PAGE: "current-page",
   ROW_PER_PAGE: "row-per-page",
+  SEARCH_QUERY: "search-query",
 };
 
 //TODO:need to implement it using api 

@@ -13,8 +13,6 @@ const CustomTabs = ({
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const tabsKeyName = tabsKeyText || "tab";
-
   const tabClass = (tabKey) => {
     let classes = `${styles.tab}`;
     if (activeTab === tabKey) classes += ` ${styles.active}`;
@@ -24,19 +22,19 @@ const CustomTabs = ({
   const handleSelectTab = (tabName) => {
     setActiveTab(tabName);
     setSearchParams((params) => {
-      params.set(tabsKeyName, tabName);
+      params.set(tabsKeyText, tabName);
       return params;
     });
   };
 
   useEffect(() => {
-    let tabQueryParam = searchParams.get(tabsKeyName);
+    let tabQueryParam = searchParams.get(tabsKeyText);
     if (tabs.some((tab) => tab.key === tabQueryParam)) {
       setActiveTab(tabQueryParam);
     } else {
       setActiveTab(tabs[0].key);
       setSearchParams((params) => {
-        params.set(tabsKeyName, tabs[0].key);
+        params.set(tabsKeyText, tabs[0].key);
         return params;
       });
     }
@@ -63,7 +61,7 @@ CustomTabs.defaultProps = {
   activeTab: "",
   setActiveTab: () => {},
   tabs: [],
-  tabsKeyText: "",
+  tabsKeyText: "tab",
 };
 
 CustomTabs.propTypes = {
