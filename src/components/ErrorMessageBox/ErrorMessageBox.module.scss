@@ -41,7 +41,7 @@
 
 .btn {
   background-color: var(--error);
-  min-height: 50px;
+  min-height: var(--height_50);
 
   color: var(--headerBg);
   font-size: var(--fontSizeSmall);
