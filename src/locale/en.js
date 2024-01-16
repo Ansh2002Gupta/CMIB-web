@@ -225,6 +225,7 @@ const locale = {
   "label.answered": "Answered",
   "label.markAnswered": "Mark Answered",
   "label.errorOccured": "Error Occured",
+  "label.visitWebsite": "Visit Website",
 };
 
 export default locale;

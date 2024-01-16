@@ -143,6 +143,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
 };
 
+
 //TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
@@ -250,4 +251,14 @@ export const STATUS = {
   PENDING: "Pending",
   SUCCESS: "Success",
   ANSWERED: "Answered",
+};
+
+export const MODULE_KEYS = {
+  CONTROL_KEY: "control",
+  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placement",
+  CA_JOBS_KEY: "ca-jobs",
+  EXPERIENCED_MEMBERS_KEY: "experienced-members",
+  CARRER_ASCENT_KEY: "career-ascent",
+  WOMEN_PARTTIME_KEY: "women-placement",
+  OVERSEAS_CHAPTERS_KEY: "overseas-placement",
 };
