@@ -51,6 +51,7 @@ const variables = {
   // Font-size
   fontSizeExtraSmall: "12px",
   fontSizeSmall: "14px",
+  fontSizeSmallMedium: "15px",
   fontSizeNormal: "16px",
   fontSizeLarge: "18px",
   fontSizeXlarge: "20px",
