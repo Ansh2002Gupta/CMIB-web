@@ -17,10 +17,7 @@ import {
   CENTER_END_POINT,
   PLACEMENT_ROUTE,
 } from "../../../constant/apiEndpoints";
-import {
-  PAGINATION_PROPERTIES,
-  SORT_VALUES,
-} from "../../../constant/constant";
+import { PAGINATION_PROPERTIES, SORT_VALUES } from "../../../constant/constant";
 import {
   getValidPageNumber,
   getValidPageSize,
@@ -237,6 +234,28 @@ const ConfigureCentreContent = () => {
       },
     }),
   ];
+
+  useEffect(() => {
+    if (data?.meta) {
+      const { total } = data?.meta;
+      const numberOfPages = Math.ceil(total / pageSize);
+      if (current > numberOfPages || current <= 0) {
+        setCurrent(1);
+        setSearchParams((prev) => {
+          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+          return prev;
+        });
+        const requestedParams = {
+          perPage: pageSize,
+          page: 1,
+          keyword: searchedValue,
+          sort: sortedOrder.sort,
+          order: sortedOrder.order,
+        };
+        fetchData(requestedParams);
+      }
+    }
+  }, [data?.meta]);
 
   useEffect(() => {
     const validPageSize = getValidPageSize(
