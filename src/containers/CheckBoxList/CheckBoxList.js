@@ -18,8 +18,11 @@ const CheckBoxList = ({
   setSelectedModules,
 }) => {
   const intl = useIntl();
-  const [areAllModulesSelected, setAreAllModulesSelected] = useState(false);
-  const [areAllControlsSelected, setAreAllControlsSelected] = useState(false);
+  const areAllModulesSelected =
+    selectedModules.length === PERMISION_AND_ROLE.data.length;
+  const areAllControlsSelected =
+    selectedControls.length === PERMISION_AND_ROLE.data[0].permissions.length;
+
   const controlModuleId = useMemo(() => {
     return PERMISION_AND_ROLE?.data?.filter(
       (item) => item.slug === "control"
@@ -40,31 +43,15 @@ const CheckBoxList = ({
   const handleSelectAll = (
     areAllElementSelected,
     setSelectedOptionArray,
-    setAreAllElementSelected,
     arrayOfAllValidId
   ) => {
     const arrayOfAllId = arrayOfAllValidId
       ?.filter((item) => !areAllElementSelected)
       ?.map((item) => item.id);
     setSelectedOptionArray(arrayOfAllId);
-    setAreAllElementSelected((prev) => !prev);
   };
 
   useEffect(() => {
-    if (selectedModules.length === PERMISION_AND_ROLE.data.length) {
-      setAreAllModulesSelected(true);
-    } else {
-      setAreAllModulesSelected(false);
-    }
-
-    if (
-      selectedControls.length === PERMISION_AND_ROLE.data[0].permissions.length
-    ) {
-      setAreAllControlsSelected(true);
-    } else {
-      setAreAllControlsSelected(false);
-    }
-
     if (selectedModules.includes(controlModuleId)) {
       setIsAccessValid(!!selectedControls?.length);
     } else {
@@ -85,7 +72,6 @@ const CheckBoxList = ({
             handleSelectAll(
               areAllModulesSelected,
               setSelectedModules,
-              setAreAllModulesSelected,
               PERMISION_AND_ROLE?.data
             )
           }
@@ -112,7 +98,6 @@ const CheckBoxList = ({
           );
         })}
       </div>
-
       {selectedModules.includes(controlModuleId) && (
         <>
           <Typography>
@@ -125,8 +110,7 @@ const CheckBoxList = ({
                 handleSelectAll(
                   areAllControlsSelected,
                   setSelectedControls,
-                  setAreAllControlsSelected,
-                  PERMISION_AND_ROLE?.data[0]?.permissions
+                  PERMISION_AND_ROLE?.data[0]?.permissions,
                 )
               }
             >
