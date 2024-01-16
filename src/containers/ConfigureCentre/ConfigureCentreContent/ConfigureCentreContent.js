@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
-import { Image, Input, Spin } from "antd";
+import { Image, Input } from "antd";
 import * as _ from "lodash";
 
+import CustomLoader from "../../../components/CustomLoader";
 import DataTable from "../../../components/DataTable";
 import ErrorMessageBox from "../../../components/ErrorMessageBox/ErrorMessageBox";
 import useFetch from "../../../core/hooks/useFetch";
@@ -17,7 +18,6 @@ import {
   PLACEMENT_ROUTE,
 } from "../../../constant/apiEndpoints";
 import {
-  DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
   SORT_VALUES,
 } from "../../../constant/constant";
@@ -312,12 +312,7 @@ const ConfigureCentreContent = () => {
               originalData={data?.records}
             />
           )}
-          {(isLoading || isUpdatingCenterDetails) && (
-            <div className={styles.box}>
-              {/* TODO: Replace it with custom spinner/loader */}
-              <Spin size="large" />
-            </div>
-          )}
+          {(isLoading || isUpdatingCenterDetails) && <CustomLoader />}
         </div>
       )}
     </>

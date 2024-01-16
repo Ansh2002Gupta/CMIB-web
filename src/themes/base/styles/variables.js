@@ -3,6 +3,7 @@ import { colorPallets } from "../../../constant/colors";
 const variables = {
   // Background colors
   bodyBg: colorPallets.white1,
+  bodyBg2: colorPallets.white2,
   primaryBg: colorPallets.blue1,
   textPrimary: colorPallets.white1,
   blueBg: colorPallets.lightBlue1,

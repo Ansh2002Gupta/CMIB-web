@@ -25,9 +25,10 @@ function withPrivateAccess(Component) {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth]);
 
-    if (userProfileDetails.isGettingUserDetails) {
-      return <CustomLoader />;
-    }
+    // TODO: Need to re-implement the below logic
+    // if (userProfileDetails.isGettingUserDetails) {
+    //   return <CustomLoader />;
+    // }
 
     return <Component {...props} />;
   };

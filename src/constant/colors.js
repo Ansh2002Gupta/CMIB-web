@@ -31,6 +31,7 @@ export const colorPallets = {
   // White color shades
   white: "#FBFCFF",
   white1: "#ffffff",
+  white2: "#fafafa",
   snow: "#F2F4FC",
   whiteSmoke: "#f5f5f5",
 };

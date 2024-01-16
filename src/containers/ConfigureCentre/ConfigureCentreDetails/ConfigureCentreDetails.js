@@ -5,6 +5,7 @@ import { Select, Spin, Typography } from "antd";
 import { Base, TwoColumn, TwoRow } from "../../../core/layouts";
 
 import CustomButton from "../../../components/CustomButton";
+import CustomLoader from "../../../components/CustomLoader";
 import CustomGrid from "../../../components/CustomGrid";
 import CustomInput from "../../../components/CustomInput";
 import CustomSwitch from "../../../components/CustomSwitch";
@@ -99,12 +100,7 @@ const ConfigureCentreDetails = () => {
   return (
     <>
       {notificationContextHolder}
-      {isLoading && (
-        <div className={styles.box}>
-          {/* TODO: Replace this with customLoader component */}
-          <Spin size="large" /> 
-        </div>
-      )}
+      {isLoading && <CustomLoader />}
       {!isLoading && (
         <TwoRow
           className={styles.mainContainer}
