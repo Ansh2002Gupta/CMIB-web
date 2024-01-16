@@ -84,14 +84,6 @@ const CompaniesContent = () => {
     setCurrentTableData(updatedData);
   }, [current, pageSize]);
 
-  //   useEffect(() => {
-  //    setSearchParams((prev) => {
-  //     prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], current);
-  //     prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], pageSize);
-  //     return prev;
-  //   });
-  // }, [ current, pageSize ]);
-
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.companyName" }),
