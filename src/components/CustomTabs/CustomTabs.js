@@ -27,19 +27,6 @@ const CustomTabs = ({
     });
   };
 
-  useEffect(() => {
-    let tabQueryParam = searchParams.get(tabsKeyText);
-    if (tabs.some((tab) => tab.key === tabQueryParam)) {
-      setActiveTab(tabQueryParam);
-    } else {
-      setActiveTab(tabs[0].key);
-      setSearchParams((params) => {
-        params.set(tabsKeyText, tabs[0].key);
-        return params;
-      });
-    }
-  }, [tabs, setActiveTab]);
-
   return (
     <div className={styles["tab-container"]}>
       <div className={styles["tab-box"]}>

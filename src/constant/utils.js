@@ -49,3 +49,10 @@ export function getValidPageSize(currentPageSize) {
   }
   return validPageSize;
 }
+
+export function getCurrentActiveTab(currentTabValue, validTabsValueArray) {
+  if (!currentTabValue || !validTabsValueArray.includes(currentTabValue)) {
+    return "1";
+  }
+  return currentTabValue;
+}

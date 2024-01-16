@@ -174,7 +174,6 @@ export const getTicketOrQueryColumn = (
             className={[
               styles.statusBox,
               styles[styleClassForContainer],
-              styles.tableCell,
             ].join(" ")}
           >
             <Typography className={styles[styleClassForText]}>
