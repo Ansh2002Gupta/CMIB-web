@@ -6,10 +6,10 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import ContentHeader from "../ContentHeader/ContentHeader";
 import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as CheckIconWhite } from "../../themes/base/assets/images/check-white.svg";
+import { STATUS } from "../../constant/constant";
 import styles from "./QueryDetailsHeader.module.scss";
 
-// TODO: update by taking pull from development
-const QueryDetailsHeader = ({ id }) => {
+const QueryDetailsHeader = ({ id, status }) => {
   const intl = useIntl();
   const responsive = useResponsive();
 
@@ -19,12 +19,21 @@ const QueryDetailsHeader = ({ id }) => {
         headerText={id}
         headerComponent={
           <Chip
-            // TODO : status will come from API.
-            label={intl.formatMessage({
-              id: "label.pending",
-            })}
-            textColor={styles.pending_color}
-            bgColor={styles.pending_bg}
+            label={status}
+            textColor={
+              styles[
+                status?.toLowerCase() === STATUS.PENDING?.toLowerCase()
+                  ? "pending_color"
+                  : "success_color"
+              ]
+            }
+            bgColor={
+              styles[
+                status?.toLowerCase() === STATUS.PENDING?.toLowerCase()
+                  ? "pending_bg"
+                  : "success_bg"
+              ]
+            }
           />
         }
         rightSection={

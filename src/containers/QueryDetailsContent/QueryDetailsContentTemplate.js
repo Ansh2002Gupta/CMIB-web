@@ -9,6 +9,7 @@ const QueryDetailsContentTemplate = ({ type, data, getLayout }) => {
   return (
     <div className={styles.container}>
       <Descriptions
+        colon={false}
         className={styles.description}
         layout="vertical"
         items={items}

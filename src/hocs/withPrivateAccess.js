@@ -25,11 +25,18 @@ function withPrivateAccess(Component) {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth]);
 
-    if (userProfileDetails.isGettingUserDetails) {
+    if (
+      userProfileDetails.isGettingUserDetails ||
+      !Object.keys(userProfileDetails.userDetails)?.length
+    ) {
       return <CustomLoader />;
     }
 
-    return <Component {...props} />;
+    if (!!Object.keys(userProfileDetails.userDetails)?.length) {
+      return <Component {...props} />;
+    }
+
+    return null;
   };
 }
 

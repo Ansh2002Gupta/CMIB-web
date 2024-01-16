@@ -8,7 +8,7 @@ import { Image } from "antd";
 import { ThemeContext } from "core/providers/theme";
 
 import CustomInput from "../../components/CustomInput/CustomInput";
-import CustomSpinner from "../../components/CustomSpinner/CustomSpinner";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import SearchFilter from "../../components/SearchFilter";
@@ -64,7 +64,10 @@ const ContactUsListingContent = ({
   } = ticketListingProps;
 
   const isLoading = isFetchingQueries || isFetchingTickets;
-  const error = errorWhileFetchingQueries || errorWhileFetchingTickets;
+  const error =
+    currentActiveTab === 2
+      ? errorWhileFetchingQueries
+      : errorWhileFetchingTickets;
   const listItemData = currentActiveTab === 1 ? ticketList : queriesList;
   const isSuccessfullyFetched =
     areTicketsFetchedSuccesfully || areQueriesFetchedSuccessfully;
@@ -234,7 +237,7 @@ const ContactUsListingContent = ({
             originalData={listItemData || []}
           />
         )}
-        {isLoading && !error && <CustomSpinner />}
+        {isLoading && !error && <CustomLoader />}
         {error && (
           <div className={styles.errorContainer}>
             <ErrorMessageBox

@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
-import CustomSpinner from "../../components/CustomSpinner";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import QueryDetailsContent from "../../containers/QueryDetailsContent";
 import QueryDetailsHeader from "../../containers/QueryDetailsHeader";
@@ -32,7 +32,7 @@ const QueryDetails = () => {
 
   return (
     <>
-      {isLoading && <CustomSpinner />}
+      {isLoading && <CustomLoader />}
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
@@ -44,7 +44,9 @@ const QueryDetails = () => {
       )}
       {isSuccess && (
         <TwoRow
-          topSection={<QueryDetailsHeader id={data?.id} />}
+          topSection={
+            <QueryDetailsHeader id={data?.id} status={data?.status} />
+          }
           bottomSection={
             <QueryDetailsContent type={data?.type} {...{ data }} />
           }
