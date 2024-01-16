@@ -12,11 +12,7 @@ import useLogin from "../../services/api-services/Login/useLogin";
 import useAuthOTP from "../../services/api-services/Otp/useAuthOTP";
 import useCheckOTP from "../../services/api-services/Otp/useCheckOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import {
-  ADMIN_ROUTE,
-  CHECK_OTP_END_POINT,
-  VERIFY_OTP,
-} from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CHECK_OTP_END_POINT } from "../../constant/apiEndpoints";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";
 import styles from "./loginForm.module.scss";
@@ -209,13 +205,9 @@ const LoginForm = () => {
             }}
             onSubmit={(otp) =>
               handleCheckOTP({
-                onSuccessCallback: () => navigate(DASHBOARD),
-                payload: {
-                  email: formInputs.userName,
-                  otp,
-                  two_factor_check: 1,
-                },
-                url: ADMIN_ROUTE + VERIFY_OTP,
+                onSuccess: () => navigate(DASHBOARD),
+                payload: { email: formInputs.userName, otp },
+                url: ADMIN_ROUTE + CHECK_OTP_END_POINT,
               })
             }
           />
