@@ -60,6 +60,7 @@
 }
 
 .statusBox {
+  width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -103,7 +104,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--gapXSmall);
-}
+} 
 
 .centerText {
   display: flex;
