@@ -16,3 +16,5 @@ export const CHECK_OTP_END_POINT = "/two-factor-check";
 export const IMAGE_UPLOAD_END_POINT = "/save-logo";
 export const USERS_END_POINT = "/users";
 export const GET_USER_PROFILE_DETAILS = "/get-user-profile-details";
+export const PLACEMENT_CORE_SESSION = "placement-core/sessions";
+export const CREATE = "/create";

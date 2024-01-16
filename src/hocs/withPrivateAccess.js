@@ -25,9 +25,10 @@ function withPrivateAccess(Component) {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth]);
 
-    if (userProfileDetails.isGettingUserDetails) {
-      return <CustomLoader />;
-    }
+    //TODO: Need to re-check the below logic again as it is causing current view to mount twice.
+    // if (userProfileDetails.isGettingUserDetails) {
+    //   return <CustomLoader />;
+    // }
 
     return <Component {...props} />;
   };

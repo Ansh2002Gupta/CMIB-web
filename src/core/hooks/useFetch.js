@@ -43,6 +43,7 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
       setApiStatus(API_STATUS.LOADING);
       error && setError("");
       const res = await Http.get(url, apiOptions);
+      console.log(res, "res");
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS
