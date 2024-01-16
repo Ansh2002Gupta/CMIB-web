@@ -226,6 +226,14 @@ const locale = {
   "label.markAnswered": "Mark Answered",
   "label.errorOccured": "Error Occured",
   "label.visitWebsite": "Visit Website",
+  "label.query": "Query",
+  "label.firmRegistrationNo": "Firm Registration No. [FRN]",
+  "label.partnersNo": "Partners (No.)",
+  "label.currentIndustry": "Current Industry",
+  "label.contactPersonName": "Contact Person Name",
+  "label.contactPersonDesignation": "Contact Person Designation",
+  "label.dummyName": "Dummy Name",
+  "label.studentName": "Student Name",
 };
 
 export default locale;
