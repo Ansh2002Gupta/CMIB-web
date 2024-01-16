@@ -155,6 +155,17 @@ const ConfigureCentreContent = () => {
     debounceSearch(requestedParams);
   };
 
+  const handleTryAgain = () => {
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      keyword: searchedValue,
+      sort: sortedOrder.sort,
+      order: sortedOrder.order,
+    };
+    fetchData(requestedParams);
+  };
+
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.centreName" }),
@@ -169,13 +180,13 @@ const ConfigureCentreContent = () => {
           };
         });
         const requestedParams = {
-          perPage: DEFAULT_PAGE_SIZE,
+          perPage: pageSize,
           page: 1,
           keyword: searchedValue,
           sort: updatedSortValue,
           order: sortedOrder.order,
         };
-        fetchData(requestedParams);
+        debounceSearch(requestedParams);
       },
       renderText: {
         isTextBold: true,
@@ -257,7 +268,7 @@ const ConfigureCentreContent = () => {
       {isError && (
         <div className={styles.box}>
           <ErrorMessageBox
-            onClick={fetchData}
+            onClick={handleTryAgain}
             errorText={errorString}
             errorHeading={intl.formatMessage({ id: "label.error" })}
           />
