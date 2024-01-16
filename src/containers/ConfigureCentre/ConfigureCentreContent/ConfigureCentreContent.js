@@ -173,7 +173,7 @@ const ConfigureCentreContent = () => {
               onChangeCurrentPage,
             }}
             currentDataLength={data?.length}
-            originalData={data}
+            originalData={data?.records}
           />
         </div>
       )}
