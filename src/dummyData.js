@@ -367,7 +367,7 @@ export const INITIAL_CENTRE_DETAILS = {
   centreName: "",
   centreId: "",
   status: true,
-}
+};
 
 export const SETUP_CENTRE_DETAILS = [
   {
@@ -414,5 +414,62 @@ export const SETUP_CENTRE_DETAILS = [
     norm1: "17000",
     norm2: "54000",
     norm2MinVacancy: "23",
+  },
+];
+export const MOCK_INTERVIEW = [
+  {
+    sNo: "1",
+    centreName: "Ghaziabad-I",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "2",
+    centreName: "Ghaziabad-II",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "3",
+    centreName: "Meerut-I",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "4",
+    centreName: "Meerut-II",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "5",
+    centreName: "Delhi-I",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "6",
+    centreName: "Delhi-II",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "7",
+    centreName: "Ahmedabad-I",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "8",
+    centreName: "Ahmedabad-II",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "9",
+    centreName: "Akola-I",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "10",
+    centreName: "Akola-II",
+    totalStudentBooked: "12",
+  },
+  {
+    sNo: "11",
+    centreName: "Akola-III",
+    totalStudentBooked: "12",
   },
 ];

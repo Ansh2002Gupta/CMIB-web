@@ -8,6 +8,7 @@ import CircleCheck from "./CircleCheck.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
+import download from "./download.svg";
 import dummyPerson from "./dummy person image.png";
 import eye from "./eye.svg";
 import filter from "./filter.svg";
@@ -38,6 +39,7 @@ const images = {
   arrowRightFilter,
   Building,
   checkedBox,
+  download,
   dummyPerson,
   CircleCheck,
   DeviceMessage,
