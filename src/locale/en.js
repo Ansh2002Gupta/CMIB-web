@@ -237,6 +237,7 @@ const locale = {
   "label.placeholder.lastRegistrationDate": "Select Last Date for registration",
   "label.placeholder.psychometricTestDate":
     "Select To Date for psychometric test",
+  "label.visitWebsite": "Visit Website",
 };
 
 export default locale;
