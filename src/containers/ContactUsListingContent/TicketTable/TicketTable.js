@@ -44,7 +44,7 @@ const TicketTable = ({
     renderColumn
   );
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + TICKET_LIST + "/aed",
+    url: ADMIN_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
   });
   let errorString = error;
