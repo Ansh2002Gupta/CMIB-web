@@ -36,7 +36,7 @@ const SetupMockInterviewContent = () => {
   const updateTableData = (currentPageNumber, currentPageSize) => {
     const startIndex = (currentPageNumber - 1) * currentPageSize;
     const endIndex = currentPageNumber * currentPageSize;
-    const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
+    const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
   };
 
