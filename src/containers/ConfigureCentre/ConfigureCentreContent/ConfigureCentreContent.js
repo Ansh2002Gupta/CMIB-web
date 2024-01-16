@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Image, Input, Spin } from "antd";
+import * as _ from "lodash";
 
 import DataTable from "../../../components/DataTable";
 import ErrorMessageBox from "../../../components/ErrorMessageBox/ErrorMessageBox";
@@ -10,11 +12,20 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
-import { CONFIGURE_CENTRES } from "../../../dummyData";
 import {
   CENTER_END_POINT,
   PLACEMENT_ROUTE,
 } from "../../../constant/apiEndpoints";
+import {
+  DEFAULT_PAGE_SIZE,
+  PAGINATION_PROPERTIES,
+  SORT_VALUES,
+} from "../../../constant/constant";
+import {
+  getValidPageNumber,
+  getValidPageSize,
+  toggleSorting,
+} from "../../../constant/utils";
 import styles from "./ConfigureCentreContent.module.scss";
 
 const ConfigureCentreContent = () => {
@@ -22,22 +33,35 @@ const ConfigureCentreContent = () => {
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [searchedValue, setSearchedValue] = useState("");
-  const [currentTableData, setCurrentTableData] = useState(CONFIGURE_CENTRES);
-  const [current, setCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [searchedValue, setSearchedValue] = useState(
+    searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
+  );
+
+  const [current, setCurrent] = useState(
+    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+  );
+  const [pageSize, setPageSize] = useState(
+    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+  );
+  const [sortedOrder, setSoretdOrder] = useState({
+    sort: SORT_VALUES.ASCENDING,
+    order: "center_name",
+  });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const {
-    isLoading: isUpdatingCenterDetails,
-    updateCenterDetails,
-  } = useUpdateCenterDetailsApi();
+  const { isLoading: isUpdatingCenterDetails, updateCenterDetails } =
+    useUpdateCenterDetailsApi();
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: PLACEMENT_ROUTE + CENTER_END_POINT,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+  const debounceSearch = useMemo(() => _.debounce(fetchData, 500), []);
   let errorString = error;
   if (typeof error === "object") {
     errorString = error?.data?.message;
@@ -57,7 +81,14 @@ const ConfigureCentreContent = () => {
       id,
       payload,
       () => {
-        fetchData();
+        const requestedParams = {
+          perPage: pageSize,
+          page: current,
+          keyword: searchedValue,
+          sort: sortedOrder.sort,
+          order: sortedOrder.order,
+        };
+        fetchData(requestedParams);
       },
       (errorMessage) => {
         showNotification(errorMessage, "error");
@@ -66,24 +97,90 @@ const ConfigureCentreContent = () => {
   };
 
   const onChangePageSize = (size) => {
-    //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
+      return prev;
+    });
+    const requestedParams = {
+      perPage: size,
+      page: 1,
+      keyword: searchedValue,
+      sort: sortedOrder.sort,
+      order: sortedOrder.order,
+    };
+    fetchData(requestedParams);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
-    //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
+      return prev;
+    });
+    const requestedParams = {
+      perPage: pageSize,
+      page: newPageNumber,
+      keyword: searchedValue,
+      sort: sortedOrder.sort,
+      order: sortedOrder.order,
+    };
+    fetchData(requestedParams);
+  };
+
+  const handleOnUserSearch = (str) => {
+    setSearchedValue(str);
+    setCurrent(1);
+    str &&
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+
+    !str &&
+      setSearchParams((prev) => {
+        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
+        return prev;
+      });
+    const requestedParams = {
+      perPage: pageSize,
+      page: 1,
+      keyword: str,
+      sort: sortedOrder.sort,
+      order: sortedOrder.order,
+    };
+    debounceSearch(requestedParams);
   };
 
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.centreName" }),
-      dataIndex: "center_name",
-      key: "center_name",
-      sortTypeText: true,
-      sortKey: "center_name",
-      renderText: { isTextBold: true, visible: true },
+      dataIndex: "name",
+      key: "name",
+      sorter: () => {
+        const updatedSortValue = toggleSorting(sortedOrder.sort);
+        setSoretdOrder((prev) => {
+          return {
+            ...prev,
+            sort: updatedSortValue,
+          };
+        });
+        const requestedParams = {
+          perPage: DEFAULT_PAGE_SIZE,
+          page: 1,
+          keyword: searchedValue,
+          sort: updatedSortValue,
+          order: sortedOrder.order,
+        };
+        fetchData(requestedParams);
+      },
+      renderText: {
+        isTextBold: true,
+        visible: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreId" }),
@@ -102,10 +199,6 @@ const ConfigureCentreContent = () => {
       dataIndex: "created_at",
       key: "created_at",
       renderText: { isTypeDate: true, visible: true },
-      sortKey: "created_at",
-      sortTypeDate: true,
-      sortDirection: ["ascend"],
-      defaultSortOrder: "ascend",
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.status" }),
@@ -131,21 +224,36 @@ const ConfigureCentreContent = () => {
   ];
 
   useEffect(() => {
+    const validPageSize = getValidPageSize(
+      searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE)
+    );
+    const validPageNumber = getValidPageNumber(
+      searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE)
+    );
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, validPageNumber);
+      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, validPageSize);
+      return prev;
+    });
+    const requestedParams = {
+      perPage: validPageSize,
+      page: validPageNumber,
+      keyword: searchedValue,
+      sort: sortedOrder.sort,
+      order: sortedOrder.order,
+    };
+    fetchData(requestedParams);
+  }, []);
+
+  useEffect(() => {
     return () => {
       setSearchedValue("");
-      setCurrentTableData(CONFIGURE_CENTRES);
-      setCurrentDataLength(CONFIGURE_CENTRES.length);
     };
   }, []);
 
   return (
     <>
       {notificationContextHolder}
-      {(isLoading || isUpdatingCenterDetails) && (
-        <div className={styles.box}>
-          <Spin size="large" />
-        </div>
-      )}
       {isError && (
         <div className={styles.box}>
           <ErrorMessageBox
@@ -155,7 +263,7 @@ const ConfigureCentreContent = () => {
           />
         </div>
       )}
-      {isSuccess && !isUpdatingCenterDetails && (
+      {true && (
         <div className={styles.tableContainer}>
           <div className={styles.searchBarContainer}>
             <Input
@@ -172,21 +280,29 @@ const ConfigureCentreContent = () => {
               allowClear
               className={styles.searchBar}
               value={searchedValue}
-              onChange={(e) => setSearchedValue(e.target.value)}
+              onChange={(e) => handleOnUserSearch(e.target.value)}
             />
           </div>
-          <DataTable
-            {...{
-              columns,
-              searchedValue,
-              current,
-              pageSize,
-              onChangePageSize,
-              onChangeCurrentPage,
-            }}
-            currentDataLength={data?.length}
-            originalData={data}
-          />
+          {isSuccess && !isUpdatingCenterDetails && (
+            <DataTable
+              {...{
+                columns,
+                searchedValue,
+                current,
+                pageSize,
+                onChangePageSize,
+                onChangeCurrentPage,
+              }}
+              currentDataLength={data?.meta?.total}
+              originalData={data?.records}
+            />
+          )}
+          {(isLoading || isUpdatingCenterDetails) && (
+            <div className={styles.box}>
+              {/* TODO: Replace it with custom spinner/loader */}
+              <Spin size="large" />
+            </div>
+          )}
         </div>
       )}
     </>

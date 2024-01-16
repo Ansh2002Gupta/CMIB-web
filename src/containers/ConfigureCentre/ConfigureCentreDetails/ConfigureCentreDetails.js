@@ -101,7 +101,8 @@ const ConfigureCentreDetails = () => {
       {notificationContextHolder}
       {isLoading && (
         <div className={styles.box}>
-          <Spin size="large" />
+          {/* TODO: Replace this with customLoader component */}
+          <Spin size="large" /> 
         </div>
       )}
       {!isLoading && (

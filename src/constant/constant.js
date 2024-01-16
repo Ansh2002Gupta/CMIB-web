@@ -19,6 +19,10 @@ export const STATUS_CODES = {
 
 export const ROW_PER_PAGE_OPTIONS = [
   {
+    value: 2,
+    label: 2,
+  },
+  {
     value: 10,
     label: 10,
   },
@@ -36,7 +40,7 @@ export const ROW_PER_PAGE_OPTIONS = [
   },
 ];
 
-export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
+export const VALID_ROW_PER_OPTIONS = [2, 10, 20, 30, 40];
 
 export const ACCESS_OPTIONS = [
   {
@@ -138,9 +142,10 @@ export const ALLOWED_MOBILE_PREFIXES = [
 export const PAGINATION_PROPERTIES = {
   CURRENT_PAGE: "current-page",
   ROW_PER_PAGE: "row-per-page",
+  SEARCH_QUERY: "search-query",
 };
 
-//TODO:need to implement it using api 
+//TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
   { id: 102, label: "November 2025", value: "November 2025" },
@@ -239,3 +244,8 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const SORT_VALUES={
+  ASCENDING:"asc",
+  DESCENDING:"desc",
+}
