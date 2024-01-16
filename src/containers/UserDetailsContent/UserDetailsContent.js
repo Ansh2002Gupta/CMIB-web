@@ -173,6 +173,7 @@ const UserDetailsContent = ({
           )}
           {errorWhileGettingUsersData && (
             <div className={styles.errorContainer}>
+              {/* TODO: Replace it with errorMessagebox */}
               <Alert
                 message={
                   <Typography className={styles.errorText}>
