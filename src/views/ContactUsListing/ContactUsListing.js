@@ -32,8 +32,6 @@ const ContactUsListing = () => {
     searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
 
-  console.log({ currentActiveTab, current, pageSize, searchedValue });
-
   return (
     <TwoRow
       topSection={

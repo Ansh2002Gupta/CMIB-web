@@ -5,7 +5,6 @@ import _ from "lodash";
 import { getItem } from "../services/encrypted-storage-service";
 import useGetUserDetails from "../services/api-services/UserProfile/useGetUserProfile";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
-import CustomLoader from "../components/CustomLoader";
 import { LOGIN } from "../routes/routeNames";
 
 function withPrivateAccess(Component) {
@@ -25,10 +24,9 @@ function withPrivateAccess(Component) {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // TODO: Need to re-check the below logic again as it is causing current view to mount twice.
-    // if (userProfileDetails.isGettingUserDetails) {
-    //   return <CustomLoader />;
-    // }
+    if (!Object.keys(userProfileDetails.userDetails)?.length) {
+      return null;
+    }
 
     return <Component {...props} />;
   };
