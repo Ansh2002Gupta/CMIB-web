@@ -68,7 +68,11 @@ const ConfigureCentreContent = () => {
   }
 
   const goToEditCentrePage = (rowData) => {
-    navigate(`/view-centre-details?centreId=${rowData?.centreId}&edit=${true}`);
+    navigate(
+      `/view-centre-details?centreId=${rowData?.centreId}&mode=${
+        true ? "edit" : "view"
+      }`
+    );
   };
 
   const onHandleCentreStatus = (data) => {
@@ -274,7 +278,7 @@ const ConfigureCentreContent = () => {
           />
         </div>
       )}
-      {true && (
+      {!isError && (
         <div className={styles.tableContainer}>
           <div className={styles.searchBarContainer}>
             <Input

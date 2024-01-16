@@ -19,3 +19,4 @@ export const USERS_END_POINT = "/users";
 export const CENTER_END_POINT = "/centers";
 export const CREATE = "/create";
 export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
+export const GET_USER_PROFILE_DETAILS = "/get-user-profile-details";

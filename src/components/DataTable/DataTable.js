@@ -77,12 +77,11 @@ DataTable.defaultProps = {
   currentDataLength: 0,
   customContainerStyles: "",
   originalData: [],
-  searchedValue: "",
   paginationApi: () => {},
   pageSize: DEFAULT_PAGE_SIZE,
   current: 1,
-  handleOnChangePageSize: () => {},
-  handleOnChangeCurrentPage: () => {},
+  onChangePageSize: () => {},
+  onChangeCurrentPage: () => {},
 };
 
 DataTable.propTypes = {
@@ -90,12 +89,11 @@ DataTable.propTypes = {
   currentDataLength: PropTypes.number,
   customContainerStyles: PropTypes.string,
   originalData: PropTypes.array,
-  searchedValue: PropTypes.string,
   paginationApi: PropTypes.func,
   pageSize: PropTypes.number,
   current: PropTypes.number,
-  handleOnChangePageSize: PropTypes.func,
-  handleOnChangeCurrentPage: PropTypes.func,
+  onChangePageSize: PropTypes.func,
+  onChangeCurrentPage: PropTypes.func,
 };
 
 export default DataTable;
