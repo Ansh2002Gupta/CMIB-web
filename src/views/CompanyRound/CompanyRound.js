@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
@@ -9,18 +10,40 @@ import JobDetails from "../../containers/CompanyDetails/JobDetails";
 import styles from "./CompanyRound.module.scss";
 
 const CompanyRound = ({ roundList }) => {
-  const [activeCompanyTab, setActiveCompanyTab] = useState(1);
+  const [activeCompanyTab, setActiveCompanyTab] = useState("1");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const tabItems = [
     {
-      key: 1,
+      key: "1",
       children: <CompanyProfile />,
     },
     {
-      key: 2,
+      key: "2",
       children: <JobDetails />,
     },
   ];
+
+  const handleSelectTab = (idx) => {
+    setActiveCompanyTab();
+    setSearchParams((params) => {
+      params.set("company-tab", idx);
+      return params;
+    });
+  };
+
+  useEffect(() => {
+    const tabQueryParam = searchParams.get("company-tab");
+    if (tabItems.some((tab) => tab.key === tabQueryParam)) {
+      setActiveCompanyTab(tabQueryParam);
+    } else {
+      setActiveCompanyTab(tabItems[0].key);
+      setSearchParams((params) => {
+        params.set("company-tab", tabItems[0].key);
+        return params;
+      });
+    }
+  }, [activeCompanyTab]);
 
   const activeTabChildren = tabItems.find(
     (tab) => tab.key === activeCompanyTab
@@ -39,9 +62,11 @@ const CompanyRound = ({ roundList }) => {
               <div
                 key={idx}
                 className={
-                  activeCompanyTab === idx + 1 ? styles.selectedTab : styles.tab
+                  activeCompanyTab === String(idx + 1)
+                    ? styles.selectedTab
+                    : styles.tab
                 }
-                onClick={() => setActiveCompanyTab(idx + 1)}
+                onClick={() => handleSelectTab(String(idx + 1))}
               >
                 <p>{i}</p>
               </div>

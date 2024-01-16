@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Image, Input } from "antd";
 
@@ -10,6 +11,8 @@ import SearchFilter from "../../../components/SearchFilter";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { ReactComponent as ArrowDown } from "../../../themes/base/assets/images/arrow-down.svg";
+import { PAGINATION_PROPERTIES } from "../../../constant/constant";
+import { getValidPageNumber, getValidPageSize } from "../../../constant/utils";
 import { COMPANY_DATA_SOURCE, COMPANIES_FILTER_DATA } from "../../../dummyData";
 import styles from "./CompaniesList.module.scss";
 
@@ -17,6 +20,7 @@ const CompaniesContent = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { getImage } = useContext(ThemeContext);
 
@@ -26,8 +30,12 @@ const CompaniesContent = () => {
   const [currentDataLength, setCurrentDataLength] = useState(
     COMPANY_DATA_SOURCE.length
   );
-  const [current, setCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [current, setCurrent] = useState(
+    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+  );
+  const [pageSize, setPageSize] = useState(
+    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+  );
 
   const goToUserDetailsPage = (data) => {
     const companyId = data?.id;
@@ -52,11 +60,20 @@ const CompaniesContent = () => {
     //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
+    setSearchParams((prev) => {
+      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
+      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+      return prev;
+    });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
     //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
+    setSearchParams((prev) => {
+      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
+      return prev;
+    });
   };
 
   // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
@@ -66,6 +83,14 @@ const CompaniesContent = () => {
     const updatedData = COMPANY_DATA_SOURCE.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
   }, [current, pageSize]);
+
+  //   useEffect(() => {
+  //    setSearchParams((prev) => {
+  //     prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], current);
+  //     prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], pageSize);
+  //     return prev;
+  //   });
+  // }, [ current, pageSize ]);
 
   const columns = [
     renderColumn({
