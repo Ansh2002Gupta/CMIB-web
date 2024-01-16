@@ -14,3 +14,4 @@ export const ROUTE = "/configurations";
 export const SETUP_CENTERS = "setup-centers";
 export const ADD = "add"
 export const SETUP_CENTERS_DETAILS = "/details/:centreId";
+export const EDIT_CONFIGURE_CENTRE = "centre-details/:centreId"

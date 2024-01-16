@@ -165,6 +165,7 @@ const locale = {
   "label.newCentre": "New Centre",
   "label.add": "Add",
   "label.centreDetails": "Centre Details",
+  "label.editCentreDetails": "Edit Centre Details",
   "centre.placeholder.centreName": "Enter Centre Name",
   "centre.placeholder.bigSmallCentre": "Choose Centre Type",
   "centre.placeholder.centreId": "Enter Centre Id",

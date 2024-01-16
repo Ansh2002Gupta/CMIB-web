@@ -364,9 +364,9 @@ export const SESSION_DETAILS = {
 };
 
 export const INITIAL_CENTRE_DETAILS = {
-  centreName: "",
-  centreId: "",
-  status: true,
+  centre_name: "",
+  centre_code: "",
+  status: 1,
 }
 
 export const SETUP_CENTRE_DETAILS = [
