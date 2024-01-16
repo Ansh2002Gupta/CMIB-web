@@ -19,6 +19,10 @@ export const STATUS_CODES = {
 
 export const ROW_PER_PAGE_OPTIONS = [
   {
+    value: 2,
+    label: 2,
+  },
+  {
     value: 10,
     label: 10,
   },
@@ -36,7 +40,7 @@ export const ROW_PER_PAGE_OPTIONS = [
   },
 ];
 
-export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
+export const VALID_ROW_PER_OPTIONS = [2, 10, 20, 30, 40];
 
 export const ACCESS_OPTIONS = [
   {
@@ -138,6 +142,7 @@ export const ALLOWED_MOBILE_PREFIXES = [
 export const PAGINATION_PROPERTIES = {
   CURRENT_PAGE: "current-page",
   ROW_PER_PAGE: "row-per-page",
+  SEARCH_QUERY: "search-query",
 };
 
 //TODO:need to implement it using api
@@ -157,8 +162,8 @@ export const SESSION_PERIOD = [
 ];
 
 export const CENTRE_TYPE = [
-  { id: 1, label: "Small Centre", value: "Small Centre" },
-  { id: 2, label: "Big Centre", value: "Big Centre" },
+  { id: 1, label: "Small Centre", value: "small" },
+  { id: 2, label: "Big Centre", value: "big" },
 ];
 
 export const ROUND_ONE_CARD_LIST = [
@@ -249,3 +254,8 @@ export const MODULE_KEYS = {
   WOMEN_PARTTIME_KEY: "women-placement",
   OVERSEAS_CHAPTERS_KEY: "overseas-placement",
 };
+
+export const SORT_VALUES={
+  ASCENDING:"asc",
+  DESCENDING:"desc",
+}

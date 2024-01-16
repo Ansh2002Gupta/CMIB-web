@@ -9,6 +9,7 @@ import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
 import dummyPerson from "./dummy person image.png";
+import errorIcon from "./error icon.svg";
 import eye from "./eye.svg";
 import filter from "./filter.svg";
 import g20 from "./G20.svg";
@@ -43,6 +44,7 @@ const images = {
   DeviceMessage,
   Document,
   edit,
+  errorIcon,
   eye,
   filter,
   g20,
