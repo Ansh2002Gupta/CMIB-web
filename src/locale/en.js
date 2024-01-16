@@ -208,6 +208,7 @@ const locale = {
   "label.warning.setupMockInterviews":
     "*This cannot be edited once registration for the students starts.",
   "label.totalStudentsBooked": "Total Students Booked",
+  "label.visitWebsite": "Visit Website",
 };
 
 export default locale;

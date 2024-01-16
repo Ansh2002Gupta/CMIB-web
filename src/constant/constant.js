@@ -239,3 +239,13 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const MODULE_KEYS = {
+  CONTROL_KEY: "control",
+  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placement",
+  CA_JOBS_KEY: "ca-jobs",
+  EXPERIENCED_MEMBERS_KEY: "experienced-members",
+  CARRER_ASCENT_KEY: "career-ascent",
+  WOMEN_PARTTIME_KEY: "women-placement",
+  OVERSEAS_CHAPTERS_KEY: "overseas-placement",
+};
