@@ -48,7 +48,7 @@
   color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 140px;
+  max-width: 10vw;
   white-space: nowrap;
 }
 .moduleList {
@@ -80,4 +80,10 @@
   list-style: none;
   width: 100%;
   overflow: hidden;
+}
+
+.visitText {
+  max-width: 8vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

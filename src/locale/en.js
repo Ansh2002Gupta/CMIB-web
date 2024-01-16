@@ -204,6 +204,7 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.visitWebsite": "Visit Website",
 };
 
 export default locale;
