@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
 import _ from "lodash";
 
+import CustomLoader from "../components/CustomLoader/CustomLoader"; 
 import { getItem } from "../services/encrypted-storage-service";
 import useGetUserDetails from "../services/api-services/UserProfile/useGetUserProfile";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
@@ -24,11 +25,18 @@ function withPrivateAccess(Component) {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (!Object.keys(userProfileDetails.userDetails)?.length) {
-      return null;
+    if (
+      userProfileDetails.isGettingUserDetails ||
+      !Object.keys(userProfileDetails.userDetails)?.length
+    ) {
+      return <CustomLoader />;
     }
 
-    return <Component {...props} />;
+    if (!!Object.keys(userProfileDetails.userDetails)?.length) {
+      return <Component {...props} />;
+    }
+
+    return null;
   };
 }
 

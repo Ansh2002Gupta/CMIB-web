@@ -40,7 +40,10 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
   });
 
   const fetchData = async (queryParams) => {
-    const modifiedURL = `${url}?${objectToQueryString(queryParams)}`;
+    let modifiedURL = url;
+    if (queryParams && objectToQueryString(queryParams)) {
+      modifiedURL = `${url}?${objectToQueryString(queryParams)}`;
+    }
     try {
       setApiStatus(API_STATUS.LOADING);
       error && setError("");
