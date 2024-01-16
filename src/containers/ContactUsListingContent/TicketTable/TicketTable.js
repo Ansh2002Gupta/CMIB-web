@@ -121,7 +121,7 @@ const TicketTable = ({
         fetchData(requestedParams);
       }
     }
-  }, [data?.meta]);
+  }, [data?.meta?.total]);
 
   useEffect(() => {
     setSearchParams((prev) => {
