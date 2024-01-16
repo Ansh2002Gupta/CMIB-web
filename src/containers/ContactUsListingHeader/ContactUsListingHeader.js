@@ -27,7 +27,6 @@ const ContactUsListingHeader = ({
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
-      prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
       return prev;
     });
     setCurrent(1);

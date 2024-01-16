@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
-import { Image, Input } from "antd";
+import { Image, Input, Spin } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
@@ -22,6 +22,7 @@ const TableWithSearchAndFilters = ({
   onChangePageSize,
   pageSize,
   searchedValue,
+  isLoading,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -53,18 +54,25 @@ const TableWithSearchAndFilters = ({
             {...{ showFilters, setShowFilters }}
           />
         </div>
-        <DataTable
-          {...{
-            columns,
-            pageSize,
-            current,
-            onChangePageSize,
-            onChangeCurrentPage,
-          }}
-          originalData={data || []}
-          customContainerStyles={styles.tableContainer}
-          {...{ currentDataLength }}
-        />
+        {isLoading && (
+          <DataTable
+            {...{
+              columns,
+              pageSize,
+              current,
+              onChangePageSize,
+              onChangeCurrentPage,
+            }}
+            originalData={data || []}
+            customContainerStyles={styles.tableContainer}
+            {...{ currentDataLength }}
+          />
+        )}
+        {!isLoading && (
+          <div className={styles.loaderContainer}>
+            <Spin size="large" />
+          </div>
+        )}
       </div>
     </>
   );
@@ -80,6 +88,7 @@ TableWithSearchAndFilters.defaultProps = {
   onChangePageSize: () => {},
   pageSize: DEFAULT_PAGE_SIZE,
   searchedValue: "",
+  isLoading: false,
 };
 
 TableWithSearchAndFilters.propTypes = {
@@ -92,6 +101,7 @@ TableWithSearchAndFilters.propTypes = {
   onChangePageSize: PropTypes.func,
   pageSize: PropTypes.number,
   searchedValue: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 export default TableWithSearchAndFilters;

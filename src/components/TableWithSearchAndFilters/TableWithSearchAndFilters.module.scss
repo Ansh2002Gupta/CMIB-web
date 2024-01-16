@@ -44,6 +44,14 @@ input::placeholder {
   color: var(--inputPlaceHolder) !important;
 }
 
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--height_50vh);
+  width: var(--fullWidth);
+}
+
 @media screen and (max-width: 1023px) {
   .searchBar {
     width: var(--halfWidth);

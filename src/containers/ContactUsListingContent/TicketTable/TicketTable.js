@@ -19,7 +19,7 @@ import {
 } from "../../../constant/constant";
 import { ADMIN_ROUTE, TICKET_LIST } from "../../../constant/apiEndpoints";
 import { TICKET_DATA_LIST } from "../../../dummyData";
-import styles from "../ContactUsListingContent.module.scss"
+import styles from "../ContactUsListingContent.module.scss";
 
 const TicketTable = ({
   current,
@@ -44,9 +44,13 @@ const TicketTable = ({
     renderColumn
   );
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + TICKET_LIST,
+    url: ADMIN_ROUTE + TICKET_LIST + "/aed",
     otherOptions: { skipApiCallOnMount: true },
   });
+  let errorString = error;
+  if (typeof error === "object") {
+    errorString = error?.data?.message;
+  }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
   const handleOnUserSearch = (str) => {
@@ -116,13 +120,32 @@ const TicketTable = ({
     fetchData(requestedParams);
   }, []);
 
-  // TODO: remove this once API start providing data 
+  const handleOnReTry = () => {
+    const requestedParams = {
+      perPage: DEFAULT_PAGE_SIZE,
+      page: 1,
+      q: searchedValue,
+    };
+    fetchData(requestedParams);
+  };
+
+  useEffect(() => {
+    return () => {
+      setSearchedValue("");
+      setSearchParams((prev) => {
+        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
+        return prev;
+      });
+    };
+  }, []);
+
+  // TODO: remove this once API start providing data
   const startIndex = (current - 1) * pageSize;
   const endIndex = current * pageSize;
 
   return (
     <>
-      {isSuccess && (
+      {!isError && (
         <TableWithSearchAndFilters
           {...{
             current,
@@ -133,21 +156,17 @@ const TicketTable = ({
             onChangePageSize,
             onChangeCurrentPage,
           }}
+          isLoading={isSuccess && !isLoading}
           // TODO: please remove the dummy data once the data start coming from API
           data={TICKET_DATA_LIST.slice(startIndex, endIndex)}
           currentDataLength={TICKET_DATA_LIST.length}
         />
       )}
-      {isLoading && !isError && (
-        <div className={styles.loaderContainer}>
-          <Spin size="large" />
-        </div>
-      )}
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
-            onClick={() => fetchData(DEFAULT_PAGE_SIZE, 1)}
-            errorText={error}
+            onClick={handleOnReTry}
+            errorText={errorString}
             errorHeading={intl.formatMessage({
               id: "label.error",
             })}

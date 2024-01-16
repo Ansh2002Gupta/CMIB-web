@@ -18,7 +18,7 @@ import {
 } from "../../constant/constant";
 
 const ContactUsListing = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams,] = useSearchParams();
   const [currentActiveTab, setCurrentActiveTab] = useState(
     getCurrentActiveTab(searchParams.get(ACTIVE_TAB), VALID_CONTACT_US_TABS_ID)
   );

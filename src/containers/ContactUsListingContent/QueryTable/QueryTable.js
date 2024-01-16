@@ -46,6 +46,10 @@ const QueryTable = ({
     url: ADMIN_ROUTE + QUERIES_LIST,
     otherOptions: { skipApiCallOnMount: true },
   });
+  let errorString = error;
+  if (typeof error === "object") {
+    errorString = error?.data?.message;
+  }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
   const handleOnUserSearch = (str) => {
@@ -98,6 +102,15 @@ const QueryTable = ({
     fetchData(requestedParams);
   };
 
+  const handleOnReTry = () => {
+    const requestedParams = {
+      perPage: DEFAULT_PAGE_SIZE,
+      page: 1,
+      q: searchedValue,
+    };
+    fetchData(requestedParams);
+  };
+
   useEffect(() => {
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
@@ -117,7 +130,7 @@ const QueryTable = ({
 
   return (
     <>
-      {isSuccess && (
+      {!isError && (
         <TableWithSearchAndFilters
           {...{
             current,
@@ -128,20 +141,16 @@ const QueryTable = ({
             onChangePageSize,
             onChangeCurrentPage,
           }}
+          isLoading={isSuccess && !isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
         />
       )}
-      {isLoading && !isError && (
-        <div className={styles.loaderContainer}>
-          <Spin size="large" />
-        </div>
-      )}
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
-            onClick={() => fetchData(DEFAULT_PAGE_SIZE, 1)}
-            errorText={error}
+            onClick={handleOnReTry}
+            errorText={errorString}
             errorHeading={intl.formatMessage({
               id: "label.error",
             })}
