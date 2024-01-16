@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import {
   ArrowRightOutlined,
@@ -6,19 +7,22 @@ import {
   UpOutlined,
 } from "@ant-design/icons";
 
+import { TwoColumn, TwoRow } from "../../core/layouts";
+
 import ModuleList from "./ModuleList";
-import TwoRow from "../../core/layouts/TwoRow";
-import TwoColumn from "../../core/layouts/TwoColumn";
-
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { getAccessibleModules } from "../../constant/utils";
 import modules from "./sideMenuItems";
-
 import styles from "./sideMenu.module.scss";
 
 const SideMenu = ({ logo }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
+  const intl = useIntl();
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [selectedModule, setSelectedModule] = useState(modules[0]);
+
+  const [userProfileState] = useContext(UserProfileContext);
 
   // TODO: need to create context for it if needed
   const handleOnSelectItem = (item) => {
@@ -28,6 +32,16 @@ const SideMenu = ({ logo }) => {
   const handleOnClickMenuItem = ({ key }) => {
     navigate(key);
   };
+
+  const accessibleModules = getAccessibleModules(
+    userProfileState?.userDetails?.role,
+    modules
+  );
+
+  useEffect(() => {
+    setSelectedModule(accessibleModules[0]);
+  }, [userProfileState]);
+
   return (
     <ConfigProvider
       theme={{
@@ -61,7 +75,7 @@ const SideMenu = ({ logo }) => {
                   >
                     {openModuleSelector
                       ? "Choose a module"
-                      : selectedModule.label}
+                      : selectedModule?.label}
                   </div>
                 }
                 rightSection={
@@ -84,7 +98,7 @@ const SideMenu = ({ logo }) => {
             bottomSection={
               openModuleSelector && (
                 <ModuleList
-                  modules={modules}
+                  modules={accessibleModules}
                   onSelectItem={handleOnSelectItem}
                 />
               )
@@ -99,7 +113,7 @@ const SideMenu = ({ logo }) => {
               mode="inline"
               items={selectedModule.children}
               expandIcon={<></>}
-              openKeys={modules.map((module) => module.key)}
+              openKeys={accessibleModules.map((module) => module.key)}
               onSelect={handleOnClickMenuItem}
             />
           )}
@@ -120,7 +134,9 @@ const SideMenu = ({ logo }) => {
             block
             icon={<GlobalOutlined />}
           >
-            <Typography.Text>Visit Website</Typography.Text>
+            <Typography.Text className={styles.visitText}>
+              {intl.formatMessage({ id: "label.visitWebsite" })}
+            </Typography.Text>
           </Button>
           <ArrowRightOutlined />
         </Space>

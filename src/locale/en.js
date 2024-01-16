@@ -170,6 +170,7 @@ const locale = {
   "centre.placeholder.centreId": "Enter Centre Id",
   "label.actions": "Actions",
   "label.sNo": "S. No",
+  "label.tryAgain": "Try Again",
   "label.centreCode": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
   "label.centreStartTime": "Centre Start Time",
@@ -229,6 +230,7 @@ const locale = {
   "label.frn": "FRN",
   "label.companyIciaMessage":
     "We wish to use your company logo in ICAI’s future Promotional materials stating that your company has participated in the Career Ascent programme of ICAI",
+  "label.visitWebsite": "Visit Website",
 };
 
 export default locale;

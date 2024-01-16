@@ -141,7 +141,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
 };
 
-//TODO:need to implement it using api 
+//TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
   { id: 102, label: "November 2025", value: "November 2025" },
@@ -260,3 +260,13 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const MODULE_KEYS = {
+  CONTROL_KEY: "control",
+  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placement",
+  CA_JOBS_KEY: "ca-jobs",
+  EXPERIENCED_MEMBERS_KEY: "experienced-members",
+  CARRER_ASCENT_KEY: "career-ascent",
+  WOMEN_PARTTIME_KEY: "women-placement",
+  OVERSEAS_CHAPTERS_KEY: "overseas-placement",
+};
