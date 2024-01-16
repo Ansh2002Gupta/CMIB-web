@@ -18,7 +18,7 @@ const useAddNewUserApi = () => {
     const formData = new FormData();
     for (let [key, value] of Object.entries(payload)) {
       if (
-        key?.toLowerCase() === "role" ||
+        key?.toLowerCase() === "roles" ||
         key?.toLowerCase() === "permissions"
       ) {
         value = value.join(",");

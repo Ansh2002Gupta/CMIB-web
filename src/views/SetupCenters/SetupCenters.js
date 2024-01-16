@@ -25,6 +25,7 @@ const SetupCenter = () => {
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams, setSearchParams] = useSearchParams();
+  const isEditable = true;
 
   const [currentTableData, setCurrentTableData] = useState(CONFIGURE_CENTRES);
   const [current, setCurrent] = useState(
@@ -36,7 +37,11 @@ const SetupCenter = () => {
 
   const goToEditCentrePage = (rowData, isEdit) => {
     const centreId = rowData?.centreId;
-    navigate(`/session/setup-centers/details/${centreId}?edit=${isEdit}`);
+    navigate(
+      `/session/setup-centers/details/${centreId}?mode=${
+        isEdit ? "edit" : "view"
+      }`
+    );
   };
 
   // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
@@ -104,9 +109,9 @@ const SetupCenter = () => {
       key: "edit",
       renderImage: {
         alt: "edit",
-        onClick: (rowData) => goToEditCentrePage(rowData, true),
+        onClick: (rowData) => goToEditCentrePage(rowData, isEditable),
         preview: false,
-        src: getImage(true ? "edit" : "eye"),
+        src: getImage(isEditable ? "edit" : "eye"),
         visible: true,
       },
     }),

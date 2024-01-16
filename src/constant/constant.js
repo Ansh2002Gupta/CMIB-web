@@ -141,6 +141,7 @@ export const PAGINATION_PROPERTIES = {
 };
 
 //TODO:need to implement it using api
+//TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
   { id: 102, label: "November 2025", value: "November 2025" },
@@ -154,6 +155,11 @@ export const SESSION_PERIOD = [
   { id: 110, label: "November 2021", value: "November 2021" },
   { id: 111, label: "May 2020", value: "May 2020" },
   { id: 112, label: "November 2020", value: "November 2020" },
+];
+
+export const CENTRE_TYPE = [
+  { id: 1, label: "Small Centre", value: "Small Centre" },
+  { id: 2, label: "Big Centre", value: "Big Centre" },
 ];
 
 export const ROUND_ONE_CARD_LIST = [
@@ -236,3 +242,13 @@ export const CITY_CENTERS = [
 ];
 
 export const CONTROL_MODULE_ID = 1;
+
+export const MODULE_KEYS = {
+  CONTROL_KEY: "control",
+  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placement",
+  CA_JOBS_KEY: "ca-jobs",
+  EXPERIENCED_MEMBERS_KEY: "experienced-members",
+  CARRER_ASCENT_KEY: "career-ascent",
+  WOMEN_PARTTIME_KEY: "women-placement",
+  OVERSEAS_CHAPTERS_KEY: "overseas-placement",
+};

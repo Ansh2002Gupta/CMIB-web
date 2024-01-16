@@ -28,6 +28,7 @@ const ActionAndCancelButtons = ({
       }
       rightSection={
         <CustomButton
+          isBtnDisable={isActionBtnDisable}
           customStyle={[styles.saveBtn, customActionBtnStyles].join(" ")}
           btnText={actionBtnText}
           onClick={onActionBtnClick}

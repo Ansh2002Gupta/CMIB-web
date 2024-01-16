@@ -163,8 +163,14 @@ const locale = {
   "label.configureCentres": "Configure Centres",
   "label.addNewCentre": "Add New Centre",
   "label.newCentre": "New Centre",
+  "label.add": "Add",
+  "label.centreDetails": "Centre Details",
+  "centre.placeholder.centreName": "Enter Centre Name",
+  "centre.placeholder.bigSmallCentre": "Choose Centre Type",
+  "centre.placeholder.centreId": "Enter Centre Id",
   "label.actions": "Actions",
   "label.sNo": "S. No",
+  "label.tryAgain": "Try Again",
   "label.centreCode": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
   "label.centreStartTime": "Centre Start Time",
@@ -200,6 +206,7 @@ const locale = {
   "label.emailPlaceholder": "Please enter your email",
   "label.controlAccessHeading": " Control Access *",
   "label.moduleAccess": "Module Access *",
+  "label.visitWebsite": "Visit Website",
 };
 
 export default locale;

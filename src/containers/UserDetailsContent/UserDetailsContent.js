@@ -199,8 +199,8 @@ const UserDetailsContent = ({
           )}
         </>
       }
-      bottomSectionStyle={classes.bottomSectionStyles}
       isTopFillSpace
+      bottomSectionStyle={classes.bottomSectionStyles}
       bottomSection={
         <>
           {currentFormState !== FORM_STATES.VIEW_ONLY &&

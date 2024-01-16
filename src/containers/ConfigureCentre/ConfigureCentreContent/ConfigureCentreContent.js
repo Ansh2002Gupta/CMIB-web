@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+import { ThemeContext } from "core/providers/theme";
 import { Image, Input } from "antd";
 
 import DataTable from "../../../components/DataTable";
@@ -7,9 +9,11 @@ import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn
 import { CONFIGURE_CENTRES } from "../../../dummyData";
 import styles from "./ConfigureCentreContent.module.scss";
 
-const ConfigureCentreContent = ({ intl, getImage }) => {
+const ConfigureCentreContent = () => {
+  const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const { getImage } = useContext(ThemeContext);
 
   const [searchedValue, setSearchedValue] = useState("");
   const [currentTableData, setCurrentTableData] = useState(CONFIGURE_CENTRES);
@@ -20,7 +24,11 @@ const ConfigureCentreContent = ({ intl, getImage }) => {
   const [pageSize, setPageSize] = useState(10);
 
   const goToEditCentrePage = (rowData) => {
-    navigate(`/view-centre-details?centreId=${rowData?.centreId}&edit=${true}`);
+    navigate(
+      `/view-centre-details?centreId=${rowData?.centreId}&mode=${
+        true ? "edit" : "view"
+      }`
+    );
   };
 
   const onHandleCentreStatus = (data) => {
@@ -37,12 +45,12 @@ const ConfigureCentreContent = ({ intl, getImage }) => {
     setCurrentTableData(updatedData);
   };
 
-  const updateTableData = (currentPageNumber, currentPageSize) =>{
+  const updateTableData = (currentPageNumber, currentPageSize) => {
     const startIndex = (currentPageNumber - 1) * currentPageSize;
     const endIndex = currentPageNumber * currentPageSize;
     const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
-  }
+  };
 
   const onChangePageSize = (size) => {
     //NOTE: if you want to do anything on changing of page size please consider doing it here

@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Typography, Upload, message } from "antd";
+import { Typography, Upload } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 import { TwoRow } from "../../core/layouts";
 
 import UserImage from "../UserImage/UserImage";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { ReactComponent as UploadImageIcon } from "../../themes/base/assets/images/Upload icon.svg";
-import { classes } from "./FileUpload.styles";
 import styles from "./FileUpload.module.scss";
 
 const FileUpload = ({
@@ -20,7 +20,7 @@ const FileUpload = ({
   userProfilePic,
 }) => {
   const intl = useIntl();
-  const [messageApi, messageContextHolder] = message.useMessage();
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -28,20 +28,18 @@ const FileUpload = ({
     const isLessThan5MB = file?.file?.size / 1024 / 1024 < 5;
 
     if (!isAllowedType) {
-      messageApi.open({
-        type: "error",
-        content: intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
-        style: classes.errorMessage,
-      });
+      showNotification(
+        intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
+        "error"
+      );
       return Upload.LIST_IGNORE;
     }
 
     if (!isLessThan5MB) {
-      messageApi.open({
-        type: "error",
-        content: intl.formatMessage({ id: "label.fileUpto5MB" }),
-        style: classes.errorMessage,
-      });
+      showNotification(
+        intl.formatMessage({ id: "label.fileUpto5MB" }),
+        "error"
+      );
       return Upload.LIST_IGNORE;
     }
     return isAllowedType && isLessThan5MB;
@@ -79,7 +77,7 @@ const FileUpload = ({
       <Typography className={styles.headingText}>{heading}</Typography>
       <div className={styles.uploadBottomContainer}>
         <Typography className={styles.subHeadingText}>{subHeading}</Typography>
-        {messageContextHolder}
+        {notificationContextHolder}
         {userProfilePic ? (
           <UserImage
             onTrashClick={removeSelctedImage}
