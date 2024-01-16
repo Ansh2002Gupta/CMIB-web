@@ -112,6 +112,27 @@ const QueryTable = ({
   };
 
   useEffect(() => {
+    if (data?.meta) {
+      const { total } = data?.meta;
+      const numberOfPages = Math.ceil(total / pageSize);
+      if (current > numberOfPages) {
+        setCurrent(1);
+        setSearchParams((prev) => {
+          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+          return prev;
+        });
+
+        const requestedParams = {
+          perPage: pageSize,
+          page: 1,
+          q: searchedValue,
+        };
+        fetchData(requestedParams);
+      }
+    }
+  }, [data?.meta]);
+
+  useEffect(() => {
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);

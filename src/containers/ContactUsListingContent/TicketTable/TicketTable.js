@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
-import { Spin } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
@@ -102,6 +101,27 @@ const TicketTable = ({
     };
     fetchData(requestedParams);
   };
+
+  useEffect(() => {
+    if (data?.meta) {
+      // const { total } = data?.meta; :TODO: un-comment once backend start providing records
+      const total = 14;
+      const numberOfPages = Math.ceil(total / pageSize);
+      if (current > numberOfPages) {
+        setCurrent(1);
+        setSearchParams((prev) => {
+          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        });
+
+        const requestedParams = {
+          perPage: pageSize,
+          page: 1,
+          q: searchedValue,
+        };
+        fetchData(requestedParams);
+      }
+    }
+  }, [data?.meta]);
 
   useEffect(() => {
     setSearchParams((prev) => {
