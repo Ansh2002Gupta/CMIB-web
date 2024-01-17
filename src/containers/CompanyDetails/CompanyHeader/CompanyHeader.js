@@ -3,10 +3,10 @@ import { useIntl } from "react-intl";
 import { Switch, Typography } from "antd";
 
 import { TwoColumn } from "core/layouts";
-import useResponsive from "core/hooks/useResponsive";
 
 import CustomButton from "../../../components/CustomButton";
 import ContentHeader from "../../../containers/ContentHeader";
+import useResponsive from "core/hooks/useResponsive";
 import { ReactComponent as ArrowDown } from "../../../themes/base/assets/images/arrow-down.svg";
 import { ReactComponent as Edit } from "../../../themes/base/assets/images/editDark.svg";
 import { COMPANY_STATUS } from "../../../companyDetailsDummyData";
