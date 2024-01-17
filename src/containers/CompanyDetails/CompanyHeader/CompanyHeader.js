@@ -2,7 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Switch, Typography } from "antd";
 
-import { TwoColumn } from "core/layouts";
+import { TwoColumn, TwoRow } from "core/layouts";
 
 import CustomButton from "../../../components/CustomButton";
 import ContentHeader from "../../../containers/ContentHeader";
@@ -12,7 +12,6 @@ import { ReactComponent as Edit } from "../../../themes/base/assets/images/editD
 import { COMPANY_STATUS } from "../../../companyDetailsDummyData";
 import { classes } from "./CompanyHeader.styles";
 import styles from "./CompanyHeader.module.scss";
-import { TwoRow } from "../../../core/layouts";
 
 function CompanyHeader() {
   const intl = useIntl();

@@ -167,6 +167,23 @@ const CompaniesContent = () => {
   }, []);
 
   useEffect(() => {
+    if ( currentTableData.length >= 0) {
+      setCurrentDataLength(+currentTableData.length);
+    }
+    const totalNumberOfValidPages = Math.ceil(
+      currentTableData.length / pageSize
+    );
+    if (current > totalNumberOfValidPages) {
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+        return prev;
+      });
+      setCurrent(1);
+    }
+  }, [currentTableData, current, pageSize]);
+
+
+  useEffect(() => {
     return () => {
       setShowFilters(false);
       setSearchedValue("");
