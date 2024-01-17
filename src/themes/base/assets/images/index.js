@@ -23,7 +23,6 @@ import Monitor from "./Monitor.svg";
 import minusCircle from "./minusCircle.svg";
 import more from "./more.svg";
 import plusIcon from "./plus icon.svg";
-import publicFooter from "./Public footer.svg";
 import searchIcon from "./search icon.svg";
 import seventyFive from "./75.svg";
 import someFiltersAreSelected from "./some filters are selected.svg";
@@ -33,6 +32,7 @@ import uploadIcon from "./Upload icon.svg";
 import addIcon from "./add.png";
 import editIcon from "./edit.png";
 import TempCompanyLogo from './TempCompanyLogo.svg'
+import publicFooter from "./PublicFooter.svg";
 
 const images = {
   addCircle,
@@ -60,7 +60,6 @@ const images = {
   minusCircle,
   more,
   plusIcon,
-  publicFooter,
   searchIcon,
   seventyFive,
   someFiltersAreSelected,
@@ -69,7 +68,8 @@ const images = {
   uploadIcon,
   addIcon,
   editIcon,
-  TempCompanyLogo
+  TempCompanyLogo,
+  publicFooter,
 };
 
 export default images;

@@ -1,21 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { ThreeRow } from "core/layouts";
-
+import { TwoRow } from "../../core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
+
 import { classes } from "./HeaderContentWithFooterLayout.styles";
+import styles from "./HeaderContentWithFooterLayout.module.scss";
 
 function HeaderContentWithFooterLayout({ content, header, footer }) {
   const responsive = useResponsive();
 
   return (
-    <ThreeRow
+    <TwoRow
+      className={styles.container}
       topSection={header}
-      middleSection={content}
-      bottomSection={responsive.isSm ? footer : null}
       topSectionStyle={classes.topSection}
-      middleSectionStyle={classes.middleSection}
+      isBottomFillSpace
+      bottomSection={
+        <div className={styles.bottomContainer}>
+          {content}
+          <div className={styles.footerContainer}>
+            {responsive.isSm && footer}
+          </div>
+        </div>
+      }
       bottomSectionStyle={classes.bottomSection}
     />
   );
@@ -23,10 +31,14 @@ function HeaderContentWithFooterLayout({ content, header, footer }) {
 
 HeaderContentWithFooterLayout.defaultProps = {
   content: null,
+  footer: null,
+  header: null,
 };
 
 HeaderContentWithFooterLayout.propTypes = {
   content: PropTypes.node,
+  footer: PropTypes.node,
+  header: PropTypes.node,
 };
 
 export default HeaderContentWithFooterLayout;
