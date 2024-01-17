@@ -7,6 +7,7 @@ import {
   USERS,
   SUBSCRIPTIONS,
 } from "../../routes/routeNames";
+import { MODULE_KEYS } from "../../constant/constant";
 
 // TODO: need to add icons according to menu
 const controlMenu = [
@@ -74,35 +75,35 @@ const experiencedMembersMenu = [
 const modules = [
   {
     label: "Control",
-    key: "/control",
+    key: MODULE_KEYS.CONTROL_KEY,
     children: controlMenu,
   },
   {
     label: "Newly Qualified Placements",
-    key: "/newly-qualified-placements",
+    key: MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY,
     children: newlyQualifiedPlacementsMenu,
   },
   {
     label: "CA Jobs",
-    key: "/ca-jobs",
+    key: MODULE_KEYS.CA_JOBS_KEY,
     children: caJobsMenu,
   },
   {
     label: "Experienced Members",
-    key: "/experienced-members",
+    key: "experienced-members",
     subMenu: [
       {
-        key: "career-ascent",
+        key: MODULE_KEYS.CARRER_ASCENT_KEY,
         label: "Career Ascent",
         children: experiencedMembersMenu,
       },
       {
-        key: "women-part-time",
+        key: MODULE_KEYS.WOMEN_PARTTIME_KEY,
         label: "Women PartTime",
         children: experiencedMembersMenu,
       },
       {
-        key: "overseas-chapters",
+        key: MODULE_KEYS.OVERSEAS_CHAPTERS_KEY,
         label: "Overseas Chapters",
         children: experiencedMembersMenu,
       },

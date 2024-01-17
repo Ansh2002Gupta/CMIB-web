@@ -60,3 +60,28 @@ export const toggleSorting = (currentSortValue) => {
   }
   return SORT_VALUES.ASCENDING;
 };
+
+export const getAccessibleModules = (useRoles, modules) => {
+  const filteredModules = modules?.filter((module) => {
+    const hasPermission = useRoles?.some((roleModule) => {
+      return roleModule?.slug?.toLowerCase() === module?.key?.toLowerCase();
+    });
+    if (hasPermission) {
+      return true;
+    }
+    if (module.subMenu) {
+      module.subMenu = module.subMenu?.filter((subModule) => {
+        return useRoles?.some((roleModule) => {
+          return (
+            roleModule?.name?.toLowerCase() === subModule?.key?.toLowerCase()
+          );
+        });
+      });
+      return module.subMenu.length > 0;
+    }
+
+    return false;
+  });
+
+  return filteredModules;
+};
