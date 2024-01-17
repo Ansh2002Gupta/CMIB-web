@@ -33,6 +33,7 @@ import unCheckedBox from "./unCheckedBox.svg";
 import uploadIcon from "./Upload icon.svg";
 import addIcon from "./add.png";
 import editIcon from "./edit.png";
+import publicFooter from "./PublicFooter.svg";
 
 const images = {
   addCircle,
@@ -70,6 +71,7 @@ const images = {
   uploadIcon,
   addIcon,
   editIcon,
+  publicFooter,
 };
 
 export default images;
