@@ -1,6 +1,6 @@
-.container{
-    overflow: auto;
-    position: relative;
+.container {
+  overflow: auto;
+  position: relative;
 }
 
 .bottomContainer {
@@ -8,11 +8,17 @@
   background-color: var(--mobileBg1);
 }
 
-.footerContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    position: absolute;
-    width: var(--fullWidth, 100%);
-    bottom: 0px;
+.footerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: var(--fullWidth, 100%);
+  bottom: 0px;
+}
+
+@media (max-width: 511px) {
+  .bottomContainer {
+    background-color: var(--bodyBg);
+  }
 }

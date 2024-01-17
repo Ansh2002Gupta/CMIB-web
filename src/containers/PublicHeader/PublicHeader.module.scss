@@ -12,7 +12,7 @@
   gap: var(--gapSmall);
 }
 
-.icons{
+.icons {
   height: var(--height_40) !important;
 }
 
@@ -37,6 +37,7 @@
 @media screen and (max-width: 511px) {
   .container {
     border-bottom: 0;
+    background-color: var(--bodyBg);
   }
   .logo {
     width: var(--width_140);
