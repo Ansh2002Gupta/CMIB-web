@@ -249,3 +249,8 @@ export const MODULE_KEYS = {
   WOMEN_PARTTIME_KEY: "women-placement",
   OVERSEAS_CHAPTERS_KEY: "overseas-placement",
 };
+
+export const STORAGE_KEYS = {
+  AUTH_TOKEN: "authToken",
+  USER_DATA: "userData",
+};

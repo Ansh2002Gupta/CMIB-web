@@ -12,6 +12,7 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import ModuleList from "./ModuleList";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useFetch from "../../core/hooks/useFetch";
 import { getAccessibleModules } from "../../constant/utils";
 import modules from "./sideMenuItems";
 import styles from "./sideMenu.module.scss";
