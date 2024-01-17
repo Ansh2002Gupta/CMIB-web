@@ -22,7 +22,9 @@ const ConfigureCentreHeader = ({ showButton }) => {
       <ContentHeader
         headerText={intl.formatMessage({
           id: `label.${
-            currentFormState === FORM_STATES.EDITABLE
+            showButton
+              ? "configureCentres"
+              : currentFormState === FORM_STATES.EDITABLE
               ? "editCentreDetails"
               : "addNewCentre"
           }`,
