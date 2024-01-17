@@ -8,6 +8,7 @@ import { Base, TwoColumn, TwoRow } from "../../../core/layouts";
 import CustomButton from "../../../components/CustomButton";
 import CustomGrid from "../../../components/CustomGrid";
 import CustomInput from "../../../components/CustomInput";
+import CustomLoader from "../../../components/CustomLoader";
 import CustomSwitch from "../../../components/CustomSwitch";
 import ErrorMessageBox from "../../../components/ErrorMessageBox/ErrorMessageBox";
 import useAddNewCenterApi from "../../../services/api-services/Centers/useAddNewCenterApi";
@@ -26,6 +27,7 @@ import { FORM_STATES } from "../../../constant/constant";
 import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
 import { classes } from "./ConfigureCentreDetails.styles";
 import styles from "./ConfigureCentreDetails.module.scss";
+import './Override.css'
 
 const ConfigureCentreDetails = () => {
   const intl = useIntl();
@@ -177,10 +179,7 @@ const ConfigureCentreDetails = () => {
             isUpdatingCenterDetails ||
             isUpdatingCenterDetails ||
             isLoading) && (
-            <div className={styles.box}>
-              {/* TODO: Replace this with customLoader component */}
-              <Spin size="large" />
-            </div>
+            <CustomLoader />
           )}
           {!isAddingCentre &&
             !isUpdatingCenterDetails &&
