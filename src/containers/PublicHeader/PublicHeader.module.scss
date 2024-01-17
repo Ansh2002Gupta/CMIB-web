@@ -4,11 +4,16 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: var(--borderLight);
+  background-color: var(--mobileBg1);
 }
 
 .rightSubIconContainer {
   display: flex;
   gap: var(--gapSmall);
+}
+
+.icons{
+  height: var(--height_40) !important;
 }
 
 @media screen and (max-width: 1535px) {
@@ -26,5 +31,18 @@
 @media screen and (max-width: 767px) {
   .container {
     padding: var(--paddingMedium) var(--paddingMedium);
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .container {
+    border-bottom: 0;
+  }
+  .logo {
+    width: var(--width_140);
+    height: var(--height_70);
+  }
+  .container {
+    padding-bottom: var(--paddingExtraSmall);
   }
 }

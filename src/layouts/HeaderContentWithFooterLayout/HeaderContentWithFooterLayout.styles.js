@@ -5,7 +5,6 @@ export const classes = {
     position: "sticky",
     top: 0,
     zIndex: 999999,
-    padding: variables.paddingSmall,
     backgroundColor: "var(--secondary-bg)",
   },
   middleSection: {
