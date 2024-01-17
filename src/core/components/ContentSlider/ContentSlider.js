@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Button } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
-import useHorizontalScroll from "../../core/hooks/useHorizontalScroll";
-import { SLIDE_BY } from "../../constant/constant";
+import useHorizontalScroll from "../../../core/hooks/useHorizontalScroll";
+import { SLIDE_BY } from "../../../constant/constant";
 import styles from "./ContentSlider.module.scss";
 
 const ContentSlider = ({ children, containerCustomStyle, roundList }) => {

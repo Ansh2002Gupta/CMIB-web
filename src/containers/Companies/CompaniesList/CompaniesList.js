@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Image, Input } from "antd";
@@ -11,7 +11,11 @@ import SearchFilter from "../../../components/SearchFilter";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { ReactComponent as ArrowDown } from "../../../themes/base/assets/images/arrow-down.svg";
-import { PAGINATION_PROPERTIES } from "../../../constant/constant";
+import {
+  DEFAULT_PAGE_SIZE,
+  PAGINATION_PROPERTIES,
+  VALID_ROW_PER_OPTIONS,
+} from "../../../constant/constant";
 import { getValidPageNumber, getValidPageSize } from "../../../constant/utils";
 import { COMPANY_DATA_SOURCE, COMPANIES_FILTER_DATA } from "../../../dummyData";
 import styles from "./CompaniesList.module.scss";
@@ -138,6 +142,29 @@ const CompaniesContent = () => {
       },
     }),
   ];
+
+  useLayoutEffect(() => {
+    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
+    const currentPagePerRow = +searchParams.get(
+      PAGINATION_PROPERTIES.ROW_PER_PAGE
+    );
+    if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+        return prev;
+      });
+    }
+
+    if (
+      !currentPagePerRow ||
+      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
+    ) {
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
+        return prev;
+      });
+    }
+  }, []);
 
   useEffect(() => {
     return () => {

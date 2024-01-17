@@ -14,6 +14,11 @@
   gap: var(--gapMedium);
 }
 
+.companyLogo {
+  @extend .companyDetails;
+  overflow: hidden;
+}
+
 .headingText {
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightBold);
@@ -45,7 +50,7 @@
   grid-column: 1 / -1;
 }
 
-a {
+.anchor {
   color: var(--linkColor);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
@@ -125,14 +130,19 @@ a {
   margin-bottom: var(--marginLarge);
 }
 
+@media screen and (max-width: 680px) {
+  .periodText {
+    margin: var(--marginSmall);
+    margin-left: 0;
+    margin-top: var(--marginXXSmall);
+  }
+}
+
 @media screen and (max-width: 450px) {
   .logoBox {
     width: var(--fullWidth);
   }
   .logoName {
     width: var(--fullWidth);
-  }
-  .sourceOfInformation {
-    gap: var(--gapXSmall);
   }
 }

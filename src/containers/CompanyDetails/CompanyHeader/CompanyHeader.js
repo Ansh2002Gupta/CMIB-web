@@ -5,8 +5,8 @@ import { Switch, Typography } from "antd";
 import { TwoColumn } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 
-import ContentHeader from "../../../containers/ContentHeader";
 import CustomButton from "../../../components/CustomButton";
+import ContentHeader from "../../../containers/ContentHeader";
 import { ReactComponent as ArrowDown } from "../../../themes/base/assets/images/arrow-down.svg";
 import { ReactComponent as Edit } from "../../../themes/base/assets/images/editDark.svg";
 import { COMPANY_STATUS } from "../../../companyDetailsDummyData";

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import ContentSlider from "../../core/components/ContentSlider/ContentSlider";
 import { TwoRow } from "../../core/layouts";
 
 import CompanyProfile from "../../containers/CompanyDetails/CompanyProfile";
-import ContentSlider from "../../containers/ContentSlider";
 import JobDetails from "../../containers/CompanyDetails/JobDetails";
 import styles from "./CompanyRound.module.scss";
 

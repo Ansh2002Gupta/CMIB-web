@@ -41,7 +41,6 @@
 }
 
 .blackBoldText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
@@ -52,10 +51,9 @@
 }
 
 .grayText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
-  color: var(--darkGrey1);
+  color: var(--subHeadingColor);
 }
 
 .greyBtnCustomStyles {
@@ -81,7 +79,7 @@
   border: var(--borderLight);
   background-color: var(--bodyBg) !important;
   min-width: var(--width_40);
-  min-height: var(--width_40);
+  min-height: var(--height_40);
 
   &:hover {
     background-color: var(--bodyBg) !important;

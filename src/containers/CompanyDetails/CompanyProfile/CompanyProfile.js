@@ -137,7 +137,9 @@ const CompanyProfile = () => {
                   }
                   bottomSection={
                     item.id === 2 ? (
-                      <a href={item.value}>{item.value}</a>
+                      <a className={styles.anchor} href={item.value}>
+                        {item.value}
+                      </a>
                     ) : (
                       <div className={styles.blackText}>{item.value}</div>
                     )
@@ -166,7 +168,7 @@ const CompanyProfile = () => {
         }
       />
       <TwoRow
-        className={styles.companyDetails}
+        className={styles.companyLogo}
         topSection={
           <div>
             <Typography className={styles.headingText}>
