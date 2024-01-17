@@ -11,7 +11,7 @@ const PublicFooter = () => {
   return (
     <Image
       preview={false}
-      src={getImage("PublicFooter")}
+      src={getImage("publicFooter")}
       className={styles.footer}
     />
   );
