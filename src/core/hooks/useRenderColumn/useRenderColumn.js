@@ -15,6 +15,7 @@ const useRenderColumn = () => {
     isRequiredField,
     key,
     renderDateTime = {},
+    render,
     renderImage = {},
     renderMenu = {},
     renderText = {},
@@ -167,6 +168,8 @@ const useRenderColumn = () => {
           />
         );
       });
+
+    render && (columnObject.render = render); // correct this
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {

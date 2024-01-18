@@ -3,6 +3,7 @@ import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
+import ContactUsListing from "../views/ContactUsListing";
 import ConfigureCentreView from "../views/ConfigureCentreView";
 import ConsentMarking from "../views/ConsentMarking";
 import DashboardView from "../views/Dashboard/Dashboard";
@@ -18,6 +19,7 @@ import SetupCenterDetails from "../views/SetupCenterDetails";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
+import QueryDetails from "../views/QueryDetails";
 import {
   ADD,
   DASHBOARD,
@@ -32,9 +34,11 @@ import {
   ADD_NEW_USER_DETAILS,
   CONFIGURE_CENTRES,
   SESSION,
+  CONTACT_US,
   ROUTE,
   SETUP_CENTERS,
   CONSENT_MARKING,
+  QUERY_DETAILS,
   SETUP_CENTERS_DETAILS,
 } from "./routeNames";
 
@@ -185,6 +189,20 @@ const config = [
       {
         viewPath: ADD,
         element: <ConfigureCentreView />,
+      },
+    ],
+  },
+  {
+    pagePath: CONTACT_US,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: "",
+        element: <ContactUsListing />,
+      },
+      {
+        viewPath: QUERY_DETAILS,
+        element: <QueryDetails />,
       },
     ],
   },

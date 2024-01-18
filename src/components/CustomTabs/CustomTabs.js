@@ -9,8 +9,14 @@ import {
 } from "../../constant/constant";
 import styles from "./CustomTabs.module.scss";
 
-const CustomTabs = ({ activeTab, setActiveTab, tabs }) => {
+const CustomTabs = ({
+  activeTab,
+  setActiveTab,
+  tabs,
+  tabsKeyText,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const tabClass = (tabKey) => {
     let classes = `${styles.tab}`;
     if (activeTab === tabKey) classes += ` ${styles.active}`;
@@ -25,23 +31,10 @@ const CustomTabs = ({ activeTab, setActiveTab, tabs }) => {
     });
     setActiveTab(tabName);
     setSearchParams((params) => {
-      params.set("tab", tabName);
+      params.set(tabsKeyText, tabName);
       return params;
     });
   };
-
-  useEffect(() => {
-    const tabQueryParam = searchParams.get("tab");
-    if (tabs.some((tab) => tab.key === tabQueryParam)) {
-      setActiveTab(tabQueryParam);
-    } else {
-      setActiveTab(tabs[0].key);
-      setSearchParams((params) => {
-        params.set("tab", tabs[0].key);
-        return params;
-      });
-    }
-  }, [tabs, setActiveTab]);
 
   return (
     <div className={styles["tab-container"]}>
@@ -64,12 +57,14 @@ CustomTabs.defaultProps = {
   activeTab: "",
   setActiveTab: () => {},
   tabs: [],
+  tabsKeyText: "tab",
 };
 
 CustomTabs.propTypes = {
   activeTab: PropTypes.string,
   setActiveTab: PropTypes.func,
   tabs: PropTypes.array,
+  tabsKeyText: PropTypes.string,
 };
 
 export default CustomTabs;
