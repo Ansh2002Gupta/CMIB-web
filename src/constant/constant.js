@@ -249,6 +249,32 @@ export const MODULE_KEYS = {
   WOMEN_PARTTIME_KEY: "women-placement",
   OVERSEAS_CHAPTERS_KEY: "overseas-placement",
 };
+export const MENU_KEYS = {
+  USER_MANAGEMENT: "user-management",
+  BULK_NOTIFICATIONS: "bulk-notifications",
+  TICKET_MANAGEMENT: "ticket-management",
+  QUERY_MANAGEMENT: "query-management",
+  TESTIMONIAL_MANAGEMENT: "testimonial-management",
+  REGISTERED_COMPANIES: "registered-companies",
+  SESSIONS: "sessions",
+  DASHBOARD: "dashboard",
+  SUBSCRIPTIONS: "subscriptions",
+  GLOBAL_CONFIGURATIONS: "global-configurations",
+  PAYMENTS: "payments",
+  CANDIDATES: "candidates",
+  COMPANIES: "companies",
+  JOBS: "jobs",
+  REPORT: "report",
+  ROASTER: "roster",
+
+  //TO ASK keys of these Permissions/menus
+  FEEDBACK: "feedback",
+  CONTACT_US: "contact-us",
+  ACTIVITY_LOGS: "activity_logs",
+  ALL_JOBS: "all_Jobs",
+  ROUND_1_PLACEMENT: "round_1_placement",
+  ROUND_2_PLACEMENT: "round_2_placement",
+};
 
 export const STORAGE_KEYS = {
   AUTH_TOKEN: "authToken",

@@ -7,69 +7,85 @@ import {
   USERS,
   SUBSCRIPTIONS,
 } from "../../routes/routeNames";
-import { MODULE_KEYS } from "../../constant/constant";
+import { MODULE_KEYS, MENU_KEYS } from "../../constant/constant";
 
 // TODO: need to add icons according to menu
 const controlMenu = [
-  { label: "Users", key: USERS, icon: <UserOutlined /> },
-  { label: "Notifications", key: "/notifications", icon: <UserOutlined /> },
-  { label: "Contact Us", key: "/contact-us", icon: <UserOutlined /> },
-  { label: "Session", key: SESSION, icon: <UserOutlined /> },
-  { label: "Feedback", key: "/feedback", icon: <UserOutlined /> },
-  { label: "Testimonials", key: "/testimonials", icon: <UserOutlined /> },
+  { label: MENU_KEYS.USER_MANAGEMENT, key: USERS, icon: <UserOutlined /> },
   {
-    label: "Registered Companies",
+    label: MENU_KEYS.BULK_NOTIFICATIONS,
+    key: "/notifications",
+    icon: <UserOutlined />,
+  },
+  { label: MENU_KEYS.CONTACT_US, key: "/contact-us", icon: <UserOutlined /> },
+  { label: MENU_KEYS.SESSIONS, key: SESSION, icon: <UserOutlined /> },
+  { label: MENU_KEYS.FEEDBACK, key: "/feedback", icon: <UserOutlined /> },
+  {
+    label: MENU_KEYS.TESTIMONIAL_MANAGEMENT,
+    key: "/testimonials",
+    icon: <UserOutlined />,
+  },
+  {
+    label: MENU_KEYS.REGISTERED_COMPANIES,
     key: "/register-companies",
     icon: <UserOutlined />,
   },
-  { label: "Activity Logs", key: "/activity-logs", icon: <UserOutlined /> },
+  {
+    label: MENU_KEYS.ACTIVITY_LOGS,
+    key: "/activity-logs",
+    icon: <UserOutlined />,
+  },
 ];
 const newlyQualifiedPlacementsMenu = [
-  { label: "Dashboard", key: DASHBOARD, icon: <UserOutlined /> },
+  { label: MENU_KEYS.DASHBOARD, key: DASHBOARD, icon: <UserOutlined /> },
   {
-    label: "Round 1 Placements",
+    label: MENU_KEYS.ROUND_1_PLACEMENT,
     key: "/round-1-placements",
     icon: <UserOutlined />,
   },
   {
-    label: "Round 2 Placements",
+    label: MENU_KEYS.ROUND_2_PLACEMENT,
     key: "/round-2-placements",
     icon: <UserOutlined />,
   },
   {
-    label: "Global configurations",
+    label: MENU_KEYS.GLOBAL_CONFIGURATIONS,
     key: CONFIGURE_CENTRES,
     icon: <UserOutlined />,
   },
-  { label: "Companies", key: COMPANIES, icon: <UserOutlined /> },
+  { label: MENU_KEYS.COMPANIES, key: COMPANIES, icon: <UserOutlined /> },
 ];
 const caJobsMenu = [
-  { label: "Dashboard", key: DASHBOARD, icon: <UserOutlined /> },
-  { label: "Subscriptions", key: SUBSCRIPTIONS, icon: <UserOutlined /> },
+  { label: MENU_KEYS.DASHBOARD, key: DASHBOARD, icon: <UserOutlined /> },
   {
-    label: "Global Configurations",
+    label: MENU_KEYS.SUBSCRIPTIONS,
+    key: SUBSCRIPTIONS,
+    icon: <UserOutlined />,
+  },
+  {
+    label: MENU_KEYS.GLOBAL_CONFIGURATIONS,
     key: CONFIGURE_CENTRES,
     icon: <UserOutlined />,
   },
-  { label: "Payments", key: "/payments", icon: <UserOutlined /> },
-  { label: "Candidates", key: "/candidates", icon: <UserOutlined /> },
-  { label: "Companies", key: COMPANIES, icon: <UserOutlined /> },
-  { label: "All Jobs", key: "/all-jobs", icon: <UserOutlined /> },
-  { label: "Report", key: "/report", icon: <UserOutlined /> },
+  { label: MENU_KEYS.PAYMENTS, key: "/payments", icon: <UserOutlined /> },
+  { label: MENU_KEYS.CANDIDATES, key: "/candidates", icon: <UserOutlined /> },
+  { label: MENU_KEYS.COMPANIES, key: COMPANIES, icon: <UserOutlined /> },
+  { label: MENU_KEYS.ALL_JOBS, key: "/all-jobs", icon: <UserOutlined /> },
+  { label: MENU_KEYS.REPORT, key: "/report", icon: <UserOutlined /> },
 ];
 const experiencedMembersMenu = [
-  { label: "Dashboard", key: DASHBOARD, icon: <UserOutlined /> },
-  { label: "Payments", key: "/payments", icon: <UserOutlined /> },
-  { label: "Candidates", key: "/candidates", icon: <UserOutlined /> },
-  { label: "Companies", key: COMPANIES, icon: <UserOutlined /> },
+  { label: MENU_KEYS.DASHBOARD, key: DASHBOARD, icon: <UserOutlined /> },
+  { label: MENU_KEYS.PAYMENTS, key: "/payments", icon: <UserOutlined /> },
+  { label: MENU_KEYS.CANDIDATES, key: "/candidates", icon: <UserOutlined /> },
+  { label: MENU_KEYS.COMPANIES, key: COMPANIES, icon: <UserOutlined /> },
   {
-    label: "Global Configurations",
+    label: MENU_KEYS.GLOBAL_CONFIGURATIONS,
     key: CONFIGURE_CENTRES,
     icon: <UserOutlined />,
   },
-  { label: "Session", key: SESSION, icon: <UserOutlined /> },
-  { label: "Roster", key: "/roster", icon: <UserOutlined /> },
-  { label: "Report", key: "/report", icon: <UserOutlined /> },
+  { label: MENU_KEYS.SESSIONS, key: SESSION, icon: <UserOutlined /> },
+  { label: MENU_KEYS.ROASTER, key: "/roster", icon: <UserOutlined /> },
+  { label: MENU_KEYS.REPORT, key: "/report", icon: <UserOutlined /> },
 ];
 // TODO: need to add role based menu
 const modules = [
@@ -90,7 +106,7 @@ const modules = [
   },
   {
     label: "Experienced Members",
-    key: "experienced-members",
+    key: MODULE_KEYS.EXPERIENCED_MEMBERS_KEY,
     subMenu: [
       {
         key: MODULE_KEYS.CARRER_ASCENT_KEY,

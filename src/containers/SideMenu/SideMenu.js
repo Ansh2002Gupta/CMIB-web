@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import {
@@ -9,21 +9,41 @@ import {
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import { getItem } from "../../services/encrypted-storage-service";
 import ModuleList from "./ModuleList";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useFetch from "../../core/hooks/useFetch";
-import { getAccessibleModules } from "../../constant/utils";
+import { filterMenuData } from "../../constant/utils";
+import { CORE_MENU_PROFILE, ADMIN_ROUTE } from "../../constant/apiEndpoints";
+import { STORAGE_KEYS } from "../../constant/constant";
 import modules from "./sideMenuItems";
 import styles from "./sideMenu.module.scss";
 
 const SideMenu = ({ logo }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const intl = useIntl();
+  const { data } = useFetch({
+    url: CORE_MENU_PROFILE + ADMIN_ROUTE,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+  const userData = getItem(STORAGE_KEYS?.USER_DATA);
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [selectedModule, setSelectedModule] = useState(modules[0]);
+  const accessibleModules = filterMenuData(modules, userData?.menu_items);
 
-  const [userProfileState] = useContext(UserProfileContext);
+  function updateLabelsForIntl(menuItems) {
+    return menuItems?.map((item) => {
+      const updatedLabel = intl.formatMessage({
+        id: `label.menu.${item.label}`,
+      });
+      return {
+        ...item,
+        label: updatedLabel,
+      };
+    });
+  }
 
   // TODO: need to create context for it if needed
   const handleOnSelectItem = (item) => {
@@ -34,14 +54,9 @@ const SideMenu = ({ logo }) => {
     navigate(key);
   };
 
-  const accessibleModules = getAccessibleModules(
-    userProfileState?.userDetails?.role,
-    modules
-  );
-
   useEffect(() => {
     setSelectedModule(accessibleModules[0]);
-  }, [userProfileState]);
+  }, [data]);
 
   return (
     <ConfigProvider
@@ -112,9 +127,9 @@ const SideMenu = ({ logo }) => {
               theme="dark"
               defaultSelectedKeys={["1"]}
               mode="inline"
-              items={selectedModule.children}
+              items={updateLabelsForIntl(selectedModule.children)}
               expandIcon={<></>}
-              openKeys={accessibleModules.map((module) => module.key)}
+              openKeys={accessibleModules?.map((module) => module?.key)}
               onSelect={handleOnClickMenuItem}
             />
           )}

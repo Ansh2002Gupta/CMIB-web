@@ -1,22 +1,14 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState } from "react";
 import { Avatar, Dropdown, Space } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
-import { getItem, setItem } from "../../services/encrypted-storage-service";
-import useFetch from "../../core/hooks/useFetch";
-import useHeader from "../../core/hooks/useHeader";
+import { getItem } from "../../services/encrypted-storage-service";
 import CardDropdownOverlay from "./CardDropdownOverlay";
 import useResponsive from "../../core/hooks/useResponsive";
 import { STORAGE_KEYS } from "../../constant/constant";
-import { CORE_MENU_PROFILE, ADMIN_ROUTE } from "../../constant/apiEndpoints";
 import styles from "./profileDropdown.module.scss";
 
 const ProfileDropdown = () => {
-  const { data, error, fetchData, isError } = useFetch({
-    url: CORE_MENU_PROFILE + ADMIN_ROUTE,otherOptions: {
-      skipApiCallOnMount: true,
-    },
-  });
   const userData= getItem(STORAGE_KEYS?.USER_DATA);
  
   const userName = userData?.name;
@@ -26,24 +18,6 @@ const ProfileDropdown = () => {
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const responsive = useResponsive();
-  const { onLogout } = useHeader();
-
-  useEffect(()=>{
-    if(!getItem(STORAGE_KEYS?.USER_DATA))
-    {
-      fetchData()
-    }
-
-  },[])
-
-  useEffect(() => {
-    if (data) {
-      setItem(STORAGE_KEYS?.USER_DATA,data);
-    }
-    if(isError){
-      onLogout();
-    }
-  }, [data,isError,error]);
 
   return (
     <Dropdown
