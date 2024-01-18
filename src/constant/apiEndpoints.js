@@ -18,3 +18,4 @@ export const TICKET_LIST = "/tickets";
 export const USERS_END_POINT = "/users";
 export const VERIFY_OTP = "/verify-otp";
 export const GET_USER_PROFILE_DETAILS = "/get-user-profile-details";
+export const MARKED_QUERY_END_POINT = "/resolve";
