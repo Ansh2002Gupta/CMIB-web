@@ -22,7 +22,7 @@ export const getTicketOrQueryColumn = (
     return [
       renderColumn({
         title: intl.formatMessage({ id: "label.queriesId" }),
-        dataIndex: "id",
+        dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
         key: "id",
         renderText: {
           isTextBold: true,
@@ -124,7 +124,7 @@ export const getTicketOrQueryColumn = (
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.ticketId" }),
-      dataIndex: "id",
+      dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
       key: "id",
       renderText: {
         isTextBold: true,

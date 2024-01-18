@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
-import { Spin } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
