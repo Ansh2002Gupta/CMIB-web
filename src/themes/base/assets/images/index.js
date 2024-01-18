@@ -24,7 +24,6 @@ import Monitor from "./Monitor.svg";
 import minusCircle from "./minusCircle.svg";
 import more from "./more.svg";
 import plusIcon from "./plus icon.svg";
-import publicFooter from "./Public footer.svg";
 import rightIcon from "./check icon.svg";
 import searchIcon from "./search icon.svg";
 import seventyFive from "./75.svg";
@@ -34,6 +33,7 @@ import unCheckedBox from "./unCheckedBox.svg";
 import uploadIcon from "./Upload icon.svg";
 import addIcon from "./add.png";
 import editIcon from "./edit.png";
+import publicFooter from "./PublicFooter.svg";
 
 const images = {
   addCircle,
@@ -62,7 +62,6 @@ const images = {
   minusCircle,
   more,
   plusIcon,
-  publicFooter,
   rightIcon,
   searchIcon,
   seventyFive,
@@ -72,6 +71,7 @@ const images = {
   uploadIcon,
   addIcon,
   editIcon,
+  publicFooter,
 };
 
 export default images;

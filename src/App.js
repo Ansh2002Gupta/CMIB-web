@@ -65,7 +65,7 @@ function App() {
         defaultLocale="en"
       >
         <div className="app">
-          <BrowserRouter>
+          <BrowserRouter basename="/manager">
             <Routes />
           </BrowserRouter>
         </div>

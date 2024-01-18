@@ -73,6 +73,13 @@ export function getCurrentActiveTab(
   return validCurrentActiveTab;
 }
 
+export function getCurrentActiveTab(currentTabValue, validTabsValueArray) {
+  if (!currentTabValue || !validTabsValueArray.includes(currentTabValue)) {
+    return "1";
+  }
+  return currentTabValue;
+}
+
 export const getAccessibleModules = (useRoles, modules) => {
   const filteredModules = modules?.filter((module) => {
     const hasPermission = useRoles?.some((roleModule) => {

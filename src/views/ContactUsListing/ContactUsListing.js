@@ -3,50 +3,34 @@ import { useSearchParams } from "react-router-dom";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
-import ContactUsListingContent from "../../containers/ContactUsListingContent";
 import ContactUsListingHeader from "../../containers/ContactUsListingHeader";
-import useQueriesListingApi from "../../services/api-services/Queries/useQueriesListingApi";
-import useTicketListingApi from "../../services/api-services/Tickets/useTicketsListingApi";
-import {
-  ACTIVE_TAB,
-  PAGINATION_PROPERTIES,
-  VALID_CONTACT_US_TABS_ID,
-} from "../../constant/constant";
+import QueryTable from "../../containers/ContactUsListingContent/QueryTable";
+import TicketTable from "../../containers/ContactUsListingContent/TicketTable/TicketTable";
 import {
   getCurrentActiveTab,
   getValidPageNumber,
   getValidPageSize,
 } from "../../constant/utils";
+import {
+  ACTIVE_TAB,
+  PAGINATION_PROPERTIES,
+  VALID_CONTACT_US_TABS_ID,
+} from "../../constant/constant";
 
 const ContactUsListing = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams,] = useSearchParams();
   const [currentActiveTab, setCurrentActiveTab] = useState(
-    getCurrentActiveTab(VALID_CONTACT_US_TABS_ID, searchParams, ACTIVE_TAB)
+    getCurrentActiveTab(searchParams.get(ACTIVE_TAB), VALID_CONTACT_US_TABS_ID)
   );
-  const [currentPage, setCurrentPage] = useState(
+  const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
   const [pageSize, setPageSize] = useState(
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
-
-  const {
-    isSuccess: areQueriesFetchedSuccessfully,
-    isFetchingQueries,
-    errorWhileFetchingQueries,
-    queriesList,
-    fetchQueries,
-    metaData: queriesMetaData,
-  } = useQueriesListingApi();
-
-  const {
-    isSuccess: areTicketsFetchedSuccesfully,
-    isFetchingTickets,
-    errorWhileFetchingTickets,
-    ticketList,
-    fetchTickets,
-    metaData: ticketsMetaData,
-  } = useTicketListingApi();
+  const [searchedValue, setSearchedValue] = useState(
+    searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
+  );
 
   return (
     <TwoRow
@@ -58,52 +42,35 @@ const ContactUsListing = () => {
             setCurrentPage,
             setPageSize,
           }}
-          queryListingProps={{
-            areQueriesFetchedSuccessfully,
-            isFetchingQueries,
-            errorWhileFetchingQueries,
-            queriesList,
-            fetchQueries,
-            queriesMetaData,
-          }}
-          ticketListingProps={{
-            areTicketsFetchedSuccesfully,
-            isFetchingTickets,
-            errorWhileFetchingTickets,
-            ticketList,
-            fetchTickets,
-            ticketsMetaData,
-          }}
         />
       }
       isBottomFillSpace
       bottomSection={
-        <ContactUsListingContent
-          {...{
-            currentActiveTab,
-            setCurrentActiveTab,
-            setCurrentPage,
-            setPageSize,
-            current: currentPage,
-            pageSize,
-          }}
-          queryListingProps={{
-            areQueriesFetchedSuccessfully,
-            isFetchingQueries,
-            errorWhileFetchingQueries,
-            queriesList,
-            fetchQueries,
-            queriesMetaData,
-          }}
-          ticketListingProps={{
-            areTicketsFetchedSuccesfully,
-            isFetchingTickets,
-            errorWhileFetchingTickets,
-            ticketList,
-            fetchTickets,
-            ticketsMetaData,
-          }}
-        />
+        currentActiveTab === "1" ? (
+          <TicketTable
+            {...{
+              current,
+              currentActiveTab,
+              pageSize,
+              setCurrent,
+              setPageSize,
+              searchedValue,
+              setSearchedValue,
+            }}
+          />
+        ) : (
+          <QueryTable
+            {...{
+              current,
+              currentActiveTab,
+              pageSize,
+              setCurrent,
+              setPageSize,
+              searchedValue,
+              setSearchedValue,
+            }}
+          />
+        )
       }
     />
   );

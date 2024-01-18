@@ -2,10 +2,10 @@ import React, { useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
 import _ from "lodash";
 
+import CustomLoader from "../components/CustomLoader/CustomLoader"; 
 import { getItem } from "../services/encrypted-storage-service";
 import useGetUserDetails from "../services/api-services/UserProfile/useGetUserProfile";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
-import CustomLoader from "../components/CustomLoader";
 import { LOGIN } from "../routes/routeNames";
 
 function withPrivateAccess(Component) {
@@ -23,7 +23,7 @@ function withPrivateAccess(Component) {
         getUserDetails();
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth]);
+    }, []);
 
     if (
       userProfileDetails.isGettingUserDetails ||
