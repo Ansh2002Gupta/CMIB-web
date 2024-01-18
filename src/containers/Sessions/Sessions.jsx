@@ -5,11 +5,12 @@ import { Button, Dropdown, Menu, Typography } from "antd";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
 import useFetch from "../../core/hooks/useFetch";
+import { SESSION_LIST } from "../../constant/apiEndpoints";
 import styles from "./sessions.module.scss";
 
 function Sessions() {
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
-  const { data } = useFetch({ url: "core/global-sessions" });
+  const { data } = useFetch({ url: SESSION_LIST });
 
   const [selectedKey, setSelectedKey] = useState(
     data?.length > 0 ? data[0].id : null

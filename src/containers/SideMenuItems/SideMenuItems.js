@@ -23,7 +23,7 @@ const SideMenuItems = ({
           className={styles.moduleSelector}
           leftSection={
             <div className={openSelector ? "" : styles.moduleSelectorHeading}>
-              {openSelector ? `Choose a ${sectionName}` : selectedItem.label}
+              {openSelector ? `Choose a ${sectionName}` : selectedItem?.label}
             </div>
           }
           rightSection={
