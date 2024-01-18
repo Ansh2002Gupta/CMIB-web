@@ -113,7 +113,7 @@ const ConsentTable = ({
   return (
     <DataTable
       columns={columns}
-      current={searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE)}
+      current={+searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE)}
       pageSize={pageSize}
       onChangePageSize={onChangePageSize}
       onChangeCurrentPage={onChangeCurrentPage}
