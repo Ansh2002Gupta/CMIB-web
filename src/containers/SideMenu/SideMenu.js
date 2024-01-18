@@ -3,13 +3,15 @@ import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import { ArrowRightOutlined, GlobalOutlined } from "@ant-design/icons";
 
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import modules from "./sideMenuItems";
-
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "core/hooks/useResponsive";
+import { getAccessibleModules } from "../../constant/utils";
+import modules from "./sideMenuItems";
+import { SESSION_LIST } from "../../constant/apiEndpoints";
 import SideMenuItems from "../SideMenuItems";
 import styles from "./sideMenu.module.scss";
 
@@ -22,10 +24,11 @@ const SideMenu = ({ logo }) => {
   const [selectedModule, setSelectedModule] = useState(modules[0]);
 
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
-  const { data, fetchData, error, isError } = useFetch({ url: "core/global-sessions" });
+  const { data } = useFetch({ url: SESSION_LIST });
   const [selectedSession, setSelectedSession] = useState(
     data?.length > 0 ? { key: data[0].id, label: data[0].name } : {}
   );
+  const [userProfileState] = useContext(UserProfileContext);
 
   // TODO: need to create context for it if needed
   const handleOnSelectItem = (item) => {
@@ -43,33 +46,22 @@ const SideMenu = ({ logo }) => {
     navigate(key);
   };
 
-  let errorString = error;
-  if (typeof error === "object") {
-    errorString = error?.data?.message;
-  }
-
-  const handleTryAgain = () => {
-      fetchData();
-  };
-
   useEffect(() => {
     if (data) {
       setSelectedSession({ key: data[0].id, label: data[0].name });
       globalSessionDispatch(setGlobalSessionDetails(data[0].id));
     }
   }, [data]);
+  const accessibleModules = getAccessibleModules(
+    userProfileState?.userDetails?.role,
+    modules
+  );
+
+  useEffect(() => {
+    setSelectedModule(accessibleModules[0]);
+  }, [userProfileState]);
 
   return (
-    <>
-    {/* {isError && (
-        <div className={styles.box}>
-          <ErrorMessageBox
-            onClick={handleTryAgain}
-            errorText={errorString}
-            errorHeading={intl.formatMessage({ id: "label.error" })}
-          />
-        </div>
-      )} */}
     <ConfigProvider
       theme={{
         token: {
@@ -148,13 +140,14 @@ const SideMenu = ({ logo }) => {
             block
             icon={<GlobalOutlined />}
           >
-            <Typography.Text>Visit Website</Typography.Text>
+            <Typography.Text className={styles.visitText}>
+              {intl.formatMessage({ id: "label.visitWebsite" })}
+            </Typography.Text>
           </Button>
           <ArrowRightOutlined />
         </Space>
       </div>
     </ConfigProvider>
-    </>
   );
 };
 

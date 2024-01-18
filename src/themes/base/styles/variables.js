@@ -105,6 +105,7 @@ const variables = {
   height_300: "300px",
   height_240: "240px",
   height_250: "250px",
+  height_70: "70px",
   height_50: "50px",
   height_30: "30px",
   height_44: "44px",

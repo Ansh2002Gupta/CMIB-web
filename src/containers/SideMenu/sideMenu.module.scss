@@ -31,6 +31,7 @@
 .menuItemContainer {
   font-weight: var(--fontWeightMedium, 500);
 }
+
 .moduleList {
   font-size: var(--fontSizeSmall, 14px);
   width: 100%;
@@ -66,4 +67,10 @@
   font-weight: var(--fontWeightMedium, 500);
   color: var(--subHeadingColor, #616C82);
   margin: var(--margin_12, 12px);
+}
+
+.visitText {
+  max-width: 8vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
