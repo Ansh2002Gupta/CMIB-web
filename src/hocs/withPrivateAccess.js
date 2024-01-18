@@ -4,6 +4,7 @@ import _ from "lodash";
 
 import { getItem, setItem } from "../services/encrypted-storage-service";
 import useFetch from "../core/hooks/useFetch";
+import useHeader from "../core/hooks/useHeader";
 import useGetUserDetails from "../services/api-services/UserProfile/useGetUserProfile";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
 import CustomLoader from "../components/CustomLoader";
@@ -15,6 +16,7 @@ function withPrivateAccess(Component) {
   return (props) => {
     const auth = getItem("authToken");
     const navigate = useNavigate();
+    const { onLogout } = useHeader();
     const { data, error, fetchData, isError } = useFetch({
       url: CORE_MENU_PROFILE + ADMIN_ROUTE,
       otherOptions: {
