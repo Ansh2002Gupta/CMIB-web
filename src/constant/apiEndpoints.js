@@ -4,13 +4,14 @@ export const API_VERSION_NUMBER = "v1";
 // API end-point role
 export const ADMIN_ROUTE = "admin";
 export const COMPANY_ROUTE = "company";
+export const CORE_ROUTE = "core"
 
 // API end-points
 export const AUTHENTICATE_OTP_ROUTE = "/reset-password-otp";
 export const CHECK_OTP_END_POINT = "/two-factor-check";
 export const FORGOT_PASSWORD_END_POINT = "/forget-password-otp";
 export const GET_USER_PROFILE_DETAILS = "/get-user-profile-details";
-export const SESSION_LIST = "core/global-sessions"
+export const GLOBAL_SESSION_LIST = "/global-sessions"
 export const IMAGE_UPLOAD_END_POINT = "/save-logo";
 export const LOGIN_END_POINT = "/login";
 export const QUERIES_LIST = "/queries";

@@ -9,9 +9,9 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "core/hooks/useResponsive";
+import { CORE_ROUTE, GLOBAL_SESSION_LIST } from "../../constant/apiEndpoints";
 import { getAccessibleModules } from "../../constant/utils";
 import modules from "./sideMenuItems";
-import { SESSION_LIST } from "../../constant/apiEndpoints";
 import SideMenuItems from "../SideMenuItems";
 import styles from "./sideMenu.module.scss";
 
@@ -24,7 +24,7 @@ const SideMenu = ({ logo }) => {
   const [selectedModule, setSelectedModule] = useState(modules[0]);
 
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
-  const { data } = useFetch({ url: SESSION_LIST });
+  const { data } = useFetch({ url: CORE_ROUTE + GLOBAL_SESSION_LIST });
   const [selectedSession, setSelectedSession] = useState(
     data?.length > 0 ? { key: data[0].id, label: data[0].name } : {}
   );
