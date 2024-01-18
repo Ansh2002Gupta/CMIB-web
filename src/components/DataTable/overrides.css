@@ -16,6 +16,15 @@ iframe#webpack-dev-server-client-overlay {
   min-height: 50vh;
 }
 
+.ant-table-column-has-sorters {
+  background-color: #fafafa !important;
+}
+
+.ant-table-wrapper td.ant-table-column-sort {
+  background-color: #ffffff !important;
+}
+
+
 .ant-table-body {
   overflow: auto !important;
 }
