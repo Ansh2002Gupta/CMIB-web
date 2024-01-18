@@ -18,7 +18,7 @@ import styles from "./sideMenu.module.scss";
 const SideMenu = ({ logo }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const responsive = useResponsive()
+  const responsive = useResponsive();
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [openSessionSelector, setOpenSessionSelector] = useState(false);
   const [selectedModule, setSelectedModule] = useState(modules[0]);
@@ -92,18 +92,6 @@ const SideMenu = ({ logo }) => {
                 selectedItem={selectedModule}
                 sectionName="module"
               />
-              {!openModuleSelector && selectedModule && (
-                <Menu
-                  className={styles.sideMenuOptionsContainer}
-                  theme="dark"
-                  defaultSelectedKeys={["1"]}
-                  mode="inline"
-                  items={selectedModule.children}
-                  expandIcon={<></>}
-                  openKeys={modules.map((module) => module.key)}
-                  onSelect={handleOnClickMenuItem}
-                />
-              )}
             </>
           )}
 
@@ -122,6 +110,19 @@ const SideMenu = ({ logo }) => {
                 sectionName="session"
               />
             </>
+          )}
+
+          {!openSessionSelector && !openModuleSelector && selectedModule && (
+            <Menu
+              className={styles.sideMenuOptionsContainer}
+              theme="dark"
+              defaultSelectedKeys={["1"]}
+              mode="inline"
+              items={selectedModule.children}
+              expandIcon={<></>}
+              openKeys={modules.map((module) => module.key)}
+              onSelect={handleOnClickMenuItem}
+            />
           )}
         </div>
         <Space
