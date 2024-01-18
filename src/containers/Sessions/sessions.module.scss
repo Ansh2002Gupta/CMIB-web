@@ -7,7 +7,7 @@
 }
 
 .customDropdownItem {
-    padding: var(paddingXXSmall) var(paddingNone) !important;
+    padding: var(--paddingXXSmall, 3px) var(--paddingNone, 0px) !important;
     color: var(--textDark) !important;
     background-color: transparent !important;
 }
