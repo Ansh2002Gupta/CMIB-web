@@ -12,7 +12,7 @@ import {
 const useMarkedQueryAsAnweredApi = () => {
   const intl = useIntl();
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
-  const [markedQuery, setMarkedQuery] = useState(null);
+  const [markedQueryData, setMarkedQueryData] = useState(null);
   const [errorWhileUpdatingQueryStatus, setErrorWhileUpdatingQueryStatus] =
     useState("");
 
@@ -24,13 +24,14 @@ const useMarkedQueryAsAnweredApi = () => {
     try {
       setApiStatus(API_STATUS.LOADING);
       errorWhileUpdatingQueryStatus && setErrorWhileUpdatingQueryStatus("");
-      const url = ADMIN_ROUTE + QUERY_END_POINT + `/${queryId}` + MARKED_QUERY_END_POINT + "/dwy";
+      const url =
+        ADMIN_ROUTE + QUERY_END_POINT + `/${queryId}` + MARKED_QUERY_END_POINT;
       const res = await Http.post(url);
       if (
         res?.code === STATUS_CODES.SUCCESS_STATUS ||
         res?.status === STATUS_CODES.SUCCESS_STATUS
       ) {
-        setMarkedQuery(res?.data);
+        setMarkedQueryData(res?.data);
         setApiStatus(API_STATUS.SUCCESS);
         onSuccessCallback && onSuccessCallback();
         return;
@@ -73,7 +74,7 @@ const useMarkedQueryAsAnweredApi = () => {
   const isError = apiStatus === API_STATUS.ERROR;
   return {
     errorWhileUpdatingQueryStatus,
-    markedQuery,
+    markedQueryData,
     markedQueryAsAnswered,
     isError,
     isLoading,

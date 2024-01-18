@@ -15,6 +15,7 @@ export const LOGIN_END_POINT = "/login";
 export const RESET_ADMIN_PASSWORD = "/reset-admin-password";
 export const SEND_OTP = "/send-otp";
 export const TICKET_LIST = "/tickets";
+export const QUERY_END_POINT = "/queries";
 export const USERS_END_POINT = "/users";
 export const VERIFY_OTP = "/verify-otp";
 export const MARKED_QUERY_END_POINT = "/resolve";

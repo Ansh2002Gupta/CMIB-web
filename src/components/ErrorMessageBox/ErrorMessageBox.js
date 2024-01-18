@@ -5,7 +5,6 @@ import { Button, Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
-import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 import { ReactComponent as ErrorIcon } from "../../themes/base/assets/images/error icon.svg";
 import styles from "./ErrorMessageBox.module.scss";
 

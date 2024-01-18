@@ -1,4 +1,4 @@
-import { Typography } from "antd";
+import { Image, Typography } from "antd";
 
 import { STATUS } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
@@ -18,13 +18,16 @@ export const getTicketOrQueryColumn = (
   intl,
   getImage,
   navigate,
-  renderColumn
+  renderColumn,
+  markedQueryAsAnswered,
+  onSuccessCallback,
+  onErrorCallBack
 ) => {
-  if (type === '2') {
+  if (type === "2") {
     return [
       renderColumn({
         title: intl.formatMessage({ id: "label.queriesId" }),
-        dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
+        dataIndex: "id",
         key: "id",
         renderText: {
           isTextBold: true,
@@ -113,11 +116,37 @@ export const getTicketOrQueryColumn = (
       renderColumn({
         dataIndex: "check",
         key: "check",
-        renderImage: {
-          alt: "check",
-          preview: false,
-          src: getImage("rightIcon"),
-          visible: true,
+        render: (_, rowData) => {
+          return (
+            <div
+              className={[
+                styles.checkIcon,
+                rowData?.status === STATUS.PENDING.toLowerCase()
+                  ? styles.cursor
+                  : styles.disable,
+              ].join(" ")}
+              onClick={
+                rowData?.status === STATUS.PENDING.toLowerCase()
+                  ? () =>
+                      markedQueryAsAnswered({
+                        queryId: rowData?.id,
+                        onSuccessCallback,
+                        onErrorCallBack,
+                      })
+                  : () => {}
+              }
+            >
+              <Image
+                alt="CheckIcon"
+                preview={false}
+                src={getImage(
+                  rowData?.status === STATUS.PENDING.toLowerCase()
+                    ? "rightIcon"
+                    : "greenTickSign"
+                )}
+              />
+            </div>
+          );
         },
       }),
     ];
@@ -126,7 +155,7 @@ export const getTicketOrQueryColumn = (
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.ticketId" }),
-      dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
+      dataIndex: "id",
       key: "id",
       renderText: {
         isTextBold: true,
@@ -173,10 +202,9 @@ export const getTicketOrQueryColumn = (
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <div
-            className={[
-              styles.statusBox,
-              styles[styleClassForContainer],
-            ].join(" ")}
+            className={[styles.statusBox, styles[styleClassForContainer]].join(
+              " "
+            )}
           >
             <Typography className={styles[styleClassForText]}>
               {status}
