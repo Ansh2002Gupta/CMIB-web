@@ -6,12 +6,12 @@
   gap: var(--gapSmall);
   padding: var(--paddingMedium);
   flex: 1;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .searchIcon {
-  width: var(--smallWidth);
-  height: var(--smallHeight);
+  width: var(--width_30);
+  height: var(--height_30);
   padding-right: var(--paddingExtraSmall);
   padding-bottom: var(--paddingXXSmall);
 }

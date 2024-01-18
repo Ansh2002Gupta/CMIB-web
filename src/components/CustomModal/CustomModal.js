@@ -20,6 +20,7 @@ const CustomModal = ({
 }) => {
   return (
     <Modal
+      className={styles.modal}
       footer={null}
       open={isOpen}
       {...{ onCancel, closeIcon, maskClosable }}
