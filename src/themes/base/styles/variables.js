@@ -81,9 +81,6 @@ const variables = {
   fontWeightBold: 600,
 
   // Widths
-  width_48: "48px",
-  width_30: "30px",
-  width_24: "24px",
   width_20: "20px",
   width_24: "24px",
   width_30: "30px",
