@@ -28,28 +28,8 @@
   justify-content: center;
   align-items: center;
 }
-.moduleSelector {
-  font-size: var(--fontSizeXSmall, 12px);
-  color: var(--textPrimary, #fff);
-  background: #141b43;
-  padding: var(--sizeXSmall, 12px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--moduleSelectorBorder, #ffffff4d);
-  overflow-x: hidden;
-}
 .menuItemContainer {
   font-weight: var(--fontWeightMedium, 500);
-}
-.moduleSelectorHeading {
-  font-size: var(--fontSizeXSmall, 12px);
-  font-weight: var(--fontWeightMedium, 500);
-  color: #fff;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 140px;
-  white-space: nowrap;
 }
 .moduleList {
   font-size: var(--fontSizeSmall, 14px);
@@ -80,4 +60,10 @@
   list-style: none;
   width: 100%;
   overflow: hidden;
+}
+.sectionHeading {
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--subHeadingColor, #616C82);
+  margin: var(--margin_12, 12px);
 }

@@ -1,0 +1,1 @@
+export const SET_GLOBAL_SESSION = "SET_GLOBAL_SESSION";

@@ -1,0 +1,21 @@
+.moduleSelector {
+  font-size: var(--fontSizeXSmall, 12px);
+  color: var(--textPrimary, #fff);
+  background: #141b43;
+  padding: var(--sizeXSmall, 12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--moduleSelectorBorder, #ffffff4d);
+  overflow-x: hidden;
+}
+
+.moduleSelectorHeading {
+  font-size: var(--fontSizeXSmall, 12px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: var(--width_140);
+  white-space: nowrap;
+}

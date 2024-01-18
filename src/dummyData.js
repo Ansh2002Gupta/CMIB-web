@@ -240,21 +240,6 @@ export const COMPANIES_FILTER_DATA = [
   },
 ];
 
-export const SESSION_ITEMS = [
-  {
-    key: "1",
-    label: "Item 1",
-  },
-  {
-    key: "2",
-    label: "Item 2",
-  },
-  {
-    key: "3",
-    label: "Item 3",
-  },
-];
-
 export const CONFIGURE_CENTRES = [
   {
     sNo: "1",
@@ -364,9 +349,9 @@ export const SESSION_DETAILS = {
 };
 
 export const INITIAL_CENTRE_DETAILS = {
-  centreName: "",
-  centreId: "",
-  status: true,
+  centre_name: "",
+  centre_code: "",
+  status: 1,
 }
 
 export const SETUP_CENTRE_DETAILS = [

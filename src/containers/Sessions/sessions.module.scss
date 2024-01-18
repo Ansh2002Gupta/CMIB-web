@@ -1,3 +1,26 @@
 .sessionContainer {
-    color: 'var(--textDark, #000833)';
+  color: "var(--textDark, #000833)";
+}
+
+.customDropdownMenu {
+  border-radius: var(--radiusXLg) !important;
+}
+
+.customDropdownItem {
+    padding: var(paddingXXSmall) var(paddingNone) !important;
+    color: var(--textDark) !important;
+    background-color: transparent !important;
+}
+
+.customDropdownItem:hover {
+    background-color: var(--border, #cecece36) !important;
+}
+
+.menu{
+    border: var(--borderLight2, 1px solid #B1B3B5);
+}
+
+.menuItemText{
+    font-size: var(--fontSizeSmall);
+    padding: var(--paddingNone, 0px) var(--paddingSmall, 16px) ;
 }

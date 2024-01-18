@@ -86,6 +86,7 @@ const variables = {
   width_350: "350px",
   width_300: "300px",
   width_200: "200px",
+  width_140: "140px",
   width_120: "120px",
   width_100: "100px",
   width_30: "30px",
@@ -117,6 +118,7 @@ const variables = {
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
+  borderLight2: `1px solid ${colorPallets.ltGrey2}`,
   borderBlue: `2px solid ${colorPallets.darkBlue}`,
   borderGreen: `1px solid ${colorPallets.green1}`,
   borderColor: colorPallets.ltGrey1,
@@ -167,6 +169,7 @@ const variables = {
   marginLarge: "24px",
   marginMedium: "16px",
   marginSmall: "8px",
+  margin_12: "12px",
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };
