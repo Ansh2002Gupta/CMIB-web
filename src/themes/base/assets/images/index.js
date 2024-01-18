@@ -10,6 +10,7 @@ import Document from "./Document.svg";
 import edit from "./edit.svg";
 import editDark from "./editDark.svg";
 import dummyPerson from "./dummy person image.png";
+import errorIcon from "./error icon.svg";
 import eye from "./eye.svg";
 import eyeHidden from "./eyeHidden.svg"
 import filter from "./filter.svg";
@@ -19,10 +20,12 @@ import greenCheckIcon from "./greenCheckIcon.svg";
 import Key from "./Key.svg";
 import Logo from "./Logo.svg";
 import logo from "./logo.png";
+import messageText from "./message-text.svg";
 import Monitor from "./Monitor.svg";
 import minusCircle from "./minusCircle.svg";
 import more from "./more.svg";
 import plusIcon from "./plus icon.svg";
+import rightIcon from "./check icon.svg";
 import searchIcon from "./search icon.svg";
 import seventyFive from "./75.svg";
 import someFiltersAreSelected from "./some filters are selected.svg";
@@ -47,6 +50,7 @@ const images = {
   Document,
   edit,
   editDark,
+  errorIcon,
   eye,
   eyeHidden,
   filter,
@@ -56,10 +60,12 @@ const images = {
   Key,
   logo,
   Logo,
+  messageText,
   Monitor,
   minusCircle,
   more,
   plusIcon,
+  rightIcon,
   searchIcon,
   seventyFive,
   someFiltersAreSelected,

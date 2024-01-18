@@ -11,6 +11,7 @@ const useRenderColumn = () => {
     dataIndex,
     defaultSortOrder,
     key,
+    render,
     renderImage = {},
     renderMenu = {},
     renderText = {},
@@ -144,6 +145,8 @@ const useRenderColumn = () => {
           />
         );
       });
+
+    render && (columnObject.render = render); // correct this
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {

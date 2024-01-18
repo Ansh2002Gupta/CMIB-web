@@ -39,6 +39,9 @@ export const ROW_PER_PAGE_OPTIONS = [
 
 export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
+export const VALID_CONTACT_US_TABS_ID = ['1', '2'];
+
+// TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
   {
     value: "all",
@@ -139,6 +142,7 @@ export const ALLOWED_MOBILE_PREFIXES = [
 export const PAGINATION_PROPERTIES = {
   CURRENT_PAGE: "current-page",
   ROW_PER_PAGE: "row-per-page",
+  SEARCH_QUERY: "search-query",
 };
 
 //TODO:need to implement it using api
@@ -260,6 +264,8 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const ACTIVE_TAB = "activeTab";
 
 export const MODULE_KEYS = {
   CONTROL_KEY: "control",
