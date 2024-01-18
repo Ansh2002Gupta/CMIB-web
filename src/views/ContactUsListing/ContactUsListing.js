@@ -22,7 +22,7 @@ const ContactUsListing = () => {
   const [currentActiveTab, setCurrentActiveTab] = useState(
     getCurrentActiveTab(searchParams.get(ACTIVE_TAB), VALID_CONTACT_US_TABS_ID)
   );
-  const [current, setCurrent] = useState(
+  const [currentPage, setCurrentPage] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
   const [pageSize, setPageSize] = useState(
@@ -49,10 +49,10 @@ const ContactUsListing = () => {
         currentActiveTab === "1" ? (
           <TicketTable
             {...{
-              current,
+              currentPage,
               currentActiveTab,
               pageSize,
-              setCurrent,
+              setCurrentPage,
               setPageSize,
               searchedValue,
               setSearchedValue,
@@ -61,10 +61,10 @@ const ContactUsListing = () => {
         ) : (
           <QueryTable
             {...{
-              current,
+              currentPage,
               currentActiveTab,
               pageSize,
-              setCurrent,
+              setCurrentPage,
               setPageSize,
               searchedValue,
               setSearchedValue,

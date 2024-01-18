@@ -16,7 +16,7 @@ import styles from "./ContactUsListingHeader.module.scss";
 
 const ContactUsListingHeader = ({
   currentActiveTab,
-  setCurrent,
+  setCurrentPage,
   setCurrentActiveTab,
   setPageSize,
 }) => {
@@ -78,14 +78,14 @@ const ContactUsListingHeader = ({
 
 ContactUsListingHeader.defaultProps = {
   currentActiveTab: "1",
-  setCurrent: () => {},
+  setCurrentPage: () => {},
   setCurrentActiveTab: () => {},
   setPageSize: () => {},
 };
 
 ContactUsListingHeader.propTypes = {
   currentActiveTab: PropTypes.string,
-  setCurrent: PropTypes.func,
+  setCurrentPage: PropTypes.func,
   setCurrentActiveTab: PropTypes.func,
   setPageSize: PropTypes.func,
 };

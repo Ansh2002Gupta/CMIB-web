@@ -31,19 +31,10 @@ const QueryDetails = () => {
       },
     },
   });
-  console.log({ data }); // remove it
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const {
-    errorWhileUpdatingQueryStatus,
-    markedQuery,
-    markedQueryAsAnswered,
-    isLoading: isMarkingQueryAsAnsered,
-    isSuccess: isQueryMarkedasAnseredSuccessfully,
-    apiStatus,
-    setErrorWhileUpdatingQueryStatus,
-  } = useMarkedQueryAsAnweredApi();
-  console.log({ isMarkingQueryAsAnsered }); // remove it
+  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnsered } =
+    useMarkedQueryAsAnweredApi();
 
   return (
     <>

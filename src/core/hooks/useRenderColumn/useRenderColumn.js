@@ -146,7 +146,7 @@ const useRenderColumn = () => {
         );
       });
 
-    render && (columnObject.render = render); // correct this
+    render && (columnObject.render = render);
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {
