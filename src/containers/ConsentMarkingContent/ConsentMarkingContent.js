@@ -80,8 +80,8 @@ const ConsentMarkingContent = ({ isEdit }) => {
         title: intl.formatMessage({ id: "session.roundOne" }),
         children: (
           <ConsentTable
-            {...{ isEdit, tableData, setTableData }}
-            originalData={initialData}
+            {...{ activeTab, isEdit, tableData, setTableData }}
+            totalData={initialData}
           />
         ),
       },
@@ -97,10 +97,10 @@ const ConsentMarkingContent = ({ isEdit }) => {
         }),
         children: (
           <ConsentTable
-            {...{ isEdit, registration: true, tableData, setTableData }}
+            {...{ activeTab, isEdit, registration: true }}
             tableData={registrationTableData}
             setTableData={setRegistrationTableData}
-            originalData={registrationInitialData}
+            totalData={registrationInitialData}
           />
         ),
       },

@@ -3,6 +3,10 @@ import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Typography } from "antd";
 
+import {
+  PAGINATION_PROPERTIES,
+  DEFAULT_PAGE_SIZE,
+} from "../../constant/constant";
 import styles from "./CustomTabs.module.scss";
 
 const CustomTabs = ({ activeTab, setActiveTab, tabs }) => {
@@ -14,6 +18,11 @@ const CustomTabs = ({ activeTab, setActiveTab, tabs }) => {
   };
 
   const handleSelectTab = (tabName) => {
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, DEFAULT_PAGE_SIZE);
+      return prev;
+    });
     setActiveTab(tabName);
     setSearchParams((params) => {
       params.set("tab", tabName);

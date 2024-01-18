@@ -10,62 +10,6 @@ import {
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
-export const updateTableData =
-  (originalData, setTableData) => (currentPageNumber, currentPageSize) => {
-    const startIndex = (currentPageNumber - 1) * currentPageSize;
-    const endIndex = currentPageNumber * currentPageSize;
-    const updatedData = originalData.slice(startIndex, endIndex);
-    setTableData(updatedData);
-  };
-
-export const onChangePageSize =
-  (setSearchParams, setPageSize, setCurrent, updateTableData) => (size) => {
-    setPageSize(Number(size));
-    setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-      return prev;
-    });
-    updateTableData(1, size);
-  };
-
-export const onChangeCurrentPage =
-  (setSearchParams, setCurrent, updateTableData, pageSize) =>
-  (newPageNumber) => {
-    setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
-      return prev;
-    });
-    updateTableData(newPageNumber, pageSize);
-  };
-
-export const usePaginationEffect = (searchParams, setSearchParams) => {
-  useLayoutEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
-      PAGINATION_PROPERTIES.ROW_PER_PAGE
-    );
-    if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
-    }
-
-    if (
-      !currentPagePerRow ||
-      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
-    ) {
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, DEFAULT_PAGE_SIZE);
-        return prev;
-      });
-    }
-  }, [searchParams, setSearchParams]);
-};
-
 export const useConsentTableColumns = (isEdit, registration, onDateChange) => {
   const { renderColumn } = useRenderColumn();
   const intl = useIntl();
@@ -214,11 +158,3 @@ export const useConsentTableColumns = (isEdit, registration, onDateChange) => {
 
   return columns;
 };
-
-export const onDateChange =
-  (tableData, setTableData) => (record, key, value) => {
-    const index = tableData.findIndex((item) => item.sNo === record.sNo);
-    const newData = [...tableData];
-    newData[index][key] = value;
-    setTableData(newData);
-  };
