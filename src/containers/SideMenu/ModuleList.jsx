@@ -5,7 +5,7 @@ import styles from './sideMenu.module.scss';
 const ModuleList = ({ modules, onSelectItem }) => {
     return <ul className={styles.moduleList}>
         {
-            modules.map(module => <>
+            modules.map(module => <div key={module.key}>
                 <li
                     className={`${styles.moduleListItem} ${module?.subMenu?.length ? styles.disabled : ''} `}
                     key={module.key}
@@ -24,7 +24,7 @@ const ModuleList = ({ modules, onSelectItem }) => {
                         </li>
                     )}
                 </ul>
-            </>)
+            </div>)
         }
     </ul>
 }
