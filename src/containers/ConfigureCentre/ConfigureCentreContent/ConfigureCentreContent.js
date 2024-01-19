@@ -72,10 +72,10 @@ const ConfigureCentreContent = () => {
     );
   };
 
-  const onHandleCentreStatus = (data) => {
-    const { id } = data;
+  const onHandleCentreStatus = (centerData) => {
+    const { id } = centerData;
     const payload = {
-      status: !data?.status,
+      status: !centerData?.status,
     };
 
     updateCenterDetails(
@@ -274,7 +274,7 @@ const ConfigureCentreContent = () => {
         fetchData(requestedParams);
       }
     }
-  }, [data?.meta]);
+  }, [data?.meta?.total]);
 
   useEffect(() => {
     const validPageSize = getValidPageSize(
