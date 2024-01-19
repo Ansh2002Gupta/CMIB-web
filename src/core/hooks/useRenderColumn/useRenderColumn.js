@@ -88,7 +88,9 @@ const useRenderColumn = () => {
           <p className={styles.columnHeading}>
             {title}
             {isRequiredField && (
-              <span className={styles.isRequiredStar}> *</span>
+              <>
+                &nbsp;<span className={styles.isRequiredStar}>*</span>
+              </>
             )}
           </p>
         );

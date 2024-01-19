@@ -562,6 +562,7 @@ export const SETUP_CENTRE_DETAILS = [
 
 export const CONSENT_MARKING_REGESTRATION_DETAILS = [
   {
+    id: 1,
     sNo: "1",
     centreName: "Ghaziabad-I",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -570,6 +571,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 2,
     sNo: "2",
     centreName: "Ghaziabad-II",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -578,6 +580,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 3,
     sNo: "3",
     centreName: "Meerut-I",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -586,6 +589,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 4,
     sNo: "4",
     centreName: "Meerut-II",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -594,6 +598,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 5,
     sNo: "5",
     centreName: "Delhi-I",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -602,6 +607,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 6,
     sNo: "6",
     centreName: "Delhi-II",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -610,6 +616,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 7,
     sNo: "7",
     centreName: "Ahmedabad-I",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -618,6 +625,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 8,
     sNo: "8",
     centreName: "Ahmedabad-II",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -626,6 +634,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 9,
     sNo: "9",
     centreName: "Akola-I",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -634,6 +643,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 10,
     sNo: "10",
     centreName: "Akola-II",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -642,6 +652,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 11,
     sNo: "11",
     centreName: "Akola-III",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -650,6 +661,7 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
     consentToDate: "2023-12-19T05:11:46.000000Z",
   },
   {
+    id: 12,
     sNo: "12",
     centreName: "Akola-III",
     companyStartDate: "2023-12-19T05:11:46.000000Z",
@@ -661,72 +673,84 @@ export const CONSENT_MARKING_REGESTRATION_DETAILS = [
 
 export const LAST_MARKING_REGESTRATION_DETAILS = [
   {
+    id: 1,
     sNo: "1",
     centreName: "Ghaziabad-I",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 2,
     sNo: "2",
     centreName: "Ghaziabad-II",
     lastRegistrationDate: null,
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 3,
     sNo: "3",
     centreName: "Meerut-I",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 4,
     sNo: "4",
     centreName: "Meerut-II",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 5,
     sNo: "5",
     centreName: "Delhi-I",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 6,
     sNo: "6",
     centreName: "Delhi-II",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 7,
     sNo: "7",
     centreName: "Ahmedabad-I",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 8,
     sNo: "8",
     centreName: "Ahmedabad-II",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 9,
     sNo: "9",
     centreName: "Akola-I",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 10,
     sNo: "10",
     centreName: "Akola-II",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 11,
     sNo: "11",
     centreName: "Akola-III",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
   {
+    id: 12,
     sNo: "12",
     centreName: "Akola-III",
     lastRegistrationDate: "2023-08-21T05:11:46.000000Z",

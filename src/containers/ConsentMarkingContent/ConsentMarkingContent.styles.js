@@ -5,7 +5,7 @@ export const classes = {
     backgroundColor: variables.bodyBg,
     padding: variables.paddingMedium,
     border: variables.borderLight,
-    borderRadius: variables.radiusXLgMedium,
+    borderRadius: variables.radiusMLg,
   },
   bottomSectionStyle: { alignSelf: "flex-end" },
   tabTopSectionStyle: {
