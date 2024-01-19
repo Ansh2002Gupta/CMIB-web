@@ -87,3 +87,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+@media (max-width: 767px) {
+  .moduleSelectorHeading {
+    max-width: 50vw;
+  }
+}
