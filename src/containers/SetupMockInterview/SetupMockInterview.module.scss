@@ -10,7 +10,8 @@
 
 .tableContainer {
   border: var(--borderLight);
-  border-radius: var(--gapXSmall);
+  border-radius: var(--radiusMLg);
+  overflow: hidden;
   flex: 1;
   width: var(--fullWidth);
   flex-direction: column;

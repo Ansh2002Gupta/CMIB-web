@@ -1,4 +1,4 @@
-import React, { useContext, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
@@ -85,27 +85,20 @@ const SetupMockInterviewContent = () => {
       key: "totalStudentBooked",
       renderText: { visible: true },
     }),
+
     renderColumn({
       title: intl.formatMessage({ id: "label.actions" }),
-      dataIndex: "edit",
-      key: "edit",
-      renderImage: {
-        alt: "edit",
-        onClick: (rowData) => console.log(rowData),
-        preview: false,
-        src: getImage("edit"),
-        visible: true,
-      },
-    }),
-    renderColumn({
-      title: "",
-      dataIndex: "download",
-      key: "download",
-      renderImage: {
-        alt: "download",
-        onClick: (rowData) => console.log(rowData),
-        preview: false,
-        src: getImage("download"),
+      dataIndex: "actions",
+      key: "actions",
+      renderTwoImage: {
+        leftAlt: "download",
+        rightAlt: "edit",
+        leftOnClick: (rowData) => console.log(rowData),
+        rightOnClick: (rowData) => console.log(rowData),
+        leftPreview: false,
+        rightPreview: false,
+        leftSrc: getImage("download"),
+        rightSrc: getImage("edit"),
         visible: true,
       },
     }),
@@ -133,6 +126,20 @@ const SetupMockInterviewContent = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
+    const currentPagePerRow = +searchParams.get(
+      PAGINATION_PROPERTIES.ROW_PER_PAGE
+    );
+    const availalblePage = Math.ceil(MOCK_INTERVIEW.length / currentPagePerRow);
+    const startIndex =
+      availalblePage >= currentPage ? (currentPage - 1) * currentPagePerRow : 0;
+    const endIndex = currentPage * currentPagePerRow;
+    const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
+    setCurrentTableData(updatedData);
+    console.log();
+  }, [current, pageSize, searchParams]);
 
   return (
     <TwoRow

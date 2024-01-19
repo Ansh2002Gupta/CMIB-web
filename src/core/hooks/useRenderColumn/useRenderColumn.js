@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch } from "antd";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
+import { TwoColumn } from "../../layouts";
 
 const useRenderColumn = () => {
   const intl = useIntl();
@@ -16,6 +17,7 @@ const useRenderColumn = () => {
     renderMenu = {},
     renderText = {},
     renderSwitch = {},
+    renderTwoImage = {},
     sortDirection,
     sorter,
     sortKey,
@@ -55,6 +57,20 @@ const useRenderColumn = () => {
       swithInActiveLabel,
       switchToggleHandler = () => {},
     } = renderSwitch;
+
+    const {
+      leftAlt = "",
+      rightAlt = "",
+      customTwoImageStyle = "",
+      leftCustomImageStyle = "",
+      rightCustomImageStyle,
+      leftSrc = "",
+      rightSrc = "",
+      leftOnClick = () => {},
+      rightOnClick = () => {},
+      leftPreview,
+      rightPreview,
+    } = renderTwoImage;
 
     const textRenderFormat = ({ text }) => {
       if (isTypeDate) {
@@ -142,6 +158,33 @@ const useRenderColumn = () => {
             preview={preview}
             className={`${customImageStyle} ${styles.editIcon}`}
             onClick={onClick ? () => onClick(rowData) : () => {}}
+          />
+        );
+      });
+
+    renderTwoImage.visible &&
+      (columnObject.render = (_, rowData) => {
+        return (
+          <TwoColumn
+            className={`${customTwoImageStyle} ${styles.twoImageStyle}`}
+            leftSection={
+              <Image
+                alt={leftAlt}
+                src={leftSrc}
+                preview={leftPreview}
+                className={`${leftCustomImageStyle} ${styles.editIcon}`}
+                onClick={leftOnClick ? () => leftOnClick(rowData) : () => {}}
+              />
+            }
+            rightSection={
+              <Image
+                alt={rightAlt}
+                src={rightSrc}
+                preview={rightPreview}
+                className={`${rightCustomImageStyle} ${styles.editIcon}`}
+                onClick={rightOnClick ? () => rightOnClick(rowData) : () => {}}
+              />
+            }
           />
         );
       });
