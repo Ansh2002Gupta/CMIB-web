@@ -7,12 +7,9 @@ import { DatePicker, Image, Select, Switch, Typography } from "antd";
 import { TwoRow, TwoColumn } from "../../core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 
-import useSession from "../../services/api-services/Session/useSession";
-import useFetch from "../../core/hooks/useFetch";
 import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
-import { PLACEMENT_CORE_SESSION } from "../../constant/apiEndpoints";
 import { FIELDS } from "./sessionFieldDetails";
 import { SESSION_DETAILS } from "../../dummyData";
 import { classes } from "./SessionDetails.styles";
@@ -23,15 +20,6 @@ const SessionDetails = ({ addSession, setAddSession }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { getImage } = useContext(ThemeContext);
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: PLACEMENT_CORE_SESSION,
-  });
-  const {
-    handleAddSession,
-    isError: addSessionError,
-    errorWhileAddSession,
-    isSuccess: addSessionSuccess,
-  } = useSession();
 
   const [formErrors, setFormErrors] = useState({});
   const [edit, setEdit] = useState(addSession);
@@ -50,27 +38,12 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     formData?.bank_account_online
   );
 
-  console.log(
-    addSessionSuccess,
-    "addSessionSuccess...",
-    addSessionError,
-    "addSessionError...",
-    errorWhileAddSession,
-    "errorWhileAddSession..."
-  );
-
   useEffect(() => {
     setEdit(addSession);
     if (addSession) {
       setFormData({});
     }
   }, [addSession]);
-
-  useEffect(() => {
-    if (data) {
-      setFormData(data[0]);
-    }
-  }, [data]);
 
   const handleInputChange = (value, name) => {
     setFormData({
@@ -99,30 +72,14 @@ const SessionDetails = ({ addSession, setAddSession }) => {
   };
 
   const handleCancel = () => {
-    setFormData(data[0]);
+    setFormData(SESSION_DETAILS);
     setEdit(false);
     setAddSession(false);
     setFormErrors({});
   };
   const handleSave = () => {
-    const updatedpayload = {
-      name: formData?.name,
-      module_id: Math.random(),
-      nature_of_service: formData?.nature_of_service,
-      perform_invoice_no_format: formData?.perform_invoice_no_format,
-      bank_ac_offline: formData?.bank_account_offline,
-      bank_ac_online: formData?.bank_account_online,
-      hsn_sac_code: "UAD22",
-      examination_session_periods: formData?.examination_session_period,
-      membership_as_on_date: "2023-02-19 17:13:18",
-    };
-    if (addSession) {
-      handleAddSession({ payload: updatedpayload });
-    }
     setEdit(false);
   };
-
-  console.log(data, "data");
 
   return (
     <TwoRow
