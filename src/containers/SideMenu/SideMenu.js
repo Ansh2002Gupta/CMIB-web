@@ -12,6 +12,7 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import ModuleList from "./ModuleList";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { DASHBOARD } from "../../routes/routeNames";
 import { getAccessibleModules } from "../../constant/utils";
 import modules from "./sideMenuItems";
 import styles from "./sideMenu.module.scss";
@@ -38,6 +39,10 @@ const SideMenu = ({ logo }) => {
     modules
   );
 
+  const handleOnClickLogo = () => {
+    navigate(DASHBOARD);
+  };
+
   useEffect(() => {
     setSelectedModule(accessibleModules[0]);
   }, [userProfileState]);
@@ -61,7 +66,11 @@ const SideMenu = ({ logo }) => {
     >
       <div className={styles.sideMenuContainer}>
         <div className={styles.sideMenuTopSection}>
-          <div className={styles.appLogo}>{logo}</div>
+          <div className={styles.appLogoContainer}>
+            <div className={styles.appLogo} onClick={handleOnClickLogo}>
+              {logo}
+            </div>
+          </div>
           <TwoRow
             style={{ overflow: "visible" }}
             topSection={

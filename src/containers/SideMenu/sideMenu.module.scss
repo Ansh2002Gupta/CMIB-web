@@ -22,8 +22,12 @@
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500);
 }
+.appLogoContainer{
+  padding: var(--paddingForLogo);
+  cursor: default;
+}
 .appLogo {
-  margin: var(--sizeLarge, 18px);
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
