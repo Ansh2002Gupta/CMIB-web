@@ -17,7 +17,6 @@ import useFetch from "../../core/hooks/useFetch";
 import { setModuleDetails } from "../../globalContext/userProfile/userProfileActions";
 import { filterMenuData } from "../../constant/utils";
 import {
-  CORE_MENU_PROFILE,
   ADMIN_ROUTE,
   GET_USER_PROFILE_DETAILS,
 } from "../../constant/apiEndpoints";
