@@ -21,6 +21,7 @@ const useRenderColumn = () => {
     sortTypeDate,
     sortTypeText,
     title,
+    render,
   }) => {
     const columnObject = {};
 
@@ -90,6 +91,8 @@ const useRenderColumn = () => {
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
 
     sortDirection && (columnObject.sortDirection = sortDirection);
+
+    render && (columnObject.render = render);
 
     renderText?.visible &&
       (columnObject.render = (text) => {

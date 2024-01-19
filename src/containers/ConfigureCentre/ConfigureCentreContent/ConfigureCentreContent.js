@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
-import { Image, Input } from "antd";
+import { Image, Input, Typography } from "antd";
 import * as _ from "lodash";
 
 import CustomLoader from "../../../components/CustomLoader";
@@ -42,9 +42,9 @@ const ConfigureCentreContent = () => {
   const [pageSize, setPageSize] = useState(
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
-  const [sortedOrder, setSoretdOrder] = useState({
-    sort: SORT_VALUES.ASCENDING,
-    order: "center_name",
+  const [sortedOrder, setSortedOrder] = useState({
+    sortDirection: SORT_VALUES.ASCENDING,
+    sortKeyName: "center_name",
   });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -86,8 +86,8 @@ const ConfigureCentreContent = () => {
           perPage: pageSize,
           page: current,
           keyword: searchedValue,
-          sort: sortedOrder.sort,
-          order: sortedOrder.order,
+          sort: sortedOrder.sortDirection,
+          order: sortedOrder.sortKeyName,
         };
         fetchData(requestedParams);
       },
@@ -109,8 +109,8 @@ const ConfigureCentreContent = () => {
       perPage: size,
       page: 1,
       keyword: searchedValue,
-      sort: sortedOrder.sort,
-      order: sortedOrder.order,
+      sort: sortedOrder.sortDirection,
+      order: sortedOrder.sortKeyName,
     };
     fetchData(requestedParams);
   };
@@ -125,8 +125,8 @@ const ConfigureCentreContent = () => {
       perPage: pageSize,
       page: newPageNumber,
       keyword: searchedValue,
-      sort: sortedOrder.sort,
-      order: sortedOrder.order,
+      sort: sortedOrder.sortDirection,
+      order: sortedOrder.sortKeyName,
     };
     fetchData(requestedParams);
   };
@@ -150,8 +150,8 @@ const ConfigureCentreContent = () => {
       perPage: pageSize,
       page: 1,
       keyword: str,
-      sort: sortedOrder.sort,
-      order: sortedOrder.order,
+      sort: sortedOrder.sortDirection,
+      order: sortedOrder.sortKeyName,
     };
     debounceSearch(requestedParams);
   };
@@ -161,34 +161,53 @@ const ConfigureCentreContent = () => {
       perPage: pageSize,
       page: current,
       keyword: searchedValue,
-      sort: sortedOrder.sort,
-      order: sortedOrder.order,
+      sort: sortedOrder.sortDirection,
+      order: sortedOrder.sortKeyName,
     };
     fetchData(requestedParams);
   };
 
+  let sortArrowStyles = "";
+  if (sortedOrder.sortDirection === SORT_VALUES.ASCENDING) {
+    sortArrowStyles = styles.upside;
+  } else if (sortedOrder.sortDirection === SORT_VALUES.DESCENDING) {
+    sortArrowStyles = styles.downside;
+  }
+
   const columns = [
     renderColumn({
-      title: intl.formatMessage({ id: "label.centreName" }),
+      title: (
+        <Typography
+          className={styles.columnHeading}
+          onClick={() =>
+            fetchData(
+              {
+                perPage: pageSize,
+                page: current,
+                keyword: searchedValue,
+                sort: toggleSorting(sortedOrder.sortDirection),
+                order: sortedOrder.sortKeyName,
+              },
+              () =>
+                setSortedOrder((prev) => {
+                  return {
+                    ...prev,
+                    sortDirection: toggleSorting(prev.sortDirection),
+                  };
+                })
+            )
+          }
+        >
+          {intl.formatMessage({ id: "label.centreName" })}
+          <Image
+            src={getImage("arrowDownDarkGrey")}
+            preview={false}
+            className={[sortArrowStyles].join(" ")}
+          />
+        </Typography>
+      ),
       dataIndex: "name",
       key: "name",
-      sorter: () => {
-        const updatedSortValue = toggleSorting(sortedOrder.sort);
-        setSoretdOrder((prev) => {
-          return {
-            ...prev,
-            sort: updatedSortValue,
-          };
-        });
-        const requestedParams = {
-          perPage: pageSize,
-          page: 1,
-          keyword: searchedValue,
-          sort: updatedSortValue,
-          order: sortedOrder.order,
-        };
-        debounceSearch(requestedParams);
-      },
       renderText: {
         isTextBold: true,
         visible: true,
@@ -249,8 +268,8 @@ const ConfigureCentreContent = () => {
           perPage: pageSize,
           page: 1,
           keyword: searchedValue,
-          sort: sortedOrder.sort,
-          order: sortedOrder.order,
+          sort: sortedOrder.sortDirection,
+          order: sortedOrder.sortKeyName,
         };
         fetchData(requestedParams);
       }
@@ -273,8 +292,8 @@ const ConfigureCentreContent = () => {
       perPage: validPageSize,
       page: validPageNumber,
       keyword: searchedValue,
-      sort: sortedOrder.sort,
-      order: sortedOrder.order,
+      sort: sortedOrder.sortDirection,
+      order: sortedOrder.sortKeyName,
     };
     fetchData(requestedParams);
   }, []);

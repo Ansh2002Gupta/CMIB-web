@@ -1,5 +1,6 @@
 import addCircle from "./addCircle.svg";
 import arrowDown from "./arrow-down.svg";
+import arrowDownDarkGrey from "./arrow-down-dark-grey.svg"
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import Building from "./Building.svg";
@@ -35,6 +36,7 @@ import publicFooter from "./PublicFooter.svg";
 const images = {
   addCircle,
   arrowDown,
+  arrowDownDarkGrey,
   arrowRight,
   arrowRightFilter,
   Building,
