@@ -37,7 +37,7 @@ function withPrivateAccess(Component) {
         fetchData();
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth]);
+    }, []);
 
     useEffect(() => {
       if (data) {
