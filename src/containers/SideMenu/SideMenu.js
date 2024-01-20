@@ -22,6 +22,8 @@ import {
 } from "../../constant/apiEndpoints";
 import { STORAGE_KEYS } from "../../constant/constant";
 import modules from "./sideMenuItems";
+
+import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
 import styles from "./sideMenu.module.scss";
 
 const SideMenu = ({ logo }) => {
@@ -142,28 +144,34 @@ const SideMenu = ({ logo }) => {
             />
           )}
         </div>
-        <Space
-          className={styles.sideMenuBottomSection}
-          align="center"
-          direction="horizontal"
-        >
-          <Button
-            styles={{
-              icon: {
-                paddingRight: "var(--sizeXXSmall, 8px)",
-              },
-            }}
-            size="large"
-            type="text"
-            block
-            icon={<GlobalOutlined />}
+        <div>
+          <Space className={styles.imageItemLogo}>
+            <CaIndiaLogo />
+          </Space>
+          <Space
+            className={styles.sideMenuBottomSection}
+            align="center"
+            direction="horizontal"
           >
-            <Typography.Text className={styles.visitText}>
-              {intl.formatMessage({ id: "label.visitWebsite" })}
-            </Typography.Text>
-          </Button>
-          <ArrowRightOutlined />
-        </Space>
+            <Button
+              className={styles.visitContainer}
+              styles={{
+                icon: {
+                  paddingRight: "var(--sizeXXSmall, 8px)",
+                },
+              }}
+              size="large"
+              type="text"
+              block
+              icon={<GlobalOutlined />}
+            >
+              <Typography.Text className={styles.visitText}>
+                {intl.formatMessage({ id: "label.visitWebsite" })}
+              </Typography.Text>
+            </Button>
+            <ArrowRightOutlined />
+          </Space>
+        </div>
       </div>
     </ConfigProvider>
   );

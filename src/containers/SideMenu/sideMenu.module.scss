@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   overflow: hidden;
   cursor: pointer;
 }
@@ -88,8 +87,30 @@
   text-overflow: ellipsis;
 }
 
+.moduleListContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+}
+.visitContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gapSmallMedium);
+}
+
+.imageItemLogo {
+  width: 100%;
+  justify-content: space-between;
+  padding: var(--paddingMedium, 16px) var(--paddingMedium, 16px);
+}
+
 @media (max-width: 767px) {
   .moduleSelectorHeading {
+    max-width: 50vw;
+  }
+  .visitText {
     max-width: 50vw;
   }
 }
