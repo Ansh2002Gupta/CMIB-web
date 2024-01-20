@@ -154,7 +154,7 @@ const ForgotPassword = () => {
           )}
         </Base>
       ) : (
-        <CreateNewPassword token={checkOTPData?.token} />
+        <CreateNewPassword reset_token={checkOTPData?.reset_token} />
       )}
     </>
   );
