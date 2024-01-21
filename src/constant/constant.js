@@ -38,7 +38,7 @@ export const ROW_PER_PAGE_OPTIONS = [
 
 export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
-export const VALID_CONTACT_US_TABS_ID = ['1', '2'];
+export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
@@ -143,7 +143,6 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
   SEARCH_QUERY: "search-query",
 };
-
 
 //TODO:need to implement it using api
 export const SESSION_PERIOD = [
@@ -262,4 +261,9 @@ export const MODULE_KEYS = {
   CARRER_ASCENT_KEY: "career-ascent",
   WOMEN_PARTTIME_KEY: "women-placement",
   OVERSEAS_CHAPTERS_KEY: "overseas-placement",
+};
+
+export const SORT_DIRECTIONS = {
+  ASCENDING: "asc",
+  DESCENDING: "desc",
 };

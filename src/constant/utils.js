@@ -1,5 +1,9 @@
 import moment from "moment";
-import { DEFAULT_PAGE_SIZE, VALID_ROW_PER_OPTIONS } from "./constant";
+import {
+  DEFAULT_PAGE_SIZE,
+  SORT_DIRECTIONS,
+  VALID_ROW_PER_OPTIONS,
+} from "./constant";
 
 export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   if (date) {
@@ -87,4 +91,11 @@ export const getAccessibleModules = (useRoles, modules) => {
   });
 
   return filteredModules;
+};
+
+export const toggleSortDirection = (direction) => {
+  if (direction === SORT_DIRECTIONS.ASCENDING) {
+    return SORT_DIRECTIONS.DESCENDING;
+  }
+  return SORT_DIRECTIONS.ASCENDING;
 };

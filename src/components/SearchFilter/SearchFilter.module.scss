@@ -40,14 +40,14 @@
 }
 
 .active {
-  background-color: var(--lightBlueBg);
+  background-color: var(--lightBlueBg) !important;
 }
 
 .filterOption {
   display: flex;
   justify-content: space-between;
   gap: var(--gapSmallMedium);
-  background-color: var(--lightBlueBg);
+  background-color: var(--bodyBg);
   padding: var(--fontSizeNormal);
   cursor: pointer;
 }
@@ -121,6 +121,11 @@
   span {
     text-decoration: underline !important;
   }
+}
+
+.optionsContainer {
+  max-height: var(--height_200);
+  overflow: auto;
 }
 
 @media screen and (max-width: 1279px) {

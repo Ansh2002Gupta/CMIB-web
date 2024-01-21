@@ -43,7 +43,7 @@ const ErrorMessageBox = ({
       bottomSection={
         <>
           {onRetry ? (
-            <div>
+            <div className={styles.btnContainer}>
               <Button block onClick={onRetry} className={styles.btn}>
                 {retryBtnText || intl.formatMessage({ id: "label.tryAgain" })}
               </Button>

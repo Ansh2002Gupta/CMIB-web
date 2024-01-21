@@ -185,7 +185,7 @@ const TicketTable = ({
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
-            onClick={handleOnReTry}
+            onRetry={handleOnReTry}
             errorText={errorString}
             errorHeading={intl.formatMessage({
               id: "label.error",

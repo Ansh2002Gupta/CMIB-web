@@ -20,6 +20,8 @@ const SearchFilter = ({
   const { getImage } = useContext(ThemeContext);
 
   const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
+  const [currentlySelectOptionsGroup, setCurrentlySelectOptionsGroup] =
+    useState(1);
   const elementNotConsideredInOutSideClick = useRef();
 
   const { wrapperRef } = useOutSideClick({
@@ -48,16 +50,27 @@ const SearchFilter = ({
     setCurrentFilterStatus([]);
   };
 
-  const getCheckBoxes = () => {
-    // TODO: refactor this SearchFilter Component
-    if (!currentFilterStatus?.length) {
-      return getImage("unCheckedBox");
-    }
-    if (currentFilterStatus?.length === 3) {
+  const getCheckBoxes = (options) => {
+    const optionsIdArray = options.map((item) => item.optionId);
+    const containsAll = optionsIdArray.every((element) =>
+      currentFilterStatus.includes(element)
+    );
+    const containsSome = optionsIdArray.some((element) =>
+      currentFilterStatus.includes(element)
+    );
+    if (containsAll) {
       return getImage("checkedBox");
     }
-    return getImage("someFiltersAreSelected");
+    if (containsSome) {
+      return getImage("someFiltersAreSelected");
+    }
+
+    return getImage("unCheckedBox");
   };
+
+  const optionsToBeShown = filterPropertiesArray?.filter(
+    (item) => item.id === currentlySelectOptionsGroup
+  )[0]?.options;
 
   return (
     <div className={styles.container}>
@@ -104,13 +117,18 @@ const SearchFilter = ({
                       <div
                         className={[
                           styles.filterOption,
-                          item.isSelected ? styles.active : "",
+                          currentlySelectOptionsGroup === item.id
+                            ? styles.active
+                            : "",
                         ].join(" ")}
-                        onClick={selectOrRemoveAll}
+                        onClick={() => setCurrentlySelectOptionsGroup(item.id)}
                         key={index}
                       >
                         <div className={styles.filterTextAndCheckContainer}>
-                          <Image src={getCheckBoxes()} preview={false} />
+                          <Image
+                            src={getCheckBoxes(item?.options)}
+                            preview={false}
+                          />
                           <Typography className={styles.filterOptionText}>
                             {item.name}
                           </Typography>
@@ -129,8 +147,8 @@ const SearchFilter = ({
                 </div>
               }
               rightSection={
-                <div>
-                  {filterPropertiesArray[0]?.options?.map((item, index) => {
+                <div className={styles.optionsContainer}>
+                  {optionsToBeShown?.map((item, index) => {
                     return (
                       <div
                         className={[styles.filterSecondLevelOption].join(" ")}
