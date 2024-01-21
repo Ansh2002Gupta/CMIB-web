@@ -35,6 +35,7 @@ const controlMenu = [
     key: "/activity-logs",
     icon: <UserOutlined />,
   },
+  { label: MENU_KEYS.QUERY_MANAGEMENT, key: USERS, icon: <UserOutlined /> },
 ];
 const newlyQualifiedPlacementsMenu = [
   { label: MENU_KEYS.DASHBOARD, key: DASHBOARD, icon: <UserOutlined /> },

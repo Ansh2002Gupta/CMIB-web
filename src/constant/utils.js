@@ -83,25 +83,28 @@ export const getAccessibleModules = (useRoles, modules) => {
 };
 
 export function filterMenuData(modules, menuItems) {
-  const emptyModule = [];
+  const filterdModules = [];
+
   modules &&
     modules?.map((item) => {
-      if (item?.subMenu) {
-        emptyModule?.push({
+      if (item?.subMenu && filterMenuData(item?.subMenu, menuItems) > 0) {
+        filterdModules?.push({
           key: item?.key,
           label: item?.label,
           subMenu: filterMenuData(item?.subMenu, menuItems),
         });
       }
       if (item?.key && menuItems && item?.key in menuItems) {
-        emptyModule?.push({
+        filterdModules?.push({
           key: item?.key,
           label: item?.label,
-          children: item?.children.filter((e) =>
-            menuItems[item?.key].includes(e?.label)
+          children: item?.children?.filter((e) =>
+            menuItems[item?.key]?.items?.find(
+              (findItem) => findItem?.key === e?.label
+            )
           ),
         });
       }
     });
-  return emptyModule;
+  return filterdModules;
 }

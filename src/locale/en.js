@@ -224,7 +224,7 @@ const locale = {
   "label.menu.user-management": "Users",
   "label.menu.bulk-notifications": "Notifications",
   "label.menu.ticket-management": "Tickets",
-  "label.menu.query-managementt": "Querys",
+  "label.menu.query-management": "Query Management",
   "label.menu.testimonial-management": "Testimonials",
   "label.menu.registered-companies": "Registered Companies",
   "label.menu.sessions": "Sessions",

@@ -9,10 +9,7 @@ import {
 } from "../../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import useHeader from "../../../core/hooks/useHeader";
-import {
-  ADMIN_ROUTE,
-  GET_USER_PROFILE_DETAILS,
-} from "../../../constant/apiEndpoints";
+import { GET_USER_PROFILE_DETAILS } from "../../../constant/apiEndpoints";
 import { STATUS_CODES } from "../../../constant/constant";
 
 const useGetUserDetails = () => {

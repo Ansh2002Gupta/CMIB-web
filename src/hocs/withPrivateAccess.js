@@ -9,10 +9,7 @@ import useGetUserDetails from "../services/api-services/UserProfile/useGetUserPr
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
 import CustomLoader from "../components/CustomLoader";
 import { STORAGE_KEYS } from "../constant/constant";
-import {
-  ADMIN_ROUTE,
-  GET_USER_PROFILE_DETAILS,
-} from "../constant/apiEndpoints";
+import { GET_USER_PROFILE_DETAILS } from "../constant/apiEndpoints";
 import { LOGIN } from "../routes/routeNames";
 
 function withPrivateAccess(Component) {
@@ -21,7 +18,7 @@ function withPrivateAccess(Component) {
     const navigate = useNavigate();
     const { onLogout } = useHeader();
     const { data, error, fetchData, isError } = useFetch({
-      url: ADMIN_ROUTE + GET_USER_PROFILE_DETAILS,
+      url: GET_USER_PROFILE_DETAILS,
       otherOptions: {
         skipApiCallOnMount: true,
       },

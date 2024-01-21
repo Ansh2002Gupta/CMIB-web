@@ -16,10 +16,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useFetch from "../../core/hooks/useFetch";
 import { setModuleDetails } from "../../globalContext/userProfile/userProfileActions";
 import { filterMenuData } from "../../constant/utils";
-import {
-  ADMIN_ROUTE,
-  GET_USER_PROFILE_DETAILS,
-} from "../../constant/apiEndpoints";
+import { GET_USER_PROFILE_DETAILS } from "../../constant/apiEndpoints";
 import { STORAGE_KEYS } from "../../constant/constant";
 import modules from "./sideMenuItems";
 
@@ -31,7 +28,7 @@ const SideMenu = ({ logo }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const intl = useIntl();
   const { data } = useFetch({
-    url: ADMIN_ROUTE + GET_USER_PROFILE_DETAILS,
+    url: GET_USER_PROFILE_DETAILS,
     otherOptions: {
       skipApiCallOnMount: true,
     },
