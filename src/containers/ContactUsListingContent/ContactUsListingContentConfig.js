@@ -1,6 +1,6 @@
-import { Typography } from "antd";
+import { Image, Typography } from "antd";
 
-import { STATUS } from "../../constant/constant";
+import { SORT_DIRECTIONS, STATUS } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
 
 const getStatusStyles = (status) => {
@@ -13,19 +13,28 @@ const getStatusStyles = (status) => {
   return ["statusContainer_progress", "statusText_progress"];
 };
 
+const getArrowStyles = (str) => {
+  if (str === SORT_DIRECTIONS.ASCENDING) {
+    return styles.upside;
+  }
+  return styles.downside;
+};
+
 export const getTicketOrQueryColumn = (
   type,
   intl,
   getImage,
   navigate,
-  renderColumn
+  renderColumn,
+  sortDirection,
+  changeDirections
 ) => {
-  if (type === '2') {
+  if (type === "2") {
     return [
       renderColumn({
         title: intl.formatMessage({ id: "label.queriesId" }),
-        dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
-        key: "id",
+        dataIndex: "readable_id",
+        key: "readable_id",
         renderText: {
           isTextBold: true,
           visible: true,
@@ -33,11 +42,25 @@ export const getTicketOrQueryColumn = (
         },
       }),
       renderColumn({
-        title: intl.formatMessage({ id: "label.studentOrCompany" }),
+        title: (
+          <div className={styles.arrowContainer} onClick={changeDirections}>
+            <Typography className={styles.columnHeader}>
+              {intl.formatMessage({ id: "label.studentOrCompany" })}
+            </Typography>
+            <div>
+              <Image
+                preview={false}
+                src={getImage("arrowDownDarkGrey")}
+                className={[
+                  styles.arrowDown,
+                  getArrowStyles(sortDirection),
+                ].join(" ")}
+              />
+            </div>
+          </div>
+        ),
         dataIndex: "name",
         key: "name",
-        sortKey: "name",
-        sortTypeText: true,
         renderText: {
           visible: true,
           textStyles: [styles.tableCell].join(" "),
@@ -94,10 +117,6 @@ export const getTicketOrQueryColumn = (
           visible: true,
           textStyles: [styles.tableCell].join(" "),
         },
-        sortDirection: ["ascend"],
-        sortKey: "created_at",
-        sortTypeDate: true,
-        defaultSortOrder: "ascend",
       }),
       renderColumn({
         dataIndex: "see",
@@ -126,8 +145,8 @@ export const getTicketOrQueryColumn = (
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.ticketId" }),
-      dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
-      key: "id",
+      dataIndex: "readable_id",
+      key: "readable_id",
       renderText: {
         isTextBold: true,
         visible: true,
@@ -135,11 +154,24 @@ export const getTicketOrQueryColumn = (
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.createdBy" }),
+      title: (
+        <div className={styles.arrowContainer} onClick={changeDirections}>
+          <Typography className={styles.columnHeader}>
+            {intl.formatMessage({ id: "label.createdBy" })}
+          </Typography>
+          <div>
+            <Image
+              preview={false}
+              src={getImage("arrowDownDarkGrey")}
+              className={[styles.arrowDown, getArrowStyles(sortDirection)].join(
+                " "
+              )}
+            />
+          </div>
+        </div>
+      ),
       dataIndex: "created_by",
       key: "created_by",
-      sortKey: "created_by",
-      sortTypeText: true,
       renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
@@ -173,10 +205,9 @@ export const getTicketOrQueryColumn = (
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <div
-            className={[
-              styles.statusBox,
-              styles[styleClassForContainer],
-            ].join(" ")}
+            className={[styles.statusBox, styles[styleClassForContainer]].join(
+              " "
+            )}
           >
             <Typography className={styles[styleClassForText]}>
               {status}
@@ -204,10 +235,6 @@ export const getTicketOrQueryColumn = (
         visible: true,
         textStyles: [styles.tableCell].join(" "),
       },
-      sortDirection: ["ascend"],
-      sortKey: "created_at",
-      sortTypeDate: true,
-      defaultSortOrder: "ascend",
     }),
     renderColumn({
       dataIndex: "see",
