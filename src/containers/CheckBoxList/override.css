@@ -1,0 +1,14 @@
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #CDEFDD; /* Custom fill color */
+    border-color: #04AF55; /* Custom border color to match fill if needed */
+  }
+  
+.ant-checkbox-checked:hover {
+    background-color: #CDEFDD !important; /* Custom fill color */
+    border-color: #04AF55 !important; /* Custom border color to match fill if needed */
+  }
+  
+  .ant-checkbox .ant-checkbox-inner:after {
+    /* border-color: #04AF55 !important; Custom checkmark color */
+    border-color: #04AF55 !important;
+  }

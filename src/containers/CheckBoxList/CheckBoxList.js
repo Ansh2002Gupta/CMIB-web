@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import Typography from "antd/es/typography/Typography";
+import { Checkbox } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
 import { PERMISION_AND_ROLE } from "../../dummyData";
-import { ReactComponent as CheckedBox } from "../../themes/base/assets/images/checkedBox.svg";
-import { ReactComponent as UncheckedBox } from "../../themes/base/assets/images/unCheckedBox.svg";
 import styles from "./CheckBoxList.module.scss";
+import "./override.css";
 
 const CheckBoxList = ({
   selectedControls,
@@ -51,6 +51,14 @@ const CheckBoxList = ({
     setSelectedOptionArray(arrayOfAllId);
   };
 
+  const getTextWithStar = (text) => {
+    return (
+      <Typography>
+        {text} <span className={styles.isRequired}>*</span>
+      </Typography>
+    );
+  };
+
   useEffect(() => {
     if (selectedModules.includes(controlModuleId)) {
       setIsAccessValid(!!selectedControls?.length);
@@ -62,77 +70,67 @@ const CheckBoxList = ({
 
   return (
     <Base className={styles.parentContainer}>
-      <Typography>
-        {intl.formatMessage({ id: "label.moduleAccess" })}
-      </Typography>
+      {getTextWithStar(intl.formatMessage({ id: "label.moduleAccess" }))}
       <div className={styles.container}>
-        <div
+        <Checkbox
           className={styles.box}
-          onClick={() =>
+          onChange={() =>
             handleSelectAll(
               areAllModulesSelected,
               setSelectedModules,
               PERMISION_AND_ROLE?.data
             )
           }
+          checked={areAllModulesSelected}
         >
-          {areAllModulesSelected ? <CheckedBox /> : <UncheckedBox />}
           <Typography>{intl.formatMessage({ id: "label.all" })}</Typography>
-        </div>
+        </Checkbox>
         {PERMISION_AND_ROLE?.data?.map((item) => {
           return (
-            <div
+            <Checkbox
               key={item.id}
-              className={styles.box}
-              onClick={() =>
+              className={[styles.box].join(" ")}
+              onChange={() =>
                 handleSelect(selectedModules, setSelectedModules, item.id)
               }
+              checked={selectedModules.includes(item.id)}
             >
-              {selectedModules.includes(item.id) ? (
-                <CheckedBox />
-              ) : (
-                <UncheckedBox />
-              )}
               <Typography>{item.name}</Typography>
-            </div>
+            </Checkbox>
           );
         })}
       </div>
       {selectedModules.includes(controlModuleId) && (
         <>
-          <Typography>
-            {intl.formatMessage({ id: "label.controlAccessHeading" })}
-          </Typography>
+          {getTextWithStar(
+            intl.formatMessage({ id: "label.controlAccessHeading" })
+          )}
           <div className={styles.container}>
-            <div
+            <Checkbox
               className={styles.box}
-              onClick={() =>
+              onChange={() =>
                 handleSelectAll(
                   areAllControlsSelected,
                   setSelectedControls,
-                  PERMISION_AND_ROLE?.data[0]?.permissions,
+                  PERMISION_AND_ROLE?.data[0]?.permissions
                 )
               }
+              checked={areAllControlsSelected}
             >
-              {areAllControlsSelected ? <CheckedBox /> : <UncheckedBox />}
               <Typography>{intl.formatMessage({ id: "label.all" })}</Typography>
-            </div>
+            </Checkbox>
             {PERMISION_AND_ROLE?.data[0]?.permissions?.map((item) => {
               return (
-                <div
+                <Checkbox
                   key={item.id}
                   className={styles.box}
-                  onClick={() =>
+                  onChange={() =>
                     handleSelect(selectedControls, setSelectedControls, item.id)
                   }
+                  checked={selectedControls.includes(item.id)}
                 >
-                  {selectedControls.includes(item.id) ? (
-                    <CheckedBox />
-                  ) : (
-                    <UncheckedBox />
-                  )}
                   <Typography>{item.name}</Typography>
-                </div>
+                </Checkbox>
               );
             })}
           </div>
