@@ -1,7 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 
-import Chip from "../../components/StatusChip";
+import Chip from "../../components/Chip";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import ContentHeader from "../ContentHeader/ContentHeader";
 import useResponsive from "../../core/hooks/useResponsive";
