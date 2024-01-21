@@ -128,8 +128,17 @@
   overflow: auto;
 }
 
-.filterOptionContainer{
+.filterOptionContainer {
   min-height: var(--height_250);
+}
+
+.messageBox {
+  padding: var(--paddingSmall);
+  width: var(--width_200);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--fontWeightMedium);
 }
 
 @media screen and (max-width: 1279px) {

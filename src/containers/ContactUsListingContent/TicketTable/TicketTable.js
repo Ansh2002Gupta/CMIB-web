@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -9,6 +9,7 @@ import { ThemeContext } from "core/providers/theme";
 import ErrorMessageBox from "../../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import useFetch from "../../../core/hooks/useFetch";
+import useGetAllQueryTypesApi from "../../../services/api-services/Query/useGetAllQueryTypesApi";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
@@ -35,6 +36,8 @@ const TicketTable = ({
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
+  const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
+
   const columns = getTicketOrQueryColumn(
     currentActiveTab,
     intl,
@@ -51,6 +54,39 @@ const TicketTable = ({
     errorString = error?.data?.message;
   }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
+
+  const {
+    isError: isErrorGettingQueryTypes,
+    isSuccess: isSuccessFullgetQueryTypes,
+    error: errorWhileGettingQueryTypes,
+    isLoading: isLoadingWhileGettingQueryTypes,
+    data: queryTypesData,
+    getAllQueryTypes,
+  } = useGetAllQueryTypesApi();
+
+  const filtersData = [
+    {
+      id: 1,
+      name: intl.formatMessage({ id: "label.status" }),
+      options: [], // TODO: need to get this from API
+    },
+    {
+      id: 2,
+      name: intl.formatMessage({ id: "label.queryTypes" }),
+      options: queryTypesData,
+    },
+  ];
+
+  const handleOnFilterApply = () => {
+    // TODO: change the name of the key required to sending the filters value to the backend
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      q: searchedValue,
+      queryType: currentFilterStatus,
+    };
+    fetchData(requestedParams);
+  };
 
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
@@ -138,6 +174,7 @@ const TicketTable = ({
       q: searchedValue,
     };
     fetchData(requestedParams);
+    getAllQueryTypes();
   }, []);
 
   const handleOnReTry = () => {
@@ -165,7 +202,7 @@ const TicketTable = ({
 
   return (
     <>
-      {!isError && (
+      {!isError||true && (
         <TableWithSearchAndFilters
           {...{
             current,
@@ -175,14 +212,20 @@ const TicketTable = ({
             columns,
             onChangePageSize,
             onChangeCurrentPage,
+            filtersData,
+            currentFilterStatus,
+            setCurrentFilterStatus,
           }}
-          isLoading={isSuccess && !isLoading}
+          isLoading={true || isSuccess && !isLoading}
           // TODO: please remove the dummy data once the data start coming from API
           data={TICKET_DATA_LIST.slice(startIndex, endIndex)}
           currentDataLength={TICKET_DATA_LIST.length}
+          optionsIdKey={"id"}
+          optionsNameKey={"name"}
+          onSearch={handleOnFilterApply}
         />
       )}
-      {isError && (
+      {isError|| true && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
             onRetry={handleOnReTry}

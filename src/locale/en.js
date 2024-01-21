@@ -235,6 +235,7 @@ const locale = {
   "label.contactPersonDesignation": "Contact Person Designation",
   "label.dummyName": "Dummy Name",
   "label.studentName": "Student Name",
+  "label.noFilterIsAvailable": "No filter is available",
 };
 
 export default locale;

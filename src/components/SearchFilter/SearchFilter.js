@@ -23,7 +23,7 @@ const SearchFilter = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  
+
   const [currentlySelectOptionsGroup, setCurrentlySelectOptionsGroup] =
     useState(1);
   const elementNotConsideredInOutSideClick = useRef();
@@ -56,11 +56,11 @@ const SearchFilter = ({
   // };
 
   const getCheckBoxes = (options) => {
-    const optionsIdArray = options.map((item) => item[optionsIdKey]);
-    const containsAll = optionsIdArray.every((element) =>
+    const optionsIdArray = options?.map((item) => item[optionsIdKey]);
+    const containsAll = optionsIdArray?.every((element) =>
       currentFilterStatus.includes(element)
     );
-    const containsSome = optionsIdArray.some((element) =>
+    const containsSome = optionsIdArray?.some((element) =>
       currentFilterStatus.includes(element)
     );
     if (containsAll) {
@@ -94,106 +94,130 @@ const SearchFilter = ({
           className={styles.cardParentContainer}
           ref={elementNotConsideredInOutSideClick}
         >
-          <Card
-            title={intl.formatMessage({ id: "label.filter" })}
-            className={styles.filterContainer}
-            headStyle={classes.filterHeaderText}
-            extra={
-              <Button
-                type="link"
-                onClick={() => setCurrentFilterStatus([])}
-                className={styles.clearAllBtn}
+          {!!filterPropertiesArray?.length && (
+            <>
+              <Card
+                title={intl.formatMessage({ id: "label.filter" })}
+                className={styles.filterContainer}
+                headStyle={classes.filterHeaderText}
+                extra={
+                  <Button
+                    type="link"
+                    onClick={() => setCurrentFilterStatus([])}
+                    className={styles.clearAllBtn}
+                  >
+                    {intl.formatMessage({ id: "label.clearAll" })}
+                  </Button>
+                }
+                bodyStyle={classes.cardBody}
               >
-                {intl.formatMessage({ id: "label.clearAll" })}
-              </Button>
-            }
-            bodyStyle={classes.cardBody}
-          >
-            <TwoColumn
-              // TODO: Srujan will be working on the responsive designs of the filters hence do not touch it much
-              isLeftFillSpace
-              isRightFillSpace
-              leftSectionStyle={classes.filterLeftSectionBorder}
-              className={styles.filterOptionContainer}
-              leftSection={
-                <div>
-                  {filterPropertiesArray?.map((item, index) => {
-                    return (
-                      <div
-                        className={[
-                          styles.filterOption,
-                          currentlySelectOptionsGroup === item.id
-                            ? styles.active
-                            : "",
-                        ].join(" ")}
-                        onClick={() => setCurrentlySelectOptionsGroup(item.id)}
-                        key={index}
-                      >
-                        <div className={styles.filterTextAndCheckContainer}>
-                          <Image
-                            src={getCheckBoxes(item?.options)}
-                            preview={false}
-                          />
-                          <Typography className={styles.filterOptionText}>
-                            {item.name}
-                          </Typography>
-                        </div>
-                        {item?.options?.length && (
-                          <div className={styles.filterRightArrow}>
-                            <Image
-                              src={getImage("arrowRightFilter")}
-                              preview={false}
-                            />
+                <TwoColumn
+                  // TODO: Srujan will be working on the responsive designs of the filters hence do not touch it much
+                  isLeftFillSpace
+                  isRightFillSpace
+                  leftSectionStyle={classes.filterLeftSectionBorder}
+                  className={styles.filterOptionContainer}
+                  leftSection={
+                    <div>
+                      {filterPropertiesArray?.map((item, index) => {
+                        return (
+                          <div
+                            className={[
+                              styles.filterOption,
+                              currentlySelectOptionsGroup === item.id
+                                ? styles.active
+                                : "",
+                            ].join(" ")}
+                            onClick={() =>
+                              setCurrentlySelectOptionsGroup(item.id)
+                            }
+                            key={index}
+                          >
+                            <div className={styles.filterTextAndCheckContainer}>
+                              <Image
+                                src={getCheckBoxes(item?.options)}
+                                preview={false}
+                              />
+                              <Typography className={styles.filterOptionText}>
+                                {item.name}
+                              </Typography>
+                            </div>
+                            {item?.options?.length && (
+                              <div className={styles.filterRightArrow}>
+                                <Image
+                                  src={getImage("arrowRightFilter")}
+                                  preview={false}
+                                />
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              }
-              rightSection={
-                <div className={styles.optionsContainer}>
-                  {optionsToBeShown?.map((item, index) => {
-                    return (
-                      <div
-                        className={[styles.filterSecondLevelOption].join(" ")}
-                        onClick={() =>
-                          handleOnUpdateAccessFilterStatus(item[optionsIdKey])
-                        }
-                        key={index}
-                      >
-                        {currentFilterStatus.includes(item[optionsIdKey]) ? (
-                          <Image src={getImage("checkedBox")} preview={false} />
-                        ) : (
-                          <Image
-                            src={getImage("unCheckedBox")}
-                            preview={false}
-                          />
-                        )}
-                        <Typography className={styles.filterOptionText}>
-                          {item[optionsNameKey]}
-                          {!isNaN(item?.count) ? `(${item?.count})` : ""}
-                        </Typography>
-                      </div>
-                    );
-                  })}
-                </div>
-              }
-            />
-          </Card>
-          <div className={styles.footerBtnContainer}>
-            <Button
-              className={styles.cancelBtn}
-              onClick={() => setShowFilters(false)}
+                        );
+                      })}
+                    </div>
+                  }
+                  rightSection={
+                    <div className={styles.optionsContainer}>
+                      {optionsToBeShown?.map((item, index) => {
+                        return (
+                          <div
+                            className={[styles.filterSecondLevelOption].join(
+                              " "
+                            )}
+                            onClick={() =>
+                              handleOnUpdateAccessFilterStatus(
+                                item[optionsIdKey]
+                              )
+                            }
+                            key={index}
+                          >
+                            {currentFilterStatus.includes(
+                              item[optionsIdKey]
+                            ) ? (
+                              <Image
+                                src={getImage("checkedBox")}
+                                preview={false}
+                              />
+                            ) : (
+                              <Image
+                                src={getImage("unCheckedBox")}
+                                preview={false}
+                              />
+                            )}
+                            <Typography className={styles.filterOptionText}>
+                              {item[optionsNameKey]}
+                              {!isNaN(item?.count) ? `(${item?.count})` : ""}
+                            </Typography>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  }
+                />
+              </Card>
+              <div className={styles.footerBtnContainer}>
+                <Button
+                  className={styles.cancelBtn}
+                  onClick={() => setShowFilters(false)}
+                >
+                  {intl.formatMessage({ id: "label.cancel" })}
+                </Button>
+                <CustomButton
+                  btnText={intl.formatMessage({ id: "label.searchResult" })}
+                  customStyle={styles.showResultBtn}
+                  onClick={onSearch}
+                />
+              </div>
+            </>
+          )}
+          {!filterPropertiesArray?.length && (
+            <div
+              className={styles.messageBox}
             >
-              {intl.formatMessage({ id: "label.cancel" })}
-            </Button>
-            <CustomButton
-              btnText={intl.formatMessage({ id: "label.searchResult" })}
-              customStyle={styles.showResultBtn}
-              onClick={onSearch}
-            />
-          </div>
+              <Typography>
+                {intl.formatMessage({ id: "label.noFilterIsAvailable" })}
+              </Typography>
+            </div>
+          )}
         </div>
       )}
     </div>

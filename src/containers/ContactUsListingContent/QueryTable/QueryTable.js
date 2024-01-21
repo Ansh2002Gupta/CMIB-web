@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -11,8 +11,10 @@ import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFil
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../../core/hooks/useFetch";
+import useGetAllQueryTypesApi from "../../../services/api-services/Query/useGetAllQueryTypesApi";
 import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
-import { ADMIN_ROUTE, QUERIES_LIST } from "../../../constant/apiEndpoints";
+import { toggleSortDirection } from "../../../constant/utils";
+import { ADMIN_ROUTE, QUERY_END_POINT } from "../../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
@@ -34,17 +36,73 @@ const QueryTable = ({
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
+  const [sortDirection, setSortDirection] = useState({
+    direction: "asc",
+    key: "name",
+  });
+  const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
+
+  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
+    url: ADMIN_ROUTE + QUERY_END_POINT,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+
+  const {
+    isError: isErrorGettingQueryTypes,
+    isSuccess: isSuccessFullgetQueryTypes,
+    error: errorWhileGettingQueryTypes,
+    isLoading: isLoadingWhileGettingQueryTypes,
+    data: queryTypesData,
+    getAllQueryTypes,
+  } = useGetAllQueryTypesApi();
+
+  const filtersData = isErrorGettingQueryTypes
+    ? null
+    : [
+        {
+          id: 1,
+          name: intl.formatMessage({ id: "label.queryTypes" }),
+          options: queryTypesData,
+        },
+      ];
+
+  const handleOnFilterApply = () => {
+    // TODO: change the name of the key required to sending the filters value to the backend
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      q: searchedValue,
+      queryType: currentFilterStatus,
+    };
+    fetchData(requestedParams);
+  };
+
   const columns = getTicketOrQueryColumn(
     currentActiveTab,
     intl,
     getImage,
     navigate,
-    renderColumn
+    renderColumn,
+    sortDirection.direction,
+    (direction) =>
+      fetchData(
+        {
+          perPage: pageSize,
+          page: current,
+          q: searchedValue,
+          sort: sortDirection.key,
+          order: direction,
+        },
+        () => {
+          setSortDirection((prev) => {
+            return {
+              ...prev,
+              direction: toggleSortDirection(sortDirection.direction),
+            };
+          });
+        }
+      )
   );
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + QUERIES_LIST,
-    otherOptions: { skipApiCallOnMount: true },
-  });
   let errorString = error;
   if (typeof error === "object") {
     errorString = error?.data?.message;
@@ -146,6 +204,7 @@ const QueryTable = ({
       q: searchedValue,
     };
     fetchData(requestedParams);
+    getAllQueryTypes();
   }, []);
 
   return (
@@ -160,16 +219,22 @@ const QueryTable = ({
             columns,
             onChangePageSize,
             onChangeCurrentPage,
+            filtersData,
+            currentFilterStatus,
+            setCurrentFilterStatus,
           }}
           isLoading={isSuccess && !isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
+          optionsIdKey={"id"}
+          optionsNameKey={"name"}
+          onSearch={handleOnFilterApply}
         />
       )}
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
-            onClick={handleOnReTry}
+            onRetry={handleOnReTry}
             errorText={errorString}
             errorHeading={intl.formatMessage({
               id: "label.error",
