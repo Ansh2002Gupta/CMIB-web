@@ -212,12 +212,22 @@ export const COMPANY_DATA_SOURCE = [
 export const ACCESS_FILTER_DATA = [
   {
     id: 1,
-    name: "Access",
-    isSelected: false,
+    name: "Access 1",
     options: [
-      { optionId: 1, str: "All", count: 100 },
-      { optionId: 2, str: "Placements", count: 100 },
-      { optionId: 3, str: "CA Jobs", count: 100 },
+      { optionId: 2, name: "Placements 1 ", count: 100 },
+      { optionId: 3, name: "CA Jobs 1 ", count: 100 },
+    ],
+  },
+  {
+    id: 2,
+    name: "Access 2",
+    options: [
+      { optionId: 5, name: "Placements 2 ", count: 100 },
+      { optionId: 6, name: "CA Jobs 2 ", count: 100 },
+      { optionId: 7, name: "Placements 2 ", count: 100 },
+      { optionId: 8, name: "CA Jobs 2 ", count: 100 },
+      { optionId: 9, name: "Placements 2 ", count: 100 },
+      { optionId: 10, name: "CA Jobs 2 ", count: 100 },
     ],
   },
 ];
@@ -366,6 +376,7 @@ export const SESSION_DETAILS = {
 export const TICKET_DATA_LIST = [
   {
     id: 1,
+    readable_id: 1,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -376,6 +387,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 2,
+    readable_id: 2,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -386,6 +398,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 3,
+    readable_id: 3,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -396,6 +409,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 4,
+    readable_id: 4,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -406,6 +420,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 5,
+    readable_id: 5,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -416,6 +431,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 6,
+    readable_id: 6,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -426,6 +442,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 7,
+    readable_id: 7,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -436,6 +453,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 8,
+    readable_id: 8,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -446,6 +464,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 9,
+    readable_id: 9,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -456,6 +475,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 10,
+    readable_id: 10,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -466,6 +486,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 11,
+    readable_id: 11,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -476,6 +497,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 12,
+    readable_id: 12,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -486,6 +508,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 13,
+    readable_id: 13,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -496,6 +519,7 @@ export const TICKET_DATA_LIST = [
   },
   {
     id: 14,
+    readable_id: 14,
     created_by: "Arhun jai",
     role: "Candidate",
     registration_no: 1023456789,
@@ -510,7 +534,7 @@ export const INITIAL_CENTRE_DETAILS = {
   centreName: "",
   centreId: "",
   status: true,
-}
+};
 
 export const SETUP_CENTRE_DETAILS = [
   {

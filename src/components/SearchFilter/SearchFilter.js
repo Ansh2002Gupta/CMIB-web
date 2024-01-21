@@ -12,14 +12,18 @@ import { classes } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
 
 const SearchFilter = ({
+  currentFilterStatus,
+  setCurrentFilterStatus,
   filterPropertiesArray,
   setShowFilters,
   showFilters,
+  optionsIdKey,
+  optionsNameKey,
+  onSearch,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-
-  const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
+  
   const [currentlySelectOptionsGroup, setCurrentlySelectOptionsGroup] =
     useState(1);
   const elementNotConsideredInOutSideClick = useRef();
@@ -42,16 +46,17 @@ const SearchFilter = ({
     setCurrentFilterStatus(updateData);
   };
 
-  const selectOrRemoveAll = () => {
-    if (currentFilterStatus.length === 0) {
-      setCurrentFilterStatus([1, 2, 3]);
-      return;
-    }
-    setCurrentFilterStatus([]);
-  };
+  // TODO: need to decide that should we remove this function or not
+  // const selectOrRemoveAll = () => {
+  //   if (currentFilterStatus.length === 0) {
+  //     setCurrentFilterStatus([1, 2, 3]);
+  //     return;
+  //   }
+  //   setCurrentFilterStatus([]);
+  // };
 
   const getCheckBoxes = (options) => {
-    const optionsIdArray = options.map((item) => item.optionId);
+    const optionsIdArray = options.map((item) => item[optionsIdKey]);
     const containsAll = optionsIdArray.every((element) =>
       currentFilterStatus.includes(element)
     );
@@ -153,11 +158,11 @@ const SearchFilter = ({
                       <div
                         className={[styles.filterSecondLevelOption].join(" ")}
                         onClick={() =>
-                          handleOnUpdateAccessFilterStatus(item.optionId)
+                          handleOnUpdateAccessFilterStatus(item[optionsIdKey])
                         }
                         key={index}
                       >
-                        {currentFilterStatus.includes(item.optionId) ? (
+                        {currentFilterStatus.includes(item[optionsIdKey]) ? (
                           <Image src={getImage("checkedBox")} preview={false} />
                         ) : (
                           <Image
@@ -166,8 +171,8 @@ const SearchFilter = ({
                           />
                         )}
                         <Typography className={styles.filterOptionText}>
-                          {item?.str}
-                          {item?.count ? item?.count : ""}
+                          {item[optionsNameKey]}
+                          {!isNaN(item?.count) ? `(${item?.count})` : ""}
                         </Typography>
                       </div>
                     );
@@ -186,7 +191,7 @@ const SearchFilter = ({
             <CustomButton
               btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
-              onClick={() => setShowFilters(false)}
+              onClick={onSearch}
             />
           </div>
         </div>
@@ -196,13 +201,23 @@ const SearchFilter = ({
 };
 
 SearchFilter.defaultProps = {
+  currentFilterStatus: [],
+  setCurrentFilterStatus: () => {},
   filterPropertiesArray: [],
+  optionsIdKey: "id",
+  optionsNameKey: "name",
+  onSearch: () => {},
   setShowFilters: () => {},
   showFilters: false,
 };
 
 SearchFilter.propTypes = {
+  currentFilterStatus: PropTypes.array,
+  setCurrentFilterStatus: PropTypes.func,
   filterPropertiesArray: PropTypes.array,
+  optionsIdKey: PropTypes.string,
+  optionsNameKey: PropTypes.string,
+  onSearch: PropTypes.func,
   setShowFilters: PropTypes.func,
   showFilters: PropTypes.bool,
 };

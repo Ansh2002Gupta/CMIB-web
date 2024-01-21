@@ -173,6 +173,7 @@ const locale = {
   "label.nonRegisteredStudentOrCompany": "Non-Registered Student/Company",
   "label.mobile": "Mobile",
   "label.queryType": "Query Type",
+  "label.queryTypes": "Query Types",
   "label.createdOn": "Created On",
   "label.tryAgain": "Try again!",
   "label.error": "Error",

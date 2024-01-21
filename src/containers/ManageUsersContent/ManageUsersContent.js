@@ -285,6 +285,7 @@ const ManageUsersContent = () => {
           <SearchFilter
             filterPropertiesArray={ACCESS_FILTER_DATA}
             {...{ showFilters, setShowFilters }}
+            optionsIdKey={"optionId"}
           />
         </div>
         {areUsersFetchedSuccessfully && (
