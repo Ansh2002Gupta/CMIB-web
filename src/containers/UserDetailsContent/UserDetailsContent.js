@@ -6,6 +6,7 @@ import { Alert, Button, Spin, Typography } from "antd";
 import { TwoRow } from "../../core/layouts";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
+import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -173,28 +174,10 @@ const UserDetailsContent = ({
           )}
           {errorWhileGettingUsersData && (
             <div className={styles.errorContainer}>
-              {/* TODO: Replace it with errorMessagebox */}
-              <Alert
-                message={
-                  <Typography className={styles.errorText}>
-                    {intl.formatMessage({ id: "label.error" })}
-                  </Typography>
-                }
-                description={
-                  <div className={styles.apiFailedErrorContainer}>
-                    <Typography className={styles.errorText}>
-                      {errorWhileGettingUsersData}
-                    </Typography>
-                    <Button
-                      onClick={() => getUserData(userId)}
-                      className={styles.tryAgainButton}
-                    >
-                      {intl.formatMessage({ id: "label.tryAgain" })}
-                    </Button>
-                  </div>
-                }
-                type="error"
-                showIcon
+              <ErrorMessageBox
+                onRetry={() => getUserData(userId)}
+                errorHeading={intl.formatMessage({ id: "label.error" })}
+                errorText={errorWhileGettingUsersData}
               />
             </div>
           )}
