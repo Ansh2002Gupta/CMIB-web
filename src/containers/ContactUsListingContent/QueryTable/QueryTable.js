@@ -84,14 +84,14 @@ const QueryTable = ({
     navigate,
     renderColumn,
     sortDirection.direction,
-    (direction) =>
+    () =>
       fetchData(
         {
           perPage: pageSize,
           page: current,
           q: searchedValue,
           sort: sortDirection.key,
-          order: direction,
+          order: toggleSortDirection(sortDirection.direction),
         },
         () => {
           setSortDirection((prev) => {

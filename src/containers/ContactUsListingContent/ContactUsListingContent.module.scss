@@ -118,7 +118,7 @@
 }
 
 .tableCell {
-  min-width: var(--width_100);
+  min-width: var(--width_140);
 }
 
 .arrowContainer {
@@ -126,6 +126,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  gap: var(--gapXXSmall);
 }
 
 .upside {
@@ -137,7 +138,11 @@
 }
 
 .arrowDown {
-  min-height: var(--height_30);
+  min-height: var(--height_20);
+  max-height: var(--height_20);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .columnHeader {

@@ -13,6 +13,7 @@ import useGetAllQueryTypesApi from "../../../services/api-services/Query/useGetA
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
+import { toggleSortDirection } from "../../../constant/utils";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
@@ -38,17 +39,42 @@ const TicketTable = ({
 
   const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
 
+  const [sortDirection, setSortDirection] = useState({
+    direction: "asc",
+    key: "name",
+  });
+
+  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
+    url: ADMIN_ROUTE + TICKET_LIST,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+  
   const columns = getTicketOrQueryColumn(
     currentActiveTab,
     intl,
     getImage,
     navigate,
-    renderColumn
+    renderColumn,
+    sortDirection.direction,
+    () =>
+      fetchData(
+        {
+          perPage: pageSize,
+          page: current,
+          q: searchedValue,
+          sort: sortDirection.key,
+          order: toggleSortDirection(sortDirection.direction),
+        },
+        () => {
+          setSortDirection((prev) => {
+            return {
+              ...prev,
+              direction: toggleSortDirection(sortDirection.direction),
+            };
+          });
+        }
+      )
   );
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + TICKET_LIST,
-    otherOptions: { skipApiCallOnMount: true },
-  });
   let errorString = error;
   if (typeof error === "object") {
     errorString = error?.data?.message;
