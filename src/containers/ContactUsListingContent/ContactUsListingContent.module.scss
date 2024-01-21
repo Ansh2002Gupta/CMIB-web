@@ -18,6 +18,11 @@
   padding: var(--paddingMedium);
   flex: 1;
 }
+.tableContainer {
+  border-radius: var(--radiusMLg) !important;
+  overflow: hidden !important;
+  border: var(--borderLight);
+}
 .searchIcon {
   width: var(--width_30);
   height: var(--height_30);
@@ -60,12 +65,12 @@
 }
 
 .statusBox {
-  width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: var(--radiusXLg);
   padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
+  width: fit-content;
 }
 
 .statusContainer_success {
@@ -77,7 +82,7 @@
 }
 
 .statusContainer_progress {
-  background-color: var(--lightBlueBg);
+  background-color: var(--lightBlueBg2);
 }
 
 .statusText_success {

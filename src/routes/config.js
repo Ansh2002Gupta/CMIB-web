@@ -202,20 +202,6 @@ const config = [
       },
     ],
   },
-  {
-    pagePath: CONTACT_US,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
-      {
-        viewPath: "",
-        element: <ContactUsListing />,
-      },
-      {
-        viewPath: QUERY_DETAILS,
-        element: <QueryDetails />,
-      },
-    ],
-  },
 ];
 
 export default config;

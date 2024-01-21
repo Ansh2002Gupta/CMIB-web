@@ -20,11 +20,11 @@ export const getTicketOrQueryColumn = (
   navigate,
   renderColumn
 ) => {
-  if (type === 2) {
+  if (type === '2') {
     return [
       renderColumn({
         title: intl.formatMessage({ id: "label.queriesId" }),
-        dataIndex: "id",
+        dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
         key: "id",
         renderText: {
           isTextBold: true,
@@ -126,7 +126,7 @@ export const getTicketOrQueryColumn = (
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.ticketId" }),
-      dataIndex: "id",
+      dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
       key: "id",
       renderText: {
         isTextBold: true,
@@ -189,7 +189,11 @@ export const getTicketOrQueryColumn = (
       title: intl.formatMessage({ id: "label.assignedTo" }),
       dataIndex: "assigned_to",
       key: "assigned_to",
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+        isCapitalize: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.createdOn" }),

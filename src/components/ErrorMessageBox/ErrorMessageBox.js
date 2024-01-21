@@ -3,7 +3,8 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Button, Typography } from "antd";
 
-import TwoRow from "../../core/layouts/TwoRow/TwoRow";
+import { TwoRow } from "../../core/layouts";
+
 import { ReactComponent as ErrorIcon } from "../../themes/base/assets/images/error icon.svg";
 import styles from "./ErrorMessageBox.module.scss";
 

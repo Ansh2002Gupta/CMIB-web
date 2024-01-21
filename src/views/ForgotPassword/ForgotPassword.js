@@ -54,7 +54,7 @@ const ForgotPassword = () => {
 
   const handleOTPSubmit = (otp) => {
     handleCheckOTP({
-      onSuccess: () => setCurrentActiveScreen(3),
+      onSuccessCallback: () => setCurrentActiveScreen(3),
       payload: { email: userName, otp },
       url: ADMIN_ROUTE + VERIFY_OTP,
     });
@@ -154,7 +154,7 @@ const ForgotPassword = () => {
           )}
         </Base>
       ) : (
-        <CreateNewPassword token={checkOTPData?.token} />
+        <CreateNewPassword reset_token={checkOTPData?.reset_token} />
       )}
     </>
   );

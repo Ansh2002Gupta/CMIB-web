@@ -1,6 +1,6 @@
 .container {
   padding: var(--paddingMedium);
-  border-radius: var(--radiusXLgMedium);
+  border-radius: var(--radiusMLg);
   border: var(--borderLight);
   background: var(--bodyBg);
   display: flex;
@@ -12,7 +12,7 @@
   width: 50%;
   height: var(--fullHeight);
   border-radius: var(--radiusXLg);
-  background-color: var(--lightBlueBg);
+  background-color: var(--lightBlueBg2);
   display: flex;
   justify-content: center;
   flex-direction: column;
