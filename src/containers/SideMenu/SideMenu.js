@@ -9,13 +9,11 @@ import {
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import { getItem } from "../../services/encrypted-storage-service";
 import ModuleList from "./ModuleList";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { setModuleDetails } from "../../globalContext/userProfile/userProfileActions";
 import { filterMenuData } from "../../constant/utils";
-import { STORAGE_KEYS } from "../../constant/constant";
 import modules from "./sideMenuItems";
 
 import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
@@ -26,7 +24,7 @@ const SideMenu = ({ logo }) => {
     useContext(UserProfileContext);
   const { navigateScreen: navigate } = useNavigateScreen();
   const intl = useIntl();
-  const userData = getItem(STORAGE_KEYS?.USER_DATA);
+  const userData = userProfileDetails?.userDetails;
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [selectedModule, setSelectedModule] = useState(modules[0]);
   const accessibleModules = filterMenuData(modules, userData?.menu_items);

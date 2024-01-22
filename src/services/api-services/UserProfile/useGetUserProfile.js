@@ -11,14 +11,14 @@ import { UserProfileContext } from "../../../globalContext/userProfile/userProfi
 import useHeader from "../../../core/hooks/useHeader";
 import { GET_USER_PROFILE_DETAILS } from "../../../constant/apiEndpoints";
 import { STATUS_CODES, STORAGE_KEYS } from "../../../constant/constant";
-import { setItem } from "../../encrypted-storage-service";
+import { getItem, setItem } from "../../encrypted-storage-service";
 
 const useGetUserDetails = () => {
   const intl = useIntl();
   const { onLogout } = useHeader();
   const [, userProfileDispatch] = useContext(UserProfileContext);
 
-  const getUserDetails = async () => {
+  const getUserFromServer = async () => {
     try {
       userProfileDispatch(setIsGettingUserDetails(true));
       userProfileDispatch(setErrorGetingUserDetails(""));
@@ -46,6 +46,17 @@ const useGetUserDetails = () => {
       onLogout();
     }
   };
+
+  const getUserDetails = () => {
+    const userData = getItem(STORAGE_KEYS?.USER_DATA);
+    console.log(userData);
+    if (userData) {
+      userProfileDispatch(setUserDetails(userData));
+    } else {
+      getUserFromServer();
+    }
+  };
+
   return { getUserDetails };
 };
 

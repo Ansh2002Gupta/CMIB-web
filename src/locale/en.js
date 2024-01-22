@@ -229,7 +229,7 @@ const locale = {
   "label.menu.registered-companies": "Registered Companies",
   "label.menu.sessions": "Sessions",
   "label.menu.dashboard": "Dashboard",
-  "label.menu.subscriptions": "subscriptions",
+  "label.menu.subscriptions": "Subscriptions",
   "label.menu.global-configurations": "Global Configurations",
   "label.menu.payments": "Payments",
   "label.menu.candidates": "Candidates",

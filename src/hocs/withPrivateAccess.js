@@ -6,7 +6,6 @@ import { getItem } from "../services/encrypted-storage-service";
 import useGetUserDetails from "../services/api-services/UserProfile/useGetUserProfile";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
 import CustomLoader from "../components/CustomLoader";
-import { STORAGE_KEYS } from "../constant/constant";
 import { LOGIN } from "../routes/routeNames";
 
 function withPrivateAccess(Component) {
@@ -20,7 +19,7 @@ function withPrivateAccess(Component) {
       if (_.isEmpty(auth)) {
         navigate(LOGIN);
       }
-      if (auth && !getItem(STORAGE_KEYS?.USER_DATA)) {
+      if (auth && !Object.keys(userProfileDetails.userDetails)?.length) {
         getUserDetails();
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

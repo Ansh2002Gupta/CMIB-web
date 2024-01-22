@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { Avatar, Dropdown, Space } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
-import { getItem } from "../../services/encrypted-storage-service";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import CardDropdownOverlay from "./CardDropdownOverlay";
 import useResponsive from "../../core/hooks/useResponsive";
-import { STORAGE_KEYS } from "../../constant/constant";
 import styles from "./profileDropdown.module.scss";
 
 const ProfileDropdown = () => {
-  const userData= getItem(STORAGE_KEYS?.USER_DATA);
+  const [userProfileDetails, userProfileDispatch] =
+  useContext(UserProfileContext);
+  const userData= userProfileDetails?.userDetails;
  
   const userName = userData?.name;
   const userRole = userData?.user_type;
