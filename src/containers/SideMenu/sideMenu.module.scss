@@ -22,11 +22,17 @@
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500);
 }
-.appLogo {
-  margin: var(--sizeLarge, 18px);
+.appLogoContainer{
+  padding: var(--padding_18);
+  cursor: default;
+}
+.appLogoBox {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.appLogo {
+  cursor: pointer;
 }
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);

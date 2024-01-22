@@ -164,6 +164,7 @@ const variables = {
   padding_9: "9px",
   paddingMediumSmall: "12px",
   paddingSmall: "16px",
+  padding_18: "18px",
   paddingMedium: "24px",
   paddingLarge: "32px",
   paddingXLarge: "40px",
