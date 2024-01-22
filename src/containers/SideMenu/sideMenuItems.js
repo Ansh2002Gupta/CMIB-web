@@ -26,7 +26,6 @@ import { ReactComponent as SMS } from "../../themes/base/assets/icons/sms.svg";
 import { ReactComponent as Testimonials } from "../../themes/base/assets/icons/testimonials.svg";
 import { ReactComponent as Wallet } from "../../themes/base/assets/icons/wallet.svg";
 
-// TODO: need to add icons according to menu
 const controlMenu = [
   { label: MENU_KEYS.USER_MANAGEMENT, key: USERS, icon: <People /> },
   {
@@ -105,7 +104,7 @@ const experiencedMembersMenu = [
   { label: MENU_KEYS.ROASTER, key: "/roster", icon: <Roaster /> },
   { label: MENU_KEYS.REPORT, key: "/report", icon: <Report /> },
 ];
-// TODO: need to add role based menu
+
 const modules = [
   {
     label: "Control",
