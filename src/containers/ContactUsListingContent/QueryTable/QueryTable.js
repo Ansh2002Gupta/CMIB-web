@@ -49,6 +49,10 @@ const QueryTable = ({
     url: ADMIN_ROUTE + QUERY_END_POINT,
     otherOptions: { skipApiCallOnMount: true },
   });
+  let errorString = error;
+  if (typeof error === "object") {
+    errorString = error?.data?.message;
+  }
 
   const {
     isError: isErrorGettingQueryTypes,
@@ -69,6 +73,15 @@ const QueryTable = ({
         },
       ];
 
+  const onSuccessfullUpdateQueryStatus = () => {
+    const requestedParams = {
+      perPage: pageSize,
+      page: currentPage,
+      q: searchedValue,
+    };
+    fetchData(requestedParams);
+  };
+
   const handleOnFilterApply = () => {
     // TODO: change the name of the key required to sending the filters value to the backend
     const requestedParams = {
@@ -80,49 +93,24 @@ const QueryTable = ({
     fetchData(requestedParams);
   };
 
-  const columns = getTicketOrQueryColumn(
-    currentActiveTab,
-    intl,
-    getImage,
-    navigate,
-    renderColumn,
-    sortDirection.direction,
-    () =>
-      fetchData(
-        {
-          perPage: pageSize,
-          page: current,
-          q: searchedValue,
-          sort: sortDirection.key,
-          order: toggleSortDirection(sortDirection.direction),
-        },
-        () => {
-          setSortDirection((prev) => {
-            return {
-              ...prev,
-              direction: toggleSortDirection(sortDirection.direction),
-            };
-          });
-        }
-      )
-  );
-  let errorString = error;
-  if (typeof error === "object") {
-    errorString = error?.data?.message;
-  }
-  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
-    useMarkedQueryAsAnweredApi();
-  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
-
-  const { showNotification, notificationContextHolder } = useShowNotification();
-
-  const onSuccessfullUpdateQueryStatus = () => {
-    const requestedParams = {
-      perPage: pageSize,
-      page: currentPage,
-      q: searchedValue,
-    };
-    fetchData(requestedParams);
+  const handleOnSort = () => {
+    fetchData(
+      {
+        perPage: pageSize,
+        page: current,
+        q: searchedValue,
+        sort: sortDirection.key,
+        order: toggleSortDirection(sortDirection.direction),
+      },
+      () => {
+        setSortDirection((prev) => {
+          return {
+            ...prev,
+            direction: toggleSortDirection(sortDirection.direction),
+          };
+        });
+      }
+    );
   };
 
   const columns = getTicketOrQueryColumn(
@@ -131,10 +119,18 @@ const QueryTable = ({
     getImage,
     navigate,
     renderColumn,
+    sortDirection.direction,
+    handleOnSort,
     markedQueryAsAnswered,
     onSuccessfullUpdateQueryStatus,
     (errorText) => showNotification(errorText, "error")
   );
+
+  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
+    useMarkedQueryAsAnweredApi();
+  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
+
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
