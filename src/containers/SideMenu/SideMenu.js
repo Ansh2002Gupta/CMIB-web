@@ -34,14 +34,20 @@ const SideMenu = ({ logo }) => {
   const location = useLocation();
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
 
-  function updateLabelsForIntl(menuItems) {
+  function updateLabelsForIntl(menuItems, selectedKey) {
     return menuItems?.map((item) => {
       const updatedLabel = intl.formatMessage({
         id: `label.menu.${item.label}`,
       });
+      let icon = item.icon;
+      if (item.selectedIcon && item.key === selectedKey) {
+        icon = item.selectedIcon;
+      }
+
       return {
         ...item,
         label: updatedLabel,
+        icon,
       };
     });
   }
@@ -54,7 +60,7 @@ const SideMenu = ({ logo }) => {
   };
   const handleOnClickMenuItem = ({ key }) => {
     navigate(key);
-    setSelectedKey([key]);
+    setSelectedKey(key);
   };
 
   useEffect(() => {
@@ -68,7 +74,7 @@ const SideMenu = ({ logo }) => {
   useEffect(() => {
     const pathSegments = location.pathname.split("/");
     const select = `/${pathSegments[1]}`;
-    setSelectedKey([select]);
+    setSelectedKey(select);
   }, [userProfileDetails]);
 
   return (
@@ -150,14 +156,13 @@ const SideMenu = ({ logo }) => {
               )
             }
           />
-
           {!openModuleSelector && selectedModule && (
             <Menu
               className={styles.sideMenuOptionsContainer}
               theme="dark"
               defaultSelectedKeys={selectedKey}
               mode="inline"
-              items={updateLabelsForIntl(selectedModule.children)}
+              items={updateLabelsForIntl(selectedModule.children, selectedKey)}
               expandIcon={<></>}
               openKeys={accessibleModules?.map((module) => module?.key)}
               onSelect={handleOnClickMenuItem}
