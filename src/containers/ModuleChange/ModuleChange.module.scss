@@ -1,0 +1,42 @@
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 24px;
+}
+
+.moduleBox {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 24px;
+  gap: 16px;
+}
+
+.activeModule {
+  border: 1px solid var(--Primary, #00137e);
+  background-color: red;
+  color: blue;
+}
+
+.modulesContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.moduleText {
+  color: var(--textBold);
+  font-size: var(--fontSizeLarge);
+  font-weight: var(--fontWeightBold);
+}
+
+.crossIcon {
+  cursor: pointer;
+}
+
+@media (max-width: 551px) {
+  .modulesContainer {
+    grid-template-columns: 1fr;
+  }
+}
