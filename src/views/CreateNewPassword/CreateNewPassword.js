@@ -23,7 +23,7 @@ import {
 import { LOGIN } from "../../routes/routeNames";
 import styles from "./CreateNewPassword.module.scss";
 
-const CreateNewPassword = ({ token }) => {
+const CreateNewPassword = ({ reset_token }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
@@ -96,7 +96,7 @@ const CreateNewPassword = ({ token }) => {
     setStatus("label.newPasswordAndConfirmPasswordMatched");
     await handleCreateNewPassword({
       password: formInputs.password,
-      token,
+      reset_token,
     });
   };
 

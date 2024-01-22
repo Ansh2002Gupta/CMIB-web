@@ -51,4 +51,18 @@ export default class Http {
       throw error;
     }
   }
+  static async patch(_url, data, apiOptions = {}, handleDiscard = () => {}) {
+    const url = `${baseUrl}${_url}`;
+    try {
+      const cancelPatchRequest = axios.CancelToken.source();
+      handleDiscard(cancelPatchRequest);
+      const response = await axios.patch(url, data, {
+        cancelToken: cancelPatchRequest.token,
+        ...apiOptions,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
