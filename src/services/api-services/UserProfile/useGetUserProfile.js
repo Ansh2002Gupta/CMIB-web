@@ -10,7 +10,8 @@ import {
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import useHeader from "../../../core/hooks/useHeader";
 import { GET_USER_PROFILE_DETAILS } from "../../../constant/apiEndpoints";
-import { STATUS_CODES } from "../../../constant/constant";
+import { STATUS_CODES, STORAGE_KEYS } from "../../../constant/constant";
+import { setItem } from "../../encrypted-storage-service";
 
 const useGetUserDetails = () => {
   const intl = useIntl();
@@ -28,6 +29,7 @@ const useGetUserDetails = () => {
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         userProfileDispatch(setUserDetails(res.data));
+        setItem(STORAGE_KEYS.USER_DATA, res.data);
         return;
       }
       userProfileDispatch(

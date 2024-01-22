@@ -13,10 +13,8 @@ import { getItem } from "../../services/encrypted-storage-service";
 import ModuleList from "./ModuleList";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import useFetch from "../../core/hooks/useFetch";
 import { setModuleDetails } from "../../globalContext/userProfile/userProfileActions";
 import { filterMenuData } from "../../constant/utils";
-import { GET_USER_PROFILE_DETAILS } from "../../constant/apiEndpoints";
 import { STORAGE_KEYS } from "../../constant/constant";
 import modules from "./sideMenuItems";
 
@@ -24,16 +22,10 @@ import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca
 import styles from "./sideMenu.module.scss";
 
 const SideMenu = ({ logo }) => {
-  const [, userProfileDispatch] = useContext(UserProfileContext);
+  const [userProfileDetails, userProfileDispatch] =
+    useContext(UserProfileContext);
   const { navigateScreen: navigate } = useNavigateScreen();
   const intl = useIntl();
-  const { data } = useFetch({
-    url: GET_USER_PROFILE_DETAILS,
-    otherOptions: {
-      skipApiCallOnMount: true,
-    },
-  });
-
   const userData = getItem(STORAGE_KEYS?.USER_DATA);
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [selectedModule, setSelectedModule] = useState(modules[0]);
@@ -63,7 +55,7 @@ const SideMenu = ({ logo }) => {
 
   useEffect(() => {
     setSelectedModule(accessibleModules[0]);
-  }, [data]);
+  }, [userProfileDetails]);
 
   return (
     <ConfigProvider
