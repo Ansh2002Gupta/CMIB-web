@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Drawer, Layout } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
@@ -66,5 +67,17 @@ function MenuContainer({ openSideMenu, setIsModalOpen, setOpenSideMenu }) {
     </Drawer>
   );
 }
+
+MenuContainer.defaultProps = {
+  setIsModalOpen: () => {},
+  setOpenSideMenu: () => {},
+  openSideMenu: false,
+};
+
+MenuContainer.propTypes = {
+  setIsModalOpen: PropTypes.func,
+  setOpenSideMenu: PropTypes.func,
+  openSideMenu: PropTypes.string,
+};
 
 export default MenuContainer;
