@@ -264,7 +264,7 @@ export const MENU_KEYS = {
   REGISTERED_COMPANIES: "registered-companies",
   SESSIONS: "setup-session",
   DASHBOARD: "dashboard",
-  SUBSCRIPTIONS: "subscriptions",
+  SUBSCRIPTIONS: "manage-subscriptions",
   GLOBAL_CONFIGURATIONS: "global-configs",
   PAYMENTS: "payments",
   CANDIDATES: "candidates",
@@ -272,14 +272,16 @@ export const MENU_KEYS = {
   JOBS: "jobs",
   REPORT: "report",
   ROASTER: "roster",
-
-  //TO ASK keys of these Permissions/menus
   FEEDBACK: "feedback",
   CONTACT_US: "contact-us",
   ACTIVITY_LOGS: "activity_logs",
-  ALL_JOBS: "all_Jobs",
+  ALL_JOBS: "all-job-listing",
   ROUND_1_PLACEMENT: "round-1",
-  ROUND_2_PLACEMENT: "round_2_placement",
+  ROUND_2_PLACEMENT: "round-2",
+  CANDIDATE_DETAILS: "company-details",
+  COMPANY_DETAILS: "company-details",
+  MANAGE_CANDIDATES: "manage-candidates",
+  MANAGE_COMPANIES: "manage-companies",
 };
 
 export const STORAGE_KEYS = {
