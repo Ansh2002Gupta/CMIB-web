@@ -23,11 +23,11 @@ import { TICKET_DATA_LIST } from "../../../dummyData";
 import styles from "../ContactUsListingContent.module.scss";
 
 const TicketTable = ({
-  currentPage,
+  current,
   currentActiveTab,
   pageSize,
   setCurrentPage,
-  setPageSize,
+  setPage,
   searchedValue,
   setSearchedValue,
 }) => {
@@ -96,8 +96,16 @@ const TicketTable = ({
       name: intl.formatMessage({ id: "label.status" }),
       options: [], // TODO: need to get this from API
     },
-    {
+    {// TODO: need to remove below object
       id: 2,
+      name: "Access 1",
+      options: [
+        { id: 21, name: "Placements 1 ", count: 100 },
+        { id: 31, name: "CA Jobs 1 ", count: 100 },
+      ],
+    },
+    {
+      id: 3,
       name: intl.formatMessage({ id: "label.queryTypes" }),
       options: queryTypesData,
     },
@@ -128,14 +136,14 @@ const TicketTable = ({
       });
     const requestedParams = {
       perPage: pageSize,
-      page: currentPage,
+      page: current,
       q: str,
     };
     debounceSearch(requestedParams);
   };
 
   const onChangePageSize = (size) => {
-    setPageSize(size);
+    setPage(size);
     setCurrentPage(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
@@ -169,7 +177,7 @@ const TicketTable = ({
       // const { total } = data?.meta; :TODO: un-comment once backend start providing records
       const total = 14;
       const numberOfPages = Math.ceil(total / pageSize);
-      if (currentPage > numberOfPages) {
+      if (current > numberOfPages) {
         setCurrentPage(1);
         setSearchParams((prev) => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
@@ -188,7 +196,7 @@ const TicketTable = ({
 
   useEffect(() => {
     setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, currentPage);
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
       searchedValue &&
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
@@ -197,7 +205,7 @@ const TicketTable = ({
 
     const requestedParams = {
       perPage: pageSize,
-      page: currentPage,
+      page: current,
       q: searchedValue,
     };
     fetchData(requestedParams);
@@ -224,35 +232,36 @@ const TicketTable = ({
   }, []);
 
   // TODO: remove this once API start providing data
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = currentPage * pageSize;
+  const startIndex = (current - 1) * pageSize;
+  const endIndex = current * pageSize;
 
   return (
     <>
-      {!isError && (
-        <TableWithSearchAndFilters
-          {...{
-            current: currentPage,
-            pageSize,
-            searchedValue,
-            handleOnUserSearch,
-            columns,
-            onChangePageSize,
-            onChangeCurrentPage,
-            filtersData,
-            currentFilterStatus,
-            setCurrentFilterStatus,
-          }}
-          isLoading={isSuccess && !isLoading}
-          // TODO: please remove the dummy data once the data start coming from API
-          data={TICKET_DATA_LIST.slice(startIndex, endIndex)}
-          currentDataLength={TICKET_DATA_LIST.length}
-          optionsIdKey={"id"}
-          optionsNameKey={"name"}
-          onSearch={handleOnFilterApply}
-        />
-      )}
-      {isError && (
+      {!isError ||
+        (true && (
+          <TableWithSearchAndFilters
+            {...{
+              current,
+              pageSize,
+              searchedValue,
+              handleOnUserSearch,
+              columns,
+              onChangePageSize,
+              onChangeCurrentPage,
+              filtersData,
+              currentFilterStatus,
+              setCurrentFilterStatus,
+            }}
+            isLoading={true || (isSuccess && !isLoading)}
+            // TODO: please remove the dummy data once the data start coming from API
+            data={TICKET_DATA_LIST.slice(startIndex, endIndex)}
+            currentDataLength={TICKET_DATA_LIST.length}
+            optionsIdKey={"id"}
+            optionsNameKey={"name"}
+            onSearch={handleOnFilterApply}
+          />
+        ))}
+      {isError && false && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
             onRetry={handleOnReTry}
@@ -268,11 +277,11 @@ const TicketTable = ({
 };
 
 TicketTable.defaultProps = {
-  currentPage: 1,
+  current: 1,
   currentActiveTab: "1",
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
-  setCurrentPage: () => {},
+  setCurrent: () => {},
   setPageSize: () => {},
   ticketListingProps: {},
   searchedValue: "",
@@ -280,11 +289,11 @@ TicketTable.defaultProps = {
 };
 
 TicketTable.propTypes = {
-  currentPage: PropTypes.number,
+  current: PropTypes.number,
   currentActiveTab: PropTypes.string,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
-  setCurrentPage: PropTypes.func,
+  setCurrent: PropTypes.func,
   setPageSize: PropTypes.func,
   ticketListingProps: PropTypes.object,
   searchedValue: PropTypes.string,

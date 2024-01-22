@@ -49,10 +49,10 @@ const ContactUsListing = () => {
         currentActiveTab === "1" ? (
           <TicketTable
             {...{
-              currentPage,
+              current,
               currentActiveTab,
               pageSize,
-              setCurrentPage,
+              setCurrent,
               setPageSize,
               searchedValue,
               setSearchedValue,
@@ -61,10 +61,10 @@ const ContactUsListing = () => {
         ) : (
           <QueryTable
             {...{
-              currentPage,
+              current,
               currentActiveTab,
               pageSize,
-              setCurrentPage,
+              setCurrent,
               setPageSize,
               searchedValue,
               setSearchedValue,

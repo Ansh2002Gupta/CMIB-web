@@ -25,10 +25,10 @@ import {
 import styles from "../ContactUsListingContent.module.scss";
 
 const QueryTable = ({
-  currentPage,
+  current,
   currentActiveTab,
   pageSize,
-  setCurrentPage,
+  setCurrent,
   setPageSize,
   searchedValue,
   setSearchedValue,
@@ -76,7 +76,7 @@ const QueryTable = ({
   const onSuccessfullUpdateQueryStatus = () => {
     const requestedParams = {
       perPage: pageSize,
-      page: currentPage,
+      page: current,
       q: searchedValue,
     };
     fetchData(requestedParams);
@@ -112,7 +112,10 @@ const QueryTable = ({
       }
     );
   };
-
+  
+  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
+    useMarkedQueryAsAnweredApi();
+    
   const columns = getTicketOrQueryColumn(
     currentActiveTab,
     intl,
@@ -126,8 +129,6 @@ const QueryTable = ({
     (errorText) => showNotification(errorText, "error")
   );
 
-  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
-    useMarkedQueryAsAnweredApi();
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -146,7 +147,7 @@ const QueryTable = ({
       });
     const requestedParams = {
       perPage: pageSize,
-      page: currentPage,
+      page: current,
       q: str,
     };
     debounceSearch(requestedParams);
@@ -154,7 +155,7 @@ const QueryTable = ({
 
   const onChangePageSize = (size) => {
     setPageSize(size);
-    setCurrentPage(1);
+    setCurrent(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
@@ -169,7 +170,7 @@ const QueryTable = ({
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
-    setCurrentPage(newPageNumber);
+    setCurrent(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
@@ -195,8 +196,8 @@ const QueryTable = ({
     if (data?.meta) {
       const { total } = data?.meta;
       const numberOfPages = Math.ceil(total / pageSize);
-      if (currentPage > numberOfPages) {
-        setCurrentPage(1);
+      if (current > numberOfPages) {
+        setCurrent(1);
         setSearchParams((prev) => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
@@ -214,7 +215,7 @@ const QueryTable = ({
 
   useEffect(() => {
     setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, currentPage);
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
       searchedValue &&
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
@@ -223,7 +224,7 @@ const QueryTable = ({
 
     const requestedParams = {
       perPage: pageSize,
-      page: currentPage,
+      page: current,
       q: searchedValue,
     };
     fetchData(requestedParams);
@@ -237,7 +238,7 @@ const QueryTable = ({
       {!isError && !isMarkingQueryAsAnswered && (
         <TableWithSearchAndFilters
           {...{
-            current: currentPage,
+            current: current,
             pageSize,
             searchedValue,
             handleOnUserSearch,
@@ -272,11 +273,11 @@ const QueryTable = ({
 };
 
 QueryTable.defaultProps = {
-  currentPage: 1,
+  current: 1,
   currentActiveTab: "1",
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
-  setCurrentPage: () => {},
+  setCurrent: () => {},
   setPageSize: () => {},
   ticketListingProps: {},
   searchedValue: "",
@@ -284,11 +285,11 @@ QueryTable.defaultProps = {
 };
 
 QueryTable.propTypes = {
-  currentPage: PropTypes.number,
+  current: PropTypes.number,
   currentActiveTab: PropTypes.string,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
-  setCurrentPage: PropTypes.func,
+  setCurrent: PropTypes.func,
   setPageSize: PropTypes.func,
   ticketListingProps: PropTypes.object,
   searchedValue: PropTypes.string,
