@@ -51,7 +51,11 @@ const controlMenu = [
     key: "/activity-logs",
     icon: <Activity />,
   },
-  { label: MENU_KEYS.QUERY_MANAGEMENT, key: USERS, icon: <SMS /> },
+  {
+    label: MENU_KEYS.QUERY_MANAGEMENT,
+    key: "/query-management",
+    icon: <SMS />,
+  },
 ];
 const newlyQualifiedPlacementsMenu = [
   { label: MENU_KEYS.DASHBOARD, key: DASHBOARD, icon: <Dashboard /> },
