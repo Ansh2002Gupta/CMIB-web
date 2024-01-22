@@ -16,6 +16,6 @@ export const SEND_OTP = "/reset-password/request";
 export const TICKET_LIST = "/tickets";
 export const USERS_END_POINT = "/users";
 export const VERIFY_OTP = "/otp/verify";
-export const GET_USER_PROFILE_DETAILS = "/user/profile";
+export const GET_USER_PROFILE_DETAILS = "core/users/permission";
 export const GET_ALL_QUERY_TYPES = "/get-all-query-types";
 export const MARKED_QUERY_END_POINT = "/resolve";
