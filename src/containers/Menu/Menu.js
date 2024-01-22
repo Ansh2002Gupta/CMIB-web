@@ -35,11 +35,6 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
       onClose={() => setOpenSideMenu(false)}
       width="90%"
       closeIcon={<CloseOutlined className={styles.crossIcon} />}
-      title={
-        <div className={styles.drawerAppLogo}>
-          <AppLogo />
-        </div>
-      }
       styles={{
         body: {
           padding: 0,
@@ -53,7 +48,7 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
         },
       }}
     >
-      <SideMenu />
+      <SideMenu logo={<AppLogo />} />
     </Drawer>
   );
 }

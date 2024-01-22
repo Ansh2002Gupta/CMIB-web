@@ -26,6 +26,13 @@
   justify-content: center;
   align-items: center;
 }
+.mobileAppLogo {
+  margin: var(--sizeLarge, 18px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);
   color: var(--textPrimary, #fff);
@@ -104,6 +111,12 @@
   justify-content: space-between;
   padding: var(--paddingMedium, 16px) var(--paddingMedium, 16px);
 }
+.moduleText {
+  font-size: var(--fontSizeSmall, 14px);
+  color: var(--subHeadingColor, #616c82);
+  padding: var(--paddingMedium, 16px);
+  padding-bottom: var(--paddingExtraSmall, 8px);
+}
 
 @media (max-width: 767px) {
   .moduleSelectorHeading {
@@ -111,5 +124,11 @@
   }
   .visitText {
     max-width: var(--widthHalfViewPort, 50vw);
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 767px) {
+  .globeIcon {
+    display: none;
   }
 }

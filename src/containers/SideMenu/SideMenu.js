@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
+import useResponsive from "../../core/hooks/useResponsive";
 
 import ModuleList from "./ModuleList";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -22,6 +23,7 @@ import styles from "./sideMenu.module.scss";
 const SideMenu = ({ logo }) => {
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
+  const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const intl = useIntl();
   const userData = userProfileDetails?.userDetails;
@@ -74,37 +76,52 @@ const SideMenu = ({ logo }) => {
     >
       <div className={styles.sideMenuContainer}>
         <div className={styles.sideMenuTopSection}>
-          <div className={styles.appLogo}>{logo}</div>
+          <div
+            className={responsive?.isMd ? styles.appLogo : styles.mobileAppLogo}
+          >
+            {logo}
+          </div>
           <TwoRow
             style={{ overflow: "visible" }}
             topSection={
-              <TwoColumn
-                className={styles.moduleSelector}
-                leftSection={
-                  <div
-                    className={
-                      openModuleSelector ? "" : styles.moduleSelectorHeading
-                    }
-                  >
-                    {openModuleSelector
-                      ? "Choose a module"
-                      : selectedModule?.label}
-                  </div>
+              <TwoRow
+                topSection={
+                  !responsive?.isMd && (
+                    <Typography className={styles.moduleText}>
+                      {intl.formatMessage({ id: "label.module" })}
+                    </Typography>
+                  )
                 }
-                rightSection={
-                  <Button
-                    size="small"
-                    shape="round"
-                    type="text"
-                    style={{
-                      color: "var(--textPrimary,#fff)",
-                      background: "#262d52",
-                      fontSize: "var(--fontSizeXSmall,12px)",
-                    }}
-                    onClick={() => setOpenModuleSelector((prev) => !prev)}
-                  >
-                    {openModuleSelector ? <UpOutlined /> : "Change"}
-                  </Button>
+                bottomSection={
+                  <TwoColumn
+                    className={styles.moduleSelector}
+                    leftSection={
+                      <div
+                        className={
+                          openModuleSelector ? "" : styles.moduleSelectorHeading
+                        }
+                      >
+                        {openModuleSelector
+                          ? "Choose a module"
+                          : selectedModule?.label}
+                      </div>
+                    }
+                    rightSection={
+                      <Button
+                        size="small"
+                        shape="round"
+                        type="text"
+                        style={{
+                          color: "var(--textPrimary,#fff)",
+                          background: "#262d52",
+                          fontSize: "var(--fontSizeXSmall,12px)",
+                        }}
+                        onClick={() => setOpenModuleSelector((prev) => !prev)}
+                      >
+                        {openModuleSelector ? <UpOutlined /> : "Change"}
+                      </Button>
+                    }
+                  />
                 }
               />
             }
@@ -150,7 +167,7 @@ const SideMenu = ({ logo }) => {
               size="large"
               type="text"
               block
-              icon={<GlobalOutlined />}
+              icon={<GlobalOutlined className={styles.globeIcon} />}
             >
               <Typography.Text className={styles.visitText}>
                 {intl.formatMessage({ id: "label.visitWebsite" })}
