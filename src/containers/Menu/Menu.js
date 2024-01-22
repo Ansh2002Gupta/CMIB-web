@@ -2,16 +2,22 @@ import React from "react";
 import { Drawer, Layout } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "core/hooks/useResponsive";
-
 import SideMenu from "../SideMenu";
-
+import { DASHBOARD } from "../../routes/routeNames";
 import { ReactComponent as AppLogo } from "../../themes/base/assets/icons/app-logo.svg";
-
 import styles from "./menu.module.scss";
 
 function MenuContainer({ openSideMenu, setOpenSideMenu }) {
+  const { navigateScreen: navigate } = useNavigateScreen();
   const responsive = useResponsive();
+
+  const handleOnClickLogo = () => {
+    navigate(DASHBOARD);
+    setOpenSideMenu(false);
+  };
+
   return responsive.isMd ? (
     <Layout
       style={{
@@ -48,7 +54,14 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
         },
       }}
     >
-      <SideMenu logo={<AppLogo />} />
+      <SideMenu
+        logo={
+          <AppLogo
+            className={styles.drawerAppLogo}
+            onClick={handleOnClickLogo}
+          />
+        }
+      />
     </Drawer>
   );
 }

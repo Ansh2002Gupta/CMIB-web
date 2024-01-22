@@ -14,6 +14,7 @@ import useResponsive from "../../core/hooks/useResponsive";
 import ModuleList from "./ModuleList";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { DASHBOARD } from "../../routes/routeNames";
 import { setModuleDetails } from "../../globalContext/userProfile/userProfileActions";
 import { filterMenuData } from "../../constant/utils";
 import modules from "./sideMenuItems";
@@ -61,6 +62,10 @@ const SideMenu = ({ logo }) => {
     setSelectedModule(accessibleModules[0]);
   }, [userProfileDetails]);
 
+  const handleOnClickLogo = () => {
+    navigate(DASHBOARD);
+  };
+
   useEffect(() => {
     const pathSegments = location.pathname.split("/");
     const select = `/${pathSegments[1]}`;
@@ -88,10 +93,12 @@ const SideMenu = ({ logo }) => {
     >
       <div className={styles.sideMenuContainer}>
         <div className={styles.sideMenuTopSection}>
-          <div
-            className={responsive?.isMd ? styles.appLogo : styles.mobileAppLogo}
-          >
-            {logo}
+          <div className={styles.appLogoContainer}>
+            <div className={styles.appLogoBox}>
+              <div onClick={handleOnClickLogo} className={styles.appLogo}>
+                {logo}
+              </div>
+            </div>
           </div>
           <TwoRow
             style={{ overflow: "visible" }}
