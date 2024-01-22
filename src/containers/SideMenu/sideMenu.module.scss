@@ -14,6 +14,7 @@
   color: var(--textPrimary, #fff);
   justify-content: space-between;
   padding: var(--sizeXXSmall, 12px) var(--sizeXSmall, 12px);
+  cursor: pointer;
 }
 .sideMenuOptionsContainer {
   margin-top: var(--sizeXSmall, 12px);
