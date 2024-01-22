@@ -2,11 +2,7 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../http-service.js";
-import {
-  API_STATUS,
-  STATUS_CODES,
-  STORAGE_KEYS,
-} from "../../../constant/constant.js";
+import { API_STATUS, STATUS_CODES } from "../../../constant/constant.js";
 import {
   LOGIN_END_POINT,
   ADMIN_ROUTE,
@@ -29,9 +25,7 @@ const useLogin = () => {
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         if (res?.data) {
           const auth = res.data.access_token;
-          const user = res?.data?.user;
           setItem("authToken", auth);
-          setItem(STORAGE_KEYS.USER_DATA, user);
           setData(res.data);
         }
         setLoginApiStatus(API_STATUS.SUCCESS);

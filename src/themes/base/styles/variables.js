@@ -121,9 +121,9 @@ const variables = {
   height_400: "400px",
   height_30vh: "30vh",
   height_50vh: "50vh",
+  heightFullViewPort: "100vh",
   halfHeight: "50%",
   fullHeight: "100%",
-  heightFullViewPort: "100vh",
 
   // Distance for top, left, bottom and right
   distance_85: "85px",

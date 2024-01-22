@@ -100,6 +100,7 @@ const controlMenu = [
     selectedIcon: <SelectedSMS />,
   },
 ];
+
 const newlyQualifiedPlacementsMenu = [
   {
     label: MENU_KEYS.DASHBOARD,
@@ -132,6 +133,7 @@ const newlyQualifiedPlacementsMenu = [
     selectedIcon: <SelectedCompanies />,
   },
 ];
+
 const caJobsMenu = [
   {
     label: MENU_KEYS.DASHBOARD,
@@ -151,7 +153,12 @@ const caJobsMenu = [
     icon: <Globe />,
     selectedIcon: <SelectedGlobe />,
   },
-  { label: MENU_KEYS.PAYMENTS, key: "/payments", icon: <Wallet /> },
+  {
+    label: MENU_KEYS.PAYMENTS,
+    key: "/payments",
+    icon: <Wallet />,
+    selectedIcon: <SelectedWallet />,
+  },
   {
     label: MENU_KEYS.CANDIDATES,
     key: "/candidates",
@@ -177,6 +184,7 @@ const caJobsMenu = [
     selectedIcon: <SelectedReport />,
   },
 ];
+
 const experiencedMembersMenu = [
   {
     label: MENU_KEYS.DASHBOARD,

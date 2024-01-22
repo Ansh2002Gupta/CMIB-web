@@ -5,9 +5,11 @@
   justify-content: space-between;
   overflow: hidden;
 }
+
 .sideMenuTopSection {
   width: var(--fullWidth, 100%);
 }
+
 .sideMenuBottomSection {
   width: var(--fullWidth, 100%);
   background: var(--sideMenuColor, #141b43);
@@ -16,20 +18,24 @@
   padding: var(--sizeXXSmall, 12px) var(--sizeXSmall, 12px);
   cursor: pointer;
 }
+
 .sideMenuOptionsContainer {
   margin-top: var(--sizeXSmall, 12px);
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500);
 }
+
 .appLogoContainer {
   padding: var(--padding_18);
   cursor: default;
 }
+
 .appLogoBox {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .mobileAppLogo {
   margin: var(--sizeLarge, 18px);
   display: flex;
@@ -40,6 +46,7 @@
 .appLogo {
   cursor: pointer;
 }
+
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);
   color: var(--textPrimary, #fff);
@@ -51,9 +58,11 @@
   border-bottom: 1px solid var(--moduleSelectorBorder, #ffffff4d);
   overflow-x: hidden;
 }
+
 .menuItemContainer {
   font-weight: var(--fontWeightMedium, 500);
 }
+
 .moduleSelectorHeading {
   font-size: var(--fontSizeXSmall, 12px);
   font-weight: var(--fontWeightMedium, 500);
@@ -63,6 +72,7 @@
   max-width: 10vw;
   white-space: nowrap;
 }
+
 .moduleList {
   font-size: var(--fontSizeSmall, 14px);
   width: var(--fullWidth, 100%);
@@ -88,6 +98,7 @@
     background-color: #141b43;
   }
 }
+
 .moduleSubMenuList {
   list-style: none;
   width: var(--fullWidth, 100%);
@@ -106,6 +117,7 @@
   flex: 1;
   width: var(--fullWidth, 100%);
 }
+
 .visitContainer {
   display: flex;
   justify-content: center;
@@ -118,6 +130,7 @@
   justify-content: space-between;
   padding: var(--paddingMedium, 16px) var(--paddingMedium, 16px);
 }
+
 .moduleText {
   font-size: var(--fontSizeSmall, 14px);
   color: var(--subHeadingColor, #616c82);
