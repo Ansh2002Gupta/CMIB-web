@@ -12,10 +12,10 @@ const ProfileDropdown = () => {
   useContext(UserProfileContext);
   const userData= userProfileDetails?.userDetails;
  
-  const userName = userData?.name;
-  const userRole = userData?.user_type;
-  const userEmail = userData?.email;
-  const userProfilePic = userData?.profile_photo;
+  const userName = userData?.name||"";
+  const userRole = userData?.user_type||"";
+  const userEmail = userData?.email||"";
+  const userProfilePic = userData?.profile_photo||"";
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const responsive = useResponsive();

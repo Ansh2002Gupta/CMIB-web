@@ -255,6 +255,7 @@ export const MODULE_KEYS = {
   WOMEN_PARTTIME_KEY: "women-placements",
   OVERSEAS_CHAPTERS_KEY: "overseas-chapters",
 };
+
 export const MENU_KEYS = {
   USER_MANAGEMENT: "user-management",
   BULK_NOTIFICATIONS: "bulk-notifications",

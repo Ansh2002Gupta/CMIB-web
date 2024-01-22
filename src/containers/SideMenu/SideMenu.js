@@ -18,7 +18,6 @@ import { DASHBOARD } from "../../routes/routeNames";
 import { setModuleDetails } from "../../globalContext/userProfile/userProfileActions";
 import { filterMenuData } from "../../constant/utils";
 import modules from "./sideMenuItems";
-
 import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
 import styles from "./sideMenu.module.scss";
 

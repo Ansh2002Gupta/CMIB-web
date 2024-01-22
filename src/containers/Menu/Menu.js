@@ -2,9 +2,9 @@ import React from "react";
 import { Drawer, Layout } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
+import SideMenu from "../SideMenu";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "core/hooks/useResponsive";
-import SideMenu from "../SideMenu";
 import { DASHBOARD } from "../../routes/routeNames";
 import { ReactComponent as AppLogo } from "../../themes/base/assets/icons/app-logo.svg";
 import styles from "./menu.module.scss";
