@@ -42,14 +42,6 @@ const CustomInput = ({
   value,
 }) => {
 
-  const handleKeyPress = (event) => {
-    const charCode = typeof event.which === "undefined" ? event.keyCode : event.which;
-    const charStr = String.fromCharCode(charCode);
-    if (!charStr.match(/^[0-9]+$/) && !event.ctrlKey && !event.metaKey && !event.altKey && charCode !== 8 && charCode !== 13) {
-      event.preventDefault();
-    }
-  };
-
   return (
     <Base className={[styles.container, customContainerStyles].join(" ")}>
       {!!label && (
@@ -149,8 +141,8 @@ const CustomInput = ({
         )}
         {type === "inputNumber" && (
           <InputNumber
+            type="number"
             className={[styles.inputNumberStyles, customInputNumberStyles]}
-            onKeyDown={handleKeyPress}
             {...{
               value,
               placeholder,
