@@ -41,7 +41,6 @@ const CustomInput = ({
   type,
   value,
 }) => {
-
   return (
     <Base className={[styles.container, customContainerStyles].join(" ")}>
       {!!label && (
@@ -92,14 +91,18 @@ const CustomInput = ({
               ,
               customInputStyles,
             ].join(" ")}
-            onChange={(event) => {
-              if (
-                event.target.value === "" ||
-                NUMERIC_VALUE_REGEX.test(event.target.value)
-              ) {
-                onChange(event);
-              }
-            }}
+            onChange={
+              type === "mobile"
+                ? (event) => {
+                    if (
+                      event.target.value === "" ||
+                      NUMERIC_VALUE_REGEX.test(event.target.value)
+                    ) {
+                      onChange(event);
+                    }
+                  }
+                : onChange
+            }
             {...{
               value,
               placeholder,
