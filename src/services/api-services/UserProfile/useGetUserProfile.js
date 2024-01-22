@@ -24,7 +24,7 @@ const useGetUserDetails = () => {
     try {
       userProfileDispatch(setIsGettingUserDetails(true));
       userProfileDispatch(setErrorGetingUserDetails(""));
-      const res = await Http.get(ADMIN_ROUTE + GET_USER_PROFILE_DETAILS);
+      const res = await Http.get(GET_USER_PROFILE_DETAILS);
       userProfileDispatch(setIsGettingUserDetails(false));
       if (
         res.status === STATUS_CODES.SUCCESS_STATUS ||
