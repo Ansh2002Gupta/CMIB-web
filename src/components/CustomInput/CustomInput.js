@@ -4,7 +4,7 @@ import { Input, Select, Typography, InputNumber } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Base from "../../core/layouts/Base/Base";
-
+import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import styles from "./CustomInput.module.scss";
 
 const CustomInput = ({
@@ -41,6 +41,15 @@ const CustomInput = ({
   type,
   value,
 }) => {
+
+  const handleKeyPress = (event) => {
+    const charCode = typeof event.which === "undefined" ? event.keyCode : event.which;
+    const charStr = String.fromCharCode(charCode);
+    if (!charStr.match(/^[0-9]+$/) && !event.ctrlKey && !event.metaKey && !event.altKey && charCode !== 8 && charCode !== 13) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <Base className={[styles.container, customContainerStyles].join(" ")}>
       {!!label && (
@@ -91,10 +100,17 @@ const CustomInput = ({
               ,
               customInputStyles,
             ].join(" ")}
+            onChange={(event) => {
+              if (
+                event.target.value === "" ||
+                NUMERIC_VALUE_REGEX.test(event.target.value)
+              ) {
+                onChange(event);
+              }
+            }}
             {...{
               value,
               placeholder,
-              onChange,
               disabled,
             }}
             prefix={isPrefixRequired ? prefixElement : null}
@@ -134,6 +150,7 @@ const CustomInput = ({
         {type === "inputNumber" && (
           <InputNumber
             className={[styles.inputNumberStyles, customInputNumberStyles]}
+            onKeyDown={handleKeyPress}
             {...{
               value,
               placeholder,
