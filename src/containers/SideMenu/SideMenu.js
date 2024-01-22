@@ -67,8 +67,10 @@ const SideMenu = ({ logo }) => {
       <div className={styles.sideMenuContainer}>
         <div className={styles.sideMenuTopSection}>
           <div className={styles.appLogoContainer}>
-            <div className={styles.appLogo} onClick={handleOnClickLogo}>
-              {logo}
+            <div className={styles.appLogoBox}>
+              <div onClick={handleOnClickLogo} className={styles.appLogo}>
+                {logo}
+              </div>
             </div>
           </div>
           <TwoRow

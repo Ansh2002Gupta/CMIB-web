@@ -23,14 +23,16 @@
   font-weight: var(--fontWeightMedium, 500);
 }
 .appLogoContainer{
-  padding: var(--paddingForLogo);
+  padding: var(--padding_18);
   cursor: default;
 }
-.appLogo {
-  cursor: pointer;
+.appLogoBox {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.appLogo {
+  cursor: pointer;
 }
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);

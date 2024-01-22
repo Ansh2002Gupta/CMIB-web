@@ -9,9 +9,6 @@ import { DASHBOARD } from '../../routes/routeNames';
 import { ReactComponent as AppLogo } from '../../themes/base/assets/icons/app-logo.svg';
 import styles from './menu.module.scss';
 
-
-
-
 function MenuContainer({ openSideMenu, setOpenSideMenu }) {
   const { navigateScreen: navigate } = useNavigateScreen();
   const responsive = useResponsive();
