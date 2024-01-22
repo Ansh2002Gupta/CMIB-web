@@ -8,31 +8,58 @@
 
 .moduleBox {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   padding: 24px;
   gap: 16px;
+  cursor: pointer;
+  min-width: 350px;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #ccd0e5;
 }
 
 .activeModule {
   border: 1px solid var(--Primary, #00137e);
-  background-color: red;
+  background-color: #f2f4fc !important;
   color: blue;
 }
 
 .modulesContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  row-gap: 16px;
+  column-gap: 16px;
+  padding: 24px;
+}
+
+.bottomContainer {
+  background-color: #f6f8f9;
 }
 
 .moduleText {
-  color: var(--textBold);
-  font-size: var(--fontSizeLarge);
-  font-weight: var(--fontWeightBold);
+  color: var(--textBold, #000833);
+  font-size: var(--fontSizeLarge, 18px);
+  font-weight: var(--fontWeightBold, 600);
 }
 
 .crossIcon {
   cursor: pointer;
+}
+
+.checkMark {
+  align-self: flex-end;
+}
+
+.imageAndTextContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.subText {
+  font-size: var(--fontSizeExtraSmall, 12px);
 }
 
 @media (max-width: 551px) {
