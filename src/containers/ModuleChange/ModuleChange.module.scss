@@ -1,0 +1,73 @@
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: var(--fullWidth, 100%);
+  padding: var(--paddingMedium, 24px);
+}
+
+.moduleBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--paddingMedium, 24px);
+  gap: var(--gapSmall, 16px);
+  cursor: pointer;
+  background-color: var(--bodyBg, white);
+  border-radius: 8px;
+  border: 1px solid #ccd0e5;
+}
+
+.activeModule {
+  border: 1px solid var(--Primary, #00137e);
+  background-color: var(--lightBlueBg, #f2f4fc) !important;
+  color: var(--Primary, blue);
+}
+
+.modulesContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: var(--gapSmall, 16px);
+  column-gap: var(--gapSmall, 16px);
+  padding: var(--gapMedium, 24px);
+}
+
+.bottomContainer {
+  background-color: var(--blueBg, #f6f8f9);
+}
+
+.moduleText {
+  color: var(--textBold, #000833);
+  font-size: var(--fontSizeLarge, 18px);
+  font-weight: var(--fontWeightBold, 600);
+}
+
+.crossIcon {
+  cursor: pointer;
+}
+
+.checkMark {
+  align-self: flex-end;
+}
+
+.imageAndTextContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gapXSmall, 8px);
+}
+
+.subText {
+  font-size: var(--fontSizeExtraSmall, 12px);
+}
+
+.imageStyle {
+  min-width: var(--width_48, 48px);
+  min-height: var(--height_48, 48px);
+}
+
+@media (max-width: 551px) {
+  .modulesContainer {
+    grid-template-columns: 1fr;
+  }
+}
