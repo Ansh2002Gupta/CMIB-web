@@ -23,7 +23,7 @@ function MainLayout({
         style={style}
         leftSection={menu}
         leftSectionStyle={{ width: "25%" }}
-        rightSectionStyle={{ width: "80%" }}
+        rightSectionStyle={{ width: "75%" }}
         rightSection={
           <TwoRow
             className={`${[
