@@ -99,19 +99,28 @@
   grid-column: 1 / -1;
 }
 
-.chipsContainer{
+.chipsContainer {
   display: flex;
   flex-wrap: wrap;
   gap: var(--gapSmall);
   text-transform: capitalize;
 }
 
-.chipBg{
+.chipBg {
   background-color: var(--chipBg);
 }
 
-.chipText{
+.chipText {
   color: var(--textBold);
+}
+
+.desrciptionText {
+  font-size: var(--fontSizeSmall);
+  color: var(--subHeadingColor);
+}
+
+.isRequired {
+  color: var(--error);
 }
 
 @media screen and (max-width: 1279px) {

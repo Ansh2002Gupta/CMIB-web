@@ -56,56 +56,82 @@ const UserInfo = ({
     return null;
   };
 
+  const getTextWithIsRequiredStart = (text) => {
+    return (
+      <Typography className={styles.desrciptionText}>
+        {text} <span className={styles.isRequired}>*</span>
+      </Typography>
+    );
+  };
+
   let items = [
     {
       key: "1",
-      label: `${intl.formatMessage({ id: "label.userName2" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.userName2" })
+      ),
       children: name,
     },
     {
       key: "2",
-      label: `${intl.formatMessage({ id: "label.email" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.email" })
+      ),
       children: email,
     },
     {
       key: "3",
-      label: `${intl.formatMessage({ id: "label.mobileNumber" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.mobileNumber" })
+      ),
       span: responsive.isMd ? 1 : 2,
       children: `+${mobilePrefix}-${mobileNo}`,
     },
     {
       key: "4",
-      label: `${intl.formatMessage({ id: "label.moduleAccess" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.moduleAccess" })
+      ),
       span: 3,
-      children: getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
+      children:
+        getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
     },
     {
       key: "5",
-      label: `${intl.formatMessage({ id: "label.controlAccessHeading" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.controlAccessHeading" })
+      ),
       span: 3,
       children: getValuesInChips(permissions),
     },
     {
       key: "6",
-      label: `${intl.formatMessage({ id: "label.dateCreatedOn" })} *`,
+      label: (
+        <Typography className={styles.desrciptionText}>
+          {intl.formatMessage({ id: "label.dateCreatedOn" })}
+        </Typography>
+      ),
       children: moment(new Date(date)).format("DD/MM/YYYY"),
     },
     {
       key: "7",
-      label: `${intl.formatMessage({ id: "label.twoFactorAuth" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.twoFactorAuth" })
+      ),
       children: intl.formatMessage({
         id: `label.${is_two_factor ? "on" : "off"}`,
       }),
     },
   ];
 
-  items = items?.filter(val=> val.children)
+  items = items?.filter((val) => val.children);
 
   return (
     <>
       {!isEditable && (
         <div className={styles.nonEditableContainer}>
           <Descriptions
+            colon={false}
             title={intl.formatMessage({ id: "label.userDetails" })}
             layout="vertical"
             items={items}
