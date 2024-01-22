@@ -27,7 +27,10 @@ export const getTicketOrQueryColumn = (
   navigate,
   renderColumn,
   sortDirection,
-  changeDirections
+  changeDirections,
+  markedQueryAsAnswered,
+  onSuccessCallback,
+  onErrorCallBack
 ) => {
   if (type === "2") {
     return [
@@ -132,11 +135,37 @@ export const getTicketOrQueryColumn = (
       renderColumn({
         dataIndex: "check",
         key: "check",
-        renderImage: {
-          alt: "check",
-          preview: false,
-          src: getImage("rightIcon"),
-          visible: true,
+        render: (_, rowData) => {
+          return (
+            <div
+              className={[
+                styles.checkIcon,
+                rowData?.status === STATUS.PENDING.toLowerCase()
+                  ? styles.cursor
+                  : styles.disable,
+              ].join(" ")}
+              onClick={
+                rowData?.status === STATUS.PENDING.toLowerCase()
+                  ? () =>
+                      markedQueryAsAnswered({
+                        queryId: rowData?.id,
+                        onSuccessCallback,
+                        onErrorCallBack,
+                      })
+                  : () => {}
+              }
+            >
+              <Image
+                alt="CheckIcon"
+                preview={false}
+                src={getImage(
+                  rowData?.status === STATUS.PENDING.toLowerCase()
+                    ? "rightIcon"
+                    : "greenTickSign"
+                )}
+              />
+            </div>
+          );
         },
       }),
     ];

@@ -23,10 +23,10 @@ import { TICKET_DATA_LIST } from "../../../dummyData";
 import styles from "../ContactUsListingContent.module.scss";
 
 const TicketTable = ({
-  current,
+  currentPage,
   currentActiveTab,
   pageSize,
-  setCurrent,
+  setCurrentPage,
   setPageSize,
   searchedValue,
   setSearchedValue,
@@ -128,7 +128,7 @@ const TicketTable = ({
       });
     const requestedParams = {
       perPage: pageSize,
-      page: current,
+      page: currentPage,
       q: str,
     };
     debounceSearch(requestedParams);
@@ -136,7 +136,7 @@ const TicketTable = ({
 
   const onChangePageSize = (size) => {
     setPageSize(size);
-    setCurrent(1);
+    setCurrentPage(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
@@ -151,7 +151,7 @@ const TicketTable = ({
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
-    setCurrent(newPageNumber);
+    setCurrentPage(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
@@ -169,10 +169,11 @@ const TicketTable = ({
       // const { total } = data?.meta; :TODO: un-comment once backend start providing records
       const total = 14;
       const numberOfPages = Math.ceil(total / pageSize);
-      if (current > numberOfPages) {
-        setCurrent(1);
+      if (currentPage > numberOfPages) {
+        setCurrentPage(1);
         setSearchParams((prev) => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+          return prev;
         });
 
         const requestedParams = {
@@ -187,7 +188,7 @@ const TicketTable = ({
 
   useEffect(() => {
     setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, currentPage);
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
       searchedValue &&
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
@@ -196,7 +197,7 @@ const TicketTable = ({
 
     const requestedParams = {
       perPage: pageSize,
-      page: current,
+      page: currentPage,
       q: searchedValue,
     };
     fetchData(requestedParams);
@@ -223,15 +224,15 @@ const TicketTable = ({
   }, []);
 
   // TODO: remove this once API start providing data
-  const startIndex = (current - 1) * pageSize;
-  const endIndex = current * pageSize;
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = currentPage * pageSize;
 
   return (
     <>
       {!isError && (
         <TableWithSearchAndFilters
           {...{
-            current,
+            current: currentPage,
             pageSize,
             searchedValue,
             handleOnUserSearch,
@@ -267,11 +268,11 @@ const TicketTable = ({
 };
 
 TicketTable.defaultProps = {
-  current: 1,
+  currentPage: 1,
   currentActiveTab: "1",
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
-  setCurrent: () => {},
+  setCurrentPage: () => {},
   setPageSize: () => {},
   ticketListingProps: {},
   searchedValue: "",
@@ -279,11 +280,11 @@ TicketTable.defaultProps = {
 };
 
 TicketTable.propTypes = {
-  current: PropTypes.number,
+  currentPage: PropTypes.number,
   currentActiveTab: PropTypes.string,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
-  setCurrent: PropTypes.func,
+  setCurrentPage: PropTypes.func,
   setPageSize: PropTypes.func,
   ticketListingProps: PropTypes.object,
   searchedValue: PropTypes.string,

@@ -35,6 +35,7 @@ import uploadIcon from "./Upload icon.svg";
 import addIcon from "./add.png";
 import editIcon from "./edit.png";
 import publicFooter from "./PublicFooter.svg";
+import greenTickSign from "./green tick sign.svg"
 
 const images = {
   addCircle,
@@ -74,6 +75,7 @@ const images = {
   addIcon,
   editIcon,
   publicFooter,
+  greenTickSign,
 };
 
 export default images;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import Chip from "../../components/Chip";
@@ -9,14 +10,21 @@ import { ReactComponent as CheckIconWhite } from "../../themes/base/assets/image
 import { STATUS } from "../../constant/constant";
 import styles from "./QueryDetailsHeader.module.scss";
 
-const QueryDetailsHeader = ({ id, status }) => {
+const QueryDetailsHeader = ({
+  fetchData,
+  id,
+  markedQueryAsAnswered,
+  readable_id,
+  showNotification,
+  status,
+}) => {
   const intl = useIntl();
   const responsive = useResponsive();
 
   return (
     <div className={styles.container}>
       <ContentHeader
-        headerText={id}
+        headerText={readable_id}
         headerComponent={
           <Chip
             label={status}
@@ -37,17 +45,42 @@ const QueryDetailsHeader = ({ id, status }) => {
           />
         }
         rightSection={
-          <CustomButton
-            IconElement={responsive?.isSm ? CheckIconWhite : null}
-            customStyle={!responsive?.isSm ? styles.buttonStyles : ""}
-            btnText={intl.formatMessage({
-              id: "label.markAnswered",
-            })}
-          />
+          status?.toLowerCase() === STATUS.PENDING?.toLowerCase() ? (
+            <CustomButton
+              IconElement={responsive?.isSm ? CheckIconWhite : null}
+              customStyle={!responsive?.isSm ? styles.buttonStyles : ""}
+              btnText={intl.formatMessage({
+                id: "label.markAnswered",
+              })}
+              onClick={() =>
+                markedQueryAsAnswered({
+                  queryId: id,
+                  onSuccessCallback: () => fetchData(),
+                  onErrorCallBack: (error) => showNotification(error, "error"),
+                })
+              }
+            />
+          ) : null
         }
       />
     </div>
   );
+};
+
+QueryDetailsHeader.defaultProps = {
+  fetchData: () => {},
+  id: 0,
+  markedQueryAsAnswered: () => {},
+  showNotification: () => {},
+  status: "",
+};
+
+QueryDetailsHeader.propTypes = {
+  fetchData: PropTypes.func,
+  id: PropTypes.number,
+  markedQueryAsAnswered: PropTypes.func,
+  showNotification: PropTypes.func,
+  status: PropTypes.string,
 };
 
 export default QueryDetailsHeader;

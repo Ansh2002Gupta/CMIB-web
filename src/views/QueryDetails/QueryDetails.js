@@ -9,6 +9,8 @@ import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import QueryDetailsContent from "../../containers/QueryDetailsContent";
 import QueryDetailsHeader from "../../containers/QueryDetailsHeader";
 import useFetch from "../../core/hooks/useFetch";
+import useMarkedQueryAsAnweredApi from "../../services/api-services/Queries/useMarkedQueryAsAnweredApi";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { getErrorMessage } from "../../constant/utils";
 import { ADMIN_ROUTE, QUERY_END_POINT } from "../../constant/apiEndpoints";
 import { classes } from "./QueryDetails.styles";
@@ -29,10 +31,15 @@ const QueryDetails = () => {
       },
     },
   });
+  const { showNotification, notificationContextHolder } = useShowNotification();
+
+  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnsered } =
+    useMarkedQueryAsAnweredApi();
 
   return (
     <>
-      {isLoading && <CustomLoader />}
+      {notificationContextHolder}
+      {(isLoading || isMarkingQueryAsAnsered) && <CustomLoader />}
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
@@ -42,10 +49,19 @@ const QueryDetails = () => {
           />
         </div>
       )}
-      {isSuccess && (
+      {isSuccess && !isMarkingQueryAsAnsered && (
         <TwoRow
           topSection={
-            <QueryDetailsHeader id={data?.id} status={data?.status} />
+            <QueryDetailsHeader
+              id={data?.id}
+              readable_id={data?.readable_id}
+              status={data?.status}
+              {...{
+                markedQueryAsAnswered,
+                showNotification,
+                fetchData,
+              }}
+            />
           }
           bottomSection={
             <QueryDetailsContent type={data?.type} {...{ data }} />

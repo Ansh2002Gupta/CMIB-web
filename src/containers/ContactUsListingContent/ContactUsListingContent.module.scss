@@ -31,7 +31,8 @@
 }
 .searchBar {
   width: var(--width_30Per);
-  min-height: var(--height_44);
+  min-height: var(--minBtnHeight);
+  border-radius: var(--radiusXLg);
   input {
     overflow: hidden;
     color: var(--inputText) !important;
@@ -148,6 +149,14 @@
 .columnHeader {
   color: var(--inputPlaceHolder);
   font-size: var(--fontSizeSmall);
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.disable {
+  cursor: not-allowed;
 }
 
 input::placeholder {

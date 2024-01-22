@@ -6,11 +6,14 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
+import CustomLoader from "../../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../../core/hooks/useFetch";
+import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
+import useMarkedQueryAsAnweredApi from "../../../services/api-services/Queries/useMarkedQueryAsAnweredApi";
+import useShowNotification from "../../../core/hooks/useShowNotification";
 import useGetAllQueryTypesApi from "../../../services/api-services/Query/useGetAllQueryTypesApi";
 import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
 import { toggleSortDirection } from "../../../constant/utils";
@@ -22,10 +25,10 @@ import {
 import styles from "../ContactUsListingContent.module.scss";
 
 const QueryTable = ({
-  current,
+  currentPage,
   currentActiveTab,
   pageSize,
-  setCurrent,
+  setCurrentPage,
   setPageSize,
   searchedValue,
   setSearchedValue,
@@ -107,7 +110,31 @@ const QueryTable = ({
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
+  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
+    useMarkedQueryAsAnweredApi();
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
+
+  const { showNotification, notificationContextHolder } = useShowNotification();
+
+  const onSuccessfullUpdateQueryStatus = () => {
+    const requestedParams = {
+      perPage: pageSize,
+      page: currentPage,
+      q: searchedValue,
+    };
+    fetchData(requestedParams);
+  };
+
+  const columns = getTicketOrQueryColumn(
+    currentActiveTab,
+    intl,
+    getImage,
+    navigate,
+    renderColumn,
+    markedQueryAsAnswered,
+    onSuccessfullUpdateQueryStatus,
+    (errorText) => showNotification(errorText, "error")
+  );
 
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
@@ -123,7 +150,7 @@ const QueryTable = ({
       });
     const requestedParams = {
       perPage: pageSize,
-      page: current,
+      page: currentPage,
       q: str,
     };
     debounceSearch(requestedParams);
@@ -131,7 +158,7 @@ const QueryTable = ({
 
   const onChangePageSize = (size) => {
     setPageSize(size);
-    setCurrent(1);
+    setCurrentPage(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
@@ -146,7 +173,7 @@ const QueryTable = ({
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
-    setCurrent(newPageNumber);
+    setCurrentPage(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
@@ -172,8 +199,8 @@ const QueryTable = ({
     if (data?.meta) {
       const { total } = data?.meta;
       const numberOfPages = Math.ceil(total / pageSize);
-      if (current > numberOfPages) {
-        setCurrent(1);
+      if (currentPage > numberOfPages) {
+        setCurrentPage(1);
         setSearchParams((prev) => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
@@ -191,7 +218,7 @@ const QueryTable = ({
 
   useEffect(() => {
     setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, currentPage);
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
       searchedValue &&
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
@@ -200,7 +227,7 @@ const QueryTable = ({
 
     const requestedParams = {
       perPage: pageSize,
-      page: current,
+      page: currentPage,
       q: searchedValue,
     };
     fetchData(requestedParams);
@@ -209,10 +236,12 @@ const QueryTable = ({
 
   return (
     <>
-      {!isError && (
+      {notificationContextHolder}
+      {isMarkingQueryAsAnswered && <CustomLoader />}
+      {!isError && !isMarkingQueryAsAnswered && (
         <TableWithSearchAndFilters
           {...{
-            current,
+            current: currentPage,
             pageSize,
             searchedValue,
             handleOnUserSearch,
@@ -247,11 +276,11 @@ const QueryTable = ({
 };
 
 QueryTable.defaultProps = {
-  current: 1,
+  currentPage: 1,
   currentActiveTab: "1",
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
-  setCurrent: () => {},
+  setCurrentPage: () => {},
   setPageSize: () => {},
   ticketListingProps: {},
   searchedValue: "",
@@ -259,11 +288,11 @@ QueryTable.defaultProps = {
 };
 
 QueryTable.propTypes = {
-  current: PropTypes.number,
+  currentPage: PropTypes.number,
   currentActiveTab: PropTypes.string,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
-  setCurrent: PropTypes.func,
+  setCurrentPage: PropTypes.func,
   setPageSize: PropTypes.func,
   ticketListingProps: PropTypes.object,
   searchedValue: PropTypes.string,

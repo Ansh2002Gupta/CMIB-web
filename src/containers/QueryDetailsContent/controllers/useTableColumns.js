@@ -11,7 +11,7 @@ const useTableColumns = () => {
         {
           key: "1",
           label: intl.formatMessage({ id: "label.companyName" }),
-          children: data?.name || "--",
+          children: data?.readable_id || "--",
         },
         {
           key: "2",
@@ -123,7 +123,7 @@ const useTableColumns = () => {
       {
         key: "1",
         label: intl.formatMessage({ id: "label.studentName" }),
-        children: data?.name || "--",
+        children: data?.readable_id || "--",
       },
       {
         // TODO: please confirm that this data will shown as it is or require some changes.

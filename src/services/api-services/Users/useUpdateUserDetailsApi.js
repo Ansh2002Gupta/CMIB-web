@@ -34,7 +34,10 @@ const useUpdateUserDetailsApi = () => {
         },
       };
       const res = await Http.post(url, formData, apiOptions);
-      if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
+      if (
+        res?.code === STATUS_CODES.SUCCESS_STATUS ||
+        res?.status === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setUserDetails(res?.data);
         setApiStatus(API_STATUS.SUCCESS);
         onSuccessCallback && onSuccessCallback();
