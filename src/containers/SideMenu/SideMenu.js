@@ -60,7 +60,7 @@ const SideMenu = ({ logo }) => {
 
   useEffect(() => {
     setSelectedModule(accessibleModules[0]);
-  }, [userProfileDetails]);
+  }, []);
 
   const handleOnClickLogo = () => {
     navigate(DASHBOARD);
