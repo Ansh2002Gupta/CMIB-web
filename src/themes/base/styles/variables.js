@@ -99,6 +99,7 @@ const variables = {
   widthViewPort_35: "35vw",
   widthHalfViewPort: "50vw",
   widthViewPort_65: "65vw",
+  widthFullViewPort: "100vw",
   width_30Per: "30%",
   width_45Per: "45%",
   halfWidth: "50%",
@@ -122,6 +123,7 @@ const variables = {
   height_50vh: "50vh",
   halfHeight: "50%",
   fullHeight: "100%",
+  heightFullViewPort: "100vh",
 
   // Distance for top, left, bottom and right
   distance_85: "85px",

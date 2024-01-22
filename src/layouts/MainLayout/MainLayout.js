@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { TwoColumn, TwoRow, ThreeRow } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
+import { classes } from "./MainLayout.styles";
 import styles from "./mainLayout.module.scss";
 
 function MainLayout({
@@ -22,8 +23,8 @@ function MainLayout({
         className={`${styles.mainLayout} ${className}`}
         style={style}
         leftSection={menu}
-        leftSectionStyle={{ width: "25%" }}
-        rightSectionStyle={{ width: "75%" }}
+        leftSectionStyle={classes.leftSectionStyle}
+        rightSectionStyle={classes.rightSectionStyle}
         rightSection={
           <TwoRow
             className={`${[
