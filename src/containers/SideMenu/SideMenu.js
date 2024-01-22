@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useSearchParams, useLocation } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import {
@@ -29,6 +30,8 @@ const SideMenu = ({ logo }) => {
   const userData = userProfileDetails?.userDetails;
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [selectedModule, setSelectedModule] = useState(modules[0]);
+  const [selectedKey, setSelectedKey] = useState();
+  const location = useLocation();
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
 
   function updateLabelsForIntl(menuItems) {
@@ -51,11 +54,20 @@ const SideMenu = ({ logo }) => {
   };
   const handleOnClickMenuItem = ({ key }) => {
     navigate(key);
+    setSelectedKey([key]);
   };
 
   useEffect(() => {
     setSelectedModule(accessibleModules[0]);
   }, [userProfileDetails]);
+
+  useEffect(() => {
+    const pathSegments = location.pathname.split("/");
+    const select = `/${pathSegments[1]}`;
+    setSelectedKey([select]);
+  }, [userProfileDetails]);
+
+  console.log(selectedKey, "selectedKey..");
 
   return (
     <ConfigProvider
@@ -139,12 +151,13 @@ const SideMenu = ({ logo }) => {
             <Menu
               className={styles.sideMenuOptionsContainer}
               theme="dark"
-              defaultSelectedKeys={["1"]}
+              defaultSelectedKeys={selectedKey}
               mode="inline"
               items={updateLabelsForIntl(selectedModule.children)}
               expandIcon={<></>}
               openKeys={accessibleModules?.map((module) => module?.key)}
               onSelect={handleOnClickMenuItem}
+              selectedKeys={selectedKey}
             />
           )}
         </div>
