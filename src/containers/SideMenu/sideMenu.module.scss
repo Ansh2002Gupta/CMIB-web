@@ -4,29 +4,49 @@
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  cursor: pointer;
 }
+
 .sideMenuTopSection {
   width: var(--fullWidth, 100%);
 }
+
 .sideMenuBottomSection {
   width: var(--fullWidth, 100%);
   background: var(--sideMenuColor, #141b43);
   color: var(--textPrimary, #fff);
   justify-content: space-between;
-  padding: var(--sizeXXSmall, 8px) var(--sizeXSmall, 12px);
+  padding: var(--sizeXXSmall, 12px) var(--sizeXSmall, 12px);
+  cursor: pointer;
 }
+
 .sideMenuOptionsContainer {
   margin-top: var(--sizeXSmall, 12px);
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500);
 }
-.appLogo {
+
+.appLogoContainer {
+  padding: var(--padding_18);
+  cursor: default;
+}
+
+.appLogoBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobileAppLogo {
   margin: var(--sizeLarge, 18px);
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.appLogo {
+  cursor: pointer;
+}
+
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);
   color: var(--textPrimary, #fff);
@@ -38,9 +58,11 @@
   border-bottom: 1px solid var(--moduleSelectorBorder, #ffffff4d);
   overflow-x: hidden;
 }
+
 .menuItemContainer {
   font-weight: var(--fontWeightMedium, 500);
 }
+
 .moduleSelectorHeading {
   font-size: var(--fontSizeXSmall, 12px);
   font-weight: var(--fontWeightMedium, 500);
@@ -50,6 +72,7 @@
   max-width: 10vw;
   white-space: nowrap;
 }
+
 .moduleList {
   font-size: var(--fontSizeSmall, 14px);
   width: var(--fullWidth, 100%);
@@ -75,6 +98,7 @@
     background-color: #141b43;
   }
 }
+
 .moduleSubMenuList {
   list-style: none;
   width: var(--fullWidth, 100%);
@@ -93,6 +117,7 @@
   flex: 1;
   width: var(--fullWidth, 100%);
 }
+
 .visitContainer {
   display: flex;
   justify-content: center;
@@ -106,11 +131,24 @@
   padding: var(--paddingMedium, 16px) var(--paddingMedium, 16px);
 }
 
+.moduleText {
+  font-size: var(--fontSizeSmall, 14px);
+  color: var(--subHeadingColor, #616c82);
+  padding: var(--paddingMedium, 16px);
+  padding-bottom: var(--paddingExtraSmall, 8px);
+}
+
 @media (max-width: 767px) {
   .moduleSelectorHeading {
     max-width: var(--widthHalfViewPort, 50vw);
   }
   .visitText {
     max-width: var(--widthHalfViewPort, 50vw);
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 767px) {
+  .globeIcon {
+    display: none;
   }
 }

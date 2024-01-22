@@ -87,7 +87,10 @@ export function filterMenuData(modules, menuItems) {
 
   modules &&
     modules?.map((item) => {
-      if (item?.subMenu && filterMenuData(item?.subMenu, menuItems) > 0) {
+      if (
+        item?.subMenu &&
+        filterMenuData(item?.subMenu, menuItems).length > 0
+      ) {
         filterdModules?.push({
           key: item?.key,
           label: item?.label,

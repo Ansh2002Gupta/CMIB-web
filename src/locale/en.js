@@ -169,7 +169,6 @@ const locale = {
   "label.mobile": "Mobile",
   "label.queryType": "Query Type",
   "label.createdOn": "Created On",
-  "label.tryAgain": "Try again!",
   "label.error": "Error",
   "label.ticketId": "Ticket ID",
   "label.createdBy": "Created By",
@@ -186,7 +185,6 @@ const locale = {
   "centre.placeholder.centreId": "Enter Centre Id",
   "label.actions": "Actions",
   "label.sNo": "S. No",
-  "label.tryAgain": "Try Again",
   "label.centreCode": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
   "label.centreStartTime": "Centre Start Time",
@@ -215,7 +213,6 @@ const locale = {
   "centre.error.enterNorm1": "Enter Norm 1",
   "centre.error.enterNorm2": "Enter Norm 2",
   "centre.error.enterVacancy": "Error",
-  "label.add": "Add",
   "label.none": "None",
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
@@ -247,6 +244,7 @@ const locale = {
   "label.menu.candidate-details": "Candidate Details",
   "label.menu.manage-companies": "Manage Companies",
   "label.menu.manage-candidates": "Manage Candidates",
+  "label.module": "Module",
 };
 
 export default locale;

@@ -248,13 +248,14 @@ export const ACTIVE_TAB = "activeTab";
 
 export const MODULE_KEYS = {
   CONTROL_KEY: "control",
-  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placement",
+  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placements",
   CA_JOBS_KEY: "ca-jobs",
   EXPERIENCED_MEMBERS_KEY: "experienced-members",
-  CARRER_ASCENT_KEY: "career-ascent",
-  WOMEN_PARTTIME_KEY: "women-placement",
-  OVERSEAS_CHAPTERS_KEY: "overseas-placement",
+  CARRER_ASCENT_KEY: "career-ascents",
+  WOMEN_PARTTIME_KEY: "women-placements",
+  OVERSEAS_CHAPTERS_KEY: "overseas-chapters",
 };
+
 export const MENU_KEYS = {
   USER_MANAGEMENT: "user-management",
   BULK_NOTIFICATIONS: "bulk-notifications",
