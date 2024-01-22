@@ -9,18 +9,16 @@ import {
 } from "../../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import useHeader from "../../../core/hooks/useHeader";
-import {
-  ADMIN_ROUTE,
-  GET_USER_PROFILE_DETAILS,
-} from "../../../constant/apiEndpoints";
-import { STATUS_CODES } from "../../../constant/constant";
+import { GET_USER_PROFILE_DETAILS } from "../../../constant/apiEndpoints";
+import { STATUS_CODES, STORAGE_KEYS } from "../../../constant/constant";
+import { getItem, setItem } from "../../encrypted-storage-service";
 
 const useGetUserDetails = () => {
   const intl = useIntl();
   const { onLogout } = useHeader();
   const [, userProfileDispatch] = useContext(UserProfileContext);
 
-  const getUserDetails = async () => {
+  const getUserFromServer = async () => {
     try {
       userProfileDispatch(setIsGettingUserDetails(true));
       userProfileDispatch(setErrorGetingUserDetails(""));
@@ -31,6 +29,7 @@ const useGetUserDetails = () => {
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         userProfileDispatch(setUserDetails(res.data));
+        setItem(STORAGE_KEYS.USER_DATA, res.data);
         return;
       }
       userProfileDispatch(
@@ -47,6 +46,16 @@ const useGetUserDetails = () => {
       onLogout();
     }
   };
+
+  const getUserDetails = () => {
+    const userData = getItem(STORAGE_KEYS?.USER_DATA);
+    if (userData) {
+      userProfileDispatch(setUserDetails(userData));
+    } else {
+      getUserFromServer();
+    }
+  };
+
   return { getUserDetails };
 };
 
