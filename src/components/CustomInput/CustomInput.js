@@ -91,21 +91,10 @@ const CustomInput = ({
               ,
               customInputStyles,
             ].join(" ")}
-            onChange={
-              type === "mobile"
-                ? (event) => {
-                    if (
-                      event.target.value === "" ||
-                      NUMERIC_VALUE_REGEX.test(event.target.value)
-                    ) {
-                      onChange(event);
-                    }
-                  }
-                : onChange
-            }
             {...{
               value,
               placeholder,
+              onChange,
               disabled,
             }}
             prefix={isPrefixRequired ? prefixElement : null}
@@ -145,6 +134,7 @@ const CustomInput = ({
         {type === "inputNumber" && (
           <InputNumber
             type="number"
+            controls={false}
             className={[styles.inputNumberStyles, customInputNumberStyles]}
             {...{
               value,
