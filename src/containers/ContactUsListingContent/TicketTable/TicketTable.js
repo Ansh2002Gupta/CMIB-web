@@ -48,7 +48,7 @@ const TicketTable = ({
     url: ADMIN_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
   });
-  
+
   const columns = getTicketOrQueryColumn(
     currentActiveTab,
     intl,
@@ -228,7 +228,7 @@ const TicketTable = ({
 
   return (
     <>
-      {!isError||true && (
+      {!isError && (
         <TableWithSearchAndFilters
           {...{
             current,
@@ -242,7 +242,7 @@ const TicketTable = ({
             currentFilterStatus,
             setCurrentFilterStatus,
           }}
-          isLoading={true || isSuccess && !isLoading}
+          isLoading={isSuccess && !isLoading}
           // TODO: please remove the dummy data once the data start coming from API
           data={TICKET_DATA_LIST.slice(startIndex, endIndex)}
           currentDataLength={TICKET_DATA_LIST.length}
@@ -251,7 +251,7 @@ const TicketTable = ({
           onSearch={handleOnFilterApply}
         />
       )}
-      {isError|| true && (
+      {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
             onRetry={handleOnReTry}
