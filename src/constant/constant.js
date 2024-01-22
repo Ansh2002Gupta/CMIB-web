@@ -38,7 +38,7 @@ export const ROW_PER_PAGE_OPTIONS = [
 
 export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
-export const VALID_CONTACT_US_TABS_ID = ['1', '2'];
+export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
@@ -262,10 +262,10 @@ export const MENU_KEYS = {
   QUERY_MANAGEMENT: "query-management",
   TESTIMONIAL_MANAGEMENT: "testimonial-management",
   REGISTERED_COMPANIES: "registered-companies",
-  SESSIONS: "sessions",
+  SESSIONS: "setup-session",
   DASHBOARD: "dashboard",
   SUBSCRIPTIONS: "subscriptions",
-  GLOBAL_CONFIGURATIONS: "global-configurations",
+  GLOBAL_CONFIGURATIONS: "global-configs",
   PAYMENTS: "payments",
   CANDIDATES: "candidates",
   COMPANIES: "companies",
@@ -278,7 +278,7 @@ export const MENU_KEYS = {
   CONTACT_US: "contact-us",
   ACTIVITY_LOGS: "activity_logs",
   ALL_JOBS: "all_Jobs",
-  ROUND_1_PLACEMENT: "round_1_placement",
+  ROUND_1_PLACEMENT: "round-1",
   ROUND_2_PLACEMENT: "round_2_placement",
 };
 

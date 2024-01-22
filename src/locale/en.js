@@ -227,10 +227,10 @@ const locale = {
   "label.menu.query-management": "Query Management",
   "label.menu.testimonial-management": "Testimonials",
   "label.menu.registered-companies": "Registered Companies",
-  "label.menu.sessions": "Sessions",
+  "label.menu.setup-session": "Sessions",
   "label.menu.dashboard": "Dashboard",
   "label.menu.subscriptions": "Subscriptions",
-  "label.menu.global-configurations": "Global Configurations",
+  "label.menu.global-configs": "Global Configurations",
   "label.menu.payments": "Payments",
   "label.menu.candidates": "Candidates",
   "label.menu.companies": "Companies",
@@ -241,7 +241,7 @@ const locale = {
   "label.menu.contact-us": "Contact Us",
   "label.menu.activity_logs": "Activity Logs",
   "label.menu.all_Jobs": "All Jobs",
-  "label.menu.round_1_placement": "Round 1 Placement",
+  "label.menu.round-1": "Round 1 Placement",
   "label.menu.round_2_placement": "Round 2 Placement",
 };
 
