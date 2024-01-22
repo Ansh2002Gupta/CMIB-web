@@ -1,7 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Alert, Button, Spin, Typography } from "antd";
+import { Spin } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -139,6 +139,7 @@ const UserDetailsContent = ({
                 date={userData?.date || new Date().toISOString()}
                 access={userData?.access}
                 permissions={userData?.permissions}
+                roles={userData?.roles}
                 is_two_factor={userData?.is_two_factor}
                 isDateDisable
                 userNameErrorMessage={

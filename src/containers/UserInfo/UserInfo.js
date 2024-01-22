@@ -7,7 +7,9 @@ import Base from "../../core/layouts/Base/Base";
 import { TwoRow } from "../../core/layouts";
 
 import CheckBoxList from "../CheckBoxList";
+import Chip from "../../components/Chip/Chip";
 import CustomInput from "../../components/CustomInput";
+import useResponsive from "../../core/hooks/useResponsive";
 import { ALLOWED_MOBILE_PREFIXES } from "../../constant/constant";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
@@ -25,14 +27,36 @@ const UserInfo = ({
   mobilePrefix,
   name,
   permissions,
+  roles,
   setIsAccessValid,
   shouldShowDatePickerOption,
   updateUserData,
   userNameErrorMessage,
 }) => {
   const intl = useIntl();
+  const responsive = useResponsive();
 
-  const items = [
+  const getValuesInChips = (arrayOfValues) => {
+    if (arrayOfValues?.length) {
+      return (
+        <div className={styles.chipsContainer}>
+          {arrayOfValues?.map((item) => {
+            return (
+              <Chip
+                bgColor={styles.chipBg}
+                label={item}
+                textColor={styles.chipText}
+              />
+            );
+          })}
+        </div>
+      );
+    }
+
+    return null;
+  };
+
+  let items = [
     {
       key: "1",
       label: `${intl.formatMessage({ id: "label.userName2" })} *`,
@@ -46,22 +70,28 @@ const UserInfo = ({
     {
       key: "3",
       label: `${intl.formatMessage({ id: "label.mobileNumber" })} *`,
+      span: responsive.isMd ? 1 : 2,
       children: `+${mobilePrefix}-${mobileNo}`,
     },
     {
       key: "4",
-      label: `${intl.formatMessage({ id: "label.access" })} *`,
-      children:
-        access?.map((item) => item)?.join(",") ||
-        intl.formatMessage({ id: "label.none" }),
+      label: `${intl.formatMessage({ id: "label.moduleAccess" })} *`,
+      span: 3,
+      children: getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
     },
     {
       key: "5",
+      label: `${intl.formatMessage({ id: "label.controlAccessHeading" })} *`,
+      span: 3,
+      children: getValuesInChips(permissions),
+    },
+    {
+      key: "6",
       label: `${intl.formatMessage({ id: "label.dateCreatedOn" })} *`,
       children: moment(new Date(date)).format("DD/MM/YYYY"),
     },
     {
-      key: "6",
+      key: "7",
       label: `${intl.formatMessage({ id: "label.twoFactorAuth" })} *`,
       children: intl.formatMessage({
         id: `label.${is_two_factor ? "on" : "off"}`,
@@ -69,12 +99,13 @@ const UserInfo = ({
     },
   ];
 
+  items = items?.filter(val=> val.children)
+
   return (
     <>
       {!isEditable && (
         <div className={styles.nonEditableContainer}>
           <Descriptions
-            className={styles.description}
             title={intl.formatMessage({ id: "label.userDetails" })}
             layout="vertical"
             items={items}
