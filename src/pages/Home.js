@@ -11,6 +11,7 @@ import HeaderContainer from "../containers/Header";
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   return (
     <>
@@ -37,8 +38,8 @@ function Home({ noOuterPadding }) {
         content={<Outlet />} // view component
         {...{ noOuterPadding }}
       />
-      <CommonModal isOpen={true}>
-        <ModuleChange />
+      <CommonModal isOpen={isModalOpen}>
+        <ModuleChange {...{setIsModalOpen}} />
       </CommonModal>
     </>
   );
