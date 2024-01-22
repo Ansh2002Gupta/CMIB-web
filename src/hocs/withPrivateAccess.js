@@ -3,8 +3,8 @@ import { useNavigate } from "react-router";
 import _ from "lodash";
 
 import CustomLoader from "../components/CustomLoader";
-import { getItem } from "../services/encrypted-storage-service";
 import useGetUserDetails from "../services/api-services/UserProfile/useGetUserProfile";
+import { getItem } from "../services/encrypted-storage-service";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
 import { LOGIN } from "../routes/routeNames";
 

@@ -1,5 +1,5 @@
 .sideMenuContainer {
-  height: 100%;
+  height: var(--fullHeight, 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -7,10 +7,10 @@
   cursor: pointer;
 }
 .sideMenuTopSection {
-  width: 100%;
+  width: var(--fullWidth, 100%);
 }
 .sideMenuBottomSection {
-  width: 100%;
+  width: var(--fullWidth, 100%);
   background: var(--sideMenuColor, #141b43);
   color: var(--textPrimary, #fff);
   justify-content: space-between;
@@ -52,7 +52,7 @@
 }
 .moduleList {
   font-size: var(--fontSizeSmall, 14px);
-  width: 100%;
+  width: var(--fullWidth, 100%);
   color: var(--textPrimary, #fff);
   font-weight: var(--fontWeightMedium, 500);
   display: flex;
@@ -65,7 +65,7 @@
 
 .moduleListItem {
   padding: var(--sizeXSmall, 12px);
-  width: 100%;
+  width: var(--fullWidth, 100%);
   &.disabled {
     color: grey;
     cursor: not-allowed;
@@ -77,7 +77,7 @@
 }
 .moduleSubMenuList {
   list-style: none;
-  width: 100%;
+  width: var(--fullWidth, 100%);
   overflow: hidden;
 }
 
@@ -91,7 +91,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  width: 100%;
+  width: var(--fullWidth, 100%);
 }
 .visitContainer {
   display: flex;
@@ -101,16 +101,16 @@
 }
 
 .imageItemLogo {
-  width: 100%;
+  width: var(--fullWidth, 100%);
   justify-content: space-between;
   padding: var(--paddingMedium, 16px) var(--paddingMedium, 16px);
 }
 
 @media (max-width: 767px) {
   .moduleSelectorHeading {
-    max-width: 50vw;
+    max-width: var(--widthHalfViewPort, 50vw);
   }
   .visitText {
-    max-width: 50vw;
+    max-width: var(--widthHalfViewPort, 50vw);
   }
 }
