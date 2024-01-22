@@ -11,15 +11,14 @@ import HeaderContainer from "../containers/Header";
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       <MainLayout
         menu={
           <MenuContainer
-            openSideMenu={openSideMenu}
-            setOpenSideMenu={setOpenSideMenu}
+            {...{ openSideMenu, setIsModalOpen, setOpenSideMenu }}
           />
         }
         header={
@@ -39,7 +38,7 @@ function Home({ noOuterPadding }) {
         {...{ noOuterPadding }}
       />
       <CommonModal isOpen={isModalOpen}>
-        <ModuleChange {...{setIsModalOpen}} />
+        <ModuleChange {...{ setIsModalOpen }} />
       </CommonModal>
     </>
   );

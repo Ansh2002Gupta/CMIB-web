@@ -9,7 +9,7 @@ import { DASHBOARD } from "../../routes/routeNames";
 import { ReactComponent as AppLogo } from "../../themes/base/assets/icons/app-logo.svg";
 import styles from "./menu.module.scss";
 
-function MenuContainer({ openSideMenu, setOpenSideMenu }) {
+function MenuContainer({ openSideMenu, setIsModalOpen, setOpenSideMenu }) {
   const { navigateScreen: navigate } = useNavigateScreen();
   const responsive = useResponsive();
 
@@ -30,7 +30,7 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
         collapsedWidth={0}
         trigger={null}
       >
-        <SideMenu logo={<AppLogo />} />
+        <SideMenu logo={<AppLogo />} {...{ setIsModalOpen, setOpenSideMenu }} />
       </Layout.Sider>
     </Layout>
   ) : (
@@ -61,6 +61,7 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
             onClick={handleOnClickLogo}
           />
         }
+        {...{ setIsModalOpen, setOpenSideMenu }}
       />
     </Drawer>
   );

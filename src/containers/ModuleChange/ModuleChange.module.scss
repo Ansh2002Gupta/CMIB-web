@@ -13,7 +13,7 @@
   padding: 24px;
   gap: 16px;
   cursor: pointer;
-  min-width: 350px;
+  // min-width: 350px;
   background-color: white;
   border-radius: 8px;
   border: 1px solid #ccd0e5;
@@ -60,6 +60,13 @@
 
 .subText {
   font-size: var(--fontSizeExtraSmall, 12px);
+}
+
+.imageStyle {
+  min-width: 48px;
+  min-height: 48px;
+  // height: 48px;
+  // width: 48px;
 }
 
 @media (max-width: 551px) {
