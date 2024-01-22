@@ -16,6 +16,10 @@
   height: var(--height_40) !important;
 }
 
+.logo{
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1535px) {
   .container {
     padding: var(--paddingMedium) var(--paddingXXLarge);
