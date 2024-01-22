@@ -2,39 +2,38 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 24px;
+  width: var(--fullWidth, 100%);
+  padding: var(--paddingMedium, 24px);
 }
 
 .moduleBox {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px;
-  gap: 16px;
+  padding: var(--paddingMedium, 24px);
+  gap: var(--gapSmall, 16px);
   cursor: pointer;
-  // min-width: 350px;
-  background-color: white;
+  background-color: var(--bodyBg, white);
   border-radius: 8px;
   border: 1px solid #ccd0e5;
 }
 
 .activeModule {
   border: 1px solid var(--Primary, #00137e);
-  background-color: #f2f4fc !important;
-  color: blue;
+  background-color: var(--lightBlueBg, #f2f4fc) !important;
+  color: var(--Primary, blue);
 }
 
 .modulesContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  row-gap: 16px;
-  column-gap: 16px;
-  padding: 24px;
+  row-gap: var(--gapSmall, 16px);
+  column-gap: var(--gapSmall, 16px);
+  padding: var(--gapMedium, 24px);
 }
 
 .bottomContainer {
-  background-color: #f6f8f9;
+  background-color: var(--blueBg, #f6f8f9);
 }
 
 .moduleText {
@@ -55,7 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: var(--gapXSmall, 8px);
 }
 
 .subText {
@@ -63,10 +62,8 @@
 }
 
 .imageStyle {
-  min-width: 48px;
-  min-height: 48px;
-  // height: 48px;
-  // width: 48px;
+  min-width: var(--width_48, 48px);
+  min-height: var(--height_48, 48px);
 }
 
 @media (max-width: 551px) {

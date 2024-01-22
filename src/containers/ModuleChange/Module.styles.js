@@ -1,5 +1,8 @@
+import variables from "../../themes/base/styles/variables";
+
 export const classes = {
   bottonContainer: {
-    backgroundColor: "#F6F8F9",
+    backgroundColor: variables.blueBg,
+    borderRadius: variables.radiusXLg,
   },
 };

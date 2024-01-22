@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Modal } from "antd";
 
 import styles from "./CommonModal.module.scss";
+import "./Override.css";
 
 const CommonModal = ({
   children,
@@ -13,7 +14,7 @@ const CommonModal = ({
 }) => {
   return (
     <Modal
-      className={styles.modal}
+      className={[styles.modal, "customModal"]}
       footer={null}
       open={isOpen}
       {...{ onCancel, closeIcon, maskClosable }}

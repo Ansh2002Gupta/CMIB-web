@@ -1,3 +1,9 @@
 .modal {
   top: 20%;
 }
+
+@media (min-width: 1100px) {
+  .modal {
+    left: 10%;
+  }
+}
