@@ -4,7 +4,7 @@ import { Input, Select, Typography, InputNumber } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Base from "../../core/layouts/Base/Base";
-import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
+
 import styles from "./CustomInput.module.scss";
 
 const CustomInput = ({
