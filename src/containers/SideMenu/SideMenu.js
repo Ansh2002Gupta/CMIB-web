@@ -72,8 +72,6 @@ const SideMenu = ({ logo }) => {
     setSelectedKey([select]);
   }, [userProfileDetails]);
 
-  console.log(selectedKey, "selectedKey..");
-
   return (
     <ConfigProvider
       theme={{
