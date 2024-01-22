@@ -49,7 +49,6 @@ const useGetUserDetails = () => {
 
   const getUserDetails = () => {
     const userData = getItem(STORAGE_KEYS?.USER_DATA);
-    console.log(userData);
     if (userData) {
       userProfileDispatch(setUserDetails(userData));
     } else {
