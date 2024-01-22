@@ -268,8 +268,6 @@ const modules = [
       },
     ],
   },
-
-  // Add more modules as needed
 ];
 
 export default modules;
