@@ -1,0 +1,34 @@
+.mainContainer {
+  gap: var(--gapMedium);
+}
+
+.customStyle {
+  max-width: calc(100vw - 25vw - 48px);
+}
+
+.tab {
+  display: flex;
+  padding: var(--paddingExtraSmall) var(--paddingSmall);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gapXSmall);
+  border-radius: var(--radius_18);
+  border: var(--borderLight);
+  text-align: center;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.selectedTab {
+  @extend .tab;
+  background: var(--active2);
+  color: var(--textPrimary);
+}
+
+@media (max-width: 767px) {
+  .customStyle {
+    max-width: calc(100vw - 48px);
+  }
+}

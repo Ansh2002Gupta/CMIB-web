@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Image, Input } from "antd";
 
@@ -10,6 +11,12 @@ import SearchFilter from "../../../components/SearchFilter";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { ReactComponent as ArrowDown } from "../../../themes/base/assets/images/arrow-down.svg";
+import {
+  DEFAULT_PAGE_SIZE,
+  PAGINATION_PROPERTIES,
+  VALID_ROW_PER_OPTIONS,
+} from "../../../constant/constant";
+import { getValidPageNumber, getValidPageSize } from "../../../constant/utils";
 import { COMPANY_DATA_SOURCE, COMPANIES_FILTER_DATA } from "../../../dummyData";
 import styles from "./CompaniesList.module.scss";
 
@@ -17,6 +24,7 @@ const CompaniesContent = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { getImage } = useContext(ThemeContext);
 
@@ -26,8 +34,12 @@ const CompaniesContent = () => {
   const [currentDataLength, setCurrentDataLength] = useState(
     COMPANY_DATA_SOURCE.length
   );
-  const [current, setCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [current, setCurrent] = useState(
+    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+  );
+  const [pageSize, setPageSize] = useState(
+    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+  );
 
   const goToUserDetailsPage = (data) => {
     const companyId = data?.id;
@@ -48,24 +60,35 @@ const CompaniesContent = () => {
     setCurrentTableData(updatedData);
   };
 
+  const updateTableData = (currentPageNumber, currentPageSize) => {
+    const startIndex = (currentPageNumber - 1) * currentPageSize;
+    const endIndex = currentPageNumber * currentPageSize;
+    const updatedData = COMPANY_DATA_SOURCE.slice(startIndex, endIndex);
+    setCurrentTableData(updatedData);
+  };
+
   const onChangePageSize = (size) => {
     //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
+    updateTableData(1, size);
+
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+      return prev;
+    });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
     //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
+    updateTableData(newPageNumber, pageSize);
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
+      return prev;
+    });
   };
-
-  // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
-  useEffect(() => {
-    const startIndex = (current - 1) * pageSize;
-    const endIndex = current * pageSize;
-    const updatedData = COMPANY_DATA_SOURCE.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
-  }, [current, pageSize]);
 
   const columns = [
     renderColumn({
@@ -122,6 +145,45 @@ const CompaniesContent = () => {
     }),
   ];
 
+  useLayoutEffect(() => {
+    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
+    const currentPagePerRow = +searchParams.get(
+      PAGINATION_PROPERTIES.ROW_PER_PAGE
+    );
+    if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+    }
+
+    if (
+      !currentPagePerRow ||
+      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
+    ) {
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, DEFAULT_PAGE_SIZE);
+        return prev;
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (COMPANY_DATA_SOURCE.length >= 0) {
+      setCurrentDataLength(+COMPANY_DATA_SOURCE.length);
+    }
+    const totalNumberOfValidPages = Math.ceil(
+      COMPANY_DATA_SOURCE.length / pageSize
+    );
+    if (current > totalNumberOfValidPages) {
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+      setCurrent(1);
+    }
+  }, [currentTableData, current, pageSize]);
+
   useEffect(() => {
     return () => {
       setShowFilters(false);
@@ -166,6 +228,7 @@ const CompaniesContent = () => {
       <DataTable
         {...{
           columns,
+          searchedValue,
           currentDataLength,
           current,
           pageSize,

@@ -1,0 +1,36 @@
+.parentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapMedium);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  row-gap: var(--gapMedium);
+  column-gap: var(--gapSmall);
+}
+
+.box {
+  display: flex;
+  gap: var(--gapSmall);
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}
+
+.isRequired {
+  color: var(--error);
+}
+
+.text {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.label {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+}

@@ -24,7 +24,7 @@ const useCreateNewPassword = () => {
       setCreateNewPasswordData(null);
       errorWhileCreatingPassword && setErrorWhileCreatingPassword("");
       const url = ADMIN_ROUTE + RESET_ADMIN_PASSWORD;
-      const res = await Http.post(url, payload);
+      const res = await Http.patch(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setCreateNewPasswordApiStatus(API_STATUS.SUCCESS);
         setCreateNewPasswordData(res.data);
