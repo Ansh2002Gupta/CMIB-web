@@ -1,7 +1,13 @@
-
-
-.drawerAppLogo {
+.drawerAppLogoContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.drawerAppLogo {
+  cursor: pointer;
+}
+
+.crossIcon {
+  color: var(--bodyBg, #ffffff);
 }

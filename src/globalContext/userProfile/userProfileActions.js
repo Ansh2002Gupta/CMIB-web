@@ -26,3 +26,10 @@ export const resetUserDetails = () => {
     type: types.RESET_USER_DETAILS,
   };
 };
+
+export const setSelectedModule = (payload) => {
+  return {
+    type: types.SET_SELECTED_MODULE_,
+    payload,
+  };
+};

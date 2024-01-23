@@ -1,6 +1,6 @@
-@use './fonts.scss' as fonts;
-@use 'core/themes/mixins/mainTemplate.scss' as main;
-@use 'core/themes/mixins/responsive.scss' as responsive;
+@use "./fonts.scss" as fonts;
+@use "core/themes/mixins/mainTemplate.scss" as main;
+@use "core/themes/mixins/responsive.scss" as responsive;
 
 * {
   margin: 0;
@@ -38,7 +38,7 @@ body,
     width: 100%;
     background: var(--body-bg);
     color: var(--text-default);
-    font-family: var(--font-family-regular);
+    font-family: var(--font-family-regular, "General Sans");
     font-size: var(--font-size-normal);
     line-height: var(--line-height-normal);
 
@@ -50,7 +50,7 @@ body,
       align-items: center;
     }
     .justifyCenter {
-      justify-content: center
+      justify-content: center;
     }
   }
 }
@@ -60,4 +60,3 @@ body {
     @include useMain;
   }
 }
-  
