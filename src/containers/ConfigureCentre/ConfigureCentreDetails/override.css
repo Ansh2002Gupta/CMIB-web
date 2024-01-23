@@ -1,3 +1,4 @@
 .ant-select-selection-item {
-  font-size: var(--fontSizeSmallMedium) !important;
+    font-size: var(--fontSizeSmall); 
 }
+  
