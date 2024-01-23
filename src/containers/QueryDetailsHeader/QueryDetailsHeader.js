@@ -55,7 +55,7 @@ const QueryDetailsHeader = ({
               onClick={() =>
                 markedQueryAsAnswered({
                   queryId: id,
-                  onSuccessCallback: () => fetchData(),
+                  onSuccessCallback: () => fetchData({}),
                   onErrorCallBack: (error) => showNotification(error, "error"),
                 })
               }
