@@ -328,7 +328,7 @@ const ConfigureCentreContent = () => {
       {isError && (
         <div className={styles.box}>
           <ErrorMessageBox
-            onClick={handleTryAgain}
+            onRetry={handleTryAgain}
             errorText={error?.data?.message || error}
             errorHeading={intl.formatMessage({ id: "label.error" })}
           />

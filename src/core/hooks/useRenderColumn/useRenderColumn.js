@@ -22,7 +22,6 @@ const useRenderColumn = () => {
     sortTypeDate,
     sortTypeText,
     title,
-    render,
   }) => {
     const columnObject = {};
 
