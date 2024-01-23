@@ -86,7 +86,7 @@ const ModuleChange = ({ setIsModalOpen }) => {
                     )}
                   </div>
                 </div>
-                {selectedModule === obj?.id && (
+                {selectedModule?.id === obj?.id && (
                   <Image
                     preview={false}
                     src={getImage("blueCheckSign")}

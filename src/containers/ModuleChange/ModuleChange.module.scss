@@ -16,6 +16,7 @@
   background-color: var(--bodyBg, white);
   border-radius: 8px;
   border: 1px solid #ccd0e5;
+  min-height: 100px;
 }
 
 .activeModule {
@@ -31,6 +32,9 @@
   column-gap: var(--gapSmall, 16px);
   padding: var(--gapMedium, 24px);
   flex: 1;
+}
+.modulesContainer > *:only-child {
+  grid-column: 1 / -1;
 }
 
 .bottomContainer {
@@ -70,5 +74,7 @@
 @media (max-width: 551px) {
   .modulesContainer {
     grid-template-columns: 1fr;
+    max-height: 60vh;
+    overflow-x: scroll;
   }
 }
