@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { Image, Typography, TimePicker, DatePicker } from "antd";
+import { DatePicker, Image, TimePicker, Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";

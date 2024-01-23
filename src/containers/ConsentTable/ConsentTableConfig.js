@@ -1,16 +1,10 @@
-import React, { useLayoutEffect } from "react";
 import { useIntl } from "react-intl";
 
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
-import {
-  DEFAULT_PAGE_SIZE,
-  PAGINATION_PROPERTIES,
-  VALID_ROW_PER_OPTIONS,
-} from "../../constant/constant";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
-export const useConsentTableColumns = (isEdit, registration, onDateChange) => {
+const useConsentTableColumns = (isEdit, registration, onDateChange) => {
   const { renderColumn } = useRenderColumn();
   const intl = useIntl();
 
@@ -158,3 +152,5 @@ export const useConsentTableColumns = (isEdit, registration, onDateChange) => {
 
   return columns;
 };
+
+export default useConsentTableColumns;

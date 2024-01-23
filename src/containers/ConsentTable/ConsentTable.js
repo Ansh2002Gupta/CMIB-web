@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { useConsentTableColumns } from "./ConsentTableConfig";
+import useConsentTableColumns from "./ConsentTableConfig";
 import DataTable from "../../components/DataTable/DataTable";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import {
@@ -66,17 +66,17 @@ const ConsentTable = ({
 
   const columns = useConsentTableColumns(isEdit, registration, onDateChange);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
-    const availalblePage = Math.ceil(totalData.length / currentPagePerRow);
+    const availablePage = Math.ceil(totalData.length / currentPagePerRow);
     if (
       !currentPage ||
       isNaN(currentPage) ||
       currentPage <= 0 ||
-      currentPage > availalblePage
+      currentPage > availablePage
     ) {
       setSearchParams((prev) => {
         prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
@@ -93,30 +93,25 @@ const ConsentTable = ({
         return prev;
       });
     }
-  }, [searchParams, setSearchParams]);
+  }, []);
 
   useEffect(() => {
     const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
-    const availalblePage = Math.ceil(totalData.length / currentPagePerRow);
+    const availablePage = Math.ceil(totalData.length / currentPagePerRow);
     const startIndex =
-      availalblePage >= currentPage ? (currentPage - 1) * currentPagePerRow : 0;
+      availablePage >= currentPage ? (currentPage - 1) * currentPagePerRow : 0;
     const endIndex = currentPage * currentPagePerRow;
     const updatedData = totalData.slice(startIndex, endIndex);
     setTableData(updatedData);
-
-    console.log();
-  }, [current, pageSize, searchParams, activeTab]);
+  }, [current, pageSize, activeTab]);
 
   return (
     <DataTable
-      columns={columns}
+      {...{ columns, pageSize, onChangePageSize, onChangeCurrentPage }}
       current={+searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE)}
-      pageSize={pageSize}
-      onChangePageSize={onChangePageSize}
-      onChangeCurrentPage={onChangeCurrentPage}
       currentDataLength={totalData.length}
       customContainerStyles={[styles.table, "customConsentTable"].join(" ")}
       originalData={tableData}

@@ -757,6 +757,14 @@ export const LAST_MARKING_REGESTRATION_DETAILS = [
     psychometricTestDate: "2022-11-07T05:11:46.000000Z",
   },
 ];
+
+export const REGISTRATION_DATES = {
+  startDateCompanies: "2023-12-19T05:11:46.000000Z",
+  startDateCandidates: "2023-12-19T05:11:46.000000Z",
+  lastDateBigCentres: "2023-12-19T05:11:46.000000Z",
+  lastDateSmallCentres: "2023-12-19T05:11:46.000000Z",
+};
+
 export const PERMISION_AND_ROLE = {
   error: false,
   code: 200,

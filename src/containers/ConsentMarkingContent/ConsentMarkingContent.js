@@ -14,6 +14,7 @@ import CustomTabs from "../../components/CustomTabs";
 import {
   CONSENT_MARKING_REGESTRATION_DETAILS,
   LAST_MARKING_REGESTRATION_DETAILS,
+  REGISTRATION_DATES,
 } from "../../dummyData";
 import { SESSION } from "../../routes/routeNames";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -25,12 +26,8 @@ const ConsentMarkingContent = ({ isEdit }) => {
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [activeTab, setActiveTab] = useState("1");
-  const [RegistrationDatesData, setRegistrationDatesData] = useState({
-    startDateCompanies: "2023-12-19T05:11:46.000000Z",
-    startDateCandidates: "2023-12-19T05:11:46.000000Z",
-    lastDateBigCentres: "2023-12-19T05:11:46.000000Z",
-    lastDateSmallCentres: "2023-12-19T05:11:46.000000Z",
-  });
+  const [registrationDatesData, setRegistrationDatesData] =
+    useState(REGISTRATION_DATES);
   const initialData = useMemo(() => {
     return CONSENT_MARKING_REGESTRATION_DETAILS.map((item) => ({
       ...item,
@@ -153,10 +150,10 @@ const ConsentMarkingContent = ({ isEdit }) => {
                   id: `label.consent.placeholder.${item?.labeIntl}`,
                 })}
                 value={
-                  RegistrationDatesData[item?.labeIntl]
+                  registrationDatesData[item?.labeIntl]
                     ? isEdit
-                      ? dayjs(RegistrationDatesData[item?.labeIntl])
-                      : RegistrationDatesData[item?.labeIntl]
+                      ? dayjs(registrationDatesData[item?.labeIntl])
+                      : registrationDatesData[item?.labeIntl]
                     : null
                 }
                 onChange={(val) => {
