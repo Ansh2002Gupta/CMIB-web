@@ -3,6 +3,7 @@ import { SETUP_CENTERS } from "../routes/routeNames";
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
+export const SLIDE_BY = 300;
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -38,7 +39,7 @@ export const ROW_PER_PAGE_OPTIONS = [
 
 export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
-export const VALID_CONTACT_US_TABS_ID = ['1', '2'];
+export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
@@ -236,6 +237,26 @@ export const ROUND_TWO_CARD_LIST = [
   },
 ];
 
+export const COMPANY_ROUND_ONE = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Billing Info",
+  "Payment",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
+];
+
+export const COMPANY_ROUND_TWO = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
+];
+
 export const CITY_CENTERS = [
   { id: 101, label: "Delhi", value: "Delhi" },
   { id: 102, label: "Mumbai", value: "Mumbai" },
@@ -251,10 +272,44 @@ export const ACTIVE_TAB = "activeTab";
 
 export const MODULE_KEYS = {
   CONTROL_KEY: "control",
-  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placement",
+  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placements",
   CA_JOBS_KEY: "ca-jobs",
   EXPERIENCED_MEMBERS_KEY: "experienced-members",
-  CARRER_ASCENT_KEY: "career-ascent",
-  WOMEN_PARTTIME_KEY: "women-placement",
-  OVERSEAS_CHAPTERS_KEY: "overseas-placement",
+  CARRER_ASCENT_KEY: "career-ascents",
+  WOMEN_PARTTIME_KEY: "women-placements",
+  OVERSEAS_CHAPTERS_KEY: "overseas-chapters",
+};
+
+export const MENU_KEYS = {
+  USER_MANAGEMENT: "user-management",
+  BULK_NOTIFICATIONS: "bulk-notifications",
+  TICKET_MANAGEMENT: "ticket-management",
+  QUERY_MANAGEMENT: "query-management",
+  TESTIMONIAL_MANAGEMENT: "testimonial-management",
+  REGISTERED_COMPANIES: "registered-companies",
+  SESSIONS: "setup-session",
+  DASHBOARD: "dashboard",
+  SUBSCRIPTIONS: "manage-subscriptions",
+  GLOBAL_CONFIGURATIONS: "global-configs",
+  PAYMENTS: "payments",
+  CANDIDATES: "candidates",
+  COMPANIES: "companies",
+  JOBS: "jobs",
+  REPORT: "report",
+  ROASTER: "roster",
+  FEEDBACK: "feedback",
+  CONTACT_US: "contact-us",
+  ACTIVITY_LOGS: "activity_logs",
+  ALL_JOBS: "all-job-listing",
+  ROUND_1_PLACEMENT: "round-1",
+  ROUND_2_PLACEMENT: "round-2",
+  CANDIDATE_DETAILS: "company-details",
+  COMPANY_DETAILS: "company-details",
+  MANAGE_CANDIDATES: "manage-candidates",
+  MANAGE_COMPANIES: "manage-companies",
+};
+
+export const STORAGE_KEYS = {
+  AUTH_TOKEN: "authToken",
+  USER_DATA: "userData",
 };

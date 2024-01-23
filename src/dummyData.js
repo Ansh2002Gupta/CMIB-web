@@ -201,7 +201,7 @@ export const COMPANY_DATA_SOURCE = [
   },
   {
     id: 11,
-    companyName: "Sprinklr",
+    companyName: "Google",
     entity: "Corporate",
     city: "Gurgaon",
     phoneNumber: "+91-1234 5678 21",
