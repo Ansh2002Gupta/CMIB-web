@@ -60,13 +60,22 @@ const CompaniesContent = () => {
     setCurrentTableData(updatedData);
   };
 
+  const updateTableData = (currentPageNumber, currentPageSize) => {
+    const startIndex = (currentPageNumber - 1) * currentPageSize;
+    const endIndex = currentPageNumber * currentPageSize;
+    const updatedData = COMPANY_DATA_SOURCE.slice(startIndex, endIndex);
+    setCurrentTableData(updatedData);
+  };
+
   const onChangePageSize = (size) => {
     //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
+    updateTableData(1, size);
+
     setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       return prev;
     });
   };
@@ -74,19 +83,12 @@ const CompaniesContent = () => {
   const onChangeCurrentPage = (newPageNumber) => {
     //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
+    updateTableData(newPageNumber, pageSize);
     setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
       return prev;
     });
   };
-
-  // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
-  useEffect(() => {
-    const startIndex = (current - 1) * pageSize;
-    const endIndex = current * pageSize;
-    const updatedData = COMPANY_DATA_SOURCE.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
-  }, [current, pageSize]);
 
   const columns = [
     renderColumn({
@@ -150,7 +152,7 @@ const CompaniesContent = () => {
     );
     if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
       setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
         return prev;
       });
     }
@@ -160,28 +162,27 @@ const CompaniesContent = () => {
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
     ) {
       setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
+        prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, DEFAULT_PAGE_SIZE);
         return prev;
       });
     }
   }, []);
 
   useEffect(() => {
-    if ( currentTableData.length >= 0) {
-      setCurrentDataLength(+currentTableData.length);
+    if (COMPANY_DATA_SOURCE.length >= 0) {
+      setCurrentDataLength(+COMPANY_DATA_SOURCE.length);
     }
     const totalNumberOfValidPages = Math.ceil(
-      currentTableData.length / pageSize
+      COMPANY_DATA_SOURCE.length / pageSize
     );
     if (current > totalNumberOfValidPages) {
       setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
         return prev;
       });
       setCurrent(1);
     }
   }, [currentTableData, current, pageSize]);
-
 
   useEffect(() => {
     return () => {
@@ -227,6 +228,7 @@ const CompaniesContent = () => {
       <DataTable
         {...{
           columns,
+          searchedValue,
           currentDataLength,
           current,
           pageSize,
