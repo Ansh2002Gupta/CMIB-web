@@ -6,7 +6,7 @@ import { Button, Typography } from "antd";
 import { ReactComponent as ErrorIcon } from "../../themes/base/assets/images/error icon.svg";
 import styles from "./ErrorMessageBox.module.scss";
 
-const ErrorMessageBox = ({ onClick, errorText, errorHeading, btnText }) => {
+const ErrorMessageBox = ({ btnText, errorHeading, errorText, onRetry }) => {
   const intl = useIntl();
 
   return (
@@ -21,24 +21,28 @@ const ErrorMessageBox = ({ onClick, errorText, errorHeading, btnText }) => {
               {errorHeading}
             </Typography>
           </div>
-          <div>
-            <Typography className={styles.errorSubHeading}>
-              {errorText}
-            </Typography>
-          </div>
+          {!!errorText && (
+            <div>
+              <Typography className={styles.errorSubHeading}>
+                {errorText}
+              </Typography>
+            </div>
+          )}
         </div>
       </div>
-      <div>
-        <Button
-          block
-          onClick={() => {
-            onClick && onClick();
-          }}
-          className={styles.btn}
-        >
-          {btnText || intl.formatMessage({ id: "label.tryAgain" })}
-        </Button>
-      </div>
+      {!!onRetry && (
+        <div>
+          <Button
+            block
+            onClick={() => {
+              onRetry && onRetry();
+            }}
+            className={styles.btn}
+          >
+            {btnText || intl.formatMessage({ id: "label.tryAgain" })}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
@@ -47,14 +51,13 @@ ErrorMessageBox.defaultProps = {
   btnText: "",
   errorHeading: "",
   errorText: "",
-  onClick: () => {},
 };
 
 ErrorMessageBox.propTypes = {
   btnText: PropTypes.string,
   errorHeading: PropTypes.string,
   errorText: PropTypes.string,
-  onClick: PropTypes.func,
+  onRetry: PropTypes.func,
 };
 
 export default ErrorMessageBox;

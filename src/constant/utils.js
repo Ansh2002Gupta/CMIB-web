@@ -61,6 +61,13 @@ export const toggleSorting = (currentSortValue) => {
   return SORT_VALUES.ASCENDING;
 };
 
+export function getCurrentActiveTab(currentTabValue, validTabsValueArray) {
+  if (!currentTabValue || !validTabsValueArray.includes(currentTabValue)) {
+    return "1";
+  }
+  return currentTabValue;
+}
+
 export const getAccessibleModules = (useRoles, modules) => {
   const filteredModules = modules?.filter((module) => {
     const hasPermission = useRoles?.some((roleModule) => {
@@ -85,6 +92,29 @@ export const getAccessibleModules = (useRoles, modules) => {
 
   return filteredModules;
 };
+
+export function filterMenuData(modules, menuItems) {
+  const filterdModules = [];
+
+  modules &&
+    modules?.map((item) => {
+      if (item?.key && menuItems && item?.key in menuItems) {
+        filterdModules?.push({
+          id: item?.id,
+          key: item?.key,
+          label: item?.label,
+          image: item?.image,
+          isExperiencedMember: item?.isExperiencedMember,
+          children: item?.children?.filter((e) =>
+            menuItems[item?.key]?.items?.find(
+              (findItem) => findItem?.key === e?.label
+            )
+          ),
+        });
+      }
+    });
+  return filterdModules;
+}
 
 export const getValidSortByValue = (currentSortByValue) => {
   if (
