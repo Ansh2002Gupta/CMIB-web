@@ -1,5 +1,9 @@
 import moment from "moment";
-import { DEFAULT_PAGE_SIZE, VALID_ROW_PER_OPTIONS } from "./constant";
+import {
+  DEFAULT_PAGE_SIZE,
+  SORT_VALUES,
+  VALID_ROW_PER_OPTIONS,
+} from "./constant";
 
 export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   if (date) {
@@ -50,6 +54,13 @@ export function getValidPageSize(currentPageSize) {
   return validPageSize;
 }
 
+export const toggleSorting = (currentSortValue) => {
+  if (SORT_VALUES.ASCENDING === currentSortValue) {
+    return SORT_VALUES.DESCENDING;
+  }
+  return SORT_VALUES.ASCENDING;
+};
+
 export function getCurrentActiveTab(currentTabValue, validTabsValueArray) {
   if (!currentTabValue || !validTabsValueArray.includes(currentTabValue)) {
     return "1";
@@ -80,4 +91,38 @@ export const getAccessibleModules = (useRoles, modules) => {
   });
 
   return filteredModules;
+};
+
+export function filterMenuData(modules, menuItems) {
+  const filterdModules = [];
+
+  modules &&
+    modules?.map((item) => {
+      if (item?.key && menuItems && item?.key in menuItems) {
+        filterdModules?.push({
+          id: item?.id,
+          key: item?.key,
+          label: item?.label,
+          image: item?.image,
+          isExperiencedMember: item?.isExperiencedMember,
+          children: item?.children?.filter((e) =>
+            menuItems[item?.key]?.items?.find(
+              (findItem) => findItem?.key === e?.label
+            )
+          ),
+        });
+      }
+    });
+  return filterdModules;
+}
+
+export const getValidSortByValue = (currentSortByValue) => {
+  if (
+    currentSortByValue === SORT_VALUES.ASCENDING ||
+    currentSortByValue === SORT_VALUES.DESCENDING
+  ) {
+    return currentSortByValue;
+  }
+
+  return SORT_VALUES.ASCENDING;
 };

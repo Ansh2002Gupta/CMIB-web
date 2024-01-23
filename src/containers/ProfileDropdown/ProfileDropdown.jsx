@@ -1,21 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState,useContext } from "react";
 import { Avatar, Dropdown, Space } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import CardDropdownOverlay from "./CardDropdownOverlay";
 import useResponsive from "../../core/hooks/useResponsive";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import styles from "./profileDropdown.module.scss";
 
 const ProfileDropdown = () => {
-  // TODO: To find logic to put Role base on Role ID
-  const [userProfileState] = useContext(UserProfileContext);
-
-  const loggedInUserInfo = userProfileState.userDetails || {};
-  const userName = loggedInUserInfo?.name;
-  const userRole = "Admin";
-  const userEmail = loggedInUserInfo?.email;
-  const userProfilePic = loggedInUserInfo?.profile_photo;
+  const [userProfileDetails, userProfileDispatch] =
+  useContext(UserProfileContext);
+  const userData= userProfileDetails?.userDetails;
+ 
+  const userName = userData?.name||"";
+  const userRole = userData?.user_type||"";
+  const userEmail = userData?.email||"";
+  const userProfilePic = userData?.profile_photo||"";
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const responsive = useResponsive();
