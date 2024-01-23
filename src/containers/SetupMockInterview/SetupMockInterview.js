@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
@@ -15,7 +15,6 @@ import { MOCK_INTERVIEW } from "../../dummyData";
 import DataTable from "../../components/DataTable/DataTable";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./SetupMockInterview.styles";
 import styles from "./SetupMockInterview.module.scss";
 
@@ -23,7 +22,6 @@ const SetupMockInterviewContent = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentTableData, setCurrentTableData] = useState(MOCK_INTERVIEW);
   const [current, setCurrent] = useState(
@@ -41,7 +39,6 @@ const SetupMockInterviewContent = () => {
   };
 
   const onChangePageSize = (size) => {
-    //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
     setSearchParams((prev) => {
@@ -53,7 +50,6 @@ const SetupMockInterviewContent = () => {
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
-    //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
@@ -104,16 +100,26 @@ const SetupMockInterviewContent = () => {
     }),
   ];
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
-    if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
+    let startIndex = (currentPage - 1) * currentPagePerRow;
+    let endIndex = currentPage * currentPagePerRow;
+    const availalblePage = Math.ceil(MOCK_INTERVIEW.length / currentPagePerRow);
+    if (
+      !currentPage ||
+      isNaN(currentPage) ||
+      currentPage <= 0 ||
+      currentPage > availalblePage
+    ) {
       setSearchParams((prev) => {
         prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
         return prev;
       });
+      startIndex = 0;
+      endIndex = DEFAULT_PAGE_SIZE;
     }
 
     if (
@@ -124,22 +130,13 @@ const SetupMockInterviewContent = () => {
         prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
         return prev;
       });
+      startIndex = 0;
+      endIndex = DEFAULT_PAGE_SIZE;
     }
-  }, []);
 
-  useEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
-      PAGINATION_PROPERTIES.ROW_PER_PAGE
-    );
-    const availalblePage = Math.ceil(MOCK_INTERVIEW.length / currentPagePerRow);
-    const startIndex =
-      availalblePage >= currentPage ? (currentPage - 1) * currentPagePerRow : 0;
-    const endIndex = currentPage * currentPagePerRow;
     const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
-    console.log();
-  }, [current, pageSize, searchParams]);
+  }, []);
 
   return (
     <TwoRow
