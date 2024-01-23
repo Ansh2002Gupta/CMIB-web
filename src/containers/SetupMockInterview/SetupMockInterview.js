@@ -79,7 +79,7 @@ const SetupMockInterviewContent = () => {
       title: intl.formatMessage({ id: "label.totalStudentsBooked" }),
       dataIndex: "totalStudentBooked",
       key: "totalStudentBooked",
-      renderText: { visible: true },
+      renderText: { visible: true, textStyles: styles.studentStyles },
     }),
 
     renderColumn({
