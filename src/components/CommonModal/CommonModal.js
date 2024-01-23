@@ -8,6 +8,7 @@ import "./Override.css";
 const CommonModal = ({
   children,
   closeIcon,
+  footer,
   isOpen,
   onCancel,
   maskClosable,
@@ -15,7 +16,7 @@ const CommonModal = ({
   return (
     <Modal
       className={[styles.modal, "customModal"]}
-      footer={null}
+      footer={footer}
       open={isOpen}
       {...{ onCancel, closeIcon, maskClosable }}
     >
@@ -27,6 +28,7 @@ const CommonModal = ({
 CommonModal.defaultProps = {
   children: null,
   closeIcon: false,
+  footer: null,
   isOpen: false,
   onCancel: () => {},
   maskClosable: false,
@@ -36,6 +38,7 @@ CommonModal.propTypes = {
   children: PropTypes.node,
   btnText: PropTypes.string,
   closeIcon: PropTypes.bool,
+  footer: PropTypes.bool,
   onCancel: PropTypes.func,
   maskclosable: PropTypes.bool,
 };

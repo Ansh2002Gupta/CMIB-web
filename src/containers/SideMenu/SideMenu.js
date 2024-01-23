@@ -9,8 +9,8 @@ import useResponsive from "../../core/hooks/useResponsive";
 
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { DASHBOARD } from "../../routes/routeNames";
 import { filterMenuData } from "../../constant/utils";
+import { DASHBOARD } from "../../routes/routeNames";
 import modules from "./sideMenuItems";
 import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
 import styles from "./sideMenu.module.scss";
