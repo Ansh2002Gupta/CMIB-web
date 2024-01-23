@@ -8,7 +8,7 @@ import { ThemeContext } from "core/providers/theme";
 
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { filterMenuData } from "../../constant/utils";
-import { setModuleDetails } from "../../globalContext/userProfile/userProfileActions";
+import { setSelectedModule } from "../../globalContext/userProfile/userProfileActions";
 import modules from "../SideMenu/sideMenuItems";
 import styles from "./ModuleChange.module.scss";
 import { classes } from "./Module.styles";
@@ -18,24 +18,14 @@ const ModuleChange = ({ setIsModalOpen }) => {
     useContext(UserProfileContext);
   const userData = userProfileDetails?.userDetails;
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
-  const [selectedModule, setSelectedModule] = useState();
-
+  const selectedModule = userProfileDetails?.selectedModuleItem;
   const { getImage } = useContext(ThemeContext);
   const intl = useIntl();
 
   const handleModuleSelect = (item) => {
     setIsModalOpen(false);
-    userProfileDispatch(setModuleDetails(item));
+    userProfileDispatch(setSelectedModule(item));
   };
-
-  useEffect(() => {
-    if (userProfileDetails?.moduleDetails) {
-      setSelectedModule(userProfileDetails?.moduleDetails);
-    } else {
-      setSelectedModule(accessibleModules[0]);
-    }
-  }, [userProfileDetails]);
-
   return (
     <TwoRow
       className={styles.mainContainer}

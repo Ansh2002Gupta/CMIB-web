@@ -21,10 +21,10 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const intl = useIntl();
   const userData = userProfileDetails?.userDetails;
-  const [selectedModule, setSelectedModule] = useState();
   const [selectedKey, setSelectedKey] = useState();
   const location = useLocation();
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
 
   function updateLabelsForIntl(menuItems, selectedKey) {
     return menuItems?.map((item) => {
@@ -35,7 +35,6 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
       if (item.selectedIcon && item.key === selectedKey) {
         icon = item.selectedIcon;
       }
-
       return {
         ...item,
         label: updatedLabel,
@@ -44,19 +43,10 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
     });
   }
 
-  // TODO: need to create context for it if needed
   const handleOnClickMenuItem = ({ key }) => {
     navigate(key);
     setSelectedKey(key);
   };
-
-  useEffect(() => {
-    if (userProfileDetails?.moduleDetails) {
-      setSelectedModule(userProfileDetails?.moduleDetails);
-    } else {
-      setSelectedModule(accessibleModules[0]);
-    }
-  }, [userProfileDetails]);
 
   const handleOnClickLogo = () => {
     navigate(DASHBOARD);

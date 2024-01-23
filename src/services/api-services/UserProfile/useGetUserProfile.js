@@ -2,21 +2,29 @@ import { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
+import useHeader from "../../../core/hooks/useHeader";
+import { filterMenuData } from "../../../constant/utils";
+import { getItem, setItem } from "../../encrypted-storage-service";
 import {
   setErrorGetingUserDetails,
   setIsGettingUserDetails,
   setUserDetails,
+  setSelectedModule,
 } from "../../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
-import useHeader from "../../../core/hooks/useHeader";
+import modules from "../../../containers/SideMenu/sideMenuItems";
 import { GET_USER_PROFILE_DETAILS } from "../../../constant/apiEndpoints";
 import { STATUS_CODES, STORAGE_KEYS } from "../../../constant/constant";
-import { getItem, setItem } from "../../encrypted-storage-service";
 
 const useGetUserDetails = () => {
   const intl = useIntl();
   const { onLogout } = useHeader();
   const [, userProfileDispatch] = useContext(UserProfileContext);
+
+  const setActiveModule = (userData) => {
+    const accessibleModules = filterMenuData(modules, userData?.menu_items);
+    userProfileDispatch(setSelectedModule(accessibleModules[0]));
+  };
 
   const getUserFromServer = async () => {
     try {
@@ -29,6 +37,7 @@ const useGetUserDetails = () => {
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         userProfileDispatch(setUserDetails(res.data));
+        setActiveModule(res.data);
         setItem(STORAGE_KEYS.USER_DATA, res.data);
         return;
       }
@@ -51,6 +60,7 @@ const useGetUserDetails = () => {
     const userData = getItem(STORAGE_KEYS?.USER_DATA);
     if (userData) {
       userProfileDispatch(setUserDetails(userData));
+      setActiveModule(userData);
     } else {
       getUserFromServer();
     }
