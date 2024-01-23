@@ -233,40 +233,52 @@ const experiencedMembersMenu = [
 
 const modules = [
   {
+    id: 1,
     label: "Control",
     key: MODULE_KEYS.CONTROL_KEY,
     children: controlMenu,
+    image: "settings",
+    isExperiencedMember: false,
   },
   {
+    id: 2,
     label: "Newly Qualified Placements",
     key: MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY,
     children: newlyQualifiedPlacementsMenu,
+    image: "scholar",
+    isExperiencedMember: false,
   },
   {
+    id: 3,
     label: "CA Jobs",
     key: MODULE_KEYS.CA_JOBS_KEY,
     children: caJobsMenu,
+    image: "suiteCase",
+    isExperiencedMember: false,
   },
   {
-    label: "Experienced Members",
-    key: MODULE_KEYS.EXPERIENCED_MEMBERS_KEY,
-    subMenu: [
-      {
-        key: MODULE_KEYS.CARRER_ASCENT_KEY,
-        label: "Career Ascent",
-        children: experiencedMembersMenu,
-      },
-      {
-        key: MODULE_KEYS.WOMEN_PARTTIME_KEY,
-        label: "Women PartTime",
-        children: experiencedMembersMenu,
-      },
-      {
-        key: MODULE_KEYS.OVERSEAS_CHAPTERS_KEY,
-        label: "Overseas Chapters",
-        children: experiencedMembersMenu,
-      },
-    ],
+    id: 4,
+    key: MODULE_KEYS.CARRER_ASCENT_KEY,
+    label: "Career Ascent",
+    children: experiencedMembersMenu,
+    image: "flagOnPedestal",
+    isExperiencedMember: true,
+  },
+  {
+    id: 5,
+    key: MODULE_KEYS.WOMEN_PARTTIME_KEY,
+    label: "Women PartTime",
+    children: experiencedMembersMenu,
+    image: "woman",
+    isExperiencedMember: true,
+  },
+  {
+    id: 6,
+    key: MODULE_KEYS.OVERSEAS_CHAPTERS_KEY,
+    label: "Overseas Chapters",
+    children: experiencedMembersMenu,
+    image: "global",
+    isExperiencedMember: true,
   },
 ];
 

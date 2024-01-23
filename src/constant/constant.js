@@ -3,6 +3,7 @@ import { SETUP_CENTERS } from "../routes/routeNames";
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
+export const SLIDE_BY = 300;
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -145,6 +146,7 @@ export const PAGINATION_PROPERTIES = {
 };
 
 //TODO:need to implement it using api
+//TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
   { id: 102, label: "November 2025", value: "November 2025" },
@@ -235,6 +237,26 @@ export const ROUND_TWO_CARD_LIST = [
   },
 ];
 
+export const COMPANY_ROUND_ONE = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Billing Info",
+  "Payment",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
+];
+
+export const COMPANY_ROUND_TWO = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
+];
+
 export const CITY_CENTERS = [
   { id: 101, label: "Delhi", value: "Delhi" },
   { id: 102, label: "Mumbai", value: "Mumbai" },
@@ -243,6 +265,8 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
 
