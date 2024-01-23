@@ -272,6 +272,9 @@ const locale = {
   "label.menu.manage-companies": "Manage Companies",
   "label.menu.manage-candidates": "Manage Candidates",
   "label.module": "Module",
+  "label.experiencedMember": "Experienced Member",
+  "label.change": "Change",
+  "label.chooseModule": "Choose a module",
 };
 
 export default locale;

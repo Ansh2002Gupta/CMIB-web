@@ -36,6 +36,14 @@ import addIcon from "./add.png";
 import editIcon from "./edit.png";
 import TempCompanyLogo from './TempCompanyLogo.svg'
 import publicFooter from "./PublicFooter.svg";
+import flagOnPedestal from "./flag on pedestal.svg";
+import global from "./global.svg";
+import scholar from "./scholar.svg";
+import settings from "./settings.svg";
+import suiteCase from "./suite-case.svg";
+import woman from "./Woman.svg";
+import cross from "./cross.svg";
+import blueCheckSign from "./blue-check-sign.svg";
 
 const images = {
   addCircle,
@@ -76,6 +84,14 @@ const images = {
   editIcon,
   TempCompanyLogo,
   publicFooter,
+  flagOnPedestal,
+  global,
+  scholar,
+  settings,
+  suiteCase,
+  woman,
+  cross,
+  blueCheckSign,
 };
 
 export default images;

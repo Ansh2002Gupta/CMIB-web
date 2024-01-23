@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Drawer, Layout } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
@@ -9,7 +10,7 @@ import { DASHBOARD } from "../../routes/routeNames";
 import { ReactComponent as AppLogo } from "../../themes/base/assets/icons/app-logo.svg";
 import styles from "./menu.module.scss";
 
-function MenuContainer({ openSideMenu, setOpenSideMenu }) {
+function MenuContainer({ openSideMenu, setIsModalOpen, setOpenSideMenu }) {
   const { navigateScreen: navigate } = useNavigateScreen();
   const responsive = useResponsive();
 
@@ -30,7 +31,7 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
         collapsedWidth={0}
         trigger={null}
       >
-        <SideMenu logo={<AppLogo />} />
+        <SideMenu logo={<AppLogo />} {...{ setIsModalOpen, setOpenSideMenu }} />
       </Layout.Sider>
     </Layout>
   ) : (
@@ -61,9 +62,22 @@ function MenuContainer({ openSideMenu, setOpenSideMenu }) {
             onClick={handleOnClickLogo}
           />
         }
+        {...{ setIsModalOpen, setOpenSideMenu }}
       />
     </Drawer>
   );
 }
+
+MenuContainer.defaultProps = {
+  setIsModalOpen: () => {},
+  setOpenSideMenu: () => {},
+  openSideMenu: false,
+};
+
+MenuContainer.propTypes = {
+  setIsModalOpen: PropTypes.func,
+  setOpenSideMenu: PropTypes.func,
+  openSideMenu: PropTypes.string,
+};
 
 export default MenuContainer;

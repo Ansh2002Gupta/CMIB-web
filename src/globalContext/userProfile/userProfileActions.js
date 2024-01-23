@@ -27,9 +27,9 @@ export const resetUserDetails = () => {
   };
 };
 
-export const setModuleDetails = (payload) => {
+export const setSelectedModule = (payload) => {
   return {
-    type: types.SET_MODULE_DETAILS,
+    type: types.SET_SELECTED_MODULE_,
     payload,
   };
 };

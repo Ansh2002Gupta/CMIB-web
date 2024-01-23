@@ -87,20 +87,13 @@ export function filterMenuData(modules, menuItems) {
 
   modules &&
     modules?.map((item) => {
-      if (
-        item?.subMenu &&
-        filterMenuData(item?.subMenu, menuItems).length > 0
-      ) {
-        filterdModules?.push({
-          key: item?.key,
-          label: item?.label,
-          subMenu: filterMenuData(item?.subMenu, menuItems),
-        });
-      }
       if (item?.key && menuItems && item?.key in menuItems) {
         filterdModules?.push({
+          id: item?.id,
           key: item?.key,
           label: item?.label,
+          image: item?.image,
+          isExperiencedMember: item?.isExperiencedMember,
           children: item?.children?.filter((e) =>
             menuItems[item?.key]?.items?.find(
               (findItem) => findItem?.key === e?.label
