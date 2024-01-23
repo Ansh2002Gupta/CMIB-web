@@ -21,7 +21,7 @@ const useGetUserDetails = () => {
   const { onLogout } = useHeader();
   const [, userProfileDispatch] = useContext(UserProfileContext);
 
-  const setActiveModule = (userData) => {
+  const setFirstActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
     userProfileDispatch(setSelectedModule(accessibleModules[0]));
   };
@@ -37,7 +37,7 @@ const useGetUserDetails = () => {
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         userProfileDispatch(setUserDetails(res.data));
-        setActiveModule(res.data);
+        setFirstActiveModule(res.data);
         setItem(STORAGE_KEYS.USER_DATA, res.data);
         return;
       }
@@ -60,7 +60,7 @@ const useGetUserDetails = () => {
     const userData = getItem(STORAGE_KEYS?.USER_DATA);
     if (userData) {
       userProfileDispatch(setUserDetails(userData));
-      setActiveModule(userData);
+      setFirstActiveModule(userData);
     } else {
       getUserFromServer();
     }
