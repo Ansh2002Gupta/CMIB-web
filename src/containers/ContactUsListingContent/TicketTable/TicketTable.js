@@ -63,7 +63,7 @@ const TicketTable = ({
           page: current,
           q: searchedValue,
           sort: sortDirection.key,
-          order: toggleSortDirection(sortDirection.direction),
+          sortDirection: toggleSortDirection(sortDirection.direction),
         },
         () => {
           setSortDirection((prev) => {
@@ -94,9 +94,10 @@ const TicketTable = ({
     {
       id: 1,
       name: intl.formatMessage({ id: "label.status" }),
-      options: [], // TODO: need to get this from API
+      options: queryTypesData, // TODO: need to get this from API
     },
-    {// TODO: need to remove below object
+    {
+      // TODO: need to remove below object
       id: 2,
       name: "Access 1",
       options: [
@@ -237,31 +238,30 @@ const TicketTable = ({
 
   return (
     <>
-      {!isError ||
-        (true && (
-          <TableWithSearchAndFilters
-            {...{
-              current,
-              pageSize,
-              searchedValue,
-              handleOnUserSearch,
-              columns,
-              onChangePageSize,
-              onChangeCurrentPage,
-              filtersData,
-              currentFilterStatus,
-              setCurrentFilterStatus,
-            }}
-            isLoading={true || (isSuccess && !isLoading)}
-            // TODO: please remove the dummy data once the data start coming from API
-            data={TICKET_DATA_LIST.slice(startIndex, endIndex)}
-            currentDataLength={TICKET_DATA_LIST.length}
-            optionsIdKey={"id"}
-            optionsNameKey={"name"}
-            onSearch={handleOnFilterApply}
-          />
-        ))}
-      {isError && false && (
+      {!isError && (
+        <TableWithSearchAndFilters
+          {...{
+            current,
+            pageSize,
+            searchedValue,
+            handleOnUserSearch,
+            columns,
+            onChangePageSize,
+            onChangeCurrentPage,
+            filtersData,
+            currentFilterStatus,
+            setCurrentFilterStatus,
+          }}
+          isLoading={isSuccess && !isLoading}
+          // TODO: please remove the dummy data once the data start coming from API
+          data={TICKET_DATA_LIST.slice(startIndex, endIndex)}
+          currentDataLength={TICKET_DATA_LIST.length}
+          optionsIdKey={"id"}
+          optionsNameKey={"name"}
+          onSearch={handleOnFilterApply}
+        />
+      )}
+      {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
             onRetry={handleOnReTry}

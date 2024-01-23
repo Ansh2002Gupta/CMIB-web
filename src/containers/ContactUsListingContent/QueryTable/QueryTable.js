@@ -100,7 +100,7 @@ const QueryTable = ({
         page: current,
         q: searchedValue,
         sort: sortDirection.key,
-        order: toggleSortDirection(sortDirection.direction),
+        sortDirection: toggleSortDirection(sortDirection.direction),
       },
       () => {
         setSortDirection((prev) => {
@@ -112,10 +112,10 @@ const QueryTable = ({
       }
     );
   };
-  
+
   const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkedQueryAsAnweredApi();
-    
+
   const columns = getTicketOrQueryColumn(
     currentActiveTab,
     intl,
