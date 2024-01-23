@@ -3,6 +3,7 @@ import { SETUP_CENTERS } from "../routes/routeNames";
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
+export const SLIDE_BY = 300;
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -233,6 +234,26 @@ export const ROUND_TWO_CARD_LIST = [
     headingIntl: "Campus Interview Settings",
     onClickNaviagtion: SETUP_CENTERS,
   },
+];
+
+export const COMPANY_ROUND_ONE = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Billing Info",
+  "Payment",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
+];
+
+export const COMPANY_ROUND_TWO = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
 ];
 
 export const CITY_CENTERS = [

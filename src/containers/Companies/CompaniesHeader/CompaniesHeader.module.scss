@@ -1,6 +1,6 @@
 .headerContainer {
   padding: var(--paddingMedium);
-  width: 100%;
+  width: var(--fullWidth);
 }
 
 .btnCustomStyles {
@@ -11,7 +11,7 @@
 }
 
 .btnIconStyles {
-  width: 24px !important;
+  width: var(--width_24) !important;
 }
 
 @media screen and (max-width: 1535px) {
@@ -30,7 +30,7 @@
   }
 
   .btnCustomStyles {
-    min-height: 44px;
+    min-height: var(--height_44);
   }
 }
 

@@ -8,9 +8,11 @@ import CircleCheck from "./CircleCheck.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
+import editDark from "./editDark.svg";
 import dummyPerson from "./dummy person image.png";
 import errorIcon from "./error icon.svg";
 import eye from "./eye.svg";
+import eyeHidden from "./eyeHidden.svg"
 import filter from "./filter.svg";
 import g20 from "./G20.svg";
 import gloPac from "./GloPac.svg";
@@ -32,6 +34,7 @@ import unCheckedBox from "./unCheckedBox.svg";
 import uploadIcon from "./Upload icon.svg";
 import addIcon from "./add.png";
 import editIcon from "./edit.png";
+import TempCompanyLogo from './TempCompanyLogo.svg'
 import publicFooter from "./PublicFooter.svg";
 
 const images = {
@@ -46,8 +49,10 @@ const images = {
   DeviceMessage,
   Document,
   edit,
+  editDark,
   errorIcon,
   eye,
+  eyeHidden,
   filter,
   g20,
   gloPac,
@@ -69,6 +74,7 @@ const images = {
   uploadIcon,
   addIcon,
   editIcon,
+  TempCompanyLogo,
   publicFooter,
 };
 
