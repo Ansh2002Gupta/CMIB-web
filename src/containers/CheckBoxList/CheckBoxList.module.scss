@@ -19,6 +19,18 @@
   cursor: pointer;
 }
 
-.isRequired{
+.isRequired {
   color: var(--error);
+}
+
+.text {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.label {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
 }

@@ -126,7 +126,6 @@ const UserDetails = () => {
         profile_photo: null,
         access: userAccountInfo?.role?.map((item) => item?.id) || [],
         roles: userAccountInfo?.roles || [],
-        // permissions: getPermissions(userAccountInfo?.role),
         permissions: userAccountInfo?.permissions,
         date: userAccountInfo?.created_at || "",
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,

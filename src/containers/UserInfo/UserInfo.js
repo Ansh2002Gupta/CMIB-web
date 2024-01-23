@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import moment from "moment/moment";
+import moment from "moment";
 import { DatePicker, Typography, Descriptions, Switch } from "antd";
 
 import Base from "../../core/layouts/Base/Base";

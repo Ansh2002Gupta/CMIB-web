@@ -1,0 +1,7 @@
+.box {
+  display: flex;
+  gap: var(--gapSmall);
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}

@@ -2,13 +2,12 @@ import React, { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import Typography from "antd/es/typography/Typography";
-import { Checkbox } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
+import CustomCheckBox from "../../components/CustomCheckBox";
 import { PERMISION_AND_ROLE } from "../../dummyData";
 import styles from "./CheckBoxList.module.scss";
-import "./override.css";
 
 const CheckBoxList = ({
   selectedControls,
@@ -53,7 +52,7 @@ const CheckBoxList = ({
 
   const getTextWithStar = (text) => {
     return (
-      <Typography>
+      <Typography className={styles.label}>
         {text} <span className={styles.isRequired}>*</span>
       </Typography>
     );
@@ -72,7 +71,7 @@ const CheckBoxList = ({
     <Base className={styles.parentContainer}>
       {getTextWithStar(intl.formatMessage({ id: "label.moduleAccess" }))}
       <div className={styles.container}>
-        <Checkbox
+        <CustomCheckBox
           className={styles.box}
           onChange={() =>
             handleSelectAll(
@@ -83,11 +82,14 @@ const CheckBoxList = ({
           }
           checked={areAllModulesSelected}
         >
-          <Typography>{intl.formatMessage({ id: "label.all" })}</Typography>
-        </Checkbox>
-        {PERMISION_AND_ROLE?.data?.map((item) => {
+          <Typography className={styles.text}>
+            {intl.formatMessage({ id: "label.all" })}
+          </Typography>
+        </CustomCheckBox>
+        {/* TODO: PERMISSION and ROLES Will come from API */}
+        {PERMISION_AND_ROLE?.data?.map((item, index) => {
           return (
-            <Checkbox
+            <CustomCheckBox
               key={item.id}
               className={[styles.box].join(" ")}
               onChange={() =>
@@ -95,8 +97,8 @@ const CheckBoxList = ({
               }
               checked={selectedModules.includes(item.id)}
             >
-              <Typography>{item.name}</Typography>
-            </Checkbox>
+              <Typography className={styles.text}>{item.name}</Typography>
+            </CustomCheckBox>
           );
         })}
       </div>
@@ -106,7 +108,7 @@ const CheckBoxList = ({
             intl.formatMessage({ id: "label.controlAccessHeading" })
           )}
           <div className={styles.container}>
-            <Checkbox
+            <CustomCheckBox
               className={styles.box}
               onChange={() =>
                 handleSelectAll(
@@ -117,11 +119,13 @@ const CheckBoxList = ({
               }
               checked={areAllControlsSelected}
             >
-              <Typography>{intl.formatMessage({ id: "label.all" })}</Typography>
-            </Checkbox>
+              <Typography className={styles.text}>
+                {intl.formatMessage({ id: "label.all" })}
+              </Typography>
+            </CustomCheckBox>
             {PERMISION_AND_ROLE?.data[0]?.permissions?.map((item) => {
               return (
-                <Checkbox
+                <CustomCheckBox
                   key={item.id}
                   className={styles.box}
                   onChange={() =>
@@ -129,8 +133,8 @@ const CheckBoxList = ({
                   }
                   checked={selectedControls.includes(item.id)}
                 >
-                  <Typography>{item.name}</Typography>
-                </Checkbox>
+                  <Typography className={styles.text}>{item.name}</Typography>
+                </CustomCheckBox>
               );
             })}
           </div>

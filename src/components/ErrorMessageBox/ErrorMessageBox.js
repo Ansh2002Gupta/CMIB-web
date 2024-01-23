@@ -6,7 +6,7 @@ import { Button, Typography } from "antd";
 import { ReactComponent as ErrorIcon } from "../../themes/base/assets/images/error icon.svg";
 import styles from "./ErrorMessageBox.module.scss";
 
-const ErrorMessageBox = ({ onRetry, errorText, errorHeading, btnText }) => {
+const ErrorMessageBox = ({ btnText, errorHeading, errorText, onRetry }) => {
   const intl = useIntl();
 
   return (
@@ -51,7 +51,6 @@ ErrorMessageBox.defaultProps = {
   btnText: "",
   errorHeading: "",
   errorText: "",
-  onRetry: null,
 };
 
 ErrorMessageBox.propTypes = {
