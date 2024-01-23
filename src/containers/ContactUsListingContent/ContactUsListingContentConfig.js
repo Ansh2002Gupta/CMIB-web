@@ -1,6 +1,6 @@
 import { Image, Typography } from "antd";
 
-import { SORT_DIRECTIONS, STATUS } from "../../constant/constant";
+import { SORT_VALUES, STATUS } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
 
 const getStatusStyles = (status) => {
@@ -14,7 +14,7 @@ const getStatusStyles = (status) => {
 };
 
 const getArrowStyles = (str) => {
-  if (str === SORT_DIRECTIONS.ASCENDING) {
+  if (str === SORT_VALUES.ASCENDING) {
     return styles.upside;
   }
   return styles.downside;

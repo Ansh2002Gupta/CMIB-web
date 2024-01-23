@@ -39,7 +39,7 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
     id: "label.generalGetApiFailedErrorMessage",
   });
 
-  const fetchData = async (queryParams, onSuccessCallback, onErrorCallBack) => {
+  const fetchData = async ({queryParamsObject, onSuccessCallback, onErrorCallBack}) => {
     let modifiedURL = url;
     if (queryParamsObject && objectToQueryString(queryParamsObject)) {
       modifiedURL = `${url}?${objectToQueryString(queryParamsObject)}`;

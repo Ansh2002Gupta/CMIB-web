@@ -79,7 +79,7 @@ const QueryTable = ({
       page: current,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnFilterApply = () => {
@@ -90,27 +90,27 @@ const QueryTable = ({
       q: searchedValue,
       queryType: currentFilterStatus,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnSort = () => {
-    fetchData(
-      {
+    fetchData({
+      queryParamsObject: {
         perPage: pageSize,
         page: current,
         q: searchedValue,
         sort: sortDirection.key,
         sortDirection: toggleSortDirection(sortDirection.direction),
       },
-      () => {
+      onSuccessCallback: () => {
         setSortDirection((prev) => {
           return {
             ...prev,
             direction: toggleSortDirection(sortDirection.direction),
           };
         });
-      }
-    );
+      },
+    });
   };
 
   const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
@@ -150,7 +150,7 @@ const QueryTable = ({
       page: current,
       q: str,
     };
-    debounceSearch(requestedParams);
+    debounceSearch({ queryParamsObject: requestedParams });
   };
 
   const onChangePageSize = (size) => {
@@ -166,7 +166,7 @@ const QueryTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -180,7 +180,7 @@ const QueryTable = ({
       page: newPageNumber,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnReTry = () => {
@@ -189,7 +189,7 @@ const QueryTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   useEffect(() => {
@@ -208,7 +208,7 @@ const QueryTable = ({
           page: 1,
           q: searchedValue,
         };
-        fetchData(requestedParams);
+        fetchData({ queryParamsObject: requestedParams });
       }
     }
   }, [data?.meta?.total]);
@@ -227,7 +227,7 @@ const QueryTable = ({
       page: current,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
     getAllQueryTypes();
   }, []);
 

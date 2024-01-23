@@ -57,23 +57,23 @@ const TicketTable = ({
     renderColumn,
     sortDirection.direction,
     () =>
-      fetchData(
-        {
+      fetchData({
+        queryParamsObject: {
           perPage: pageSize,
           page: current,
           q: searchedValue,
           sort: sortDirection.key,
           sortDirection: toggleSortDirection(sortDirection.direction),
         },
-        () => {
+        onSuccessCallback: () => {
           setSortDirection((prev) => {
             return {
               ...prev,
               direction: toggleSortDirection(sortDirection.direction),
             };
           });
-        }
-      )
+        },
+      })
   );
   let errorString = error;
   if (typeof error === "object") {
@@ -120,7 +120,7 @@ const TicketTable = ({
       q: searchedValue,
       queryType: currentFilterStatus,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnUserSearch = (str) => {
@@ -140,7 +140,7 @@ const TicketTable = ({
       page: current,
       q: str,
     };
-    debounceSearch(requestedParams);
+    debounceSearch({ queryParamsObject: requestedParams });
   };
 
   const onChangePageSize = (size) => {
@@ -156,7 +156,7 @@ const TicketTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -170,7 +170,7 @@ const TicketTable = ({
       page: newPageNumber,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   useEffect(() => {
@@ -190,7 +190,7 @@ const TicketTable = ({
           page: 1,
           q: searchedValue,
         };
-        fetchData(requestedParams);
+        fetchData({ queryParamsObject: requestedParams });
       }
     }
   }, [data?.meta?.total]);
@@ -209,7 +209,7 @@ const TicketTable = ({
       page: current,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
     getAllQueryTypes();
   }, []);
 
@@ -219,7 +219,7 @@ const TicketTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   useEffect(() => {

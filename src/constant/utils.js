@@ -135,8 +135,8 @@ export const getValidSortByValue = (currentSortByValue) => {
 };
 
 export const toggleSortDirection = (direction) => {
-  if (direction === SO.ASCENDING) {
-    return SORT_DIRECTIONS.DESCENDING;
+  if (direction === SORT_VALUES.ASCENDING) {
+    return SORT_VALUES.DESCENDING;
   }
-  return SORT_DIRECTIONS.ASCENDING;
+  return SORT_VALUES.ASCENDING;
 };
