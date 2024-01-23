@@ -108,6 +108,8 @@ const useRenderColumn = () => {
 
     sortDirection && (columnObject.sortDirection = sortDirection);
 
+    render && (columnObject.render = render);
+
     renderText?.visible &&
       (columnObject.render = (text) => {
         return {

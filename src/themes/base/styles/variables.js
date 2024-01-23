@@ -3,6 +3,7 @@ import { colorPallets } from "../../../constant/colors";
 const variables = {
   // Background colors
   bodyBg: colorPallets.white1,
+  bodyBg2: colorPallets.white2,
   primaryBg: colorPallets.blue1,
   textPrimary: colorPallets.white1,
   blueBg: colorPallets.lightBlue1,
@@ -14,9 +15,11 @@ const variables = {
   uploadBg: colorPallets.white1,
   snow: colorPallets.snow,
   lightGreen: colorPallets.lightGreen,
+  blackBg: colorPallets.black1,
   lightGreenBg: colorPallets.lightGreen,
   lightBlueBg2: colorPallets.skyBlue,
   lightRedBg: colorPallets.lightOrange,
+  chipBg: colorPallets.lightBlue2,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -50,11 +53,13 @@ const variables = {
   radiusLg: "8px",
   radiusXLg: "12px",
   radiusMLg: "16px",
+  radius_18: "18px",
   radiusXXLg: "24px",
 
   // Font-size
   fontSizeExtraSmall: "12px",
   fontSizeSmall: "14px",
+  fontSizeSmallMedium: "15px",
   fontSizeNormal: "16px",
   fontSizeLarge: "18px",
   fontSizeXlarge: "20px",
@@ -81,10 +86,12 @@ const variables = {
   fontWeightBold: 600,
 
   // Widths
+  xSmallWidth: "16px",
   width_20: "20px",
   width_24: "24px",
   width_30: "30px",
   width_32: "32px",
+  width_40: "40px",
   width_48: "48px",
   sidemenuWidth: "74px",
   width_80: "80px",
@@ -94,20 +101,25 @@ const variables = {
   width_200: "200px",
   width_300: "300px",
   width_350: "350px",
+  width_347: "347px",
   width_400: "400px",
   width_500: "500px",
   widthViewPort_35: "35vw",
   widthHalfViewPort: "50vw",
   widthViewPort_65: "65vw",
+  widthFullViewPort: "100vw",
   width_30Per: "30%",
   width_45Per: "45%",
   halfWidth: "50%",
   fullWidth: "100%",
 
   // Heights
+  xSmallHeight: "16px",
   height_20: "20px",
   height_24: "24px",
   height_30: "30px",
+  height_32: "32px",
+  height_40: "40px",
   height_44: "44px",
   minBtnHeight: "45px",
   height_48: "48px",
@@ -120,6 +132,7 @@ const variables = {
   height_400: "400px",
   height_30vh: "30vh",
   height_50vh: "50vh",
+  heightFullViewPort: "100vh",
   halfHeight: "50%",
   fullHeight: "100%",
 
@@ -153,8 +166,10 @@ const variables = {
   paddingXXXSmall: "2px",
   paddingXXSmall: "4px",
   paddingExtraSmall: "8px",
+  padding_9: "9px",
   paddingMediumSmall: "12px",
   paddingSmall: "16px",
+  padding_18: "18px",
   paddingMedium: "24px",
   paddingLarge: "32px",
   paddingXLarge: "40px",
@@ -177,6 +192,8 @@ const variables = {
 
   // margin
   marginSmall: "8px",
+  marginXSmall: "6px",
+  marginXXSmall: "4px",
   marginMedium: "16px",
   marginLarge: "24px",
 

@@ -3,6 +3,7 @@ import * as types from "./types";
 
 const initialState = {
   isGettingUserDetails: false,
+  selectedModuleItem: null,
   userDetails: {},
   errorGettingUserDetails: "",
 };
@@ -19,6 +20,12 @@ const userProfileReducer = (state, action) => {
       return {
         ...state,
         userDetails: { ...state.userDetails, ...action.payload },
+      };
+
+    case types.SET_SELECTED_MODULE_:
+      return {
+        ...state,
+        selectedModuleItem: action.payload,
       };
 
     case types.SET_ERROR_GETTING_USER_DETAILS:
