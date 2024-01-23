@@ -50,6 +50,13 @@ export function getValidPageSize(currentPageSize) {
   return validPageSize;
 }
 
+export function getCurrentActiveTab(currentTabValue, validTabsValueArray) {
+  if (!currentTabValue || !validTabsValueArray.includes(currentTabValue)) {
+    return "1";
+  }
+  return currentTabValue;
+}
+
 export const getAccessibleModules = (useRoles, modules) => {
   const filteredModules = modules?.filter((module) => {
     const hasPermission = useRoles?.some((roleModule) => {
@@ -74,3 +81,33 @@ export const getAccessibleModules = (useRoles, modules) => {
 
   return filteredModules;
 };
+
+export function filterMenuData(modules, menuItems) {
+  const filterdModules = [];
+
+  modules &&
+    modules?.map((item) => {
+      if (
+        item?.subMenu &&
+        filterMenuData(item?.subMenu, menuItems).length > 0
+      ) {
+        filterdModules?.push({
+          key: item?.key,
+          label: item?.label,
+          subMenu: filterMenuData(item?.subMenu, menuItems),
+        });
+      }
+      if (item?.key && menuItems && item?.key in menuItems) {
+        filterdModules?.push({
+          key: item?.key,
+          label: item?.label,
+          children: item?.children?.filter((e) =>
+            menuItems[item?.key]?.items?.find(
+              (findItem) => findItem?.key === e?.label
+            )
+          ),
+        });
+      }
+    });
+  return filterdModules;
+}

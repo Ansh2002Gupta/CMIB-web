@@ -26,3 +26,10 @@ export const resetUserDetails = () => {
     type: types.RESET_USER_DETAILS,
   };
 };
+
+export const setModuleDetails = (payload) => {
+  return {
+    type: types.SET_MODULE_DETAILS,
+    payload,
+  };
+};

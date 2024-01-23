@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: var(--gapMedium);
   padding: var(--paddingMedium);
-  border-radius: var(--radiusXLgMedium);
+  border-radius: var(--radiusMLg);
   border: var(--borderLight);
   background-color: var(--bodyBg);
   flex: 1;
@@ -12,7 +12,7 @@
 
 .nonEditableContainer {
   padding: var(--paddingMedium);
-  border-radius: var(--radiusXLgMedium);
+  border-radius: var(--radiusMLg);
   border: var(--borderLight);
   background-color: var(--bodyBg);
 }
