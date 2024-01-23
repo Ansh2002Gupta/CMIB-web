@@ -255,7 +255,13 @@ export const MODULE_KEYS = {
   OVERSEAS_CHAPTERS_KEY: "overseas-placement",
 };
 
-export const SORT_VALUES={
-  ASCENDING:"asc",
-  DESCENDING:"desc",
-}
+export const SORT_VALUES = {
+  ASCENDING: "asc",
+  DESCENDING: "desc",
+};
+
+export const DEBOUNCE_TIME = 500;
+
+export const SORT_PROPERTIES = {
+  SORT_BY: "sortBy",
+};

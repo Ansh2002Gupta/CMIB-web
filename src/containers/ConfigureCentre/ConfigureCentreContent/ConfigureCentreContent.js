@@ -17,10 +17,16 @@ import {
   CENTER_END_POINT,
   PLACEMENT_ROUTE,
 } from "../../../constant/apiEndpoints";
-import { PAGINATION_PROPERTIES, SORT_VALUES } from "../../../constant/constant";
+import {
+  DEBOUNCE_TIME,
+  PAGINATION_PROPERTIES,
+  SORT_PROPERTIES,
+  SORT_VALUES,
+} from "../../../constant/constant";
 import {
   getValidPageNumber,
   getValidPageSize,
+  getValidSortByValue,
   toggleSorting,
 } from "../../../constant/utils";
 import styles from "./ConfigureCentreContent.module.scss";
@@ -35,7 +41,6 @@ const ConfigureCentreContent = () => {
   const [searchedValue, setSearchedValue] = useState(
     searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
-
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
@@ -43,7 +48,9 @@ const ConfigureCentreContent = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
   const [sortedOrder, setSortedOrder] = useState({
-    sortDirection: SORT_VALUES.ASCENDING,
+    sortDirection: getValidSortByValue(
+      searchParams.get(SORT_PROPERTIES.SORT_BY)
+    ),
     sortKeyName: "center_name",
   });
 
@@ -58,11 +65,10 @@ const ConfigureCentreContent = () => {
       skipApiCallOnMount: true,
     },
   });
-  const debounceSearch = useMemo(() => _.debounce(fetchData, 500), []);
-  let errorString = error;
-  if (typeof error === "object") {
-    errorString = error?.data?.message;
-  }
+  const debounceSearch = useMemo(
+    () => _.debounce(fetchData, DEBOUNCE_TIME),
+    []
+  );
 
   const goToEditCentrePage = (rowData) => {
     navigate(
@@ -89,7 +95,7 @@ const ConfigureCentreContent = () => {
           sort: sortedOrder.sortDirection,
           order: sortedOrder.sortKeyName,
         };
-        fetchData(requestedParams);
+        fetchData({ queryParamsObject: requestedParams });
       },
       (errorMessage) => {
         showNotification(errorMessage, "error");
@@ -112,7 +118,7 @@ const ConfigureCentreContent = () => {
       sort: sortedOrder.sortDirection,
       order: sortedOrder.sortKeyName,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -128,7 +134,7 @@ const ConfigureCentreContent = () => {
       sort: sortedOrder.sortDirection,
       order: sortedOrder.sortKeyName,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnUserSearch = (str) => {
@@ -153,7 +159,7 @@ const ConfigureCentreContent = () => {
       sort: sortedOrder.sortDirection,
       order: sortedOrder.sortKeyName,
     };
-    debounceSearch(requestedParams);
+    debounceSearch({ queryParamsObject: requestedParams });
   };
 
   const handleTryAgain = () => {
@@ -164,7 +170,7 @@ const ConfigureCentreContent = () => {
       sort: sortedOrder.sortDirection,
       order: sortedOrder.sortKeyName,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   let sortArrowStyles = "";
@@ -180,22 +186,30 @@ const ConfigureCentreContent = () => {
         <Typography
           className={styles.columnHeading}
           onClick={() =>
-            fetchData(
-              {
+            fetchData({
+              queryParamsObject: {
                 perPage: pageSize,
                 page: current,
                 keyword: searchedValue,
                 sort: toggleSorting(sortedOrder.sortDirection),
                 order: sortedOrder.sortKeyName,
               },
-              () =>
+              onSuccessCallback: () => {
+                setSearchParams((prevValue) => {
+                  prevValue.set(
+                    SORT_PROPERTIES.SORT_BY,
+                    toggleSorting(sortedOrder.sortDirection)
+                  );
+                  return prevValue;
+                });
                 setSortedOrder((prev) => {
                   return {
                     ...prev,
                     sortDirection: toggleSorting(prev.sortDirection),
                   };
-                })
-            )
+                });
+              },
+            })
           }
         >
           {intl.formatMessage({ id: "label.centreName" })}
@@ -271,7 +285,7 @@ const ConfigureCentreContent = () => {
           sort: sortedOrder.sortDirection,
           order: sortedOrder.sortKeyName,
         };
-        fetchData(requestedParams);
+        fetchData({ queryParamsObject: requestedParams });
       }
     }
   }, [data?.meta?.total]);
@@ -283,19 +297,23 @@ const ConfigureCentreContent = () => {
     const validPageNumber = getValidPageNumber(
       searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE)
     );
+    const validSortByValue = getValidSortByValue(
+      searchParams.get(SORT_PROPERTIES.SORT_BY)
+    );
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, validPageNumber);
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, validPageSize);
+      prev.set(SORT_PROPERTIES.SORT_BY, validSortByValue);
       return prev;
     });
     const requestedParams = {
       perPage: validPageSize,
       page: validPageNumber,
       keyword: searchedValue,
-      sort: sortedOrder.sortDirection,
+      sort: validSortByValue,
       order: sortedOrder.sortKeyName,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   }, []);
 
   useEffect(() => {
@@ -311,7 +329,7 @@ const ConfigureCentreContent = () => {
         <div className={styles.box}>
           <ErrorMessageBox
             onClick={handleTryAgain}
-            errorText={errorString}
+            errorText={error?.data?.message || error}
             errorHeading={intl.formatMessage({ id: "label.error" })}
           />
         </div>

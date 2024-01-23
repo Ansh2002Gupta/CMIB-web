@@ -85,3 +85,14 @@ export const getAccessibleModules = (useRoles, modules) => {
 
   return filteredModules;
 };
+
+export const getValidSortByValue = (currentSortByValue) => {
+  if (
+    currentSortByValue === SORT_VALUES.ASCENDING ||
+    currentSortByValue === SORT_VALUES.DESCENDING
+  ) {
+    return currentSortByValue;
+  }
+
+  return SORT_VALUES.ASCENDING;
+};

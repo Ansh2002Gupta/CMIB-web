@@ -5,7 +5,7 @@ export const objectToQueryString = (requestedParams) => {
   const validParams = _.omitBy(
     requestedParams,
     (v) =>
-      _.isUndefined(v) || // _ is coming from lodash -> import _ from "lodash";
+      _.isUndefined(v) ||
       _.isNull(v) ||
       v === "" ||
       (Array.isArray(v) && v.length === 0)
