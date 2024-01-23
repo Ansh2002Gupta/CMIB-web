@@ -238,7 +238,7 @@ const QueryTable = ({
       {!isError && !isMarkingQueryAsAnswered && (
         <TableWithSearchAndFilters
           {...{
-            current: current,
+            current,
             pageSize,
             searchedValue,
             handleOnUserSearch,

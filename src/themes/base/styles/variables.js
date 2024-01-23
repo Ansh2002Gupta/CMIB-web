@@ -17,7 +17,7 @@ const variables = {
   lightGreen: colorPallets.lightGreen,
   blackBg: colorPallets.black1,
   lightGreenBg: colorPallets.lightGreen,
-  lightBlueBg2: colorPallets.skyBlue,
+  lightBlueBg2: colorPallets.snow,
   lightRedBg: colorPallets.lightOrange,
   orangeBg: colorPallets.orange1,
   blueBg2: colorPallets.blue4,

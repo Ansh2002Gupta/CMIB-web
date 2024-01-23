@@ -33,13 +33,13 @@ const QueryDetails = () => {
   });
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnsered } =
+  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkedQueryAsAnweredApi();
 
   return (
     <>
       {notificationContextHolder}
-      {(isLoading || isMarkingQueryAsAnsered) && <CustomLoader />}
+      {(isLoading || isMarkingQueryAsAnswered) && <CustomLoader />}
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
@@ -49,7 +49,7 @@ const QueryDetails = () => {
           />
         </div>
       )}
-      {isSuccess && !isMarkingQueryAsAnsered && (
+      {isSuccess && !isMarkingQueryAsAnswered && (
         <TwoRow
           topSection={
             <QueryDetailsHeader

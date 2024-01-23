@@ -1,31 +1,35 @@
 .parentContainer .ant-input-disabled,
 .ant-input[disabled] {
   border: 0px;
-  background-color: #fff;
+  background-color: var(--bodyBg, #fff);
   padding-left: 0px;
 }
 
 .UserInfo_input__GyT0y.ant-picker-disabled {
-  background-color: #fff;
-  font-weight: 500 !important;
+  background-color: var(--bodyBg, #fff);
+  font-weight: var(--fontWeightMedium, 500) !important;
   color: rgba(97, 108, 130, 0.4) !important;
 }
 
 .ant-select-selector {
-  min-width: 100%;
+  min-width: var(--fullWidth, 100%);
   border: 0;
 }
 
 .ant-select-customize-input.ant-select-selector {
-  min-height: 48px !important;
+  min-height: var(--height_48, 48px) !important;
 }
 
 .ant-descriptions-item-label {
-  color: var(--On-surface, #616c82) !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
+  color: var(--subHeadingColor, #616c82) !important;
+  font-size: var(--paddingMediumSmall2, 14px) !important;
+  font-weight: var(--fontWeightMedium, 500) !important;
 }
 
 .ant-descriptions-item-content {
-  font-weight: 500 !important;
+  font-weight: var(--fontWeightMedium, 500) !important;
+}
+
+.ant-descriptions .ant-descriptions-row > th {
+  padding-bottom: var(--paddingExtraSmall, 8px);
 }
