@@ -6,7 +6,8 @@
   gap: var(--gapMedium);
   justify-content: center;
   align-items: center;
-  padding: var(--paddingXXLarge);
+  padding: var(--paddingSmall);
+  padding-bottom: var(--paddingExtraSmall);
 }
 
 .innerContainer {
