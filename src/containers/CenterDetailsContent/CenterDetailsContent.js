@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import moment from "moment";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
@@ -16,7 +16,6 @@ import { SETUP_CENTRE_DETAILS } from "../../dummyData";
 import { SESSION, SETUP_CENTERS } from "../../routes/routeNames";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
-import dayjs from "dayjs";
 
 const CenterDetailsContent = ({ isEdit }) => {
   const intl = useIntl();
