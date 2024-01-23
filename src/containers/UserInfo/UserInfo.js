@@ -4,15 +4,13 @@ import moment from "moment";
 import { DatePicker, Typography, Descriptions, Switch } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
+import { TwoRow } from "../../core/layouts";
 
+import CheckBoxList from "../CheckBoxList";
+import Chip from "../../components/Chip/Chip";
 import CustomInput from "../../components/CustomInput";
-import CustomMultiSelect from "../../components/CustomMultiSelect";
-import {
-  ADD_NEW_USER_ACCESS_OPTIONS,
-  ALLOWED_MOBILE_PREFIXES,
-  allAccessIdObject,
-} from "../../constant/constant";
-import { convertStringArrayToObjectOfStringAndIdArray } from "../../constant/utils";
+import useResponsive from "../../core/hooks/useResponsive";
+import { ALLOWED_MOBILE_PREFIXES } from "../../constant/constant";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
@@ -28,56 +26,112 @@ const UserInfo = ({
   mobileNo,
   mobilePrefix,
   name,
+  permissions,
+  roles,
+  setIsAccessValid,
   shouldShowDatePickerOption,
   updateUserData,
-  userAccessErrorMessage,
   userNameErrorMessage,
 }) => {
   const intl = useIntl();
+  const responsive = useResponsive();
 
-  const items = [
+  const getValuesInChips = (arrayOfValues) => {
+    if (arrayOfValues?.length) {
+      return (
+        <div className={styles.chipsContainer}>
+          {arrayOfValues?.map((item) => {
+            return (
+              <Chip
+                bgColor={styles.chipBg}
+                label={item}
+                textColor={styles.chipText}
+              />
+            );
+          })}
+        </div>
+      );
+    }
+
+    return null;
+  };
+
+  const getTextWithIsRequiredStart = (text) => {
+    return (
+      <Typography className={styles.desrciptionText}>
+        {text} <span className={styles.isRequired}>*</span>
+      </Typography>
+    );
+  };
+
+  let items = [
     {
       key: "1",
-      label: `${intl.formatMessage({ id: "label.userName2" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.userName2" })
+      ),
       children: name,
     },
     {
       key: "2",
-      label: `${intl.formatMessage({ id: "label.email" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.email" })
+      ),
       children: email,
     },
     {
       key: "3",
-      label: `${intl.formatMessage({ id: "label.mobileNumber" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.mobileNumber" })
+      ),
+      span: responsive.isMd ? 1 : 2,
       children: `+${mobilePrefix}-${mobileNo}`,
     },
     {
       key: "4",
-      label: `${intl.formatMessage({ id: "label.access" })} *`,
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.moduleAccess" })
+      ),
+      span: 3,
       children:
-        access?.map((item) => item)?.join(",") ||
-        intl.formatMessage({ id: "label.none" }),
+        getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
     },
     {
       key: "5",
-      label: `${intl.formatMessage({ id: "label.dateCreatedOn" })} *`,
-      children: moment(new Date(date)).format("DD/MM/YYYY"),
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.controlAccessHeading" })
+      ),
+      span: 3,
+      children: getValuesInChips(permissions),
     },
     {
       key: "6",
-      label: `${intl.formatMessage({ id: "label.twoFactorAuth" })} *`,
+      label: (
+        <Typography className={styles.desrciptionText}>
+          {intl.formatMessage({ id: "label.dateCreatedOn" })}
+        </Typography>
+      ),
+      children: moment(new Date(date)).format("DD/MM/YYYY"),
+    },
+    {
+      key: "7",
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.twoFactorAuth" })
+      ),
       children: intl.formatMessage({
         id: `label.${is_two_factor ? "on" : "off"}`,
       }),
     },
   ];
 
+  items = items?.filter((val) => val.children);
+
   return (
     <>
       {!isEditable && (
         <div className={styles.nonEditableContainer}>
           <Descriptions
-            className={styles.description}
+            colon={false}
             title={intl.formatMessage({ id: "label.userDetails" })}
             layout="vertical"
             items={items}
@@ -151,39 +205,37 @@ const UserInfo = ({
               />
             </div>
             <div className={styles.spanOverAllColumns}>
-              <CustomMultiSelect
-                optionsArray={ADD_NEW_USER_ACCESS_OPTIONS}
-                selectedOptions={convertStringArrayToObjectOfStringAndIdArray(
-                  access,
-                  allAccessIdObject
-                )}
-                setSelectedOptions={(value) => updateUserData("access", value)}
+              <CheckBoxList
+                {...{ setIsAccessValid }}
+                selectedModules={access}
+                setSelectedModules={(value) => updateUserData("access", value)}
+                selectedControls={permissions}
+                setSelectedControls={(value) =>
+                  updateUserData("permissions", value)
+                }
               />
-              {!!userAccessErrorMessage && (
-                <div>
-                  {" "}
-                  <Typography className={styles.errorText}>
-                    * {intl.formatMessage({ id: "label.notValidUserAccess" })}
-                  </Typography>
-                </div>
-              )}
             </div>
             {shouldShowDatePickerOption && date && (
-              <div className={styles.dateContainer}>
-                <Typography className={styles.accessSelectLabel}>
-                  {intl.formatMessage({ id: "label.dateCreatedOn" })}
-                </Typography>
-                <DatePicker
-                  onChange={(date, dateString) =>
-                    updateUserData("date", dateString)
-                  }
-                  className={[styles.text, styles.input].join(" ")}
-                  defaultValue={moment(new Date(date)).format("DD/MM/YYYY")}
-                  disabled={isDateDisable || !isEditable}
-                  customInputStyles={[styles.text, styles.input].join(" ")}
-                  customLabelStyles={styles.label}
-                />
-              </div>
+              <TwoRow
+                className={styles.dateContainer}
+                topSection={
+                  <Typography className={styles.accessSelectLabel}>
+                    {intl.formatMessage({ id: "label.dateCreatedOn" })}
+                  </Typography>
+                }
+                bottomSection={
+                  <DatePicker
+                    onChange={(date, dateString) =>
+                      updateUserData("date", dateString)
+                    }
+                    className={[styles.text, styles.input].join(" ")}
+                    defaultValue={moment(date).format("YYYY-MM-DD")}
+                    disabled={isDateDisable || !isEditable}
+                    customInputStyles={[styles.text, styles.input].join(" ")}
+                    customLabelStyles={styles.label}
+                  />
+                }
+              />
             )}
             <div className={styles.twoFactorContainer}>
               <Typography className={styles.label}>
@@ -219,9 +271,10 @@ UserInfo.defaultProps = {
   mobileNo: "",
   mobilePrefix: "",
   name: "",
+  permissions: [],
+  setIsAccessValid: () => {},
   shouldShowDatePickerOption: true,
   updateUserData: () => {},
-  userAccessErrorMessage: "",
   userNameErrorMessage: "",
 };
 
@@ -235,9 +288,10 @@ UserInfo.propTypes = {
   mobileNo: PropTypes.string,
   mobilePrefix: PropTypes.string,
   name: PropTypes.string,
+  permissions: PropTypes.array,
+  setIsAccessValid: () => {},
   shouldShowDatePickerOption: PropTypes.bool,
   updateUserData: PropTypes.func,
-  userAccessErrorMessage: PropTypes.string,
   userNameErrorMessage: PropTypes.string,
 };
 

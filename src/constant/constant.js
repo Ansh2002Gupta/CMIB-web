@@ -146,6 +146,7 @@ export const PAGINATION_PROPERTIES = {
 };
 
 //TODO:need to implement it using api
+//TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
   { id: 102, label: "November 2025", value: "November 2025" },
@@ -264,6 +265,8 @@ export const CITY_CENTERS = [
   { id: 105, label: "Banglore", value: "Banglore" },
   { id: 106, label: "Goa", value: "Goa" },
 ];
+
+export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
 

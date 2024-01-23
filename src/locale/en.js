@@ -122,7 +122,7 @@ const locale = {
   "label.onlyJpgAndPngFile":
     "Format not supported, only jpeg and png can be uploaded. Please upload again",
   "label.fileUpto5MB": "Max size allowed is 5 mb, please upload again",
-  "label.editUserDetails": "Edit User Details.",
+  "label.editUserDetails": "Edit User Details",
   "label.twoFactorAuth": "Two factor authentication",
   "label.on": "ON",
   "label.off": "OFF",
@@ -215,6 +215,8 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.controlAccessHeading": " Control Access",
+  "label.moduleAccess": "Module Access",
   "label.appdynamics": "Appdynamics",
   "label.downloadDetails": "Download Details",
   "label.roundOne": "Round 1",

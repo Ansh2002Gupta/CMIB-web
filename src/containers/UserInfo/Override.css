@@ -29,7 +29,3 @@
 .ant-descriptions-item-content {
   font-weight: 500 !important;
 }
-
-.ant-descriptions .ant-descriptions-view table {
-  table-layout: auto;
-}
