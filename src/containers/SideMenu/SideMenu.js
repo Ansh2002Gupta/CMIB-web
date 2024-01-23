@@ -2,37 +2,29 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
-import {
-  ArrowRightOutlined,
-  GlobalOutlined,
-  UpOutlined,
-} from "@ant-design/icons";
+import { ArrowRightOutlined, GlobalOutlined } from "@ant-design/icons";
 
-import { TwoColumn, TwoRow } from "../../core/layouts";
+import { Base, TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
 
-import ModuleList from "./ModuleList";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { DASHBOARD } from "../../routes/routeNames";
-import { setModuleDetails } from "../../globalContext/userProfile/userProfileActions";
 import { filterMenuData } from "../../constant/utils";
+import { DASHBOARD } from "../../routes/routeNames";
 import modules from "./sideMenuItems";
 import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
 import styles from "./sideMenu.module.scss";
 
-const SideMenu = ({ logo }) => {
-  const [userProfileDetails, userProfileDispatch] =
-    useContext(UserProfileContext);
+const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
+  const [userProfileDetails] = useContext(UserProfileContext);
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const intl = useIntl();
   const userData = userProfileDetails?.userDetails;
-  const [openModuleSelector, setOpenModuleSelector] = useState(false);
-  const [selectedModule, setSelectedModule] = useState(modules[0]);
   const [selectedKey, setSelectedKey] = useState();
   const location = useLocation();
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
 
   function updateLabelsForIntl(menuItems, selectedKey) {
     return menuItems?.map((item) => {
@@ -43,7 +35,6 @@ const SideMenu = ({ logo }) => {
       if (item.selectedIcon && item.key === selectedKey) {
         icon = item.selectedIcon;
       }
-
       return {
         ...item,
         label: updatedLabel,
@@ -52,20 +43,10 @@ const SideMenu = ({ logo }) => {
     });
   }
 
-  // TODO: need to create context for it if needed
-  const handleOnSelectItem = (item) => {
-    setSelectedModule(item);
-    setOpenModuleSelector(false);
-    userProfileDispatch(setModuleDetails(item));
-  };
   const handleOnClickMenuItem = ({ key }) => {
     navigate(key);
     setSelectedKey(key);
   };
-
-  useEffect(() => {
-    setSelectedModule(accessibleModules[0]);
-  }, []);
 
   const handleOnClickLogo = () => {
     navigate(DASHBOARD);
@@ -103,60 +84,47 @@ const SideMenu = ({ logo }) => {
               </div>
             </div>
           </div>
-          <TwoRow
-            style={{ overflow: "visible" }}
-            topSection={
-              <TwoRow
-                topSection={
-                  !responsive?.isMd && (
-                    <Typography className={styles.moduleText}>
-                      {intl.formatMessage({ id: "label.module" })}
-                    </Typography>
-                  )
-                }
-                bottomSection={
-                  <TwoColumn
-                    className={styles.moduleSelector}
-                    leftSection={
-                      <div
-                        className={
-                          openModuleSelector ? "" : styles.moduleSelectorHeading
-                        }
-                      >
-                        {openModuleSelector
-                          ? "Choose a module"
-                          : selectedModule?.label}
-                      </div>
-                    }
-                    rightSection={
-                      <Button
-                        size="small"
-                        shape="round"
-                        type="text"
-                        style={{
-                          color: "var(--textPrimary,#fff)",
-                          background: "#262d52",
-                          fontSize: "var(--fontSizeXSmall,12px)",
-                        }}
-                        onClick={() => setOpenModuleSelector((prev) => !prev)}
-                      >
-                        {openModuleSelector ? <UpOutlined /> : "Change"}
-                      </Button>
-                    }
-                  />
-                }
-              />
-            }
-            bottomSection={
-              openModuleSelector && (
-                <ModuleList
-                  modules={accessibleModules}
-                  onSelectItem={handleOnSelectItem}
+          <Base style={{ overflow: "visible" }}>
+            <TwoRow
+              topSection={
+                !responsive?.isMd && (
+                  <Typography className={styles.moduleText}>
+                    {intl.formatMessage({ id: "label.module" })}
+                  </Typography>
+                )
+              }
+              bottomSection={
+                <TwoColumn
+                  className={styles.moduleSelector}
+                  leftSection={
+                    <div className={styles.moduleSelectorHeading}>
+                      {selectedModule?.label}
+                    </div>
+                  }
+                  rightSection={
+                    <Button
+                      size="small"
+                      shape="round"
+                      type="text"
+                      style={{
+                        color: "var(--textPrimary,#fff)",
+                        background: "#262d52",
+                        fontSize: "var(--fontSizeXSmall,12px)",
+                      }}
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        setOpenSideMenu(false);
+                      }}
+                    >
+                      {intl.formatMessage({ id: "label.change" })}
+                    </Button>
+                  }
                 />
-              )
-            }
-          />
-          {!openModuleSelector && selectedModule && (
+              }
+            />
+          </Base>
+
+          {selectedModule && (
             <Menu
               className={styles.sideMenuOptionsContainer}
               theme="dark"

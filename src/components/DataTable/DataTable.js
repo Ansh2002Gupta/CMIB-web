@@ -13,13 +13,13 @@ import "./overrides.css";
 
 const DataTable = ({
   columns,
+  current,
   currentDataLength,
   customContainerStyles,
-  originalData,
-  current,
-  pageSize,
-  onChangePageSize,
   onChangeCurrentPage,
+  onChangePageSize,
+  originalData,
+  pageSize,
 }) => {
   const intl = useIntl();
 
@@ -74,28 +74,24 @@ const DataTable = ({
 
 DataTable.defaultProps = {
   columns: [],
+  current: 1,
   currentDataLength: 0,
   customContainerStyles: "",
+  onChangeCurrentPage: () => {},
+  onChangePageSize: () => {},
   originalData: [],
-  searchedValue: "",
-  paginationApi: () => {},
   pageSize: DEFAULT_PAGE_SIZE,
-  current: 1,
-  handleOnChangePageSize: () => {},
-  handleOnChangeCurrentPage: () => {},
 };
 
 DataTable.propTypes = {
   columns: PropTypes.array,
+  current: PropTypes.number,
   currentDataLength: PropTypes.number,
   customContainerStyles: PropTypes.string,
+  onChangeCurrentPage: PropTypes.func,
+  onChangePageSize: PropTypes.func,
   originalData: PropTypes.array,
-  searchedValue: PropTypes.string,
-  paginationApi: PropTypes.func,
   pageSize: PropTypes.number,
-  current: PropTypes.number,
-  handleOnChangePageSize: PropTypes.func,
-  handleOnChangeCurrentPage: PropTypes.func,
 };
 
 export default DataTable;

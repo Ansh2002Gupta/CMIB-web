@@ -20,6 +20,10 @@ export const STATUS_CODES = {
 
 export const ROW_PER_PAGE_OPTIONS = [
   {
+    value: 2,
+    label: 2,
+  },
+  {
     value: 10,
     label: 10,
   },
@@ -37,7 +41,7 @@ export const ROW_PER_PAGE_OPTIONS = [
   },
 ];
 
-export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
+export const VALID_ROW_PER_OPTIONS = [2, 10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 
@@ -163,8 +167,8 @@ export const SESSION_PERIOD = [
 ];
 
 export const CENTRE_TYPE = [
-  { id: 1, label: "Small Centre", value: "Small Centre" },
-  { id: 2, label: "Big Centre", value: "Big Centre" },
+  { id: 1, label: "Small Centre", value: "small" },
+  { id: 2, label: "Big Centre", value: "big" },
 ];
 
 export const ROUND_ONE_CARD_LIST = [
@@ -312,4 +316,15 @@ export const MENU_KEYS = {
 export const STORAGE_KEYS = {
   AUTH_TOKEN: "authToken",
   USER_DATA: "userData",
+};
+
+export const SORT_VALUES = {
+  ASCENDING: "asc",
+  DESCENDING: "desc",
+};
+
+export const DEBOUNCE_TIME = 500;
+
+export const SORT_PROPERTIES = {
+  SORT_BY: "sortBy",
 };
