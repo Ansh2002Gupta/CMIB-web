@@ -11,6 +11,7 @@ import edit from "./edit.svg";
 import dummyPerson from "./dummy person image.png";
 import errorIcon from "./error icon.svg";
 import eye from "./eye.svg";
+import featuredIcon from "./featured-icon.svg"
 import filter from "./filter.svg";
 import g20 from "./G20.svg";
 import gloPac from "./GloPac.svg";
@@ -48,6 +49,7 @@ const images = {
   edit,
   errorIcon,
   eye,
+  featuredIcon,
   filter,
   g20,
   gloPac,

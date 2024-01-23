@@ -27,6 +27,7 @@ const ProfileDropdown = () => {
           userName={userName}
           userEmail={userEmail}
           userProfile={userProfilePic}
+          setDropdownVisible={setDropdownVisible}
         />
       )}
       trigger={["click"]}

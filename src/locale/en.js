@@ -221,6 +221,7 @@ const locale = {
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
   "label.visitWebsite": "Visit Website",
+  "label.logoutConfirmationMessage" : "Are you sure you want to logout of the portal?"
 };
 
 export default locale;

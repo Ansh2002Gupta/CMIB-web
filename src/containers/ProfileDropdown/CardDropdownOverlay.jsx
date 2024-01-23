@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { Avatar, Space, Card, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
-import useHeader from "../../core/hooks/useHeader";
+import { setShowLogoutModal } from "../../globalContext/userProfile/userProfileActions";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import headerActionItems from "../../constants/headerActionItems";
-
 import styles from "./profileDropdown.module.scss";
 
 export default function CardDropdownOverlay({
   userName,
   userEmail,
   userProfile,
+  setDropdownVisible
 }) {
   const intl = useIntl();
-  const { onLogout } = useHeader();
+  const [, userProfileDispatch] = useContext(UserProfileContext);
+
+  const handleLogoutClick = () => {
+    setDropdownVisible(false)
+    userProfileDispatch(setShowLogoutModal(true));
+  }
 
   return (
     <Card
@@ -45,7 +51,7 @@ export default function CardDropdownOverlay({
           className={styles.logoutBtn}
           type="text"
           icon={<LogoutIcon />}
-          onClick={onLogout}
+          onClick={handleLogoutClick}
         >
           {intl.formatMessage({ id: "label.logout" })}
         </Button>,
