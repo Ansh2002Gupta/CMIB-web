@@ -133,6 +133,8 @@ const CustomInput = ({
         )}
         {type === "inputNumber" && (
           <InputNumber
+            type="number"
+            controls={false}
             className={[styles.inputNumberStyles, customInputNumberStyles]}
             {...{
               value,

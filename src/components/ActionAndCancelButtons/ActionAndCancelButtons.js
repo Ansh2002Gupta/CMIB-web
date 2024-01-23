@@ -32,6 +32,7 @@ const ActionAndCancelButtons = ({
           customStyle={[styles.saveBtn, customActionBtnStyles].join(" ")}
           btnText={actionBtnText}
           onClick={onActionBtnClick}
+          isBtnDisable={isActionBtnDisable}
         />
       }
     />

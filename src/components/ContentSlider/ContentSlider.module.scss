@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.scrollBox::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollBox {
+  display: flex;
+  gap: var(--gapXSmall);
+  overflow-x: auto;
+  width: var(--fullWidth);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.arrow {
+  border-radius: var(--halfWidth);
+  width: var(--width_32);
+  height: var(--height_32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--blackBg);
+  cursor: pointer;
+}
+
+.arrowOutline {
+  color: var(--bodyBg);
+}

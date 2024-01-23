@@ -3,6 +3,7 @@ export const API_VERSION_NUMBER = "v1";
 
 // API end-point role
 export const ADMIN_ROUTE = "admin";
+export const PLACEMENT_ROUTE = "placement-core";
 export const COMPANY_ROUTE = "company";
 
 // API end-points
@@ -15,6 +16,9 @@ export const RESET_ADMIN_PASSWORD = "/reset-password/confirm";
 export const SEND_OTP = "/reset-password/request";
 export const TICKET_LIST = "/tickets";
 export const USERS_END_POINT = "/users";
+export const CENTER_END_POINT = "/centers";
+export const CREATE = "/create";
+export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
 export const VERIFY_OTP = "/otp/verify";
 export const GET_USER_PROFILE_DETAILS = "core/users/permission";
 export const GET_ALL_QUERY_TYPES = "/get-all-query-types";

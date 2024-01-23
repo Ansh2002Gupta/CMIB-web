@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
 import { API_STATUS, STATUS_CODES } from "../../constant/constant";
-import { objectToQueryString } from "../../constant/queryParamHelpers";
+import { objectToQueryString } from "../../Utils/queryParamHelpers";
 
 /** 
  * 1. useFetch will initiate the API call on component mount automatically so that you don't require to use the useEffect hook in your component explicitly just to call the API.
@@ -41,8 +41,8 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
 
   const fetchData = async (queryParams, onSuccessCallback, onErrorCallBack) => {
     let modifiedURL = url;
-    if (queryParams && objectToQueryString(queryParams)) {
-      modifiedURL = `${url}?${objectToQueryString(queryParams)}`;
+    if (queryParamsObject && objectToQueryString(queryParamsObject)) {
+      modifiedURL = `${url}?${objectToQueryString(queryParamsObject)}`;
     }
     try {
       setApiStatus(API_STATUS.LOADING);
