@@ -44,7 +44,7 @@ const QueryDetails = () => {
         <div className={styles.errorContainer}>
           <ErrorMessageBox
             errorText={getErrorMessage(error)}
-            onRetry={fetchData}
+            onRetry={()=>fetchData({})}
             errorHeading={intl.formatMessage({ id: "label.errorOccured" })}
           />
         </div>
