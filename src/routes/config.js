@@ -5,6 +5,7 @@ import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import ContactUsListing from "../views/ContactUsListing";
 import ConfigureCentreView from "../views/ConfigureCentreView";
+import ConfigureInterviewDates from "../views/ConfigureInterviewDates";
 import ConsentMarking from "../views/ConsentMarking";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
@@ -24,6 +25,7 @@ import QueryDetails from "../views/QueryDetails";
 import {
   ADD,
   DASHBOARD,
+  DETAILS,
   SUBSCRIPTIONS,
   LOGIN,
   COMPANIES,
@@ -40,7 +42,6 @@ import {
   SETUP_CENTERS,
   CONSENT_MARKING,
   QUERY_DETAILS,
-  SETUP_CENTERS_DETAILS,
   SETUP_MOCK_INTERVIEW,
 } from "./routeNames";
 
@@ -174,12 +175,16 @@ const config = [
         element: <SetupCenter />,
       },
       {
-        viewPath: SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SETUP_CENTERS + DETAILS,
         element: <SetupCenterDetails />,
       },
       {
         viewPath: SETUP_MOCK_INTERVIEW,
         element: <SetupMockInterview />,
+      },
+      {
+        viewPath: SETUP_MOCK_INTERVIEW + DETAILS,
+        element: <ConfigureInterviewDates />,
       },
       { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
     ],
