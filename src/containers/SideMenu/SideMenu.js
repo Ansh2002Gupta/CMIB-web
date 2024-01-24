@@ -32,8 +32,8 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
         id: `label.menu.${item.label}`,
       });
       let icon = item.icon;
-      if (item?.selectedIcon && item.key === selectedKey) {
-        icon = item?.selectedIcon;
+      if (item?.selectedicon && item.key === selectedKey) {
+        icon = item?.selectedicon;
       }
       return {
         ...item,
