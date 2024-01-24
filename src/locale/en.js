@@ -279,6 +279,7 @@ const locale = {
   "label.companyIciaMessage":
     "We wish to use your company logo in ICAI’s future Promotional materials stating that your company has participated in the Career Ascent programme of ICAI",
   "label.visitWebsite": "Visit Website",
+  "label.logoutConfirmationMessage" : "Are you sure you want to logout of the portal?",
   "label.menu.user-management": "Users",
   "label.menu.bulk-notifications": "Notifications",
   "label.menu.ticket-management": "Tickets",

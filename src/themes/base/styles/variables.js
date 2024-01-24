@@ -20,6 +20,7 @@ const variables = {
   lightGreenBg: colorPallets.lightGreen,
   lightBlueBg2: colorPallets.skyBlue,
   lightRedBg: colorPallets.lightOrange,
+  yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
 
   // Text-colors
@@ -186,6 +187,7 @@ const variables = {
   gapXSmall: "8px",
   gapSmallMedium: "12px",
   gapSmall: "16px",
+  gap_20: "20px",
   gapMedium: "24px",
   gapLarge: "32px",
   gapXLarge: "40px",
