@@ -201,7 +201,7 @@ export const COMPANY_DATA_SOURCE = [
   },
   {
     id: 11,
-    companyName: "Sprinklr",
+    companyName: "Google",
     entity: "Corporate",
     city: "Gurgaon",
     phoneNumber: "+91-1234 5678 21",
@@ -544,3 +544,108 @@ export const SETUP_CENTRE_DETAILS = [
     norm2MinVacancy: "23",
   },
 ];
+
+export const PERMISION_AND_ROLE = {
+  error: false,
+  code: 200,
+  message: "OK",
+  data: [
+    {
+      name: "Control",
+      slug: "control",
+      id: 1,
+      permissions: [
+        {
+          id: 19,
+          name: "User Management",
+          slug: "user-management",
+        },
+        {
+          id: 20,
+          name: "Bulk Notifications",
+          slug: "bulk-notifications",
+        },
+        {
+          id: 21,
+          name: "Ticket Management",
+          slug: "ticket-management",
+        },
+        {
+          id: 22,
+          name: "Query Management",
+          slug: "query-management",
+        },
+        {
+          id: 23,
+          name: "Testimonial Management",
+          slug: "testimonial-management",
+        },
+        {
+          id: 24,
+          name: "Registered Companies",
+          slug: "registered-companies",
+        },
+      ],
+    },
+    {
+      name: "CA-Jobs",
+      slug: "ca-jobs",
+      id: 2,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+    {
+      name: "NQCA-Placement",
+      slug: "nqca-placement",
+      id: 3,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+    {
+      name: "Overseas-Placement",
+      slug: "overseas-placement",
+      id: 4,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+    {
+      name: "Career-Ascent",
+      slug: "career-ascent",
+      id: 5,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+    {
+      name: "Women-Placement",
+      slug: "women-placement",
+      id: 6,
+      permissions: [
+        {
+          id: 25,
+          name: "Access Module",
+          slug: "access-module",
+        },
+      ],
+    },
+  ],
+};

@@ -13,7 +13,15 @@ iframe#webpack-dev-server-client-overlay {
 
 .ant-table-expanded-row-fixed,
 .table-layout {
-  min-height: 50vh;
+  min-height: var(--height_50vh, 50vh);
+}
+
+.ant-table-column-has-sorters {
+  background-color: var(--bodyBg2) !important;
+}
+
+.ant-table-wrapper td.ant-table-column-sort {
+  background-color: var(--bodyBg) !important;
 }
 
 .ant-table-column-has-sorters {

@@ -1,40 +1,61 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import { ArrowRightOutlined, GlobalOutlined } from "@ant-design/icons";
+
+
+import { Base, TwoColumn, TwoRow } from "../../core/layouts";
+import useResponsive from "../../core/hooks/useResponsive";
 
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import useResponsive from "core/hooks/useResponsive";
 import { CORE_ROUTE, GLOBAL_SESSION_LIST } from "../../constant/apiEndpoints";
-import { getAccessibleModules } from "../../constant/utils";
+import { DASHBOARD } from "../../routes/routeNames";
+import { filterMenuData } from "../../constant/utils";
 import modules from "./sideMenuItems";
+import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
 import SideMenuItems from "../SideMenuItems";
 import styles from "./sideMenu.module.scss";
 
-const SideMenu = ({ logo }) => {
-  const intl = useIntl();
-  const { navigateScreen: navigate } = useNavigateScreen();
+const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
+  const [userProfileDetails] = useContext(UserProfileContext);
   const responsive = useResponsive();
-  const [openModuleSelector, setOpenModuleSelector] = useState(false);
+  const { navigateScreen: navigate } = useNavigateScreen();
+  const intl = useIntl();
+  const userData = userProfileDetails?.userDetails;
+  const [selectedKey, setSelectedKey] = useState();
   const [openSessionSelector, setOpenSessionSelector] = useState(false);
-  const [selectedModule, setSelectedModule] = useState(modules[0]);
 
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
   const { data } = useFetch({ url: CORE_ROUTE + GLOBAL_SESSION_LIST });
   const [selectedSession, setSelectedSession] = useState(
     data?.length > 0 ? { key: data[0].id, label: data[0].name } : {}
   );
-  const [userProfileState] = useContext(UserProfileContext);
 
-  // TODO: need to create context for it if needed
-  const handleOnSelectItem = (item) => {
-    setSelectedModule(item);
-    setOpenModuleSelector(false);
-  };
+  const location = useLocation();
+  const accessibleModules = filterMenuData(modules, userData?.menu_items);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
+
+  function updateLabelsForIntl(menuItems, selectedKey) {
+    return menuItems?.map((item) => {
+      const updatedLabel = intl.formatMessage({
+        id: `label.menu.${item.label}`,
+      });
+      let icon = item.icon;
+      if (item.selectedIcon && item.key === selectedKey) {
+        icon = item.selectedIcon;
+      }
+      return {
+        ...item,
+        label: updatedLabel,
+        icon,
+      };
+    });
+  }
 
   const handleOnSelectSession = (item) => {
     setSelectedSession(item);
@@ -44,7 +65,18 @@ const SideMenu = ({ logo }) => {
 
   const handleOnClickMenuItem = ({ key }) => {
     navigate(key);
+    setSelectedKey(key);
   };
+
+  const handleOnClickLogo = () => {
+    navigate(DASHBOARD);
+  };
+
+  useEffect(() => {
+    const pathSegments = location.pathname.split("/");
+    const select = `/${pathSegments[1]}`;
+    setSelectedKey(select);
+  }, [userProfileDetails]);
 
   useEffect(() => {
     if (data) {
@@ -52,14 +84,6 @@ const SideMenu = ({ logo }) => {
       globalSessionDispatch(setGlobalSessionDetails(data[0].id));
     }
   }, [data]);
-  const accessibleModules = getAccessibleModules(
-    userProfileState?.userDetails?.role,
-    modules
-  );
-
-  useEffect(() => {
-    setSelectedModule(accessibleModules[0]);
-  }, [userProfileState]);
 
   return (
     <ConfigProvider
@@ -80,24 +104,72 @@ const SideMenu = ({ logo }) => {
     >
       <div className={styles.sideMenuContainer}>
         <div className={styles.sideMenuTopSection}>
-          <div className={styles.appLogo}>{logo}</div>
-          {!openSessionSelector && (
-            <>
-              <Typography className={styles.sectionHeading}>Module</Typography>
-              <SideMenuItems
-                openSelector={openModuleSelector}
-                setOpenSelector={setOpenModuleSelector}
-                modules={modules}
-                handleOnSelectItem={handleOnSelectItem}
-                selectedItem={selectedModule}
-                sectionName="module"
-              />
-            </>
-          )}
+          <div className={styles.appLogoContainer}>
+            <div className={styles.appLogoBox}>
+              <div onClick={handleOnClickLogo} className={styles.appLogo}>
+                {logo}
+              </div>
+            </div>
+          </div>
+          <Base style={{ overflow: "visible" }}>
+            <TwoRow
+              topSection={
+                !responsive?.isMd && (
+                  <Typography className={styles.moduleText}>
+                    {intl.formatMessage({ id: "label.module" })}
+                  </Typography>
+                )
+              }
+              bottomSection={
+                <TwoColumn
+                  className={styles.moduleSelector}
+                  leftSection={
+                    <div className={styles.moduleSelectorHeading}>
+                      {selectedModule?.label}
+                    </div>
+                  }
+                  rightSection={
+                    <Button
+                      size="small"
+                      shape="round"
+                      type="text"
+                      style={{
+                        color: "var(--textPrimary,#fff)",
+                        background: "#262d52",
+                        fontSize: "var(--fontSizeXSmall,12px)",
+                      }}
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        setOpenSessionSelector(false);
+                        setOpenSideMenu(false);
+                      }}
+                    >
+                      {intl.formatMessage({ id: "label.change" })}
+                    </Button>
+                  }
+                />
+              }
+            />
+          </Base>
 
-          {data && !openModuleSelector && !responsive.isMd && (
+          {selectedModule && (
+            <Menu
+              className={styles.sideMenuOptionsContainer}
+              theme="dark"
+              defaultSelectedKeys={selectedKey}
+              mode="inline"
+              items={updateLabelsForIntl(selectedModule.children, selectedKey)}
+              expandIcon={<></>}
+              openKeys={accessibleModules?.map((module) => module?.key)}
+              onSelect={handleOnClickMenuItem}
+              selectedKeys={selectedKey}
+            />
+          )}
+          {data && !responsive.isMd && (
             <>
-              <Typography className={styles.sectionHeading}>Session</Typography>
+              <Typography className={styles.sectionHeading}>
+                {intl.formatMessage({ id: "label.session" })}
+              </Typography>
               <SideMenuItems
                 openSelector={openSessionSelector}
                 setOpenSelector={setOpenSessionSelector}
@@ -111,42 +183,35 @@ const SideMenu = ({ logo }) => {
               />
             </>
           )}
-
-          {!openSessionSelector && !openModuleSelector && selectedModule && (
-            <Menu
-              className={styles.sideMenuOptionsContainer}
-              theme="dark"
-              defaultSelectedKeys={["1"]}
-              mode="inline"
-              items={selectedModule.children}
-              expandIcon={<></>}
-              openKeys={modules.map((module) => module.key)}
-              onSelect={handleOnClickMenuItem}
-            />
-          )}
         </div>
-        <Space
-          className={styles.sideMenuBottomSection}
-          align="center"
-          direction="horizontal"
-        >
-          <Button
-            styles={{
-              icon: {
-                paddingRight: "var(--sizeXXSmall, 8px)",
-              },
-            }}
-            size="large"
-            type="text"
-            block
-            icon={<GlobalOutlined />}
+        <div>
+          <Space className={styles.imageItemLogo}>
+            <CaIndiaLogo />
+          </Space>
+          <Space
+            className={styles.sideMenuBottomSection}
+            align="center"
+            direction="horizontal"
           >
-            <Typography.Text className={styles.visitText}>
-              {intl.formatMessage({ id: "label.visitWebsite" })}
-            </Typography.Text>
-          </Button>
-          <ArrowRightOutlined />
-        </Space>
+            <Button
+              className={styles.visitContainer}
+              styles={{
+                icon: {
+                  paddingRight: "var(--sizeXXSmall, 8px)",
+                },
+              }}
+              size="large"
+              type="text"
+              block
+              icon={<GlobalOutlined className={styles.globeIcon} />}
+            >
+              <Typography.Text className={styles.visitText}>
+                {intl.formatMessage({ id: "label.visitWebsite" })}
+              </Typography.Text>
+            </Button>
+            <ArrowRightOutlined />
+          </Space>
+        </div>
       </div>
     </ConfigProvider>
   );
