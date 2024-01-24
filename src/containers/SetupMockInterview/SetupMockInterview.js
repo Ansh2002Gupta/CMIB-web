@@ -5,16 +5,17 @@ import { ThemeContext } from "core/providers/theme";
 
 import { TwoRow } from "../../core/layouts";
 
+import DataTable from "../../components/DataTable/DataTable";
+import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import getSetupMockColumn from "./SetupMockInterviewConfig";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
 import { MOCK_INTERVIEW } from "../../dummyData";
-import DataTable from "../../components/DataTable/DataTable";
-import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
-import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { classes } from "./SetupMockInterview.styles";
 import styles from "./SetupMockInterview.module.scss";
 
@@ -58,47 +59,7 @@ const SetupMockInterviewContent = () => {
     updateTableData(newPageNumber, pageSize);
   };
 
-  const columns = [
-    renderColumn({
-      title: intl.formatMessage({ id: "label.sNo" }),
-      dataIndex: "sNo",
-      key: "sNo",
-      renderText: {
-        visible: true,
-        includeDotAfterText: true,
-        textStyles: styles.textStyles,
-      },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.centreName" }),
-      dataIndex: "centreName",
-      key: "centreName",
-      renderText: { isTextBold: true, visible: true },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.totalStudentsBooked" }),
-      dataIndex: "totalStudentBooked",
-      key: "totalStudentBooked",
-      renderText: { visible: true, textStyles: styles.studentStyles },
-    }),
-
-    renderColumn({
-      title: intl.formatMessage({ id: "label.actions" }),
-      dataIndex: "actions",
-      key: "actions",
-      renderTwoImage: {
-        leftAlt: "download",
-        rightAlt: "edit",
-        leftOnClick: (rowData) => console.log(rowData),
-        rightOnClick: (rowData) => console.log(rowData),
-        leftPreview: false,
-        rightPreview: false,
-        leftSrc: getImage("download"),
-        rightSrc: getImage("edit"),
-        visible: true,
-      },
-    }),
-  ];
+  const columns = getSetupMockColumn(intl, getImage, renderColumn);
 
   useEffect(() => {
     const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
@@ -118,8 +79,9 @@ const SetupMockInterviewContent = () => {
         prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
         return prev;
       });
+      setCurrent(1);
       startIndex = 0;
-      endIndex = DEFAULT_PAGE_SIZE;
+      endIndex = currentPagePerRow;
     }
 
     if (
@@ -130,7 +92,7 @@ const SetupMockInterviewContent = () => {
         prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
         return prev;
       });
-      startIndex = 0;
+      startIndex = currentPage;
       endIndex = DEFAULT_PAGE_SIZE;
     }
 

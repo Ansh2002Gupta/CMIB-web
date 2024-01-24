@@ -44,6 +44,11 @@
 
 .twoImageStyle {
   gap: var(--gapMedium);
+  background-color: red;
+  max-width: 100px;
+  display: flex;
+  width: 100%;
+  flex: 1;
 }
 
 .isRequiredStar {
