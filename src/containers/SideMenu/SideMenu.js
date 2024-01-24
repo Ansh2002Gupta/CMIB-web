@@ -4,7 +4,6 @@ import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import { ArrowRightOutlined, GlobalOutlined } from "@ant-design/icons";
 
-
 import { Base, TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
 
