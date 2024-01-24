@@ -9,6 +9,7 @@ export const colorPallets = {
   greyBlue: "#FCFCFD",
   skyBlue: "#E8FCFF",
   darkBlue2: "#0099CA",
+  darkBlue3: "#262d52",
 
   // Red color shades
   red1: "#D93400",
