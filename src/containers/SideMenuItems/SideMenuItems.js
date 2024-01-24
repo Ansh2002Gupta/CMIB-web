@@ -1,9 +1,11 @@
 import React from "react";
-import { Button } from "antd";
+import { useIntl } from "react-intl";
 import { UpOutlined } from "@ant-design/icons";
 
 import TwoRow from "../../core/layouts/TwoRow";
 import TwoColumn from "../../core/layouts/TwoColumn";
+
+import SideMenuButton from "../../components/SideMenuButton/SideMenuButton";
 import ModuleList from "../SideMenu/ModuleList";
 import styles from "./SideMenuItems.module.scss";
 
@@ -13,8 +15,10 @@ const SideMenuItems = ({
   modules,
   handleOnSelectItem,
   selectedItem,
-  sectionName
+  sectionName,
 }) => {
+  const intl = useIntl();
+
   return (
     <TwoRow
       style={{ overflow: "visible" }}
@@ -27,19 +31,16 @@ const SideMenuItems = ({
             </div>
           }
           rightSection={
-            <Button
-              size="small"
-              shape="round"
-              type="text"
-              style={{
-                color: "var(--textPrimary,#fff)",
-                background: "#262d52",
-                fontSize: "var(--fontSizeXSmall,12px)",
-              }}
-              onClick={() => setOpenSelector((prev) => !prev)}
-            >
-              {openSelector ? <UpOutlined /> : "Change"}
-            </Button>
+            <SideMenuButton
+              onBtnClick={() => setOpenSelector((prev) => !prev)}
+              btnText={
+                openSelector ? (
+                  <UpOutlined />
+                ) : (
+                  intl.formatMessage({ id: "label.change" })
+                )
+              }
+            />
           }
         />
       }

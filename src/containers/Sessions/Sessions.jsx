@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DownOutlined } from "@ant-design/icons";
+import { useIntl } from "react-intl";
 import { Button, Dropdown, Menu, Typography } from "antd";
 
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
@@ -9,6 +10,7 @@ import { CORE_ROUTE, GLOBAL_SESSION_LIST } from "../../constant/apiEndpoints";
 import styles from "./sessions.module.scss";
 
 function Sessions() {
+  const intl = useIntl();
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
   const { data } = useFetch({ url: CORE_ROUTE + GLOBAL_SESSION_LIST });
 
@@ -38,8 +40,11 @@ function Sessions() {
         data?.map((item) => (
           <Menu.Item
             key={+item.id}
-            className={styles.customDropdownItem}
-            style={{ fontWeight: selectedKey === +item.id ? "500" : "inherit" }}
+            className={`${styles.customDropdownItem} ${
+              selectedKey === +item.id
+                ? styles.menuItemFontWeightBold
+                : styles.menuItemFontWeightNormal
+            }`}
           >
             <span className={styles.menuItemText}>{item.name}</span>
           </Menu.Item>
@@ -55,7 +60,10 @@ function Sessions() {
       overlayClassName={styles.customDropdownMenu}
     >
       <Button shape="round" size="middle">
-        <Typography.Text> Session: </Typography.Text> &nbsp;
+        <Typography.Text>
+          {intl.formatMessage({ id: "label.sessionPrefix" })}
+        </Typography.Text>{" "}
+        &nbsp;
         <Typography.Text strong>
           {data?.find((item) => item.id === selectedKey)?.name}
         </Typography.Text>

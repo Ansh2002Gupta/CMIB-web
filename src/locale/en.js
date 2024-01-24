@@ -309,6 +309,7 @@ const locale = {
   "label.experiencedMember": "Experienced Member",
   "label.change": "Change",
   "label.chooseModule": "Choose a module",
+  "label.sessionPrefix": "Session:"
 };
 
 export default locale;

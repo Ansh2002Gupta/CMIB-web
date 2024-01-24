@@ -7,6 +7,7 @@ import { ArrowRightOutlined, GlobalOutlined } from "@ant-design/icons";
 import { Base, TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
 
+import SideMenuButton from "../../components/SideMenuButton";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -30,7 +31,12 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   const [openSessionSelector, setOpenSessionSelector] = useState(false);
 
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
-  const { data } = useFetch({ url: CORE_ROUTE + GLOBAL_SESSION_LIST });
+  const { data, fetchData } = useFetch({
+    url: CORE_ROUTE + GLOBAL_SESSION_LIST,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
   const [selectedSession, setSelectedSession] = useState(
     data?.length > 0 ? { key: data[0].id, label: data[0].name } : {}
   );
@@ -58,7 +64,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
 
   const handleOnSelectSession = (item) => {
     setSelectedSession(item);
-    globalSessionDispatch(setGlobalSessionDetails(+item.id));
+    globalSessionDispatch(setGlobalSessionDetails(+item.key));
     setOpenSessionSelector(false);
   };
 
@@ -83,6 +89,12 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
       globalSessionDispatch(setGlobalSessionDetails(data[0].id));
     }
   }, [data]);
+
+  useEffect(() => {
+    if (!responsive.isMd && !data) {
+      fetchData({});
+    }
+  }, [openSessionSelector]);
 
   return (
     <ConfigProvider
@@ -128,23 +140,14 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                     </div>
                   }
                   rightSection={
-                    <Button
-                      size="small"
-                      shape="round"
-                      type="text"
-                      style={{
-                        color: "var(--textPrimary,#fff)",
-                        background: "#262d52",
-                        fontSize: "var(--fontSizeXSmall,12px)",
-                      }}
-                      onClick={() => {
+                    <SideMenuButton
+                      onBtnClick={() => {
                         setIsModalOpen(true);
                         setOpenSessionSelector(false);
                         setOpenSideMenu(false);
                       }}
-                    >
-                      {intl.formatMessage({ id: "label.change" })}
-                    </Button>
+                      btnText={intl.formatMessage({ id: "label.change" })}
+                    />
                   }
                 />
               }
@@ -165,22 +168,26 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
             />
           )}
           {data && !responsive.isMd && (
-            <>
-              <Typography className={styles.sectionHeading}>
-                {intl.formatMessage({ id: "label.session" })}
-              </Typography>
-              <SideMenuItems
-                openSelector={openSessionSelector}
-                setOpenSelector={setOpenSessionSelector}
-                modules={data?.map((item) => ({
-                  key: item.id,
-                  label: item.name,
-                }))}
-                handleOnSelectItem={handleOnSelectSession}
-                selectedItem={selectedSession}
-                sectionName="session"
-              />
-            </>
+            <TwoRow
+              topSection={
+                <Typography className={styles.sectionHeading}>
+                  {intl.formatMessage({ id: "label.session" })}
+                </Typography>
+              }
+              bottomSection={
+                <SideMenuItems
+                  openSelector={openSessionSelector}
+                  setOpenSelector={setOpenSessionSelector}
+                  modules={data?.map((item) => ({
+                    key: item.id,
+                    label: item.name,
+                  }))}
+                  handleOnSelectItem={handleOnSelectSession}
+                  selectedItem={selectedSession}
+                  sectionName="session"
+                />
+              }
+            />
           )}
         </div>
         <div>
