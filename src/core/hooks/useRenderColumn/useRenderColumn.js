@@ -191,29 +191,34 @@ const useRenderColumn = () => {
 
     renderTwoImage.visible &&
       (columnObject.render = (_, rowData) => {
-        return (
-          <TwoColumn
-            className={`${customTwoImageStyle} ${styles.twoImageStyle}`}
-            leftSection={
-              <Image
-                alt={leftAlt}
-                src={leftSrc}
-                preview={leftPreview}
-                className={`${leftCustomImageStyle} ${styles.editIcon}`}
-                onClick={leftOnClick ? () => leftOnClick(rowData) : () => {}}
-              />
-            }
-            rightSection={
-              <Image
-                alt={rightAlt}
-                src={rightSrc}
-                preview={rightPreview}
-                className={`${rightCustomImageStyle} ${styles.editIcon}`}
-                onClick={rightOnClick ? () => rightOnClick(rowData) : () => {}}
-              />
-            }
-          />
-        );
+        return {
+          props: { className: styles.twoImageContainer },
+          children: (
+            <TwoColumn
+              className={`${customTwoImageStyle} ${styles.twoImageStyle}`}
+              leftSection={
+                <Image
+                  alt={leftAlt}
+                  src={leftSrc}
+                  preview={leftPreview}
+                  className={`${leftCustomImageStyle} ${styles.editIcon}`}
+                  onClick={leftOnClick ? () => leftOnClick(rowData) : () => {}}
+                />
+              }
+              rightSection={
+                <Image
+                  alt={rightAlt}
+                  src={rightSrc}
+                  preview={rightPreview}
+                  className={`${rightCustomImageStyle} ${styles.editIcon}`}
+                  onClick={
+                    rightOnClick ? () => rightOnClick(rowData) : () => {}
+                  }
+                />
+              }
+            />
+          ),
+        };
       });
 
     render && (columnObject.render = render); // correct this
