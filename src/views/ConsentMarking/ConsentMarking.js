@@ -10,7 +10,6 @@ import styles from "./ConsentMarking.module.scss";
 const ConsentMarking = () => {
   const intl = useIntl();
   const isEdit = true;
-
   return (
     <TwoRow
       className={styles.mainContainer}

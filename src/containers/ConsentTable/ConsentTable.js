@@ -29,13 +29,12 @@ const ConsentTable = ({
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
 
-  const updateTableData =
-    (totalData, setTableData) => (currentPageNumber, currentPageSize) => {
-      const startIndex = (currentPageNumber - 1) * currentPageSize;
-      const endIndex = currentPageNumber * currentPageSize;
-      const updatedData = totalData.slice(startIndex, endIndex);
-      setTableData(updatedData);
-    };
+  const updateTableData = (currentPageNumber, currentPageSize) => {
+    const startIndex = (currentPageNumber - 1) * currentPageSize;
+    const endIndex = currentPageNumber * currentPageSize;
+    const updatedData = totalData.slice(startIndex, endIndex);
+    setTableData(updatedData);
+  };
 
   const onDateChange = (record, key, value) => {
     const index = tableData.findIndex((item) => item.sNo === record.sNo);
@@ -72,6 +71,10 @@ const ConsentTable = ({
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
     const availablePage = Math.ceil(totalData.length / currentPagePerRow);
+
+    let startIndex = (currentPage - 1) * currentPagePerRow;
+    let endIndex = currentPage * currentPagePerRow;
+
     if (
       !currentPage ||
       isNaN(currentPage) ||
@@ -82,6 +85,8 @@ const ConsentTable = ({
         prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
         return prev;
       });
+      startIndex = 0;
+      endIndex = DEFAULT_PAGE_SIZE;
     }
 
     if (
@@ -92,21 +97,12 @@ const ConsentTable = ({
         prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, DEFAULT_PAGE_SIZE);
         return prev;
       });
+      startIndex = 0;
+      endIndex = DEFAULT_PAGE_SIZE;
     }
-  }, []);
-
-  useEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
-      PAGINATION_PROPERTIES.ROW_PER_PAGE
-    );
-    const availablePage = Math.ceil(totalData.length / currentPagePerRow);
-    const startIndex =
-      availablePage >= currentPage ? (currentPage - 1) * currentPagePerRow : 0;
-    const endIndex = currentPage * currentPagePerRow;
     const updatedData = totalData.slice(startIndex, endIndex);
     setTableData(updatedData);
-  }, [current, pageSize, activeTab]);
+  }, [activeTab]);
 
   return (
     <DataTable

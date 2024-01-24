@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useCallback, useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -11,11 +12,18 @@ import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
+import { getCurrentActiveTab } from "../../constant/utils";
+import { ACTIVE_TAB } from "../../constant/constant";
 import {
   CONSENT_MARKING_REGESTRATION_DETAILS,
   LAST_MARKING_REGESTRATION_DETAILS,
   REGISTRATION_DATES,
 } from "../../dummyData";
+import {
+  DEFAULT_PAGE_SIZE,
+  PAGINATION_PROPERTIES,
+  VALID_CONSENT_MARKING_TABS_ID,
+} from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./ConsentMarkingContent.styles";
@@ -24,12 +32,18 @@ import styles from "./ConsentMarkingContent.module.scss";
 const ConsentMarkingContent = ({ isEdit }) => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [activeTab, setActiveTab] = useState("1");
+  const [activeTab, setActiveTab] = useState(
+    getCurrentActiveTab(
+      searchParams.get(ACTIVE_TAB),
+      VALID_CONSENT_MARKING_TABS_ID
+    )
+  );
   const [registrationDatesData, setRegistrationDatesData] =
     useState(REGISTRATION_DATES);
-  const initialData = useMemo(() => {
-    return CONSENT_MARKING_REGESTRATION_DETAILS.map((item) => ({
+  const round1InitialData = CONSENT_MARKING_REGESTRATION_DETAILS.map(
+    (item) => ({
       ...item,
       sNo: item.sNo,
       centreName: item.centreName,
@@ -41,11 +55,11 @@ const ConsentMarkingContent = ({ isEdit }) => {
         ? dayjs(item.consentFromDate)
         : null,
       consentToDate: item.consentToDate ? dayjs(item.consentToDate) : null,
-    }));
-  }, []);
+    })
+  );
 
-  const registrationInitialData = useMemo(() => {
-    return LAST_MARKING_REGESTRATION_DETAILS.map((item) => ({
+  const registrationInitialData = LAST_MARKING_REGESTRATION_DETAILS.map(
+    (item) => ({
       ...item,
       sNo: item.sNo,
       centreName: item.centreName,
@@ -55,10 +69,10 @@ const ConsentMarkingContent = ({ isEdit }) => {
       psychometricTestDate: item.psychometricTestDate
         ? dayjs(item.psychometricTestDate)
         : null,
-    }));
-  }, []);
+    })
+  );
 
-  const [tableData, setTableData] = useState(initialData);
+  const [tableData, setTableData] = useState(round1InitialData);
   const [registrationTableData, setRegistrationTableData] = useState(
     registrationInitialData
   );
@@ -70,47 +84,37 @@ const ConsentMarkingContent = ({ isEdit }) => {
     { id: 4, labeIntl: "lastDateSmallCentres" },
   ];
 
-  const tabItems = useMemo(
-    () => [
-      {
-        key: "1",
-        title: intl.formatMessage({ id: "session.roundOne" }),
-        children: (
-          <ConsentTable
-            {...{ activeTab, isEdit, tableData, setTableData }}
-            totalData={initialData}
-          />
-        ),
-      },
-      {
-        key: "2",
-        title: intl.formatMessage({ id: "session.roundTwo" }),
-        children: <>Round2</>,
-      },
-      {
-        key: "3",
-        title: intl.formatMessage({
-          id: "session.lastDateRegistrationCompanies",
-        }),
-        children: (
-          <ConsentTable
-            {...{ activeTab, isEdit, registration: true }}
-            tableData={registrationTableData}
-            setTableData={setRegistrationTableData}
-            totalData={registrationInitialData}
-          />
-        ),
-      },
-    ],
-    [
-      intl,
-      isEdit,
-      tableData,
-      setTableData,
-      registrationTableData,
-      setRegistrationTableData,
-    ]
-  );
+  const tabItems = [
+    {
+      key: "1",
+      title: intl.formatMessage({ id: "session.roundOne" }),
+      children: (
+        <ConsentTable
+          {...{ activeTab, isEdit, tableData, setTableData }}
+          totalData={round1InitialData}
+        />
+      ),
+    },
+    {
+      key: "2",
+      title: intl.formatMessage({ id: "session.roundTwo" }),
+      children: <>Round2</>,
+    },
+    {
+      key: "3",
+      title: intl.formatMessage({
+        id: "session.lastDateRegistrationCompanies",
+      }),
+      children: (
+        <ConsentTable
+          {...{ activeTab, isEdit, registration: true }}
+          tableData={registrationTableData}
+          setTableData={setRegistrationTableData}
+          totalData={registrationInitialData}
+        />
+      ),
+    },
+  ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
   const handleInputChange = (value, name) => {
@@ -127,6 +131,45 @@ const ConsentMarkingContent = ({ isEdit }) => {
   const handleSave = () => {
     navigate(`${SESSION}?tab=2`);
   };
+
+  const setPageSizeAndNumberToDefault = () => {
+    setSearchParams((prev) => {
+      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
+      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
+      return prev;
+    });
+  };
+
+  const setTableToDefault = () => {
+    const startIndex = 0;
+    const endIndex = DEFAULT_PAGE_SIZE;
+    const round1UpdatedData = round1InitialData.slice(startIndex, endIndex);
+    setTableData(round1UpdatedData);
+    const registrationUpdatedData = registrationInitialData.slice(
+      startIndex,
+      endIndex
+    );
+    registrationTableData(registrationUpdatedData);
+  };
+
+  const handleOnTabSwitch = useCallback((tabId) => {
+    setActiveTab(tabId);
+    setPageSizeAndNumberToDefault();
+    setTableToDefault();
+  }, []);
+
+  useEffect(() => {
+    const activeTab = searchParams.get(ACTIVE_TAB);
+    if (!VALID_CONSENT_MARKING_TABS_ID.includes(activeTab)) {
+      setSearchParams((prev) => {
+        prev.set(ACTIVE_TAB, 1);
+        return prev;
+      });
+    }
+  }, []);
+
+  console.log(tableData, "tableData");
+  console.log(registrationTableData, "registrationTableData");
 
   return (
     <ThreeRow
@@ -172,7 +215,8 @@ const ConsentMarkingContent = ({ isEdit }) => {
             <CustomTabs
               tabs={tabItems}
               activeTab={activeTab}
-              setActiveTab={setActiveTab}
+              setActiveTab={handleOnTabSwitch}
+              tabsKeyText={ACTIVE_TAB}
             />
           }
           topSectionStyle={classes.tabTopSectionStyle}

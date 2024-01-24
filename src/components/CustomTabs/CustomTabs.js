@@ -1,21 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Typography } from "antd";
 
-import {
-  PAGINATION_PROPERTIES,
-  DEFAULT_PAGE_SIZE,
-} from "../../constant/constant";
 import styles from "./CustomTabs.module.scss";
 
-const CustomTabs = ({
-  activeTab,
-  setActiveTab,
-  tabs,
-  tabsKeyText,
-}) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+const CustomTabs = ({ activeTab, setActiveTab, tabs, tabsKeyText }) => {
+  const [, setSearchParams] = useSearchParams();
 
   const tabClass = (tabKey) => {
     let classes = `${styles.tab}`;
@@ -24,11 +15,6 @@ const CustomTabs = ({
   };
 
   const handleSelectTab = (tabName) => {
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, DEFAULT_PAGE_SIZE);
-      return prev;
-    });
     setActiveTab(tabName);
     setSearchParams((params) => {
       params.set(tabsKeyText, tabName);
