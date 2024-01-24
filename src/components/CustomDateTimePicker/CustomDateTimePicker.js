@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { Typography, TimePicker, DatePicker } from "antd";
+import { DatePicker, Image, TimePicker, Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
+import { ThemeContext } from "core/providers/theme";
 
+import { formatDate } from "../../constant/utils";
 import styles from "./CustomDateTimePicker.module.scss";
 
 const CustomDateTimePicker = ({
@@ -16,6 +18,7 @@ const CustomDateTimePicker = ({
   disabled,
   errorMessage,
   format,
+  isEditable,
   isRequired,
   label,
   onChange,
@@ -23,16 +26,18 @@ const CustomDateTimePicker = ({
   type,
   value,
 }) => {
+  const { getImage } = useContext(ThemeContext);
+
   return (
     <TwoRow
       className={[styles.container, customContainerStyles].join(" ")}
       topSection={
         label && (
           <div className={styles.inputLabelContainer}>
-            <Typography className={customLabelStyles}>{label}</Typography>
-            {isRequired && (
-              <Typography className={styles.isRequiredStar}>*</Typography>
-            )}
+            <Typography className={customLabelStyles}>
+              {label}
+              {isRequired && <span className={styles.isRequiredStar}> *</span>}
+            </Typography>
           </div>
         )
       }
@@ -47,15 +52,21 @@ const CustomDateTimePicker = ({
                   onChange,
                   placeholder,
                   disabled,
+                  value,
                 }}
                 className={[styles.timeInput, customTimeStyle]}
               />
-            ) : (
+            ) : isEditable ? (
               <DatePicker
-                {...{ value, defaultValue, onChange, placeholder, disabled }}
+                {...{ defaultValue, onChange, placeholder, disabled, value }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle]}
+                suffixIcon={<Image src={getImage("calendar")} />}
               />
+            ) : (
+              <Typography className={styles.dateText}>
+                {formatDate(value)}
+              </Typography>
             )
           }
           bottomSection={
@@ -79,16 +90,17 @@ CustomDateTimePicker.defaultProps = {
   customLabelStyles: "",
   customTimeStyle: "",
   dateFormat: "DD/MM/YYYY",
-  defaultValue: "",
+  defaultValue: null,
   disabled: false,
   errorMessage: "",
   format: "h:mm a",
+  isEditable: true,
   isRequired: false,
   label: "",
   onChange: () => {},
   placeholder: "",
   type: "time",
-  value: {},
+  value: null,
 };
 
 CustomDateTimePicker.propTypes = {
@@ -101,6 +113,7 @@ CustomDateTimePicker.propTypes = {
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   format: PropTypes.string,
+  isEditable: PropTypes.bool,
   isRequired: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
