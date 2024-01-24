@@ -1,10 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
 import { DatePicker, Image, Select, Switch, Typography } from "antd";
 
 import { TwoRow, TwoColumn } from "../../core/layouts";
+import { ThemeContext } from "core/providers/theme";
 import useResponsive from "core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton";
@@ -149,6 +150,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             placeholder={intl.formatMessage({
                               id: `session.placeholder.${item.headingIntl}`,
                             })}
+                            value={dayjs(item.value)}
                           />
                         ) : item.id === 4 ? (
                           //TODO:Replace this component with common component of custom input which contains multiselect

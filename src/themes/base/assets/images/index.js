@@ -5,6 +5,7 @@ import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
+import calendar from "./calendar.svg";
 import CircleCheck from "./CircleCheck.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
@@ -56,6 +57,7 @@ const images = {
   Building,
   checkedBox,
   download,
+  calendar,
   dummyPerson,
   CircleCheck,
   DeviceMessage,

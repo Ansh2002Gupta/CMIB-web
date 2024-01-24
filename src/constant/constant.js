@@ -1,4 +1,8 @@
-import { SETUP_CENTERS, SETUP_MOCK_INTERVIEW } from "../routes/routeNames";
+import {
+  CONSENT_MARKING,
+  SETUP_CENTERS,
+  SETUP_MOCK_INTERVIEW,
+} from "../routes/routeNames";
 
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
@@ -44,6 +48,7 @@ export const ROW_PER_PAGE_OPTIONS = [
 export const VALID_ROW_PER_OPTIONS = [2, 10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
+export const VALID_CONSENT_MARKING_TABS_ID = ["1", "2", "3"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
@@ -202,7 +207,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: CONSENT_MARKING,
   },
   {
     id: 5,
@@ -229,7 +234,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: CONSENT_MARKING,
   },
   {
     id: 3,

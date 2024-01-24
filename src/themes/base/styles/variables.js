@@ -15,6 +15,7 @@ const variables = {
   uploadBg: colorPallets.white1,
   snow: colorPallets.snow,
   lightGreen: colorPallets.lightGreen,
+  greyBlue: colorPallets.greyBlue,
   blackBg: colorPallets.black1,
   lightGreenBg: colorPallets.lightGreen,
   lightBlueBg2: colorPallets.skyBlue,

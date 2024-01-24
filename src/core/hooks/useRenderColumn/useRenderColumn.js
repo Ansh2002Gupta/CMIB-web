@@ -1,6 +1,8 @@
 import moment from "moment";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch } from "antd";
+
+import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 import { TwoColumn } from "../../layouts";
@@ -11,7 +13,9 @@ const useRenderColumn = () => {
   const renderColumn = ({
     dataIndex,
     defaultSortOrder,
+    isRequiredField,
     key,
+    renderDateTime = {},
     render,
     renderImage = {},
     renderMenu = {},
@@ -26,6 +30,18 @@ const useRenderColumn = () => {
     title,
   }) => {
     const columnObject = {};
+
+    const {
+      customContainerStyles,
+      customTimeStyle,
+      defaultValue,
+      disabled = false,
+      isEditable = true,
+      isRequired = false,
+      onChange = () => {},
+      placeholder = "",
+      type,
+    } = renderDateTime;
 
     const {
       alt = "",
@@ -84,7 +100,16 @@ const useRenderColumn = () => {
 
     title &&
       (columnObject.title = () => {
-        return <p className={styles.columnHeading}>{title}</p>;
+        return (
+          <p className={styles.columnHeading}>
+            {title}
+            {isRequiredField && (
+              <>
+                &nbsp;<span className={styles.isRequiredStar}>*</span>
+              </>
+            )}
+          </p>
+        );
       });
 
     dataIndex && (columnObject.dataIndex = dataIndex);
@@ -216,6 +241,28 @@ const useRenderColumn = () => {
               preview={menuPreview}
             />
           </Dropdown>
+        );
+      });
+
+    renderDateTime.visible &&
+      (columnObject.render = (value, record) => {
+        return (
+          <CustomDateTimePicker
+            {...{
+              customContainerStyles,
+              customTimeStyle,
+              defaultValue,
+              disabled,
+              isEditable,
+              isRequired,
+              type,
+              placeholder,
+              value,
+            }}
+            onChange={(val) => {
+              onChange(val, record);
+            }}
+          />
         );
       });
 
