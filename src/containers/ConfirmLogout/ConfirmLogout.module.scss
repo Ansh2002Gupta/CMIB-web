@@ -4,7 +4,7 @@
 }
 
 .modal{
-    border-radius: 12px !important;
+    border-radius: var(--radiusXLg, 12px) !important;
 }
 
 .heading {
@@ -43,23 +43,24 @@
 }
 
 .btn {
-  min-height: 44px;
+  min-height: var(--height_44, 44px);
   border-radius: var(--radiusLg, 8px);
   color: var(--black1, #000833);
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
-  background: var(--yellowBg, #fabb00);
+  background-color: var(--white1, #ffffff);
   &:hover {
-    background-color: var(--yellowBg, #fabb00) !important;
-    color: var(--black1, #000833) !important;
+    background-color: var(--white1, #ffffff) !important;
     border-color: var(--disableLink, #B1B3B5) !important;
   }
 }
 
 .btn_1 {
-  background: var(--white1, #ffffff);
+  background-color: var(--yellowBg, #fabb00);
+  border: none;
   &:hover {
-    background-color: var(--white1, #ffffff) !important;
+    background-color: var(--yellowBg, #fabb00) !important;
+    color: var(--black1, #000833) !important;
   }
 }
 

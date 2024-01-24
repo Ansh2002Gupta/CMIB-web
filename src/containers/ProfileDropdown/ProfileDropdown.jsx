@@ -24,10 +24,8 @@ const ProfileDropdown = () => {
     <Dropdown
       dropdownRender={() => (
         <CardDropdownOverlay
-          userName={userName}
-          userEmail={userEmail}
           userProfile={userProfilePic}
-          setDropdownVisible={setDropdownVisible}
+          {...{ userName, userEmail, setDropdownVisible }}
         />
       )}
       trigger={["click"]}

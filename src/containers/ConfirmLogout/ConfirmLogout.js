@@ -57,13 +57,13 @@ const ConfirmLogout = () => {
           <CustomButton
             onClick={() => userProfileDispatch(setShowLogoutModal(false))}
             customButtonContainerStyle={styles.customButtonContainerStyle}
+            customStyle={styles.btn}
             btnText={intl.formatMessage({ id: "label.cancel" })}
-            customStyle={`${styles.btn} ${styles.btn_1}`}
-          />
+            />
           <CustomButton
             onClick={onLogout}
             btnText={intl.formatMessage({ id: "label.logout" })}
-            customStyle={styles.btn}
+            customStyle={`${styles.btn} ${styles.btn_1}`}
             customButtonContainerStyle={styles.customButtonContainerStyle}
           />
         </div>
