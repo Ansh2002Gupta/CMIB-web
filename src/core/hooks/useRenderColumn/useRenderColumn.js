@@ -2,10 +2,11 @@ import moment from "moment";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch } from "antd";
 
+import { TwoColumn } from "../../layouts";
+
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
-import { TwoColumn } from "../../layouts";
 
 const useRenderColumn = () => {
   const intl = useIntl();
