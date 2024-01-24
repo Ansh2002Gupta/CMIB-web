@@ -275,6 +275,9 @@ const locale = {
   "label.experiencedMember": "Experienced Member",
   "label.change": "Change",
   "label.chooseModule": "Choose a module",
+  'label.view_profile': 'View Profile',
+  'label.change_password': 'Change Password',
+  'account.logout': 'Log out',
 };
 
 export default locale;

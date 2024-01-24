@@ -1,0 +1,125 @@
+// TODO: use var here
+.mainContainer {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.imageStyle {
+  height: 48px;
+  width: 48px;
+  border-radius: 48px;
+}
+
+.middleSectionStyle {
+  margin-top: 20px;
+  margin-bottom: 32px;
+  gap: 5px;
+}
+
+.bottomSectionStyle {
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cancelButton {
+  border-color: grey;
+  border-width: 0.5px;
+  padding: 12px;
+  border-radius: 8px;
+  width: 140px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logoutButton {
+  background-color: yellow;
+  padding: 12px;
+  border-radius: 8px;
+  width: 140px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.buttonText {
+  color: black;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.headingText {
+  color: black;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.subHeadingText {
+  color: green;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.imageContainerStyle {
+  background-color: white;
+  border-radius: 200px;
+  border-width: 5px;
+  border-color: white;
+}
+
+.initialContainerStyle {
+  background-color: white;
+  border-radius: 200px;
+  height: 104px;
+  width: 104px;
+}
+
+.profileMainContainer {
+  background: linear-gradient(to bottom, silver 40%, white 30%);
+  padding: 24px;
+  border-radius: 12px;
+  gap: 24px;
+  min-width: 500px;
+}
+
+.secondSectionStyle {
+  gap: 5px;
+  align-items: center;
+}
+
+.thirdSectionStyle {
+  gap: 5px;
+  align-items: center;
+}
+
+.lastSectionStyle {
+  align-items: center;
+  gap: 8px;
+}
+
+.crossIconStyle {
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+}
+
+.crossStyle {
+  align-self: flex-end;
+  margin-bottom: 40px;
+}
+
+.headingStyle {
+  justify-content: space-between;
+}
+
+.changeProfileContainer {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  gap: 40px;
+}
+
+.profileImageStyle {
+  height: 152px;
+  width: 152px;
+  border-radius: 152px;
+}

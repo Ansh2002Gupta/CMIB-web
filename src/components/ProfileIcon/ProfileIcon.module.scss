@@ -1,0 +1,41 @@
+// TODO: use var here
+.initials-container {
+  justify-content: center;
+  background-color: white;
+  border-radius: 200px;
+  align-items: center;
+  border-width: 0.5px;
+  border-color: lightGrey;
+  position: relative;
+}
+
+.edit-profile-container {
+  align-self: center;
+  height: 152px;
+  width: 152px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.profile-image-style {
+  width: 104px;
+  height: 104px;
+  border-radius: 52px;
+}
+
+.modal-profile-image {
+  width: 152px;
+  height: 152px;
+  border-radius: 76px;
+}
+
+.initials-text {
+  font-size: 14px;
+}
+
+.edit-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}

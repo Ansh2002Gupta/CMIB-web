@@ -3,10 +3,12 @@ import { useIntl } from "react-intl";
 import { Avatar, Space, Card, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
+import { ReactComponent as UserIcon } from "../../themes/base/assets/icons/user.svg";
+import { ReactComponent as CompanyIcon } from "../../themes/base/assets/icons/building.svg";
+import { ReactComponent as LockIcon } from "../../themes/base/assets/icons/lock.svg";
+
 import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
 import useHeader from "../../core/hooks/useHeader";
-import headerActionItems from "../../constants/headerActionItems";
-
 import styles from "./profileDropdown.module.scss";
 
 export default function CardDropdownOverlay({
@@ -16,6 +18,33 @@ export default function CardDropdownOverlay({
 }) {
   const intl = useIntl();
   const { onLogout } = useHeader();
+
+  const headerActionItems = [
+    {
+      id: 1,
+      onClick: () => {
+        console.log("user profile 1");
+      },
+      label: "label.viewProfile",
+      icon: <UserIcon />,
+    },
+    {
+      id: 2,
+      onClick: () => {
+        console.log("user profile 2");
+      },
+      label: "label.companyProfile",
+      icon: <CompanyIcon />,
+    },
+    {
+      id: 3,
+      onClick: () => {
+        console.log("user profile 3");
+      },
+      label: "label.changePassword",
+      icon: <LockIcon />,
+    },
+  ];
 
   return (
     <Card
@@ -59,8 +88,9 @@ export default function CardDropdownOverlay({
             type="text"
             block
             icon={<span>{item.icon}</span>}
+            onClick={item?.onClick}
           >
-            {intl.formatMessage({ id: item.id })}
+            {intl.formatMessage({ id: item.label })}
           </Button>
         ))}
       </Space>
