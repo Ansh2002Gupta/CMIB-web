@@ -185,7 +185,7 @@ const LoginForm = () => {
                 onClick={handleOnLogin}
                 disabled={!isAllowedToLogin}
               >
-                {intl.formatMessage({ id: "label.loginBtn" })}
+                {isLoading ? "" : intl.formatMessage({ id: "label.loginBtn" })}
               </Button>
             </div>
           </form>

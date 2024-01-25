@@ -36,7 +36,7 @@ const ButtonAndLink = ({
       <Base className={styles.container}>
         <CustomButton
           {...{ loading, type }}
-          btnText={topBtnText}
+          btnText={loading ? "" : topBtnText}
           isBtnDisable={isTopBtnDisable}
           onClick={onTopBtnClick}
         />
