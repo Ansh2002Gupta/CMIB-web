@@ -22,21 +22,30 @@
   }
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 1523px) {
   .loginHeading {
-    font-size: var(--fontSizeHeading);
+    font-size: var(--fontSizeXXlarge);
+    line-height: normal;
   }
   .loginSubHeading {
     font-size: var(--fontSizeSmall);
+  }
+  .headingContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gapXSmall);
   }
 }
 
 @media (max-width: 511px) {
   .loginHeading {
-    font-size: var(--fontSizeXXlarge);
+    font-size: var(--fontSizeXlargeMedium);
   }
   .headingContainer {
     padding: var(--paddingMedium) var(--paddingSmall) 0px var(--paddingSmall);
     background-color: var(--bodyBg);
+  }
+  .headingContainer{
+    padding-top: var(--paddingXXSmall);
   }
 }

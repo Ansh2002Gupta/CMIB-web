@@ -21,6 +21,15 @@
   z-index: 999;
 }
 
+@media (max-width: 1523px) {
+  .container {
+    padding: var(--paddingSmall);
+  }
+  .innerContainer {
+    padding: var(--paddingMedium) var(--paddingLarge);
+  }
+}
+
 @media (max-width: 1279px) {
   .innerContainer {
     width: 60vw;

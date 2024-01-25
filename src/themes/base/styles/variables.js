@@ -176,6 +176,7 @@ const variables = {
   paddingLarge: "32px",
   paddingXLarge: "40px",
   paddingXXLarge: "48px",
+  padding_60: "60px",
   paddingForSection: "72px",
 
   // Bullet points
