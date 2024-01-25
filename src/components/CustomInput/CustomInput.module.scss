@@ -19,6 +19,12 @@
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
   margin-top: var(--marginSmall);
+  min-height: var(--height_20);
+  opacity: 0;
+}
+
+.showError {
+  opacity: 1;
 }
 
 .messageText {
@@ -66,5 +72,11 @@
 
   &::placeholder {
     color: var(--inputPlaceHolder) !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .errorText {
+    min-height: var(--height_50);
   }
 }

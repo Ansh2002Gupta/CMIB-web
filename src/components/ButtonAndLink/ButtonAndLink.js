@@ -6,6 +6,7 @@ import Base from "../../core/layouts/Base/Base";
 
 import CustomButton from "../CustomButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { getErrorText } from "../../constant/utils";
 import styles from "./ButtonAndLink.module.scss";
 
 const ButtonAndLink = ({
@@ -27,7 +28,11 @@ const ButtonAndLink = ({
 
   return (
     <div>
-      {!!error && <Typography className={styles.error}>{error}</Typography>}
+      <Typography
+        className={[styles.error, error ? styles.showError : ""].join(" ")}
+      >
+        {getErrorText(error)}
+      </Typography>
       <Base className={styles.container}>
         <CustomButton
           {...{ loading, type }}

@@ -12,6 +12,7 @@ import useLogin from "../../services/api-services/Login/useLogin";
 import useAuthOTP from "../../services/api-services/Otp/useAuthOTP";
 import useCheckOTP from "../../services/api-services/Otp/useCheckOTP";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { getErrorText } from "../../constant/utils";
 import { ADMIN_ROUTE, VERIFY_OTP } from "../../constant/apiEndpoints";
 import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";
@@ -167,13 +168,14 @@ const LoginForm = () => {
               </div>
             </div>
             <div>
-              {loginError ? (
-                <Typography className={styles.errorText}>
-                  {loginError}
-                </Typography>
-              ) : (
-                ""
-              )}
+              <Typography
+                className={[
+                  styles.errorText,
+                  !!loginError ? styles.showError : "",
+                ].join(" ")}
+              >
+                {getErrorText(loginError)}
+              </Typography>
               <Button
                 type="primary"
                 htmlType="submit"

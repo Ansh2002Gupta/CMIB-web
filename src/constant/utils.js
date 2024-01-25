@@ -1,6 +1,7 @@
 import moment from "moment";
 import {
   DEFAULT_PAGE_SIZE,
+  PLACEHOLDER_TEXT,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
@@ -125,4 +126,12 @@ export const getValidSortByValue = (currentSortByValue) => {
   }
 
   return SORT_VALUES.ASCENDING;
+};
+
+export const getErrorText = (errorText) => {
+  if (errorText) {
+    return errorText;
+  }
+
+  return PLACEHOLDER_TEXT;
 };
