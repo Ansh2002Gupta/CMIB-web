@@ -11,6 +11,7 @@ import styles from "./ButtonAndLink.module.scss";
 
 const ButtonAndLink = ({
   bottomLinkText,
+  customContainerStyles,
   error,
   isTopBtnDisable,
   linkRedirection,
@@ -29,7 +30,7 @@ const ButtonAndLink = ({
   return (
     <div>
       <Typography
-        className={[styles.error, error ? styles.showError : ""].join(" ")}
+        className={[styles.error, error ? styles.showError : "", customContainerStyles].join(" ")}
       >
         {getErrorText(error)}
       </Typography>
@@ -57,6 +58,7 @@ const ButtonAndLink = ({
 
 ButtonAndLink.defaultProps = {
   bottomLinkText: "",
+  customContainerStyles: "",
   error: "",
   isTopBtnDisable: false,
   linkRedirection: "",
@@ -69,6 +71,7 @@ ButtonAndLink.defaultProps = {
 
 ButtonAndLink.propTypes = {
   bottomLinkText: PropTypes.string,
+  customContainerStyles: PropTypes.string,
   error: PropTypes.string,
   isTopBtnDisable: PropTypes.bool,
   linkRedirection: PropTypes.string,

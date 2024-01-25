@@ -242,6 +242,7 @@ const CreateNewPassword = ({ reset_token }) => {
             onTopBtnClick={handleOnSubmit}
             linkRedirection={LOGIN}
             type="submit"
+            customContainerStyles={styles.minHeight}
           />
           <CustomModal
             isOpen={
