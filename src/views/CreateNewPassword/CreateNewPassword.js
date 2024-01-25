@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Typography } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
@@ -90,6 +89,16 @@ const CreateNewPassword = ({ reset_token }) => {
       atLeast6Characters: AT_LEAST_SIX_CHARACTERS_REGEX.test(newPassword),
       bothEqual: newPassword === confirmPassword,
     });
+  };
+
+  const getCurrentErrorText = () => {
+    if (status && status !== "label.newPasswordAndConfirmPasswordMatched") {
+      return intl.formatMessage({
+        id: status,
+      });
+    }
+
+    return errorWhileCreatingPassword;
   };
 
   useEffect(() => {
@@ -198,23 +207,9 @@ const CreateNewPassword = ({ reset_token }) => {
           />
         </div>
         <div>
-          {!!status &&
-            status !== "label.newPasswordAndConfirmPasswordMatched" && (
-              <div>
-                {
-                  <Typography className={[styles.errorText].join(" ")}>
-                    {intl.formatMessage({
-                      id: status,
-                    })}
-                  </Typography>
-                }
-              </div>
-            )}
           <ButtonAndLink
             loading={isLoading}
-            error={
-              !!errorWhileCreatingPassword ? errorWhileCreatingPassword : ""
-            }
+            error={getCurrentErrorText()}
             bottomLinkText={intl.formatMessage({
               id: "label.backToLoginBtn",
             })}
@@ -227,6 +222,7 @@ const CreateNewPassword = ({ reset_token }) => {
             onTopBtnClick={handleOnSubmit}
             linkRedirection={LOGIN}
             type="submit"
+            customContainerStyles={styles.minHeight}
           />
           <CustomModal
             isOpen={

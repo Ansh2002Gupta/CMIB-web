@@ -47,9 +47,9 @@ const ForgotPassword = () => {
     }
     setStatus("success");
     handleForgotPassword({
-      onSuccess: () => setCurrentActiveScreen(2),
       payload: { email: userName },
     });
+    setCurrentActiveScreen(2);
   };
 
   const handleOTPSubmit = (otp) => {
@@ -133,6 +133,7 @@ const ForgotPassword = () => {
           )}
           {currentActiveScreen === 2 && (
             <OTPInput
+              email={userName}
               errorWhileSendingOTP={errorWhileResetPassword}
               setErrorWhileSendingOTP={setErrorWhileResetPassword}
               {...{
@@ -150,6 +151,7 @@ const ForgotPassword = () => {
               onSubmit={(otp) => {
                 handleOTPSubmit(otp);
               }}
+              setActiveScreen={(val) => setCurrentActiveScreen(val)}
             />
           )}
         </Base>

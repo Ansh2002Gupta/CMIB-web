@@ -19,7 +19,7 @@ const locale = {
   "label.rememberMe": "Remember Me",
   "label.forgotPasswordHeading": "Forgot password?",
   "label.forgotPasswordSubHeading":
-    "Enter your email address to reset your password. Upon submission, if an account is associated with this email, we'll send the reset instructions.",
+    "Enter your email address to reset your password. Upon submission, if an account is associated with the email address entered below, we'll send the one time password.",
   "label.loginBtn": "Login",
   "label.backToLoginBtn": "Back to Login",
   "label.gobackToLoginBtn": "Go back to Login",
@@ -58,7 +58,7 @@ const locale = {
   "label.fourteenMinTimerText2": "You can resend the next OTP after",
   "label.somethingWentWrong": "Something went wrong!",
   "label.forgotPasswordOTP":
-    "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
+    "Please enter the one time password that you have received on your registered email address to continue to reset your password.",
   "label.filter": "Filter",
   "label.userDetails": "User Details",
   "label.dateCreatedOn": "Date Created On",
@@ -313,6 +313,8 @@ const locale = {
   "label.oldPassword": "Old Password",
   "label.newPassword": "New Password",
   "label.confirmPassword": "Confirm Password",
+  "label.emailAddress": "Email Address: ",
+  "label.changeEmailAddress": "Change Email Address",
 };
 
 export default locale;
