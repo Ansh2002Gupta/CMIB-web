@@ -25,6 +25,8 @@ import { ReactComponent as Session } from "../../themes/base/assets/icons/sessio
 import { ReactComponent as SMS } from "../../themes/base/assets/icons/sms.svg";
 import { ReactComponent as Testimonials } from "../../themes/base/assets/icons/testimonials.svg";
 import { ReactComponent as Wallet } from "../../themes/base/assets/icons/wallet.svg";
+import { ReactComponent as Ticket } from "../../themes/base/assets/icons/ticket.svg";
+import { ReactComponent as EmailAlias } from "../../themes/base/assets/icons/emailAlias.svg";
 import { ReactComponent as SelectedActivity } from "../../themes/base/assets/icons/selectedActivity.svg";
 import { ReactComponent as SelectedBriefcase } from "../../themes/base/assets/icons/selectedBriefcase.svg";
 import { ReactComponent as SelectedCompanies } from "../../themes/base/assets/icons/selectedCompanies.svg";
@@ -43,8 +45,73 @@ import { ReactComponent as SelectedSession } from "../../themes/base/assets/icon
 import { ReactComponent as SelectedSMS } from "../../themes/base/assets/icons/selectedSms.svg";
 import { ReactComponent as SelectedTestimonials } from "../../themes/base/assets/icons/selectedTestimonials.svg";
 import { ReactComponent as SelectedWallet } from "../../themes/base/assets/icons/selectedWallet.svg";
+import { ReactComponent as SelectedTicket } from "../../themes/base/assets/icons/selectedTicket.svg";
+import { ReactComponent as SelectedEmailAlias } from "../../themes/base/assets/icons/selectedEmailAlias.svg";
+
+const caJobsMenu = [
+  {
+    label: MENU_KEYS.DASHBOARD,
+    key: DASHBOARD,
+    icon: <Dashboard />,
+    selectedIcon: <SelectedDashboard />,
+  },
+  {
+    label: MENU_KEYS.MANAGE_SUBSCRIPTIONS,
+    key: SUBSCRIPTIONS,
+    icon: <Dollor />,
+    selectedIcon: <SelectedDollor />,
+  },
+  {
+    label: MENU_KEYS.CONFIGURATIONS,
+    key: CONFIGURE_CENTRES,
+    icon: <Globe />,
+    selectedIcon: <SelectedGlobe />,
+  },
+  {
+    label: MENU_KEYS.MANAGE_PAYMENTS,
+    key: "/payments",
+    icon: <Wallet />,
+    selectedIcon: <SelectedWallet />,
+  },
+  {
+    label: MENU_KEYS.MANAGE_CANDIDATES,
+    key: "/candidates",
+    icon: <People />,
+    selectedIcon: <SelectedPeople />,
+  },
+  {
+    label: MENU_KEYS.MANAGE_COMPANIES,
+    key: COMPANIES,
+    icon: <Companies />,
+    selectedIcon: <SelectedCompanies />,
+  },
+  {
+    label: MENU_KEYS.ALL_JOBS,
+    key: "/all-jobs",
+    icon: <Briefcase />,
+    selectedIcon: <SelectedBriefcase />,
+  },
+  {
+    label: MENU_KEYS.REPORT,
+    key: "/report",
+    icon: <Report />,
+    selectedIcon: <SelectedReport />,
+  },
+];
 
 const controlMenu = [
+  {
+    label: MENU_KEYS.TICKET_MANAGEMENT,
+    key: "/ticket-management",
+    icon: <Ticket />,
+    selectedIcon: <SelectedTicket />,
+  },
+  {
+    label: MENU_KEYS.QUERY_MANAGEMENT,
+    key: "/query-management",
+    icon: <SMS />,
+    selectedIcon: <SelectedSMS />,
+  },
   {
     label: MENU_KEYS.USER_MANAGEMENT,
     key: USERS,
@@ -58,20 +125,8 @@ const controlMenu = [
     selectedIcon: <SelectedNotification />,
   },
   {
-    label: MENU_KEYS.CONTACT_US,
-    key: "/contact-us",
-    icon: <Message />,
-    selectedIcon: <SelectedMessage />,
-  },
-  {
-    label: MENU_KEYS.SESSIONS,
-    key: SESSION,
-    icon: <Session />,
-    selectedIcon: <SelectedSession />,
-  },
-  {
-    label: MENU_KEYS.FEEDBACK,
-    key: "/feedback",
+    label: MENU_KEYS.FEEDBACK_MANAGEMENT,
+    key: "/feedback-management",
     icon: <Send />,
     selectedIcon: <SelectedSend />,
   },
@@ -94,20 +149,75 @@ const controlMenu = [
     selectedIcon: <SelectedActivity />,
   },
   {
-    label: MENU_KEYS.QUERY_MANAGEMENT,
-    key: "/query-management",
-    icon: <SMS />,
-    selectedIcon: <SelectedSMS />,
+    label: MENU_KEYS.SUPPORT_EMAIL_MANGEMENT,
+    key: "/activity-logs",
+    icon: <EmailAlias />,
+    selectedIcon: <SelectedEmailAlias />,
+  },
+  {
+    label: MENU_KEYS.CONTACT_US,
+    key: "/contact-us",
+    icon: <Message />,
+    selectedIcon: <SelectedMessage />,
+  },
+  {
+    label: MENU_KEYS.SESSIONS,
+    key: SESSION,
+    icon: <Session />,
+    selectedIcon: <SelectedSession />,
   },
 ];
 
 const newlyQualifiedPlacementsMenu = [
+  {
+    label: MENU_KEYS.GLOBAL_CONFIGURATIONS,
+    key: CONFIGURE_CENTRES,
+    icon: <Globe />,
+    selectedIcon: <SelectedGlobe />,
+  },
+  {
+    label: MENU_KEYS.SET_UP_SESSIONS,
+    key: SESSION,
+    icon: <Session />,
+    selectedIcon: <SelectedSession />,
+  },
   {
     label: MENU_KEYS.DASHBOARD,
     key: DASHBOARD,
     icon: <Dashboard />,
     selectedIcon: <SelectedDashboard />,
   },
+  {
+    label: MENU_KEYS.CANDIDATE_DETAILS,
+    key: "/candidates-details",
+    icon: <People />,
+    selectedIcon: <SelectedPeople />,
+  },
+  {
+    label: MENU_KEYS.COMPANY_DETAILS,
+    key: COMPANIES,
+    icon: <Companies />,
+    selectedIcon: <SelectedCompanies />,
+  },
+  {
+    label: MENU_KEYS.ROASTER,
+    key: "/roster",
+    icon: <Roaster />,
+    selectedIcon: <SelectedRoaster />,
+  },
+  {
+    label: MENU_KEYS.PAYMENTS,
+    key: "/payments",
+    icon: <Wallet />,
+    selectedIcon: <SelectedWallet />,
+  },
+  {
+    label: MENU_KEYS.REPORT,
+    key: "/report",
+    icon: <Report />,
+    selectedIcon: <SelectedReport />,
+  },
+
   {
     label: MENU_KEYS.ROUND_1_PLACEMENT,
     key: "/round-1-placements",
@@ -120,12 +230,7 @@ const newlyQualifiedPlacementsMenu = [
     icon: <Round2 />,
     selectedIcon: <SelectedRound2 />,
   },
-  {
-    label: MENU_KEYS.GLOBAL_CONFIGURATIONS,
-    key: CONFIGURE_CENTRES,
-    icon: <Globe />,
-    selectedIcon: <SelectedGlobe />,
-  },
+
   {
     label: MENU_KEYS.COMPANIES,
     key: COMPANIES,
@@ -134,7 +239,19 @@ const newlyQualifiedPlacementsMenu = [
   },
 ];
 
-const caJobsMenu = [
+const experiencedMembersMenu = [
+  {
+    label: MENU_KEYS.GLOBAL_CONFIGURATIONS,
+    key: CONFIGURE_CENTRES,
+    icon: <Globe />,
+    selectedIcon: <SelectedGlobe />,
+  },
+  {
+    label: MENU_KEYS.SET_UP_SESSIONS,
+    key: SESSION,
+    icon: <Session />,
+    selectedIcon: <SelectedSession />,
+  },
   {
     label: MENU_KEYS.DASHBOARD,
     key: DASHBOARD,
@@ -142,16 +259,16 @@ const caJobsMenu = [
     selectedIcon: <SelectedDashboard />,
   },
   {
-    label: MENU_KEYS.SUBSCRIPTIONS,
-    key: SUBSCRIPTIONS,
-    icon: <Dollor />,
-    selectedIcon: <SelectedDollor />,
+    label: MENU_KEYS.CANDIDATE_DETAILS,
+    key: "/candidates-details",
+    icon: <People />,
+    selectedIcon: <SelectedPeople />,
   },
   {
-    label: MENU_KEYS.GLOBAL_CONFIGURATIONS,
-    key: CONFIGURE_CENTRES,
-    icon: <Globe />,
-    selectedIcon: <SelectedGlobe />,
+    label: MENU_KEYS.COMPANY_DETAILS,
+    key: COMPANIES,
+    icon: <Companies />,
+    selectedIcon: <SelectedCompanies />,
   },
   {
     label: MENU_KEYS.PAYMENTS,
@@ -160,84 +277,47 @@ const caJobsMenu = [
     selectedIcon: <SelectedWallet />,
   },
   {
-    label: MENU_KEYS.CANDIDATES,
-    key: "/candidates",
-    icon: <People />,
-    selectedIcon: <SelectedPeople />,
-  },
-  {
-    label: MENU_KEYS.COMPANIES,
-    key: COMPANIES,
-    icon: <Companies />,
-    selectedIcon: <SelectedCompanies />,
-  },
-  {
-    label: MENU_KEYS.ALL_JOBS,
-    key: "/all-jobs",
-    icon: <Briefcase />,
-    selectedIcon: <SelectedBriefcase />,
-  },
-  {
-    label: MENU_KEYS.REPORT,
-    key: "/report",
-    icon: <Report />,
-    selectedIcon: <SelectedReport />,
-  },
-];
-
-const experiencedMembersMenu = [
-  {
-    label: MENU_KEYS.DASHBOARD,
-    key: DASHBOARD,
-    icon: <Dashboard />,
-    selectedIcon: <SelectedDashboard />,
-  },
-  { label: MENU_KEYS.PAYMENTS, key: "/payments", icon: <Wallet /> },
-  {
-    label: MENU_KEYS.CANDIDATES,
-    key: "/candidates",
-    icon: <People />,
-    selectedIcon: <SelectedPeople />,
-  },
-  {
-    label: MENU_KEYS.COMPANIES,
-    key: COMPANIES,
-    icon: <Companies />,
-    selectedIcon: <SelectedCompanies />,
-  },
-  {
-    label: MENU_KEYS.GLOBAL_CONFIGURATIONS,
-    key: CONFIGURE_CENTRES,
-    icon: <Globe />,
-    selectedIcon: <SelectedGlobe />,
-  },
-  {
-    label: MENU_KEYS.SESSIONS,
-    key: SESSION,
-    icon: <Session />,
-    selectedIcon: <SelectedSession />,
-  },
-  {
     label: MENU_KEYS.ROASTER,
     key: "/roster",
     icon: <Roaster />,
     selectedIcon: <SelectedRoaster />,
   },
+
   {
     label: MENU_KEYS.REPORT,
     key: "/report",
     icon: <Report />,
     selectedIcon: <SelectedReport />,
+  },
+
+  {
+    label: MENU_KEYS.ROUND_1_PLACEMENT,
+    key: "/round-1-placements",
+    icon: <Round1 />,
+    selectedIcon: <SelectedRound1 />,
+  },
+  {
+    label: MENU_KEYS.ROUND_2_PLACEMENT,
+    key: "/round-2-placements",
+    icon: <Round2 />,
+    selectedIcon: <SelectedRound2 />,
+  },
+
+  {
+    label: MENU_KEYS.COMPANIES,
+    key: COMPANIES,
+    icon: <Companies />,
+    selectedIcon: <SelectedCompanies />,
   },
 ];
 
 const modules = [
   {
     id: 1,
-    label: "Control",
-    key: MODULE_KEYS.CONTROL_KEY,
-    children: controlMenu,
-    image: "settings",
+    label: "CA Jobs",
+    key: MODULE_KEYS.CA_JOBS_KEY,
+    children: caJobsMenu,
+    image: "suiteCase",
     isExperiencedMember: false,
   },
   {
@@ -250,11 +330,11 @@ const modules = [
   },
   {
     id: 3,
-    label: "CA Jobs",
-    key: MODULE_KEYS.CA_JOBS_KEY,
-    children: caJobsMenu,
-    image: "suiteCase",
-    isExperiencedMember: false,
+    key: MODULE_KEYS.OVERSEAS_CHAPTERS_KEY,
+    label: "Overseas Chapters",
+    children: experiencedMembersMenu,
+    image: "global",
+    isExperiencedMember: true,
   },
   {
     id: 4,
@@ -274,11 +354,11 @@ const modules = [
   },
   {
     id: 6,
-    key: MODULE_KEYS.OVERSEAS_CHAPTERS_KEY,
-    label: "Overseas Chapters",
-    children: experiencedMembersMenu,
-    image: "global",
-    isExperiencedMember: true,
+    label: "Control",
+    key: MODULE_KEYS.CONTROL_KEY,
+    children: controlMenu,
+    image: "settings",
+    isExperiencedMember: false,
   },
 ];
 
