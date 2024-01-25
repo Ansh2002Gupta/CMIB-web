@@ -77,7 +77,7 @@
   color: var(--disableBtn);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightBold);
-  padding: 0px;
+  padding: 0px !important;
   &:hover {
     color: var(--disableBtn) !important;
   }
@@ -99,6 +99,8 @@
 .fourteenMinCounterContainer {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .subHeadingAndInputContainer {
@@ -110,6 +112,13 @@
 .fourteenMinCounterBottomContainer {
   display: flex;
   gap: var(--gapXSmall);
+}
+
+.emailCheckStyle {
+  margin-top: var(--marginMedium);
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: start;
 }
 
 @media screen and (max-width: 511px) {
