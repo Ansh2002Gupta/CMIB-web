@@ -130,3 +130,9 @@
     padding: var(--paddingSmall);
   }
 }
+
+@media screen and (max-width: 767px) {
+  .emailCheckStyle {
+    flex-direction: column;
+  }
+}
