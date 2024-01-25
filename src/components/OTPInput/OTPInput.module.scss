@@ -64,10 +64,7 @@
   align-items: center;
 }
 .timer {
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  padding-top: 14px;
+  padding-top: var(--padding_14);
 }
 
 .receivedOTP {
