@@ -37,11 +37,12 @@ const ChangePassword = () => {
     atLeast6Characters: false,
     bothEqual: false,
   });
-  const [shouldShow, setShouldShow] = useState({
+  const initalShouldShowData = {
     old_password: false,
     new_password: false,
     confirm_password: false,
-  });
+  };
+  const [shouldShow, setShouldShow] = useState(initalShouldShowData);
 
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
@@ -79,6 +80,7 @@ const ChangePassword = () => {
 
   const handleCloseModal = () => {
     setFormData(INITIAL_PASSWORD_DATA);
+    setShouldShow(initalShouldShowData);
     userProfileDispatch(setShowChangePasswordModal(false));
   };
 
