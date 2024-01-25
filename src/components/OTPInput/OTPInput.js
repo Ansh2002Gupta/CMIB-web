@@ -188,7 +188,7 @@ const OTPInput = ({
           loading={isOTPLoading || isCheckingOTP}
           topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
           onTopBtnClick={handleOnSubmit}
-          bottomLinkText={intl.formatMessage({ id: "label.back" })}
+          bottomLinkText={intl.formatMessage({ id: "label.backToLoginBtn" })}
           onLinkClick={() => setCurrentActiveScreen(1)}
           isTopBtnDisable={!isAllowedToSubmit}
           linkRedirection={LOGIN}
