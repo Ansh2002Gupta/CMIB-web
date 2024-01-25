@@ -164,6 +164,7 @@ const OTPInput = ({
                   </Typography>
                   <span>
                     <CustomCountdown
+                      center={true}
                       onFinish={handleTimerEnd}
                       format="mm:ss"
                       minutes={TIMER_OF_15_MINUTES}
