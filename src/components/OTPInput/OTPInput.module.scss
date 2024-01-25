@@ -118,7 +118,7 @@
   margin-top: var(--marginMedium);
   justify-content: space-between;
   flex-wrap: wrap;
-  align-items: start;
+  align-items: center;
 }
 
 @media screen and (max-width: 511px) {
@@ -128,5 +128,12 @@
   }
   .container {
     padding: var(--paddingSmall);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .emailCheckStyle {
+    flex-direction: column;
+    align-items: start;
   }
 }
