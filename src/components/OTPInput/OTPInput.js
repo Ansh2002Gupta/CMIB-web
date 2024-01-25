@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import { Button, Typography } from "antd";
 import { InputOTP } from "antd-input-otp";
 
-import Base from "../../core/layouts/Base/Base";
+import { Base, TwoColumn } from "../../core/layouts";
+import useResponsive from "../../core/hooks/useResponsive";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
 import CustomCountdown from "../CustomCountdown";
@@ -17,6 +18,7 @@ import styles from "./OTPInput.module.scss";
 import "./Override.css";
 
 const OTPInput = ({
+  email,
   errorWhileSendingOTP,
   errorWhileVerifyingOTP,
   handleAuthOTP,
@@ -25,11 +27,13 @@ const OTPInput = ({
   isOTPLoading,
   noOfBlocks,
   onSubmit,
+  setActiveScreen,
   setCurrentActiveScreen,
   setErrorWhileSendingOTP,
   setErrorWhileVeryingOTP,
 }) => {
   const intl = useIntl();
+  const responsive = useResponsive();
 
   const [otpValues, setOtpValues] = useState(new Array(noOfBlocks).fill(""));
   const [isSendAgainBtnActive, setIsSendAgainBtnActive] = useState(false);
@@ -92,7 +96,33 @@ const OTPInput = ({
             ? headingText
             : intl.formatMessage({ id: "label.otpHeading" })}
         </Typography>
+        {!!email && (
+          <TwoColumn
+            className={styles.emailCheckStyle}
+            leftSection={
+              <Typography className={styles.heading}>
+                {intl.formatMessage({ id: "label.emailAddress" })}
+                {email}
+              </Typography>
+            }
+            rightSection={
+              <Button
+                className={[styles.sendAgainText, styles.active].join(" ")}
+                type="link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveScreen(1);
+                }}
+              >
+                {responsive?.isMd
+                  ? intl.formatMessage({ id: "label.changeEmailAddress" })
+                  : intl.formatMessage({ id: "label.change" })}
+              </Button>
+            }
+          />
+        )}
       </div>
+
       <form
         className={styles.otpFieldsAndButtonContainer}
         onSubmit={handleOnSubmit}
@@ -109,6 +139,7 @@ const OTPInput = ({
                 <Typography className={styles.requiredStar}>*</Typography>
               </div>
             </div>
+
             <InputOTP
               inputType="numeric"
               autoFocus
@@ -132,8 +163,9 @@ const OTPInput = ({
                   </Typography>
                   <span>
                     <CustomCountdown
+                      center={true}
                       onFinish={handleTimerEnd}
-                      format="(mm:ss)"
+                      format="mm:ss"
                       minutes={TIMER_OF_15_MINUTES}
                     />
                   </span>
@@ -163,7 +195,7 @@ const OTPInput = ({
                     {intl.formatMessage({ id: "label.sendAgain" })}
                   </Button>
                   {showCountdown === 1 ? (
-                    <span className={styles.timer}>
+                    <span>
                       <CustomCountdown
                         onFinish={handleTimerEnd}
                         format="(mm:ss)"
@@ -193,6 +225,7 @@ const OTPInput = ({
           isTopBtnDisable={!isAllowedToSubmit}
           linkRedirection={LOGIN}
           type="submit"
+          customContainerStyles={styles.minHeight}
         />
       </form>
     </Base>
@@ -200,6 +233,7 @@ const OTPInput = ({
 };
 
 OTPInput.defaultProps = {
+  email: "",
   errorWhileSendingOTP: "",
   errorWhileVerifyingOTP: "",
   handleAuthOTP: () => {},
@@ -207,12 +241,14 @@ OTPInput.defaultProps = {
   isOTPLoading: false,
   noOfBlocks: 4,
   onSubmit: () => {},
+  setActiveScreen: () => {},
   setCurrentActiveScreen: () => {},
   setErrorWhileSendingOTP: () => {},
   setErrorWhileVeryingOTP: () => {},
 };
 
 OTPInput.propTypes = {
+  email: PropTypes.string,
   errorWhileSendingOTP: PropTypes.string,
   errorWhileVerifyingOTP: PropTypes.string,
   handleAuthOTP: PropTypes.func,
@@ -220,6 +256,7 @@ OTPInput.propTypes = {
   isOTPLoading: PropTypes.bool,
   noOfBlocks: PropTypes.number,
   onSubmit: PropTypes.func,
+  setActiveScreen: PropTypes.func,
   setCurrentActiveScreen: PropTypes.func,
   setErrorWhileSendingOTP: PropTypes.func,
   setErrorWhileVeryingOTP: PropTypes.func,

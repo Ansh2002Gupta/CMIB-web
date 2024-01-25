@@ -24,6 +24,9 @@
   .container {
     padding: var(--paddingMedium) var(--paddingXXLarge);
   }
+  .logo {
+    width: var(--width_100);
+  }
 }
 
 @media screen and (max-width: 1023px) {
@@ -42,6 +45,7 @@
   .container {
     border-bottom: 0;
     background-color: var(--bodyBg);
+    padding-top: var(--padding_18);
   }
   .logo {
     width: var(--width_140);

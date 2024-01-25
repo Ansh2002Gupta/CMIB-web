@@ -109,6 +109,33 @@
   opacity: 1;
 }
 
+@media (max-width: 1523px) {
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--paddingSmall);
+    width: var(--fullWidth);
+  }
+  .inputAndBtnContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--paddingSmall);
+  }
+  .formContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0px;
+  }
+  .inputContainer{
+    gap: var(--gapSmall);
+  }
+  .errorText {
+    padding-bottom: var(--paddingExtraSmall);
+  }
+}
+
 @media (max-width: 511px) {
   .loginForm {
     gap: var(--gapXLarge);
@@ -134,6 +161,6 @@
 
 @media (max-width: 400px) {
   .errorText {
-    min-height: var(--height_50);
+    min-height: var(--height_30);
   }
 }

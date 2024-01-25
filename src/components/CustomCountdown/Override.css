@@ -1,4 +1,4 @@
-.ant-statistic-content {
+.customCount .ant-statistic-content {
     min-width: var(--width_48);
     font-size: 0px !important;
   }
