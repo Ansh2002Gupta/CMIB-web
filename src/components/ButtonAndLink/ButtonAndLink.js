@@ -6,10 +6,12 @@ import Base from "../../core/layouts/Base/Base";
 
 import CustomButton from "../CustomButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { getErrorText } from "../../constant/utils";
 import styles from "./ButtonAndLink.module.scss";
 
 const ButtonAndLink = ({
   bottomLinkText,
+  customContainerStyles,
   error,
   isTopBtnDisable,
   linkRedirection,
@@ -27,11 +29,15 @@ const ButtonAndLink = ({
 
   return (
     <div>
-      {!!error && <Typography className={styles.error}>{error}</Typography>}
+      <Typography
+        className={[styles.error, error ? styles.showError : "", customContainerStyles].join(" ")}
+      >
+        {getErrorText(error)}
+      </Typography>
       <Base className={styles.container}>
         <CustomButton
           {...{ loading, type }}
-          btnText={topBtnText}
+          btnText={loading ? "" : topBtnText}
           isBtnDisable={isTopBtnDisable}
           onClick={onTopBtnClick}
         />
@@ -52,6 +58,7 @@ const ButtonAndLink = ({
 
 ButtonAndLink.defaultProps = {
   bottomLinkText: "",
+  customContainerStyles: "",
   error: "",
   isTopBtnDisable: false,
   linkRedirection: "",
@@ -64,6 +71,7 @@ ButtonAndLink.defaultProps = {
 
 ButtonAndLink.propTypes = {
   bottomLinkText: PropTypes.string,
+  customContainerStyles: PropTypes.string,
   error: PropTypes.string,
   isTopBtnDisable: PropTypes.bool,
   linkRedirection: PropTypes.string,

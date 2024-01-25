@@ -133,7 +133,7 @@ const OTPInput = ({
                   <span>
                     <CustomCountdown
                       onFinish={handleTimerEnd}
-                      format="mm:ss"
+                      format="(mm:ss)"
                       minutes={TIMER_OF_15_MINUTES}
                     />
                   </span>
@@ -163,7 +163,7 @@ const OTPInput = ({
                     {intl.formatMessage({ id: "label.sendAgain" })}
                   </Button>
                   {showCountdown === 1 ? (
-                    <span>
+                    <span className={styles.timer}>
                       <CustomCountdown
                         onFinish={handleTimerEnd}
                         format="(mm:ss)"
@@ -188,7 +188,7 @@ const OTPInput = ({
           loading={isOTPLoading || isCheckingOTP}
           topBtnText={intl.formatMessage({ id: "label.submitBtn" })}
           onTopBtnClick={handleOnSubmit}
-          bottomLinkText={intl.formatMessage({ id: "label.back" })}
+          bottomLinkText={intl.formatMessage({ id: "label.backToLoginBtn" })}
           onLinkClick={() => setCurrentActiveScreen(1)}
           isTopBtnDisable={!isAllowedToSubmit}
           linkRedirection={LOGIN}

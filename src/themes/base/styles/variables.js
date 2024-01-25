@@ -3,6 +3,7 @@ import { colorPallets } from "../../../constant/colors";
 const variables = {
   // Background colors
   bodyBg: colorPallets.white1,
+  bodyBg2: colorPallets.white2,
   primaryBg: colorPallets.blue1,
   textPrimary: colorPallets.white1,
   blueBg: colorPallets.lightBlue1,
@@ -14,6 +15,7 @@ const variables = {
   uploadBg: colorPallets.white1,
   snow: colorPallets.snow,
   lightGreen: colorPallets.lightGreen,
+  greyBlue: colorPallets.greyBlue,
   blackBg: colorPallets.black1,
   lightGreenBg: colorPallets.lightGreen,
   lightBlueBg2: colorPallets.skyBlue,
@@ -58,6 +60,7 @@ const variables = {
   // Font-size
   fontSizeExtraSmall: "12px",
   fontSizeSmall: "14px",
+  fontSizeSmallMedium: "15px",
   fontSizeNormal: "16px",
   fontSizeLarge: "18px",
   fontSizeXlarge: "20px",
@@ -166,6 +169,7 @@ const variables = {
   paddingExtraSmall: "8px",
   padding_9: "9px",
   paddingMediumSmall: "12px",
+  padding_14: "14px",
   paddingSmall: "16px",
   padding_18: "18px",
   paddingMedium: "24px",

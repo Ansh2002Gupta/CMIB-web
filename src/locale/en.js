@@ -58,7 +58,7 @@ const locale = {
   "label.fourteenMinTimerText2": "You can resend the next OTP after",
   "label.somethingWentWrong": "Something went wrong!",
   "label.forgotPasswordOTP":
-    "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
+    "Please enter the one time password that you have received on your registered email address to continue to reset your password.",
   "label.filter": "Filter",
   "label.userDetails": "User Details",
   "label.dateCreatedOn": "Date Created On",
@@ -106,6 +106,8 @@ const locale = {
   "session.placeholder.bankACNumberOnline": "Enter Bank A/C number online",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
+  "session.lastDateRegistrationCompanies":
+    "Last date of registration for companies",
   "session.saveChanges": "Save Changes",
   "label.viewProfile": "View Profile",
   "label.changePassword": "Change Password",
@@ -183,6 +185,17 @@ const locale = {
   "centre.placeholder.centreId": "Enter Centre Id",
   "label.actions": "Actions",
   "label.sNo": "S. No",
+  "label.registrationConsentSchedule":
+    "Registration and Consent Marking Schedule",
+  "label.consentMarkingScheduleWarning":
+    "*This cannot be edited once this section data is submitted.",
+  "label.consent.startDateCompanies": "Registration Start Date for Companies",
+  "label.consent.startDateCandidates": "Registration Start Date for Candidates",
+  "label.consent.lastDateBigCentres":
+    "Last Date of Registration for Candidates for Big Centres",
+  "label.consent.lastDateSmallCentres":
+    "Last Date of Registration for Candidates for Small Centres",
+  "label.tryAgain": "Try Again",
   "label.centreCode": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
   "label.centreStartTime": "Centre Start Time",
@@ -215,6 +228,27 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.consent.placeholder.startDateCompanies":
+    " Select Start Date for Companies",
+  "label.consent.placeholder.startDateCandidates":
+    "Select Start Date for Candidates",
+  "label.consent.placeholder.lastDateBigCentres":
+    "Select Last Date for Big Centres",
+  "label.consent.placeholder.lastDateSmallCentres":
+    " Select Last Date for Small Centres",
+  "label.companyStartDate": "Shortlist By Company Start Date",
+  "label.companyEndDate": "Shortlist By Company end Date",
+  "label.consentFromDate": "Consent From Date for Candidate",
+  "label.consentToDate": "Consent To Date for Candidate",
+  "label.placeholder.companyStartDate": "Select Company Start Date",
+  "label.placeholder.companyEndDate": "Select Company end Date",
+  "label.placeholder.consentFromDate": "Select From Date for Candidate",
+  "label.placeholder.consentToDate": "Select To Date for Candidate",
+  "label.lastRegistrationDate": "Last date of registration for companies",
+  "label.psychometricTestDate": "psychometric test/written test date",
+  "label.placeholder.lastRegistrationDate": "Select Last Date for registration",
+  "label.placeholder.psychometricTestDate":
+    "Select To Date for psychometric test",
   "label.controlAccessHeading": " Control Access",
   "label.moduleAccess": "Module Access",
   "label.appdynamics": "Appdynamics",
