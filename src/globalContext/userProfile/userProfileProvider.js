@@ -35,6 +35,12 @@ const userProfileReducer = (state, action) => {
         errorGettingUserDetails: action.payload,
       };
 
+    case types.SET_SHOW_CHANGE_PASSWORD_MODAL:
+      return {
+        ...state,
+        showChangePasswordModal: action.payload,
+      };
+
     case types.RESET_USER_DETAILS:
       return initialState;
 

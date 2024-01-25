@@ -310,6 +310,9 @@ const locale = {
   "label.experiencedMember": "Experienced Member",
   "label.change": "Change",
   "label.chooseModule": "Choose a module",
+  "label.oldPassword": "Old Password",
+  "label.newPassword": "New Password",
+  "label.confirmPassword": "Confirm Password",
 };
 
 export default locale;

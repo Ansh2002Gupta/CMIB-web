@@ -20,6 +20,7 @@ import {
   AT_LEAST_ONE_SMALL_LETTER,
   AT_LEAST_ONE_CAPITAL_LETTER,
 } from "../../constant/regex";
+import { getPasswordStrengthPointsArray } from "../../constant/passwordRules";
 import { LOGIN } from "../../routes/routeNames";
 import styles from "./CreateNewPassword.module.scss";
 
@@ -54,28 +55,7 @@ const CreateNewPassword = ({ reset_token }) => {
     setErrorWhileCreatingPassword,
   } = useCreateNewPassword();
 
-  const passwordStrengthPointsArray = [
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck1" }),
-      isValid: passwordValidations.atLeast6Characters,
-    },
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck2" }),
-      isValid: passwordValidations.oneNumericValue,
-    },
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck3" }),
-      isValid: passwordValidations.oneCapitalLetterValue,
-    },
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck4" }),
-      isValid: passwordValidations.oneSmallLetterValue,
-    },
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck5" }),
-      isValid: passwordValidations.oneSpecialCharacterValue,
-    },
-  ];
+  const passwordStrengthPointsArray = getPasswordStrengthPointsArray(intl, passwordValidations)
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
