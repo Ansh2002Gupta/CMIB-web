@@ -63,6 +63,9 @@
   justify-content: flex-start;
   align-items: center;
 }
+.timer {
+  padding-top: var(--padding_14);
+}
 
 .receivedOTP {
   color: var(--subHeadingColor);
