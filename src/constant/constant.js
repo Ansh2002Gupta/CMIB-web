@@ -329,4 +329,4 @@ export const SORT_PROPERTIES = {
   SORT_BY: "sortBy",
 };
 
-export const PLACEHOLDER_TEXT = "Placeholder text";
+export const GENERIC_ERROR_MESSAGE = "Placeholder text";

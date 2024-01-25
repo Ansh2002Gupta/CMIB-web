@@ -161,7 +161,6 @@ const CustomInput = ({
           />
         )}
       </div>
-
       <div>
         <Typography
           className={[
@@ -173,7 +172,6 @@ const CustomInput = ({
           {errorMessage ? ` * ${errorMessage}` : ""}
         </Typography>
       </div>
-
       {!!messageToShow && (
         <div>
           <Typography

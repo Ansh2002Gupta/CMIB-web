@@ -1,7 +1,7 @@
 import moment from "moment";
 import {
   DEFAULT_PAGE_SIZE,
-  PLACEHOLDER_TEXT,
+  GENERIC_ERROR_MESSAGE,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
@@ -132,6 +132,5 @@ export const getErrorText = (errorText) => {
   if (errorText) {
     return errorText;
   }
-
-  return PLACEHOLDER_TEXT;
+  return GENERIC_ERROR_MESSAGE;
 };
