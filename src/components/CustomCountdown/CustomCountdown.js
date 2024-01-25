@@ -1,5 +1,6 @@
 import React from "react";
 import { Statistic } from "antd";
+import "./Override.css";
 
 const CustomCountdown = React.memo(({ format, minutes, onFinish }) => {
   const { Countdown } = Statistic;

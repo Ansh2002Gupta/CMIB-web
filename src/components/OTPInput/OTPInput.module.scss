@@ -63,6 +63,12 @@
   justify-content: flex-start;
   align-items: center;
 }
+.timer {
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  padding-top: 14px;
+}
 
 .receivedOTP {
   color: var(--subHeadingColor);
