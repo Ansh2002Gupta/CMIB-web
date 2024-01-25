@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { Button, Typography } from "antd";
 import { InputOTP } from "antd-input-otp";
 
-import Base from "../../core/layouts/Base/Base";
-import { TwoColumn } from "../../core/layouts";
+import { Base, TwoColumn } from "../../core/layouts";
+import useResponsive from "../../core/hooks/useResponsive";
 
 import ButtonAndLink from "../ButtonAndLink/ButtonAndLink";
 import CustomCountdown from "../CustomCountdown";
@@ -16,7 +16,6 @@ import {
 } from "../../constant/constant";
 import styles from "./OTPInput.module.scss";
 import "./Override.css";
-import useResponsive from "../../core/hooks/useResponsive";
 
 const OTPInput = ({
   email,
@@ -97,7 +96,7 @@ const OTPInput = ({
             ? headingText
             : intl.formatMessage({ id: "label.otpHeading" })}
         </Typography>
-        {email && (
+        {!!email && (
           <TwoColumn
             className={styles.emailCheckStyle}
             leftSection={
