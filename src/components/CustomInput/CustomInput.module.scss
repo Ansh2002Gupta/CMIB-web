@@ -73,9 +73,3 @@
     color: var(--inputPlaceHolder) !important;
   }
 }
-
-@media (max-width: 400px) {
-  .errorText {
-    min-height: var(--height_50);
-  }
-}
