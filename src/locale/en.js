@@ -19,7 +19,7 @@ const locale = {
   "label.rememberMe": "Remember Me",
   "label.forgotPasswordHeading": "Forgot password?",
   "label.forgotPasswordSubHeading":
-    "Enter your email address to reset your password. Upon submission, if an account is associated with this email, we'll send the reset instructions.",
+    "Enter your email address to reset your password. Upon submission, if an account is associated with the email address entered below, we'll send the one time password.",
   "label.loginBtn": "Login",
   "label.backToLoginBtn": "Back to Login",
   "label.gobackToLoginBtn": "Go back to Login",
@@ -309,6 +309,8 @@ const locale = {
   "label.experiencedMember": "Experienced Member",
   "label.change": "Change",
   "label.chooseModule": "Choose a module",
+  "label.emailAddress": "Email Address: ",
+  "label.changeEmailAddress": "Change Email Address",
 };
 
 export default locale;
