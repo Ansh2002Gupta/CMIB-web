@@ -193,6 +193,7 @@ const OTPInput = ({
           isTopBtnDisable={!isAllowedToSubmit}
           linkRedirection={LOGIN}
           type="submit"
+          customContainerStyles={styles.minHeight}
         />
       </form>
     </Base>

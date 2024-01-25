@@ -112,12 +112,22 @@
   gap: var(--gapXSmall);
 }
 
+@media screen and (max-width: 1523px) {
+  .otpFieldsAndButtonContainer {
+    gap: var(--gapMedium);
+  }
+}
+
 @media screen and (max-width: 511px) {
   .otpFieldsAndButtonContainer {
     flex: 1;
     justify-content: space-between;
+    gap: var(--gapLarge);
   }
   .container {
     padding: var(--paddingSmall);
+  }
+  .minHeight{
+    min-height: var(--height_50);
   }
 }
