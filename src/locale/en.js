@@ -301,7 +301,7 @@ const locale = {
   "label.menu.roster": "Roster",
   "label.menu.feedback": "Feedback",
   "label.menu.contact-us": "Contact Us",
-  "label.menu.activity_logs": "Activity Logs",
+  "label.menu.activity-logs": "Activity Logs",
   "label.menu.all-job-listing": "All Job listing",
   "label.menu.round-1": "Round 1",
   "label.menu.round-2": "Round 2",
