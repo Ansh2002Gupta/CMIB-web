@@ -37,7 +37,7 @@ function Home({ noOuterPadding }) {
         content={<Outlet />} // view component
         {...{ noOuterPadding }}
       />
-      <CommonModal isOpen={isModalOpen}>
+      <CommonModal isOpen={isModalOpen} width={600}>
         <ModuleChange {...{ setIsModalOpen }} />
       </CommonModal>
     </>
