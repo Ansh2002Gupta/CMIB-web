@@ -308,7 +308,7 @@ export const MENU_KEYS = {
   ROASTER: "roster",
   FEEDBACK: "feedback",
   CONTACT_US: "contact-us",
-  ACTIVITY_LOGS: "activity_logs",
+  ACTIVITY_LOGS: "activity-logs",
   ALL_JOBS: "all-job-listing",
   ROUND_1_PLACEMENT: "round-1",
   ROUND_2_PLACEMENT: "round-2",
