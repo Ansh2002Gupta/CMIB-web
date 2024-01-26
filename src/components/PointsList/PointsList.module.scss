@@ -33,6 +33,10 @@
     background-color: var(--active);
 }
 
+.spanOverAllColumns {
+  grid-column: 1 / -1;
+}
+
 @media screen and (max-width: 511px) {
   .box {
     grid-template-columns: 1fr;
