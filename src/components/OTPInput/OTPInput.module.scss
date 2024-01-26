@@ -121,9 +121,18 @@
   align-items: center;
 }
 
+@media screen and (max-width: 1800px) {
+  .otpFieldsAndButtonContainer {
+    gap: var(--gapSmallMedium);
+  }
+}
+
 @media screen and (max-width: 1523px) {
   .otpFieldsAndButtonContainer {
-    gap: var(--gapMedium);
+    gap: var(--gapXXSmall);
+  }
+  .container{
+    gap: var(--gapXSmall);
   }
 }
 
