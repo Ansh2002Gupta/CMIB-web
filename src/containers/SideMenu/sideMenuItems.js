@@ -347,7 +347,7 @@ const modules = [
   {
     id: 5,
     key: MODULE_KEYS.WOMEN_PARTTIME_KEY,
-    label: "Women Part Time",
+    label: "Women Placement",
     children: experiencedMembersMenu,
     image: "woman",
     isExperiencedMember: true,
