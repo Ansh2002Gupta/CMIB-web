@@ -4,7 +4,6 @@ import { Avatar, Space, Card, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import { ReactComponent as UserIcon } from "../../themes/base/assets/icons/user.svg";
-import { ReactComponent as CompanyIcon } from "../../themes/base/assets/icons/building.svg";
 import { ReactComponent as LockIcon } from "../../themes/base/assets/icons/lock.svg";
 
 import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
@@ -27,14 +26,6 @@ export default function CardDropdownOverlay({
       },
       label: "label.viewProfile",
       icon: <UserIcon />,
-    },
-    {
-      id: 2,
-      onClick: () => {
-        console.log("user profile 2");
-      },
-      label: "label.companyProfile",
-      icon: <CompanyIcon />,
     },
     {
       id: 3,
