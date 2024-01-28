@@ -5,6 +5,11 @@
   border-radius: 12px;
 }
 
+.containerStyles {
+  padding: 24px;
+  padding-bottom: 40px;
+}
+
 .imageStyle {
   height: 48px;
   width: 48px;
@@ -45,6 +50,12 @@
   color: black;
   font-size: 14px;
   font-weight: 500;
+  min-height: 48px;
+  width: 100%;
+  &:hover {
+    color: black !important;
+    border: 1px solid grey !important;
+  }
 }
 
 .headingText {
@@ -54,9 +65,9 @@
 }
 
 .subHeadingText {
-  color: green;
   font-size: 14px;
   font-weight: 500;
+  width: 50%;
 }
 
 .imageContainerStyle {
@@ -77,13 +88,16 @@
   background: linear-gradient(to bottom, silver 40%, white 30%);
   padding: 24px;
   border-radius: 12px;
-  gap: 24px;
+  gap: 32px;
   min-width: 500px;
 }
 
 .secondSectionStyle {
   gap: 5px;
   align-items: center;
+  background-color: white;
+  text-align: center;
+  width: 100%;
 }
 
 .thirdSectionStyle {
@@ -97,8 +111,10 @@
 }
 
 .crossIconStyle {
-  height: 24px;
-  width: 24px;
+  min-height: 24px;
+  max-height: 24px;
+  min-width: 24px;
+  max-width: 24px;
   cursor: pointer;
 }
 
@@ -122,4 +138,101 @@
   height: 152px;
   width: 152px;
   border-radius: 152px;
+}
+
+.emailAndMobileNoContainer {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.rightAlign {
+  width: 50%;
+  text-align: end;
+}
+
+.leftAlign {
+  width: 50%;
+  text-align: start;
+}
+
+.divider {
+  min-height: 5px;
+  min-width: 1px;
+  background-color: grey;
+}
+
+.accessAndDateContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+}
+
+.innerContainer-accessAndDateContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.textAndValueContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.inside-twoFactorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.chipsContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.darkText {
+  color: var(--textBold, #000803);
+  font-weight: 500;
+}
+
+.chipsBg {
+  background-color: #f2f4fc;
+  border-radius: 16px;
+  padding: 4px 8px;
+}
+
+.greyText {
+  color: var(--On-surface, #616c82);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.chipsBox {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 16px;
+}
+
+.padding24px {
+  padding: 24px;
+}
+
+.topHeadingStyles {
+  border-bottom: 1px solid grey;
+}
+
+.imageBox {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

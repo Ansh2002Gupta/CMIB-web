@@ -315,9 +315,12 @@ const locale = {
   "label.chooseModule": "Choose a module",
   "label.emailAddress": "Email Address: ",
   "label.changeEmailAddress": "Change Email Address",
-  'label.view_profile': 'View Profile',
-  'label.change_password': 'Change Password',
-  'account.logout': 'Log out',
+  "label.view_profile": "View Profile",
+  "label.change_password": "Change Password",
+  "account.logout": "Log out",
+  "account.enableTwoFactorAuthentication": "Enable Two-factor Authentication",
+  "label.editProfilePicture": "Edit Profile Picture",
+  "label.remove": "Remove",
 };
 
 export default locale;

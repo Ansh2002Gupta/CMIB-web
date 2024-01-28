@@ -2,6 +2,7 @@ import React from "react";
 import BaseLayout from "../Base";
 import layoutStyle from "./FourRow.styles";
 function FourRow({
+  className,
   style,
   firstSectionStyle,
   secondSectionStyle,
@@ -13,7 +14,7 @@ function FourRow({
   lastSection,
 }) {
   return (
-    <BaseLayout style={{ ...layoutStyle, ...style }}>
+    <BaseLayout style={{ ...layoutStyle, ...style }} className={className}>
       {({ Row }) => (
         <>
           <Row style={firstSectionStyle}>{firstSection}</Row>

@@ -1,9 +1,9 @@
-import LogoutModal from './LogoutModal';
-import ViewProfileModal from './ViewProfileModal';
-import ChangeProfileModal from './ChangeProfileModal';
+import AcessModal from "./LogoutModal";
+import ViewProfileModal from "./ViewProfileModal";
+import ChangeProfileModal from "./ChangeProfileModal";
 
 const ModalComponents = {
-  LogoutModal,
+  AcessModal,
   ViewProfileModal,
   ChangeProfileModal,
 };

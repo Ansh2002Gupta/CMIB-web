@@ -9,6 +9,7 @@ import "./Override.css";
 const CommonModal = ({
   children,
   closeIcon,
+  customContainerStyles,
   footer,
   isOpen,
   onCancel,
@@ -17,7 +18,7 @@ const CommonModal = ({
 }) => {
   return (
     <Modal
-      className={[styles.modal, "customModal"]}
+      className={[styles.modal, "customModal", customContainerStyles].join(" ")}
       footer={footer}
       width={width}
       centered
@@ -33,6 +34,7 @@ const CommonModal = ({
 CommonModal.defaultProps = {
   children: null,
   closeIcon: false,
+  customContainerStyles: "",
   footer: null,
   isOpen: false,
   onCancel: () => {},
@@ -43,6 +45,7 @@ CommonModal.propTypes = {
   children: PropTypes.node,
   btnText: PropTypes.string,
   closeIcon: PropTypes.bool,
+  customContainerStyles: PropTypes.string,
   footer: PropTypes.bool,
   onCancel: PropTypes.func,
   maskclosable: PropTypes.bool,

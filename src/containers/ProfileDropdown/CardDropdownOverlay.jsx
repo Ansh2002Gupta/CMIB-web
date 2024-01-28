@@ -28,7 +28,7 @@ export default function CardDropdownOverlay({
       icon: <UserIcon />,
     },
     {
-      id: 3,
+      id: 2,
       onClick: () => {
         console.log("user profile 3");
       },
