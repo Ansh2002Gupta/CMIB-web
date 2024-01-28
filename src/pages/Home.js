@@ -54,7 +54,7 @@ function Home({ noOuterPadding }) {
           />
         )}
         {currentOpenendModal === 2 && (
-          <ModalComponents.LogoutModal
+          <ModalComponents.AccessViewModal
             {...{  setCurrentOpenModal }}
           />
         )}
