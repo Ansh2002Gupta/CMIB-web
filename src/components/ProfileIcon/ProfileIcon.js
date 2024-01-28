@@ -34,6 +34,7 @@ const ProfileIcon = ({
             : "",
           imageContainerStyle,
         ].join(" ")}
+        onClick={onClick}
       >
         <Image
           src={getImage("global")}
@@ -46,12 +47,14 @@ const ProfileIcon = ({
           ].join(" ")}
         />
         {icon && (
-          <Image
-            preview={false}
-            src={icon}
-            className={styles.editIcon}
-            onClick={onClick}
-          />
+          <div className={styles.iconContainer}>
+            <Image
+              preview={false}
+              src={icon}
+              className={styles.editIcon}
+              onClick={onClick}
+            />
+          </div>
         )}
       </div>
     );

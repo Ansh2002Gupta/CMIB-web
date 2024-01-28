@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Typography, Image, Button } from "antd";
+import { Typography, Image } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
+
+import Chip from "../Chip/Chip";
 import { classes } from "./ModalComponent.styles";
 import styles from "./modalComponent.module.scss";
-import Chip from "../Chip/Chip";
 
 const AccessViewModal = ({ setCurrentOpenModal }) => {
   const intl = useIntl();

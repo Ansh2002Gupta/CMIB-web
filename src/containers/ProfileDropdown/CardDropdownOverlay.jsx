@@ -14,6 +14,8 @@ export default function CardDropdownOverlay({
   userName,
   userEmail,
   userProfile,
+  setCurrentOpenModal,
+  setDropdownVisible,
 }) {
   const intl = useIntl();
   const { onLogout } = useHeader();
@@ -22,7 +24,8 @@ export default function CardDropdownOverlay({
     {
       id: 1,
       onClick: () => {
-        console.log("user profile 1");
+        setDropdownVisible(false);
+        setCurrentOpenModal(1);
       },
       label: "label.viewProfile",
       icon: <UserIcon />,

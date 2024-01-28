@@ -16,7 +16,7 @@ import styles from "./CommonStyles/commonModalStyles.module.scss";
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentOpenendModal, setCurrentOpenModal] = useState(4);
+  const [currentOpenendModal, setCurrentOpenModal] = useState(0);
 
   return (
     <>
@@ -36,6 +36,9 @@ function Home({ noOuterPadding }) {
             <HeaderContainer
               openSideMenu={openSideMenu}
               setOpenSideMenu={setOpenSideMenu}
+              {...{
+                setCurrentOpenModal,
+              }}
             />
           </Layout>
         }
@@ -60,7 +63,7 @@ function Home({ noOuterPadding }) {
           <ModalComponents.ChangeProfileModal {...{ setCurrentOpenModal }} />
         )}
       </CommonModal>
-
+      {/* TODO: Need to findout how to use the below commented crop and rotate modal */}
       {/* {currentOpenendModal === 4 && <CropAndRotateImage  {...{
             file,
             handleFileUpload,

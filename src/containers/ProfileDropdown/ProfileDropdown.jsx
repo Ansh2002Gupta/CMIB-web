@@ -7,7 +7,7 @@ import CardDropdownOverlay from "./CardDropdownOverlay";
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./profileDropdown.module.scss";
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({setCurrentOpenModal}) => {
   const [userProfileDetails, userProfileDispatch] =
   useContext(UserProfileContext);
   const userData= userProfileDetails?.userDetails;
@@ -27,6 +27,7 @@ const ProfileDropdown = () => {
           userName={userName}
           userEmail={userEmail}
           userProfile={userProfilePic}
+          {...{setCurrentOpenModal, setDropdownVisible}}
         />
       )}
       trigger={["click"]}
