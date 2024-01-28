@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
 
 import CommonModal from "../components/CommonModal";
+// TODO: Need to find out how to work with this below component
+// import CropAndRotateImage from "../components/CropAndRotateImage/CropAndRotateImage";
 import ModuleChange from "../containers/ModuleChange";
 import MainLayout from "../layouts/MainLayout";
 import MenuContainer from "../containers/Menu/Menu";
@@ -14,7 +16,7 @@ import styles from "./CommonStyles/commonModalStyles.module.scss";
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentOpenendModal, setCurrentOpenModal] = useState(1);
+  const [currentOpenendModal, setCurrentOpenModal] = useState(4);
 
   return (
     <>
@@ -49,21 +51,24 @@ function Home({ noOuterPadding }) {
         customContainerStyles={styles.customContainerStyles}
       >
         {currentOpenendModal === 1 && (
-          <ModalComponents.ViewProfileModal
-            {...{  setCurrentOpenModal }}
-          />
+          <ModalComponents.ViewProfileModal {...{ setCurrentOpenModal }} />
         )}
         {currentOpenendModal === 2 && (
-          <ModalComponents.AccessViewModal
-            {...{  setCurrentOpenModal }}
-          />
+          <ModalComponents.AccessViewModal {...{ setCurrentOpenModal }} />
         )}
         {currentOpenendModal === 3 && (
-          <ModalComponents.ChangeProfileModal
-            {...{  setCurrentOpenModal }}
-          />
+          <ModalComponents.ChangeProfileModal {...{ setCurrentOpenModal }} />
         )}
       </CommonModal>
+
+      {/* {currentOpenendModal === 4 && <CropAndRotateImage  {...{
+            file,
+            handleFileUpload,
+            initiateFileUpload,
+            photoURL: getImageSource(file),
+            setFile,
+            setOpenCropView,
+          }}/>} */}
     </>
   );
 }
