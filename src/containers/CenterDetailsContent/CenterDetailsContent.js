@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import moment from "moment";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
@@ -71,12 +71,12 @@ const CenterDetailsContent = ({ isEdit }) => {
             isRequired
             label={intl.formatMessage({ id: "label.centreStartTime" })}
             onChange={(momentValue, timeString) => {
-              handleInputChange(momentValue?.toISOString(), "centreStartTime");
+              handleInputChange(momentValue, "centreStartTime");
             }}
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreStartTime",
             })}
-            value={moment(formData?.centreStartTime)}
+            value={dayjs(formData?.centreStartTime)}
             disabled={!isEdit}
           />
           <CustomDateTimePicker
@@ -86,12 +86,12 @@ const CenterDetailsContent = ({ isEdit }) => {
             isRequired
             label={intl.formatMessage({ id: "label.centreEndTime" })}
             onChange={(momentValue, timeString) => {
-              handleInputChange(momentValue?.toISOString(), "centreEndTime");
+              handleInputChange(momentValue, "centreEndTime");
             }}
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreEndTime",
             })}
-            value={moment(formData.centreEndTime)}
+            value={dayjs(formData.centreEndTime)}
             disabled={!isEdit}
           />
         </div>

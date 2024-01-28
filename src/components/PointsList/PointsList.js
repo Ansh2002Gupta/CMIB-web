@@ -6,11 +6,7 @@ import Base from "../../core/layouts/Base/Base";
 
 import styles from "./PointsList.module.scss";
 
-const PointsList = ({
-  customHeadingStyles,
-  pointsArray,
-  pointsHeading,
-}) => {
+const PointsList = ({ customHeadingStyles, pointsArray, pointsHeading }) => {
   const getBulletStyles = (isValid) => {
     return [styles.bullet, isValid ? styles.active : ""].join(" ");
   };
@@ -26,7 +22,15 @@ const PointsList = ({
       <Base className={styles.box}>
         {pointsArray?.map((point, index) => {
           return (
-            <div key={index} className={styles.pointsContainer}>
+            <div
+              key={index}
+              className={[
+                styles.pointsContainer,
+                index === pointsArray?.length - 1
+                  ? styles.spanOverAllColumns
+                  : "",
+              ].join(" ")}
+            >
               <div className={getBulletStyles(point.isValid)}></div>
               <Typography className={styles.pointText}>{point.str}</Typography>
             </div>
