@@ -335,3 +335,9 @@ export const SORT_PROPERTIES = {
 };
 
 export const GENERIC_ERROR_MESSAGE = "Placeholder text";
+
+export const ZOOM_CONSTANT = {
+  MAX_ZOOM: 3,
+  MIN_ZOOM: 1,
+  ZOOM_STEP: 0.1,
+};

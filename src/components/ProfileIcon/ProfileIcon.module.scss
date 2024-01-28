@@ -1,15 +1,17 @@
 // TODO: use var here
-.initials-container {
+.initialsContainer {
+  display: flex;
   justify-content: center;
+  align-items: center;
   background-color: white;
   border-radius: 200px;
-  align-items: center;
   border-width: 0.5px;
   border-color: lightGrey;
   position: relative;
+  background-color: black;
 }
 
-.edit-profile-container {
+.editProfileContainer {
   align-self: center;
   height: 152px;
   width: 152px;
@@ -17,25 +19,31 @@
   margin-bottom: 32px;
 }
 
-.profile-image-style {
+.profileImageStyle {
   width: 104px;
   height: 104px;
   border-radius: 52px;
 }
 
-.modal-profile-image {
+.modalProfileImage {
   width: 152px;
   height: 152px;
   border-radius: 76px;
 }
 
-.initials-text {
+.initialsText {
   font-size: 14px;
 }
 
-.edit-icon {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  cursor: pointer;
+// .editIcon {
+//   position: absolute;
+//   bottom: 0;
+//   right: 0;
+//   cursor: pointer;
+// }
+
+.profileImageStyle{
+  width: 100%;
+  height: 100%;
+  background-color: red;
 }
