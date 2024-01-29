@@ -3,6 +3,7 @@ export const colorPallets = {
   blue1: "#60C5F9",
   blue2: "#0a3292",
   blue3: "#8997c5",
+  blue4: "#007AFF",
   lightBlue1: "#F6F8F9",
   lightBlue2: "#f2f4fc",
   darkBlue: "#00137E",

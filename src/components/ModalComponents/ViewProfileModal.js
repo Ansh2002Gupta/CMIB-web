@@ -67,7 +67,7 @@ const ViewProfileModal = ({ setModalSelect, setCurrentOpenModal }) => {
               }}
               iconType="modalIcon"
               showEditModal
-              icon={getImage("edit")}
+              icon={getImage("smallCircularEditBtn")}
             />
           }
         />

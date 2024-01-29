@@ -1,10 +1,12 @@
+import variables from "../../themes/base/styles/variables";
+
 export const classes = {
   crossStyle: {
     alignSelf: "flex-end",
-    marginBottom: "40px",
+    marginBottom: variables.margin_40,
   },
   thirdSectionStyle: {
-    gap: "5px",
+    gap: variables.gapXXSmall,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -12,10 +14,10 @@ export const classes = {
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-end",
-    paddingRight: "8px",
+    paddingRight:  variables.paddingExtraSmall,
   },
   leftSectionStyles: {
-    paddingLeft: "8px",
+    paddingLeft: variables.paddingExtraSmall,
   },
   middleSectionStyles: {
     display: "flex",

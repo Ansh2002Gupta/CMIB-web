@@ -1,27 +1,28 @@
+import variables from "../../themes/base/styles/variables";
 
 const styles = {
   zoomInfoContainer: {
-    marginTop: 32,
+    marginTop: `${variables.margin_32}`,
     flexDirection: "row",
-    gap: 16,
+    gap: `${variables.gapSmall}`,
     alignItems: "center",
   },
   sliderBox: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: `${variables.gapXSmall}`,
     flex: 1,
   },
   zoomIcon: {
     cursor: "pointer",
-    width: 24,
-    height: 24,
+    width: `${variables.width_24}`,
+    height: `${variables.height_24}`,
   },
   zoomSlider: {
     flex: 1,
   },
   percentageText: {
-    fontSize: 14,
+    fontSize: `${variables.fontSizeSmall}`,
   },
 };
 

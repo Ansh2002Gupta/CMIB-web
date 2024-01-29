@@ -1,4 +1,3 @@
-// TODO: use var here
 .initialsContainer {
   display: flex;
   justify-content: center;
@@ -8,12 +7,13 @@
   border-width: 0.5px;
   border-color: var(--borderColor, #ccd0e5);
   position: relative;
-  border: var(--width_10, 10px) solid  var(--bodyBg, #fff);
+  border: var(--width_10, 10px) solid var(--bodyBg, #fff);
 }
 
 .editProfileContainer {
   cursor: pointer;
   align-self: center;
+  margin-top: var(--margin_60, 60px);
 }
 
 .profileImageStyle {
@@ -32,11 +32,12 @@
 }
 
 .iconContainer {
-  position: relative;
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
 }
 
 .editIcon {
-  position: absolute;
   bottom: 100px;
   right: 0;
   cursor: pointer;
@@ -50,4 +51,7 @@
   .modalProfileImage {
     min-width: var(--width_70, 70px);
   }
+  .editProfileContainer {
+    margin-top: var(--margin_20, 20px);
+  }  
 }

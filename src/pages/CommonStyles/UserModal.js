@@ -1,41 +1,44 @@
+import variables from "../../themes/base/styles/variables";
+import { colorPallets } from "../../constant/colors";
+
 const style = {
   container: {
     flexDirection: "row",
     justifyContent: "center",
-    padding: 16,
+    padding: variables.paddingSmall,
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: variables.bodyBg,
   },
   container: {
     flex: 1,
     justifyContent: "center",
-    padding: 16,
+    padding: variables.paddingSmall,
     alignItems: "center",
   },
   header: {
-    fontSize: 24,
-    marginBottom: 24,
+    fontSize: variables.fontSizeXlargeMedium,
+    marginBottom: variables.marginLarge,
     textAlign: "center",
   },
   input: {
-    height: 40,
-    borderColor: "gray",
+    height: variables.height_40,
+    borderColor: colorPallets.ltGrey1,
     borderWidth: 1,
-    marginBottom: 12,
-    paddingLeft: 8,
+    marginBottom: variables.margin_12,
+    paddingLeft: variables.paddingExtraSmall,
   },
   button: {
-    backgroundColor: "#007AFF",
-    padding: 12,
-    borderRadius: 4,
+    backgroundColor: colorPallets.blue4,
+    padding: variables.paddingMediumSmall,
+    borderRadius: variables.radiusSm,
     alignItems: "center",
   },
   modal: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: "100%",
-    width: "100%",
+    height: variables.fullHeight,
+    width: variables.fullWidth,
   },
 };
 

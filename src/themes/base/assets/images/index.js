@@ -47,6 +47,7 @@ import suiteCase from "./suite-case.svg";
 import woman from "./Woman.svg";
 import cross from "./cross.svg";
 import blueCheckSign from "./blue-check-sign.svg";
+import smallCircularEditBtn  from "./small edit circular button.svg"
 
 const images = {
   addCircle,
@@ -98,6 +99,7 @@ const images = {
   woman,
   cross,
   blueCheckSign,
+  smallCircularEditBtn,
 };
 
 export default images;

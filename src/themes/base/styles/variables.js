@@ -208,10 +208,13 @@ const variables = {
   marginSmall: "8px",
   marginXSmall: "6px",
   marginXXSmall: "4px",
+  margin_12: "12px",
   marginMedium: "16px",
   margin_20: "20px",
   marginLarge: "24px",
   margin_32: "32px",
+  margin_40: "40px",
+  margin_60: "60px",
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };

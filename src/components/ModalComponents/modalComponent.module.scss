@@ -1,6 +1,5 @@
-// TODO: use var here
 .mainContainer {
-  background-color: white;
+  background-color: var(--bodyBg, #fff);
   padding: var(--paddingMedium, 24px);
   border-radius: var(--radiusXLg, 12px);
 }
@@ -28,7 +27,7 @@
 }
 
 .cancelButton {
-  border-color: grey;
+  border-color: var(--borderColor, #ccd0e5);
   border-width: var(--width_1, 1px);
   padding: var(--paddingMediumSmall, 12px);
   border-radius: var(-radiusLg, 8px);
@@ -46,19 +45,19 @@
 }
 
 .buttonText {
-  color: black;
+  color: var(--textBold, #000833);
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
   min-height: var(--height_48, 48px);
   width: var(--fullWidth, 100%);
   &:hover {
-    color: black !important;
-    border: 1px solid grey !important;
+    color: var(--textBold, #000833) !important;
+    border: 1px solid var(--borderColor, #ccd0e5) !important;
   }
 }
 
 .headingText {
-  color: black;
+  color: var(--textBold, #000833);
   font-size: var(--fontSizeXlarge, 20px);
   font-weight: var(--fontWeightBold, 600);
 }
@@ -70,14 +69,13 @@
 }
 
 .imageContainerStyle {
-  background-color: white;
+  background-color: var(--bodyBg, #fff);
   border-radius: var(--radius_50Per, 50%);
   border-width: 5px;
-  border-color: white;
 }
 
 .initialContainerStyle {
-  background-color: white;
+  background-color: var(--bodyBg, #fff);
   border-radius: var(--radius_50Per, 50%);
   height: var(--height_100, 100px);
   width: var(--width_100, 100px);
@@ -86,7 +84,7 @@
 .profileMainContainer {
   background: linear-gradient(to bottom, silver 40%, white 30%);
   padding: var(--paddingMedium, 24px);
-  border-radius: var(-radiusXLg, 12px);
+  border-radius: var(--radiusXLg, 12px);
   gap: var(--gapLarge, 32px);
 }
 
@@ -125,9 +123,9 @@
 }
 
 .changeProfileContainer {
-  background-color: white;
+  background-color: var(--bodyBg, #fff);
   padding: var(--paddingMedium, 24px);
-  border-radius: var(-radiusXLg, 12px);
+  border-radius: var(--radiusXLg, 12px);
   gap: var(--gapXLarge, 40px);
 }
 
@@ -156,7 +154,7 @@
 .divider {
   min-height: var(--height_5, 5px);
   min-width: var(--width_1, 1px);
-  background-color: grey;
+  background-color: var(--borderColor, #ccd0e5);
 }
 
 .accessAndDateContainer {
@@ -190,7 +188,7 @@
 }
 
 .chipsBg {
-  background-color: #f2f4fc;
+  background-color: var(--chipBg, #f2f4fc);
   border-radius: var(--radiusMLg, 16px);
   padding: var(--paddingXXSmall, 4px) var(--paddingExtraSmall, 8px);
 }
@@ -217,7 +215,7 @@
 }
 
 .topHeadingStyles {
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid var(--borderColor, #ccd0e5);
 }
 
 .imageBox {
@@ -233,7 +231,7 @@
 }
 
 .switch {
-  background-color: #04af55 !important;
+  background-color: var(--greenBtnBg, #04af55) !important;
 }
 
 @media (max-width: 551px) {
@@ -272,7 +270,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: var(--fontSizeExtraSmall, 12px)
+    font-size: var(--fontSizeExtraSmall, 12px);
   }
   .crossIconStyle {
     min-height: var(--xSmallHeight, 16px);
