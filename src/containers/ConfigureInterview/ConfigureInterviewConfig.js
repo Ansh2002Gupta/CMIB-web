@@ -1,6 +1,6 @@
 import styles from "./ConfigureInterview.module.scss";
 
-const getConfigureDateCoumns = (intl, getImage, renderColumn) => {
+const getConfigureDateCoumns = (intl, isEdit, getImage, renderColumn) => {
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "centre.scheduleDate" }),
@@ -77,6 +77,7 @@ const getConfigureDateCoumns = (intl, getImage, renderColumn) => {
         onChange: (date, record) => {},
       },
     }),
+
     renderColumn({
       dataIndex: "minusCircle",
       key: "minusCircle",
@@ -85,7 +86,7 @@ const getConfigureDateCoumns = (intl, getImage, renderColumn) => {
         onClick: (rowData) => {},
         preview: false,
         src: getImage(true ? "minusCircle" : "addCircle"),
-        visible: true,
+        visible: isEdit,
       },
     }),
   ];

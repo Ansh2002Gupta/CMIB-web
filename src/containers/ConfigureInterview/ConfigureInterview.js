@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Table, Typography } from "antd";
 import { ThemeContext } from "core/providers/theme";
@@ -8,17 +9,24 @@ import { TwoRow } from "../../core/layouts";
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import getConfigureDateCoumns from "./ConfigureInterviewConfig";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { CONFIGURE_INTERVIEW_DATES } from "../../dummyData";
+import { SETUP_MOCK_INTERVIEW, SESSION } from "../../routes/routeNames";
 import styles from "./ConfigureInterview.module.scss";
 
 const ConfigureInterview = () => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
-  const columns = getConfigureDateCoumns(intl, getImage, renderColumn);
+  const { navigateScreen: navigate } = useNavigateScreen();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isEdit = searchParams.get("mode") === "edit";
+  const columns = getConfigureDateCoumns(intl, isEdit, getImage, renderColumn);
 
   const handleOnSubmit = () => {};
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    navigate(`${SESSION}/${SETUP_MOCK_INTERVIEW}`);
+  };
 
   return (
     <TwoRow

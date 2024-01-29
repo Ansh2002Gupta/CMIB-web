@@ -2,6 +2,7 @@ import styles from "./SetupMockInterview.module.scss";
 
 const getSetupMockColumn = (
   intl,
+  isEdit,
   getImage,
   goToConfigureInterview,
   renderColumn
@@ -38,7 +39,7 @@ const getSetupMockColumn = (
         leftAlt: "download",
         rightAlt: "edit",
         leftOnClick: (rowData) => {},
-        rightOnClick: (rowData) => goToConfigureInterview(rowData, true),
+        rightOnClick: (rowData) => goToConfigureInterview(rowData, isEdit),
         leftPreview: false,
         rightPreview: false,
         leftSrc: getImage("download"),
