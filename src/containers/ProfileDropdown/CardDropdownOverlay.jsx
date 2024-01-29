@@ -33,7 +33,6 @@ export default function CardDropdownOverlay({
     {
       id: 2,
       onClick: () => {
-        console.log("user profile 3");
       },
       label: "label.changePassword",
       icon: <LockIcon />,

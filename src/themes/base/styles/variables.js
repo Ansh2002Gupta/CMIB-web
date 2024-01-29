@@ -56,6 +56,8 @@ const variables = {
   radiusMLg: "16px",
   radius_18: "18px",
   radiusXXLg: "24px",
+  radius_48: "48px",
+  radius_50Per: "50%",
 
   // Font-size
   fontSizeExtraSmall: "12px",
@@ -87,6 +89,8 @@ const variables = {
   fontWeightBold: 600,
 
   // Widths
+  width_1: "1px",
+  width_10: "10px",
   xSmallWidth: "16px",
   width_20: "20px",
   width_24: "24px",
@@ -94,11 +98,13 @@ const variables = {
   width_32: "32px",
   width_40: "40px",
   width_48: "48px",
+  width_70: "70px",
   sidemenuWidth: "74px",
   width_80: "80px",
   width_100: "100px",
   width_120: "120px",
   width_140: "140px",
+  width_150: "150px",
   width_200: "200px",
   width_300: "300px",
   width_350: "350px",
@@ -115,6 +121,7 @@ const variables = {
   fullWidth: "100%",
 
   // Heights
+  height_5: "5px",
   xSmallHeight: "16px",
   height_20: "20px",
   height_24: "24px",
@@ -127,6 +134,8 @@ const variables = {
   height_50: "50px",
   btnHeight: "56px",
   height_70: "70px",
+  height_100: "100px",
+  height_150: "150px",
   height_240: "240px",
   height_250: "250px",
   height_300: "300px",
@@ -200,7 +209,9 @@ const variables = {
   marginXSmall: "6px",
   marginXXSmall: "4px",
   marginMedium: "16px",
+  margin_20: "20px",
   marginLarge: "24px",
+  margin_32: "32px",
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };

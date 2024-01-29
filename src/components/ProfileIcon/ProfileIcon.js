@@ -19,10 +19,6 @@ const ProfileIcon = ({
   showEditModal,
 }) => {
   const { getImage } = useContext(ThemeContext);
-  console.log({
-    showEditModal,
-    iconType,
-  });
 
   if (profileImage) {
     return (

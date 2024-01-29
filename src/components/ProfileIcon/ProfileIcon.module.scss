@@ -3,12 +3,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
-  border-radius: 50%;
+  background-color: var(--bodyBg, #fff);
+  border-radius: var(--radius_50Per, 50%);
   border-width: 0.5px;
-  border-color: lightGrey;
+  border-color: var(--borderColor, #ccd0e5);
   position: relative;
-  border: 10px solid white;
+  border: var(--width_10, 10px) solid  var(--bodyBg, #fff);
 }
 
 .editProfileContainer {
@@ -17,21 +17,21 @@
 }
 
 .profileImageStyle {
-  min-width: 152px;
-  min-height: 152px;
-  border-radius: 50%;
+  min-width: var(--width_150, 150px);
+  min-height: var(--height_150, 150px);
+  border-radius: var(--radius_50Per, 50%);
 }
 
 .modalProfileImage {
-  min-width: 100px;
-  border-radius: 76px;
+  min-width: var(--width_100, 100px);
+  border-radius: var(--radius_50Per, 50%);
 }
 
 .initialsText {
-  font-size: 14px;
+  font-size: var(--fontSizeSmall, 14px);
 }
 
-.iconContainer{
+.iconContainer {
   position: relative;
 }
 
@@ -43,11 +43,11 @@
 }
 
 @media (max-width: 551px) {
-  .profileImageStyle{
-    min-width: 70px;
-    min-height: 70px;
+  .profileImageStyle {
+    min-width: var(--width_70, 70px);
+    min-height: var(height_70, 70px);
   }
   .modalProfileImage {
-    min-width: 70px;
+    min-width: var(--width_70, 70px);
   }
 }
