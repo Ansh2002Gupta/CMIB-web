@@ -23,7 +23,7 @@ import { getPasswordStrengthPointsArray } from "../../constant/passwordRules";
 import { LOGIN } from "../../routes/routeNames";
 import styles from "./CreateNewPassword.module.scss";
 
-const CreateNewPassword = ({ reset_token }) => {
+const CreateNewPassword = ({ token }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
@@ -75,7 +75,7 @@ const CreateNewPassword = ({ reset_token }) => {
     setStatus("label.newPasswordAndConfirmPasswordMatched");
     await handleCreateNewPassword({
       password: formInputs.password,
-      reset_token,
+      token,
     });
   };
 

@@ -26,6 +26,7 @@ const ForgotPassword = () => {
     handleForgotPassword,
     isLoading,
     errorWhileResetPassword,
+    forgotPasswordResult,
     isSuccess: isForgotPasswordSuccessful,
     setErrorWhileResetPassword,
   } = useForgotPassword();
@@ -55,7 +56,7 @@ const ForgotPassword = () => {
   const handleOTPSubmit = (otp) => {
     handleCheckOTP({
       onSuccessCallback: () => setCurrentActiveScreen(3),
-      payload: { email: userName, otp },
+      payload: { otp, token: forgotPasswordResult?.token },
       url: ADMIN_ROUTE + VERIFY_OTP,
     });
   };
@@ -156,7 +157,7 @@ const ForgotPassword = () => {
           )}
         </Base>
       ) : (
-        <CreateNewPassword reset_token={checkOTPData?.reset_token} />
+        <CreateNewPassword token={checkOTPData?.token} />
       )}
     </>
   );

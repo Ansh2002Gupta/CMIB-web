@@ -3,9 +3,4 @@
   border-radius: var(--radiusXLg,12px); 
 }
 
-@media (min-width: 1200px) {
-    .customModal .ant-modal-content {
-      width: 40vw;
-    }
-  }
 
