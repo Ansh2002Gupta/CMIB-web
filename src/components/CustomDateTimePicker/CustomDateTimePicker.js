@@ -55,6 +55,7 @@ const CustomDateTimePicker = ({
                   value,
                 }}
                 className={[styles.timeInput, customTimeStyle]}
+                suffixIcon={<Image src={getImage("clock")} />}
               />
             ) : isEditable ? (
               <DatePicker

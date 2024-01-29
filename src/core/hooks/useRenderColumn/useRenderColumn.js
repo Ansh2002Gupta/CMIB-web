@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch } from "antd";
 
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
+import CustomInput from "../../../components/CustomInput";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 import { TwoColumn } from "../../layouts";
@@ -18,6 +19,7 @@ const useRenderColumn = () => {
     renderDateTime = {},
     render,
     renderImage = {},
+    renderInput = {},
     renderMenu = {},
     renderText = {},
     renderSwitch = {},
@@ -50,6 +52,16 @@ const useRenderColumn = () => {
       onClick = () => {},
       preview,
     } = renderImage;
+
+    const {
+      customInputContainerStyles,
+      customInputNumberStyles,
+      customInputStyles,
+      customSelectInputStyles,
+      inputDisabled,
+      inputPlaceholder = "",
+      inputType,
+    } = renderInput;
 
     const {
       items = [],
@@ -262,11 +274,29 @@ const useRenderColumn = () => {
               isRequired,
               type,
               placeholder,
-              value,
+              // value,
             }}
             onChange={(val) => {
               onChange(val, record);
             }}
+          />
+        );
+      });
+
+    renderInput.visible &&
+      (columnObject.render = (value, record) => {
+        return (
+          <CustomInput
+            {...{
+              value,
+              customInputNumberStyles,
+              customInputStyles,
+              customSelectInputStyles,
+            }}
+            disabled={inputDisabled}
+            placeholder={inputPlaceholder}
+            type={inputType}
+            customContainerStyles={customInputContainerStyles}
           />
         );
       });

@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
-import { Typography } from "antd";
+import { Table, Typography } from "antd";
+import { ThemeContext } from "core/providers/theme";
 
 import { TwoRow } from "../../core/layouts";
 
-import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
+import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
+import getConfigureDateCoumns from "./ConfigureInterviewConfig";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { CONFIGURE_INTERVIEW_DATES } from "../../dummyData";
 import styles from "./ConfigureInterview.module.scss";
-import { stubFalse } from "lodash";
 
 const ConfigureInterview = () => {
   const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
+  const { renderColumn } = useRenderColumn();
+  const columns = getConfigureDateCoumns(intl, getImage, renderColumn);
 
   const handleOnSubmit = () => {};
   const handleCancel = () => {};
 
   return (
     <TwoRow
+      className={styles.mainContainer}
       topSection={
         <TwoRow
-          className={styles.mainContainer}
+          className={styles.topContainer}
           topSection={
             <Typography className={styles.titleText}>
               {intl.formatMessage({ id: "label.configureInterviewDates" })}
             </Typography>
+          }
+          bottomSection={
+            <Table
+              columns={columns}
+              dataSource={CONFIGURE_INTERVIEW_DATES}
+              pagination={false}
+              rowClassName={styles.rowtext}
+              scroll={{ x: "max-content" }}
+              className={[styles.table, "customTable"]}
+              rowKey="id"
+            />
           }
         />
       }
@@ -33,7 +51,7 @@ const ConfigureInterview = () => {
           })}
           cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
           onActionBtnClick={handleOnSubmit}
-          isActionBtnDisable={stubFalse}
+          isActionBtnDisable={false}
           onCancelBtnClick={handleCancel}
         />
       }

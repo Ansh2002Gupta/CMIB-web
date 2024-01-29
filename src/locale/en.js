@@ -313,6 +313,14 @@ const locale = {
   "label.experiencedMember": "Experienced Member",
   "label.change": "Change",
   "label.chooseModule": "Choose a module",
+  "label.startTime": "Start Time",
+  "label.endTime": "End Time",
+  "label.facilitiesNumber": "No. of Facilities",
+  "label.slotDurationInMinutes": "Slot Duration (in Minutes)",
+  "label.placeholder.startTime": "Select start time",
+  "label.placeholder.endTime": "Select end time",
+  "label.placeholder.facilitiesNumber": "Enter no. of facilities",
+  "label.placeholder.slotDurationInMinutes": "Enter duration",
 };
 
 export default locale;
