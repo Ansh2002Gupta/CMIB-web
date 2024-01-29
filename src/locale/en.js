@@ -322,6 +322,7 @@ const locale = {
   "label.confirmPassword": "Confirm Password",
   "label.emailAddress": "Email Address: ",
   "label.changeEmailAddress": "Change Email Address",
+  "label.save": "Save",
 };
 
 export default locale;

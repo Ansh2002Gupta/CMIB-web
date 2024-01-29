@@ -18,11 +18,9 @@ const ActionAndCancelButtons = ({
 }) => {
   return (
     <TwoColumn
-      className={[styles.saveAndCancelBtnContainer, customCancelBtnStyles].join(
-        " "
-      )}
+      className={styles.saveAndCancelBtnContainer}
       leftSection={
-        <Button className={styles.cancelBtn} onClick={onCancelBtnClick}>
+        <Button className={[styles.cancelBtn, customCancelBtnStyles].join(" ")} onClick={onCancelBtnClick}>
           {cancelBtnText}
         </Button>
       }

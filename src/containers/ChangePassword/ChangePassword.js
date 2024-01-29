@@ -66,6 +66,12 @@ const ChangePassword = () => {
     });
   };
 
+  const isSaveDisabled =
+    !formData.old_password ||
+    !formData.new_password ||
+    !formData.confirm_password;
+
+
   const passwordStrengthPointsArray = getPasswordStrengthPointsArray(
     intl,
     passwordValidations
@@ -152,7 +158,6 @@ const ChangePassword = () => {
                       })
                     }
                     isTextVisible={!shouldShow[item.label]}
-                    eyeImage
                   />
                 </div>
               }
@@ -172,12 +177,13 @@ const ChangePassword = () => {
             bottomSection={
               <ActionAndCancelButtons
                 customActionBtnStyles={styles.customActionBtnStyles}
+                customCancelBtnStyles={styles.customCancelBtnStyles}
                 actionBtnText={intl.formatMessage({
-                  id: "label.saveChanges",
+                  id: "label.save",
                 })}
                 cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
                 onActionBtnClick={handleOnSubmit}
-                isActionBtnDisable={false}
+                isActionBtnDisable={isSaveDisabled}
                 onCancelBtnClick={handleCloseModal}
               />
             }

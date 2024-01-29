@@ -4,8 +4,8 @@ import { BellOutlined } from "@ant-design/icons";
 
 import { TwoColumn } from "core/layouts";
 
-import ConfirmLogout from "../ConfirmLogout";
 import ChangePassword from "../ChangePassword";
+import ConfirmLogout from "../ConfirmLogout";
 import ProfileDropdown from "../ProfileDropdown";
 import Sessions from "../Sessions/Sessions";
 import useResponsive from "../../core/hooks/useResponsive";

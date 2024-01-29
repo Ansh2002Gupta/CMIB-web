@@ -25,6 +25,7 @@
 .saveBtn {
   font-size: (--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
+  background-color: var(--greenBtnBg, #04af55);
   &:hover {
     border: var(--borderLight) !important;;
   }

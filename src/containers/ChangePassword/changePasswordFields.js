@@ -1,10 +1,10 @@
-export const FIELDS = (old_password, new_password, confirm_password) => {
+export const FIELDS = (oldPassword, newPassword, confirmPassword) => {
   return [
     {
       id: 1,
       headingIntl: "oldPassword",
       label: "old_password",
-      value: old_password,
+      value: oldPassword,
       rules: [
         {
           required: true,
@@ -16,7 +16,7 @@ export const FIELDS = (old_password, new_password, confirm_password) => {
       id: 2,
       headingIntl: "newPassword",
       label: "new_password",
-      value: new_password,
+      value: newPassword,
       rules: [
         {
           required: true,
@@ -28,7 +28,7 @@ export const FIELDS = (old_password, new_password, confirm_password) => {
       id: 3,
       headingIntl: "confirmPassword",
       label: "confirm_password",
-      value: confirm_password,
+      value: confirmPassword,
       rules: [
         {
           required: true,
