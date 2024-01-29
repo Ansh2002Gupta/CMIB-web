@@ -6,6 +6,7 @@ export const colorPallets = {
   lightBlue1: "#F6F8F9",
   lightBlue2: "#f2f4fc",
   darkBlue: "#00137E",
+  greyBlue: "#FCFCFD",
   skyBlue: "#E8FCFF",
   darkBlue2: "#0099CA",
 
