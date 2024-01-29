@@ -1,6 +1,7 @@
 .container {
   flex-direction: column;
   gap: var(--gapLarge);
+  overflow: unset;
 }
 
 .error {
@@ -8,6 +9,12 @@
   color: var(--error);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightBold);
+  opacity: 0;
+  min-height: var(--height_20);
+}
+
+.showError {
+  opacity: 1;
 }
 
 .linkContainer {
@@ -28,4 +35,11 @@
 
 .backToLoginLink[disabled] {
   color: var(--disableLink) !important;
+}
+
+
+@media (max-width: 400px) {
+  .error {
+    min-height: var(--height_30);
+  }
 }

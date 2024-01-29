@@ -19,7 +19,7 @@ const locale = {
   "label.rememberMe": "Remember Me",
   "label.forgotPasswordHeading": "Forgot password?",
   "label.forgotPasswordSubHeading":
-    "Enter your email address to reset your password. Upon submission, if an account is associated with this email, we'll send the reset instructions.",
+    "Enter your email address to reset your password. Upon submission, if an account is associated with the email address entered below, we'll send the one time password.",
   "label.loginBtn": "Login",
   "label.backToLoginBtn": "Back to Login",
   "label.gobackToLoginBtn": "Go back to Login",
@@ -58,7 +58,7 @@ const locale = {
   "label.fourteenMinTimerText2": "You can resend the next OTP after",
   "label.somethingWentWrong": "Something went wrong!",
   "label.forgotPasswordOTP":
-    "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
+    "Please enter the one time password that you have received on your registered email address to continue to reset your password.",
   "label.filter": "Filter",
   "label.userDetails": "User Details",
   "label.dateCreatedOn": "Date Created On",
@@ -106,6 +106,8 @@ const locale = {
   "session.placeholder.bankACNumberOnline": "Enter Bank A/C number online",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
+  "session.lastDateRegistrationCompanies":
+    "Last date of registration for companies",
   "session.saveChanges": "Save Changes",
   "label.viewProfile": "View Profile",
   "label.changePassword": "Change Password",
@@ -184,6 +186,17 @@ const locale = {
   "centre.placeholder.centreId": "Enter Centre Id",
   "label.actions": "Actions",
   "label.sNo": "S. No",
+  "label.registrationConsentSchedule":
+    "Registration and Consent Marking Schedule",
+  "label.consentMarkingScheduleWarning":
+    "*This cannot be edited once this section data is submitted.",
+  "label.consent.startDateCompanies": "Registration Start Date for Companies",
+  "label.consent.startDateCandidates": "Registration Start Date for Candidates",
+  "label.consent.lastDateBigCentres":
+    "Last Date of Registration for Candidates for Big Centres",
+  "label.consent.lastDateSmallCentres":
+    "Last Date of Registration for Candidates for Small Centres",
+  "label.tryAgain": "Try Again",
   "label.centreCode": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
   "label.centreStartTime": "Centre Start Time",
@@ -216,6 +229,27 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.consent.placeholder.startDateCompanies":
+    " Select Start Date for Companies",
+  "label.consent.placeholder.startDateCandidates":
+    "Select Start Date for Candidates",
+  "label.consent.placeholder.lastDateBigCentres":
+    "Select Last Date for Big Centres",
+  "label.consent.placeholder.lastDateSmallCentres":
+    " Select Last Date for Small Centres",
+  "label.companyStartDate": "Shortlist By Company Start Date",
+  "label.companyEndDate": "Shortlist By Company end Date",
+  "label.consentFromDate": "Consent From Date for Candidate",
+  "label.consentToDate": "Consent To Date for Candidate",
+  "label.placeholder.companyStartDate": "Select Company Start Date",
+  "label.placeholder.companyEndDate": "Select Company end Date",
+  "label.placeholder.consentFromDate": "Select From Date for Candidate",
+  "label.placeholder.consentToDate": "Select To Date for Candidate",
+  "label.lastRegistrationDate": "Last date of registration for companies",
+  "label.psychometricTestDate": "psychometric test/written test date",
+  "label.placeholder.lastRegistrationDate": "Select Last Date for registration",
+  "label.placeholder.psychometricTestDate":
+    "Select To Date for psychometric test",
   "label.controlAccessHeading": " Control Access",
   "label.moduleAccess": "Module Access",
   "label.appdynamics": "Appdynamics",
@@ -246,16 +280,20 @@ const locale = {
   "label.companyIciaMessage":
     "We wish to use your company logo in ICAI’s future Promotional materials stating that your company has participated in the Career Ascent programme of ICAI",
   "label.visitWebsite": "Visit Website",
-  "label.menu.user-management": "Users",
-  "label.menu.bulk-notifications": "Notifications",
-  "label.menu.ticket-management": "Tickets",
+  "label.menu.user-management": "User Management",
+  "label.menu.bulk-notifications-management": "Bulk Notifications Management",
+  "label.menu.ticket-management": "Ticket Management",
   "label.menu.query-management": "Query Management",
-  "label.menu.testimonial-management": "Testimonials",
-  "label.menu.registered-companies": "Registered Companies",
-  "label.menu.setup-session": "Sessions",
+  "label.menu.testimonial-management": "Testimonial Management",
+  "label.menu.registered-companies": "Company Registration",
+  "label.menu.feedback-management": "Feedback Management",
+  "label.menu.support-email-management": "Support Email Management",
+  "label.menu.setup-session": "Set up session",
   "label.menu.dashboard": "Dashboard",
-  "label.menu.manage-subscriptions": "Subscriptions",
-  "label.menu.global-configs": "Global Configurations",
+  "label.menu.manage-subscriptions": "Manage Subscriptions",
+  "label.menu.global-configs": "GLOBAL CONFIGS",
+  "label.menu.configurations": "Configurations",
+  "label.menu.manage-payments": "Manage Payments",
   "label.menu.payments": "Payments",
   "label.menu.candidate": "Candidates",
   "label.menu.companies": "Companies",
@@ -264,8 +302,8 @@ const locale = {
   "label.menu.roster": "Roster",
   "label.menu.feedback": "Feedback",
   "label.menu.contact-us": "Contact Us",
-  "label.menu.activity_logs": "Activity Logs",
-  "label.menu.all-job-listing": "All Jobs",
+  "label.menu.activity-logs": "Activity Logs",
+  "label.menu.all-job-listing": "All Job listing",
   "label.menu.round-1": "Round 1",
   "label.menu.round-2": "Round 2",
   "label.menu.company-details": "Company Details",
@@ -276,6 +314,8 @@ const locale = {
   "label.experiencedMember": "Experienced Member",
   "label.change": "Change",
   "label.chooseModule": "Choose a module",
+  "label.emailAddress": "Email Address: ",
+  "label.changeEmailAddress": "Change Email Address",
 };
 
 export default locale;

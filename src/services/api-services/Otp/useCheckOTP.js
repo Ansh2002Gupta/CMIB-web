@@ -48,6 +48,7 @@ const useCheckOTP = () => {
   return {
     checkOTPData,
     errorWhileVerifyingOTP,
+    setErrorWhileVeryingOTP,
     otpAPIStatus,
     handleCheckOTP,
     isError,

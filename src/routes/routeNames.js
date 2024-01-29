@@ -1,3 +1,4 @@
+export const ADD = "add";
 export const LOGIN = "/login";
 export const DASHBOARD = "/dashboard";
 export const SUBSCRIPTIONS = "/subscriptions";
@@ -13,7 +14,7 @@ export const SESSION = "/session";
 export const CONTACT_US = "/contact-us";
 export const ROUTE = "/configurations";
 export const SETUP_CENTERS = "setup-centers";
+export const CONSENT_MARKING = "consent-marking";
 export const QUERY_DETAILS = "query/:queryId";
-export const ADD = "add"
 export const SETUP_CENTERS_DETAILS = "/details/:centreId";
 export const EDIT_CONFIGURE_CENTRE = "centre-details/:centreId"
