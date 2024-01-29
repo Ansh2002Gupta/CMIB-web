@@ -1,0 +1,12 @@
+.mainContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border: var(--borderLight);
+  border-radius: var(--radiusMLg);
+}
+
+.titleText {
+  font-size: var(--fontSizeNormal);
+  color: var(--headingColor);
+  font-weight: var(--fontWeightBold);
+}

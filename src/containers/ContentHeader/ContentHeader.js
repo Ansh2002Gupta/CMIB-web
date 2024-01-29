@@ -22,6 +22,7 @@ const ContentHeader = ({ headerText, rightSection, customStyles }) => {
   return (
     <TwoColumn
       leftSection={<Header />}
+      leftSectionStyle={{ flex: 1 }}
       rightSection={rightSection}
       className={styles.twoColumnBox}
     ></TwoColumn>
