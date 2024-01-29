@@ -1,25 +1,40 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { Image, Modal, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 import { ThemeContext } from "core/providers/theme";
+import useHeader from "../../core/hooks/useHeader";
 
 import CustomButton from "../../components/CustomButton";
-import useHeader from "../../core/hooks/useHeader";
+import useLogout from "../../services/api-services/Logout/useLogout";
+import { getErrorText } from "../../constant/utils";
 import { setShowLogoutModal } from "../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import styles from "./ConfirmLogout.module.scss";
-import "./Override.css"
+import "./Override.css";
 
 const ConfirmLogout = () => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const { onLogout } = useHeader();
+  const { error, isLoading, setError, logoutApiStatus, handleUserLogout } =
+    useLogout();
 
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
   const { showLogoutModal } = userProfileDetails;
+
+  const onCancelClick = () => {
+    setError("");
+    userProfileDispatch(setShowLogoutModal(false));
+  };
+
+  useEffect(() => {
+    if (logoutApiStatus === "success") {
+      !error && !isLoading && onLogout();
+    }
+  }, [logoutApiStatus]);
 
   return (
     <Modal
@@ -53,18 +68,32 @@ const ConfirmLogout = () => {
             </div>
           </div>
         </div>
+        {error && (
+          <Typography
+            className={[styles.errorText, !!error ? styles.showError : ""].join(
+              " "
+            )}
+          >
+            {getErrorText(error)}
+          </Typography>
+        )}
+
         <div className={styles.buttonsContainer}>
           <CustomButton
-            onClick={() => userProfileDispatch(setShowLogoutModal(false))}
+            onClick={onCancelClick}
             customButtonContainerStyle={styles.customButtonContainerStyle}
             customStyle={styles.btn}
             btnText={intl.formatMessage({ id: "label.cancel" })}
-            />
+            isBtnDisable={isLoading}
+          />
           <CustomButton
-            onClick={onLogout}
-            btnText={intl.formatMessage({ id: "label.logout" })}
+            onClick={handleUserLogout}
+            btnText={
+              isLoading ? "" : intl.formatMessage({ id: "label.logout" })
+            }
             customStyle={`${styles.btn} ${styles.btn_1}`}
             customButtonContainerStyle={styles.customButtonContainerStyle}
+            loading={isLoading}
           />
         </div>
       </Base>
