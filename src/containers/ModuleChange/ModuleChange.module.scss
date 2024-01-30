@@ -32,6 +32,8 @@
   column-gap: var(--gapSmall, 16px);
   padding: var(--gapMedium, 24px);
   flex: 1;
+  max-height: 60vh;
+  overflow-x: scroll;
 }
 .modulesContainer > *:only-child {
   grid-column: 1 / -1;
@@ -74,7 +76,5 @@
 @media (max-width: 551px) {
   .modulesContainer {
     grid-template-columns: 1fr;
-    max-height: 60vh;
-    overflow-x: scroll;
   }
 }

@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import {
   DEFAULT_PAGE_SIZE,
+  GENERIC_ERROR_MESSAGE,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
@@ -125,4 +126,11 @@ export const getValidSortByValue = (currentSortByValue) => {
   }
 
   return SORT_VALUES.ASCENDING;
+};
+
+export const getErrorText = (errorText) => {
+  if (errorText) {
+    return errorText;
+  }
+  return GENERIC_ERROR_MESSAGE;
 };
