@@ -19,6 +19,11 @@
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
   margin-top: var(--marginSmall);
+  opacity: 0;
+}
+
+.showError {
+  opacity: 1;
 }
 
 .messageText {

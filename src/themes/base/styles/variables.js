@@ -171,12 +171,14 @@ const variables = {
   paddingExtraSmall: "8px",
   padding_9: "9px",
   paddingMediumSmall: "12px",
+  padding_14: "14px",
   paddingSmall: "16px",
   padding_18: "18px",
   paddingMedium: "24px",
   paddingLarge: "32px",
   paddingXLarge: "40px",
   paddingXXLarge: "48px",
+  padding_60: "60px",
   paddingForSection: "72px",
 
   // Bullet points
@@ -188,6 +190,8 @@ const variables = {
   gapXSmall: "8px",
   gapSmallMedium: "12px",
   gapSmall: "16px",
+  gap_20: "20px",
+  gap_28: "28px",
   gapMedium: "24px",
   gapLarge: "32px",
   gapXLarge: "40px",
