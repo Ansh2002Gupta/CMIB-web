@@ -5,6 +5,7 @@ import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import ContactUsListing from "../views/ContactUsListing";
 import ConfigureCentreView from "../views/ConfigureCentreView";
+import ConsentMarking from "../views/ConsentMarking";
 import DashboardView from "../views/Dashboard/Dashboard";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
@@ -36,6 +37,7 @@ import {
   CONTACT_US,
   ROUTE,
   SETUP_CENTERS,
+  CONSENT_MARKING,
   QUERY_DETAILS,
   SETUP_CENTERS_DETAILS,
 } from "./routeNames";
@@ -172,6 +174,7 @@ const config = [
         viewPath: SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
+      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
     ],
   },
   {

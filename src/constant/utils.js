@@ -1,6 +1,7 @@
 import moment from "moment";
 import {
   DEFAULT_PAGE_SIZE,
+  GENERIC_ERROR_MESSAGE,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
@@ -139,4 +140,11 @@ export const toggleSortDirection = (direction) => {
     return SORT_VALUES.DESCENDING;
   }
   return SORT_VALUES.ASCENDING;
+};
+
+export const getErrorText = (errorText) => {
+  if (errorText) {
+    return errorText;
+  }
+  return GENERIC_ERROR_MESSAGE;
 };

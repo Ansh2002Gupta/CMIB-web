@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Typography } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
@@ -23,7 +22,7 @@ import {
 import { LOGIN } from "../../routes/routeNames";
 import styles from "./CreateNewPassword.module.scss";
 
-const CreateNewPassword = ({ reset_token }) => {
+const CreateNewPassword = ({ token }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
@@ -96,7 +95,7 @@ const CreateNewPassword = ({ reset_token }) => {
     setStatus("label.newPasswordAndConfirmPasswordMatched");
     await handleCreateNewPassword({
       password: formInputs.password,
-      reset_token,
+      token,
     });
   };
 
@@ -110,6 +109,16 @@ const CreateNewPassword = ({ reset_token }) => {
       atLeast6Characters: AT_LEAST_SIX_CHARACTERS_REGEX.test(newPassword),
       bothEqual: newPassword === confirmPassword,
     });
+  };
+
+  const getCurrentErrorText = () => {
+    if (status && status !== "label.newPasswordAndConfirmPasswordMatched") {
+      return intl.formatMessage({
+        id: status,
+      });
+    }
+
+    return errorWhileCreatingPassword;
   };
 
   useEffect(() => {
@@ -218,23 +227,9 @@ const CreateNewPassword = ({ reset_token }) => {
           />
         </div>
         <div>
-          {!!status &&
-            status !== "label.newPasswordAndConfirmPasswordMatched" && (
-              <div>
-                {
-                  <Typography className={[styles.errorText].join(" ")}>
-                    {intl.formatMessage({
-                      id: status,
-                    })}
-                  </Typography>
-                }
-              </div>
-            )}
           <ButtonAndLink
             loading={isLoading}
-            error={
-              !!errorWhileCreatingPassword ? errorWhileCreatingPassword : ""
-            }
+            error={getCurrentErrorText()}
             bottomLinkText={intl.formatMessage({
               id: "label.backToLoginBtn",
             })}
@@ -247,6 +242,7 @@ const CreateNewPassword = ({ reset_token }) => {
             onTopBtnClick={handleOnSubmit}
             linkRedirection={LOGIN}
             type="submit"
+            customContainerStyles={styles.minHeight}
           />
           <CustomModal
             isOpen={

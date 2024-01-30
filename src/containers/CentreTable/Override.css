@@ -36,6 +36,12 @@
   color: var(--textBold) !important;
 }
 
+.ant-picker-input > input {
+  color: var(--textBold) !important;
+  background-color: var(--bodyBg) !important;
+  font-weight: var(--fontWeightMedium) !important;
+}
+
 .ant-picker-disabled,
 .ant-picker-input > input[disabled] {
   color: var(--textBold) !important;

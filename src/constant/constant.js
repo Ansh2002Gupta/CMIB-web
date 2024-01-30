@@ -1,4 +1,4 @@
-import { SETUP_CENTERS } from "../routes/routeNames";
+import { SETUP_CENTERS, CONSENT_MARKING } from "../routes/routeNames";
 
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
@@ -44,6 +44,7 @@ export const ROW_PER_PAGE_OPTIONS = [
 export const VALID_ROW_PER_OPTIONS = [2, 10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
+export const VALID_CONSENT_MARKING_TABS_ID = ["1", "2", "3"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
@@ -202,7 +203,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: CONSENT_MARKING,
   },
   {
     id: 5,
@@ -229,7 +230,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: CONSENT_MARKING,
   },
   {
     id: 3,
@@ -293,28 +294,32 @@ export const MODULE_KEYS = {
 
 export const MENU_KEYS = {
   USER_MANAGEMENT: "user-management",
-  BULK_NOTIFICATIONS: "bulk-notifications",
+  BULK_NOTIFICATIONS: "bulk-notifications-management",
   TICKET_MANAGEMENT: "ticket-management",
   QUERY_MANAGEMENT: "query-management",
   TESTIMONIAL_MANAGEMENT: "testimonial-management",
+  FEEDBACK_MANAGEMENT: "feedback-management",
+  SUPPORT_EMAIL_MANGEMENT: "support-email-management",
   REGISTERED_COMPANIES: "registered-companies",
-  SESSIONS: "setup-session",
+  SET_UP_SESSIONS: "setup-session",
   DASHBOARD: "dashboard",
-  SUBSCRIPTIONS: "manage-subscriptions",
+  MANAGE_SUBSCRIPTIONS: "manage-subscriptions",
   GLOBAL_CONFIGURATIONS: "global-configs",
+  MANAGE_PAYMENTS: "manage-payments",
   PAYMENTS: "payments",
   CANDIDATES: "candidates",
   COMPANIES: "companies",
+  CONFIGURATIONS: "configurations",
   JOBS: "jobs",
   REPORT: "report",
   ROASTER: "roster",
   FEEDBACK: "feedback",
   CONTACT_US: "contact-us",
-  ACTIVITY_LOGS: "activity_logs",
+  ACTIVITY_LOGS: "activity-logs",
   ALL_JOBS: "all-job-listing",
   ROUND_1_PLACEMENT: "round-1",
   ROUND_2_PLACEMENT: "round-2",
-  CANDIDATE_DETAILS: "company-details",
+  CANDIDATE_DETAILS: "candidate-details",
   COMPANY_DETAILS: "company-details",
   MANAGE_CANDIDATES: "manage-candidates",
   MANAGE_COMPANIES: "manage-companies",
@@ -335,3 +340,5 @@ export const DEBOUNCE_TIME = 500;
 export const SORT_PROPERTIES = {
   SORT_BY: "sortBy",
 };
+
+export const GENERIC_ERROR_MESSAGE = "Placeholder text";
