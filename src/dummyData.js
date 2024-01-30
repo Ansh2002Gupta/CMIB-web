@@ -945,8 +945,8 @@ export const CONFIGURE_INTERVIEW_DATES = [
     scheduleDate: "2023-12-19T05:11:46.000000Z",
     startTime: "2023-12-19T05:11:46.000000Z",
     endTime: "2023-12-19T05:11:46.000000Z",
-    facilitiesNumber: null,
-    slotDurationInMinutes: "",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
   },
   {
     id: 2,

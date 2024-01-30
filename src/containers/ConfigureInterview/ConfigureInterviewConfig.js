@@ -1,6 +1,15 @@
 import styles from "./ConfigureInterview.module.scss";
 
-const getConfigureDateCoumns = (intl, isEdit, getImage, renderColumn) => {
+const getConfigureDateCoumns = (
+  errors,
+  intl,
+  isEdit,
+  handleAdd,
+  handleRemove,
+  getImage,
+  handleInputChange,
+  renderColumn
+) => {
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "centre.scheduleDate" }),
@@ -8,13 +17,16 @@ const getConfigureDateCoumns = (intl, isEdit, getImage, renderColumn) => {
       key: "scheduleDate",
       isRequiredField: true,
       renderDateTime: {
+        errorMessage: errors.scheduleDate,
         visible: true,
         type: "date",
         placeholder: intl.formatMessage({
           id: "centre.placeholder.selectDate",
         }),
         customTimeStyle: styles.customTimeStyle,
-        onChange: (date, record) => {},
+        onChange: (val, record) => {
+          handleInputChange("scheduleDate", val);
+        },
       },
     }),
     renderColumn({
@@ -23,13 +35,16 @@ const getConfigureDateCoumns = (intl, isEdit, getImage, renderColumn) => {
       key: "startTime",
       isRequiredField: true,
       renderDateTime: {
+        errorMessage: errors.startTime,
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
           id: "label.placeholder.startTime",
         }),
         customTimeStyle: styles.customTimeStyle,
-        onChange: (date, record) => {},
+        onChange: (val, record) => {
+          handleInputChange("startTime", val);
+        },
       },
     }),
     renderColumn({
@@ -38,13 +53,16 @@ const getConfigureDateCoumns = (intl, isEdit, getImage, renderColumn) => {
       key: "endTime",
       isRequiredField: true,
       renderDateTime: {
+        errorMessage: errors.endTime,
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
           id: "label.placeholder.endTime",
         }),
         customTimeStyle: styles.customTimeStyle,
-        onChange: (date, record) => {},
+        onChange: (val, record) => {
+          handleInputChange("endTime", val);
+        },
       },
     }),
     renderColumn({
@@ -53,13 +71,16 @@ const getConfigureDateCoumns = (intl, isEdit, getImage, renderColumn) => {
       key: "facilitiesNumber",
       isRequiredField: true,
       renderInput: {
+        inputErrorMessage: errors.facilitiesNumber,
         visible: true,
         inputType: "inputNumber",
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.facilitiesNumber",
         }),
         customInputNumberStyles: styles.customTimeStyle,
-        onChange: (date, record) => {},
+        onInputChange: (val) => {
+          handleInputChange("facilitiesNumber", val);
+        },
       },
     }),
     renderColumn({
@@ -68,24 +89,34 @@ const getConfigureDateCoumns = (intl, isEdit, getImage, renderColumn) => {
       key: "slotDurationInMinutes",
       isRequiredField: true,
       renderInput: {
+        inputErrorMessage: errors.slotDurationInMinutes,
         visible: true,
         inputType: "text",
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.slotDurationInMinutes",
         }),
         customInputStyles: styles.customTimeStyle,
-        onChange: (date, record) => {},
+        onInputChange: (val) => {
+          handleInputChange("slotDurationInMinutes", val.target.value);
+        },
       },
     }),
 
     renderColumn({
+      title: " ",
       dataIndex: "minusCircle",
       key: "minusCircle",
       renderImage: {
         alt: "minusCircle/addCircle",
-        onClick: (rowData) => {},
+        alternateOnClick: (rowData) => {
+          handleAdd(rowData);
+        },
+        onClick: (rowData) => {
+          handleRemove(rowData);
+        },
         preview: false,
-        src: getImage(true ? "minusCircle" : "addCircle"),
+        src: getImage("minusCircle"),
+        alternateSrc: getImage("addCircle"),
         visible: isEdit,
       },
     }),

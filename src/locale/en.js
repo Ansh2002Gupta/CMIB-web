@@ -325,6 +325,10 @@ const locale = {
   "label.placeholder.endTime": "Select end time",
   "label.placeholder.facilitiesNumber": "Enter no. of facilities",
   "label.placeholder.slotDurationInMinutes": "Enter duration",
+  "label.error.startTime": "Select start time",
+  "label.error.endTime": "Select end time",
+  "label.error.facilitiesNumber": "Enter facilities",
+  "label.error.slotDurationInMinutes": "Enter duration",
   "label.emailAddress": "Email Address: ",
   "label.changeEmailAddress": "Change Email Address",
 };

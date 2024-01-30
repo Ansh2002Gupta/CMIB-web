@@ -38,6 +38,7 @@ const useRenderColumn = () => {
       customTimeStyle,
       defaultValue,
       disabled = false,
+      errorMessage,
       isEditable = true,
       isRequired = false,
       onChange = () => {},
@@ -47,6 +48,8 @@ const useRenderColumn = () => {
 
     const {
       alt = "",
+      alternateSrc = "",
+      alternateOnClick = () => {},
       customImageStyle = "",
       src = "",
       onClick = () => {},
@@ -59,8 +62,10 @@ const useRenderColumn = () => {
       customInputStyles,
       customSelectInputStyles,
       inputDisabled,
+      inputErrorMessage,
       inputPlaceholder = "",
       inputType,
+      onInputChange,
     } = renderInput;
 
     const {
@@ -193,10 +198,12 @@ const useRenderColumn = () => {
         return (
           <Image
             alt={alt}
-            src={src}
+            src={rowData?.isAddRow ? alternateSrc : src}
             preview={preview}
             className={`${customImageStyle} ${styles.editIcon}`}
-            onClick={onClick ? () => onClick(rowData) : () => {}}
+            onClick={() =>
+              rowData?.isAddRow ? alternateOnClick(rowData) : onClick(rowData)
+            }
           />
         );
       });
@@ -269,7 +276,6 @@ const useRenderColumn = () => {
               customContainerStyles,
               customTimeStyle,
               defaultValue,
-              disabled,
               isEditable,
               isRequired,
               type,
@@ -279,6 +285,8 @@ const useRenderColumn = () => {
             onChange={(val) => {
               onChange(val, record);
             }}
+            disabled={disabled || !record?.isAddRow}
+            errorMessage={record?.isAddRow && errorMessage}
           />
         );
       });
@@ -293,10 +301,13 @@ const useRenderColumn = () => {
               customInputStyles,
               customSelectInputStyles,
             }}
-            disabled={inputDisabled}
+            disabled={inputDisabled || !record?.isAddRow}
             placeholder={inputPlaceholder}
             type={inputType}
             customContainerStyles={customInputContainerStyles}
+            onChange={onInputChange}
+            errorMessage={record.isAddRow && inputErrorMessage}
+            isError={record.isAddRow && inputErrorMessage}
           />
         );
       });
