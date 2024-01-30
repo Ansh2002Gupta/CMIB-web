@@ -22,7 +22,7 @@
 
 .ant-descriptions-item-label {
   color: var(--subHeadingColor, #616c82) !important;
-  font-size: var(--paddingMediumSmall2, 14px) !important;
+  font-size: var(--padding_14, 14px) !important;
   font-weight: var(--fontWeightMedium, 500) !important;
 }
 
