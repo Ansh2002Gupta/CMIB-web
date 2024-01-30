@@ -33,6 +33,10 @@
     background-color: var(--active, #00873E);
 }
 
+.error{
+  background-color: var(--error, #D93400);
+}
+
 .spanOverAllColumns {
   grid-column: 1 / -1;
 }

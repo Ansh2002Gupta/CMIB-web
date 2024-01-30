@@ -9,6 +9,8 @@ import { TwoRow } from "../../core/layouts";
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import CustomInput from "../../components/CustomInput";
 import PointsList from "../../components/PointsList";
+import useChangePassword from "../../services/api-services/ChangePassword/useChangePassword";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { setShowChangePasswordModal } from "../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
@@ -27,6 +29,15 @@ import styles from "./ChangePassword.module.scss";
 const ChangePassword = () => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
+  const { showNotification, notificationContextHolder } = useShowNotification();
+  const { errorWhileChangingPassword, handleChangePassword, isLoading } =
+    useChangePassword();
+
+  const initalShouldShowData = {
+    old_password: false,
+    new_password: false,
+    confirm_password: false,
+  };
 
   const [formData, setFormData] = useState(INITIAL_PASSWORD_DATA);
   const [passwordValidations, setPasswordValidation] = useState({
@@ -37,11 +48,7 @@ const ChangePassword = () => {
     atLeast6Characters: false,
     bothEqual: false,
   });
-  const initalShouldShowData = {
-    old_password: false,
-    new_password: false,
-    confirm_password: false,
-  };
+  const [isBulletColorRed, setIsBulletColorRed] = useState(false);
   const [shouldShow, setShouldShow] = useState(initalShouldShowData);
 
   const [userProfileDetails, userProfileDispatch] =
@@ -66,11 +73,18 @@ const ChangePassword = () => {
     });
   };
 
-  const isSaveDisabled =
-    !formData.old_password ||
-    !formData.new_password ||
-    !formData.confirm_password;
-
+  const isSaveButtonDisabled = () => {
+    return (
+      !formData.old_password ||
+      !formData.new_password ||
+      !formData.confirm_password ||
+      !passwordValidations.oneSmallLetterValue ||
+      !passwordValidations.oneCapitalLetterValue ||
+      !passwordValidations.oneNumericValue ||
+      !passwordValidations.oneSpecialCharacterValue ||
+      !passwordValidations.atLeast6Characters
+    );
+  };
 
   const passwordStrengthPointsArray = getPasswordStrengthPointsArray(
     intl,
@@ -87,110 +101,145 @@ const ChangePassword = () => {
   const handleCloseModal = () => {
     setFormData(INITIAL_PASSWORD_DATA);
     setShouldShow(initalShouldShowData);
+    setIsBulletColorRed(false);
     userProfileDispatch(setShowChangePasswordModal(false));
   };
 
-  const handleOnSubmit = () => {};
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    if (!passwordValidations.bothEqual) {
+      showNotification(
+        intl.formatMessage({
+          id: "label.newPasswordAndConfirmPasswordDoNotMatched",
+        }),
+        "error"
+      );
+      return;
+    }
+    await handleChangePassword({
+      current_password: formData.old_password,
+      new_password: formData.new_password,
+    });
+  };
 
   useEffect(() => {
     passwordStrengthCheck(formData.new_password, formData.confirm_password);
-  }, [formData.new_password, formData.new_password]);
+  }, [formData.new_password, formData.confirm_password]);
+
+  useEffect(() => {
+    if (errorWhileChangingPassword) {
+      showNotification(errorWhileChangingPassword, "error");
+    }
+  }, [errorWhileChangingPassword]);
 
   return (
-    <Modal
-      className={styles.modal}
-      footer={null}
-      open={showChangePasswordModal}
-      maskClosable={false}
-      closeIcon={false}
-      centered={true}
-      width={530}
-    >
-      <Base className={styles.container}>
-        <div className={styles.imageAndHeadingContainer}>
-          <div className={styles.headingAndSubHeadingContainer}>
-            <Typography className={styles.heading}>
-              {intl.formatMessage({ id: "label.changePassword" })}
-            </Typography>
-            <div>
-              <Image
-                src={getImage("cross")}
-                className={styles.crossIcon}
-                preview={false}
-                onClick={handleCloseModal}
-              />
+    <>
+      {notificationContextHolder}
+      <Modal
+        className={styles.modal}
+        footer={null}
+        open={showChangePasswordModal}
+        maskClosable={false}
+        closeIcon={false}
+        centered={true}
+        width={530}
+      >
+        <Base className={styles.container}>
+          <div className={styles.imageAndHeadingContainer}>
+            <div className={styles.headingAndSubHeadingContainer}>
+              <Typography className={styles.heading}>
+                {intl.formatMessage({ id: "label.changePassword" })}
+              </Typography>
+              <div>
+                <Image
+                  src={getImage("cross")}
+                  className={styles.crossIcon}
+                  preview={false}
+                  onClick={handleCloseModal}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <>
-          {fields.map((item) => (
-            <TwoRow
-              key={item.id}
-              topSection={
-                <Typography className={styles.grayText}>
-                  {intl.formatMessage({
-                    id: `label.${item.headingIntl}`,
-                  })}
-                  <span className={styles.redText}> *</span>
-                </Typography>
-              }
-              bottomSection={
-                <div className={styles.formInputStyles}>
-                  <CustomInput
-                    value={item.value}
-                    type={shouldShow[item.label] ? "text" : "password"}
-                    isSuffixRequiredForPassword
-                    customLabelStyles={styles.inputLabel}
-                    customInputStyles={styles.input}
-                    customContainerStyles={styles.customContainerStyles}
-                    onChange={(val) =>
-                      handleInputChange(val.target.value, item.label)
-                    }
-                    placeholder={intl.formatMessage({
+          <>
+            {fields.map((item) => (
+              <TwoRow
+                key={item.id}
+                topSection={
+                  <Typography className={styles.grayText}>
+                    {intl.formatMessage({
                       id: `label.${item.headingIntl}`,
                     })}
-                    onSuffixElementClick={() =>
-                      setShouldShow((prev) => {
-                        return {
-                          ...prev,
-                          [item.label]: !prev[item.label],
-                        };
-                      })
-                    }
-                    isTextVisible={!shouldShow[item.label]}
-                  />
-                </div>
+                    <span className={styles.redText}> *</span>
+                  </Typography>
+                }
+                bottomSection={
+                  <div className={styles.formInputStyles}>
+                    <CustomInput
+                      value={item.value}
+                      type={shouldShow[item.label] ? "text" : "password"}
+                      isSuffixRequiredForPassword
+                      customLabelStyles={styles.inputLabel}
+                      customInputStyles={styles.input}
+                      customContainerStyles={styles.customContainerStyles}
+                      onChange={(val) =>
+                        handleInputChange(val.target.value, item.label)
+                      }
+                      onBlur={
+                        item.label === "new_password"
+                          ? () => {
+                              setIsBulletColorRed(true);
+                            }
+                          : ""
+                      }
+                      placeholder={intl.formatMessage({
+                        id: `label.${item.headingIntl}`,
+                      })}
+                      onSuffixElementClick={() =>
+                        setShouldShow((prev) => {
+                          return {
+                            ...prev,
+                            [item.label]: !prev[item.label],
+                          };
+                        })
+                      }
+                      isTextVisible={!shouldShow[item.label]}
+                    />
+                  </div>
+                }
+              />
+            ))}
+            <TwoRow
+              className={styles.twoRowContainer}
+              topSection={
+                <PointsList
+                  pointsArray={passwordStrengthPointsArray}
+                  isBulletColorRed={isBulletColorRed}
+                  pointsHeading={intl.formatMessage({
+                    id: "label.passwordStrengthCheckHeading",
+                  })}
+                  customHeadingStyles={styles.passwordPointsHeading}
+                />
+              }
+              bottomSectionStyle={classes.bottomSectionStyles}
+              bottomSection={
+                <ActionAndCancelButtons
+                  customActionBtnStyles={styles.customActionBtnStyles}
+                  customCancelBtnStyles={styles.customCancelBtnStyles}
+                  actionBtnText={intl.formatMessage({
+                    id: "label.save",
+                  })}
+                  cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                  onActionBtnClick={handleOnSubmit}
+                  isActionBtnDisable={isSaveButtonDisabled() || isLoading}
+                  onCancelBtnClick={handleCloseModal}
+                  isctionButtonLoading={isLoading}
+                />
               }
             />
-          ))}
-          <TwoRow
-            topSection={
-              <PointsList
-                pointsArray={passwordStrengthPointsArray}
-                pointsHeading={intl.formatMessage({
-                  id: "label.passwordStrengthCheckHeading",
-                })}
-                customHeadingStyles={styles.passwordPointsHeading}
-              />
-            }
-            bottomSectionStyle={classes.bottomSectionStyles}
-            bottomSection={
-              <ActionAndCancelButtons
-                customActionBtnStyles={styles.customActionBtnStyles}
-                customCancelBtnStyles={styles.customCancelBtnStyles}
-                actionBtnText={intl.formatMessage({
-                  id: "label.save",
-                })}
-                cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-                onActionBtnClick={handleOnSubmit}
-                isActionBtnDisable={isSaveDisabled}
-                onCancelBtnClick={handleCloseModal}
-              />
-            }
-          />
-        </>
-      </Base>
-    </Modal>
+          </>
+        </Base>
+      </Modal>
+    </>
   );
 };
 

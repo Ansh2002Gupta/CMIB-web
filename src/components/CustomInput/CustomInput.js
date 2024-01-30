@@ -31,6 +31,7 @@ const CustomInput = ({
   messageStyles: customMessageStyles,
   messageToShow,
   min,
+  onBlur,
   onChange,
   onSelectItem,
   onSuffixElementClick,
@@ -110,6 +111,7 @@ const CustomInput = ({
               placeholder,
               disabled,
               onChange,
+              onBlur
             }}
             prefix={isPrefixRequired ? prefixElement : null}
             suffix={
