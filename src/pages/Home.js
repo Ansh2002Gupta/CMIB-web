@@ -4,8 +4,6 @@ import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
 
 import CommonModal from "../components/CommonModal";
-// TODO: Need to find out how to work with this below component
-// import CropAndRotateImage from "../components/CropAndRotateImage/CropAndRotateImage";
 import ModuleChange from "../containers/ModuleChange";
 import MainLayout from "../layouts/MainLayout";
 import MenuContainer from "../containers/Menu/Menu";
@@ -59,19 +57,10 @@ function Home({ noOuterPadding }) {
         {currentOpenendModal === 2 && (
           <ModalComponents.AccessViewModal {...{ setCurrentOpenModal }} />
         )}
-        {currentOpenendModal === 3 && (
-          <ModalComponents.ChangeProfileModal {...{ setCurrentOpenModal }} />
+        {currentOpenendModal >= 3 && (
+          <ModalComponents.ChangeProfileModal {...{ setCurrentOpenModal, currentOpenendModal }} />
         )}
       </CommonModal>
-      {/* TODO: Need to findout how to use the below commented crop and rotate modal */}
-      {/* {currentOpenendModal === 4 && <CropAndRotateImage  {...{
-            file,
-            handleFileUpload,
-            initiateFileUpload,
-            photoURL: getImageSource(file),
-            setFile,
-            setOpenCropView,
-          }}/>} */}
     </>
   );
 }

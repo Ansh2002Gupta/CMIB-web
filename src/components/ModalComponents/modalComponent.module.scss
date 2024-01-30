@@ -234,6 +234,15 @@
   background-color: var(--greenBtnBg, #04af55) !important;
 }
 
+.primaryBtn {
+  background-color: var(--greenBtnBg, #04af55) !important;
+}
+
+.cropAndRotateContainer {
+  gap: var(--gapMedium, 24px);
+  padding: var(--paddingMedium, 24px);
+}
+
 @media (max-width: 551px) {
   .headingText {
     font-size: var(--fontSizeNormal, 16px);

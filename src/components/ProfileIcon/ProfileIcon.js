@@ -1,8 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Image, Typography } from "antd";
-
-import { ThemeContext } from "core/providers/theme";
 
 import styles from "./ProfileIcon.module.scss";
 
@@ -18,7 +16,12 @@ const ProfileIcon = ({
   profileImageStyle,
   showEditModal,
 }) => {
-  const { getImage } = useContext(ThemeContext);
+  const getInitials = (fName, lName) => {
+    if (fName && lName) {
+      return `${fName?.charAt(0)}${lName?.charAt(0)}`;
+    }
+    return fName?.charAt(0);
+  };
 
   if (profileImage) {
     return (
@@ -33,7 +36,7 @@ const ProfileIcon = ({
         onClick={onClick}
       >
         <Image
-          src={getImage("global")}
+          src={profileImage}
           preview={false}
           className={[
             showEditModal && iconType === "modalIcon"
@@ -55,7 +58,7 @@ const ProfileIcon = ({
       </div>
     );
   } else {
-    const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
+    const initials = getInitials(firstName, lastName);
     return (
       <div
         className={[
@@ -65,8 +68,13 @@ const ProfileIcon = ({
             : "",
           initialContainerStyle,
         ].join(" ")}
+        onClick={onClick}
       >
-        <Typography className={styles.initialsText}>{initials}</Typography>
+        <Typography
+          className={[styles.initialsText, styles.initials].join(" ")}
+        >
+          {initials}
+        </Typography>
       </div>
     );
   }

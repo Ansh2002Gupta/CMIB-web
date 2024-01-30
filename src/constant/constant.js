@@ -341,3 +341,5 @@ export const ZOOM_CONSTANT = {
   MIN_ZOOM: 1,
   ZOOM_STEP: 0.1,
 };
+
+export const NUMBER_OF_CHIPS_TO_BE_SHOWN = 2;

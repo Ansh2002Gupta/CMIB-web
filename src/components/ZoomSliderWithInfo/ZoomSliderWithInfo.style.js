@@ -1,17 +1,21 @@
 import variables from "../../themes/base/styles/variables";
 
-const styles = {
+export const classes = {
   zoomInfoContainer: {
     marginTop: `${variables.margin_32}`,
     flexDirection: "row",
     gap: `${variables.gapSmall}`,
     alignItems: "center",
+    display: "flex",
+    gap: "8px",
   },
   sliderBox: {
     flexDirection: "row",
     alignItems: "center",
     gap: `${variables.gapXSmall}`,
     flex: 1,
+    display: "flex",
+    gap: "8px",
   },
   zoomIcon: {
     cursor: "pointer",
@@ -25,5 +29,3 @@ const styles = {
     fontSize: `${variables.fontSizeSmall}`,
   },
 };
-
-export default styles;
