@@ -140,7 +140,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
         </div>
         <div>
           <Space className={styles.imageItemLogo}>
-            <CaIndiaLogo />
+            <CaIndiaLogo className={styles.width40} />
           </Space>
           <Space
             className={styles.sideMenuBottomSection}

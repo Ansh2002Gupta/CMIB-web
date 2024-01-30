@@ -11,3 +11,9 @@
 .crossIcon {
   color: var(--bodyBg, #ffffff);
 }
+
+@media (max-width: 767px) {
+  .drawerAppLogo {
+    width: var(--width_120, 120px);
+  }
+}

@@ -1,5 +1,5 @@
 .sideMenuContainer {
-  height: var(--fullHeight, 100%);
+  min-height: var(--fullHeight, 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -106,7 +106,7 @@
 }
 
 .visitText {
-  max-width: 8vw;
+  max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -122,7 +122,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--gapSmallMedium);
 }
 
 .imageItemLogo {
@@ -138,6 +137,16 @@
   padding-bottom: var(--paddingExtraSmall, 8px);
 }
 
+@media (max-width: 1523px) {
+  .sideMenuBottomSection{
+    padding: var(--paddingXXSmall, 4px) var(--paddingMedium, 12px) var(--paddingXXSmall, 4px) var(--paddingXXSmall, 4px);
+  }
+  .imageItemLogo{
+    padding: var(--paddingMediumSmall, 12px);
+    padding-left: var(--paddingMedium, 24px);
+  }
+}
+
 @media (max-width: 767px) {
   .moduleSelectorHeading {
     max-width: var(--widthHalfViewPort, 50vw);
@@ -145,10 +154,15 @@
   .visitText {
     max-width: var(--widthHalfViewPort, 50vw);
   }
-}
-
-@media (max-width: 1000px) and (min-width: 767px) {
-  .globeIcon {
-    display: none;
+  .width40{
+    width: var(--width_40, 40px);
+  }
+  .imageItemLogo{
+    padding: 0px;
+    padding-left: var(--paddingMedium, 24px);
+  }
+  .moduleText{
+    padding: 0px;
+    padding-left: var(--paddingMediumSmall, 12px);
   }
 }

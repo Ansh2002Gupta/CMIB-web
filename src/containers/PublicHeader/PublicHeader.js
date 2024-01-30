@@ -20,7 +20,7 @@ const PublicHeader = () => {
   return (
     <Base className={styles.container}>
       <div className={styles.logo}>
-        <Image src={getImage("Logo")} preview={false} className={styles.logo} onClick={handleOnLogoClick} />
+        <Image src={getImage("publicLogoWhite")} preview={false} className={styles.logo} onClick={handleOnLogoClick} />
       </div>
       {responsive?.isSm && (
         <div className={styles.rightSubIconContainer}>
