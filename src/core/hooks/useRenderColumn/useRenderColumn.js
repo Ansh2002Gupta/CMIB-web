@@ -274,7 +274,7 @@ const useRenderColumn = () => {
               isRequired,
               type,
               placeholder,
-              // value,
+              value,
             }}
             onChange={(val) => {
               onChange(val, record);

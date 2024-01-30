@@ -22,7 +22,7 @@ import styles from "./SetupMockInterview.module.scss";
 
 const SetupMockInterviewContent = () => {
   const intl = useIntl();
-  const isEdit = false;
+  const isEdit = true;
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();

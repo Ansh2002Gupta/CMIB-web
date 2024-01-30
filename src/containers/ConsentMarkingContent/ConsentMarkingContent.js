@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -47,14 +46,10 @@ const ConsentMarkingContent = ({ isEdit }) => {
       ...item,
       sNo: item.sNo,
       centreName: item.centreName,
-      companyStartDate: item.companyStartDate
-        ? dayjs(item.companyStartDate)
-        : null,
-      companyEndDate: item.companyEndDate ? dayjs(item.companyEndDate) : null,
-      consentFromDate: item.consentFromDate
-        ? dayjs(item.consentFromDate)
-        : null,
-      consentToDate: item.consentToDate ? dayjs(item.consentToDate) : null,
+      companyStartDate: item.companyStartDate ? item.companyStartDate : null,
+      companyEndDate: item.companyEndDate ? item.companyEndDate : null,
+      consentFromDate: item.consentFromDate ? item.consentFromDate : null,
+      consentToDate: item.consentToDate ? item.consentToDate : null,
     })
   );
 
@@ -64,10 +59,10 @@ const ConsentMarkingContent = ({ isEdit }) => {
       sNo: item.sNo,
       centreName: item.centreName,
       lastRegistrationDate: item.lastRegistrationDate
-        ? dayjs(item.lastRegistrationDate)
+        ? item.lastRegistrationDate
         : null,
       psychometricTestDate: item.psychometricTestDate
-        ? dayjs(item.psychometricTestDate)
+        ? item.psychometricTestDate
         : null,
     })
   );
@@ -195,7 +190,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
                 value={
                   registrationDatesData[item?.labeIntl]
                     ? isEdit
-                      ? dayjs(registrationDatesData[item?.labeIntl])
+                      ? registrationDatesData[item?.labeIntl]
                       : registrationDatesData[item?.labeIntl]
                     : null
                 }

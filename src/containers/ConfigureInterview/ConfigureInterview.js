@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Table, Typography } from "antd";
@@ -21,12 +21,25 @@ const ConfigureInterview = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams, setSearchParams] = useSearchParams();
   const isEdit = searchParams.get("mode") === "edit";
+  const [tableData, setTableData] = useState(CONFIGURE_INTERVIEW_DATES);
   const columns = getConfigureDateCoumns(intl, isEdit, getImage, renderColumn);
+
+  const [addTableData, setAddTableData] = useState({
+    id: Math.random().toString(),
+    isAddRow: true,
+    scheduleDate: null,
+    startTime: null,
+    endTime: null,
+    facilitiesNumber: null,
+    slotDurationInMinutes: "",
+  });
 
   const handleOnSubmit = () => {};
   const handleCancel = () => {
     navigate(`${SESSION}/${SETUP_MOCK_INTERVIEW}`);
   };
+
+  const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;
 
   return (
     <TwoRow
@@ -42,7 +55,7 @@ const ConfigureInterview = () => {
           bottomSection={
             <Table
               columns={columns}
-              dataSource={CONFIGURE_INTERVIEW_DATES}
+              dataSource={extendedTableData}
               pagination={false}
               rowClassName={styles.rowtext}
               scroll={{ x: "max-content" }}
