@@ -114,15 +114,16 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
       }}
     >
       <div className={styles.sideMenuContainer}>
-        <div className={styles.sideMenuTopSection}>
           <div className={styles.appLogoContainer}>
+        <div className={styles.sideMenuTopSection}>
             <div className={styles.appLogoBox}>
               <div onClick={handleOnClickLogo} className={styles.appLogo}>
                 {logo}
               </div>
             </div>
           </div>
-          <Base style={{ overflow: "visible" }}>
+         <div className={styles.sectionContainer}>
+         <Base style={{ overflow: "visible" }}>
             <TwoRow
               topSection={
                 !responsive?.isMd && (
@@ -189,6 +190,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
               }
             />
           )}
+         </div>
         </div>
         <div>
           <Space className={styles.imageItemLogo}>

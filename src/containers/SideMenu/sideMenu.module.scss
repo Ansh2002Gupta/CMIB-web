@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .sideMenuTopSection {
@@ -106,7 +107,7 @@
 .sectionHeading {
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
-  color: var(--subHeadingColor, #616C82);
+  color: var(--subHeadingColor, #616c82);
   margin: var(--margin_12, 12px);
 }
 
@@ -121,7 +122,6 @@
   flex-direction: column;
   flex: 1;
   width: var(--fullWidth, 100%);
-
 }
 
 .visitContainer {
@@ -142,6 +142,11 @@
   color: var(--subHeadingColor, #616c82);
   padding: var(--paddingMedium, 16px);
   padding-bottom: var(--paddingExtraSmall, 8px);
+}
+
+.sectionContainer {
+  overflow-y: auto;
+  max-height: 420px;
 }
 
 @media (max-width: 767px) {
