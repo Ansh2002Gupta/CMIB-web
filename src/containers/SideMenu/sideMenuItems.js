@@ -116,37 +116,37 @@ const controlMenu = [
     label: MENU_KEYS.USER_MANAGEMENT,
     key: USERS,
     icon: <People />,
-    selectedIcon: <SelectedPeople />,
+    selectedicon: <SelectedPeople />,
   },
   {
     label: MENU_KEYS.BULK_NOTIFICATIONS,
     key: "/notifications",
     icon: <Notification />,
-    selectedIcon: <SelectedNotification />,
+    selectedicon: <SelectedNotification />,
   },
   {
     label: MENU_KEYS.FEEDBACK_MANAGEMENT,
     key: "/feedback-management",
     icon: <Send />,
-    selectedIcon: <SelectedSend />,
+    selectedicon: <SelectedSend />,
   },
   {
     label: MENU_KEYS.TESTIMONIAL_MANAGEMENT,
     key: "/testimonials",
     icon: <Testimonials />,
-    selectedIcon: <SelectedTestimonials />,
+    selectedicon: <SelectedTestimonials />,
   },
   {
     label: MENU_KEYS.REGISTERED_COMPANIES,
     key: "/register-companies",
     icon: <Companies />,
-    selectedIcon: <SelectedCompanies />,
+    selectedicon: <SelectedCompanies />,
   },
   {
     label: MENU_KEYS.ACTIVITY_LOGS,
     key: "/activity-logs",
     icon: <Activity />,
-    selectedIcon: <SelectedActivity />,
+    selectedicon: <SelectedActivity />,
   },
   {
     label: MENU_KEYS.SUPPORT_EMAIL_MANGEMENT,
@@ -185,7 +185,7 @@ const newlyQualifiedPlacementsMenu = [
     label: MENU_KEYS.DASHBOARD,
     key: DASHBOARD,
     icon: <Dashboard />,
-    selectedIcon: <SelectedDashboard />,
+    selectedicon: <SelectedDashboard />,
   },
   {
     label: MENU_KEYS.CANDIDATE_DETAILS,
@@ -222,20 +222,19 @@ const newlyQualifiedPlacementsMenu = [
     label: MENU_KEYS.ROUND_1_PLACEMENT,
     key: "/round-1-placements",
     icon: <Round1 />,
-    selectedIcon: <SelectedRound1 />,
+    selectedicon: <SelectedRound1 />,
   },
   {
     label: MENU_KEYS.ROUND_2_PLACEMENT,
     key: "/round-2-placements",
     icon: <Round2 />,
-    selectedIcon: <SelectedRound2 />,
+    selectedicon: <SelectedRound2 />,
   },
-
   {
     label: MENU_KEYS.COMPANIES,
     key: COMPANIES,
     icon: <Companies />,
-    selectedIcon: <SelectedCompanies />,
+    selectedicon: <SelectedCompanies />,
   },
 ];
 
@@ -256,7 +255,7 @@ const experiencedMembersMenu = [
     label: MENU_KEYS.DASHBOARD,
     key: DASHBOARD,
     icon: <Dashboard />,
-    selectedIcon: <SelectedDashboard />,
+    selectedicon: <SelectedDashboard />,
   },
   {
     label: MENU_KEYS.CANDIDATE_DETAILS,
@@ -274,20 +273,20 @@ const experiencedMembersMenu = [
     label: MENU_KEYS.PAYMENTS,
     key: "/payments",
     icon: <Wallet />,
-    selectedIcon: <SelectedWallet />,
+    selectedicon: <SelectedWallet />,
   },
   {
     label: MENU_KEYS.ROASTER,
     key: "/roster",
     icon: <Roaster />,
-    selectedIcon: <SelectedRoaster />,
+    selectedicon: <SelectedRoaster />,
   },
 
   {
     label: MENU_KEYS.REPORT,
     key: "/report",
     icon: <Report />,
-    selectedIcon: <SelectedReport />,
+    selectedicon: <SelectedReport />,
   },
 
   {
