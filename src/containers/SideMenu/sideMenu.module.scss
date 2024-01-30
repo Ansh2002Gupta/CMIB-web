@@ -23,6 +23,7 @@
   margin-top: var(--sizeXSmall, 12px);
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500);
+  overflow-y: auto;
 }
 
 .appLogoContainer {
@@ -138,12 +139,20 @@
 }
 
 @media (max-width: 1523px) {
-  .sideMenuBottomSection{
-    padding: var(--paddingXXSmall, 4px) var(--paddingMedium, 12px) var(--paddingXXSmall, 4px) var(--paddingXXSmall, 4px);
+  .sideMenuBottomSection {
+    padding: var(--paddingXXSmall, 4px) var(--paddingMedium, 12px)
+      var(--paddingXXSmall, 4px) var(--paddingXXSmall, 4px);
   }
-  .imageItemLogo{
+  .imageItemLogo {
     padding: var(--paddingMediumSmall, 12px);
     padding-left: var(--paddingMedium, 24px);
+  }
+}
+
+@media (max-width: 1279px) {
+  .menuItemsContainer {
+    max-height: var(--height_50vh, 50vh);
+    overflow-y: auto;
   }
 }
 
@@ -154,14 +163,14 @@
   .visitText {
     max-width: var(--widthHalfViewPort, 50vw);
   }
-  .width40{
+  .width40 {
     width: var(--width_40, 40px);
   }
-  .imageItemLogo{
+  .imageItemLogo {
     padding: 0px;
     padding-left: var(--paddingMedium, 24px);
   }
-  .moduleText{
+  .moduleText {
     padding: 0px;
     padding-left: var(--paddingMediumSmall, 12px);
   }
