@@ -10,13 +10,12 @@
   padding-bottom: var(--paddingSmall) !important;
 }
 
-
 .customTable .ant-table-thead > tr > th .ant-table-cell {
   padding-left: var(--paddingNone) !important;
   padding-right: var(--paddingNone) !important;
   border: none !important;
-
 }
+
 .customTable .ant-table-tbody > tr:hover > td {
   background-color: transparent !important; 
 }
@@ -58,6 +57,10 @@
 .ant-input-number-handler-wrap {
   opacity: 1 !important; 
   visibility: visible !important; 
+}
+
+.ant-input-number-input-wrap input{
+  color: var(--textBold) !important;
 }
 
 

@@ -12,6 +12,7 @@ const useRenderColumn = () => {
   const intl = useIntl();
 
   const renderColumn = ({
+    customColumnHeading,
     dataIndex,
     defaultSortOrder,
     isRequiredField,
@@ -118,7 +119,7 @@ const useRenderColumn = () => {
     title &&
       (columnObject.title = () => {
         return (
-          <p className={styles.columnHeading}>
+          <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
             {title}
             {isRequiredField && (
               <>

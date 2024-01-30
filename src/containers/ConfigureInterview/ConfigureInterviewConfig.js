@@ -16,6 +16,7 @@ const getConfigureDateCoumns = (
       dataIndex: "scheduleDate",
       key: "scheduleDate",
       isRequiredField: true,
+      customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
         errorMessage: errors.scheduleDate,
         visible: true,
@@ -34,6 +35,7 @@ const getConfigureDateCoumns = (
       dataIndex: "startTime",
       key: "startTime",
       isRequiredField: true,
+      customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
         errorMessage: errors.startTime,
         visible: true,
@@ -52,6 +54,7 @@ const getConfigureDateCoumns = (
       dataIndex: "endTime",
       key: "endTime",
       isRequiredField: true,
+      customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
         errorMessage: errors.endTime,
         visible: true,
@@ -70,6 +73,7 @@ const getConfigureDateCoumns = (
       dataIndex: "facilitiesNumber",
       key: "facilitiesNumber",
       isRequiredField: true,
+      customColumnHeading: styles.customColumnHeading,
       renderInput: {
         inputErrorMessage: errors.facilitiesNumber,
         visible: true,
@@ -77,7 +81,7 @@ const getConfigureDateCoumns = (
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.facilitiesNumber",
         }),
-        customInputNumberStyles: styles.customTimeStyle,
+        customInputNumberStyles: styles.customInputStyle,
         onInputChange: (val) => {
           handleInputChange("facilitiesNumber", val);
         },
@@ -88,14 +92,15 @@ const getConfigureDateCoumns = (
       dataIndex: "slotDurationInMinutes",
       key: "slotDurationInMinutes",
       isRequiredField: true,
+      customColumnHeading: styles.customColumnHeading,
       renderInput: {
         inputErrorMessage: errors.slotDurationInMinutes,
         visible: true,
-        inputType: "text",
+        inputType: "inputNumber",
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.slotDurationInMinutes",
         }),
-        customInputStyles: styles.customTimeStyle,
+        customInputNumberStyles: styles.customInputStyle,
         onInputChange: (val) => {
           handleInputChange("slotDurationInMinutes", val.target.value);
         },
@@ -106,6 +111,7 @@ const getConfigureDateCoumns = (
       title: " ",
       dataIndex: "minusCircle",
       key: "minusCircle",
+      customColumnHeading: styles.customColumnHeading,
       renderImage: {
         alt: "minusCircle/addCircle",
         alternateOnClick: (rowData) => {

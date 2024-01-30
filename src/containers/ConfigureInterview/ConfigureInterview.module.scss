@@ -32,3 +32,13 @@
 .customTimeStyle {
   width: var(--fullWidth);
 }
+
+.customInputStyle {
+  max-width: var(--fullWidth);
+}
+
+.customColumnHeading {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+}
