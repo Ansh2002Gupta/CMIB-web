@@ -5,6 +5,7 @@ import { Image, Modal, Typography } from "antd";
 import Base from "../../core/layouts/Base/Base";
 import { ThemeContext } from "core/providers/theme";
 import { TwoRow } from "../../core/layouts";
+import useHeader from "../../core/hooks/useHeader";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import CustomInput from "../../components/CustomInput";
@@ -29,9 +30,14 @@ import styles from "./ChangePassword.module.scss";
 const ChangePassword = () => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
+  const { onLogout } = useHeader();
   const { showNotification, notificationContextHolder } = useShowNotification();
-  const { errorWhileChangingPassword, handleChangePassword, isLoading } =
-    useChangePassword();
+  const {
+    errorWhileChangingPassword,
+    handleChangePassword,
+    isLoading,
+    changePasswordApiStatus,
+  } = useChangePassword();
 
   const initalShouldShowData = {
     old_password: false,
@@ -132,6 +138,21 @@ const ChangePassword = () => {
     }
   }, [errorWhileChangingPassword]);
 
+  useEffect(() => {
+    if (changePasswordApiStatus === "success") {
+      showNotification(
+        intl.formatMessage({
+          id: "label.passwordChanged",
+        }),
+        "success"
+      );
+
+      setTimeout(() => {
+        return onLogout(false);
+      }, 3000);
+    }
+  }, [changePasswordApiStatus]);
+
   return (
     <>
       {notificationContextHolder}
@@ -189,7 +210,7 @@ const ChangePassword = () => {
                           ? () => {
                               setIsBulletColorRed(true);
                             }
-                          : ""
+                          : () => {}
                       }
                       placeholder={intl.formatMessage({
                         id: `label.${item.headingIntl}`,

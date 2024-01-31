@@ -19,7 +19,7 @@ const useLogout = () => {
       setLogoutApiStatus(API_STATUS.LOADING);
       setError("");
       const url = ADMIN_ROUTE + LOGOUT_END_POINT;
-      const res = await Http.post(url);
+      const res = await Http.get(url);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setLogoutApiStatus(API_STATUS.SUCCESS);
         return;
