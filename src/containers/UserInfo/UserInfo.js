@@ -38,14 +38,14 @@ const UserInfo = ({
   const responsive = useResponsive();
 
   const getValuesInChips = (arrayOfValues) => {
-    if (arrayOfValues?.length) {
+    if (arrayOfValues) {
       return (
         <div className={styles.chipsContainer}>
-          {arrayOfValues?.map((item) => {
+          {Object.entries(arrayOfValues)?.map(([key, value]) => {
             return (
               <Chip
                 bgColor={styles.chipBg}
-                label={item}
+                label={value}
                 textColor={styles.chipText}
               />
             );
@@ -91,19 +91,20 @@ const UserInfo = ({
     {
       key: "4",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.moduleAccess" })
+        intl.formatMessage({ id: "label.status" })
       ),
-      span: 3,
-      children:
-        getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
+      children: intl.formatMessage({
+        id: `label.${1 ? "active" : "inactive"}`,
+      }),
     },
     {
       key: "5",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.controlAccessHeading" })
+        intl.formatMessage({ id: "label.twoFactorAuth" })
       ),
-      span: 3,
-      children: getValuesInChips(permissions),
+      children: intl.formatMessage({
+        id: `label.${is_two_factor ? "enabled" : "disabled"}`,
+      }),
     },
     {
       key: "6",
@@ -117,11 +118,19 @@ const UserInfo = ({
     {
       key: "7",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.twoFactorAuth" })
+        intl.formatMessage({ id: "label.moduleAccess" })
       ),
-      children: intl.formatMessage({
-        id: `label.${is_two_factor ? "on" : "off"}`,
-      }),
+      span: 3,
+      children:
+        getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
+    },
+    {
+      key: "8",
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.controlAccessHeading" })
+      ),
+      span: 3,
+      children: getValuesInChips(permissions),
     },
   ];
 
