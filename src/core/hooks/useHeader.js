@@ -17,7 +17,7 @@ function useHeader() {
   const [, userProfileDispatch] = useContext(UserProfileContext);
   const { navigateScreen: navigate } = useNavigateScreen();
   const { handleUserLogout, isLoading: isUserLoggingOut } = useLogout();
-  const [logoutState, setLogoutDispatch] = useContext(LogoutContext);
+  const [, setLogoutDispatch] = useContext(LogoutContext);
 
   const onLogout = async () => {
     await handleUserLogout();
@@ -25,7 +25,6 @@ function useHeader() {
     userProfileDispatch(resetUserDetails());
     setLogoutDispatch(
       setLogoutToast({
-        ...logoutState.logoutInfo,
         isSuccess: true,
         message: intl.formatMessage({ id: "label.logoutSuccessful" }),
       })

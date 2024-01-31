@@ -98,15 +98,13 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (logoutInfo.isSuccess) {
-      showNotification(
-        logoutInfo.message,
-        "success"
+      showNotification(logoutInfo.message, "success");
+      setLogoutDispatch(
+        setLogoutToast({
+          isSuccess: false,
+          message: "",
+        })
       );
-      setLogoutDispatch(setLogoutToast ({
-        ...logoutInfo,
-        isSuccess: false,
-        message: "",
-      }))
     }
     return () => {
       setIsEmailValid(true);
