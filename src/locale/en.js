@@ -319,6 +319,7 @@ const locale = {
   "label.chooseModule": "Choose a module",
   "label.emailAddress": "Email Address: ",
   "label.changeEmailAddress": "Change Email Address",
+  "label.logoutSuccessful": "Logged out successfully",
 };
 
 export default locale;
