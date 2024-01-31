@@ -68,7 +68,7 @@ const ConfirmLogout = () => {
             btnText={
               isUserLoggingOut ? "" : intl.formatMessage({ id: "label.logout" })
             }
-            customStyle={`${styles.btn} ${styles.btn_1}`}
+            customStyle={`${styles.btn} ${styles.logoutBtnStyle}`}
             customButtonContainerStyle={styles.customButtonContainerStyle}
             loading={isUserLoggingOut}
           />
