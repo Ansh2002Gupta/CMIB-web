@@ -317,6 +317,8 @@ const locale = {
   "label.changeEmailAddress": "Change Email Address",
   "label.enabled": "Enabled",
   "label.disabled": "Disabled",
+  "label.path.users": "Manage Users",
+  "label.path.details": "User Details",
 };
 
 export default locale;
