@@ -77,6 +77,58 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
     navigate(DASHBOARD);
   };
 
+  const ModuleSection = () => {
+    return (
+      <>
+        <Base style={{ overflow: "visible" }}>
+          <TwoRow
+            topSection={
+              !responsive?.isMd && (
+                <Typography className={styles.moduleText}>
+                  {intl.formatMessage({ id: "label.module" })}
+                </Typography>
+              )
+            }
+            bottomSection={
+              <TwoColumn
+                className={styles.moduleSelector}
+                leftSection={
+                  <div className={styles.moduleSelectorHeading}>
+                    {selectedModule?.label}
+                  </div>
+                }
+                rightSection={
+                  <SideMenuButton
+                    onBtnClick={() => {
+                      setIsModalOpen(true);
+                      setOpenSessionSelector(false);
+                      setOpenSideMenu(false);
+                    }}
+                    btnText={intl.formatMessage({ id: "label.change" })}
+                  />
+                }
+              />
+            }
+          />
+        </Base>
+
+        {selectedModule && (
+          <Menu
+            className={styles.sideMenuOptionsContainer}
+            theme="dark"
+            defaultSelectedKeys={selectedKey}
+            mode="inline"
+            items={updateLabelsForIntl(selectedModule.children, selectedKey)}
+            expandIcon={<></>}
+            openKeys={accessibleModules?.map((module) => module?.key)}
+            onSelect={handleOnClickMenuItem}
+            selectedKeys={selectedKey}
+          />
+        )}
+      </>
+    );
+  };
+
   useEffect(() => {
     const pathSegments = location.pathname.split("/");
     const select = `/${pathSegments[1]}`;
@@ -123,59 +175,15 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
             </div>
           </div>
         </div>
-        {!openSessionSelector && (
-          <div>
-            <Base style={{ overflow: "visible" }}>
-              <TwoRow
-                topSection={
-                  !responsive?.isMd && (
-                    <Typography className={styles.moduleText}>
-                      {intl.formatMessage({ id: "label.module" })}
-                    </Typography>
-                  )
-                }
-                bottomSection={
-                  <TwoColumn
-                    className={styles.moduleSelector}
-                    leftSection={
-                      <div className={styles.moduleSelectorHeading}>
-                        {selectedModule?.label}
-                      </div>
-                    }
-                    rightSection={
-                      <SideMenuButton
-                        onBtnClick={() => {
-                          setIsModalOpen(true);
-                          setOpenSessionSelector(false);
-                          setOpenSideMenu(false);
-                        }}
-                        btnText={intl.formatMessage({ id: "label.change" })}
-                      />
-                    }
-                  />
-                }
-              />
-            </Base>
-
-            {selectedModule && (
-              <Menu
-                className={styles.sideMenuOptionsContainer}
-                theme="dark"
-                defaultSelectedKeys={selectedKey}
-                mode="inline"
-                items={updateLabelsForIntl(
-                  selectedModule.children,
-                  selectedKey
-                )}
-                expandIcon={<></>}
-                openKeys={accessibleModules?.map((module) => module?.key)}
-                onSelect={handleOnClickMenuItem}
-                selectedKeys={selectedKey}
-              />
-            )}
-          </div>
-        )}
-        {!responsive.isMd && (
+        {!openSessionSelector &&
+          (!responsive.isMd ? (
+            <div>
+              <ModuleSection />
+            </div>
+          ) : (
+            <ModuleSection />
+          ))}
+        {data && !responsive.isMd && (
           <TwoRow
             className={styles.sessionContainer}
             topSection={
