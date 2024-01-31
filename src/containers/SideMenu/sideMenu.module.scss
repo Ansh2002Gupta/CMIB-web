@@ -144,11 +144,6 @@
   padding-bottom: var(--paddingExtraSmall, 8px);
 }
 
-.sectionContainer {
-  overflow-y: auto;
-  max-height: 420px;
-}
-
 @media (max-width: 767px) {
   .moduleSelectorHeading {
     max-width: var(--widthHalfViewPort, 50vw);

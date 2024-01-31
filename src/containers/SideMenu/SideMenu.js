@@ -122,6 +122,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
               </div>
             </div>
           </div>
+          </div>
           <Base style={{ overflow: "visible" }}>
             <TwoRow
               topSection={
@@ -189,7 +190,6 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
               }
             />
           )}
-        </div>
         <div>
           <Space className={styles.imageItemLogo}>
             <CaIndiaLogo />
