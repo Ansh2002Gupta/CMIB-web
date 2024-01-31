@@ -63,7 +63,7 @@ const ConfirmLogout = () => {
           <CustomButton
             onClick={onLogout}
             btnText={intl.formatMessage({ id: "label.logout" })}
-            customStyle={`${styles.btn} ${styles.btn_1}`}
+            customStyle={`${styles.btn} ${styles.logoutBtnStyle}`}
             customButtonContainerStyle={styles.customButtonContainerStyle}
           />
         </div>
