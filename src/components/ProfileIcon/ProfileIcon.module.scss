@@ -43,6 +43,13 @@
   cursor: pointer;
 }
 
+.initials {
+  font-size: var(--fontSizeExtraLargeHeading, 40px);
+  border-radius: vra(--radius_50Per, 50%);
+  border: 1px solid var(--textBold);
+  padding: var(--paddingMedium, 24px) var(--padding_30, 30px);
+}
+
 @media (max-width: 551px) {
   .profileImageStyle {
     min-width: var(--width_70, 70px);
@@ -53,5 +60,5 @@
   }
   .editProfileContainer {
     margin-top: var(--margin_20, 20px);
-  }  
+  }
 }

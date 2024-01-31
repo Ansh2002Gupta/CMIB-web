@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Image, Typography } from "antd";
 
+import { ThemeContext } from "core/providers/theme";
+
 import Slider from "../Slider";
 import { ZOOM_CONSTANT } from "../../constant/constant";
-import styles from "./ZoomSliderWithInfo.style";
+import { classes } from "./ZoomSliderWithInfo.style";
 
 const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
+  const {getImage} = useContext(ThemeContext);
+
   const zoomPercentage = Math.floor(
     ((zoom - ZOOM_CONSTANT.MIN_ZOOM) /
       (ZOOM_CONSTANT.MAX_ZOOM - ZOOM_CONSTANT.MIN_ZOOM)) *
@@ -30,17 +34,18 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
   };
 
   return (
-    <div style={styles.zoomInfoContainer}>
-      <div style={styles.sliderBox}>
+    <div style={classes.zoomInfoContainer}>
+      <div style={classes.sliderBox}>
         <Image
-          // src={images.minusCirlce}
+          src={getImage("minusCircle")}
           alt="Zoom out"
           width={24}
           height={24}
-          style={styles.zoomIcon}
+          style={classes.zoomIcon}
           onClick={zoomOutHandler}
-        />
-        <div style={styles.zoomSlider}>
+          preview={false}
+          />
+        <div style={classes.zoomSlider}>
           <Slider
             maximumValue={ZOOM_CONSTANT.MAX_ZOOM}
             minimumValue={ZOOM_CONSTANT.MIN_ZOOM}
@@ -50,16 +55,17 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
           />
         </div>
         <Image
-          // src={images.addCircle}
+          src={getImage("addCircle")}
           alt="Zoom in"
           width={24}
           height={24}
-          style={styles.zoomIcon}
+          style={classes.zoomIcon}
           onClick={zoomInHandler}
+          preview={false}
         />
       </div>
       <Typography
-        customTextStyle={styles.percentageText}
+        style={classes.percentageText}
       >{`${zoomPercentage}%`}</Typography>
     </div>
   );
