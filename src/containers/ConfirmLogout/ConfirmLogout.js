@@ -4,19 +4,18 @@ import { Image, Modal, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 import { ThemeContext } from "core/providers/theme";
+import useHeader from "../../core/hooks/useHeader";
 
 import CustomButton from "../../components/CustomButton";
-import useHeader from "../../core/hooks/useHeader";
 import { setShowLogoutModal } from "../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import styles from "./ConfirmLogout.module.scss";
-import "./Override.css"
+import "./Override.css";
 
 const ConfirmLogout = () => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  const { onLogout } = useHeader();
-
+  const { onLogout, isUserLoggingOut } = useHeader();
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
   const { showLogoutModal } = userProfileDetails;
@@ -48,23 +47,30 @@ const ConfirmLogout = () => {
             </div>
             <div>
               <Typography className={styles.subHeading}>
-                {intl.formatMessage({ id: "label.logoutConfirmationMessage" })}
+                {intl.formatMessage({
+                  id: "label.logoutConfirmationMessage",
+                })}
               </Typography>
             </div>
           </div>
         </div>
         <div className={styles.buttonsContainer}>
           <CustomButton
-            onClick={() => userProfileDispatch(setShowLogoutModal(false))}
+            onClick={() => {
+              userProfileDispatch(setShowLogoutModal(false));
+            }}
             customButtonContainerStyle={styles.customButtonContainerStyle}
             customStyle={styles.btn}
             btnText={intl.formatMessage({ id: "label.cancel" })}
-            />
+          />
           <CustomButton
             onClick={onLogout}
-            btnText={intl.formatMessage({ id: "label.logout" })}
+            btnText={
+              isUserLoggingOut ? "" : intl.formatMessage({ id: "label.logout" })
+            }
             customStyle={`${styles.btn} ${styles.btn_1}`}
             customButtonContainerStyle={styles.customButtonContainerStyle}
+            loading={isUserLoggingOut}
           />
         </div>
       </Base>

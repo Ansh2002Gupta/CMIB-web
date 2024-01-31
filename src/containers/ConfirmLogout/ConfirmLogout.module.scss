@@ -49,7 +49,7 @@
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
   background-color: var(--white1, #ffffff);
-  &:hover {
+  &:not(:disabled):hover {
     background-color: var(--white1, #ffffff) !important;
     border-color: var(--disableLink, #B1B3B5) !important;
   }
@@ -58,7 +58,7 @@
 .btn_1 {
   background-color: var(--yellowBg, #fabb00);
   border: none;
-  &:hover {
+  &:not(:disabled):hover {
     background-color: var(--yellowBg, #fabb00) !important;
     color: var(--black1, #000833) !important;
   }
@@ -66,4 +66,17 @@
 
 .customButtonContainerStyle {
   flex: 1;
+}
+
+.errorText {
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightBold, 600);
+  color: var(--error, #d93400);
+  padding-bottom: var(--paddingSmall, 16px);
+  min-height: var(--height_20, 20px);
+  opacity: 0;
+}
+
+.showError {
+  opacity: 1;
 }

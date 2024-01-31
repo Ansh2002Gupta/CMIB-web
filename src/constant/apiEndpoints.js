@@ -13,6 +13,7 @@ export const FORGOT_PASSWORD_END_POINT = "/forget-password-otp";
 export const GET_USER_PROFILE_DETAILS = "core/users/permission";
 export const IMAGE_UPLOAD_END_POINT = "/save-logo";
 export const LOGIN_END_POINT = "/login";
+export const LOGOUT_END_POINT = "/logout";
 export const QUERIES_LIST = "/queries";
 export const RESET_ADMIN_PASSWORD = "/reset-password/confirm";
 export const SEND_OTP = "/reset-password/request";

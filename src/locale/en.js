@@ -323,6 +323,7 @@ const locale = {
   "label.emailAddress": "Email Address: ",
   "label.changeEmailAddress": "Change Email Address",
   "label.save": "Save",
+  "label.logoutSuccessful": "Logged out successfully",
 };
 
 export default locale;
