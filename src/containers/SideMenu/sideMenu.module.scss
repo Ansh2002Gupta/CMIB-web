@@ -143,6 +143,9 @@
   padding: var(--paddingMedium, 16px);
   padding-bottom: var(--paddingExtraSmall, 8px);
 }
+.sessionContainer{
+  margin-bottom: var(--marginLarge, 24px);
+}
 
 @media (max-width: 767px) {
   .moduleSelectorHeading {

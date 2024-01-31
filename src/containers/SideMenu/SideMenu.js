@@ -122,74 +122,82 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
               </div>
             </div>
           </div>
-          </div>
-          <Base style={{ overflow: "visible" }}>
-            <TwoRow
-              topSection={
-                !responsive?.isMd && (
-                  <Typography className={styles.moduleText}>
-                    {intl.formatMessage({ id: "label.module" })}
-                  </Typography>
-                )
-              }
-              bottomSection={
-                <TwoColumn
-                  className={styles.moduleSelector}
-                  leftSection={
-                    <div className={styles.moduleSelectorHeading}>
-                      {selectedModule?.label}
-                    </div>
-                  }
-                  rightSection={
-                    <SideMenuButton
-                      onBtnClick={() => {
-                        setIsModalOpen(true);
-                        setOpenSessionSelector(false);
-                        setOpenSideMenu(false);
-                      }}
-                      btnText={intl.formatMessage({ id: "label.change" })}
-                    />
-                  }
-                />
-              }
-            />
-          </Base>
+        </div>
+        {!openSessionSelector && (
+          <div>
+            <Base style={{ overflow: "visible" }}>
+              <TwoRow
+                topSection={
+                  !responsive?.isMd && (
+                    <Typography className={styles.moduleText}>
+                      {intl.formatMessage({ id: "label.module" })}
+                    </Typography>
+                  )
+                }
+                bottomSection={
+                  <TwoColumn
+                    className={styles.moduleSelector}
+                    leftSection={
+                      <div className={styles.moduleSelectorHeading}>
+                        {selectedModule?.label}
+                      </div>
+                    }
+                    rightSection={
+                      <SideMenuButton
+                        onBtnClick={() => {
+                          setIsModalOpen(true);
+                          setOpenSessionSelector(false);
+                          setOpenSideMenu(false);
+                        }}
+                        btnText={intl.formatMessage({ id: "label.change" })}
+                      />
+                    }
+                  />
+                }
+              />
+            </Base>
 
-          {selectedModule && (
-            <Menu
-              className={styles.sideMenuOptionsContainer}
-              theme="dark"
-              defaultSelectedKeys={selectedKey}
-              mode="inline"
-              items={updateLabelsForIntl(selectedModule.children, selectedKey)}
-              expandIcon={<></>}
-              openKeys={accessibleModules?.map((module) => module?.key)}
-              onSelect={handleOnClickMenuItem}
-              selectedKeys={selectedKey}
-            />
-          )}
-          {data && !responsive.isMd && (
-            <TwoRow
-              topSection={
-                <Typography className={styles.sectionHeading}>
-                  {intl.formatMessage({ id: "label.session" })}
-                </Typography>
-              }
-              bottomSection={
-                <SideMenuItems
-                  openSelector={openSessionSelector}
-                  setOpenSelector={setOpenSessionSelector}
-                  modules={data?.map((item) => ({
-                    key: item.id,
-                    label: item.name,
-                  }))}
-                  handleOnSelectItem={handleOnSelectSession}
-                  selectedItem={selectedSession}
-                  sectionName="session"
-                />
-              }
-            />
-          )}
+            {selectedModule && (
+              <Menu
+                className={styles.sideMenuOptionsContainer}
+                theme="dark"
+                defaultSelectedKeys={selectedKey}
+                mode="inline"
+                items={updateLabelsForIntl(
+                  selectedModule.children,
+                  selectedKey
+                )}
+                expandIcon={<></>}
+                openKeys={accessibleModules?.map((module) => module?.key)}
+                onSelect={handleOnClickMenuItem}
+                selectedKeys={selectedKey}
+              />
+            )}
+          </div>
+        )}
+        {!responsive.isMd && (
+          <TwoRow
+            className={styles.sessionContainer}
+            topSection={
+              <Typography className={styles.sectionHeading}>
+                {intl.formatMessage({ id: "label.session" })}
+              </Typography>
+            }
+            bottomSection={
+              <SideMenuItems
+                openSelector={openSessionSelector}
+                setOpenSelector={setOpenSessionSelector}
+                modules={data?.map((item) => ({
+                  key: item.id,
+                  label: item.name,
+                }))}
+                handleOnSelectItem={handleOnSelectSession}
+                selectedItem={selectedSession}
+                sectionName="session"
+              />
+            }
+          />
+        )}
         <div>
           <Space className={styles.imageItemLogo}>
             <CaIndiaLogo />
