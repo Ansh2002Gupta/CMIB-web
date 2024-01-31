@@ -112,7 +112,7 @@ const UserInfo = ({
           {intl.formatMessage({ id: "label.dateCreatedOn" })}
         </Typography>
       ),
-      children: formatDate({ date: date }),
+      children: formatDate({ date }),
     },
     {
       key: "7",
