@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import {
   DEFAULT_PAGE_SIZE,
   GENERIC_ERROR_MESSAGE,
@@ -8,9 +8,9 @@ import {
 
 export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   if (date) {
-    return moment(new Date(date)).format(dateFormat);
+    return dayjs(new Date(date)).format(dateFormat);
   }
-  return moment(new Date()).format(dateFormat);
+  return dayjs(new Date()).format(dateFormat);
 };
 
 export const convertStringArrayToObjectOfStringAndIdArray = (
