@@ -40,6 +40,9 @@ export const colorPallets = {
   snow: "#F2F4FC",
   whiteSmoke: "#f5f5f5",
 
+  //Yellow color shades
+  yellow1: "#fabb00",
+
   // Orange color shades
   lightOrange: "#FFEFE5",
   darkOrange: "#D76200",

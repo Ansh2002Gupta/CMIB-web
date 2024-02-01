@@ -118,7 +118,7 @@ const FileUpload = ({
 };
 
 FileUpload.defaultProps = {
-  heading: "Sent To",
+  heading: "Profile Photo",
   isFormEditable: false,
   subHeading: "Photo",
   updateUserData: () => {},

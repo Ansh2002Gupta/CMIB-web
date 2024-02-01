@@ -4,14 +4,16 @@ import localeProviders from "./locale/localeProviders";
 import dashboardProvider from "./dashboard/dashboardProvider";
 import globalSessionProvider from "./globalSession/globalSessionProvider";
 import userProfileProvider from "./userProfile/userProfileProvider";
+import logoutProvider from "./logout/logoutProvider";
 
 // Import other created Providers and add them here -
 const providers = [
   authProvider,
   dashboardProvider,
+  globalSessionProvider,
   localeProviders,
+  logoutProvider,
   userProfileProvider,
-  globalSessionProvider
 ];
 
 const combineProviders = (components) => {
