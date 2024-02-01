@@ -35,11 +35,3 @@
   font-weight: var(--fontWeightMedium) !important;
   font-size: var(--fontSizeSmall) !important;
 }
-
-.ant-drawer .ant-drawer-content{
-  overflow: unset !important;
-}
-
-.ant-drawer .ant-drawer-body {
-  overflow: unset !important;
-}
