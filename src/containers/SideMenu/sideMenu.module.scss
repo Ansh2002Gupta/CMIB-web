@@ -143,6 +143,7 @@
     padding: var(--paddingXXSmall, 4px) var(--paddingMedium, 12px)
       var(--paddingXXSmall, 4px) var(--paddingXXSmall, 4px);
   }
+  
   .imageItemLogo {
     padding: var(--paddingMediumSmall, 12px);
     padding-left: var(--paddingMedium, 24px);
@@ -160,16 +161,20 @@
   .moduleSelectorHeading {
     max-width: var(--widthHalfViewPort, 50vw);
   }
+
   .visitText {
     max-width: var(--widthHalfViewPort, 50vw);
   }
+
   .width40 {
     width: var(--width_40, 40px);
   }
+
   .imageItemLogo {
     padding: 0px;
     padding-left: var(--paddingMedium, 24px);
   }
+
   .moduleText {
     padding: 0px;
     padding-left: var(--paddingMediumSmall, 12px);

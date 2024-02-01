@@ -4,6 +4,11 @@
   align-items: center;
 }
 
+.cmibLogo {
+  width: var(--width_170, 170px);
+  height: var(--height_50, 50px);
+}
+
 .drawerAppLogo {
   cursor: pointer;
 }
