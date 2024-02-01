@@ -59,11 +59,6 @@ function Home({ noOuterPadding }) {
             {...{ setCurrentOpenModal, showNotification }}
           />
         )}
-        {currentOpenendModal === 2 && (
-          <ModalComponents.AccessViewModal
-            {...{ setCurrentOpenModal, showNotification }}
-          />
-        )}
         {currentOpenendModal >= 3 && (
           <ModalComponents.ChangeProfileModal
             {...{ setCurrentOpenModal, currentOpenendModal, showNotification }}
