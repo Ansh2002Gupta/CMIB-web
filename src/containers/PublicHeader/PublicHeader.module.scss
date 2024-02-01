@@ -18,7 +18,8 @@
 
 .logo{
   cursor: pointer;
-  max-width: var(--width_180);
+  max-width: var(--width_166);
+  min-height: var(--height_55);
 }
 
 @media screen and (max-width: 1535px) {
@@ -49,8 +50,8 @@
     padding-top: var(--padding_18);
   }
   .logo {
-    width: var(--width_140);
-    height: var(--height_70);
+    max-width: var(--width_120) !important;
+    min-height: var(--height_40) !important;
   }
   .container {
     padding-bottom: var(--paddingExtraSmall);
