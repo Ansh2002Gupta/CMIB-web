@@ -214,6 +214,7 @@ const UserInfo = ({
                 label={intl.formatMessage({ id: "label.mobileNumber" })}
                 isRequired
                 value={mobileNo}
+                mobilePrefix={mobilePrefix}
                 disabled={!isEditable}
                 customInputStyles={[styles.text, styles.input].join(" ")}
                 customSelectInputStyles={[styles.selectInput].join(" ")}

@@ -31,6 +31,7 @@ const CustomInput = ({
   messageStyles: customMessageStyles,
   messageToShow,
   min,
+  mobilePrefix,
   onBlur,
   onChange,
   onSelectItem,
@@ -103,7 +104,7 @@ const CustomInput = ({
                 customSelectInputStyles,
                 styles.selectOptionsMobileStyles,
               ].join(" ")}
-              defaultValue="in"
+              value={mobilePrefix}
               onChange={(value) => {
                 onSelectItem({ target: { value } });
               }}
@@ -112,8 +113,8 @@ const CustomInput = ({
             >
               {selectOptions?.map((country) => (
                 <Select.Option
-                  key={country.country_code}
-                  value={country.country_code}
+                  key={country.dial_code}
+                  value={country.dial_code}
                   label={
                     <div>
                       <img
@@ -204,7 +205,7 @@ const CustomInput = ({
               placeholder,
               disabled,
               onChange,
-              onBlur
+              onBlur,
             }}
             prefix={isPrefixRequired ? prefixElement : null}
             suffix={
@@ -304,6 +305,7 @@ CustomInput.defaultProps = {
   messageStyles: "",
   messageToShow: "",
   min: 0,
+  mobilePrefix: "+91",
   onBlur: () => {},
   onChange: () => {},
   onSelectItem: () => {},
@@ -340,6 +342,7 @@ CustomInput.propTypes = {
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
+  mobilePrefix: PropTypes.string,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onSelectItem: PropTypes.func,

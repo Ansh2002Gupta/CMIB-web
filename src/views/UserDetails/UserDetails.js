@@ -33,7 +33,7 @@ const UserDetails = () => {
     name: "",
     email: "",
     mobile: "",
-    mobile_prefix: "in",
+    mobile_prefix: "+91",
     profile_photo: null,
     profile_photo_url: "",
     access: [],
@@ -111,7 +111,7 @@ const UserDetails = () => {
         name: userAccountInfo?.name || "",
         email: userAccountInfo?.email || "",
         mobile: userAccountInfo?.mobile_number || "",
-        mobile_prefix: userAccountInfo?.mobile_country_code,
+        mobile_prefix: userAccountInfo?.mobile_country_code || "+91",
         profile_photo_url: userAccountInfo?.profile_photo || "",
         profile_photo: null,
         access:
