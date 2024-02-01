@@ -8,7 +8,7 @@ import { ThemeContext } from "core/providers/theme";
 
 import CustomButton from "../CustomButton";
 import ZoomSliderWithInfo from "../ZoomSliderWithInfo/ZoomSliderWithInfo";
-import getCroppedImg, { getImageSource } from "../../constant/utils";
+import getCroppedImg from "../../constant/cropImageUtils";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { STORAGE_KEYS, ZOOM_CONSTANT } from "../../constant/constant";
 import { removeItem } from "../../services/encrypted-storage-service";
