@@ -6,6 +6,7 @@ import { TwoColumn } from "core/layouts";
 
 import ConfirmLogout from "../ConfirmLogout";
 import ProfileDropdown from "../ProfileDropdown";
+import BreadCrumbs from "../../components/BreadCrumbs";
 import Sessions from "../Sessions/Sessions";
 import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as MenuIcon } from "../../themes/base/assets/icons/menu.svg";
@@ -18,17 +19,19 @@ function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
       <TwoColumn
         className={styles.headerContainer}
         leftSection={
-          !responsive.isMd && (
+          !responsive.isMd ? (
             <Button
               icon={<MenuIcon />}
               type="text"
               onClick={() => setOpenSideMenu(true)}
             />
+          ) : (
+            <BreadCrumbs />
           )
         }
         rightSection={
           <Space size="large">
-            {responsive.isMd && <Sessions />}
+            {/* {responsive.isMd && <Sessions />} */}
             <Badge dot offset={[-6, 4]}>
               <BellOutlined className={styles.notificationIcon} />
             </Badge>
