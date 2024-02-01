@@ -23,3 +23,4 @@ export const CENTER_END_POINT = "/centers";
 export const CREATE = "/create";
 export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
 export const VERIFY_OTP = "/otp/verify";
+export const CHANGE_PASSWORD = "/password";

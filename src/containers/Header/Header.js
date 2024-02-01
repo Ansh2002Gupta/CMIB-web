@@ -4,6 +4,7 @@ import { BellOutlined } from "@ant-design/icons";
 
 import { TwoColumn } from "core/layouts";
 
+import ChangePassword from "../ChangePassword";
 import ConfirmLogout from "../ConfirmLogout";
 import ProfileDropdown from "../ProfileDropdown";
 import BreadCrumbs from "../../components/BreadCrumbs";
@@ -40,6 +41,7 @@ function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
         }
       />
       <ConfirmLogout />
+      <ChangePassword />
     </>
   );
 }
