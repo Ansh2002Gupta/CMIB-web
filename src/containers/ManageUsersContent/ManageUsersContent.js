@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useMemo,
   useLayoutEffect,
-  useRef,
 } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
@@ -18,8 +17,11 @@ import SearchFilter from "../../components/SearchFilter";
 import useListingUsers from "../../services/api-services/Users/useListingUsers";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useFetch from "../../core/hooks/useFetch";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
+import { convertPermissionFilter } from "../../constant/utils";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import { ADMIN_ROUTE, ROLES_PERMISSION } from "../../constant/apiEndpoints";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
 import {
   DEFAULT_PAGE_SIZE,
@@ -36,6 +38,9 @@ const ManageUsersContent = () => {
   const { getImage } = useContext(ThemeContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
+    url: ADMIN_ROUTE + ROLES_PERMISSION,
+  });
 
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
@@ -44,6 +49,7 @@ const ManageUsersContent = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
   const [showFilters, setShowFilters] = useState(false);
+  const [filterArray, setFilterArray] = useState([]);
   const [searchedValue, setSearchedValue] = useState("");
   const [currentDataLength, setCurrentDataLength] = useState(0);
 
@@ -273,6 +279,12 @@ const ManageUsersContent = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (filterArray.length > 0) {
+      fetchUsers(pageSize, current, searchedValue, filterArray);
+    }
+  }, [filterArray]);
+
   return (
     <>
       {contextHolder}
@@ -294,9 +306,15 @@ const ManageUsersContent = () => {
             value={searchedValue}
             onChange={handleOnUserSearch}
           />
+
           <SearchFilter
-            filterPropertiesArray={ACCESS_FILTER_DATA}
-            {...{ showFilters, setShowFilters }}
+            filterPropertiesArray={convertPermissionFilter(data?.roles)}
+            {...{
+              filterArray,
+              showFilters,
+              setFilterArray,
+              setShowFilters,
+            }}
           />
         </div>
         {areUsersFetchedSuccessfully && (
@@ -309,6 +327,7 @@ const ManageUsersContent = () => {
               onChangePageSize,
               onChangeCurrentPage,
             }}
+            customContainerStyles={styles.customContainerStyles}
             originalData={usersList || []}
           />
         )}

@@ -113,6 +113,11 @@ input::placeholder {
   border-radius: var(--radiusMLg);
 }
 
+.customContainerStyles {
+  border-radius: var(--radiusMLg) !important;
+  overflow: hidden !important;
+}
+
 @media screen and (max-width: 1023px) {
   .searchBar {
     width: var(--halfWidth);
