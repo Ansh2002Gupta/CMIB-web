@@ -9,6 +9,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  min-width: var(--width_100);
 }
 
 .filterAndTableContainer {
@@ -82,8 +83,34 @@ input::placeholder {
   color: var(--inputPlaceHolder) !important;
 }
 
-.tableCell{
+.tableCell {
   min-width: var(--width_100);
+}
+
+.chipsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gapSmall);
+  text-transform: capitalize;
+}
+
+.chipBg {
+  background-color: var(--chipBg);
+}
+
+.chipText {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+.textEllipsisChip {
+  max-width: var(--width_200);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: var(--snow);
+  padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
+  border-radius: var(--radiusMLg);
 }
 
 @media screen and (max-width: 1023px) {

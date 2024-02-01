@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useMemo,
   useLayoutEffect,
+  useRef,
 } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
@@ -104,13 +105,31 @@ const ManageUsersContent = () => {
     });
   };
 
+  const ChipWithOverflow = ({ textArray, maxChips }) => {
+    if (textArray && textArray.length > 0) {
+      const visibleChips = textArray.slice(0, maxChips);
+      const hiddenCount = textArray.length - maxChips;
+
+      return (
+        <div className={styles.chipsContainer}>
+          {visibleChips.map((chip, index) => (
+            <p className={styles.textEllipsisChip} key={index}>
+              {chip}
+            </p>
+          ))}
+          {hiddenCount > 0 && (
+            <p className={styles.textEllipsisChip}>+{hiddenCount}</p>
+          )}
+        </div>
+      );
+    }
+    return <p className={styles.textEllipsis}>{"--"}</p>;
+  };
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.userName2" }),
       dataIndex: "name",
       key: "name",
-      sortTypeText: true,
-      sortKey: "name",
       renderText: {
         isTextBold: true,
         visible: true,
@@ -136,40 +155,33 @@ const ManageUsersContent = () => {
           {intl.formatMessage({ id: "label.access" })}
         </p>
       ),
-      dataIndex: "role",
-      key: "role",
+      dataIndex: "roles",
+      key: "roles",
       render: (textArray, rowData) => {
-        const { id } = rowData;
-        const str = textArray?.map((item) => item.name)?.join(", ");
         return (
-          <p className={styles.textEllipsis} key={id}>
-            {str ? str : "--"}
-          </p>
+          <ChipWithOverflow
+            textArray={textArray ? Object.values(textArray) : null}
+            maxChips={1}
+          />
         );
       },
     },
-    renderColumn({
-      title: intl.formatMessage({ id: "label.dateCreatedOn" }),
-      dataIndex: "created_at",
-      key: "created_at",
-      sortTypeText: true,
-      sortKey: "created_at",
-      renderText: {
-        isTypeDate: true,
-        visible: true,
-        textStyles: styles.tableCell,
-      },
-      sortTypeDate: true,
-      sortDirection: ["ascend"],
-      defaultSortOrder: "ascend",
-    }),
     renderColumn({
       title: intl.formatMessage({ id: "label.status" }),
       dataIndex: "status",
       key: "status",
       renderSwitch: {
-        switchToggleHandler: (data) =>
-          onHandleUserStatus(data?.id, data?.status),
+        visible: true,
+        textStyles: styles.tableCell,
+        isActionable: false,
+      },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.dateCreatedOn" }),
+      dataIndex: "created_at",
+      key: "created_at",
+      renderText: {
+        isTypeDate: true,
         visible: true,
         textStyles: styles.tableCell,
       },
