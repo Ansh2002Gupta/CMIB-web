@@ -42,6 +42,9 @@ const UserDetailsContent = ({
   const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
 
+  const imageParts = userData?.profile_photo_url.split("/");
+  const imageName = imageParts.pop();
+
   const handleUpdateUserData = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
     setIsMobileNumberValid(
@@ -141,6 +144,7 @@ const UserDetailsContent = ({
                 permissions={userData?.permissions}
                 roles={userData?.roles}
                 is_two_factor={userData?.is_two_factor}
+                status={userData?.status}
                 isDateDisable
                 userNameErrorMessage={
                   !isUserNameValid
@@ -164,7 +168,9 @@ const UserDetailsContent = ({
                   isFormEditable: currentFormState !== FORM_STATES.VIEW_ONLY,
                 }}
                 userProfilePic={userData?.profile_photo_url}
-                userImageName={userData?.profile_photo?.file?.name}
+                userImageName={
+                  imageName.includes("png", "jpg", "jpeg") && imageName
+                }
               />
             </div>
           )}

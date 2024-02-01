@@ -29,6 +29,7 @@ const UserInfo = ({
   name,
   permissions,
   roles,
+  status,
   setIsAccessValid,
   shouldShowDatePickerOption,
   updateUserData,
@@ -38,14 +39,15 @@ const UserInfo = ({
   const responsive = useResponsive();
 
   const getValuesInChips = (arrayOfValues) => {
-    if (arrayOfValues?.length) {
+    if (Object.entries(arrayOfValues).length > 0) {
       return (
         <div className={styles.chipsContainer}>
-          {arrayOfValues?.map((item) => {
+          {Object.entries(arrayOfValues)?.map(([key, value]) => {
             return (
               <Chip
+                key={key}
                 bgColor={styles.chipBg}
-                label={item}
+                label={value}
                 textColor={styles.chipText}
               />
             );
@@ -91,19 +93,20 @@ const UserInfo = ({
     {
       key: "4",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.moduleAccess" })
+        intl.formatMessage({ id: "label.status" })
       ),
-      span: 3,
-      children:
-        getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
+      children: intl.formatMessage({
+        id: `label.${status ? "active" : "inactive"}`,
+      }),
     },
     {
       key: "5",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.controlAccessHeading" })
+        intl.formatMessage({ id: "label.twoFactorAuth" })
       ),
-      span: 3,
-      children: getValuesInChips(permissions),
+      children: intl.formatMessage({
+        id: `label.${is_two_factor ? "enabled" : "disabled"}`,
+      }),
     },
     {
       key: "6",
@@ -114,18 +117,30 @@ const UserInfo = ({
       ),
       children: formatDate({ date }),
     },
+  ];
+  let item2 = [
     {
       key: "7",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.twoFactorAuth" })
+        intl.formatMessage({ id: "label.access" })
       ),
-      children: intl.formatMessage({
-        id: `label.${is_two_factor ? "on" : "off"}`,
-      }),
+      span: 3,
+      children:
+        getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
+    },
+  ];
+  let item3 = [
+    {
+      key: "8",
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.controlAccessHeading" })
+      ),
+      span: 3,
+      children: getValuesInChips(permissions),
     },
   ];
 
-  items = items?.filter((val) => val.children);
+  item3 = item3?.filter((val) => val.children);
 
   return (
     <>
@@ -137,6 +152,8 @@ const UserInfo = ({
             layout="vertical"
             items={items}
           />
+          <Descriptions colon={false} layout="vertical" items={item2} />
+          <Descriptions colon={false} layout="vertical" items={item3} />
         </div>
       )}
       {isEditable && (
