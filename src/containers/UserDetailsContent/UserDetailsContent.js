@@ -44,14 +44,12 @@ const UserDetailsContent = ({
 
   const handleUpdateUserData = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
-    setIsMobileNumberValid(
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
-    );
+    setIsMobileNumberValid(MOBILE_NO_REGEX.test(`${userData?.mobile}`));
     setIsUserNameValid(userData.name?.trim()?.length !== 0);
     setIsAccessValid(userData.access?.length !== 0);
     if (
       EMAIL_REGEX.test(userData?.email) &&
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`) &&
+      MOBILE_NO_REGEX.test(`${userData?.mobile}`) &&
       userData.name?.trim()?.length !== 0 &&
       userData.access?.length !== 0
     ) {
@@ -74,9 +72,7 @@ const UserDetailsContent = ({
 
   const handleOnAddNewUser = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
-    setIsMobileNumberValid(
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
-    );
+    setIsMobileNumberValid(MOBILE_NO_REGEX.test(`${userData?.mobile}`));
     setIsUserNameValid(userData.name?.trim()?.length !== 0);
     setIsAccessValid(userData.access?.length !== 0);
     if (

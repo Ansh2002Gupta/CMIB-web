@@ -44,7 +44,6 @@ const UserInfo = ({
   const { data, error, isError, isLoading, isSuccess } = useFetch({
     url: CORE_COUNTRIES,
   });
-  console.log(mobilePrefix, "mobilePrefix");
   const getValuesInChips = (arrayOfValues) => {
     if (Object.entries(arrayOfValues).length > 0) {
       return (
@@ -267,26 +266,6 @@ const UserInfo = ({
                 value={date}
                 isEditable={!shouldShowDatePickerOption}
               />
-              // <TwoRow
-              //   className={styles.dateContainer}
-              //   topSection={
-              //     <Typography className={styles.accessSelectLabel}>
-              //       {intl.formatMessage({ id: "label.dateCreatedOn" })}
-              //     </Typography>
-              //   }
-              //   bottomSection={
-              //     <DatePicker
-              //       onChange={(date, dateString) =>
-              //         updateUserData("date", dateString)
-              //       }
-              //       className={[styles.text, styles.input].join(" ")}
-              //       defaultValue={dayjs(date)}
-              //       disabled={isDateDisable || !isEditable}
-              //       customInputStyles={[styles.text, styles.input].join(" ")}
-              //       customLabelStyles={styles.label}
-              //     />
-              //   }
-              // />
             )}
             <div className={styles.spanOverAllColumns}>
               <CheckBoxList
