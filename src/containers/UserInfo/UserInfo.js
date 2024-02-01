@@ -29,6 +29,7 @@ const UserInfo = ({
   name,
   permissions,
   roles,
+  status,
   setIsAccessValid,
   shouldShowDatePickerOption,
   updateUserData,
@@ -38,12 +39,13 @@ const UserInfo = ({
   const responsive = useResponsive();
 
   const getValuesInChips = (arrayOfValues) => {
-    if (arrayOfValues) {
+    if (Object.entries(arrayOfValues).length > 0) {
       return (
         <div className={styles.chipsContainer}>
           {Object.entries(arrayOfValues)?.map(([key, value]) => {
             return (
               <Chip
+                key={key}
                 bgColor={styles.chipBg}
                 label={value}
                 textColor={styles.chipText}
@@ -94,7 +96,7 @@ const UserInfo = ({
         intl.formatMessage({ id: "label.status" })
       ),
       children: intl.formatMessage({
-        id: `label.${1 ? "active" : "inactive"}`,
+        id: `label.${status ? "active" : "inactive"}`,
       }),
     },
     {

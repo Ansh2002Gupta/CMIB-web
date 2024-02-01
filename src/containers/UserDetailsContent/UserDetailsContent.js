@@ -141,6 +141,7 @@ const UserDetailsContent = ({
                 permissions={userData?.permissions}
                 roles={userData?.roles}
                 is_two_factor={userData?.is_two_factor}
+                status={userData?.status}
                 isDateDisable
                 userNameErrorMessage={
                   !isUserNameValid
