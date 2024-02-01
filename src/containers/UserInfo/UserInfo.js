@@ -8,9 +8,10 @@ import { TwoRow } from "../../core/layouts";
 
 import CheckBoxList from "../CheckBoxList";
 import Chip from "../../components/Chip/Chip";
-import CustomInput from "../../components/CustomInput";
-import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
 import CustomCheckBox from "../../components/CustomCheckBox";
+import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
+import CustomInput from "../../components/CustomInput";
+import CustomSwitch from "../../components/CustomSwitch/CustomSwitch";
 import { formatDate } from "../../constant/utils";
 import useFetch from "../../core/hooks/useFetch";
 import useResponsive from "../../core/hooks/useResponsive";
@@ -231,14 +232,14 @@ const UserInfo = ({
               />
             </div>
             <div className={styles.twoFactorContainer}>
-              {getTextWithIsRequiredStart(
-                intl.formatMessage({ id: "label.status" })
-              )}
-              <Typography className={styles.text}>
-                {intl.formatMessage({
-                  id: `label.${status ? "active" : "inactiveMessage"}`,
-                })}
-              </Typography>
+              <CustomSwitch
+                checked={status}
+                isRequired={true}
+                label={intl.formatMessage({ id: "label.status" })}
+                onChange={() => {
+                  updateUserData("status", !status);
+                }}
+              />
             </div>
             <div className={styles.twoFactorContainer}>
               {getTextWithIsRequiredStart(

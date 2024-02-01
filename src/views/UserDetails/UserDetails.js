@@ -34,7 +34,7 @@ const UserDetails = () => {
     email: "",
     mobile: "",
     mobile_prefix: "+91",
-    profile_photo: null,
+    profile_photo: "",
     profile_photo_url: "",
     access: [],
     roles: [],

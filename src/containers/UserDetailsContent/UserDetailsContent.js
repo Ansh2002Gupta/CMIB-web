@@ -66,9 +66,9 @@ const UserDetailsContent = ({
         mobile_country_code: userData?.mobile_prefix,
         status: userData?.status,
       };
-      // if (userData?.profile_photo) {
-      //   payload["profile_photo"] = userData.profile_photo.file;
-      // }
+      if (userData?.profile_photo) {
+        payload["profile_photo"] = userData.profile_photo.file;
+      }
       updateUserDetails(userId, payload, () => {
         navigate(USERS);
       });
