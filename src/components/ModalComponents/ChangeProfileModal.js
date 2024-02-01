@@ -17,7 +17,7 @@ import { resetUserDetails } from "../../globalContext/userProfile/userProfileAct
 import { removeItem } from "../../services/encrypted-storage-service";
 import { STORAGE_KEYS } from "../../constant/constant";
 import { classes } from "./ModalComponent.styles";
-import styles from "./modalComponent.module.scss";
+import styles from "./ModalComponent.module.scss";
 import "./override.css";
 
 const ChangeProfileModal = ({
@@ -210,9 +210,6 @@ const ChangeProfileModal = ({
               photoURL={imageToBeChaged?.src}
               initiateFileUpload={handleUploadImage}
               handleFileUpload={handleUpdatingUserProfile}
-              user2FacValidation={
-                userProfileDetails?.userDetails?.is_two_factor
-              }
               {...{ showNotification, setCurrentOpenModal }}
             />
           }

@@ -343,3 +343,5 @@ export const ZOOM_CONSTANT = {
 };
 
 export const NUMBER_OF_CHIPS_TO_BE_SHOWN = 2;
+
+export const ROTATE_IMAGE_BY = 90;

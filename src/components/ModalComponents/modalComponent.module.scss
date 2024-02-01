@@ -247,6 +247,8 @@
 .cropAndRotateContainer {
   gap: var(--gapMedium, 24px);
   padding: var(--paddingMedium, 24px);
+  max-height: var(--height_85vh, 85vh);
+  overflow-y: auto;
 }
 
 .fullWidth {

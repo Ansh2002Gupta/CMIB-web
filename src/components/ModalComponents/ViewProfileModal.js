@@ -11,7 +11,7 @@ import useUpdateUserProfileApi from "../../services/api-services/UserProfile/use
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { formatDate } from "../../constant/utils";
 import { classes } from "./ModalComponent.styles";
-import styles from "./modalComponent.module.scss";
+import styles from "./ModalComponent.module.scss";
 
 const ViewProfileModal = ({ setCurrentOpenModal, showNotification }) => {
   const [userProfileDetails] = useContext(UserProfileContext);

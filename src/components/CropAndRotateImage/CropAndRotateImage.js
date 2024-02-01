@@ -10,7 +10,11 @@ import CustomButton from "../CustomButton";
 import ZoomSliderWithInfo from "../ZoomSliderWithInfo/ZoomSliderWithInfo";
 import getCroppedImg from "../../constant/cropImageUtils";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { STORAGE_KEYS, ZOOM_CONSTANT } from "../../constant/constant";
+import {
+  ROTATE_IMAGE_BY,
+  STORAGE_KEYS,
+  ZOOM_CONSTANT,
+} from "../../constant/constant";
 import { removeItem } from "../../services/encrypted-storage-service";
 import { resetUserDetails } from "../../globalContext/userProfile/userProfileActions";
 import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
@@ -24,24 +28,21 @@ const CropAndRotateImage = ({
   photoURL,
   setFile,
   setCurrentOpenModal,
-  user2FacValidation,
   showNotification,
 }) => {
   const intl = useIntl();
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(ZOOM_CONSTANT.MIN_ZOOM);
-  const rotateImageBy = 90;
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [isCroppingImage, setIsCroppingImage] = useState(false);
   const [isErrorCroppingImage, setIsErrorCroppingImage] = useState(false);
 
   const { getImage } = useContext(ThemeContext);
+  const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const { getUserDetails } = useGetUserDetails();
-
-  const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const resetUserStoredInfo = () => {
     removeItem(STORAGE_KEYS.USER_DATA);
@@ -54,7 +55,6 @@ const CropAndRotateImage = ({
     handleFileUpload({
       payload: {
         profile_photo: uploadedURL,
-        is_two_factor: user2FacValidation,
       },
       onErrorCallback: (errString) => {
         showNotification(errString, "error");
@@ -71,7 +71,7 @@ const CropAndRotateImage = ({
     try {
       setIsCroppingImage(true);
       isErrorCroppingImage && setIsErrorCroppingImage(false);
-      const { file } = await getCroppedImg(
+      const { file: croppedFile } = await getCroppedImg(
         photoURL,
         croppedAreaPixels,
         rotation
@@ -79,9 +79,12 @@ const CropAndRotateImage = ({
       setIsCroppingImage(false);
       initiateFileUpload({
         onSuccessCallback: (imgURL) => {
-          uploadImageToServer({ uploadedFile: file, uploadedURL: imgURL });
+          uploadImageToServer({
+            uploadedFile: croppedFile,
+            uploadedURL: imgURL,
+          });
         },
-        file: file,
+        file: croppedFile,
         onErrorCallback: (errString) => {
           showNotification(errString, "error");
           setCurrentOpenModal(1);
@@ -140,7 +143,7 @@ const CropAndRotateImage = ({
           width={24}
           height={24}
           className={styles.rotateIcon}
-          onClick={() => setRotation((prev) => (prev + rotateImageBy) % 360)}
+          onClick={() => setRotation((prev) => (prev + ROTATE_IMAGE_BY) % 360)}
         />
       </div>
       <div className={styles.actionBtnContainer}>

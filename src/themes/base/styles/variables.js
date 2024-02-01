@@ -149,6 +149,8 @@ const variables = {
   height_400: "400px",
   height_30vh: "30vh",
   height_50vh: "50vh",
+  height_70vh: "70vh",
+  height_85vh: "85vh",
   heightFullViewPort: "100vh",
   halfHeight: "50%",
   fullHeight: "100%",

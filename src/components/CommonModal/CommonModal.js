@@ -18,7 +18,11 @@ const CommonModal = ({
 }) => {
   return (
     <Modal
-      className={[styles.modal, "customModal", customContainerStyles].join(" ")}
+      className={[
+        styles.modal,
+        "customModal",
+        customContainerStyles,
+      ].join(" ")}
       footer={footer}
       width={width}
       centered
