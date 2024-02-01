@@ -7,8 +7,10 @@
   cursor: pointer;
   font-size: var(--fontSizeSmall);
   color: var(--textBold);
+  font-weight: var(--fontWeightMedium);
 }
 .nonclickable {
   font-size: var(--fontSizeSmall);
   color: var(--subHeadingColor);
+  font-weight: var(--fontWeightMedium);
 }

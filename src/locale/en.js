@@ -318,6 +318,9 @@ const locale = {
   "label.experiencedMember": "Experienced Member",
   "label.change": "Change",
   "label.chooseModule": "Choose a module",
+  "label.oldPassword": "Old Password",
+  "label.newPassword": "New Password",
+  "label.confirmPassword": "Confirm Password",
   "label.emailAddress": "Email Address: ",
   "label.changeEmailAddress": "Change Email Address",
   "label.enable": "Enable",
@@ -327,6 +330,13 @@ const locale = {
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
+  "label.save": "Save",
+  "label.enabled": "Enabled",
+  "label.disabled": "Disabled",
+  "label.path.users": "Manage Users",
+  "label.path.details": "User Details",
+  "label.logoutSuccessful": "Logged out successfully",
+  "label.passwordChanged": "Password changed successfully",
 };
 
 export default locale;

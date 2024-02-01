@@ -33,7 +33,7 @@ const UserDetails = () => {
     name: "",
     email: "",
     mobile: "",
-    mobile_prefix: "91",
+    mobile_prefix: "in",
     profile_photo: null,
     profile_photo_url: "",
     access: [],
@@ -104,16 +104,6 @@ const UserDetails = () => {
     errorWhileAddingNewUser,
     isNewUserSuccessfullyAdded,
   ]);
-
-  const getPermissions = (rolesObjectArray) => {
-    const controlObject = rolesObjectArray?.filter(
-      (item) => item?.id === CONTROL_MODULE_ID
-    );
-    if (controlObject?.length) {
-      return controlObject[0].permissions?.map((item) => item.id);
-    }
-    return [];
-  };
 
   useEffect(() => {
     !!userAccountInfo &&

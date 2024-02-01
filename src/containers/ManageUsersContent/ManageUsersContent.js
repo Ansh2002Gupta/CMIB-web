@@ -22,7 +22,6 @@ import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdate
 import { convertPermissionFilter } from "../../constant/utils";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import { ADMIN_ROUTE, ROLES_PERMISSION } from "../../constant/apiEndpoints";
-import { ACCESS_FILTER_DATA } from "../../dummyData";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
@@ -38,7 +37,7 @@ const ManageUsersContent = () => {
   const { getImage } = useContext(ThemeContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
+  const { data, error, isLoading, isSuccess } = useFetch({
     url: ADMIN_ROUTE + ROLES_PERMISSION,
   });
 
@@ -74,13 +73,6 @@ const ManageUsersContent = () => {
     navigate(`details/${userId}?mode=${mode ? "edit" : "view"}`);
   };
 
-  const onHandleUserStatus = (userId, currentStatus) => {
-    updateUserDetails(userId, {
-      status: currentStatus ? 0 : 1,
-    });
-    debounceSearch(pageSize, current, searchedValue);
-  };
-
   const onChangePageSize = (size) => {
     setPageSize(Number(size));
     setCurrent(1);
@@ -89,7 +81,7 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    fetchUsers(size, 1, searchedValue);
+    fetchUsers(size, 1, searchedValue, filterArray);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -98,7 +90,7 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    fetchUsers(pageSize, newPageNumber, searchedValue);
+    fetchUsers(pageSize, newPageNumber, searchedValue, filterArray);
   };
 
   const handleOnUserSearch = (event) => {
@@ -266,8 +258,13 @@ const ManageUsersContent = () => {
   }, [errorWhileUpdatingUserData]);
 
   useEffect(() => {
-    fetchUsers(pageSize, current, searchedValue);
-  }, []);
+    fetchUsers(
+      pageSize,
+      searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE),
+      searchedValue,
+      filterArray
+    );
+  }, [filterArray]);
 
   useEffect(() => {
     return () => {
@@ -278,12 +275,6 @@ const ManageUsersContent = () => {
       setCurrent(1);
     };
   }, []);
-
-  useEffect(() => {
-    if (filterArray.length > 0) {
-      fetchUsers(pageSize, current, searchedValue, filterArray);
-    }
-  }, [filterArray]);
 
   return (
     <>
@@ -306,7 +297,6 @@ const ManageUsersContent = () => {
             value={searchedValue}
             onChange={handleOnUserSearch}
           />
-
           <SearchFilter
             filterPropertiesArray={convertPermissionFilter(data?.roles)}
             {...{

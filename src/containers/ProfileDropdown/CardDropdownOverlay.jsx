@@ -4,7 +4,10 @@ import { Avatar, Space, Card, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
-import { setShowLogoutModal } from "../../globalContext/userProfile/userProfileActions";
+import {
+  setShowChangePasswordModal,
+  setShowLogoutModal,
+} from "../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import headerActionItems from "../../constants/headerActionItems";
 import styles from "./profileDropdown.module.scss";
@@ -13,15 +16,22 @@ export default function CardDropdownOverlay({
   userName,
   userEmail,
   userProfile,
-  setDropdownVisible
+  setDropdownVisible,
 }) {
   const intl = useIntl();
   const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const handleLogoutClick = () => {
-    setDropdownVisible(false)
+    setDropdownVisible(false);
     userProfileDispatch(setShowLogoutModal(true));
-  }
+  };
+
+  const headerActionMethods = {
+    changePassword: () => {
+      setDropdownVisible(false);
+      userProfileDispatch(setShowChangePasswordModal(true));
+    },
+  };
 
   return (
     <Card
@@ -65,6 +75,7 @@ export default function CardDropdownOverlay({
             type="text"
             block
             icon={<span>{item.icon}</span>}
+            onClick={headerActionMethods[item.key]}
           >
             {intl.formatMessage({ id: item.id })}
           </Button>

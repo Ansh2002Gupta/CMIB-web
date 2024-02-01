@@ -53,7 +53,7 @@ const UserInfo = ({
               <Chip
                 key={key}
                 bgColor={styles.chipBg}
-                label={value}
+                label={value.name}
                 textColor={styles.chipText}
               />
             );
@@ -123,15 +123,19 @@ const UserInfo = ({
       ),
       children: formatDate({ date }),
     },
+  ];
+  let item2 = [
     {
       key: "7",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.moduleAccess" })
+        intl.formatMessage({ id: "label.access" })
       ),
       span: 3,
       children:
         getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
     },
+  ];
+  let item3 = [
     {
       key: "8",
       label: getTextWithIsRequiredStart(
@@ -142,7 +146,7 @@ const UserInfo = ({
     },
   ];
 
-  items = items?.filter((val) => val.children);
+  item3 = item3?.filter((val) => val.children);
 
   return (
     <>
@@ -154,6 +158,8 @@ const UserInfo = ({
             layout="vertical"
             items={items}
           />
+          <Descriptions colon={false} layout="vertical" items={item2} />
+          <Descriptions colon={false} layout="vertical" items={item3} />
         </div>
       )}
       {isEditable && (

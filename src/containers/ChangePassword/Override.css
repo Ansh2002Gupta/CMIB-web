@@ -1,0 +1,3 @@
+.ant-input.css-dev-only-do-not-override-1saub8l::placeholder {
+    color: var(--inputPlaceHolder, #616c82) !important;
+}
