@@ -869,9 +869,3 @@ export const PERMISION_AND_ROLE = {
     },
   ],
 };
-
-export const INITIAL_PASSWORD_DATA = {
-  old_password: "",
-  new_password: "",
-  confirm_password: "",
-};

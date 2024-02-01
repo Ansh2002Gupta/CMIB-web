@@ -23,7 +23,7 @@ import {
 } from "../../constant/regex";
 import { FIELDS } from "./changePasswordFields";
 import { getPasswordStrengthPointsArray } from "../../constant/passwordRules";
-import { INITIAL_PASSWORD_DATA } from "../../dummyData";
+import { INITIAL_PASSWORD_DATA } from "../../constant/constant";
 import { classes } from "./ChangePassword.styles";
 import styles from "./ChangePassword.module.scss";
 
@@ -111,6 +111,14 @@ const ChangePassword = () => {
     userProfileDispatch(setShowChangePasswordModal(false));
   };
 
+  const handleOnBlur = () => {
+    if (formData.new_password) {
+      setIsBulletColorRed(true);
+    } else {
+      setIsBulletColorRed(false);
+    }
+  };
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     if (!passwordValidations.bothEqual) {
@@ -139,6 +147,7 @@ const ChangePassword = () => {
   }, [errorWhileChangingPassword]);
 
   useEffect(() => {
+    let timer;
     if (changePasswordApiStatus === "success") {
       showNotification(
         intl.formatMessage({
@@ -146,11 +155,13 @@ const ChangePassword = () => {
         }),
         "success"
       );
-
-      setTimeout(() => {
+      timer = setTimeout(() => {
         return onLogout(false);
       }, 3000);
     }
+    return () => {
+      clearTimeout(timer);
+    };
   }, [changePasswordApiStatus]);
 
   return (
@@ -206,11 +217,7 @@ const ChangePassword = () => {
                         handleInputChange(val.target.value, item.label)
                       }
                       onBlur={
-                        item.label === "new_password"
-                          ? () => {
-                              setIsBulletColorRed(true);
-                            }
-                          : () => {}
+                        item.label === "new_password" ? handleOnBlur : () => {}
                       }
                       placeholder={intl.formatMessage({
                         id: `label.${item.headingIntl}`,

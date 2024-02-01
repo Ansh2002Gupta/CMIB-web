@@ -8,9 +8,9 @@ import styles from "./PointsList.module.scss";
 
 const PointsList = ({
   customHeadingStyles,
+  isBulletColorRed,
   pointsArray,
   pointsHeading,
-  isBulletColorRed,
 }) => {
   const getBulletStyles = (isValid) => {
     return [

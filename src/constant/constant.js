@@ -335,3 +335,9 @@ export const SORT_PROPERTIES = {
 };
 
 export const GENERIC_ERROR_MESSAGE = "Placeholder text";
+
+export const INITIAL_PASSWORD_DATA = {
+  old_password: "",
+  new_password: "",
+  confirm_password: "",
+};
