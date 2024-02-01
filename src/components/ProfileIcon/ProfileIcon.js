@@ -33,7 +33,6 @@ const ProfileIcon = ({
             : "",
           imageContainerStyle,
         ].join(" ")}
-        onClick={onClick}
       >
         <Image
           src={profileImage}

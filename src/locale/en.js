@@ -321,7 +321,7 @@ const locale = {
   "account.enableTwoFactorAuthentication": "Enable Two-factor Authentication",
   "label.editProfilePicture": "Edit Profile Picture",
   "label.remove": "Remove",
-  "label.save": "save",
+  "label.save": "Save",
   "label.cropProfilePicture": "Crop Profile Picture",
   "label.profilePictureIsUpdated": "User profile picture is updated",
 };

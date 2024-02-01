@@ -58,7 +58,7 @@
 
 .whiteText {
   color: var(--bodyBg, #ffff);
-  &:hover{
+  &:hover {
     color: var(--bodyBg, #ffff) !important;
   }
 }
@@ -72,7 +72,6 @@
 .subHeadingText {
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
-  // width: var(--halfWidth, 50%);
 }
 
 .imageContainerStyle {
@@ -100,6 +99,7 @@
   align-items: center;
   text-align: center;
   width: var(--fullWidth, 100%);
+  overflow: unset !important;
 }
 
 .thirdSectionStyle {
@@ -247,6 +247,10 @@
 .cropAndRotateContainer {
   gap: var(--gapMedium, 24px);
   padding: var(--paddingMedium, 24px);
+}
+
+.fullWidth {
+  width: var(--fullWidth, 100%);
 }
 
 @media (max-width: 551px) {

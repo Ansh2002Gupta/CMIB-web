@@ -11,24 +11,24 @@
 }
 
 .editProfileContainer {
-  cursor: pointer;
   align-self: center;
   margin-top: var(--margin_60, 60px);
 }
 
 .profileImageStyle {
-  min-width: var(--width_150, 150px);
-  min-height: var(--height_150, 150px);
+  min-width: var(--width_120, 120px);
+  max-width: var(--width_120, 120px);
+  min-height: var(--height_120, 120px);
+  max-height: var(--height_120, 120px);
   border-radius: var(--radius_50Per, 50%);
-  height: 600px;
 }
 
 .modalProfileImage {
-  min-width: var(--width_100, 100px);
   border-radius: var(--radius_50Per, 50%);
-  min-height: 100px;
-  max-height: 100px;
-  max-width: 100px;
+  min-height: var(--height_100, 100px);
+  max-height: var(--height_100, 100px);
+  min-width: var(--width_100, 100px);
+  max-width: var(--width_100, 100px);
 }
 
 .initialsText {
@@ -54,7 +54,7 @@
   padding: var(--paddingMedium, 24px) var(--padding_30, 30px);
 }
 
-.circularContainer{
+.circularContainer {
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -67,9 +67,24 @@
     min-height: var(height_70, 70px);
   }
   .modalProfileImage {
-    min-width: var(--width_70, 70px);
+    min-width: var(--width_80, 80px);
+    max-width: var(--width_80, 80px);
+    max-height: var(--height_80, 80px);
+    min-height: var(--height_80, 80px);
+    margin-bottom: 12px;
+  }
+  .profileImageStyle {
+    min-width: var(--width_100, 100px);
+    max-width: var(--width_100, 100px);
+    min-height: var(--height_100, 100px);
+    max-height: var(--height_100, 100px);
   }
   .editProfileContainer {
     margin-top: var(--margin_20, 20px);
+  }
+  .circularContainer {
+    width: var(--width_90, 90px);
+    height: var(--height_90, 90px);
+    margin-bottom: 12px;
   }
 }
