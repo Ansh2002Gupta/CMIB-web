@@ -14,7 +14,6 @@ import styles from "./FileUpload.module.scss";
 const FileUpload = ({
   heading,
   isFormEditable,
-  subHeading,
   updateUserData,
   userImageName,
   userProfilePic,
@@ -76,7 +75,9 @@ const FileUpload = ({
     <Base className={styles.container}>
       <Typography className={styles.headingText}>{heading}</Typography>
       <div className={styles.uploadBottomContainer}>
-        <Typography className={styles.subHeadingText}>{subHeading}</Typography>
+        <Typography className={styles.subHeadingText}>
+          {userImageName}
+        </Typography>
         {notificationContextHolder}
         {userProfilePic ? (
           <UserImage
@@ -120,7 +121,6 @@ const FileUpload = ({
 FileUpload.defaultProps = {
   heading: "Sent To",
   isFormEditable: false,
-  subHeading: "Photo",
   updateUserData: () => {},
   userProfilePic: "",
   userImageName: "",
@@ -129,7 +129,6 @@ FileUpload.defaultProps = {
 FileUpload.propTypes = {
   heading: PropTypes.string,
   isFormEditable: PropTypes.bool,
-  subHeading: PropTypes.string,
   updateUserData: PropTypes.func,
   userProfilePic: PropTypes.string,
   userImageName: PropTypes.string,
