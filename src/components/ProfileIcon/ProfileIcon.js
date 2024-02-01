@@ -67,6 +67,7 @@ const ProfileIcon = ({
             ? styles.editProfileContainer
             : "",
           initialContainerStyle,
+          styles.circularContainer,
         ].join(" ")}
         onClick={onClick}
       >

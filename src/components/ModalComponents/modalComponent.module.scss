@@ -56,6 +56,13 @@
   }
 }
 
+.whiteText {
+  color: var(--bodyBg, #ffff);
+  &:hover{
+    color: var(--bodyBg, #ffff) !important;
+  }
+}
+
 .headingText {
   color: var(--textBold, #000833);
   font-size: var(--fontSizeXlarge, 20px);
@@ -65,7 +72,7 @@
 .subHeadingText {
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
-  width: var(--halfWidth, 50%);
+  // width: var(--halfWidth, 50%);
 }
 
 .imageContainerStyle {
@@ -139,15 +146,14 @@
   display: flex;
   gap: var(--gapXSmall, 8px);
   width: var(--fullWidth, 100%);
+  justify-content: center;
 }
 
 .rightAlign {
-  width: var(--halfWidth, 50%);
   text-align: end;
 }
 
 .leftAlign {
-  width: var(--halfWidth, 50%);
   text-align: start;
 }
 

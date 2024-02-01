@@ -20,11 +20,15 @@
   min-width: var(--width_150, 150px);
   min-height: var(--height_150, 150px);
   border-radius: var(--radius_50Per, 50%);
+  height: 600px;
 }
 
 .modalProfileImage {
   min-width: var(--width_100, 100px);
   border-radius: var(--radius_50Per, 50%);
+  min-height: 100px;
+  max-height: 100px;
+  max-width: 100px;
 }
 
 .initialsText {
@@ -45,9 +49,16 @@
 
 .initials {
   font-size: var(--fontSizeExtraLargeHeading, 40px);
-  border-radius: vra(--radius_50Per, 50%);
+  border-radius: var(--radius_50Per, 50%);
   border: 1px solid var(--textBold);
   padding: var(--paddingMedium, 24px) var(--padding_30, 30px);
+}
+
+.circularContainer{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid black;
 }
 
 @media (max-width: 551px) {

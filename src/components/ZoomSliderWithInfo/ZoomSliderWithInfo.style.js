@@ -8,6 +8,7 @@ export const classes = {
     alignItems: "center",
     display: "flex",
     gap: "8px",
+    width: "100%",
   },
   sliderBox: {
     flexDirection: "row",

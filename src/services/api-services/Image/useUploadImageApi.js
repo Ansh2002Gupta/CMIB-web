@@ -3,7 +3,11 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import { CORE_ROUTE, FILES_END_POINT } from "../../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  CORE_ROUTE,
+  FILES_END_POINT,
+} from "../../../constant/apiEndpoints";
 
 const useUploadImageApi = () => {
   const intl = useIntl();
@@ -15,7 +19,6 @@ const useUploadImageApi = () => {
 
   const handleUploadImage = async ({
     onSuccessCallback,
-    module,
     file,
     onErrorCallback,
   }) => {
@@ -23,15 +26,17 @@ const useUploadImageApi = () => {
       setImageUploadApiStatus(API_STATUS.LOADING);
       setImageUploadData(null);
       errorWhileUploadingImage && setErrorWhileUploadingImage("");
-      const url = CORE_ROUTE + "/" + module + FILES_END_POINT;
+      const url = CORE_ROUTE + "/" + ADMIN_ROUTE + FILES_END_POINT;
       const formData = new FormData();
-      console.log({file, module});
-      formData.append("file_name", file);
+      formData.append("file", file);
       const res = await Http.post(url, formData);
-      if (res.code === STATUS_CODES.SUCCESS_STATUS) {
+      if (
+        res.code === STATUS_CODES.SUCCESS_STATUS ||
+        res.status === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setImageUploadApiStatus(API_STATUS.SUCCESS);
         setImageUploadData(res?.data);
-        onSuccessCallback && onSuccessCallback();
+        onSuccessCallback && onSuccessCallback(res?.data?.url);
         return;
       }
       setImageUploadApiStatus(API_STATUS.ERROR);

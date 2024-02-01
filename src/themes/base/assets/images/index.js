@@ -49,6 +49,8 @@ import cross from "./cross.svg";
 import blueCheckSign from "./blue-check-sign.svg";
 import smallCircularEditBtn from "./small edit circular button.svg";
 import rotateIcon from "./rotate-Icon.svg";
+import minusCircleBlue from "./minus-cirlce-blue.svg";
+import addCircleBlue from "./add-circle-blue.svg";
 
 const images = {
   addCircle,
@@ -102,6 +104,8 @@ const images = {
   blueCheckSign,
   smallCircularEditBtn,
   rotateIcon,
+  addCircleBlue,
+  minusCircleBlue,
 };
 
 export default images;

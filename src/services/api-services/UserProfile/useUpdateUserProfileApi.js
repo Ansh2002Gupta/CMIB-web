@@ -7,9 +7,8 @@ import { ADMIN_ROUTE, PROFILE_END_POINT } from "../../../constant/apiEndpoints";
 
 const useUpdateUserProfileApi = () => {
   const intl = useIntl();
-  const [updatingUserProfileApiStatus, setUpdatingUserProfileApiStatus] = useState(
-    API_STATUS.IDLE
-  );
+  const [updatingUserProfileApiStatus, setUpdatingUserProfileApiStatus] =
+    useState(API_STATUS.IDLE);
   const [userProfileUpdatedData, setUserProfileUpdatedData] = useState(null);
   const [errorWhileUpdatingUserProfile, setErrorWhileUpdatingUserProfile] =
     useState("");
@@ -24,9 +23,11 @@ const useUpdateUserProfileApi = () => {
       setUserProfileUpdatedData(null);
       errorWhileUpdatingUserProfile && setErrorWhileUpdatingUserProfile("");
       const url = ADMIN_ROUTE + PROFILE_END_POINT;
-      console.log({ payload });
-      const res = await Http.post(url, payload);
-      if (res.code === STATUS_CODES.SUCCESS_STATUS) {
+      const res = await Http.patch(url, payload);
+      if (
+        res.code === STATUS_CODES.SUCCESS_STATUS ||
+        res.status === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setUpdatingUserProfileApiStatus(API_STATUS.SUCCESS);
         setUserProfileUpdatedData(res?.data);
         onSuccessCallback && onSuccessCallback();

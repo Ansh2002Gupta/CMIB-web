@@ -323,6 +323,7 @@ const locale = {
   "label.remove": "Remove",
   "label.save": "save",
   "label.cropProfilePicture": "Crop Profile Picture",
+  "label.profilePictureIsUpdated": "User profile picture is updated",
 };
 
 export default locale;

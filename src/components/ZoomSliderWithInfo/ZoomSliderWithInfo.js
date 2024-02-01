@@ -37,7 +37,7 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
     <div style={classes.zoomInfoContainer}>
       <div style={classes.sliderBox}>
         <Image
-          src={getImage("minusCircle")}
+          src={getImage("minusCircleBlue")}
           alt="Zoom out"
           width={24}
           height={24}
@@ -55,7 +55,7 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
           />
         </div>
         <Image
-          src={getImage("addCircle")}
+          src={getImage("addCircleBlue")}
           alt="Zoom in"
           width={24}
           height={24}

@@ -10,14 +10,17 @@ import MenuContainer from "../containers/Menu/Menu";
 import HeaderContainer from "../containers/Header";
 import ModalComponents from "../components/ModalComponents";
 import styles from "./CommonStyles/commonModalStyles.module.scss";
+import useShowNotification from "../core/hooks/useShowNotification";
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentOpenendModal, setCurrentOpenModal] = useState(0);
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   return (
     <>
+      {notificationContextHolder}
       <MainLayout
         menu={
           <MenuContainer
@@ -52,13 +55,19 @@ function Home({ noOuterPadding }) {
         customContainerStyles={styles.customContainerStyles}
       >
         {currentOpenendModal === 1 && (
-          <ModalComponents.ViewProfileModal {...{ setCurrentOpenModal }} />
+          <ModalComponents.ViewProfileModal
+            {...{ setCurrentOpenModal, showNotification }}
+          />
         )}
         {currentOpenendModal === 2 && (
-          <ModalComponents.AccessViewModal {...{ setCurrentOpenModal }} />
+          <ModalComponents.AccessViewModal
+            {...{ setCurrentOpenModal, showNotification }}
+          />
         )}
         {currentOpenendModal >= 3 && (
-          <ModalComponents.ChangeProfileModal {...{ setCurrentOpenModal, currentOpenendModal }} />
+          <ModalComponents.ChangeProfileModal
+            {...{ setCurrentOpenModal, currentOpenendModal, showNotification }}
+          />
         )}
       </CommonModal>
     </>
