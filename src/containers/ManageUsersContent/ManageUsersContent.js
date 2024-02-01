@@ -95,7 +95,11 @@ const ManageUsersContent = () => {
 
   const handleOnUserSearch = (event) => {
     setSearchedValue(event.target.value);
-    debounceSearch(pageSize, current, event.target.value);
+    if (event.target.value.length > 2) {
+      debounceSearch(pageSize, current, event.target.value, filterArray);
+    } else {
+      debounceSearch(pageSize, current, "", filterArray);
+    }
     setCurrent(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
