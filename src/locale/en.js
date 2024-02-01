@@ -279,6 +279,11 @@ const locale = {
   "label.companyIciaMessage":
     "We wish to use your company logo in ICAI’s future Promotional materials stating that your company has participated in the Career Ascent programme of ICAI",
   "label.visitWebsite": "Visit Website",
+  "label.logoutConfirmationMessage":
+    "Are you sure you want to logout of the portal?",
+  "label.menu.user-management": "Users",
+  "label.menu.bulk-notifications": "Notifications",
+  "label.menu.ticket-management": "Tickets",
   "label.menu.user-management": "User Management",
   "label.menu.bulk-notifications-management": "Bulk Notifications Management",
   "label.menu.ticket-management": "Ticket Management",
@@ -313,8 +318,18 @@ const locale = {
   "label.experiencedMember": "Experienced Member",
   "label.change": "Change",
   "label.chooseModule": "Choose a module",
+  "label.oldPassword": "Old Password",
+  "label.newPassword": "New Password",
+  "label.confirmPassword": "Confirm Password",
   "label.emailAddress": "Email Address: ",
   "label.changeEmailAddress": "Change Email Address",
+  "label.save": "Save",
+  "label.enabled": "Enabled",
+  "label.disabled": "Disabled",
+  "label.path.users": "Manage Users",
+  "label.path.details": "User Details",
+  "label.logoutSuccessful": "Logged out successfully",
+  "label.passwordChanged": "Password changed successfully",
 };
 
 export default locale;

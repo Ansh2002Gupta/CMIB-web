@@ -16,6 +16,6 @@
 }
 
 .btn[disabled] {
-  background-color: var(--disableBtn) !important;
-  color: var(--btnText) !important;
+  background-color: var(--disableBtn, #B1B3B5) !important;
+  color: var(--btnText, #FBFCFF) !important;
 }

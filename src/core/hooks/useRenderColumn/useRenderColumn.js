@@ -1,8 +1,9 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch } from "antd";
 
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
+import { formatDate } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 
@@ -74,7 +75,7 @@ const useRenderColumn = () => {
 
     const textRenderFormat = ({ text }) => {
       if (isTypeDate) {
-        return moment(new Date(text)).format(dateFormat);
+        return formatDate({ date: text });
       }
       if (includeDotAfterText) {
         return `${text} .`;
@@ -104,8 +105,8 @@ const useRenderColumn = () => {
       (columnObject.sorter = (() => {
         if (sortTypeDate) {
           return (a, b) =>
-            moment(new Date(a[sortKey])).unix() -
-            moment(new Date(b[sortKey])).unix();
+            dayjs(new Date(a[sortKey])).unix() -
+            dayjs(new Date(b[sortKey])).unix();
         }
         if (sortTypeText) {
           return (a, b) => a[sortKey].localeCompare(b[sortKey]);
