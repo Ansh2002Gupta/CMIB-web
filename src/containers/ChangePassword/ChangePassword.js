@@ -26,6 +26,7 @@ import { getPasswordStrengthPointsArray } from "../../constant/passwordRules";
 import { INITIAL_PASSWORD_DATA } from "../../constant/constant";
 import { classes } from "./ChangePassword.styles";
 import styles from "./ChangePassword.module.scss";
+import "./Override.css"
 
 const ChangePassword = () => {
   const intl = useIntl();
