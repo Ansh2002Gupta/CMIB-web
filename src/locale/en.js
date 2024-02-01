@@ -320,11 +320,13 @@ const locale = {
   "label.chooseModule": "Choose a module",
   "label.emailAddress": "Email Address: ",
   "label.changeEmailAddress": "Change Email Address",
-  "label.enabled": "Enabled",
-  "label.disabled": "Disabled",
+  "label.enable": "Enable",
+  "label.disable": "Disable",
   "label.path.users": "Manage Users",
   "label.path.details": "User Details",
   "label.logoutSuccessful": "Logged out successfully",
+  "label.inactiveMessage":
+    "Your account has been marked inactive. Please contact the administrator for assistance",
 };
 
 export default locale;

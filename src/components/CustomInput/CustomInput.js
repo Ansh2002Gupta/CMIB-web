@@ -70,7 +70,7 @@ const CustomInput = ({
           type === "mobile" ? styles.mobile : "",
         ].join(" ")}
       >
-        {(type === "select" || type === "mobile") && (
+        {type === "select" && (
           <>
             <Select
               mode={isMultiSelect ? "multiple" : ""}
@@ -94,17 +94,110 @@ const CustomInput = ({
             />
           </>
         )}
-        {((type !== "select" && type !== "inputNumber") ||
-          type === "mobile") && (
+        {type === "mobile" && (
+          <div className={[styles.formContainer, styles.mobile].join(" ")}>
+            <Select
+              className={[
+                styles.selectInput,
+                customSelectInputStyles,
+                styles.selectOptionsMobileStyles,
+              ].join(" ")}
+              defaultValue="in"
+              onChange={(value) => {
+                onSelectItem({ target: { value } });
+              }}
+              disabled={isSelectBoxDisable}
+              optionLabelProp="label"
+            >
+              {selectOptions?.map((country) => (
+                <Select.Option
+                  key={country.country_code}
+                  value={country.country_code}
+                  label={
+                    <div>
+                      <img
+                        src={country.flag}
+                        alt={`${country.name} flag`}
+                        style={{
+                          width: "20px",
+                          marginRight: "8px",
+                          verticalAlign: "middle",
+                        }}
+                      />
+                      {country.dial_code}
+                    </div>
+                  }
+                >
+                  <div>
+                    <img
+                      src={country.flag}
+                      alt={`${country.name} flag`}
+                      style={{
+                        width: "20px",
+                        marginRight: "8px",
+                        verticalAlign: "middle",
+                      }}
+                    />
+                    {country.dial_code}
+                  </div>
+                </Select.Option>
+              ))}
+            </Select>
+            <Input
+              ref={isSuffixRequiredForPassword ? inputFieldRef : null}
+              type={"number"}
+              className={[
+                styles.inputField,
+                styles.mobileInput,
+                ,
+                customInputStyles,
+              ].join(" ")}
+              {...{
+                value,
+                placeholder,
+                disabled,
+                onChange,
+              }}
+              prefix={isPrefixRequired ? prefixElement : null}
+              suffix={
+                <>
+                  {isSuffixRequiredForPassword &&
+                    (isTextVisible ? (
+                      <span
+                        className={styles.suffixElement}
+                        onClick={() => {
+                          onSuffixElementClick && restoreCursorPosition();
+                        }}
+                      >
+                        <EyeOutlined />
+                      </span>
+                    ) : (
+                      <span
+                        className={styles.suffixElement}
+                        onClick={() => {
+                          onSuffixElementClick && restoreCursorPosition();
+                        }}
+                      >
+                        <EyeInvisibleOutlined />
+                      </span>
+                    ))}
+                  {SuffixIcon && (
+                    <SuffixIcon
+                      onClick={() => {
+                        onSuffixElementClick && onSuffixElementClick();
+                      }}
+                    />
+                  )}
+                </>
+              }
+            />
+          </div>
+        )}
+        {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
           <Input
             ref={isSuffixRequiredForPassword ? inputFieldRef : null}
             type={type || "text"}
-            className={[
-              styles.inputField,
-              type === "mobile" ? styles.mobileInput : "",
-              ,
-              customInputStyles,
-            ].join(" ")}
+            className={[styles.inputField, customInputStyles].join(" ")}
             {...{
               value,
               placeholder,

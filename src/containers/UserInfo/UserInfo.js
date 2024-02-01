@@ -9,9 +9,13 @@ import { TwoRow } from "../../core/layouts";
 import CheckBoxList from "../CheckBoxList";
 import Chip from "../../components/Chip/Chip";
 import CustomInput from "../../components/CustomInput";
+import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
+import CustomCheckBox from "../../components/CustomCheckBox";
 import { formatDate } from "../../constant/utils";
+import useFetch from "../../core/hooks/useFetch";
 import useResponsive from "../../core/hooks/useResponsive";
 import { ALLOWED_MOBILE_PREFIXES } from "../../constant/constant";
+import { CORE_COUNTRIES } from "../../constant/apiEndpoints";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
@@ -37,7 +41,10 @@ const UserInfo = ({
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
-
+  const { data, error, isError, isLoading, isSuccess } = useFetch({
+    url: CORE_COUNTRIES,
+  });
+  console.log(mobilePrefix, "mobilePrefix");
   const getValuesInChips = (arrayOfValues) => {
     if (Object.entries(arrayOfValues).length > 0) {
       return (
@@ -105,7 +112,7 @@ const UserInfo = ({
         intl.formatMessage({ id: "label.twoFactorAuth" })
       ),
       children: intl.formatMessage({
-        id: `label.${is_two_factor ? "enabled" : "disabled"}`,
+        id: `label.${is_two_factor ? "enable" : "disable"}`,
       }),
     },
     {
@@ -196,7 +203,6 @@ const UserInfo = ({
               <CustomInput
                 isError={!!mobileErrorMessage}
                 errorMessage={mobileErrorMessage}
-                isSelectBoxDisable
                 type="mobile"
                 label={intl.formatMessage({ id: "label.mobileNumber" })}
                 isRequired
@@ -206,7 +212,7 @@ const UserInfo = ({
                 customSelectInputStyles={[styles.selectInput].join(" ")}
                 customLabelStyles={styles.label}
                 onChange={(e) => updateUserData("mobile", e.target.value)}
-                selectOptions={ALLOWED_MOBILE_PREFIXES}
+                selectOptions={data}
                 defaultSelectValueString="+91"
                 onSelectItem={(e) =>
                   updateUserData("mobile_prefix", e.target.value)
@@ -216,6 +222,72 @@ const UserInfo = ({
                 })}
               />
             </div>
+            <div className={styles.twoFactorContainer}>
+              {getTextWithIsRequiredStart(
+                intl.formatMessage({ id: "label.status" })
+              )}
+              <Typography className={styles.text}>
+                {intl.formatMessage({
+                  id: `label.${status ? "active" : "inactiveMessage"}`,
+                })}
+              </Typography>
+            </div>
+            <div className={styles.twoFactorContainer}>
+              {getTextWithIsRequiredStart(
+                intl.formatMessage({ id: "label.twoFactorAuth" })
+              )}
+              <CustomCheckBox
+                className={styles.box}
+                onChange={(value) =>
+                  updateUserData("is_two_factor", !is_two_factor)
+                }
+                checked={is_two_factor}
+              >
+                <Typography className={styles.text}>
+                  {intl.formatMessage({
+                    id: `label.${is_two_factor ? "enable" : "disable"}`,
+                  })}
+                </Typography>
+              </CustomCheckBox>
+            </div>
+            {date && (
+              <CustomDateTimePicker
+                customLabelStyles={styles.label}
+                customTimeStyle={[styles.text, styles.input].join(" ")}
+                customContainerStyles={styles.twoFactorContainer}
+                isRequired
+                label={intl.formatMessage({ id: "label.dateCreatedOn" })}
+                onChange={(date, dateString) =>
+                  updateUserData("date", dateString)
+                }
+                placeholder={intl.formatMessage({
+                  id: "centre.placeholder.selectDate",
+                })}
+                type="date"
+                value={date}
+                isEditable={!shouldShowDatePickerOption}
+              />
+              // <TwoRow
+              //   className={styles.dateContainer}
+              //   topSection={
+              //     <Typography className={styles.accessSelectLabel}>
+              //       {intl.formatMessage({ id: "label.dateCreatedOn" })}
+              //     </Typography>
+              //   }
+              //   bottomSection={
+              //     <DatePicker
+              //       onChange={(date, dateString) =>
+              //         updateUserData("date", dateString)
+              //       }
+              //       className={[styles.text, styles.input].join(" ")}
+              //       defaultValue={dayjs(date)}
+              //       disabled={isDateDisable || !isEditable}
+              //       customInputStyles={[styles.text, styles.input].join(" ")}
+              //       customLabelStyles={styles.label}
+              //     />
+              //   }
+              // />
+            )}
             <div className={styles.spanOverAllColumns}>
               <CheckBoxList
                 {...{ setIsAccessValid }}
@@ -226,45 +298,6 @@ const UserInfo = ({
                   updateUserData("permissions", value)
                 }
               />
-            </div>
-            {shouldShowDatePickerOption && date && (
-              <TwoRow
-                className={styles.dateContainer}
-                topSection={
-                  <Typography className={styles.accessSelectLabel}>
-                    {intl.formatMessage({ id: "label.dateCreatedOn" })}
-                  </Typography>
-                }
-                bottomSection={
-                  <DatePicker
-                    onChange={(date, dateString) =>
-                      updateUserData("date", dateString)
-                    }
-                    className={[styles.text, styles.input].join(" ")}
-                    defaultValue={dayjs(date)}
-                    disabled={isDateDisable || !isEditable}
-                    customInputStyles={[styles.text, styles.input].join(" ")}
-                    customLabelStyles={styles.label}
-                  />
-                }
-              />
-            )}
-            <div className={styles.twoFactorContainer}>
-              <Typography className={styles.label}>
-                {intl.formatMessage({ id: "label.twoFactorAuth" })}
-              </Typography>
-              <div className={styles.switchAndTextContainer}>
-                <Switch
-                  className={is_two_factor ? styles.active : ""}
-                  defaultChecked={is_two_factor}
-                  onChange={(value) => updateUserData("is_two_factor", value)}
-                />
-                <Typography>
-                  {intl.formatMessage({
-                    id: `label.${is_two_factor ? "on" : "off"}`,
-                  })}
-                </Typography>
-              </div>
             </div>
           </div>
         </Base>

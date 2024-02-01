@@ -157,7 +157,7 @@ const UserDetailsContent = ({
                       })
                     : ""
                 }
-                shouldShowDatePickerOption={false}
+                shouldShowDatePickerOption={true}
               />
               <FileUpload
                 {...{
