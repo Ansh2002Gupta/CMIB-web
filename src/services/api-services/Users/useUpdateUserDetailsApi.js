@@ -16,26 +16,7 @@ const useUpdateUserDetailsApi = () => {
     try {
       setApiStatus(API_STATUS.LOADING);
       errorWhileUpdatingUserData && setErrorWhileUpdatingUserData("");
-      const formData = new FormData();
-      // for (let [key, value] of Object.entries(payload)) {
-      //   if (
-      //     key?.toLowerCase() === "roles" ||
-      //     key?.toLowerCase() === "permissions"
-      //   ) {
-      //     value = value.map((item) => item);
-      //     value = value.join(",");
-      //   }
-      //   formData.append(key, value);
-      // }
-      // formData.append("_method", "PATCH");
-      // TODO: remove the below code once we start getting current user permissions.
-      // formData.append("permissions", "1");
       const url = ADMIN_ROUTE + USERS_END_POINT + "/" + userId;
-      const apiOptions = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
       const res = await Http.patch(url, payload);
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
         setUserDetails(res?.data);

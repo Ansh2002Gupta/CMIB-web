@@ -121,12 +121,18 @@ const UserDetails = () => {
         name: userAccountInfo?.name || "",
         email: userAccountInfo?.email || "",
         mobile: userAccountInfo?.mobile_number || "",
-        mobile_prefix: "91",
+        mobile_prefix: userAccountInfo?.mobile_country_code,
         profile_photo_url: userAccountInfo?.profile_photo || "",
         profile_photo: null,
-        access: userAccountInfo?.role?.map((item) => item?.id) || [],
+        access:
+          Object.entries(userAccountInfo?.roles || {})?.map(
+            ([index, item]) => item?.id
+          ) || [],
         roles: userAccountInfo?.roles || [],
-        permissions: userAccountInfo?.permissions,
+        permissions:
+          Object.entries(userAccountInfo?.permissions || {})?.map(
+            ([index, item]) => item?.id
+          ) || [],
         date: userAccountInfo?.created_at || "",
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,
         status: userAccountInfo?.status,

@@ -8,6 +8,7 @@ import Base from "../../core/layouts/Base/Base";
 import CustomCheckBox from "../../components/CustomCheckBox";
 import useFetch from "../../core/hooks/useFetch";
 import { ADMIN_ROUTE, ROLES_PERMISSION } from "../../constant/apiEndpoints";
+import { allModuleIdObject } from "../../constant/constant";
 import { PERMISION_AND_ROLE } from "../../dummyData";
 import styles from "./CheckBoxList.module.scss";
 
@@ -24,7 +25,7 @@ const CheckBoxList = ({
   const areAllControlsSelected =
     selectedControls.length === PERMISION_AND_ROLE.data[0].permissions.length;
 
-  const controlModuleId = 12;
+  const controlModuleId = allModuleIdObject.control;
 
   const {
     data: rolesData,
@@ -37,7 +38,6 @@ const CheckBoxList = ({
     url: ADMIN_ROUTE + ROLES_PERMISSION,
   });
 
-  console.log(rolesData, "rolesData...");
   const handleSelect = (selectedOptionArray, setSelectedOptionArray, id) => {
     if (selectedOptionArray.includes(id)) {
       const updatedData = selectedOptionArray.filter(
@@ -79,11 +79,9 @@ const CheckBoxList = ({
 
   return (
     <Base className={styles.parentContainer}>
-      {getTextWithStar(intl.formatMessage({ id: "label.moduleAccess" }))}
+      {getTextWithStar(intl.formatMessage({ id: "label.access" }))}
       <div className={styles.container}>
-        {/* TODO: PERMISSION and ROLES Will come from API */}
         {Object.entries(rolesData?.roles || {})?.map(([index, item]) => {
-          console.log(item, "item..");
           return (
             <CustomCheckBox
               disabled={item.disabled}
@@ -119,7 +117,9 @@ const CheckBoxList = ({
                         item.id
                       )
                     }
-                    checked={selectedControls.includes(item.id)}
+                    checked={
+                      selectedControls && selectedControls.includes(item.id)
+                    }
                   >
                     <Typography className={styles.text}>{item.name}</Typography>
                   </CustomCheckBox>

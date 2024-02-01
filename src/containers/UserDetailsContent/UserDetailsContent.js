@@ -60,6 +60,7 @@ const UserDetailsContent = ({
         roles: userData?.access,
         permissions: userData.permissions,
         is_two_factor: userData?.is_two_factor ? 1 : 0,
+        mobile_country_code: userData?.mobile_prefix,
       };
       if (userData?.profile_photo) {
         payload["profile_photo"] = userData.profile_photo.file;
