@@ -24,11 +24,11 @@
 }
 
 .cancelButton {
-  background-color: #fff;
+  background-color: var(--bodyBg, #fff);
   color: var(--textBold, #000833);
   border: 1px solid rgba(161, 159, 159, 0.482) !important;
   &:hover {
-    background-color: #fff !important;
+    background-color: var(--bodyBg, #fff) !important;
     color: var(--textBold, #000833) !important;
     border: 1px solid rgba(161, 159, 159, 0.482) !important;
   }
