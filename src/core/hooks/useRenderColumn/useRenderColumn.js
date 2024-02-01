@@ -71,6 +71,7 @@ const useRenderColumn = () => {
       swithActiveLabel,
       swithInActiveLabel,
       switchToggleHandler = () => {},
+      isActionable = true,
     } = renderSwitch;
 
     const textRenderFormat = ({ text }) => {
@@ -146,11 +147,13 @@ const useRenderColumn = () => {
         const { status } = data;
         return (
           <div className={styles.centreStatusContainer}>
-            <Switch
-              checked={status}
-              onClick={() => switchToggleHandler(data)}
-              className={status ? styles.switchBgColor : ""}
-            />
+            {isActionable && (
+              <Switch
+                checked={status}
+                onClick={() => switchToggleHandler(data)}
+                className={status ? styles.switchBgColor : ""}
+              />
+            )}
             <p>
               {status
                 ? swithActiveLabel || intl.formatMessage({ id: "label.active" })

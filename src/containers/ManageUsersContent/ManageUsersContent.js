@@ -17,9 +17,11 @@ import SearchFilter from "../../components/SearchFilter";
 import useListingUsers from "../../services/api-services/Users/useListingUsers";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useFetch from "../../core/hooks/useFetch";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
+import { convertPermissionFilter } from "../../constant/utils";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
-import { ACCESS_FILTER_DATA } from "../../dummyData";
+import { ADMIN_ROUTE, ROLES_PERMISSION } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
@@ -35,6 +37,9 @@ const ManageUsersContent = () => {
   const { getImage } = useContext(ThemeContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { data, error, isLoading, isSuccess } = useFetch({
+    url: ADMIN_ROUTE + ROLES_PERMISSION,
+  });
 
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
@@ -43,6 +48,7 @@ const ManageUsersContent = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
   const [showFilters, setShowFilters] = useState(false);
+  const [filterArray, setFilterArray] = useState([]);
   const [searchedValue, setSearchedValue] = useState("");
   const [currentDataLength, setCurrentDataLength] = useState(0);
 
@@ -67,13 +73,6 @@ const ManageUsersContent = () => {
     navigate(`details/${userId}?mode=${mode ? "edit" : "view"}`);
   };
 
-  const onHandleUserStatus = (userId, currentStatus) => {
-    updateUserDetails(userId, {
-      status: currentStatus ? 0 : 1,
-    });
-    debounceSearch(pageSize, current, searchedValue);
-  };
-
   const onChangePageSize = (size) => {
     setPageSize(Number(size));
     setCurrent(1);
@@ -82,7 +81,7 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    fetchUsers(size, 1, searchedValue);
+    fetchUsers(size, 1, searchedValue, filterArray);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -91,7 +90,7 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    fetchUsers(pageSize, newPageNumber, searchedValue);
+    fetchUsers(pageSize, newPageNumber, searchedValue, filterArray);
   };
 
   const handleOnUserSearch = (event) => {
@@ -104,13 +103,31 @@ const ManageUsersContent = () => {
     });
   };
 
+  const ChipWithOverflow = ({ textArray, maxChips }) => {
+    if (textArray && textArray.length > 0) {
+      const visibleChips = textArray.slice(0, maxChips);
+      const hiddenCount = textArray.length - maxChips;
+
+      return (
+        <div className={styles.chipsContainer}>
+          {visibleChips.map((chip, index) => (
+            <p className={styles.textEllipsisChip} key={index}>
+              {chip}
+            </p>
+          ))}
+          {hiddenCount > 0 && (
+            <p className={styles.textEllipsisChip}>+{hiddenCount}</p>
+          )}
+        </div>
+      );
+    }
+    return <p className={styles.textEllipsis}>{"--"}</p>;
+  };
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.userName2" }),
       dataIndex: "name",
       key: "name",
-      sortTypeText: true,
-      sortKey: "name",
       renderText: {
         isTextBold: true,
         visible: true,
@@ -136,40 +153,33 @@ const ManageUsersContent = () => {
           {intl.formatMessage({ id: "label.access" })}
         </p>
       ),
-      dataIndex: "role",
-      key: "role",
+      dataIndex: "roles",
+      key: "roles",
       render: (textArray, rowData) => {
-        const { id } = rowData;
-        const str = textArray?.map((item) => item.name)?.join(", ");
         return (
-          <p className={styles.textEllipsis} key={id}>
-            {str ? str : "--"}
-          </p>
+          <ChipWithOverflow
+            textArray={textArray ? Object.values(textArray) : null}
+            maxChips={1}
+          />
         );
       },
     },
-    renderColumn({
-      title: intl.formatMessage({ id: "label.dateCreatedOn" }),
-      dataIndex: "created_at",
-      key: "created_at",
-      sortTypeText: true,
-      sortKey: "created_at",
-      renderText: {
-        isTypeDate: true,
-        visible: true,
-        textStyles: styles.tableCell,
-      },
-      sortTypeDate: true,
-      sortDirection: ["ascend"],
-      defaultSortOrder: "ascend",
-    }),
     renderColumn({
       title: intl.formatMessage({ id: "label.status" }),
       dataIndex: "status",
       key: "status",
       renderSwitch: {
-        switchToggleHandler: (data) =>
-          onHandleUserStatus(data?.id, data?.status),
+        visible: true,
+        textStyles: styles.tableCell,
+        isActionable: false,
+      },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.dateCreatedOn" }),
+      dataIndex: "created_at",
+      key: "created_at",
+      renderText: {
+        isTypeDate: true,
         visible: true,
         textStyles: styles.tableCell,
       },
@@ -248,8 +258,13 @@ const ManageUsersContent = () => {
   }, [errorWhileUpdatingUserData]);
 
   useEffect(() => {
-    fetchUsers(pageSize, current, searchedValue);
-  }, []);
+    fetchUsers(
+      pageSize,
+      searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE),
+      searchedValue,
+      filterArray
+    );
+  }, [filterArray]);
 
   useEffect(() => {
     return () => {
@@ -283,8 +298,13 @@ const ManageUsersContent = () => {
             onChange={handleOnUserSearch}
           />
           <SearchFilter
-            filterPropertiesArray={ACCESS_FILTER_DATA}
-            {...{ showFilters, setShowFilters }}
+            filterPropertiesArray={convertPermissionFilter(data?.roles)}
+            {...{
+              filterArray,
+              showFilters,
+              setFilterArray,
+              setShowFilters,
+            }}
           />
         </div>
         {areUsersFetchedSuccessfully && (
@@ -297,6 +317,7 @@ const ManageUsersContent = () => {
               onChangePageSize,
               onChangeCurrentPage,
             }}
+            customContainerStyles={styles.customContainerStyles}
             originalData={usersList || []}
           />
         )}

@@ -47,7 +47,7 @@ const UserInfo = ({
               <Chip
                 key={key}
                 bgColor={styles.chipBg}
-                label={value}
+                label={value.name}
                 textColor={styles.chipText}
               />
             );

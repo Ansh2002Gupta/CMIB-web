@@ -23,7 +23,10 @@ function MainLayout({
         className={`${styles.mainLayout} ${className}`}
         style={style}
         leftSection={menu}
-        leftSectionStyle={classes.leftSectionStyle}
+        leftSectionStyle={{
+          ...classes.leftSectionStyle,
+          ...(!responsive.isXxl ? classes.responsiveHeight : {}),
+        }}
         rightSectionStyle={classes.rightSectionStyle}
         rightSection={
           <TwoRow

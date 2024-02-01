@@ -134,3 +134,25 @@ export const getErrorText = (errorText) => {
   }
   return GENERIC_ERROR_MESSAGE;
 };
+
+export const convertPermissionFilter = (roles) => {
+  let result = [
+    {
+      id: 1,
+      name: "Access",
+      isSelected: false,
+      options: [],
+    },
+  ];
+
+  for (const key in roles) {
+    if (roles.hasOwnProperty(key)) {
+      result[0].options.push({
+        optionId: parseInt(key),
+        str: roles[key]?.name,
+      });
+    }
+  }
+
+  return result;
+};

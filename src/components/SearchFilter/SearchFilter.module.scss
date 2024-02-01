@@ -123,6 +123,18 @@
   }
 }
 
+.countFilterStyle {
+  color: var(--bodyBg);
+  font-weight: var(--fontWeightBold);
+}
+.countFilterContainerStyle {
+  background-color: var(--greenBtnBg);
+  border-radius: var(--radiusXXLg);
+  align-items: center;
+  height: 22px;
+  width: 22px;
+}
+
 @media screen and (max-width: 1279px) {
   .filterOptionContainer {
     flex-direction: column;

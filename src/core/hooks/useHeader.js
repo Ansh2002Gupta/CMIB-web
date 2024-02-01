@@ -19,16 +19,18 @@ function useHeader() {
   const { handleUserLogout, isLoading: isUserLoggingOut } = useLogout();
   const [, setLogoutDispatch] = useContext(LogoutContext);
 
-  const onLogout = async () => {
+  const onLogout = async (showToast = true) => {
     await handleUserLogout();
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
-    setLogoutDispatch(
-      setLogoutToast({
-        isSuccess: true,
-        message: intl.formatMessage({ id: "label.logoutSuccessful" }),
-      })
-    );
+    if (showToast) {
+      setLogoutDispatch(
+        setLogoutToast({
+          isSuccess: true,
+          message: intl.formatMessage({ id: "label.logoutSuccessful" }),
+        })
+      );
+    }
     navigate(LOGIN);
   };
 
