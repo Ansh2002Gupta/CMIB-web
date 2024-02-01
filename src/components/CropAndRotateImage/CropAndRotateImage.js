@@ -147,10 +147,12 @@ const CropAndRotateImage = ({
         <CustomButton
           customStyle={styles.cancelButton}
           onClick={cancelCropHandler}
+          isBtnDisable={isCroppingImage}
           btnText={intl.formatMessage({ id: "label.cancel" })}
         />
         <CustomButton
           onClick={cropImage}
+          isBtnDisable={isCroppingImage}
           btnText={intl.formatMessage({ id: "label.save" })}
         />
       </div>
