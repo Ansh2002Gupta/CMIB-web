@@ -29,3 +29,8 @@
 .ant-descriptions-item-content {
   font-weight: 500 !important;
 }
+
+/* For preventing unnecessary scroll from modal */
+.ant-modal-root .ant-modal-wrap {
+  overflow: unset !important;
+}

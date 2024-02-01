@@ -68,13 +68,22 @@ const ProfileIcon = ({
           initialContainerStyle,
           styles.circularContainer,
         ].join(" ")}
-        onClick={onClick}
       >
         <Typography
           className={[styles.initialsText, styles.initials].join(" ")}
         >
           {initials}
         </Typography>
+        {icon && (
+          <div className={styles.iconContainer}>
+            <Image
+              preview={false}
+              src={icon}
+              className={styles.editIcon}
+              onClick={onClick}
+            />
+          </div>
+        )}
       </div>
     );
   }

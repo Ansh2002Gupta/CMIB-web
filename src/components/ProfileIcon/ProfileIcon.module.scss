@@ -33,6 +33,7 @@
 
 .initialsText {
   font-size: var(--fontSizeSmall, 14px);
+  min-width: var(--width_125, 125px);
 }
 
 .iconContainer {
