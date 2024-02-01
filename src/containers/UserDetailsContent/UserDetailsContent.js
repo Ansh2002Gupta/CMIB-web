@@ -82,7 +82,7 @@ const UserDetailsContent = ({
     setIsAccessValid(userData.access?.length !== 0);
     if (
       EMAIL_REGEX.test(userData?.email) &&
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`) &&
+      MOBILE_NO_REGEX.test(`${userData?.mobile}`) &&
       userData.name?.trim()?.length !== 0 &&
       userData.access?.length !== 0
     ) {
@@ -90,10 +90,12 @@ const UserDetailsContent = ({
         name: userData.name,
         email: userData.email,
         mobile_number: userData.mobile,
+        mobile_country_code: userData?.mobile_prefix,
         created_by: 1, // TODO: Get this id from get-Logged-In-User-details API (once it is integrated)
         roles: userData.access,
         permissions: userData.permissions,
         is_two_factor: userData.is_two_factor ? 1 : 0,
+        status: userData?.status,
       };
       if (userData?.profile_photo) {
         payload["profile_photo"] = userData.profile_photo.file;

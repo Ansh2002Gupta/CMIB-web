@@ -97,7 +97,7 @@ const UserInfo = ({
         intl.formatMessage({ id: "label.mobileNumber" })
       ),
       span: responsive.isMd ? 1 : 2,
-      children: `+${mobilePrefix}-${mobileNo}`,
+      children: `${mobilePrefix}-${mobileNo}`,
     },
     {
       key: "4",
