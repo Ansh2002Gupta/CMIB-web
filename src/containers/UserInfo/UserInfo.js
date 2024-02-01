@@ -1,10 +1,8 @@
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import dayjs from "dayjs";
-import { DatePicker, Typography, Descriptions, Switch } from "antd";
+import { Typography, Descriptions } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
-import { TwoRow } from "../../core/layouts";
 
 import CheckBoxList from "../CheckBoxList";
 import Chip from "../../components/Chip/Chip";
@@ -15,7 +13,6 @@ import CustomSwitch from "../../components/CustomSwitch/CustomSwitch";
 import { formatDate } from "../../constant/utils";
 import useFetch from "../../core/hooks/useFetch";
 import useResponsive from "../../core/hooks/useResponsive";
-import { ALLOWED_MOBILE_PREFIXES } from "../../constant/constant";
 import { CORE_COUNTRIES } from "../../constant/apiEndpoints";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
