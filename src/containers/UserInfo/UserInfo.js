@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import moment from "moment";
+import dayjs from "dayjs";
 import { DatePicker, Typography, Descriptions, Switch } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
@@ -9,6 +9,7 @@ import { TwoRow } from "../../core/layouts";
 import CheckBoxList from "../CheckBoxList";
 import Chip from "../../components/Chip/Chip";
 import CustomInput from "../../components/CustomInput";
+import { formatDate } from "../../constant/utils";
 import useResponsive from "../../core/hooks/useResponsive";
 import { ALLOWED_MOBILE_PREFIXES } from "../../constant/constant";
 import styles from "./UserInfo.module.scss";
@@ -111,7 +112,7 @@ const UserInfo = ({
           {intl.formatMessage({ id: "label.dateCreatedOn" })}
         </Typography>
       ),
-      children: moment(new Date(date)).format("DD/MM/YYYY"),
+      children: formatDate({ date }),
     },
     {
       key: "7",
@@ -229,7 +230,7 @@ const UserInfo = ({
                       updateUserData("date", dateString)
                     }
                     className={[styles.text, styles.input].join(" ")}
-                    defaultValue={moment(date).format("YYYY-MM-DD")}
+                    defaultValue={dayjs(date)}
                     disabled={isDateDisable || !isEditable}
                     customInputStyles={[styles.text, styles.input].join(" ")}
                     customLabelStyles={styles.label}

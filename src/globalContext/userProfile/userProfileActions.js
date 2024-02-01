@@ -27,6 +27,13 @@ export const resetUserDetails = () => {
   };
 };
 
+export const setShowLogoutModal = (payload) => {
+  return {
+    type: types.SET_SHOW_LOGOUT_MODAL,
+    payload,
+  };
+};
+
 export const setSelectedModule = (payload) => {
   return {
     type: types.SET_SELECTED_MODULE_,

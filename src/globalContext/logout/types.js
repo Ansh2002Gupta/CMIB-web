@@ -1,0 +1,1 @@
+export const SET_LOGOUT_TOAST = "SET_LOGOUT_TOAST";
