@@ -106,14 +106,16 @@ const UserDetails = () => {
   ]);
 
   useEffect(() => {
-    !!userAccountInfo &&
+    if (!!userAccountInfo) {
+      const imageParts = userAccountInfo?.profile_photo?.split("/");
+      const imageName = imageParts?.pop();
       setUserData({
         name: userAccountInfo?.name || "",
         email: userAccountInfo?.email || "",
         mobile: userAccountInfo?.mobile_number || "",
         mobile_prefix: userAccountInfo?.mobile_country_code || "+91",
         profile_photo_url: userAccountInfo?.profile_photo || "",
-        profile_photo: null,
+        profile_photo: imageName || "",
         access:
           Object.entries(userAccountInfo?.roles || {})?.map(
             ([index, item]) => item?.id
@@ -127,6 +129,7 @@ const UserDetails = () => {
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,
         status: userAccountInfo?.status,
       });
+    }
   }, [userAccountInfo]);
 
   useEffect(() => {
@@ -145,10 +148,11 @@ const UserDetails = () => {
         name: "",
         email: "",
         mobile: "",
-        mobile_prefix: "91",
-        profile_photo: null,
+        mobile_prefix: "+91",
+        profile_photo: "null",
         profile_photo_url: "",
         access: [],
+        permissions: [],
         date: "",
         is_two_factor: false,
         status: 0,

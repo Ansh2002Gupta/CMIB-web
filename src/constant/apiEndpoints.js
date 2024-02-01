@@ -9,6 +9,8 @@ export const COMPANY_ROUTE = "company";
 // API end-points
 export const AUTHENTICATE_OTP_ROUTE = "/reset-password-otp";
 export const CHECK_OTP_END_POINT = "/two-factor-check";
+export const CORE_ROUTE = "core";
+export const FILES_END_POINT = "/files";
 export const FORGOT_PASSWORD_END_POINT = "/forget-password-otp";
 export const GET_USER_PROFILE_DETAILS = "core/users/permission";
 export const CORE_COUNTRIES = "core/countries";

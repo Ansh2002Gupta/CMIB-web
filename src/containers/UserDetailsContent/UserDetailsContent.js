@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Spin } from "antd";
@@ -10,6 +10,7 @@ import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
@@ -38,12 +39,9 @@ const UserDetailsContent = ({
 }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
-
+  const [userProfileDetails] = useContext(UserProfileContext);
   const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
-
-  const imageParts = userData?.profile_photo_url.split("/");
-  const imageName = imageParts.pop();
 
   const handleUpdateUserData = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
@@ -66,8 +64,8 @@ const UserDetailsContent = ({
         mobile_country_code: userData?.mobile_prefix,
         status: userData?.status,
       };
-      if (userData?.profile_photo) {
-        payload["profile_photo"] = userData.profile_photo.file;
+      if (userData?.profile_photo_url) {
+        payload["profile_photo"] = userData.profile_photo_url;
       }
       updateUserDetails(userId, payload, () => {
         navigate(USERS);
@@ -91,14 +89,14 @@ const UserDetailsContent = ({
         email: userData.email,
         mobile_number: userData.mobile,
         mobile_country_code: userData?.mobile_prefix,
-        created_by: 1, // TODO: Get this id from get-Logged-In-User-details API (once it is integrated)
+        created_by: userProfileDetails?.userDetails?.id,
         roles: userData.access,
         permissions: userData.permissions,
         is_two_factor: userData.is_two_factor ? 1 : 0,
         status: userData?.status,
       };
-      if (userData?.profile_photo) {
-        payload["profile_photo"] = userData.profile_photo.file;
+      if (userData?.profile_photo_url) {
+        payload["profile_photo"] = userData.profile_photo_url;
       }
       addNewUser(payload, () => {
         goBackToViewDetailsPage();
@@ -169,9 +167,7 @@ const UserDetailsContent = ({
                   isFormEditable: currentFormState !== FORM_STATES.VIEW_ONLY,
                 }}
                 userProfilePic={userData?.profile_photo_url}
-                userImageName={
-                  imageName.includes("png", "jpg", "jpeg") && imageName
-                }
+                userImageName={userData?.profile_photo}
               />
             </div>
           )}
