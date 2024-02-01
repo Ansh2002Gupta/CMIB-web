@@ -31,7 +31,10 @@ function MenuContainer({ openSideMenu, setIsModalOpen, setOpenSideMenu }) {
         collapsedWidth={0}
         trigger={null}
       >
-        <SideMenu logo={<AppLogo />} {...{ setIsModalOpen, setOpenSideMenu }} />
+        <SideMenu
+          logo={<AppLogo className={styles.cmibLogo} />}
+          {...{ setIsModalOpen, setOpenSideMenu }}
+        />
       </Layout.Sider>
     </Layout>
   ) : (
