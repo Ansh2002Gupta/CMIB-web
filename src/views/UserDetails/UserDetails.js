@@ -105,7 +105,7 @@ const UserDetails = () => {
     isNewUserSuccessfullyAdded,
   ]);
 
-  useEffect(() => {
+  const loadDataOfUser = (userAccountInfo) => {
     if (!!userAccountInfo) {
       const imageParts = userAccountInfo?.profile_photo?.split("/");
       const imageName = imageParts?.pop();
@@ -130,13 +130,21 @@ const UserDetails = () => {
         status: userAccountInfo?.status,
       });
     }
-  }, [userAccountInfo]);
+  };
 
   useEffect(() => {
     if (userId) {
-      getUserData(userId);
+      getUserData({
+        userId,
+        onSuccessCallBack: (userAccountInfo) => {
+          loadDataOfUser(userAccountInfo);
+        },
+        onErrorCallBack: (errMessage) => {
+          showNotification(errMessage);
+        },
+      });
     }
-  }, [userId, currentFormState]);
+  }, []);
 
   useEffect(() => {
     return () => {
