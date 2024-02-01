@@ -77,7 +77,7 @@ MenuContainer.defaultProps = {
 MenuContainer.propTypes = {
   setIsModalOpen: PropTypes.func,
   setOpenSideMenu: PropTypes.func,
-  openSideMenu: PropTypes.string,
+  openSideMenu: PropTypes.bool,
 };
 
 export default MenuContainer;
