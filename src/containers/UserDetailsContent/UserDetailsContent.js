@@ -131,6 +131,7 @@ const UserDetailsContent = ({
                     : ""
                 }
                 isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
+                isNotAddable={currentFormState === FORM_STATES.EDITABLE}
                 {...{ updateUserData, setIsAccessValid }}
                 name={userData?.name}
                 email={userData?.email}

@@ -26,6 +26,7 @@ const UserInfo = ({
   emailErrorMessage,
   isDateDisable,
   isEditable,
+  isNotAddable,
   is_two_factor,
   mobileErrorMessage,
   mobileNo,
@@ -44,6 +45,7 @@ const UserInfo = ({
   const { data, error, isError, isLoading, isSuccess } = useFetch({
     url: CORE_COUNTRIES,
   });
+
   const getValuesInChips = (arrayOfValues) => {
     if (Object.entries(arrayOfValues).length > 0) {
       return (
@@ -255,7 +257,7 @@ const UserInfo = ({
                 </Typography>
               </CustomCheckBox>
             </div>
-            {date && (
+            {isNotAddable && date && (
               <CustomDateTimePicker
                 customLabelStyles={styles.label}
                 customTimeStyle={[styles.text, styles.input].join(" ")}
@@ -297,6 +299,7 @@ UserInfo.defaultProps = {
   email: "",
   isDateDisable: false,
   isEditable: false,
+  isNotAddable: false,
   is_two_factor: false,
   mobileNo: "",
   mobilePrefix: "",
@@ -314,6 +317,7 @@ UserInfo.propTypes = {
   email: PropTypes.string,
   isDateDisable: PropTypes.bool,
   isEditable: PropTypes.bool,
+  isNotAddable: PropTypes.bool,
   is_two_factor: PropTypes.bool,
   mobileNo: PropTypes.string,
   mobilePrefix: PropTypes.string,
