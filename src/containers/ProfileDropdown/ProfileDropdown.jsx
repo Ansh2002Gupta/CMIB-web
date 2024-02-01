@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Avatar, Dropdown, Space } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
@@ -7,15 +7,15 @@ import CardDropdownOverlay from "./CardDropdownOverlay";
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./profileDropdown.module.scss";
 
-const ProfileDropdown = ({setCurrentOpenModal}) => {
+const ProfileDropdown = ({ setCurrentOpenModal }) => {
   const [userProfileDetails, userProfileDispatch] =
-  useContext(UserProfileContext);
-  const userData= userProfileDetails?.userDetails;
- 
-  const userName = userData?.name||"";
-  const userRole = userData?.user_type||"";
-  const userEmail = userData?.email||"";
-  const userProfilePic = userData?.profile_photo||"";
+    useContext(UserProfileContext);
+  const userData = userProfileDetails?.userDetails;
+
+  const userName = userData?.name || "";
+  const userRole = userData?.user_type || "";
+  const userEmail = userData?.email || "";
+  const userProfilePic = userData?.profile_photo || "";
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const responsive = useResponsive();
@@ -24,10 +24,8 @@ const ProfileDropdown = ({setCurrentOpenModal}) => {
     <Dropdown
       dropdownRender={() => (
         <CardDropdownOverlay
-          userName={userName}
-          userEmail={userEmail}
           userProfile={userProfilePic}
-          {...{setCurrentOpenModal, setDropdownVisible}}
+          {...{ userName, userEmail, setCurrentOpenModal, setDropdownVisible }}
         />
       )}
       trigger={["click"]}

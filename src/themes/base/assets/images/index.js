@@ -15,6 +15,7 @@ import dummyPerson from "./dummy person image.png";
 import errorIcon from "./error icon.svg";
 import eye from "./eye.svg";
 import eyeHidden from "./eyeHidden.svg";
+import featuredIcon from "./featured-icon.svg"
 import filter from "./filter.svg";
 import g20 from "./G20.svg";
 import gloPac from "./GloPac.svg";
@@ -70,6 +71,7 @@ const images = {
   errorIcon,
   eye,
   eyeHidden,
+  featuredIcon,
   filter,
   g20,
   gloPac,
