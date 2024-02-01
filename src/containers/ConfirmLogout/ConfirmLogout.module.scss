@@ -50,6 +50,7 @@
   font-weight: var(--fontWeightMedium, 500);
   background-color: var(--white1, #ffffff);
   &:not(:disabled):hover {
+    color: var(--black1, #000833) !important;
     background-color: var(--white1, #ffffff) !important;
     border-color: var(--disableLink, #B1B3B5) !important;
   }
