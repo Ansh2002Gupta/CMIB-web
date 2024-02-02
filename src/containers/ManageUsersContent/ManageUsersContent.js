@@ -49,7 +49,10 @@ const ManageUsersContent = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
   const [showFilters, setShowFilters] = useState(false);
-  const [filterArray, setFilterArray] = useState([]);
+  let arrayFromParams = JSON.parse(
+    decodeURIComponent(searchParams.get("filter") || "[]")
+  );
+  const [filterArray, setFilterArray] = useState(arrayFromParams);
   const [searchedValue, setSearchedValue] = useState(
     searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
@@ -264,7 +267,7 @@ const ManageUsersContent = () => {
       });
       setCurrent(1);
     }
-  }, [metaData?.total, metaData?.perPage, filterArray]);
+  }, [metaData?.total, metaData?.perPage]);
 
   useEffect(() => {
     if (errorWhileUpdatingUserData) {
@@ -283,6 +286,8 @@ const ManageUsersContent = () => {
       searchedValue.length > 2 ? searchedValue : "",
       filterArray
     );
+    let arrayAsString = JSON.stringify(filterArray);
+    setSearchParams({ filter: encodeURIComponent(arrayAsString) });
   }, [filterArray, current, pageSize]);
 
   useEffect(() => {
