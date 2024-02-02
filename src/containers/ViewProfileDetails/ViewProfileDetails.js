@@ -10,13 +10,23 @@ import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import useUpdateUserProfileApi from "../../services/api-services/UserProfile/useUpdateUserProfileApi";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { formatDate } from "../../constant/utils";
+import {
+  closeUserProfileModal,
+  resetUserDetails,
+  setUserProfileModalNumber,
+} from "../../globalContext/userProfile/userProfileActions";
+import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
+import { removeItem } from "../../services/encrypted-storage-service";
+import { STORAGE_KEYS } from "../../constant/constant";
 import { classes } from "./ViewProfileDetails.styles";
 import styles from "./ViewProfileDetails.module.scss";
 
-const ViewProfileDetails = ({ setCurrentOpenModal, showNotification }) => {
-  const [userProfileDetails] = useContext(UserProfileContext);
+const ViewProfileDetails = ({ showNotification }) => {
+  const [userProfileDetails, userProfileDispatch] =
+    useContext(UserProfileContext);
   const { getImage } = useContext(ThemeContext);
   const intl = useIntl();
+  const { getUserDetails } = useGetUserDetails();
 
   const userName = userProfileDetails?.userDetails?.name;
   const firstName = userName?.split(" ")?.[0] || "";
@@ -36,13 +46,22 @@ const ViewProfileDetails = ({ setCurrentOpenModal, showNotification }) => {
 
   const responsive = useResponsive();
 
+  const resetUserStoredInfo = () => {
+    removeItem(STORAGE_KEYS.USER_DATA);
+    userProfileDispatch(resetUserDetails());
+    getUserDetails();
+  };
+
   const updateUserData = () => {
     const payload = {
       is_two_factor: !is2FactorAuthenicationOn ? 1 : 0,
     };
     handleUpdatingUserProfile({
       payload,
-      onSuccessCallback: () => setIs2FactorAuthenicationOn((prev) => !prev),
+      onSuccessCallback: () => {
+        setIs2FactorAuthenicationOn((prev) => !prev);
+        resetUserStoredInfo();
+      },
       onErrorCallback: (errorString) => showNotification(errorString, "error"),
     });
   };
@@ -60,7 +79,7 @@ const ViewProfileDetails = ({ setCurrentOpenModal, showNotification }) => {
                 preview={false}
                 src={getImage("cross")}
                 className={styles.crossIconStyle}
-                onClick={() => setCurrentOpenModal(0)}
+                onClick={() => userProfileDispatch(closeUserProfileModal())}
               />
             }
             bottomSection={
@@ -71,7 +90,7 @@ const ViewProfileDetails = ({ setCurrentOpenModal, showNotification }) => {
                 imageContainerStyle={styles.imageContainerStyle}
                 initialContainerStyle={styles.initialContainerStyle}
                 onClick={() => {
-                  setCurrentOpenModal(3);
+                  userProfileDispatch(setUserProfileModalNumber(2));
                 }}
                 iconType="modalIcon"
                 showEditModal

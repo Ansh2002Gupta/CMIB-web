@@ -7,6 +7,7 @@ import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/log
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
+  setUserProfileModalNumber,
 } from "../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import headerActionItems from "../../constants/headerActionItems";
@@ -17,7 +18,6 @@ export default function CardDropdownOverlay({
   userName,
   userEmail,
   userProfile,
-  setCurrentOpenModal,
   setDropdownVisible,
 }) {
   const intl = useIntl();
@@ -35,7 +35,7 @@ export default function CardDropdownOverlay({
     },
     viewProfile: () => {
       setDropdownVisible(false);
-      setCurrentOpenModal(1);
+      userProfileDispatch(setUserProfileModalNumber(1));
     },
   };
 

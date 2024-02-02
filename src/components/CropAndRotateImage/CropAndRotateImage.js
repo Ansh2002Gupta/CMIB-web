@@ -16,7 +16,10 @@ import {
   ZOOM_CONSTANT,
 } from "../../constant/constant";
 import { removeItem } from "../../services/encrypted-storage-service";
-import { resetUserDetails } from "../../globalContext/userProfile/userProfileActions";
+import {
+  resetUserDetails,
+  setUserProfileModalNumber,
+} from "../../globalContext/userProfile/userProfileActions";
 import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
 import styles from "./CropAndRotateImage.module.scss";
 
@@ -27,7 +30,6 @@ const CropAndRotateImage = ({
   initiateFileUpload,
   photoURL,
   setFile,
-  setCurrentOpenModal,
   showNotification,
   isLoading,
 }) => {
@@ -60,7 +62,7 @@ const CropAndRotateImage = ({
       onErrorCallback: (errString) => {
         showNotification(errString, "error");
         setFile(null);
-        setCurrentOpenModal(1);
+        userProfileDispatch(setUserProfileModalNumber(1));
       },
       onSuccessCallback: () => {
         resetUserStoredInfo();
@@ -88,7 +90,7 @@ const CropAndRotateImage = ({
         file: croppedFile,
         onErrorCallback: (errString) => {
           showNotification(errString, "error");
-          setCurrentOpenModal(1);
+          userProfileDispatch(setUserProfileModalNumber(1));
         },
       });
     } catch (error) {
@@ -98,7 +100,7 @@ const CropAndRotateImage = ({
   };
 
   const cancelCropHandler = () => {
-    setCurrentOpenModal(3);
+    userProfileDispatch(setUserProfileModalNumber(2));
   };
 
   const resetStates = () => {
@@ -171,7 +173,6 @@ CropAndRotateImage.defaultProps = {
   initiateFileUpload: () => {},
   photoURL: "",
   setFile: () => {},
-  setCurrentOpenModal: () => {},
 };
 
 CropAndRotateImage.propTypes = {
@@ -181,7 +182,6 @@ CropAndRotateImage.propTypes = {
   initiateFileUpload: PropTypes.func,
   photoURL: PropTypes.string,
   setFile: PropTypes.func,
-  setCurrentOpenModal: PropTypes.func,
   setPhotoURL: PropTypes.func,
 };
 

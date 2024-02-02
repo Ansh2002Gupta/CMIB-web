@@ -14,20 +14,22 @@ import useGetUserDetails from "../../services/api-services/UserProfile/useGetUse
 import useUpdateUserProfileApi from "../../services/api-services/UserProfile/useUpdateUserProfileApi";
 import { getImageSource } from "../../constant/utils";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { resetUserDetails } from "../../globalContext/userProfile/userProfileActions";
+import {
+  resetUserDetails,
+  setUserProfileModalNumber,
+} from "../../globalContext/userProfile/userProfileActions";
 import { removeItem } from "../../services/encrypted-storage-service";
 import { STORAGE_KEYS } from "../../constant/constant";
 import { classes } from "./EditProfile.styles";
 import styles from "./EditProfile.module.scss";
 import "./override.css";
 
-const EditProfile = ({
-  setCurrentOpenModal,
-  currentOpenendModal,
-  showNotification,
-}) => {
+const EditProfile = ({ showNotification }) => {
   const intl = useIntl();
-  const [userProfileDetails] = useContext(UserProfileContext);
+  const [userProfileDetails, userProfileDispatch] =
+    useContext(UserProfileContext);
+  const { currentlyOpenedUserProfileModal } = userProfileDetails;
+
   const [userProfileImage, setUserProfileImage] = useState({
     file: null,
     src: userProfileDetails?.userDetails?.profile_photo,
@@ -40,16 +42,12 @@ const EditProfile = ({
   const [imageToBeChaged, setImageToBeChanged] = useState(null);
   const { getImage } = useContext(ThemeContext);
   const { handleUpdatingUserProfile } = useUpdateUserProfileApi();
-  const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const { handleUploadImage, isLoading: isUploadingImage } =
-  useUploadImageApi();
-  
-  const {
-    handleDeleteImage,
-    isLoading: isDeletingImage,
-  } = useDeleteImageApi();
-  
+    useUploadImageApi();
+
+  const { handleDeleteImage, } = useDeleteImageApi();
+
   const { getUserDetails } = useGetUserDetails();
 
   const beforeUpload = (file) => {
@@ -79,14 +77,16 @@ const EditProfile = ({
         file,
         src: imageSRC,
       });
-      setCurrentOpenModal(4);
+      userProfileDispatch(setUserProfileModalNumber(3));
     }
     return isAllowedType && isLessThan5MB;
   };
 
   const handleOnClose = () => {
-    currentOpenendModal === 3 && setCurrentOpenModal(1);
-    currentOpenendModal === 4 && setCurrentOpenModal(3);
+    currentlyOpenedUserProfileModal === 2 &&
+      userProfileDispatch(setUserProfileModalNumber(1));
+      currentlyOpenedUserProfileModal === 3 &&
+      userProfileDispatch(setUserProfileModalNumber(2));
   };
 
   const getTopHeader = () => {
@@ -97,7 +97,7 @@ const EditProfile = ({
           <Typography className={styles.headingText}>
             {intl.formatMessage({
               id: `label.${
-                currentOpenendModal === 3
+                currentlyOpenedUserProfileModal === 2
                   ? "editProfilePicture"
                   : "cropProfilePicture"
               }`,
@@ -146,7 +146,7 @@ const EditProfile = ({
 
   return (
     <>
-      {currentOpenendModal === 3 ? (
+      {currentlyOpenedUserProfileModal === 2 ? (
         <ThreeRow
           className={styles.changeProfileContainer}
           topSection={getTopHeader()}
@@ -215,12 +215,12 @@ const EditProfile = ({
           bottomSection={
             <CropAndRotateImage
               isLoading={isUploadingImage}
-              file={imageToBeChaged.file}
+              file={imageToBeChaged?.file}
               setFile={setUserProfileImage}
               photoURL={imageToBeChaged?.src}
               initiateFileUpload={handleUploadImage}
               handleFileUpload={handleUpdatingUserProfile}
-              {...{ showNotification, setCurrentOpenModal }}
+              {...{ showNotification }}
             />
           }
         />
@@ -230,7 +230,7 @@ const EditProfile = ({
 };
 
 EditProfile.propTypes = {
-  setCurrentOpenModal: PropTypes.func,
+  showNotification: PropTypes.func,
 };
 
 export default EditProfile;

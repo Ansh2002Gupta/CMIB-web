@@ -13,7 +13,7 @@ import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as MenuIcon } from "../../themes/base/assets/icons/menu.svg";
 import styles from "./header.module.scss";
 
-function HeaderContainer({ openSideMenu, setOpenSideMenu, setCurrentOpenModal }) {
+function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
   const responsive = useResponsive();
   return (
     <>
@@ -36,7 +36,7 @@ function HeaderContainer({ openSideMenu, setOpenSideMenu, setCurrentOpenModal })
             <Badge dot offset={[-6, 4]}>
               <BellOutlined className={styles.notificationIcon} />
             </Badge>
-            <ProfileDropdown {...{setCurrentOpenModal}}/>
+            <ProfileDropdown />
           </Space>
         }
       />

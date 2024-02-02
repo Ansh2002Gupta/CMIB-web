@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // will be replaced by view component injected through route
 import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
@@ -10,13 +10,15 @@ import MainLayout from "../layouts/MainLayout";
 import MenuContainer from "../containers/Menu/Menu";
 import HeaderContainer from "../containers/Header";
 import ViewProfileDetails from "../containers/ViewProfileDetails";
-import styles from "./CommonStyles/commonModalStyles.module.scss";
 import useShowNotification from "../core/hooks/useShowNotification";
+import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
+import styles from "./CommonStyles/commonModalStyles.module.scss";
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentOpenendModal, setCurrentOpenModal] = useState(0);
+  const [userProfileDetails,] = useContext(UserProfileContext);
+  const { currentlyOpenedUserProfileModal } = userProfileDetails;
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   return (
@@ -38,9 +40,6 @@ function Home({ noOuterPadding }) {
             <HeaderContainer
               openSideMenu={openSideMenu}
               setOpenSideMenu={setOpenSideMenu}
-              {...{
-                setCurrentOpenModal,
-              }}
             />
           </Layout>
         }
@@ -50,20 +49,32 @@ function Home({ noOuterPadding }) {
       <CommonModal isOpen={isModalOpen} width={600}>
         <ModuleChange {...{ setIsModalOpen }} />
       </CommonModal>
-      <CommonModal
-        isOpen={currentOpenendModal}
-        width={600}
-        customContainerStyles={styles.customContainerStyles}
-      >
-        {currentOpenendModal === 1 && (
-          <ViewProfileDetails {...{ setCurrentOpenModal, showNotification }} />
+      {!!currentlyOpenedUserProfileModal &&
+        currentlyOpenedUserProfileModal < 4 && (
+          <CommonModal
+            isOpen={
+              currentlyOpenedUserProfileModal &&
+              currentlyOpenedUserProfileModal < 4
+            }
+            width={600}
+            customContainerStyles={styles.customContainerStyles}
+          >
+            {currentlyOpenedUserProfileModal === 1 && (
+              <ViewProfileDetails
+                {...{
+                  showNotification,
+                }}
+              />
+            )}
+            {currentlyOpenedUserProfileModal !== 1 && (
+              <EditProfile
+                {...{
+                  showNotification,
+                }}
+              />
+            )}
+          </CommonModal>
         )}
-        {currentOpenendModal >= 3 && (
-          <EditProfile
-            {...{ setCurrentOpenModal, currentOpenendModal, showNotification }}
-          />
-        )}
-      </CommonModal>
     </>
   );
 }
