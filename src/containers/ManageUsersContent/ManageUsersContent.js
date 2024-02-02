@@ -105,6 +105,16 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
+    event.target.value &&
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.SEARCH_QUERY], event.target.value);
+        return prev;
+      });
+    !event.target.value &&
+      setSearchParams((prev) => {
+        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
+        return prev;
+      });
   };
 
   const ChipWithOverflow = ({ textArray, maxChips }) => {
