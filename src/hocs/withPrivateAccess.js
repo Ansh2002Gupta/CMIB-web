@@ -15,29 +15,27 @@ function withPrivateAccess(Component) {
     const [userProfileDetails] = useContext(UserProfileContext);
     const { getUserDetails } = useGetUserDetails();
 
-    // useEffect(() => {
-    //   if (_.isEmpty(auth)) {
-    //     navigate(LOGIN);
-    //   }
-    //   if (auth && !Object.keys(userProfileDetails.userDetails)?.length) {
-    //     getUserDetails();
-    //   }
-    //   // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+    useEffect(() => {
+      if (_.isEmpty(auth)) {
+        navigate(LOGIN);
+      }
+      if (auth && !Object.keys(userProfileDetails.userDetails)?.length) {
+        getUserDetails();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    // if (
-    //   userProfileDetails.isGettingUserDetails ||
-    //   !Object.keys(userProfileDetails.userDetails)?.length
-    // ) {
-    //   return <CustomLoader />;
-    // }
+    if (
+      userProfileDetails.isGettingUserDetails ||
+      !Object.keys(userProfileDetails.userDetails)?.length
+    ) {
+      return <CustomLoader />;
+    }
 
-    // if (!!Object.keys(userProfileDetails.userDetails)?.length) {
-    //   return <Component {...props} />;
-    // }
-    // return null;
-
-    return <Component {...props} />;
+    if (!!Object.keys(userProfileDetails.userDetails)?.length) {
+      return <Component {...props} />;
+    }
+    return null;
   };
 }
 
