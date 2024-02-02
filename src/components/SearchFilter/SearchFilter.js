@@ -1,10 +1,11 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { ThemeContext } from "core/providers/theme";
 import { Button, Card, Image, Typography } from "antd";
 
 import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
+import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomButton from "../CustomButton";
 import useOutSideClick from "../../core/hooks/useOutSideClick";
@@ -12,14 +13,32 @@ import { classes } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
 
 const SearchFilter = ({
+  filterArray,
   filterPropertiesArray,
+  setFilterArray,
   setShowFilters,
   showFilters,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
+  const responsive = useResponsive();
 
-  const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
+  function getAllOptionIds(data) {
+    const optionIds = [];
+    data.forEach((item) => {
+      if (item.options && Array.isArray(item.options)) {
+        item.options.forEach((option) => {
+          if (option.optionId) {
+            optionIds.push(option.optionId);
+          }
+        });
+      }
+    });
+    return optionIds;
+  }
+  const allOptionId = getAllOptionIds(filterPropertiesArray);
+
+  const [currentFilterStatus, setCurrentFilterStatus] = useState(filterArray);
   const elementNotConsideredInOutSideClick = useRef();
 
   const { wrapperRef } = useOutSideClick({
@@ -42,7 +61,7 @@ const SearchFilter = ({
 
   const selectOrRemoveAll = () => {
     if (currentFilterStatus.length === 0) {
-      setCurrentFilterStatus([1, 2, 3]);
+      setCurrentFilterStatus(allOptionId);
       return;
     }
     setCurrentFilterStatus([]);
@@ -53,7 +72,7 @@ const SearchFilter = ({
     if (!currentFilterStatus?.length) {
       return getImage("unCheckedBox");
     }
-    if (currentFilterStatus?.length === 3) {
+    if (currentFilterStatus?.length === allOptionId.length) {
       return getImage("checkedBox");
     }
     return getImage("someFiltersAreSelected");
@@ -70,6 +89,13 @@ const SearchFilter = ({
         <Typography className={styles.filterBtnText}>
           {intl.formatMessage({ id: "label.filter" })}
         </Typography>
+        {filterArray.length > 0 && (
+          <div className={styles.countFilterContainerStyle}>
+            <Typography className={styles.countFilterStyle}>
+              {filterArray.length}
+            </Typography>
+          </div>
+        )}
       </Button>
       {showFilters && (
         <div
@@ -95,7 +121,16 @@ const SearchFilter = ({
               // TODO: Srujan will be working on the responsive designs of the filters hence do not touch it much
               isLeftFillSpace
               isRightFillSpace
-              leftSectionStyle={classes.filterLeftSectionBorder}
+              leftSectionStyle={
+                responsive.isMd
+                  ? classes.leftSectionStyle
+                  : classes.filterLeftSectionMobile
+              }
+              rightSectionStyle={
+                responsive.isMd
+                  ? classes.rightSectionStyle
+                  : classes.filterRightSectionMobile
+              }
               className={styles.filterOptionContainer}
               leftSection={
                 <div>
@@ -111,7 +146,7 @@ const SearchFilter = ({
                       >
                         <div className={styles.filterTextAndCheckContainer}>
                           <Image src={getCheckBoxes()} preview={false} />
-                          <Typography className={styles.filterOptionText}>
+                          <Typography className={styles.leftFilterOptionText}>
                             {item.name}
                           </Typography>
                         </div>
@@ -161,14 +196,20 @@ const SearchFilter = ({
           <div className={styles.footerBtnContainer}>
             <Button
               className={styles.cancelBtn}
-              onClick={() => setShowFilters(false)}
+              onClick={() => {
+                setShowFilters(false);
+                setCurrentFilterStatus(filterArray);
+              }}
             >
               {intl.formatMessage({ id: "label.cancel" })}
             </Button>
             <CustomButton
               btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
-              onClick={() => setShowFilters(false)}
+              onClick={() => {
+                setFilterArray(currentFilterStatus);
+                setShowFilters(false);
+              }}
             />
           </div>
         </div>
@@ -178,13 +219,18 @@ const SearchFilter = ({
 };
 
 SearchFilter.defaultProps = {
+  filterArray: [],
   filterPropertiesArray: [],
+  setFilterArray: () => {},
   setShowFilters: () => {},
   showFilters: false,
 };
 
 SearchFilter.propTypes = {
+  filterArray: PropTypes.array,
   filterPropertiesArray: PropTypes.array,
+  handleApllyFilter: PropTypes.func,
+  setFilterArray: PropTypes.func,
   setShowFilters: PropTypes.func,
   showFilters: PropTypes.bool,
 };

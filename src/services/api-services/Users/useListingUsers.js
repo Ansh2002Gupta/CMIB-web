@@ -16,6 +16,7 @@ const useListingUsers = () => {
     pageSize,
     currentPage,
     searchQuery,
+    roles,
     onSuccessCallback
   ) => {
     setIsFetchingUsers(true);
@@ -30,9 +31,13 @@ const useListingUsers = () => {
         "&" +
         "page=" +
         currentPage;
+      if (roles) {
+        url = url + `&role=[${roles}]`;
+      }
       if (searchQuery) {
         url = url + `&q=${searchQuery}`;
       }
+
       const res = await Http.get(url);
       setIsFetchingUsers(false);
       if (res.error) {

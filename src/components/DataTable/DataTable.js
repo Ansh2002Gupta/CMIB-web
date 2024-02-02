@@ -60,10 +60,14 @@ const DataTable = ({
           />
         </div>
         <Pagination
+          disabled={originalData.length <= 0}
           {...rightPaginationConfig}
           className={styles.paginationContainer}
           itemRender={(current, type, originalElement) => (
-            <PaginationItems {...{ current, type, originalElement }} />
+            <PaginationItems
+              {...{ current, type, originalElement }}
+              disabled={originalData.length <= 0}
+            />
           )}
           showLessItems
         />
