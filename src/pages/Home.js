@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // will be replaced by view component injected through route
 import { Outlet, useSearchParams } from "react-router-dom";
 import { Layout } from "antd";
@@ -17,16 +17,24 @@ import styles from "./CommonStyles/commonModalStyles.module.scss";
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
-  const [serachParams,] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userProfileDetails,] =
-    useContext(UserProfileContext);
+  const [userProfileDetails] = useContext(UserProfileContext);
   const userModalParams =
-    serachParams.get(USER_PROFILE_QUERY_PARAMS) === "open";
+    searchParams.get(USER_PROFILE_QUERY_PARAMS) === "open";
   const { showNotification, notificationContextHolder } = useShowNotification();
   const currentlyOpenedUserProfileModal = userModalParams
-    ? userProfileDetails?.currentlyOpenedUserProfileModal || 1
+    ? (userProfileDetails?.currentlyOpenedUserProfileModal || 1)
     : 0;
+
+  useEffect(() => {
+    if (!userModalParams && searchParams.has(USER_PROFILE_QUERY_PARAMS)) {
+      setSearchParams((prev) => {
+        prev.delete(USER_PROFILE_QUERY_PARAMS);
+        return prev;
+      });
+    }
+  }, []);
 
   return (
     <>
