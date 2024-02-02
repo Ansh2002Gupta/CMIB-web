@@ -49,7 +49,9 @@ const ManageUsersContent = () => {
   );
   const [showFilters, setShowFilters] = useState(false);
   const [filterArray, setFilterArray] = useState([]);
-  const [searchedValue, setSearchedValue] = useState("");
+  const [searchedValue, setSearchedValue] = useState(
+    searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
+  );
   const [currentDataLength, setCurrentDataLength] = useState(0);
 
   const {
@@ -81,7 +83,7 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    fetchUsers(size, 1, searchedValue, filterArray);
+    //fetchUsers(size, 1, searchedValue, filterArray);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -90,16 +92,18 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    fetchUsers(pageSize, newPageNumber, searchedValue, filterArray);
+    //fetchUsers(pageSize, newPageNumber, searchedValue, filterArray);
   };
 
   const handleOnUserSearch = (event) => {
     setSearchedValue(event.target.value);
-    if (event.target.value.length > 2) {
-      debounceSearch(pageSize, current, event.target.value, filterArray);
-    } else {
-      debounceSearch(pageSize, current, "", filterArray);
-    }
+    debounceSearch(
+      pageSize,
+      current,
+      event.target.value.length > 2 ? event.target.value : "",
+      filterArray
+    );
+
     setCurrent(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
@@ -259,7 +263,7 @@ const ManageUsersContent = () => {
       });
       setCurrent(1);
     }
-  }, [metaData?.total, metaData?.perPage]);
+  }, [metaData?.total, metaData?.perPage, filterArray]);
 
   useEffect(() => {
     if (errorWhileUpdatingUserData) {
@@ -274,11 +278,11 @@ const ManageUsersContent = () => {
   useEffect(() => {
     fetchUsers(
       pageSize,
-      searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE),
-      searchedValue,
+      current,
+      searchedValue.length > 2 ? searchedValue : "",
       filterArray
     );
-  }, [filterArray]);
+  }, [filterArray, current, pageSize]);
 
   useEffect(() => {
     return () => {
