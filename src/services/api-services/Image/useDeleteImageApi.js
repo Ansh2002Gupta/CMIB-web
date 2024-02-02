@@ -16,19 +16,18 @@ const useDeleteImageApi = () => {
   const handleDeleteImage = async ({
     onSuccessCallback,
     fileName,
-    module,
     onErrorCallback,
   }) => {
     try {
       setImageDeleteApiStatus(API_STATUS.LOADING);
       setImageDeleteData(null);
       errorWhileDeletingImage && setErrorWhileDeletingImage("");
-      const url = CORE_ROUTE + "/" + module + FILES_END_POINT + "/" + fileName;
+      const url = CORE_ROUTE + "/admin"  + FILES_END_POINT + "/" + fileName;
       const res = await Http.delete(url);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setImageDeleteApiStatus(API_STATUS.SUCCESS);
         setImageDeleteData(res?.data);
-        onSuccessCallback && onSuccessCallback();
+        onSuccessCallback && onSuccessCallback(res?.data);
         return;
       }
       setImageDeleteApiStatus(API_STATUS.ERROR);

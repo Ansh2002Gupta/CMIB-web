@@ -4,7 +4,6 @@ import { Avatar, Space, Card, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
-import useHeader from "../../core/hooks/useHeader";
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
@@ -34,25 +33,11 @@ export default function CardDropdownOverlay({
       setDropdownVisible(false);
       userProfileDispatch(setShowChangePasswordModal(true));
     },
+    viewProfile: () => {
+      setDropdownVisible(false);
+      setCurrentOpenModal(1);
+    },
   };
-
-  const headerActionItems = [
-    {
-      id: 1,
-      onClick: () => {
-        setDropdownVisible(false);
-        setCurrentOpenModal(1);
-      },
-      label: "label.viewProfile",
-      icon: <UserIcon />,
-    },
-    {
-      id: 2,
-      onClick: () => {},
-      label: "label.changePassword",
-      icon: <LockIcon />,
-    },
-  ];
 
   return (
     <Card
@@ -89,16 +74,16 @@ export default function CardDropdownOverlay({
       ]}
     >
       <Space className={styles.profileList} size="small" direction="vertical">
-        {headerActionItems.map((item) => (
+        {headerActionItems?.map((item) => (
           <Button
             key={item?.id}
             className={styles.menuBtn}
             type="text"
             block
             icon={<span>{item.icon}</span>}
-            onClick={headerActionMethods[item.key]}
+            onClick={headerActionMethods[item?.key]}
           >
-            {intl.formatMessage({ id: item.label })}
+            {intl.formatMessage({ id: item?.id })}
           </Button>
         ))}
       </Space>

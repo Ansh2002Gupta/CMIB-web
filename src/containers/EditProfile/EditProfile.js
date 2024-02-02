@@ -8,6 +8,7 @@ import { ThemeContext } from "core/providers/theme";
 
 import CropAndRotateImage from "../../components/CropAndRotateImage/CropAndRotateImage";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import useDeleteImageApi from "../../services/api-services/Image/useDeleteImageApi";
 import useUploadImageApi from "../../services/api-services/Image/useUploadImageApi";
 import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
 import useUpdateUserProfileApi from "../../services/api-services/UserProfile/useUpdateUserProfileApi";
@@ -31,16 +32,24 @@ const EditProfile = ({
     file: null,
     src: userProfileDetails?.userDetails?.profile_photo,
   });
+  const userProfileImageURL = userProfileDetails?.userDetails?.profile_photo;
+  const userProfileImageName = userProfileImageURL?.split("/")?.pop() || "";
   const userName = userProfileDetails?.userDetails?.name;
-  const firstName = userName?.split(" ")[0];
-  const lastName = userName?.split(" ")[1] || "";
+  const firstName = userName?.split(" ")?.[0] || "";
+  const lastName = userName?.split(" ")?.[1] || "";
   const [imageToBeChaged, setImageToBeChanged] = useState(null);
   const { getImage } = useContext(ThemeContext);
   const { handleUpdatingUserProfile } = useUpdateUserProfileApi();
   const [, userProfileDispatch] = useContext(UserProfileContext);
 
-  const { handleUploadImage } = useUploadImageApi();
-
+  const { handleUploadImage, isLoading: isUploadingImage } =
+  useUploadImageApi();
+  
+  const {
+    handleDeleteImage,
+    isLoading: isDeletingImage,
+  } = useDeleteImageApi();
+  
   const { getUserDetails } = useGetUserDetails();
 
   const beforeUpload = (file) => {
@@ -74,7 +83,7 @@ const EditProfile = ({
     }
     return isAllowedType && isLessThan5MB;
   };
-  
+
   const handleOnClose = () => {
     currentOpenendModal === 3 && setCurrentOpenModal(1);
     currentOpenendModal === 4 && setCurrentOpenModal(3);
@@ -119,13 +128,13 @@ const EditProfile = ({
         profile_photo: "",
         is_two_factor: userProfileDetails?.userDetails?.is_two_factor,
       },
-      onErrorCallback: () => {
-        showNotification(
-          intl.formatMessage({ id: "label.somethingWentWrong" }),
-          "error"
-        );
+      onErrorCallback: (errorString) => {
+        showNotification(errorString, "error");
       },
       onSuccessCallback: () => {
+        handleDeleteImage({
+          fileName: userProfileImageName,
+        });
         resetUserStoredInfo();
         setUserProfileImage({
           src: "",
@@ -205,6 +214,7 @@ const EditProfile = ({
           isBottomFillSpace
           bottomSection={
             <CropAndRotateImage
+              isLoading={isUploadingImage}
               file={imageToBeChaged.file}
               setFile={setUserProfileImage}
               photoURL={imageToBeChaged?.src}

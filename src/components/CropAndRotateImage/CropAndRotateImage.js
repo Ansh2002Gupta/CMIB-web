@@ -29,6 +29,7 @@ const CropAndRotateImage = ({
   setFile,
   setCurrentOpenModal,
   showNotification,
+  isLoading,
 }) => {
   const intl = useIntl();
 
@@ -150,7 +151,7 @@ const CropAndRotateImage = ({
         <CustomButton
           customStyle={styles.cancelButton}
           onClick={cancelCropHandler}
-          isBtnDisable={isCroppingImage}
+          isBtnDisable={isCroppingImage || isLoading}
           btnText={intl.formatMessage({ id: "label.cancel" })}
         />
         <CustomButton

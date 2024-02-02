@@ -20,7 +20,7 @@ const ViewProfileDetails = ({ setCurrentOpenModal, showNotification }) => {
 
   const userName = userProfileDetails?.userDetails?.name;
   const firstName = userName?.split(" ")?.[0] || "";
-  const lastName  = userName?.split(" ")?.[1] || "";
+  const lastName = userName?.split(" ")?.[1] || "";
   const profileImage = userProfileDetails?.userDetails?.profile_photo;
   const email = userProfileDetails?.userDetails?.email || "--";
   const phone = userProfileDetails?.userDetails?.mobile_number || "--";
@@ -39,16 +39,11 @@ const ViewProfileDetails = ({ setCurrentOpenModal, showNotification }) => {
   const updateUserData = () => {
     const payload = {
       is_two_factor: !is2FactorAuthenicationOn ? 1 : 0,
-      profile_photo: profileImage,
     };
     handleUpdatingUserProfile({
       payload,
       onSuccessCallback: () => setIs2FactorAuthenicationOn((prev) => !prev),
-      onErrorCallback: () =>
-        showNotification(
-          intl.formatMessage({ id: "label.somethingWentWrong" }),
-          "error"
-        ),
+      onErrorCallback: (errorString) => showNotification(errorString, "error"),
     });
   };
 
