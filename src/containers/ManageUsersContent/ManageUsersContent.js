@@ -49,10 +49,12 @@ const ManageUsersContent = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
   const [showFilters, setShowFilters] = useState(false);
-  let arrayFromParams = JSON.parse(
-    decodeURIComponent(searchParams.get("filter") || "[]")
+
+  const [filterArray, setFilterArray] = useState(
+    JSON.parse(
+      decodeURIComponent(searchParams.get(PAGINATION_PROPERTIES.FILTER) || "[]")
+    )
   );
-  const [filterArray, setFilterArray] = useState(arrayFromParams);
   const [searchedValue, setSearchedValue] = useState(
     searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
@@ -287,7 +289,10 @@ const ManageUsersContent = () => {
       filterArray
     );
     let arrayAsString = JSON.stringify(filterArray);
-    setSearchParams({ filter: encodeURIComponent(arrayAsString) });
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
+      return prev;
+    });
   }, [filterArray, current, pageSize]);
 
   useEffect(() => {
