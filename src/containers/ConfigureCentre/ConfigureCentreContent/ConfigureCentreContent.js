@@ -30,6 +30,7 @@ import {
   toggleSorting,
 } from "../../../constant/utils";
 import styles from "./ConfigureCentreContent.module.scss";
+import { CENTRE_DETAILS } from "../../../routes/routeNames";
 
 const ConfigureCentreContent = () => {
   const intl = useIntl();
@@ -72,7 +73,7 @@ const ConfigureCentreContent = () => {
 
   const goToEditCentrePage = (rowData) => {
     navigate(
-      `centre-details/${rowData?.id}?mode=edit`
+      `${CENTRE_DETAILS}/${rowData?.id}?mode=edit`
     );
   };
 

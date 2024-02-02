@@ -17,4 +17,5 @@ export const SETUP_CENTERS = "setup-centers";
 export const CONSENT_MARKING = "consent-marking";
 export const QUERY_DETAILS = "query/:queryId";
 export const SETUP_CENTERS_DETAILS = "/details/:centreId";
-export const EDIT_CONFIGURE_CENTRE = "centre-details/:centreId"
+export const EDIT_CONFIGURE_CENTRE = "centre-details/:centreId";
+export const CENTRE_DETAILS = "centre-details";

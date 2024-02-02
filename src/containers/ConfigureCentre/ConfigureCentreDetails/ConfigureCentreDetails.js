@@ -6,7 +6,6 @@ import { Select, Spin, Typography } from "antd";
 import { Base, TwoColumn, TwoRow } from "../../../core/layouts";
 
 import CustomButton from "../../../components/CustomButton";
-import CustomLoader from "../../../components/CustomLoader";
 import CustomGrid from "../../../components/CustomGrid";
 import CustomInput from "../../../components/CustomInput";
 import CustomLoader from "../../../components/CustomLoader";
@@ -141,13 +140,13 @@ const ConfigureCentreDetails = () => {
 
   const handleTryAgain = () => {
     if (isEditMode) {
-      fetchData();
+      fetchData({});
     }
   };
 
   useEffect(() => {
     if (isEditMode) {
-      fetchData();
+      fetchData({});
     }
   }, [currentFormState]);
 
