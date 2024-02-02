@@ -8,7 +8,7 @@ import React, {
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
-import { Alert, Button, Image, Input, Spin, Typography, message } from "antd";
+import { Image, Input, Spin, message } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
@@ -164,7 +164,7 @@ const ManageUsersContent = () => {
       title: intl.formatMessage({ id: "label.mobileNumber" }),
       dataIndex: "mobile_number",
       key: "mobile_number",
-      renderText: { visible: true, textStyles: styles.tableCell },
+      renderText: { visible: true, textStyles: styles.tableCell, mobile: true },
     }),
     {
       title: () => (
