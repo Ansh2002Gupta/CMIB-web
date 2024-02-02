@@ -17,9 +17,9 @@ import styles from "./CommonStyles/commonModalStyles.module.scss";
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
-  const [serahcParams, setSearchParams] = useSearchParams();
+  const [serahcParams,] = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userProfileDetails, userProfileDispatch] =
+  const [userProfileDetails,] =
     useContext(UserProfileContext);
   const userModalParams =
     serahcParams.get(USER_PROFILE_QUERY_PARAMS) === "open";
