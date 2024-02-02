@@ -89,7 +89,6 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    //fetchUsers(size, 1, searchedValue, filterArray);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -98,7 +97,6 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    //fetchUsers(pageSize, newPageNumber, searchedValue, filterArray);
   };
 
   const handleOnUserSearch = (event) => {

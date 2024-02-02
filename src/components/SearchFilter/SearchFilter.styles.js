@@ -15,24 +15,24 @@ export const classes = {
     borderRight: variables.borderLight,
     flex: 2,
     maxHeight: "60vw",
-    overflowX: "scroll",
+    overflowX: "auto",
   },
   filterRightSectionMobile: {
     flex: 3,
     maxHeight: "60vw",
-    overflowX: "scroll",
+    overflowX: "auto",
   },
   leftSectionStyle: {
     borderRight: variables.borderLight,
     flex: 1,
     maxHeight: "20vw",
-    overflowX: "scroll",
+    overflowX: "auto",
     minWidth: "15vw",
   },
   rightSectionStyle: {
     flex: 1,
     maxHeight: "20vw",
-    overflowX: "scroll",
+    overflowX: "auto",
     minWidth: "15vw",
   },
 };
