@@ -17,12 +17,12 @@ import styles from "./CommonStyles/commonModalStyles.module.scss";
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
-  const [serahcParams,] = useSearchParams();
+  const [serachParams,] = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userProfileDetails,] =
     useContext(UserProfileContext);
   const userModalParams =
-    serahcParams.get(USER_PROFILE_QUERY_PARAMS) === "open";
+    serachParams.get(USER_PROFILE_QUERY_PARAMS) === "open";
   const { showNotification, notificationContextHolder } = useShowNotification();
   const currentlyOpenedUserProfileModal = userModalParams
     ? userProfileDetails?.currentlyOpenedUserProfileModal || 1

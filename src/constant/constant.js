@@ -352,4 +352,4 @@ export const INITIAL_PASSWORD_DATA = {
   confirm_password: "",
 };
 
-export const USER_PROFILE_QUERY_PARAMS = "userProfile";
+export const USER_PROFILE_QUERY_PARAMS = "user-profile";
