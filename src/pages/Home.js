@@ -12,6 +12,7 @@ import HeaderContainer from "../containers/Header";
 import ViewProfileDetails from "../containers/ViewProfileDetails";
 import useShowNotification from "../core/hooks/useShowNotification";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
+import { USER_PROFILE_QUERY_PARAMS } from "../constant/constant";
 import styles from "./CommonStyles/commonModalStyles.module.scss";
 
 function Home({ noOuterPadding }) {
@@ -20,9 +21,12 @@ function Home({ noOuterPadding }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
-  const userModalParams = serahcParams.get("userProfileisOpen") == "open"|| 0;
-  const { currentlyOpenedUserProfileModal } = userProfileDetails;
+  const userModalParams =
+    serahcParams.get(USER_PROFILE_QUERY_PARAMS) === "open";
   const { showNotification, notificationContextHolder } = useShowNotification();
+  const currentlyOpenedUserProfileModal = userModalParams
+    ? userProfileDetails?.currentlyOpenedUserProfileModal || 1
+    : 0;
 
   return (
     <>

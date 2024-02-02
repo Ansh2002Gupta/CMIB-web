@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Typography, Image, Switch } from "antd";
 
@@ -17,7 +18,7 @@ import {
 } from "../../globalContext/userProfile/userProfileActions";
 import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
 import { removeItem } from "../../services/encrypted-storage-service";
-import { STORAGE_KEYS } from "../../constant/constant";
+import { STORAGE_KEYS, USER_PROFILE_QUERY_PARAMS } from "../../constant/constant";
 import { classes } from "./ViewProfileDetails.styles";
 import styles from "./ViewProfileDetails.module.scss";
 
@@ -27,6 +28,7 @@ const ViewProfileDetails = ({ showNotification }) => {
   const { getImage } = useContext(ThemeContext);
   const intl = useIntl();
   const { getUserDetails } = useGetUserDetails();
+  const [, setSearchParams] = useSearchParams();
 
   const userName = userProfileDetails?.userDetails?.name;
   const firstName = userName?.split(" ")?.[0] || "";
@@ -66,6 +68,14 @@ const ViewProfileDetails = ({ showNotification }) => {
     });
   };
 
+  const handleCloseUserProfile = () => {
+    setSearchParams((prev) => {
+      prev.delete(USER_PROFILE_QUERY_PARAMS);
+      return prev;
+    });
+    userProfileDispatch(closeUserProfileModal());
+  };
+
   return (
     <>
       <TwoRow
@@ -79,7 +89,7 @@ const ViewProfileDetails = ({ showNotification }) => {
                 preview={false}
                 src={getImage("cross")}
                 className={styles.crossIconStyle}
-                onClick={() => userProfileDispatch(closeUserProfileModal())}
+                onClick={handleCloseUserProfile}
               />
             }
             bottomSection={
