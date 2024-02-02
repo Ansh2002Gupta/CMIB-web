@@ -9,8 +9,8 @@
 }
 
 .searchIcon {
-  width: var(--smallWidth);
-  height: var(--smallHeight);
+  width: var(--width_30);
+  height: var(--height_30);
   padding-right: var(--paddingExtraSmall);
   padding-bottom: var(--paddingXXSmall);
 }
@@ -44,6 +44,21 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.columnHeading {
+  color: var(--subHeadingColor) !important;
+  display: flex;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+}
+
+.upside {
+  transform: rotate(180deg);
+}
+
+.downside {
+  transform: rotate(0deg);
 }
 
 @media screen and (max-width: 1023px) {

@@ -8,6 +8,7 @@ import { TwoRow } from "../../core/layouts";
 
 import UserImage from "../UserImage/UserImage";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import { getImageSource } from "../../constant/utils";
 import { ReactComponent as UploadImageIcon } from "../../themes/base/assets/images/Upload icon.svg";
 import styles from "./FileUpload.module.scss";
 
@@ -43,16 +44,6 @@ const FileUpload = ({
       return Upload.LIST_IGNORE;
     }
     return isAllowedType && isLessThan5MB;
-  };
-
-  const getImageSource = (uploadedImage) => {
-    if (uploadedImage && typeof uploadedImage === "string") {
-      return uploadedImage;
-    }
-    if (uploadedImage) {
-      return URL.createObjectURL(uploadedImage);
-    }
-    return "";
   };
 
   const handleOnUploadImage = (file) => {
@@ -118,7 +109,7 @@ const FileUpload = ({
 };
 
 FileUpload.defaultProps = {
-  heading: "Sent To",
+  heading: "Profile Photo",
   isFormEditable: false,
   subHeading: "Photo",
   updateUserData: () => {},

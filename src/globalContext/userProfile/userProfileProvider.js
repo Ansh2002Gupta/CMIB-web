@@ -3,8 +3,11 @@ import * as types from "./types";
 
 const initialState = {
   isGettingUserDetails: false,
+  selectedModuleItem: null,
   userDetails: {},
   errorGettingUserDetails: "",
+  showLogoutModal: false,
+  currentlyOpenedUserProfileModal: 0,
 };
 
 const userProfileReducer = (state, action) => {
@@ -21,14 +24,44 @@ const userProfileReducer = (state, action) => {
         userDetails: { ...state.userDetails, ...action.payload },
       };
 
+    case types.SET_SELECTED_MODULE_:
+      return {
+        ...state,
+        selectedModuleItem: action.payload,
+      };
+
     case types.SET_ERROR_GETTING_USER_DETAILS:
       return {
         ...state,
         errorGettingUserDetails: action.payload,
       };
 
+    case types.SET_SHOW_CHANGE_PASSWORD_MODAL:
+      return {
+        ...state,
+        showChangePasswordModal: action.payload,
+      };
+
     case types.RESET_USER_DETAILS:
       return initialState;
+
+    case types.SET_SHOW_LOGOUT_MODAL:
+      return {
+        ...state,
+        showLogoutModal: action.payload,
+      };
+
+    case types.SET_USER_PROFILE_MODAL_NUMBER:
+      return {
+        ...state,
+        currentlyOpenedUserProfileModal: action.payload,
+      };
+
+    case types.CLOSE_USER_PROFILE_MODAL:
+      return {
+        ...state,
+        currentlyOpenedUserProfileModal: 0,
+      };
 
     default:
       return state;

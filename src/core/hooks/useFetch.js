@@ -39,8 +39,11 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
     id: "label.generalGetApiFailedErrorMessage",
   });
 
-  const fetchData = async (queryParamsObject = {}) => {
-    const modifiedURL = `${url}?${objectToQueryString(queryParamsObject)}`;
+  const fetchData = async ({ queryParamsObject, onSuccessCallback }) => {
+    let modifiedURL = url;
+    if (queryParamsObject && objectToQueryString(queryParamsObject)) {
+      modifiedURL = `${url}?${objectToQueryString(queryParamsObject)}`;
+    }
     try {
       setApiStatus(API_STATUS.LOADING);
       error && setError("");
@@ -51,6 +54,7 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
       ) {
         setApiStatus(API_STATUS.SUCCESS);
         setData(res.data);
+        onSuccessCallback && onSuccessCallback();
         return;
       }
       setApiStatus(API_STATUS.ERROR);
@@ -65,7 +69,8 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
     if (skipApiCallOnMount) {
       return;
     }
-    fetchData();
+
+    fetchData({ queryParamsObject: {} });
   }, [url]);
 
   useEffect(() => {

@@ -1,8 +1,9 @@
-import { SETUP_CENTERS } from "../routes/routeNames";
+import { SETUP_CENTERS, CONSENT_MARKING } from "../routes/routeNames";
 
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
+export const SLIDE_BY = 300;
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -42,6 +43,10 @@ export const ROW_PER_PAGE_OPTIONS = [
 
 export const VALID_ROW_PER_OPTIONS = [2, 10, 20, 30, 40];
 
+export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
+export const VALID_CONSENT_MARKING_TABS_ID = ["1", "2", "3"];
+
+// TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
   {
     value: "all",
@@ -143,8 +148,10 @@ export const PAGINATION_PROPERTIES = {
   CURRENT_PAGE: "current-page",
   ROW_PER_PAGE: "row-per-page",
   SEARCH_QUERY: "search-query",
+  FILTER: "filter",
 };
 
+//TODO:need to implement it using api
 //TODO:need to implement it using api
 export const SESSION_PERIOD = [
   { id: 101, label: "May 2025", value: "May 2025" },
@@ -197,7 +204,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: CONSENT_MARKING,
   },
   {
     id: 5,
@@ -224,7 +231,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: CONSENT_MARKING,
   },
   {
     id: 3,
@@ -236,6 +243,26 @@ export const ROUND_TWO_CARD_LIST = [
   },
 ];
 
+export const COMPANY_ROUND_ONE = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Billing Info",
+  "Payment",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
+];
+
+export const COMPANY_ROUND_TWO = [
+  "Company Profile",
+  "Job Details",
+  "Pre-Interview Preferences",
+  "Centre Details",
+  "Interview Roster",
+  "Consent Marking And Interview Process",
+];
+
 export const CITY_CENTERS = [
   { id: 101, label: "Delhi", value: "Delhi" },
   { id: 102, label: "Mumbai", value: "Mumbai" },
@@ -245,17 +272,88 @@ export const CITY_CENTERS = [
   { id: 106, label: "Goa", value: "Goa" },
 ];
 
+export const CONTROL_MODULE_ID = 1;
+
+export const ACTIVE_TAB = "activeTab";
+
 export const MODULE_KEYS = {
   CONTROL_KEY: "control",
-  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placement",
+  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placements",
   CA_JOBS_KEY: "ca-jobs",
   EXPERIENCED_MEMBERS_KEY: "experienced-members",
-  CARRER_ASCENT_KEY: "career-ascent",
-  WOMEN_PARTTIME_KEY: "women-placement",
-  OVERSEAS_CHAPTERS_KEY: "overseas-placement",
+  CARRER_ASCENT_KEY: "career-ascents",
+  WOMEN_PARTTIME_KEY: "women-placements",
+  OVERSEAS_CHAPTERS_KEY: "overseas-chapters",
 };
 
-export const SORT_VALUES={
-  ASCENDING:"asc",
-  DESCENDING:"desc",
-}
+export const MENU_KEYS = {
+  USER_MANAGEMENT: "user-management",
+  BULK_NOTIFICATIONS: "bulk-notifications-management",
+  TICKET_MANAGEMENT: "ticket-management",
+  QUERY_MANAGEMENT: "query-management",
+  TESTIMONIAL_MANAGEMENT: "testimonial-management",
+  FEEDBACK_MANAGEMENT: "feedback-management",
+  SUPPORT_EMAIL_MANGEMENT: "support-email-management",
+  REGISTERED_COMPANIES: "registered-companies",
+  SET_UP_SESSIONS: "setup-session",
+  DASHBOARD: "dashboard",
+  MANAGE_SUBSCRIPTIONS: "manage-subscriptions",
+  GLOBAL_CONFIGURATIONS: "global-configs",
+  MANAGE_PAYMENTS: "manage-payments",
+  PAYMENTS: "payments",
+  CANDIDATES: "candidates",
+  COMPANIES: "companies",
+  CONFIGURATIONS: "configurations",
+  JOBS: "jobs",
+  REPORT: "report",
+  ROASTER: "roster",
+  FEEDBACK: "feedback",
+  CONTACT_US: "contact-us",
+  ACTIVITY_LOGS: "activity-logs",
+  ALL_JOBS: "all-job-listing",
+  ROUND_1_PLACEMENT: "round-1",
+  ROUND_2_PLACEMENT: "round-2",
+  CANDIDATE_DETAILS: "candidate-details",
+  COMPANY_DETAILS: "company-details",
+  MANAGE_CANDIDATES: "manage-candidates",
+  MANAGE_COMPANIES: "manage-companies",
+};
+
+export const STORAGE_KEYS = {
+  AUTH_TOKEN: "authToken",
+  USER_DATA: "userData",
+};
+
+export const SORT_VALUES = {
+  ASCENDING: "asc",
+  DESCENDING: "desc",
+};
+
+export const DEBOUNCE_TIME = 500;
+
+export const SORT_PROPERTIES = {
+  SORT_BY: "sortBy",
+};
+
+export const GENERIC_ERROR_MESSAGE = "Placeholder text";
+
+export const ZOOM_CONSTANT = {
+  MAX_ZOOM: 3,
+  MIN_ZOOM: 1,
+  ZOOM_STEP: 0.1,
+};
+
+export const NUMBER_OF_CHIPS_TO_BE_SHOWN = 2;
+
+export const ROTATE_IMAGE_BY = 90;
+
+export const INITIAL_PASSWORD_DATA = {
+  old_password: "",
+  new_password: "",
+  confirm_password: "",
+};
+
+export const SORT_VALUES = {
+  ASCENDING: "asc",
+  DESCENDING: "desc",
+};

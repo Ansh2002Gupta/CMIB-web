@@ -11,7 +11,11 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
-import { FORM_STATES, NOTIFICATION_TYPES } from "../../constant/constant";
+import {
+  CONTROL_MODULE_ID,
+  FORM_STATES,
+  NOTIFICATION_TYPES,
+} from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
 
 const UserDetails = () => {
@@ -29,10 +33,12 @@ const UserDetails = () => {
     name: "",
     email: "",
     mobile: "",
-    mobile_prefix: "91",
+    mobile_prefix: "in",
     profile_photo: null,
     profile_photo_url: "",
     access: [],
+    roles: [],
+    permissions: [],
     date: "",
     is_two_factor: false,
     status: 0,
@@ -108,7 +114,9 @@ const UserDetails = () => {
         mobile_prefix: "91",
         profile_photo_url: userAccountInfo?.profile_photo || "",
         profile_photo: null,
-        access: userAccountInfo?.role?.map((item) => item?.name) || "",
+        access: userAccountInfo?.role?.map((item) => item?.id) || [],
+        roles: userAccountInfo?.roles || [],
+        permissions: userAccountInfo?.permissions,
         date: userAccountInfo?.created_at || "",
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,
         status: userAccountInfo?.status,

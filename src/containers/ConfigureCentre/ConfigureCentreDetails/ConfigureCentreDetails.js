@@ -6,6 +6,7 @@ import { Select, Spin, Typography } from "antd";
 import { Base, TwoColumn, TwoRow } from "../../../core/layouts";
 
 import CustomButton from "../../../components/CustomButton";
+import CustomLoader from "../../../components/CustomLoader";
 import CustomGrid from "../../../components/CustomGrid";
 import CustomInput from "../../../components/CustomInput";
 import CustomLoader from "../../../components/CustomLoader";
@@ -27,7 +28,7 @@ import { FORM_STATES } from "../../../constant/constant";
 import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
 import { classes } from "./ConfigureCentreDetails.styles";
 import styles from "./ConfigureCentreDetails.module.scss";
-import './Override.css'
+import "./override.css";
 
 const ConfigureCentreDetails = () => {
   const intl = useIntl();
@@ -178,9 +179,7 @@ const ConfigureCentreDetails = () => {
           {(isAddingCentre ||
             isUpdatingCenterDetails ||
             isUpdatingCenterDetails ||
-            isLoading) && (
-            <CustomLoader />
-          )}
+            isLoading) && <CustomLoader />}
           {!isAddingCentre &&
             !isUpdatingCenterDetails &&
             !isUpdatingCenterDetails &&

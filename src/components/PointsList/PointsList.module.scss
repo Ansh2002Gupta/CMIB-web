@@ -17,7 +17,7 @@
 
 .pointText {
   color: var(--bulletPointText);
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium);
 }
 
@@ -26,11 +26,19 @@
   height: 8px;
   padding: 5px;
   border-radius: 50%;
-  background-color: var(--bulletPoint);
+  background-color: var(--bulletPoint, #ccd0e5);
 }
 
 .active{
-    background-color: var(--active);
+    background-color: var(--active, #00873E);
+}
+
+.error{
+  background-color: var(--error, #D93400);
+}
+
+.spanOverAllColumns {
+  grid-column: 1 / -1;
 }
 
 @media screen and (max-width: 511px) {

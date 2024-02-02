@@ -1,11 +1,12 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Alert, Button, Spin, Typography } from "antd";
+import { Spin } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
+import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -38,11 +39,11 @@ const UserDetailsContent = ({
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const isSavedBtnDisable =
-    !userData?.name ||
-    !userData?.email ||
-    !userData?.mobile ||
-    !userData?.access?.length;
+  const isActionBtnDisable =
+    !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
+
+  const imageParts = userData?.profile_photo_url.split("/");
+  const imageName = imageParts.pop();
 
   const handleUpdateUserData = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
@@ -61,7 +62,8 @@ const UserDetailsContent = ({
         name: userData?.name,
         email: userData?.email,
         mobile_number: userData?.mobile,
-        role: userData?.access,
+        roles: userData?.access,
+        permissions: userData.permissions,
         is_two_factor: userData?.is_two_factor ? 1 : 0,
       };
       if (userData?.profile_photo) {
@@ -92,6 +94,7 @@ const UserDetailsContent = ({
         mobile_number: userData.mobile,
         created_by: 1, // TODO: Get this id from get-Logged-In-User-details API (once it is integrated)
         roles: userData.access,
+        permissions: userData.permissions,
         is_two_factor: userData.is_two_factor ? 1 : 0,
       };
       if (userData?.profile_photo) {
@@ -131,14 +134,17 @@ const UserDetailsContent = ({
                     : ""
                 }
                 isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
-                {...{ updateUserData }}
+                {...{ updateUserData, setIsAccessValid }}
                 name={userData?.name}
                 email={userData?.email}
                 mobileNo={userData?.mobile}
                 mobilePrefix={userData?.mobile_prefix}
-                date={userData?.date || new Date().toLocaleDateString()}
+                date={userData?.date || new Date().toISOString()}
                 access={userData?.access}
+                permissions={userData?.permissions}
+                roles={userData?.roles}
                 is_two_factor={userData?.is_two_factor}
+                status={userData?.status}
                 isDateDisable
                 userNameErrorMessage={
                   !isUserNameValid
@@ -162,7 +168,9 @@ const UserDetailsContent = ({
                   isFormEditable: currentFormState !== FORM_STATES.VIEW_ONLY,
                 }}
                 userProfilePic={userData?.profile_photo_url}
-                userImageName={userData?.profile_photo?.file?.name}
+                userImageName={
+                  imageName.includes("png", "jpg", "jpeg") && imageName
+                }
               />
             </div>
           )}
@@ -173,27 +181,10 @@ const UserDetailsContent = ({
           )}
           {errorWhileGettingUsersData && (
             <div className={styles.errorContainer}>
-              <Alert
-                message={
-                  <Typography className={styles.errorText}>
-                    {intl.formatMessage({ id: "label.error" })}
-                  </Typography>
-                }
-                description={
-                  <div className={styles.apiFailedErrorContainer}>
-                    <Typography className={styles.errorText}>
-                      {errorWhileGettingUsersData}
-                    </Typography>
-                    <Button
-                      onClick={() => getUserData(userId)}
-                      className={styles.tryAgainButton}
-                    >
-                      {intl.formatMessage({ id: "label.tryAgain" })}
-                    </Button>
-                  </div>
-                }
-                type="error"
-                showIcon
+              <ErrorMessageBox
+                onRetry={() => getUserData(userId)}
+                errorHeading={intl.formatMessage({ id: "label.error" })}
+                errorText={errorWhileGettingUsersData}
               />
             </div>
           )}
@@ -207,7 +198,6 @@ const UserDetailsContent = ({
             !isLoading &&
             !errorWhileGettingUsersData && (
               <ActionAndCancelButtons
-                cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
                 actionBtnText={intl.formatMessage({
                   id: `label.${
                     currentFormState === FORM_STATES.EDITABLE
@@ -215,9 +205,10 @@ const UserDetailsContent = ({
                       : "add"
                   }`,
                 })}
+                cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
                 onActionBtnClick={handleOnSubmit}
+                isActionBtnDisable={isActionBtnDisable}
                 onCancelBtnClick={goBackToViewDetailsPage}
-                isActionBtnDisable={isSavedBtnDisable}
               />
             )}
         </>

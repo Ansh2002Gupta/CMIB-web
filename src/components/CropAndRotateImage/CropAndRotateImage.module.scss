@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: var(--fullWidth, 100%);
+}
+
+.cropperContainer {
+  position: relative;
+  overflow-y: auto;
+  padding: var(--paddingSmall, 16px) var(--paddingMedium, 24px);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: var(--bodyBg, "#fff");
+  height: max(20vh, 400px);
+  border-radius: var(--radiusMLg, 16px);
+}
+
+.actionBtnContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: var(--gapSmall, 16px);
+  margin-top: var(--margin_32, 32px);
+}
+
+.cancelButton {
+  background-color: var(--bodyBg, #fff);
+  color: var(--textBold, #000833);
+  border: 1px solid rgba(161, 159, 159, 0.482) !important;
+  &:hover {
+    background-color: var(--bodyBg, #fff) !important;
+    color: var(--textBold, #000833) !important;
+    border: 1px solid rgba(161, 159, 159, 0.482) !important;
+  }
+}
+
+.rotateIcon {
+  margin-top: var(--margin_12, 12px);
+  cursor: pointer;
+}
+
+.containerWithRotate {
+  display: flex;
+  gap: var(--gapSmallMedium, 12px);
+  align-items: center;
+  width: var(--fullWidth, 100%);
+}

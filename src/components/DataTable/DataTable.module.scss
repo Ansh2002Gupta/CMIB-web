@@ -23,8 +23,8 @@
 }
 
 .rowPerPageCount {
-  width: 70px;
-  color: var(--On-background, var(--textBold));
+  width: var(--height_70);
+  color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }
@@ -56,7 +56,7 @@
   gap: var(--gapXSmall);
   justify-content: space-between;
   align-items: baseline;
-  min-height: 44px;
+  min-height: var(--minBtnHeight);
   flex-direction: row-reverse;
   padding: var(--paddingExtraSmall) var(--paddingMedium);
   border: var(--borderLight);
@@ -76,21 +76,9 @@
   align-items: center;
 }
 
-// TODO: override the color of the sorting arrows based on active and non-active state
-.ant-table-column-sorter-up,
-.ant-table-column-sorter-down {
-  color: red; /* Light gray for non-active arrows */
-}
-
-/* Active sorting arrow styles */
-.ant-table-column-sorter-up.active .ant-table-column-sorter-up-inner,
-.ant-table-column-sorter-down.active .ant-table-column-sorter-down-inner {
-  color: #1890ff; /* Blue for active arrows */
-}
-
 @media (max-width: 1023px) {
   .nextAndPrevArrowContainer {
-    padding: 4px var(--paddingExtraSmall);
+    padding: var(--paddingXXSmall) var(--paddingExtraSmall);
     align-items: center;
   }
 }
@@ -107,7 +95,7 @@
     margin-top: var(--marginMedium);
   }
   .paginationContainer {
-    width: 100%;
+    width: var(--fullWidth);
     justify-content: space-between;
     padding: 0px var(--paddingExtraSmall);
   }

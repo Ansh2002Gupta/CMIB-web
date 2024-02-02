@@ -1,0 +1,3 @@
+.ant-modal-content {
+  border-radius: var(--radiusXLg, 12px) !important;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { Input, Select, Typography, InputNumber } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -31,6 +31,7 @@ const CustomInput = ({
   messageStyles: customMessageStyles,
   messageToShow,
   min,
+  onBlur,
   onChange,
   onSelectItem,
   onSuffixElementClick,
@@ -41,6 +42,19 @@ const CustomInput = ({
   type,
   value,
 }) => {
+  const inputFieldRef = useRef();
+
+  const restoreCursorPosition = () => {
+    let selectionStart = inputFieldRef?.current?.input?.selectionStart;
+    let selectionEnd = inputFieldRef?.current?.input?.selectionEnd;
+
+    onSuffixElementClick();
+
+    requestAnimationFrame(() => {
+      inputFieldRef?.current?.setSelectionRange(selectionStart, selectionEnd);
+    });
+  };
+
   return (
     <Base className={[styles.container, customContainerStyles].join(" ")}>
       {!!label && (
@@ -84,6 +98,7 @@ const CustomInput = ({
         {((type !== "select" && type !== "inputNumber") ||
           type === "mobile") && (
           <Input
+            ref={isSuffixRequiredForPassword ? inputFieldRef : null}
             type={type || "text"}
             className={[
               styles.inputField,
@@ -94,8 +109,9 @@ const CustomInput = ({
             {...{
               value,
               placeholder,
-              onChange,
               disabled,
+              onChange,
+              onBlur
             }}
             prefix={isPrefixRequired ? prefixElement : null}
             suffix={
@@ -105,7 +121,7 @@ const CustomInput = ({
                     <span
                       className={styles.suffixElement}
                       onClick={() => {
-                        onSuffixElementClick && onSuffixElementClick();
+                        onSuffixElementClick && restoreCursorPosition();
                       }}
                     >
                       <EyeOutlined />
@@ -114,7 +130,7 @@ const CustomInput = ({
                     <span
                       className={styles.suffixElement}
                       onClick={() => {
-                        onSuffixElementClick && onSuffixElementClick();
+                        onSuffixElementClick && restoreCursorPosition();
                       }}
                     >
                       <EyeInvisibleOutlined />
@@ -133,6 +149,8 @@ const CustomInput = ({
         )}
         {type === "inputNumber" && (
           <InputNumber
+            type="number"
+            controls={false}
             className={[styles.inputNumberStyles, customInputNumberStyles]}
             {...{
               value,
@@ -145,15 +163,17 @@ const CustomInput = ({
           />
         )}
       </div>
-      {isError && (
-        <div>
-          <Typography
-            className={[styles.errorText, customErrorTextStyles].join(" ")}
-          >
-            * {errorMessage}
-          </Typography>
-        </div>
-      )}
+      <div>
+        <Typography
+          className={[
+            styles.errorText,
+            customErrorTextStyles,
+            isError ? styles.showError : "",
+          ].join(" ")}
+        >
+          {errorMessage ? ` * ${errorMessage}` : ""}
+        </Typography>
+      </div>
       {!!messageToShow && (
         <div>
           <Typography
@@ -191,6 +211,7 @@ CustomInput.defaultProps = {
   messageStyles: "",
   messageToShow: "",
   min: 0,
+  onBlur: () => {},
   onChange: () => {},
   onSelectItem: () => {},
   onSuffixElementClick: () => {},
@@ -226,6 +247,7 @@ CustomInput.propTypes = {
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
+  onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onSelectItem: PropTypes.func,
   onSuffixElementClick: PropTypes.func,

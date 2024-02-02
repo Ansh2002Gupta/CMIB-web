@@ -8,11 +8,15 @@ import styles from "./PointsList.module.scss";
 
 const PointsList = ({
   customHeadingStyles,
+  isBulletColorRed,
   pointsArray,
   pointsHeading,
 }) => {
   const getBulletStyles = (isValid) => {
-    return [styles.bullet, isValid ? styles.active : ""].join(" ");
+    return [
+      styles.bullet,
+      isValid ? styles.active : isBulletColorRed ? styles.error : "",
+    ].join(" ");
   };
   return (
     <Base className={styles.container}>
@@ -26,7 +30,15 @@ const PointsList = ({
       <Base className={styles.box}>
         {pointsArray?.map((point, index) => {
           return (
-            <div key={index} className={styles.pointsContainer}>
+            <div
+              key={index}
+              className={[
+                styles.pointsContainer,
+                index === pointsArray?.length - 1
+                  ? styles.spanOverAllColumns
+                  : "",
+              ].join(" ")}
+            >
               <div className={getBulletStyles(point.isValid)}></div>
               <Typography className={styles.pointText}>{point.str}</Typography>
             </div>

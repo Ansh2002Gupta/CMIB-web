@@ -1,15 +1,16 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import {
   DEFAULT_PAGE_SIZE,
+  GENERIC_ERROR_MESSAGE,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
 
 export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   if (date) {
-    return moment(new Date(date)).format(dateFormat);
+    return dayjs(new Date(date)).format(dateFormat);
   }
-  return moment(new Date()).format(dateFormat);
+  return dayjs(new Date()).format(dateFormat);
 };
 
 export const convertStringArrayToObjectOfStringAndIdArray = (
@@ -54,6 +55,26 @@ export function getValidPageSize(currentPageSize) {
   return validPageSize;
 }
 
+export function getValidFilter(currentFilter) {
+  let decodedFilter;
+  try {
+    const filterParam = currentFilter || "[]";
+    decodedFilter = JSON.parse(decodeURIComponent(filterParam));
+  } catch (e) {
+    console.error("Failed to decode filter parameter:", e);
+    // Fallback to an empty array or some default value
+    decodedFilter = [];
+  }
+  return decodedFilter;
+}
+
+export function getCurrentActiveTab(currentTabValue, validTabsValueArray) {
+  if (!currentTabValue || !validTabsValueArray.includes(currentTabValue)) {
+    return "1";
+  }
+  return currentTabValue;
+}
+
 export const getAccessibleModules = (useRoles, modules) => {
   const filteredModules = modules?.filter((module) => {
     const hasPermission = useRoles?.some((roleModule) => {
@@ -84,4 +105,77 @@ export const toggleSorting = (currentSortValue) => {
     return SORT_VALUES.DESCENDING;
   }
   return SORT_VALUES.ASCENDING;
+};
+
+export function filterMenuData(modules, menuItems) {
+  const filterdModules = [];
+
+  modules &&
+    modules?.map((item) => {
+      if (item?.key && menuItems && item?.key in menuItems) {
+        filterdModules?.push({
+          id: item?.id,
+          key: item?.key,
+          label: item?.label,
+          image: item?.image,
+          isExperiencedMember: item?.isExperiencedMember,
+          children: item?.children?.filter((e) =>
+            menuItems[item?.key]?.items?.find(
+              (findItem) => findItem?.key === e?.label
+            )
+          ),
+        });
+      }
+    });
+  return filterdModules;
+}
+
+export const getValidSortByValue = (currentSortByValue) => {
+  if (
+    currentSortByValue === SORT_VALUES.ASCENDING ||
+    currentSortByValue === SORT_VALUES.DESCENDING
+  ) {
+    return currentSortByValue;
+  }
+
+  return SORT_VALUES.ASCENDING;
+};
+
+export const getErrorText = (errorText) => {
+  if (errorText) {
+    return errorText;
+  }
+  return GENERIC_ERROR_MESSAGE;
+};
+
+export const getImageSource = (uploadedImage) => {
+  if (uploadedImage && typeof uploadedImage === "string") {
+    return uploadedImage;
+  }
+  if (uploadedImage) {
+    return URL.createObjectURL(uploadedImage);
+  }
+  return "";
+};
+
+export const convertPermissionFilter = (roles) => {
+  let result = [
+    {
+      id: 1,
+      name: "Access",
+      isSelected: false,
+      options: [],
+    },
+  ];
+
+  for (const key in roles) {
+    if (roles.hasOwnProperty(key)) {
+      result[0].options.push({
+        optionId: parseInt(key),
+        str: roles[key]?.name,
+      });
+    }
+  }
+
+  return result;
 };

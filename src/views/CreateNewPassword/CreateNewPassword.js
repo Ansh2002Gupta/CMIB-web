@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Typography } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
@@ -20,6 +19,7 @@ import {
   AT_LEAST_ONE_SMALL_LETTER,
   AT_LEAST_ONE_CAPITAL_LETTER,
 } from "../../constant/regex";
+import { getPasswordStrengthPointsArray } from "../../constant/passwordRules";
 import { LOGIN } from "../../routes/routeNames";
 import styles from "./CreateNewPassword.module.scss";
 
@@ -54,28 +54,7 @@ const CreateNewPassword = ({ token }) => {
     setErrorWhileCreatingPassword,
   } = useCreateNewPassword();
 
-  const passwordStrengthPointsArray = [
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck1" }),
-      isValid: passwordValidations.atLeast6Characters,
-    },
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck2" }),
-      isValid: passwordValidations.oneNumericValue,
-    },
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck3" }),
-      isValid: passwordValidations.oneCapitalLetterValue,
-    },
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck4" }),
-      isValid: passwordValidations.oneSmallLetterValue,
-    },
-    {
-      str: intl.formatMessage({ id: "label.passwordStrengthCheck5" }),
-      isValid: passwordValidations.oneSpecialCharacterValue,
-    },
-  ];
+  const passwordStrengthPointsArray = getPasswordStrengthPointsArray(intl, passwordValidations)
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -110,6 +89,16 @@ const CreateNewPassword = ({ token }) => {
       atLeast6Characters: AT_LEAST_SIX_CHARACTERS_REGEX.test(newPassword),
       bothEqual: newPassword === confirmPassword,
     });
+  };
+
+  const getCurrentErrorText = () => {
+    if (status && status !== "label.newPasswordAndConfirmPasswordMatched") {
+      return intl.formatMessage({
+        id: status,
+      });
+    }
+
+    return errorWhileCreatingPassword;
   };
 
   useEffect(() => {
@@ -218,23 +207,9 @@ const CreateNewPassword = ({ token }) => {
           />
         </div>
         <div>
-          {!!status &&
-            status !== "label.newPasswordAndConfirmPasswordMatched" && (
-              <div>
-                {
-                  <Typography className={[styles.errorText].join(" ")}>
-                    {intl.formatMessage({
-                      id: status,
-                    })}
-                  </Typography>
-                }
-              </div>
-            )}
           <ButtonAndLink
             loading={isLoading}
-            error={
-              !!errorWhileCreatingPassword ? errorWhileCreatingPassword : ""
-            }
+            error={getCurrentErrorText()}
             bottomLinkText={intl.formatMessage({
               id: "label.backToLoginBtn",
             })}
@@ -247,6 +222,7 @@ const CreateNewPassword = ({ token }) => {
             onTopBtnClick={handleOnSubmit}
             linkRedirection={LOGIN}
             type="submit"
+            customContainerStyles={styles.minHeight}
           />
           <CustomModal
             isOpen={

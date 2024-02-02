@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: var(--borderLight);
+  background-color: var(--mobileBg1);
 }
 
 .rightSubIconContainer {
@@ -11,9 +12,22 @@
   gap: var(--gapSmall);
 }
 
+.icons {
+  height: var(--height_40) !important;
+}
+
+.logo{
+  cursor: pointer;
+  max-width: var(--width_166);
+  min-height: var(--height_55);
+}
+
 @media screen and (max-width: 1535px) {
   .container {
     padding: var(--paddingMedium) var(--paddingXXLarge);
+  }
+  .logo {
+    width: var(--width_100);
   }
 }
 
@@ -26,5 +40,20 @@
 @media screen and (max-width: 767px) {
   .container {
     padding: var(--paddingMedium) var(--paddingMedium);
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .container {
+    border-bottom: 0;
+    background-color: var(--bodyBg);
+    padding-top: var(--padding_18);
+  }
+  .logo {
+    max-width: var(--width_120) !important;
+    min-height: var(--height_40) !important;
+  }
+  .container {
+    padding-bottom: var(--paddingExtraSmall);
   }
 }
