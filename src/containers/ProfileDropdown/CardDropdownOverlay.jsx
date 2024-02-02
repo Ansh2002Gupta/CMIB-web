@@ -3,12 +3,12 @@ import { useIntl } from "react-intl";
 import { Avatar, Space, Card, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-import { ReactComponent as UserIcon } from "../../themes/base/assets/icons/user.svg";
-import { ReactComponent as LockIcon } from "../../themes/base/assets/icons/lock.svg";
-
 import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
 import useHeader from "../../core/hooks/useHeader";
-import { setShowLogoutModal } from "../../globalContext/userProfile/userProfileActions";
+import {
+  setShowChangePasswordModal,
+  setShowLogoutModal,
+} from "../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import headerActionItems from "../../constants/headerActionItems";
 
@@ -25,10 +25,16 @@ export default function CardDropdownOverlay({
   const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const handleLogoutClick = () => {
-    setDropdownVisible(false)
+    setDropdownVisible(false);
     userProfileDispatch(setShowLogoutModal(true));
-  }
-  const { onLogout } = useHeader();
+  };
+
+  const headerActionMethods = {
+    changePassword: () => {
+      setDropdownVisible(false);
+      userProfileDispatch(setShowChangePasswordModal(true));
+    },
+  };
 
   const headerActionItems = [
     {
@@ -42,8 +48,7 @@ export default function CardDropdownOverlay({
     },
     {
       id: 2,
-      onClick: () => {
-      },
+      onClick: () => {},
       label: "label.changePassword",
       icon: <LockIcon />,
     },
@@ -91,7 +96,7 @@ export default function CardDropdownOverlay({
             type="text"
             block
             icon={<span>{item.icon}</span>}
-            onClick={item?.onClick}
+            onClick={headerActionMethods[item.key]}
           >
             {intl.formatMessage({ id: item.label })}
           </Button>

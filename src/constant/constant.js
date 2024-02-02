@@ -345,3 +345,9 @@ export const ZOOM_CONSTANT = {
 export const NUMBER_OF_CHIPS_TO_BE_SHOWN = 2;
 
 export const ROTATE_IMAGE_BY = 90;
+
+export const INITIAL_PASSWORD_DATA = {
+  old_password: "",
+  new_password: "",
+  confirm_password: "",
+};

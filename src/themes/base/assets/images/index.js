@@ -52,6 +52,7 @@ import smallCircularEditBtn from "./small edit circular button.svg";
 import rotateIcon from "./rotate-Icon.svg";
 import minusCircleBlue from "./minus-cirlce-blue.svg";
 import addCircleBlue from "./add-circle-blue.svg";
+import publicLogoWhite from "./public_logo_white_transparent.svg";
 
 const images = {
   addCircle,
@@ -108,6 +109,7 @@ const images = {
   rotateIcon,
   addCircleBlue,
   minusCircleBlue,
+  publicLogoWhite,
 };
 
 export default images;

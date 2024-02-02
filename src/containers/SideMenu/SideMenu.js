@@ -56,7 +56,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
     const pathSegments = location.pathname.split("/");
     const select = `/${pathSegments[1]}`;
     setSelectedKey(select);
-  }, [userProfileDetails]);
+  }, [userProfileDetails, navigate]);
 
   return (
     <ConfigProvider
@@ -125,22 +125,27 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
           </Base>
 
           {selectedModule && (
-            <Menu
-              className={styles.sideMenuOptionsContainer}
-              theme="dark"
-              defaultSelectedKeys={selectedKey}
-              mode="inline"
-              items={updateLabelsForIntl(selectedModule.children, selectedKey)}
-              expandIcon={<></>}
-              openKeys={accessibleModules?.map((module) => module?.key)}
-              onSelect={handleOnClickMenuItem}
-              selectedKeys={selectedKey}
-            />
+            <div className={styles.menuItemsContainer}>
+              <Menu
+                className={styles.sideMenuOptionsContainer}
+                theme="dark"
+                defaultSelectedKeys={selectedKey}
+                mode="inline"
+                items={updateLabelsForIntl(
+                  selectedModule.children,
+                  selectedKey
+                )}
+                expandIcon={<></>}
+                openKeys={accessibleModules?.map((module) => module?.key)}
+                onSelect={handleOnClickMenuItem}
+                selectedKeys={selectedKey}
+              />
+            </div>
           )}
         </div>
         <div>
           <Space className={styles.imageItemLogo}>
-            <CaIndiaLogo />
+            <CaIndiaLogo className={styles.width40} />
           </Space>
           <Space
             className={styles.sideMenuBottomSection}

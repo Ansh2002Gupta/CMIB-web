@@ -40,3 +40,10 @@ export const setSelectedModule = (payload) => {
     payload,
   };
 };
+
+export const setShowChangePasswordModal = (payload) => {
+  return {
+    type: types.SET_SHOW_CHANGE_PASSWORD_MODAL,
+    payload,
+  };
+};
