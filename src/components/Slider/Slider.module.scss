@@ -1,0 +1,62 @@
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Removes default focus */
+.range:focus {
+  outline: none;
+}
+
+/***** Chrome, Safari, Opera and Edge Chromium styles *****/
+/* slider track */
+.range::-webkit-slider-runnable-track {
+  background-color: var(--textBold, #000833);
+  border-radius: 0.5rem;
+  height: 0.4rem;
+}
+
+/* slider thumb */
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -5px;
+  box-shadow: 0px 0px 0px 2px var(--blue5, rgba(63, 81, 181, 0.16));
+  background-color: var(--textPrimary, #fff);
+  width: 1rem;
+  height: 1rem;
+  border-radius: 100%;
+}
+
+/******** Firefox styles ********/
+/* slider track */
+.range::-moz-range-track {
+  background-color: var(--textBold, #000833);
+  border-radius: 0.5rem;
+  height: 0.4rem;
+}
+
+/* slider thumb */
+.range::-moz-range-thumb {
+  border: none;
+  background-color: var(--textPrimary, #fff);
+  height: 1rem;
+  width: 1rem;
+  box-shadow: 0px 0px 0px 2px var(--blue5, rgba(63, 81, 181, 0.16));
+}
+
+.controls:hover input[type="range"]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px 8px var(--blueOne);
+}
+
+.controls:hover input[type="range"]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px 8px var(--blueOne);
+}

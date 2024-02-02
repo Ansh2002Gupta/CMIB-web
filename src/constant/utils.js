@@ -148,6 +148,16 @@ export const getErrorText = (errorText) => {
   return GENERIC_ERROR_MESSAGE;
 };
 
+export const getImageSource = (uploadedImage) => {
+  if (uploadedImage && typeof uploadedImage === "string") {
+    return uploadedImage;
+  }
+  if (uploadedImage) {
+    return URL.createObjectURL(uploadedImage);
+  }
+  return "";
+};
+
 export const convertPermissionFilter = (roles) => {
   let result = [
     {

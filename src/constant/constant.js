@@ -337,6 +337,16 @@ export const SORT_PROPERTIES = {
 
 export const GENERIC_ERROR_MESSAGE = "Placeholder text";
 
+export const ZOOM_CONSTANT = {
+  MAX_ZOOM: 3,
+  MIN_ZOOM: 1,
+  ZOOM_STEP: 0.1,
+};
+
+export const NUMBER_OF_CHIPS_TO_BE_SHOWN = 2;
+
+export const ROTATE_IMAGE_BY = 90;
+
 export const INITIAL_PASSWORD_DATA = {
   old_password: "",
   new_password: "",
