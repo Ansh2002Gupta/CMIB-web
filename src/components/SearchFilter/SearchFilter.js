@@ -147,7 +147,7 @@ const SearchFilter = ({
                       >
                         <div className={styles.filterTextAndCheckContainer}>
                           <Image src={getCheckBoxes()} preview={false} />
-                          <Typography className={styles.filterOptionText}>
+                          <Typography className={styles.leftFilterOptionText}>
                             {item.name}
                           </Typography>
                         </div>

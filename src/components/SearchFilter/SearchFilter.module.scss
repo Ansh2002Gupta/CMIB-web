@@ -74,6 +74,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.leftFilterOptionText {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  white-space: nowrap;
+  width: 10vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .filterSecondLevelOption {
   display: flex;
@@ -138,5 +147,17 @@
 @media screen and (max-width: 900px) and (min-width: 510px) {
   .cardParentContainer {
     left: -100px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .filterContainer {
+    min-width: 60vw;
+  }
+  .filterOptionText {
+    width: 28vw;
+  }
+  .leftFilterOptionText {
+    width: 19vw;
   }
 }

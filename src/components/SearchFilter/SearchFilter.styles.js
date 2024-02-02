@@ -13,12 +13,12 @@ export const classes = {
   },
   filterLeftSectionMobile: {
     borderRight: variables.borderLight,
-    flex: 1,
+    flex: 2,
     maxHeight: "60vw",
     overflowX: "scroll",
   },
   filterRightSectionMobile: {
-    flex: 1,
+    flex: 3,
     maxHeight: "60vw",
     overflowX: "scroll",
   },

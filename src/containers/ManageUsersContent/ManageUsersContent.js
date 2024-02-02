@@ -13,6 +13,7 @@ import { Alert, Button, Image, Input, Spin, Typography, message } from "antd";
 import { ThemeContext } from "core/providers/theme";
 
 import DataTable from "../../components/DataTable";
+import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import SearchFilter from "../../components/SearchFilter";
 import useListingUsers from "../../services/api-services/Users/useListingUsers";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -348,22 +349,10 @@ const ManageUsersContent = () => {
           )}
         {errorWhileFetchingUsers && (
           <div className={styles.errorContainer}>
-            <Alert
-              type="error"
-              message="Error"
-              className={styles.alertBox}
-              description={
-                <div className={styles.errorTextContainer}>
-                  <Typography className={styles.errorText}>
-                    {errorWhileFetchingUsers}
-                  </Typography>
-                  <Button onClick={() => fetchUsers(10, 1)}>
-                    {intl.formatMessage({
-                      id: "label.tryAgain",
-                    })}
-                  </Button>
-                </div>
-              }
+            <ErrorMessageBox
+              onRetry={() => fetchUsers(10, 1)}
+              errorText={errorWhileFetchingUsers}
+              errorHeading={intl.formatMessage({ id: "label.error" })}
             />
           </div>
         )}
