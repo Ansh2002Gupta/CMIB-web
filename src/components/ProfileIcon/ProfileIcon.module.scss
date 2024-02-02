@@ -70,6 +70,7 @@
     min-width: var(--width_70, 70px);
     min-height: var(height_70, 70px);
   }
+
   .modalProfileImage {
     min-width: var(--width_80, 80px);
     max-width: var(--width_80, 80px);
@@ -77,15 +78,18 @@
     min-height: var(--height_80, 80px);
     margin-bottom: 12px;
   }
+
   .profileImageStyle {
     min-width: var(--width_100, 100px);
     max-width: var(--width_100, 100px);
     min-height: var(--height_100, 100px);
     max-height: var(--height_100, 100px);
   }
+
   .editProfileContainer {
     margin-top: var(--margin_20, 20px);
   }
+  
   .circularContainer {
     width: var(--width_90, 90px);
     height: var(--height_90, 90px);

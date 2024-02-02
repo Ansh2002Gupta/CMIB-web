@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import styles from "./Slider.module.css";
+import styles from "./Slider.module.scss";
 
 const Slider = ({ maximumValue, minimumValue, onChange, step, value }) => {
   return (

@@ -6,10 +6,10 @@ import { ThemeContext } from "core/providers/theme";
 
 import Slider from "../Slider";
 import { ZOOM_CONSTANT } from "../../constant/constant";
-import { classes } from "./ZoomSliderWithInfo.style";
+import styles from "./ZoomSliderWithInfo.module.scss";
 
 const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
-  const {getImage} = useContext(ThemeContext);
+  const { getImage } = useContext(ThemeContext);
 
   const zoomPercentage = Math.floor(
     ((zoom - ZOOM_CONSTANT.MIN_ZOOM) /
@@ -34,18 +34,18 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
   };
 
   return (
-    <div style={classes.zoomInfoContainer}>
-      <div style={classes.sliderBox}>
+    <div className={styles.zoomInfoContainer}>
+      <div className={styles.sliderBox}>
         <Image
           src={getImage("minusCircleBlue")}
           alt="Zoom out"
           width={24}
           height={24}
-          style={classes.zoomIcon}
+          className={styles.zoomIcon}
           onClick={zoomOutHandler}
           preview={false}
-          />
-        <div style={classes.zoomSlider}>
+        />
+        <div className={styles.zoomSlider}>
           <Slider
             maximumValue={ZOOM_CONSTANT.MAX_ZOOM}
             minimumValue={ZOOM_CONSTANT.MIN_ZOOM}
@@ -59,13 +59,13 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
           alt="Zoom in"
           width={24}
           height={24}
-          style={classes.zoomIcon}
+          className={styles.zoomIcon}
           onClick={zoomInHandler}
           preview={false}
         />
       </div>
       <Typography
-        style={classes.percentageText}
+        className={styles.percentageText}
       >{`${zoomPercentage}%`}</Typography>
     </div>
   );

@@ -4,11 +4,12 @@ import { Outlet } from "react-router-dom";
 import { Layout } from "antd";
 
 import CommonModal from "../components/CommonModal";
+import EditProfile from "../containers/EditProfile";
 import ModuleChange from "../containers/ModuleChange";
 import MainLayout from "../layouts/MainLayout";
 import MenuContainer from "../containers/Menu/Menu";
 import HeaderContainer from "../containers/Header";
-import ModalComponents from "../components/ModalComponents";
+import ViewProfileDetails from "../containers/ViewProfileDetails";
 import styles from "./CommonStyles/commonModalStyles.module.scss";
 import useShowNotification from "../core/hooks/useShowNotification";
 
@@ -55,12 +56,10 @@ function Home({ noOuterPadding }) {
         customContainerStyles={styles.customContainerStyles}
       >
         {currentOpenendModal === 1 && (
-          <ModalComponents.ViewProfileModal
-            {...{ setCurrentOpenModal, showNotification }}
-          />
+          <ViewProfileDetails {...{ setCurrentOpenModal, showNotification }} />
         )}
         {currentOpenendModal >= 3 && (
-          <ModalComponents.ChangeProfileModal
+          <EditProfile
             {...{ setCurrentOpenModal, currentOpenendModal, showNotification }}
           />
         )}
