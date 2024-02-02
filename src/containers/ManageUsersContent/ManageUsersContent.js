@@ -21,7 +21,11 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import { convertPermissionFilter } from "../../constant/utils";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import {
+  getValidPageNumber,
+  getValidPageSize,
+  getValidFilter,
+} from "../../constant/utils";
 import { ADMIN_ROUTE, ROLES_PERMISSION } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
@@ -51,9 +55,7 @@ const ManageUsersContent = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const [filterArray, setFilterArray] = useState(
-    JSON.parse(
-      decodeURIComponent(searchParams.get(PAGINATION_PROPERTIES.FILTER) || "[]")
-    )
+    getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
   );
   const [searchedValue, setSearchedValue] = useState(
     searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
