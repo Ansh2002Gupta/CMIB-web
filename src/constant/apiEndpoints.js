@@ -19,6 +19,7 @@ export const LOGOUT_END_POINT = "/logout";
 export const QUERIES_LIST = "/queries";
 export const PROFILE_END_POINT = "/profile";
 export const RESET_ADMIN_PASSWORD = "/reset-password/confirm";
+export const ROLES_PERMISSION = "/roles-permissions";
 export const SEND_OTP = "/reset-password/request";
 export const TICKET_LIST = "/tickets";
 export const USERS_END_POINT = "/users";
