@@ -124,7 +124,6 @@ const useRenderColumn = () => {
 
     renderText?.visible &&
       (columnObject.render = (text, rowData) => {
-        console.log(rowData, "rowData..");
         return {
           props: {
             className: styles.tableCellStyles,
