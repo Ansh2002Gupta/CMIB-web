@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 // will be replaced by view component injected through route
-import { Outlet } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import { Layout } from "antd";
 
 import CommonModal from "../components/CommonModal";
@@ -16,8 +16,11 @@ import styles from "./CommonStyles/commonModalStyles.module.scss";
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
+  const [serahcParams, setSearchParams] = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userProfileDetails,] = useContext(UserProfileContext);
+  const [userProfileDetails, userProfileDispatch] =
+    useContext(UserProfileContext);
+  const userModalParams = serahcParams.get("userProfileisOpen") == "open"|| 0;
   const { currentlyOpenedUserProfileModal } = userProfileDetails;
   const { showNotification, notificationContextHolder } = useShowNotification();
 
