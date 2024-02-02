@@ -135,8 +135,8 @@
   width: 22px;
 }
 
-@media screen and (max-width: 1279px) {
-  .filterOptionContainer {
-    flex-direction: column;
+@media screen and (max-width: 900px) and (min-width: 510px) {
+  .cardParentContainer {
+    left: -100px;
   }
 }
