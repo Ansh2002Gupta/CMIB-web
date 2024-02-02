@@ -1,0 +1,98 @@
+.initialsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bodyBg, #fff);
+  border-radius: var(--radius_50Per, 50%);
+  border-width: 0.5px;
+  border-color: var(--borderColor, #ccd0e5);
+  position: relative;
+  border: var(--width_10, 10px) solid var(--bodyBg, #fff);
+}
+
+.editProfileContainer {
+  align-self: center;
+  margin-top: var(--margin_60, 60px);
+}
+
+.profileImageStyle {
+  min-width: var(--width_120, 120px);
+  max-width: var(--width_120, 120px);
+  min-height: var(--height_120, 120px);
+  max-height: var(--height_120, 120px);
+  border-radius: var(--radius_50Per, 50%);
+}
+
+.modalProfileImage {
+  border-radius: var(--radius_50Per, 50%);
+  min-height: var(--height_100, 100px);
+  max-height: var(--height_100, 100px);
+  min-width: var(--width_100, 100px);
+  max-width: var(--width_100, 100px);
+}
+
+.initialsText {
+  font-size: var(--fontSizeSmall, 14px);
+  min-width: var(--width_130, 130px);
+}
+
+.iconContainer {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+}
+
+.editIcon {
+  bottom: 100px;
+  right: 0;
+  cursor: pointer;
+}
+
+.initials {
+  font-size: var(--fontSizeHeading, 32px);
+  border-radius: var(--radius_50Per, 50%);
+  border: 1px solid var(--textBold);
+  padding: var(--paddingMedium, 24px) var(--padding_30, 30px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circularContainer {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid var(--blackBg, black);
+}
+
+@media (max-width: 551px) {
+  .profileImageStyle {
+    min-width: var(--width_70, 70px);
+    min-height: var(height_70, 70px);
+  }
+
+  .modalProfileImage {
+    min-width: var(--width_80, 80px);
+    max-width: var(--width_80, 80px);
+    max-height: var(--height_80, 80px);
+    min-height: var(--height_80, 80px);
+    margin-bottom: 12px;
+  }
+
+  .profileImageStyle {
+    min-width: var(--width_100, 100px);
+    max-width: var(--width_100, 100px);
+    min-height: var(--height_100, 100px);
+    max-height: var(--height_100, 100px);
+  }
+
+  .editProfileContainer {
+    margin-top: var(--margin_20, 20px);
+  }
+  
+  .circularContainer {
+    width: var(--width_90, 90px);
+    height: var(--height_90, 90px);
+    margin-bottom: 12px;
+  }
+}

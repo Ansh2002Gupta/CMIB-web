@@ -35,3 +35,7 @@
   font-weight: var(--fontWeightMedium) !important;
   font-size: var(--fontSizeSmall) !important;
 }
+/* For preventing unnecessary scroll from modal */
+.ant-modal-root .ant-modal-wrap {
+  overflow: unset !important;
+}

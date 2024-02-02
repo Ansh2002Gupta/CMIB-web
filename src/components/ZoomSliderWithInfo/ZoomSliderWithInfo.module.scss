@@ -1,0 +1,29 @@
+.zoomInfoContainer {
+  margin-top: var(--margin_32, 32px);
+  display: flex;
+  align-items: center;
+  gap: var(--gapXSmall, 8px);
+  width: 100%;
+}
+
+.sliderBox {
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  display: flex;
+  gap: var(--gapXSmall, 8px);
+}
+
+.zoomIcon {
+  cursor: pointer;
+  width: var(--width_24, 24px);
+  height: var(--height_24, 24px);
+}
+
+.zoomSlider {
+  flex: 1;
+}
+
+.percentageText {
+  font-size: var(--fontSizeSmall, 14px);
+}

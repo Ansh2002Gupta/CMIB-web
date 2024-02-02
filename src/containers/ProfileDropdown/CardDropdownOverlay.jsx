@@ -7,9 +7,11 @@ import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/log
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
+  setUserProfileModalNumber,
 } from "../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import headerActionItems from "../../constants/headerActionItems";
+
 import styles from "./profileDropdown.module.scss";
 
 export default function CardDropdownOverlay({
@@ -30,6 +32,10 @@ export default function CardDropdownOverlay({
     changePassword: () => {
       setDropdownVisible(false);
       userProfileDispatch(setShowChangePasswordModal(true));
+    },
+    viewProfile: () => {
+      setDropdownVisible(false);
+      userProfileDispatch(setUserProfileModalNumber(1));
     },
   };
 
@@ -68,16 +74,16 @@ export default function CardDropdownOverlay({
       ]}
     >
       <Space className={styles.profileList} size="small" direction="vertical">
-        {headerActionItems.map((item) => (
+        {headerActionItems?.map((item) => (
           <Button
             key={item?.id}
             className={styles.menuBtn}
             type="text"
             block
             icon={<span>{item.icon}</span>}
-            onClick={headerActionMethods[item.key]}
+            onClick={headerActionMethods[item?.key]}
           >
-            {intl.formatMessage({ id: item.id })}
+            {intl.formatMessage({ id: item?.id })}
           </Button>
         ))}
       </Space>

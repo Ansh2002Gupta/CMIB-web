@@ -11,7 +11,6 @@ import CustomButton from "../CustomButton";
 import useOutSideClick from "../../core/hooks/useOutSideClick";
 import { classes } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
-import { responsiveArray } from "antd/es/_util/responsiveObserver";
 
 const SearchFilter = ({
   filterArray,
@@ -39,7 +38,7 @@ const SearchFilter = ({
   }
   const allOptionId = getAllOptionIds(filterPropertiesArray);
 
-  const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
+  const [currentFilterStatus, setCurrentFilterStatus] = useState(filterArray);
   const elementNotConsideredInOutSideClick = useRef();
 
   const { wrapperRef } = useOutSideClick({

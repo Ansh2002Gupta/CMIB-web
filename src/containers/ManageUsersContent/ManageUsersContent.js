@@ -21,7 +21,11 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import { convertPermissionFilter } from "../../constant/utils";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import {
+  getValidPageNumber,
+  getValidPageSize,
+  getValidFilter,
+} from "../../constant/utils";
 import { ADMIN_ROUTE, ROLES_PERMISSION } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
@@ -49,7 +53,10 @@ const ManageUsersContent = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
   const [showFilters, setShowFilters] = useState(false);
-  const [filterArray, setFilterArray] = useState([]);
+
+  const [filterArray, setFilterArray] = useState(
+    getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
+  );
   const [searchedValue, setSearchedValue] = useState(
     searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
@@ -84,7 +91,6 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    //fetchUsers(size, 1, searchedValue, filterArray);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -93,7 +99,6 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    //fetchUsers(pageSize, newPageNumber, searchedValue, filterArray);
   };
 
   const handleOnUserSearch = (event) => {
@@ -264,7 +269,7 @@ const ManageUsersContent = () => {
       });
       setCurrent(1);
     }
-  }, [metaData?.total, metaData?.perPage, filterArray]);
+  }, [metaData?.total, metaData?.perPage]);
 
   useEffect(() => {
     if (errorWhileUpdatingUserData) {
@@ -283,6 +288,11 @@ const ManageUsersContent = () => {
       searchedValue.length > 2 ? searchedValue : "",
       filterArray
     );
+    let arrayAsString = JSON.stringify(filterArray);
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
+      return prev;
+    });
   }, [filterArray, current, pageSize]);
 
   useEffect(() => {
