@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import moment from "moment";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
@@ -179,7 +179,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       render: (text, record) => (
         <CustomDateTimePicker
           customContainerStyles={styles.customDateContainerStyles}
-          value={text?.scheduleDate ? moment(text?.scheduleDate) : null}
+          value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
           type="date"
           disabled={record.isAddRow ? false : true}
           onChange={(val, dateString) => {

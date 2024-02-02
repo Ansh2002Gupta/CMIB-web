@@ -1,6 +1,6 @@
 import addCircle from "./addCircle.svg";
 import arrowDown from "./arrow-down.svg";
-import arrowDownDarkGrey from "./arrow-down-dark-grey.svg"
+import arrowDownDarkGrey from "./arrow-down-dark-grey.svg";
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import Building from "./Building.svg";
@@ -14,7 +14,8 @@ import editDark from "./editDark.svg";
 import dummyPerson from "./dummy person image.png";
 import errorIcon from "./error icon.svg";
 import eye from "./eye.svg";
-import eyeHidden from "./eyeHidden.svg"
+import eyeHidden from "./eyeHidden.svg";
+import featuredIcon from "./featured-icon.svg"
 import filter from "./filter.svg";
 import g20 from "./G20.svg";
 import gloPac from "./GloPac.svg";
@@ -36,7 +37,7 @@ import unCheckedBox from "./unCheckedBox.svg";
 import uploadIcon from "./Upload icon.svg";
 import addIcon from "./add.png";
 import editIcon from "./edit.png";
-import TempCompanyLogo from './TempCompanyLogo.svg'
+import TempCompanyLogo from "./TempCompanyLogo.svg";
 import publicFooter from "./PublicFooter.svg";
 import flagOnPedestal from "./flag on pedestal.svg";
 import global from "./global.svg";
@@ -46,6 +47,7 @@ import suiteCase from "./suite-case.svg";
 import woman from "./Woman.svg";
 import cross from "./cross.svg";
 import blueCheckSign from "./blue-check-sign.svg";
+import publicLogoWhite from "./public_logo_white_transparent.svg";
 
 const images = {
   addCircle,
@@ -65,6 +67,7 @@ const images = {
   errorIcon,
   eye,
   eyeHidden,
+  featuredIcon,
   filter,
   g20,
   gloPac,
@@ -96,6 +99,7 @@ const images = {
   woman,
   cross,
   blueCheckSign,
+  publicLogoWhite,
 };
 
 export default images;

@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import moment from "moment";
+import dayjs from "dayjs";
 import { DatePicker, Typography, Descriptions, Switch } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
@@ -9,6 +9,7 @@ import { TwoRow } from "../../core/layouts";
 import CheckBoxList from "../CheckBoxList";
 import Chip from "../../components/Chip/Chip";
 import CustomInput from "../../components/CustomInput";
+import { formatDate } from "../../constant/utils";
 import useResponsive from "../../core/hooks/useResponsive";
 import { ALLOWED_MOBILE_PREFIXES } from "../../constant/constant";
 import styles from "./UserInfo.module.scss";
@@ -28,6 +29,7 @@ const UserInfo = ({
   name,
   permissions,
   roles,
+  status,
   setIsAccessValid,
   shouldShowDatePickerOption,
   updateUserData,
@@ -37,14 +39,15 @@ const UserInfo = ({
   const responsive = useResponsive();
 
   const getValuesInChips = (arrayOfValues) => {
-    if (arrayOfValues?.length) {
+    if (Object.entries(arrayOfValues).length > 0) {
       return (
         <div className={styles.chipsContainer}>
-          {arrayOfValues?.map((item) => {
+          {Object.entries(arrayOfValues)?.map(([key, value]) => {
             return (
               <Chip
+                key={key}
                 bgColor={styles.chipBg}
-                label={item}
+                label={value.name}
                 textColor={styles.chipText}
               />
             );
@@ -90,19 +93,20 @@ const UserInfo = ({
     {
       key: "4",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.moduleAccess" })
+        intl.formatMessage({ id: "label.status" })
       ),
-      span: 3,
-      children:
-        getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
+      children: intl.formatMessage({
+        id: `label.${status ? "active" : "inactive"}`,
+      }),
     },
     {
       key: "5",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.controlAccessHeading" })
+        intl.formatMessage({ id: "label.twoFactorAuth" })
       ),
-      span: 3,
-      children: getValuesInChips(permissions),
+      children: intl.formatMessage({
+        id: `label.${is_two_factor ? "enabled" : "disabled"}`,
+      }),
     },
     {
       key: "6",
@@ -111,20 +115,32 @@ const UserInfo = ({
           {intl.formatMessage({ id: "label.dateCreatedOn" })}
         </Typography>
       ),
-      children: moment(new Date(date)).format("DD/MM/YYYY"),
+      children: formatDate({ date }),
     },
+  ];
+  let item2 = [
     {
       key: "7",
       label: getTextWithIsRequiredStart(
-        intl.formatMessage({ id: "label.twoFactorAuth" })
+        intl.formatMessage({ id: "label.access" })
       ),
-      children: intl.formatMessage({
-        id: `label.${is_two_factor ? "on" : "off"}`,
-      }),
+      span: 3,
+      children:
+        getValuesInChips(roles) || intl.formatMessage({ id: "label.none" }),
+    },
+  ];
+  let item3 = [
+    {
+      key: "8",
+      label: getTextWithIsRequiredStart(
+        intl.formatMessage({ id: "label.controlAccessHeading" })
+      ),
+      span: 3,
+      children: getValuesInChips(permissions),
     },
   ];
 
-  items = items?.filter((val) => val.children);
+  item3 = item3?.filter((val) => val.children);
 
   return (
     <>
@@ -136,6 +152,8 @@ const UserInfo = ({
             layout="vertical"
             items={items}
           />
+          <Descriptions colon={false} layout="vertical" items={item2} />
+          <Descriptions colon={false} layout="vertical" items={item3} />
         </div>
       )}
       {isEditable && (
@@ -229,7 +247,7 @@ const UserInfo = ({
                       updateUserData("date", dateString)
                     }
                     className={[styles.text, styles.input].join(" ")}
-                    defaultValue={moment(date).format("YYYY-MM-DD")}
+                    defaultValue={dayjs(date)}
                     disabled={isDateDisable || !isEditable}
                     customInputStyles={[styles.text, styles.input].join(" ")}
                     customLabelStyles={styles.label}

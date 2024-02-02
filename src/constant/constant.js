@@ -148,6 +148,7 @@ export const PAGINATION_PROPERTIES = {
   CURRENT_PAGE: "current-page",
   ROW_PER_PAGE: "row-per-page",
   SEARCH_QUERY: "search-query",
+  FILTER: "filter",
 };
 
 //TODO:need to implement it using api
@@ -335,3 +336,9 @@ export const SORT_PROPERTIES = {
 };
 
 export const GENERIC_ERROR_MESSAGE = "Placeholder text";
+
+export const INITIAL_PASSWORD_DATA = {
+  old_password: "",
+  new_password: "",
+  confirm_password: "",
+};
