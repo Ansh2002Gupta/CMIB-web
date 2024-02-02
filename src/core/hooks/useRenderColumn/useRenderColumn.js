@@ -65,6 +65,7 @@ const useRenderColumn = () => {
       isTypeDate,
       textStyles,
       isCapitalize,
+      mobile,
     } = renderText;
 
     const {
@@ -122,12 +123,27 @@ const useRenderColumn = () => {
     render && (columnObject.render = render);
 
     renderText?.visible &&
-      (columnObject.render = (text) => {
+      (columnObject.render = (text, rowData) => {
         return {
           props: {
             className: styles.tableCellStyles,
           },
-          children: (
+          children: mobile ? (
+            <p
+              className={[
+                textStyles,
+                isTextBold ? styles.boldText : "",
+                styles.textEllipsis,
+                isCapitalize ? styles.capitalize : "",
+              ].join(" ")}
+            >
+              {`${
+                rowData?.mobile_country_code
+                  ? rowData?.mobile_country_code
+                  : "+91"
+              }-${text}`}
+            </p>
+          ) : (
             <p
               className={[
                 textStyles,

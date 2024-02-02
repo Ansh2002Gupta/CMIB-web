@@ -8,11 +8,12 @@ import React, {
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
-import { Alert, Button, Image, Input, Spin, Typography, message } from "antd";
+import { Image, Input, Spin, message } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
 import DataTable from "../../components/DataTable";
+import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import SearchFilter from "../../components/SearchFilter";
 import useListingUsers from "../../services/api-services/Users/useListingUsers";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -49,7 +50,9 @@ const ManageUsersContent = () => {
   );
   const [showFilters, setShowFilters] = useState(false);
   const [filterArray, setFilterArray] = useState([]);
-  const [searchedValue, setSearchedValue] = useState("");
+  const [searchedValue, setSearchedValue] = useState(
+    searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
+  );
   const [currentDataLength, setCurrentDataLength] = useState(0);
 
   const {
@@ -81,7 +84,7 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    fetchUsers(size, 1, searchedValue, filterArray);
+    //fetchUsers(size, 1, searchedValue, filterArray);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -90,21 +93,33 @@ const ManageUsersContent = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    fetchUsers(pageSize, newPageNumber, searchedValue, filterArray);
+    //fetchUsers(pageSize, newPageNumber, searchedValue, filterArray);
   };
 
   const handleOnUserSearch = (event) => {
     setSearchedValue(event.target.value);
-    if (event.target.value.length > 2) {
-      debounceSearch(pageSize, current, event.target.value, filterArray);
-    } else {
-      debounceSearch(pageSize, current, "", filterArray);
-    }
+    debounceSearch(
+      pageSize,
+      current,
+      event.target.value.length > 2 ? event.target.value : "",
+      filterArray
+    );
+
     setCurrent(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
+    event.target.value &&
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.SEARCH_QUERY], event.target.value);
+        return prev;
+      });
+    !event.target.value &&
+      setSearchParams((prev) => {
+        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
+        return prev;
+      });
   };
 
   const ChipWithOverflow = ({ textArray, maxChips }) => {
@@ -149,7 +164,7 @@ const ManageUsersContent = () => {
       title: intl.formatMessage({ id: "label.mobileNumber" }),
       dataIndex: "mobile_number",
       key: "mobile_number",
-      renderText: { visible: true, textStyles: styles.tableCell },
+      renderText: { visible: true, textStyles: styles.tableCell, mobile: true },
     }),
     {
       title: () => (
@@ -249,7 +264,7 @@ const ManageUsersContent = () => {
       });
       setCurrent(1);
     }
-  }, [metaData?.total, metaData?.perPage]);
+  }, [metaData?.total, metaData?.perPage, filterArray]);
 
   useEffect(() => {
     if (errorWhileUpdatingUserData) {
@@ -264,11 +279,11 @@ const ManageUsersContent = () => {
   useEffect(() => {
     fetchUsers(
       pageSize,
-      searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE),
-      searchedValue,
+      current,
+      searchedValue.length > 2 ? searchedValue : "",
       filterArray
     );
-  }, [filterArray]);
+  }, [filterArray, current, pageSize]);
 
   useEffect(() => {
     return () => {
@@ -334,22 +349,10 @@ const ManageUsersContent = () => {
           )}
         {errorWhileFetchingUsers && (
           <div className={styles.errorContainer}>
-            <Alert
-              type="error"
-              message="Error"
-              className={styles.alertBox}
-              description={
-                <div className={styles.errorTextContainer}>
-                  <Typography className={styles.errorText}>
-                    {errorWhileFetchingUsers}
-                  </Typography>
-                  <Button onClick={() => fetchUsers(10, 1)}>
-                    {intl.formatMessage({
-                      id: "label.tryAgain",
-                    })}
-                  </Button>
-                </div>
-              }
+            <ErrorMessageBox
+              onRetry={() => fetchUsers(10, 1)}
+              errorText={errorWhileFetchingUsers}
+              errorHeading={intl.formatMessage({ id: "label.error" })}
             />
           </div>
         )}

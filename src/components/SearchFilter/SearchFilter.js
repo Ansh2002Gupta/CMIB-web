@@ -5,11 +5,13 @@ import { ThemeContext } from "core/providers/theme";
 import { Button, Card, Image, Typography } from "antd";
 
 import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
+import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomButton from "../CustomButton";
 import useOutSideClick from "../../core/hooks/useOutSideClick";
 import { classes } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
+import { responsiveArray } from "antd/es/_util/responsiveObserver";
 
 const SearchFilter = ({
   filterArray,
@@ -20,6 +22,7 @@ const SearchFilter = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
+  const responsive = useResponsive();
 
   function getAllOptionIds(data) {
     const optionIds = [];
@@ -119,7 +122,16 @@ const SearchFilter = ({
               // TODO: Srujan will be working on the responsive designs of the filters hence do not touch it much
               isLeftFillSpace
               isRightFillSpace
-              leftSectionStyle={classes.filterLeftSectionBorder}
+              leftSectionStyle={
+                responsive.isMd
+                  ? classes.leftSectionStyle
+                  : classes.filterLeftSectionMobile
+              }
+              rightSectionStyle={
+                responsive.isMd
+                  ? classes.rightSectionStyle
+                  : classes.filterRightSectionMobile
+              }
               className={styles.filterOptionContainer}
               leftSection={
                 <div>
@@ -135,7 +147,7 @@ const SearchFilter = ({
                       >
                         <div className={styles.filterTextAndCheckContainer}>
                           <Image src={getCheckBoxes()} preview={false} />
-                          <Typography className={styles.filterOptionText}>
+                          <Typography className={styles.leftFilterOptionText}>
                             {item.name}
                           </Typography>
                         </div>

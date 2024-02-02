@@ -11,5 +11,28 @@ export const classes = {
     color: variables.textBold,
     fontWeight: variables.fontWeightBold,
   },
-  filterLeftSectionBorder: { borderRight: variables.borderLight },
+  filterLeftSectionMobile: {
+    borderRight: variables.borderLight,
+    flex: 2,
+    maxHeight: "60vw",
+    overflowX: "scroll",
+  },
+  filterRightSectionMobile: {
+    flex: 3,
+    maxHeight: "60vw",
+    overflowX: "scroll",
+  },
+  leftSectionStyle: {
+    borderRight: variables.borderLight,
+    flex: 1,
+    maxHeight: "20vw",
+    overflowX: "scroll",
+    minWidth: "15vw",
+  },
+  rightSectionStyle: {
+    flex: 1,
+    maxHeight: "20vw",
+    overflowX: "scroll",
+    minWidth: "15vw",
+  },
 };
