@@ -352,8 +352,3 @@ export const INITIAL_PASSWORD_DATA = {
   new_password: "",
   confirm_password: "",
 };
-
-export const SORT_VALUES = {
-  ASCENDING: "asc",
-  DESCENDING: "desc",
-};
