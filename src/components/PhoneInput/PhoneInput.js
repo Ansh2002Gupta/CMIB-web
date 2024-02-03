@@ -84,7 +84,6 @@ const PhoneInput = ({
           ))}
         </Select>
         <Input
-          ref={isSuffixRequiredForPassword ? inputFieldRef : null}
           type={"number"}
           className={[
             styles.inputField,

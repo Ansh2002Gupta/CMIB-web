@@ -223,7 +223,7 @@ const UserDetailsContent = ({
 };
 
 UserDetailsContent.defaultProps = {
-  countryData: {},
+  countryData: [],
   currentFormState: "",
   errorWhileGettingUsersData: "",
   getUserData: () => {},
@@ -245,7 +245,7 @@ UserDetailsContent.defaultProps = {
 };
 
 UserDetailsContent.propTypes = {
-  countryData: PropTypes.object,
+  countryData: PropTypes.array,
   currentFormState: PropTypes.string,
   errorWhileGettingUsersData: PropTypes.string,
   getUserData: PropTypes.func,

@@ -131,7 +131,7 @@ CheckBoxList.defaultProps = {
 };
 
 CheckBoxList.propTypes = {
-  rolesData: PropTypes.Object,
+  rolesData: PropTypes.object,
   setIsAccessValid: PropTypes.func,
   selectedControls: PropTypes.array,
   selectedModules: PropTypes.array,
