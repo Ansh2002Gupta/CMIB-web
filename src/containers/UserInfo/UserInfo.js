@@ -10,6 +10,7 @@ import CustomCheckBox from "../../components/CustomCheckBox";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
 import CustomInput from "../../components/CustomInput";
 import CustomSwitch from "../../components/CustomSwitch/CustomSwitch";
+import PhoneInput from "../../components/PhoneInput/PhoneInput";
 import { formatDate } from "../../constant/utils";
 import useFetch from "../../core/hooks/useFetch";
 import useResponsive from "../../core/hooks/useResponsive";
@@ -205,10 +206,9 @@ const UserInfo = ({
               />
             </div>
             <div>
-              <CustomInput
+              <PhoneInput
                 isError={!!mobileErrorMessage}
                 errorMessage={mobileErrorMessage}
-                type="mobile"
                 label={intl.formatMessage({ id: "label.mobileNumber" })}
                 isRequired
                 value={mobileNo}

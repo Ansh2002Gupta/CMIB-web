@@ -31,7 +31,6 @@ const CustomInput = ({
   messageStyles: customMessageStyles,
   messageToShow,
   min,
-  mobilePrefix,
   onBlur,
   onChange,
   onSelectItem,
@@ -95,105 +94,6 @@ const CustomInput = ({
               disabled={isSelectBoxDisable}
             />
           </>
-        )}
-        {type === "mobile" && (
-          <div className={[styles.formContainer, styles.mobile].join(" ")}>
-            <Select
-              className={[
-                styles.selectInput,
-                customSelectInputStyles,
-                styles.selectOptionsMobileStyles,
-              ].join(" ")}
-              value={mobilePrefix}
-              onChange={(value) => {
-                onSelectItem({ target: { value } });
-              }}
-              disabled={isSelectBoxDisable}
-              optionLabelProp="label"
-            >
-              {selectOptions?.map((country) => (
-                <Select.Option
-                  key={country.dial_code}
-                  value={country.dial_code}
-                  label={
-                    <div>
-                      <img
-                        src={country.flag}
-                        alt={`${country.name} flag`}
-                        style={{
-                          width: "20px",
-                          marginRight: "8px",
-                          verticalAlign: "middle",
-                        }}
-                      />
-                      {country.dial_code}
-                    </div>
-                  }
-                >
-                  <div>
-                    <img
-                      src={country.flag}
-                      alt={`${country.name} flag`}
-                      style={{
-                        width: "20px",
-                        marginRight: "8px",
-                        verticalAlign: "middle",
-                      }}
-                    />
-                    {country.dial_code}
-                  </div>
-                </Select.Option>
-              ))}
-            </Select>
-            <Input
-              ref={isSuffixRequiredForPassword ? inputFieldRef : null}
-              type={"number"}
-              className={[
-                styles.inputField,
-                styles.mobileInput,
-                ,
-                customInputStyles,
-              ].join(" ")}
-              {...{
-                value,
-                placeholder,
-                disabled,
-                onChange,
-              }}
-              prefix={isPrefixRequired ? prefixElement : null}
-              suffix={
-                <>
-                  {isSuffixRequiredForPassword &&
-                    (isTextVisible ? (
-                      <span
-                        className={styles.suffixElement}
-                        onClick={() => {
-                          onSuffixElementClick && restoreCursorPosition();
-                        }}
-                      >
-                        <EyeOutlined />
-                      </span>
-                    ) : (
-                      <span
-                        className={styles.suffixElement}
-                        onClick={() => {
-                          onSuffixElementClick && restoreCursorPosition();
-                        }}
-                      >
-                        <EyeInvisibleOutlined />
-                      </span>
-                    ))}
-                  {SuffixIcon && (
-                    <SuffixIcon
-                      onClick={() => {
-                        onSuffixElementClick && onSuffixElementClick();
-                      }}
-                    />
-                  )}
-                </>
-              }
-            />
-          </div>
         )}
         {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
           <Input
@@ -305,7 +205,6 @@ CustomInput.defaultProps = {
   messageStyles: "",
   messageToShow: "",
   min: 0,
-  mobilePrefix: "+91",
   onBlur: () => {},
   onChange: () => {},
   onSelectItem: () => {},
@@ -342,7 +241,6 @@ CustomInput.propTypes = {
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
-  mobilePrefix: PropTypes.string,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onSelectItem: PropTypes.func,

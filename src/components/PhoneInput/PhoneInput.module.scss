@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: unset;
+}
+
+.inputLabelContainer {
+  display: flex;
+  gap: var(--gapXXSmall);
+  padding-bottom: 4px;
+}
+
+.isRequiredStar {
+  color: var(--requiredStarColor);
+}
+
+.errorText {
+  color: var(--error);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  margin-top: var(--marginSmall);
+  opacity: 0;
+}
+
+.showError {
+  opacity: 1;
+}
+
+.messageText {
+  margin-top: var(--marginSmall);
+}
+
+.formContainer {
+  margin-bottom: 0px;
+}
+
+.inputField {
+  min-width: 100%;
+  color: var(--inputText) !important;
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
+
+  &::placeholder {
+    color: var(--inputPlaceHolder) !important;
+  }
+}
+
+.mobileInput {
+  min-width: auto;
+}
+
+.mobile {
+  display: flex;
+  gap: var(--gapXSmall);
+  background-color: var(--bodyBg);
+}
+
+.selectInput {
+  padding: 0px;
+}
+
+.selectOptionsMobileStyles {
+  min-width: 100px;
+}
