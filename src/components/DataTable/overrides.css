@@ -37,23 +37,3 @@ iframe#webpack-dev-server-client-overlay {
   overflow: auto !important;
 }
 
-.ant-pagination-item-active{
-  border:var(--borderBlue1) !important;
-  background-color: var(--lightBlueBg) !important;
-}
-
-.ant-pagination .ant-pagination-item-active a{
-  color: var(--darkBlue) !important;
-  font-weight: var(--fontWeightMedium);
-  font-size: var(--fontSizeSmall);
-}
-
- .ant-table-thead > tr > th {
-  padding:  var(--paddingMediumSmall) var(--paddingSmall) !important;
-
-}
-
-.ant-table-wrapper .ant-table-thead > tr > th:not(:last-child)::before {
-  content: none !important;
-}
-

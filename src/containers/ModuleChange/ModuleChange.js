@@ -9,8 +9,6 @@ import { ThemeContext } from "core/providers/theme";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { filterMenuData } from "../../constant/utils";
 import { setSelectedModule } from "../../globalContext/userProfile/userProfileActions";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { DASHBOARD } from "../../routes/routeNames";
 import modules from "../SideMenu/sideMenuItems";
 import styles from "./ModuleChange.module.scss";
 import { classes } from "./Module.styles";
@@ -21,14 +19,12 @@ const ModuleChange = ({ setIsModalOpen }) => {
   const userData = userProfileDetails?.userDetails;
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
   const intl = useIntl();
 
   const handleModuleSelect = (item) => {
     setIsModalOpen(false);
     userProfileDispatch(setSelectedModule(item));
-    navigate(DASHBOARD);
   };
   return (
     <TwoRow

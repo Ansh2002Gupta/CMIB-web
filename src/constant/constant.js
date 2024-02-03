@@ -20,6 +20,10 @@ export const STATUS_CODES = {
 
 export const ROW_PER_PAGE_OPTIONS = [
   {
+    value: 2,
+    label: 2,
+  },
+  {
     value: 10,
     label: 10,
   },
@@ -37,7 +41,7 @@ export const ROW_PER_PAGE_OPTIONS = [
   },
 ];
 
-export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
+export const VALID_ROW_PER_OPTIONS = [2, 10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 export const VALID_CONSENT_MARKING_TABS_ID = ["1", "2", "3"];

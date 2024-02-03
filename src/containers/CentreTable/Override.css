@@ -17,7 +17,7 @@
   border: none !important;
 
 }
- .ant-table-tbody > tr:hover > td {
+.customTable .ant-table-tbody > tr:hover > td {
   background-color: transparent !important; 
 }
 
@@ -59,6 +59,7 @@
   opacity: 1 !important; 
   visibility: visible !important; 
 }
+
 
 
 
