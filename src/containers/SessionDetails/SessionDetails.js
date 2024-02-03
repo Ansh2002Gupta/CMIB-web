@@ -11,6 +11,7 @@ import useResponsive from "core/hooks/useResponsive";
 import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
+import { convertdateToStringDate } from "../../constant/utils";
 import { FIELDS } from "./sessionFieldDetails";
 import { SESSION_DETAILS } from "../../dummyData";
 import { classes } from "./SessionDetails.styles";
@@ -25,6 +26,35 @@ const SessionDetails = ({ addSession, setAddSession }) => {
   const [formErrors, setFormErrors] = useState({});
   const [edit, setEdit] = useState(addSession);
   const [formData, setFormData] = useState(SESSION_DETAILS);
+  const { MonthPicker } = DatePicker;
+
+  const handleMonthChange = (date, dateString) => {
+    if (date) {
+      let updatedMonths = [...formData.examination_session_period];
+      const formattedDate = dayjs(date).format("MMM YYYY");
+      const index = updatedMonths.findIndex((month) => month === formattedDate);
+
+      if (index === -1) {
+        updatedMonths.push(formattedDate);
+      } else {
+        updatedMonths.splice(index, 1);
+      }
+      setFormData({
+        ...formData,
+        examination_session_period: updatedMonths,
+      });
+    }
+  };
+
+  const handleDeselect = (value) => {
+    const updatedMonths = formData.examination_session_period.filter(
+      (month) => month !== value
+    );
+    setFormData({
+      ...formData,
+      examination_session_period: updatedMonths,
+    });
+  };
 
   const fields = FIELDS(
     formData?.name,
@@ -153,22 +183,48 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             value={dayjs(item.value)}
                           />
                         ) : item.id === 4 ? (
-                          //TODO:Replace this component with common component of custom input which contains multiselect
-                          <Select
-                            bordered={false}
-                            size={"large"}
-                            style={classes.multiSelectStyle}
-                            className={styles.multilpleInput}
-                            onChange={(val) => {
-                              handleInputChange(val, item.label);
-                            }}
-                            options={item.selectOptions}
-                            placeholder={intl.formatMessage({
-                              id: `session.placeholder.${item.headingIntl}`,
-                            })}
-                            value={item.value}
-                            mode="multiple"
-                          />
+                          <div>
+                            <MonthPicker
+                              format="YYYY/MM"
+                              className={styles.multilpleInput}
+                              size={"large"}
+                              placeholder={intl.formatMessage({
+                                id: `session.placeholder.${item.headingIntl}`,
+                              })}
+                              onChange={handleMonthChange}
+                              style={classes.multiSelectStyle}
+                              disabledDate={(current) =>
+                                formData.examination_session_period.includes(
+                                  dayjs(current).format("MMM YYYY")
+                                )
+                              }
+                            />
+
+                            <div className={styles.examinationFieldContainer}>
+                              {formData.examination_session_period.map(
+                                (item, index) => {
+                                  return (
+                                    <div
+                                      className={styles.chipContainer}
+                                      key={index}
+                                    >
+                                      <Typography className={styles.chipText}>
+                                        {convertdateToStringDate(item)}
+                                      </Typography>
+                                      <Image
+                                        src={getImage("cross")}
+                                        className={styles.crossIcon}
+                                        preview={false}
+                                        onClick={() => {
+                                          handleDeselect(item);
+                                        }}
+                                      />
+                                    </div>
+                                  );
+                                }
+                              )}
+                            </div>
+                          </div>
                         ) : (
                           <CustomInput
                             value={item.value}

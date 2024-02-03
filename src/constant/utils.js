@@ -13,6 +13,10 @@ export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   return dayjs(new Date()).format(dateFormat);
 };
 
+export const convertdateToStringDate = (date) => {
+  return date;
+};
+
 export const convertStringArrayToObjectOfStringAndIdArray = (
   stringArray,
   arrayOfObjectWithTextAndId
