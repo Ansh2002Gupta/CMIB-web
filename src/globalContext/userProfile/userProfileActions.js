@@ -47,3 +47,16 @@ export const setShowChangePasswordModal = (payload) => {
     payload,
   };
 };
+
+export const setUserProfileModalNumber = (payload) => {
+  return {
+    type: types.SET_USER_PROFILE_MODAL_NUMBER,
+    payload,
+  };
+};
+
+export const closeUserProfileModal = () => {
+  return {
+    type: types.CLOSE_USER_PROFILE_MODAL,
+  };
+};

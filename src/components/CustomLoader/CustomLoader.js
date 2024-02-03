@@ -6,20 +6,21 @@ import { Base } from "../../core/layouts";
 
 import styles from "./CustomLoader.module.scss";
 
-const CustomLoader = ({ customLoaderContainerStyles }) => {
+const CustomLoader = ({ customLoaderContainerStyles, size }) => {
   return (
     <Base
       className={[styles.loadingContainer, customLoaderContainerStyles].join(
         " "
       )}
     >
-      <Spin size="large" />
+      <Spin size={size || "large"} />
     </Base>
   );
 };
 
 CustomLoader.defaultProps = {
   customLoaderContainerStyles: "",
+  size: "",
 };
 
 CustomLoader.propTypes = {
