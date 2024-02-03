@@ -12,8 +12,8 @@ const useUserDetails = () => {
 
   const getUserData = async ({
     userId,
-    onSuccessCallBack,
     onErrorCallBack,
+    onSuccessCallBack,
   }) => {
     setError("");
     setIsLoading(true);

@@ -49,18 +49,11 @@ const useUploadImageApi = () => {
         );
     } catch (err) {
       setImageUploadApiStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileUploadingImage(err.response?.data?.message);
-        onErrorCallback && onErrorCallback(err.response?.data?.message);
-        return;
-      }
-      setErrorWhileUploadingImage(
-        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
-      );
-      onErrorCallback &&
-        onErrorCallback(
-          intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
-        );
+      const errMessage =
+        err.response?.data?.message ||
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" });
+      setErrorWhileUploadingImage(errMessage);
+      onErrorCallback && onErrorCallback(errMessage);
     }
   };
 

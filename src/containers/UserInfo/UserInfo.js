@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Typography, Descriptions } from "antd";
+import { Descriptions, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 

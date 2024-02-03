@@ -54,12 +54,16 @@ const UserDetails = () => {
 
   const { fetchData, data: countryData } = useFetch({
     url: CORE_COUNTRIES,
-    otherOptions: { skipApiCallOnMount: true },
+    otherOptions: {
+      skipApiCallOnMount: currentFormState !== FORM_STATES.EMPTY,
+    },
   });
 
   const { data: rolesData, fetchData: roleFetchDate } = useFetch({
     url: ADMIN_ROUTE + ROLES_PERMISSION,
-    otherOptions: { skipApiCallOnMount: true },
+    otherOptions: {
+      skipApiCallOnMount: currentFormState !== FORM_STATES.EMPTY,
+    },
   });
 
   const {
@@ -210,6 +214,8 @@ const UserDetails = () => {
         bottomSection={
           <UserDetailsContent
             {...{
+              fetchData,
+              roleFetchDate,
               countryData,
               currentFormState,
               updateUserData,

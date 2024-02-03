@@ -18,6 +18,8 @@ import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 
 const UserDetailsContent = ({
+  fetchData,
+  roleFetchDate,
   addNewUser,
   currentFormState,
   countryData,

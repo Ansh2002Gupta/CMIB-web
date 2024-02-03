@@ -22,7 +22,7 @@ const useDeleteImageApi = () => {
       setImageDeleteApiStatus(API_STATUS.LOADING);
       setImageDeleteData(null);
       errorWhileDeletingImage && setErrorWhileDeletingImage("");
-      const url = CORE_ROUTE + "/admin"  + FILES_END_POINT + "/" + fileName;
+      const url = CORE_ROUTE + "/admin" + FILES_END_POINT + "/" + fileName;
       const res = await Http.delete(url);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setImageDeleteApiStatus(API_STATUS.SUCCESS);
@@ -40,18 +40,12 @@ const useDeleteImageApi = () => {
         );
     } catch (err) {
       setImageDeleteApiStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileDeletingImage(err.response?.data?.message);
-        onErrorCallback && onErrorCallback(err.response?.data?.message);
-        return;
-      }
-      setErrorWhileDeletingImage(
-        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
-      );
-      onErrorCallback &&
-        onErrorCallback(
-          intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
-        );
+      const errMessage =
+        err.response?.data?.message ||
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" });
+
+      setErrorWhileDeletingImage(errMessage);
+      onErrorCallback && onErrorCallback(errMessage);
     }
   };
 
