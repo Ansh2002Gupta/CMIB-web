@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Input, Select, Typography } from "antd";
+import { InputNumber, Select, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
@@ -10,15 +10,13 @@ import styles from "./PhoneInput.module.scss";
 const PhoneInput = ({
   customContainerStyles,
   customErrorTextStyles,
-  customInputStyles,
+  customInputNumberStyles,
   customLabelStyles,
   customSelectInputStyles,
   disabled,
   errorMessage,
   isError,
   isRequired,
-  isPrefixRequired,
-  isSuffixRequiredForPassword,
   isSelectBoxDisable,
   label,
   messageStyles: customMessageStyles,
@@ -26,11 +24,8 @@ const PhoneInput = ({
   mobilePrefix,
   onChange,
   onSelectItem,
-  onSuffixElementClick,
   placeholder,
-  prefixElement,
   selectOptions,
-  SuffixIcon,
   value,
 }) => {
   return (
@@ -83,30 +78,16 @@ const PhoneInput = ({
             </Select.Option>
           ))}
         </Select>
-        <Input
-          type={"number"}
-          className={[
-            styles.inputField,
-            styles.mobileInput,
-            ,
-            customInputStyles,
-          ].join(" ")}
+        <InputNumber
+          type="number"
+          controls={false}
+          className={[styles.inputNumberStyles, customInputNumberStyles]}
           {...{
             value,
             placeholder,
-            disabled,
             onChange,
+            disabled,
           }}
-          prefix={isPrefixRequired ? prefixElement : null}
-          suffix={
-            SuffixIcon && (
-              <SuffixIcon
-                onClick={() => {
-                  onSuffixElementClick && onSuffixElementClick();
-                }}
-              />
-            )
-          }
         />
       </div>
       <div>
@@ -136,15 +117,12 @@ const PhoneInput = ({
 PhoneInput.defaultProps = {
   customContainerStyles: "",
   customErrorTextStyles: "",
-  customInputStyles: "",
   customLabelStyles: "",
   customSelectInputStyles: "",
   disabled: false,
   errorMessage: "",
   isError: false,
-  isPrefixRequired: false,
   isRequired: false,
-  isSuffixRequiredForPassword: false,
   isSelectBoxDisable: false,
   label: "",
   messageStyles: "",
@@ -152,26 +130,20 @@ PhoneInput.defaultProps = {
   mobilePrefix: "+91",
   onChange: () => {},
   onSelectItem: () => {},
-  onSuffixElementClick: () => {},
   placeholder: "",
-  prefixElement: null,
   selectOptions: [],
-  SuffixIcon: null,
   value: "",
 };
 
 PhoneInput.propTypes = {
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
-  customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   customSelectInputStyles: PropTypes.string,
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
-  isPrefixRequired: PropTypes.bool,
   isRequired: PropTypes.bool,
-  isSuffixRequiredForPassword: PropTypes.bool,
   isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
   messageStyles: PropTypes.string,
@@ -179,11 +151,8 @@ PhoneInput.propTypes = {
   mobilePrefix: PropTypes.string,
   onChange: PropTypes.func,
   onSelectItem: PropTypes.func,
-  onSuffixElementClick: PropTypes.func,
   placeholder: PropTypes.string,
-  prefixElement: PropTypes.node,
   selectOptions: PropTypes.array,
-  SuffixIcon: PropTypes.node,
   value: PropTypes.string,
 };
 

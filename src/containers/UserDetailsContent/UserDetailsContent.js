@@ -119,7 +119,6 @@ const UserDetailsContent = ({
           {!isLoading && !errorWhileGettingUsersData && (
             <div className={styles.bottomContainer}>
               <UserInfo
-                countryData
                 emailErrorMessage={
                   !isEmailValid
                     ? intl.formatMessage({

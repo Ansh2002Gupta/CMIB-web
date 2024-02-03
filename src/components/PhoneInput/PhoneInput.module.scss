@@ -60,5 +60,20 @@
 }
 
 .selectOptionsMobileStyles {
+  flex: 1;
   min-width: 100px;
+}
+
+.inputNumberStyles {
+  padding-top: var(--paddingExtraSmall);
+  flex: 4;
+  align-items: center;
+  justify-content: center;
+  color: var(--inputText) !important;
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
+
+  &::placeholder {
+    color: var(--inputPlaceHolder) !important;
+  }
 }

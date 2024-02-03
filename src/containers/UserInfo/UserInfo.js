@@ -214,7 +214,9 @@ const UserInfo = ({
                 customInputStyles={[styles.text, styles.input].join(" ")}
                 customSelectInputStyles={[styles.selectInput].join(" ")}
                 customLabelStyles={styles.label}
-                onChange={(e) => updateUserData("mobile", e.target.value)}
+                onChange={(e) => {
+                  updateUserData("mobile", e);
+                }}
                 selectOptions={countryData}
                 defaultSelectValueString="+91"
                 onSelectItem={(e) =>

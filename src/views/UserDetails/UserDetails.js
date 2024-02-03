@@ -95,7 +95,7 @@ const UserDetails = () => {
     key === "name" && setIsUserNameValid(true);
     setErrorWhileUpdatingUserData("");
     if (key === "mobile") {
-      value = value.slice(0, 10);
+      value = value;
     }
     setUserData((prev) => {
       return {
