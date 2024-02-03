@@ -86,6 +86,9 @@ input::placeholder {
 .tableCell {
   min-width: var(--width_100);
 }
+.tableCellDate {
+  min-width: var(--width_120);
+}
 
 .chipsContainer {
   display: flex;

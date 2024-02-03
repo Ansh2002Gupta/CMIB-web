@@ -68,7 +68,6 @@ const SearchFilter = ({
   };
 
   const getCheckBoxes = () => {
-    // TODO: refactor this SearchFilter Component
     if (!currentFilterStatus?.length) {
       return getImage("unCheckedBox");
     }
@@ -87,7 +86,7 @@ const SearchFilter = ({
       >
         <Image src={getImage("filter")} preview={false} />
         <Typography className={styles.filterBtnText}>
-          {intl.formatMessage({ id: "label.filter" })}
+          {intl.formatMessage({ id: "label.filters" })}
         </Typography>
         {filterArray.length > 0 && (
           <div className={styles.countFilterContainerStyle}>
@@ -103,7 +102,7 @@ const SearchFilter = ({
           ref={elementNotConsideredInOutSideClick}
         >
           <Card
-            title={intl.formatMessage({ id: "label.filter" })}
+            title={intl.formatMessage({ id: "label.filters" })}
             className={styles.filterContainer}
             headStyle={classes.filterHeaderText}
             extra={
