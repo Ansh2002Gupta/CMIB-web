@@ -9,6 +9,7 @@ import UserDetailsHeader from "../../containers/UserDetailsHeader";
 import useAddNewUserApi from "../../services/api-services/Users/useAddNewUserApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import useFetch from "../../core/hooks/useFetch";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
 import {
@@ -16,6 +17,11 @@ import {
   FORM_STATES,
   NOTIFICATION_TYPES,
 } from "../../constant/constant";
+import {
+  ADMIN_ROUTE,
+  CORE_COUNTRIES,
+  ROLES_PERMISSION,
+} from "../../constant/apiEndpoints";
 import { USERS } from "../../routes/routeNames";
 
 const UserDetails = () => {
@@ -45,6 +51,16 @@ const UserDetails = () => {
   });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
+
+  const { fetchData, data: countryData } = useFetch({
+    url: CORE_COUNTRIES,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+
+  const { data: rolesData, fetchData: roleFetchDate } = useFetch({
+    url: ADMIN_ROUTE + ROLES_PERMISSION,
+    otherOptions: { skipApiCallOnMount: true },
+  });
 
   const {
     getUserData,
@@ -138,6 +154,8 @@ const UserDetails = () => {
         userId,
         onSuccessCallBack: (userAccountInfo) => {
           loadDataOfUser(userAccountInfo);
+          fetchData({ queryParamsObject: {} });
+          roleFetchDate({ queryParamsObject: {} });
         },
         onErrorCallBack: (errMessage) => {
           showNotification(errMessage);
@@ -192,6 +210,7 @@ const UserDetails = () => {
         bottomSection={
           <UserDetailsContent
             {...{
+              countryData,
               currentFormState,
               updateUserData,
               userData,
@@ -203,6 +222,7 @@ const UserDetails = () => {
               isEmailValid,
               setIsEmailValid,
               isMobileNumber,
+              rolesData,
               setIsMobileNumberValid,
               isUserNameValid,
               setIsUserNameValid,

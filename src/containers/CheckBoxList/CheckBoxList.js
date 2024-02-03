@@ -6,13 +6,12 @@ import Typography from "antd/es/typography/Typography";
 import Base from "../../core/layouts/Base/Base";
 
 import CustomCheckBox from "../../components/CustomCheckBox";
-import useFetch from "../../core/hooks/useFetch";
-import { ADMIN_ROUTE, ROLES_PERMISSION } from "../../constant/apiEndpoints";
 import { allModuleIdObject } from "../../constant/constant";
 import { PERMISION_AND_ROLE } from "../../dummyData";
 import styles from "./CheckBoxList.module.scss";
 
 const CheckBoxList = ({
+  rolesData,
   selectedControls,
   selectedModules,
   setIsAccessValid,
@@ -26,17 +25,6 @@ const CheckBoxList = ({
     selectedControls.length === PERMISION_AND_ROLE.data[0].permissions.length;
 
   const controlModuleId = allModuleIdObject.control;
-
-  const {
-    data: rolesData,
-    error,
-    fetchData,
-    isError,
-    isLoading,
-    isSuccess,
-  } = useFetch({
-    url: ADMIN_ROUTE + ROLES_PERMISSION,
-  });
 
   const handleSelect = (selectedOptionArray, setSelectedOptionArray, id) => {
     if (selectedOptionArray.includes(id)) {
@@ -134,6 +122,7 @@ const CheckBoxList = ({
 };
 
 CheckBoxList.defaultProps = {
+  rolesData: {},
   setIsAccessValid: () => {},
   selectedControls: [],
   selectedModules: [],
@@ -142,6 +131,7 @@ CheckBoxList.defaultProps = {
 };
 
 CheckBoxList.propTypes = {
+  rolesData: PropTypes.Object,
   setIsAccessValid: PropTypes.func,
   selectedControls: PropTypes.array,
   selectedModules: PropTypes.array,

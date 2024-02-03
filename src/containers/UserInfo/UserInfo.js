@@ -12,14 +12,13 @@ import CustomInput from "../../components/CustomInput";
 import CustomSwitch from "../../components/CustomSwitch/CustomSwitch";
 import PhoneInput from "../../components/PhoneInput/PhoneInput";
 import { formatDate } from "../../constant/utils";
-import useFetch from "../../core/hooks/useFetch";
 import useResponsive from "../../core/hooks/useResponsive";
-import { CORE_COUNTRIES } from "../../constant/apiEndpoints";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
 const UserInfo = ({
   access,
+  countryData,
   date,
   email,
   emailErrorMessage,
@@ -33,6 +32,7 @@ const UserInfo = ({
   name,
   permissions,
   roles,
+  rolesData,
   status,
   setIsAccessValid,
   shouldShowDatePickerOption,
@@ -41,9 +41,6 @@ const UserInfo = ({
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
-  const { data, error, isError, isLoading, isSuccess } = useFetch({
-    url: CORE_COUNTRIES,
-  });
 
   const getValuesInChips = (arrayOfValues) => {
     if (Object.entries(arrayOfValues).length > 0) {
@@ -218,7 +215,7 @@ const UserInfo = ({
                 customSelectInputStyles={[styles.selectInput].join(" ")}
                 customLabelStyles={styles.label}
                 onChange={(e) => updateUserData("mobile", e.target.value)}
-                selectOptions={data}
+                selectOptions={countryData}
                 defaultSelectValueString="+91"
                 onSelectItem={(e) =>
                   updateUserData("mobile_prefix", e.target.value)
@@ -276,7 +273,7 @@ const UserInfo = ({
             )}
             <div className={styles.spanOverAllColumns}>
               <CheckBoxList
-                {...{ setIsAccessValid }}
+                {...{ setIsAccessValid, rolesData }}
                 selectedModules={access}
                 setSelectedModules={(value) => updateUserData("access", value)}
                 selectedControls={permissions}
@@ -294,6 +291,7 @@ const UserInfo = ({
 
 UserInfo.defaultProps = {
   access: [],
+  countryData: {},
   date: null,
   email: "",
   isDateDisable: false,
@@ -312,6 +310,7 @@ UserInfo.defaultProps = {
 
 UserInfo.propTypes = {
   access: PropTypes.array,
+  countryData: PropTypes.object,
   date: PropTypes.string,
   email: PropTypes.string,
   isDateDisable: PropTypes.bool,

@@ -20,6 +20,7 @@ import styles from "./UserDetailsContent.module.scss";
 const UserDetailsContent = ({
   addNewUser,
   currentFormState,
+  countryData,
   errorWhileGettingUsersData,
   getUserData,
   goBackToViewDetailsPage,
@@ -28,6 +29,7 @@ const UserDetailsContent = ({
   isLoading,
   isMobileNumber,
   isUserNameValid,
+  rolesData,
   setIsAccessValid,
   setIsEmailValid,
   setIsMobileNumberValid,
@@ -117,6 +119,7 @@ const UserDetailsContent = ({
           {!isLoading && !errorWhileGettingUsersData && (
             <div className={styles.bottomContainer}>
               <UserInfo
+                countryData
                 emailErrorMessage={
                   !isEmailValid
                     ? intl.formatMessage({
@@ -133,7 +136,12 @@ const UserDetailsContent = ({
                 }
                 isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
                 isNotAddable={currentFormState === FORM_STATES.EDITABLE}
-                {...{ updateUserData, setIsAccessValid }}
+                {...{
+                  countryData,
+                  setIsAccessValid,
+                  rolesData,
+                  updateUserData,
+                }}
                 name={userData?.name}
                 email={userData?.email}
                 mobileNo={userData?.mobile}
@@ -215,6 +223,7 @@ const UserDetailsContent = ({
 };
 
 UserDetailsContent.defaultProps = {
+  countryData: {},
   currentFormState: "",
   errorWhileGettingUsersData: "",
   getUserData: () => {},
@@ -224,6 +233,7 @@ UserDetailsContent.defaultProps = {
   isLoading: false,
   isMobileNumber: true,
   isUserNameValid: true,
+  rolesData: {},
   setIsAccessValid: () => {},
   setIsEmailValid: () => {},
   setIsMobileNumberValid: () => {},
@@ -235,6 +245,7 @@ UserDetailsContent.defaultProps = {
 };
 
 UserDetailsContent.propTypes = {
+  countryData: PropTypes.object,
   currentFormState: PropTypes.string,
   errorWhileGettingUsersData: PropTypes.string,
   getUserData: PropTypes.func,
@@ -244,6 +255,7 @@ UserDetailsContent.propTypes = {
   isLoading: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isUserNameValid: PropTypes.bool,
+  rolesData: PropTypes.object,
   setIsAccessValid: PropTypes.func,
   setIsEmailValid: PropTypes.func,
   setIsMobileNumberValid: PropTypes.func,

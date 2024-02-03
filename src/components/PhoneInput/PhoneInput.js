@@ -4,6 +4,7 @@ import { Input, Select, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
+import { classes } from "./PhoneInput.styles";
 import styles from "./PhoneInput.module.scss";
 
 const PhoneInput = ({
@@ -65,11 +66,7 @@ const PhoneInput = ({
                   <img
                     src={country.flag}
                     alt={`${country.name} flag`}
-                    style={{
-                      width: "20px",
-                      marginRight: "8px",
-                      verticalAlign: "middle",
-                    }}
+                    style={classes.flagContainer}
                   />
                   {country.dial_code}
                 </div>
@@ -79,11 +76,7 @@ const PhoneInput = ({
                 <img
                   src={country.flag}
                   alt={`${country.name} flag`}
-                  style={{
-                    width: "20px",
-                    marginRight: "8px",
-                    verticalAlign: "middle",
-                  }}
+                  style={classes.flagContainer}
                 />
                 {country.dial_code}
               </div>
