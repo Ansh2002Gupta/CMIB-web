@@ -137,6 +137,10 @@ export const allAccessIdObject = [
   { text: "Control", id: 1 },
 ];
 
+export const allModuleIdObject = {
+  control: 12,
+};
+
 export const ALLOWED_MOBILE_PREFIXES = [
   {
     value: "91",

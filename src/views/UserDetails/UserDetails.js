@@ -9,6 +9,7 @@ import UserDetailsHeader from "../../containers/UserDetailsHeader";
 import useAddNewUserApi from "../../services/api-services/Users/useAddNewUserApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import useFetch from "../../core/hooks/useFetch";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
 import {
@@ -16,6 +17,11 @@ import {
   FORM_STATES,
   NOTIFICATION_TYPES,
 } from "../../constant/constant";
+import {
+  ADMIN_ROUTE,
+  CORE_COUNTRIES,
+  ROLES_PERMISSION,
+} from "../../constant/apiEndpoints";
 import { USERS } from "../../routes/routeNames";
 
 const UserDetails = () => {
@@ -33,8 +39,8 @@ const UserDetails = () => {
     name: "",
     email: "",
     mobile: "",
-    mobile_prefix: "in",
-    profile_photo: null,
+    mobile_prefix: "+91",
+    profile_photo: "",
     profile_photo_url: "",
     access: [],
     roles: [],
@@ -45,6 +51,20 @@ const UserDetails = () => {
   });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
+
+  const { fetchData, data: countryData } = useFetch({
+    url: CORE_COUNTRIES,
+    otherOptions: {
+      skipApiCallOnMount: currentFormState !== FORM_STATES.EMPTY,
+    },
+  });
+
+  const { data: rolesData, fetchData: roleFetchDate } = useFetch({
+    url: ADMIN_ROUTE + ROLES_PERMISSION,
+    otherOptions: {
+      skipApiCallOnMount: currentFormState !== FORM_STATES.EMPTY,
+    },
+  });
 
   const {
     getUserData,
@@ -79,7 +99,7 @@ const UserDetails = () => {
     key === "name" && setIsUserNameValid(true);
     setErrorWhileUpdatingUserData("");
     if (key === "mobile") {
-      value = value.slice(0, 10);
+      value = value;
     }
     setUserData((prev) => {
       return {
@@ -105,29 +125,48 @@ const UserDetails = () => {
     isNewUserSuccessfullyAdded,
   ]);
 
-  useEffect(() => {
-    !!userAccountInfo &&
+  const loadDataOfUser = (userAccountInfo) => {
+    if (!!userAccountInfo) {
+      const imageParts = userAccountInfo?.profile_photo?.split("/");
+      const imageName = imageParts?.pop();
       setUserData({
         name: userAccountInfo?.name || "",
         email: userAccountInfo?.email || "",
         mobile: userAccountInfo?.mobile_number || "",
-        mobile_prefix: "91",
+        mobile_prefix: userAccountInfo?.mobile_country_code || "+91",
         profile_photo_url: userAccountInfo?.profile_photo || "",
-        profile_photo: null,
-        access: userAccountInfo?.role?.map((item) => item?.id) || [],
+        profile_photo: imageName || "",
+        access:
+          Object.entries(userAccountInfo?.roles || {})?.map(
+            ([index, item]) => item?.id
+          ) || [],
         roles: userAccountInfo?.roles || [],
-        permissions: userAccountInfo?.permissions,
+        permissions:
+          Object.entries(userAccountInfo?.permissions || {})?.map(
+            ([index, item]) => item?.id
+          ) || [],
         date: userAccountInfo?.created_at || "",
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,
         status: userAccountInfo?.status,
       });
-  }, [userAccountInfo]);
+    }
+  };
 
   useEffect(() => {
     if (userId) {
-      getUserData(userId);
+      getUserData({
+        userId,
+        onSuccessCallBack: (userAccountInfo) => {
+          loadDataOfUser(userAccountInfo);
+          fetchData({ queryParamsObject: {} });
+          roleFetchDate({ queryParamsObject: {} });
+        },
+        onErrorCallBack: (errMessage) => {
+          showNotification(errMessage);
+        },
+      });
     }
-  }, [userId, currentFormState]);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -139,10 +178,11 @@ const UserDetails = () => {
         name: "",
         email: "",
         mobile: "",
-        mobile_prefix: "91",
-        profile_photo: null,
+        mobile_prefix: "+91",
+        profile_photo: "null",
         profile_photo_url: "",
         access: [],
+        permissions: [],
         date: "",
         is_two_factor: false,
         status: 0,
@@ -174,6 +214,9 @@ const UserDetails = () => {
         bottomSection={
           <UserDetailsContent
             {...{
+              fetchData,
+              roleFetchDate,
+              countryData,
               currentFormState,
               updateUserData,
               userData,
@@ -185,6 +228,7 @@ const UserDetails = () => {
               isEmailValid,
               setIsEmailValid,
               isMobileNumber,
+              rolesData,
               setIsMobileNumberValid,
               isUserNameValid,
               setIsUserNameValid,

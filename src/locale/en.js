@@ -323,6 +323,13 @@ const locale = {
   "label.confirmPassword": "Confirm Password",
   "label.emailAddress": "Email Address: ",
   "label.changeEmailAddress": "Change Email Address",
+  "label.enable": "Enable",
+  "label.disable": "Disable",
+  "label.path.users": "Manage Users",
+  "label.path.details": "User Details",
+  "label.logoutSuccessful": "Logged out successfully",
+  "label.inactiveMessage":
+    "Your account has been marked inactive. Please contact the administrator for assistance",
   "label.view_profile": "View Profile",
   "label.change_password": "Change Password",
   "account.logout": "Log out",
