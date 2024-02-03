@@ -205,7 +205,7 @@ const ManageUsersContent = () => {
       renderText: {
         isTypeDate: true,
         visible: true,
-        textStyles: styles.tableCell,
+        textStyles: styles.tableCellDate,
       },
     }),
     renderColumn({
