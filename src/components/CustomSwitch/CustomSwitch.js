@@ -9,14 +9,25 @@ import useResponsive from "core/hooks/useResponsive";
 import { classes } from "./CustomSwitch.styles";
 import styles from "./CustomSwitch.module.scss";
 
-const CustomSwitch = ({ checked, customStyle, disabled, label, onChange }) => {
+const CustomSwitch = ({
+  checked,
+  customStyle,
+  disabled,
+  isRequired,
+  label,
+  onChange,
+}) => {
   const intl = useIntl();
   const responsive = useResponsive();
 
   return (
     <TwoRow
       className={[styles.mainContainer, customStyle].join(" ")}
-      topSection={<Typography className={styles.grayText}>{label}</Typography>}
+      topSection={
+        <Typography className={styles.grayText}>
+          {label} {isRequired && <span className={styles.isRequired}>*</span>}
+        </Typography>
+      }
       bottomSection={
         responsive.isMd ? (
           <TwoColumn
@@ -62,6 +73,7 @@ CustomSwitch.defaultProps = {
   checked: false,
   customStyle: "",
   disabled: false,
+  isRequired: false,
   label: "",
   onChange: () => {},
 };
@@ -70,6 +82,7 @@ CustomSwitch.propTypes = {
   checked: PropTypes.bool,
   customStyle: PropTypes.string,
   disabled: PropTypes.bool,
+  isRequired: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
 };

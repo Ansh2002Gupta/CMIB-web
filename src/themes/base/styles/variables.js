@@ -57,6 +57,8 @@ const variables = {
   radiusMLg: "16px",
   radius_18: "18px",
   radiusXXLg: "24px",
+  radius_48: "48px",
+  radius_50Per: "50%",
 
   // Font-size
   fontSizeExtraSmall: "12px",
@@ -88,6 +90,8 @@ const variables = {
   fontWeightBold: 600,
 
   // Widths
+  width_1: "1px",
+  width_10: "10px",
   xSmallWidth: "16px",
   width_20: "20px",
   width_24: "24px",
@@ -95,11 +99,16 @@ const variables = {
   width_32: "32px",
   width_40: "40px",
   width_48: "48px",
+  width_70: "70px",
   sidemenuWidth: "74px",
   width_80: "80px",
+  width_90: "90px",
   width_100: "100px",
   width_120: "120px",
+  width_125: "125px",
+  width_130: "130px",
   width_140: "140px",
+  width_150: "150px",
   width_166: "166px",
   width_170: "170px",
   width_180: "180px",
@@ -119,6 +128,7 @@ const variables = {
   fullWidth: "100%",
 
   // Heights
+  height_5: "5px",
   xSmallHeight: "16px",
   height_20: "20px",
   height_24: "24px",
@@ -132,6 +142,11 @@ const variables = {
   height_55: "55px",
   btnHeight: "56px",
   height_70: "70px",
+  height_80: "80px",
+  height_90: "90px",
+  height_100: "100px",
+  height_120: "120px",
+  height_150: "150px",
   height_240: "240px",
   height_250: "250px",
   height_300: "300px",
@@ -141,6 +156,8 @@ const variables = {
   height_40vh: "40vh",
   height_45vh: "45vh",
   height_50vh: "50vh",
+  height_70vh: "70vh",
+  height_85vh: "85vh",
   heightFullViewPort: "100vh",
   halfHeight: "50%",
   fullHeight: "100%",
@@ -151,6 +168,7 @@ const variables = {
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
   borderBlue: `2px solid ${colorPallets.darkBlue}`,
+  borderBlue1: `1px solid ${colorPallets.darkBlue}`,
   borderGreen: `1px solid ${colorPallets.green1}`,
   borderColor: colorPallets.ltGrey1,
 
@@ -181,6 +199,7 @@ const variables = {
   paddingSmall: "16px",
   padding_18: "18px",
   paddingMedium: "24px",
+  padding_30: "30px",
   paddingLarge: "32px",
   paddingXLarge: "40px",
   paddingXXLarge: "48px",
@@ -197,8 +216,8 @@ const variables = {
   gapSmallMedium: "12px",
   gapSmall: "16px",
   gap_20: "20px",
-  gap_28: "28px",
   gapMedium: "24px",
+  gap_28: "28px",
   gapLarge: "32px",
   gapXLarge: "40px",
   gapXXLarge: "56px",
@@ -207,8 +226,13 @@ const variables = {
   marginSmall: "8px",
   marginXSmall: "6px",
   marginXXSmall: "4px",
+  margin_12: "12px",
   marginMedium: "16px",
+  margin_20: "20px",
   marginLarge: "24px",
+  margin_32: "32px",
+  margin_40: "40px",
+  margin_60: "60px",
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };

@@ -15,28 +15,12 @@ const useAddNewUserApi = () => {
   const [errorWhileAddingNewUser, setErrorWhileAddingNewUser] = useState("");
 
   const addNewUser = async (payload, onSuccessCallback) => {
-    const formData = new FormData();
-    for (let [key, value] of Object.entries(payload)) {
-      if (
-        key?.toLowerCase() === "roles" ||
-        key?.toLowerCase() === "permissions"
-      ) {
-        value = value.join(",");
-      }
-      formData.append(key, value);
-    }
-    formData.append("permissions", "1"); // TODO: Please remove this once the ADD NEW USER API is updated.
     try {
-      const apiOptions = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
       setAddNewUserApiStatus(API_STATUS.LOADING);
       setAddNewUserData(null);
       errorWhileAddingNewUser && setErrorWhileAddingNewUser("");
       const url = ADMIN_ROUTE + USERS_END_POINT;
-      const res = await Http.post(url, formData, apiOptions);
+      const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setAddNewUserApiStatus(API_STATUS.SUCCESS);
         setAddNewUserData(res.data);

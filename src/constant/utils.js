@@ -59,6 +59,19 @@ export function getValidPageSize(currentPageSize) {
   return validPageSize;
 }
 
+export function getValidFilter(currentFilter) {
+  let decodedFilter;
+  try {
+    const filterParam = currentFilter || "[]";
+    decodedFilter = JSON.parse(decodeURIComponent(filterParam));
+  } catch (e) {
+    console.error("Failed to decode filter parameter:", e);
+    // Fallback to an empty array or some default value
+    decodedFilter = [];
+  }
+  return decodedFilter;
+}
+
 export const toggleSorting = (currentSortValue) => {
   if (SORT_VALUES.ASCENDING === currentSortValue) {
     return SORT_VALUES.DESCENDING;
@@ -137,4 +150,36 @@ export const getErrorText = (errorText) => {
     return errorText;
   }
   return GENERIC_ERROR_MESSAGE;
+};
+
+export const getImageSource = (uploadedImage) => {
+  if (uploadedImage && typeof uploadedImage === "string") {
+    return uploadedImage;
+  }
+  if (uploadedImage) {
+    return URL.createObjectURL(uploadedImage);
+  }
+  return "";
+};
+
+export const convertPermissionFilter = (roles) => {
+  let result = [
+    {
+      id: 1,
+      name: "Access",
+      isSelected: false,
+      options: [],
+    },
+  ];
+
+  for (const key in roles) {
+    if (roles.hasOwnProperty(key)) {
+      result[0].options.push({
+        optionId: parseInt(key),
+        str: roles[key]?.name,
+      });
+    }
+  }
+
+  return result;
 };

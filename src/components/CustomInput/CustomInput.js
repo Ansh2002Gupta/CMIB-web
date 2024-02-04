@@ -71,7 +71,7 @@ const CustomInput = ({
           type === "mobile" ? styles.mobile : "",
         ].join(" ")}
       >
-        {(type === "select" || type === "mobile") && (
+        {type === "select" && (
           <>
             <Select
               mode={isMultiSelect ? "multiple" : ""}
@@ -95,23 +95,17 @@ const CustomInput = ({
             />
           </>
         )}
-        {((type !== "select" && type !== "inputNumber") ||
-          type === "mobile") && (
+        {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
           <Input
             ref={isSuffixRequiredForPassword ? inputFieldRef : null}
             type={type || "text"}
-            className={[
-              styles.inputField,
-              type === "mobile" ? styles.mobileInput : "",
-              ,
-              customInputStyles,
-            ].join(" ")}
+            className={[styles.inputField, customInputStyles].join(" ")}
             {...{
               value,
               placeholder,
               disabled,
               onChange,
-              onBlur
+              onBlur,
             }}
             prefix={isPrefixRequired ? prefixElement : null}
             suffix={

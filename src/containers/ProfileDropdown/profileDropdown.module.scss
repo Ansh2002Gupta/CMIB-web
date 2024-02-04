@@ -47,7 +47,12 @@
     margin-left: 16px; // TODO: need to add marignNormal
     text-align: left;
     width: 88%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--textBold, #000803);
 }
 .menuBtn {
     text-align: left;
+    color: var(--textBold, #000803);
 }
