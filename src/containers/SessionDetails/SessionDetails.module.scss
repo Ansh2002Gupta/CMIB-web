@@ -212,3 +212,19 @@
   font-size: var(--fontSizeExtraSmall);
   margin-top: var(--gapXXSmall);
 }
+
+.noSessionContainer {
+  min-height: 20vw;
+  background-color: var(--bodyBg);
+  padding: var(--fontSizeXlargeMedium);
+  border-radius: var(--lineHeightExtraSmall);
+  border: var(--borderLight);
+  justify-content: center;
+  align-items: center;
+}
+
+.noSessionText {
+  font-size: var(--fontSizeXlargeMedium);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}

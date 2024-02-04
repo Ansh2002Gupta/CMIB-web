@@ -10,8 +10,9 @@ export const FIELDS = (
   membership_completion_date,
   session_start_date,
   article_completion_from_date,
-  bank_account_offline,
-  bank_account_online
+  hsn_sac_code,
+  bank_ac_no,
+  bank_ac_ifsc
 ) => {
   return [
     {
@@ -113,25 +114,37 @@ export const FIELDS = (
     },
     {
       id: 9,
-      headingIntl: "bankACNumberOffline",
-      label: "bank_account_offline",
-      value: bank_account_offline,
+      headingIntl: "hsnCode",
+      label: "hsn_sac_code",
+      value: hsn_sac_code,
       rules: [
         {
           required: true,
-          message: "Please enter Bank A/C number offline",
+          message: "Please enter HSN Code/ SAC",
         },
       ],
     },
     {
       id: 10,
-      headingIntl: "bankACNumberOnline",
-      label: "bank_account_online",
-      value: bank_account_online,
+      headingIntl: "bankACNumber",
+      label: "bank_ac_no",
+      value: bank_ac_no,
       rules: [
         {
           required: true,
-          message: "Please enter Bank A/C number online",
+          message: "Please enter Bank A/C number",
+        },
+      ],
+    },
+    {
+      id: 11,
+      headingIntl: "ifsc",
+      label: "bank_ac_ifsc",
+      value: bank_ac_ifsc,
+      rules: [
+        {
+          required: true,
+          message: "Please enter IFSC Code",
         },
       ],
     },

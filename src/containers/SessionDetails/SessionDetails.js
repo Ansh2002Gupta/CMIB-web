@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { DatePicker, Image, Select, Switch, Typography } from "antd";
 
-import { TwoRow, TwoColumn } from "../../core/layouts";
+import { TwoRow, TwoColumn, Base } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 import useResponsive from "core/hooks/useResponsive";
 
@@ -17,6 +17,7 @@ import { SESSION_DETAILS } from "../../dummyData";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 import "./Override.css";
+import CustomSwitch from "../../components/CustomSwitch";
 
 const SessionDetails = ({ addSession, setAddSession }) => {
   const intl = useIntl();
@@ -65,8 +66,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     formData?.membership_completion_date,
     formData?.session_start_date,
     formData?.article_completion_from_date,
-    formData?.bank_account_offline,
-    formData?.bank_account_online
+    formData?.hsn_sac_code,
+    formData?.bank_ac_no,
+    formData?.bank_ac_ifsc
   );
 
   useEffect(() => {
@@ -112,7 +114,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     setEdit(false);
   };
 
-  return (
+  return fields.length > 0 ? (
     <TwoRow
       className={styles.mainContainer}
       topSection={
@@ -152,7 +154,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
           }
           bottomSection={
             <CustomGrid>
-              {fields.map((item) => (
+              {fields?.map((item) => (
                 <TwoRow
                   key={item.id}
                   className={styles.gridItem}
@@ -185,6 +187,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                         ) : item.id === 4 ? (
                           <div>
                             <MonthPicker
+                              disabled={
+                                formData?.examination_session_period.length > 3
+                              }
                               format="YYYY/MM"
                               className={styles.multilpleInput}
                               size={"large"}
@@ -201,7 +206,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             />
 
                             <div className={styles.examinationFieldContainer}>
-                              {formData.examination_session_period.map(
+                              {formData?.examination_session_period?.map(
                                 (item, index) => {
                                   return (
                                     <div
@@ -262,40 +267,19 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   }
                 />
               ))}
-              <TwoRow
-                className={styles.gridItem}
-                topSection={
-                  <Typography className={styles.grayText}>
-                    {intl.formatMessage({ id: "label.status" })}
-                  </Typography>
-                }
-                bottomSection={
-                  <TwoColumn
-                    className={styles.statusContainer}
-                    leftSection={
-                      <Switch
-                        style={formData?.status && classes.switchBackground}
-                        checked={formData?.status}
-                        onChange={() => {
-                          setFormData({
-                            ...formData,
-                            status: !formData.status,
-                          });
-                        }}
-                        disabled={!edit}
-                      />
-                    }
-                    rightSection={
-                      <Typography className={styles.blackText}>
-                        {intl.formatMessage({
-                          id: `label.${
-                            formData?.status ? "active" : "inactive"
-                          }`,
-                        })}
-                      </Typography>
-                    }
-                  />
-                }
+
+              <CustomSwitch
+                customStyle={styles.gridItem}
+                disabled={!edit}
+                checked={formData?.status}
+                isRequired
+                label={intl.formatMessage({ id: "label.sessionStatus" })}
+                onChange={() => {
+                  setFormData({
+                    ...formData,
+                    status: !formData.status,
+                  });
+                }}
               />
             </CustomGrid>
           }
@@ -331,8 +315,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   !formData?.gmcs_completion_date ||
                   !formData?.membership_completion_date ||
                   !formData?.article_completion_from_date ||
-                  !formData?.bank_account_offline ||
-                  !formData?.bank_account_online
+                  !formData?.hsn_sac_code ||
+                  !formData?.bank_ac_no ||
+                  !formData?.bank_ac_ifsc
                 }
                 textStyle={styles.saveButtonTextStyles}
                 btnText={intl.formatMessage({
@@ -346,6 +331,12 @@ const SessionDetails = ({ addSession, setAddSession }) => {
       }
       bottomSectionStyle={classes.bottomSectionStyle}
     />
+  ) : (
+    <Base className={styles.noSessionContainer}>
+      <Typography className={styles.noSessionText}>
+        {intl.formatMessage({ id: "label.noSessionSetup" })}
+      </Typography>
+    </Base>
   );
 };
 

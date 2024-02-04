@@ -83,13 +83,14 @@ const locale = {
   "session.natureOfGoods": "Nature of services/goods",
   "session.invoiceNumberFormat": "Performa Invoice Number Format",
   "session.examinationSessionPeriod": "Examination Session Period",
-  "session.gmcsCompletetionDate": "GMCS Completetion Date",
+  "session.gmcsCompletetionDate": "MCS Completetion Date",
   "session.membershipCompletetionDate": "Membership Completetion Date",
   "session.articleshipCompletetionFromDate":
     "Articleship Completetion From Date",
   "session.articleshipCompletetionToDate": "Articleship Completetion To Date",
-  "session.bankACNumberOffline": "Bank A/C number offline",
-  "session.bankACNumberOnline": "Bank A/C number online",
+  "session.hsnCode": "HSN Code/ SAC ",
+  "session.bankACNumber": "Bank A/C number",
+  "session.ifsc": "IFSC",
   "session.placeholder.sessionName": "Enter Session Name",
   "session.placeholder.natureOfGoods": "Enter Nature of services/goods",
   "session.placeholder.invoiceNumberFormat":
@@ -102,8 +103,9 @@ const locale = {
     "Select Articleship Completetion From Date",
   "session.placeholder.articleshipCompletetionToDate":
     "Select Articleship Completetion To Date",
-  "session.placeholder.bankACNumberOffline": "Enter Bank A/C number offline",
-  "session.placeholder.bankACNumberOnline": "Enter Bank A/C number online",
+  "session.placeholder.hsnCode": "Enter HSN Code/ SAC ",
+  "session.placeholder.bankACNumber": "Enter Bank A/C number",
+  "session.placeholder.ifsc": "Enter IFSC Code",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
   "session.lastDateRegistrationCompanies":
@@ -346,6 +348,8 @@ const locale = {
   "label.path.details": "User Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.passwordChanged": "Password changed successfully",
+  "label.noSessionSetup": "No session is setup currently",
+  "label.sessionStatus": "Session Status",
 };
 
 export default locale;
