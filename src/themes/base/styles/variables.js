@@ -168,6 +168,7 @@ const variables = {
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
   borderBlue: `2px solid ${colorPallets.darkBlue}`,
+  borderBlue1: `1px solid ${colorPallets.darkBlue}`,
   borderGreen: `1px solid ${colorPallets.green1}`,
   borderColor: colorPallets.ltGrey1,
 
