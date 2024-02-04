@@ -22,6 +22,7 @@ const variables = {
   lightRedBg: colorPallets.lightOrange,
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
+  lightGrey3Bg: colorPallets.ltGrey3,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -91,6 +92,7 @@ const variables = {
 
   // Widths
   width_1: "1px",
+  width_8: "8px",
   width_10: "10px",
   xSmallWidth: "16px",
   width_20: "20px",
@@ -104,6 +106,7 @@ const variables = {
   width_80: "80px",
   width_90: "90px",
   width_100: "100px",
+  width_104: "104px",
   width_120: "120px",
   width_125: "125px",
   width_130: "130px",
@@ -111,6 +114,7 @@ const variables = {
   width_150: "150px",
   width_166: "166px",
   width_170: "170px",
+  width_176: "176px",
   width_180: "180px",
   width_200: "200px",
   width_300: "300px",
@@ -145,6 +149,7 @@ const variables = {
   height_80: "80px",
   height_90: "90px",
   height_100: "100px",
+  height_104: "104px",
   height_120: "120px",
   height_150: "150px",
   height_240: "240px",
@@ -216,6 +221,7 @@ const variables = {
   gapSmall: "16px",
   gap_20: "20px",
   gapMedium: "24px",
+  gap_26: "26px",
   gap_28: "28px",
   gapLarge: "32px",
   gapXLarge: "40px",
@@ -226,6 +232,7 @@ const variables = {
   marginXSmall: "6px",
   marginXXSmall: "4px",
   margin_12: "12px",
+  margin_14: "14px",
   marginMedium: "16px",
   margin_20: "20px",
   marginLarge: "24px",

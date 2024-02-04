@@ -7,12 +7,12 @@
   border-width: 0.5px;
   border-color: var(--borderColor, #ccd0e5);
   position: relative;
-  border: var(--width_10, 10px) solid var(--bodyBg, #fff);
+  border: var(--width_8, 8px) solid var(--bodyBg, #fff);
 }
 
 .editProfileContainer {
   align-self: center;
-  margin-top: var(--margin_60, 60px);
+  margin-top: var(--margin_40, 40px);
 }
 
 .profileImageStyle {
@@ -25,15 +25,17 @@
 
 .modalProfileImage {
   border-radius: var(--radius_50Per, 50%);
-  min-height: var(--height_100, 100px);
-  max-height: var(--height_100, 100px);
-  min-width: var(--width_100, 100px);
-  max-width: var(--width_100, 100px);
+  min-height: var(--height_104, 104px);
+  max-height: var(--height_104, 104px);
+  min-width: var(--width_104, 104px);
+  max-width: var(--width_104, 104px);
 }
 
 .initialsText {
   font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
   min-width: var(--width_130, 130px);
+  color: var(--bodyBg, #fff);
 }
 
 .iconContainer {
@@ -62,7 +64,8 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 1px solid var(--blackBg, black);
+  border: 8px solid var(--bodyBg, #fff);
+  background-color: var(--textBold, #000833) !important;
 }
 
 @media (max-width: 551px) {
@@ -89,7 +92,7 @@
   .editProfileContainer {
     margin-top: var(--margin_20, 20px);
   }
-  
+
   .circularContainer {
     width: var(--width_90, 90px);
     height: var(--height_90, 90px);

@@ -23,7 +23,6 @@
 .imageContainerStyle {
   background-color: var(--bodyBg, #fff);
   border-radius: var(--radius_50Per, 50%);
-  border-width: 5px;
 }
 
 .initialContainerStyle {
@@ -34,14 +33,15 @@
 }
 
 .profileMainContainer {
-  background: linear-gradient(to bottom, silver 40%, white 30%);
+  background: linear-gradient(to bottom, #ebebeb 35%, white 25%);
   padding: var(--paddingMedium, 24px);
   border-radius: var(--radiusXLg, 12px);
-  gap: var(--gapLarge, 32px);
+  gap: var(--gapMedium, 24px);
 }
 
 .secondSectionStyle {
-  gap: var(--gapXXSmall, 5px);
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   width: var(--fullWidth, 100%);
@@ -129,6 +129,10 @@
   font-weight: var(--fontWeightMedium, 500);
 }
 
+.fontBold{
+  font-weight: var(--fontWeightBold, 600);
+}
+
 .greyText {
   color: var(--On-surface, #616c82);
   font-size: var(--fontSizeSmall, 14px);
@@ -156,7 +160,7 @@
 }
 
 .bottomBox {
-  gap: var(--gapLarge, 32px);
+  gap: var(--gap_26, 26px);
 }
 
 .switch {
@@ -171,7 +175,19 @@
   width: var(--fullWidth, 100%);
 }
 
-@media (max-width: 551px) {
+.deleteText {
+  font-weight: var(--fontWeightMedium, 500);
+  font-size: var(--fontSizeSmall, 14px);
+  padding: var(--paddingSmall, 16px);
+  min-width: var(--width_176, 176px);
+}
+
+.crossAndMenuContainer {
+  display: flex;
+  gap: var(--gapSmall, 16px);
+}
+
+@media (max-width: 511px) {
   .headingText {
     font-size: var(--fontSizeNormal, 16px);
   }
@@ -223,7 +239,7 @@
     min-width: var(--xSmallWidth, 16px);
     max-width: var(--xSmallWidth, 16px);
   }
-  
+
   .padding24px {
     padding: var(--paddingSmall, 16px);
   }
