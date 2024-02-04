@@ -96,7 +96,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     if (!rules) return undefined;
 
     for (const rule of rules) {
-      if (rule.required && (!value || value.length <= 0)) {
+      if (rule.required && (!value || value?.length <= 0)) {
         return rule.message;
       }
       if (rule.regex && !rule.regex.test(value)) {
@@ -130,7 +130,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     }
   };
 
-  return fields.length > 0 ? (
+  return fields?.length > 0 ? (
     <TwoRow
       className={styles.mainContainer}
       topSection={
@@ -204,7 +204,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                           <div>
                             <MonthPicker
                               disabled={
-                                formData?.examination_session_period.length > 3
+                                formData?.examination_session_period?.length > 3
                               }
                               format="YYYY/MM"
                               className={styles.multilpleInput}
