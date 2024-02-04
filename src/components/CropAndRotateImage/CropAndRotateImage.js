@@ -12,12 +12,10 @@ import getCroppedImg from "../../constant/cropImageUtils";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   ROTATE_IMAGE_BY,
-  STORAGE_KEYS,
   ZOOM_CONSTANT,
 } from "../../constant/constant";
-import { removeItem } from "../../services/encrypted-storage-service";
 import {
-  resetUserDetails,
+  setUserDetails,
   setUserProfileModalNumber,
 } from "../../globalContext/userProfile/userProfileActions";
 import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
@@ -43,18 +41,24 @@ const CropAndRotateImage = ({
   const [isErrorCroppingImage, setIsErrorCroppingImage] = useState(false);
 
   const { getImage } = useContext(ThemeContext);
-  const [, userProfileDispatch] = useContext(UserProfileContext);
+  const [userProfileDetails, userProfileDispatch] =
+    useContext(UserProfileContext);
 
-  const { getUserDetails } = useGetUserDetails();
-
-  const resetUserStoredInfo = () => {
-    removeItem(STORAGE_KEYS.USER_DATA);
-    userProfileDispatch(resetUserDetails());
-    getUserDetails();
+  const resetUserStoredInfo = (uploadedURL) => {
+    const { userDetails } = userProfileDetails;
+    userProfileDispatch(
+      setUserDetails({
+        ...userDetails,
+        profile_photo: uploadedURL,
+      })
+    );
   };
 
   const uploadImageToServer = ({ uploadedFile, uploadedURL }) => {
-    setFile(uploadedURL);
+    setFile({
+      file: uploadedFile,
+      src: uploadedURL,
+    });
     handleFileUpload({
       payload: {
         profile_photo: uploadedURL,
@@ -65,7 +69,8 @@ const CropAndRotateImage = ({
         userProfileDispatch(setUserProfileModalNumber(1));
       },
       onSuccessCallback: () => {
-        resetUserStoredInfo();
+        resetUserStoredInfo(uploadedURL);
+        userProfileDispatch(setUserProfileModalNumber(1));
       },
     });
   };

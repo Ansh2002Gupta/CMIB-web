@@ -10,16 +10,13 @@ import CropAndRotateImage from "../../components/CropAndRotateImage/CropAndRotat
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import useDeleteImageApi from "../../services/api-services/Image/useDeleteImageApi";
 import useUploadImageApi from "../../services/api-services/Image/useUploadImageApi";
-import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
 import useUpdateUserProfileApi from "../../services/api-services/UserProfile/useUpdateUserProfileApi";
 import { getImageSource } from "../../constant/utils";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
-  resetUserDetails,
+  setUserDetails,
   setUserProfileModalNumber,
 } from "../../globalContext/userProfile/userProfileActions";
-import { removeItem } from "../../services/encrypted-storage-service";
-import { STORAGE_KEYS } from "../../constant/constant";
 import { classes } from "./EditProfile.styles";
 import styles from "./EditProfile.module.scss";
 import "./override.css";
@@ -46,9 +43,7 @@ const EditProfile = ({ showNotification }) => {
   const { handleUploadImage, isLoading: isUploadingImage } =
     useUploadImageApi();
 
-  const { handleDeleteImage, } = useDeleteImageApi();
-
-  const { getUserDetails } = useGetUserDetails();
+  const { handleDeleteImage } = useDeleteImageApi();
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -85,7 +80,7 @@ const EditProfile = ({ showNotification }) => {
   const handleOnClose = () => {
     currentlyOpenedUserProfileModal === 2 &&
       userProfileDispatch(setUserProfileModalNumber(1));
-      currentlyOpenedUserProfileModal === 3 &&
+    currentlyOpenedUserProfileModal === 3 &&
       userProfileDispatch(setUserProfileModalNumber(2));
   };
 
@@ -117,9 +112,13 @@ const EditProfile = ({ showNotification }) => {
   };
 
   const resetUserStoredInfo = () => {
-    removeItem(STORAGE_KEYS.USER_DATA);
-    userProfileDispatch(resetUserDetails());
-    getUserDetails();
+    const { userDetails } = userProfileDetails;
+    userProfileDispatch(
+      setUserDetails({
+        ...userDetails,
+        profile_photo: "",
+      })
+    );
   };
 
   const handleOnRemoveImage = () => {
