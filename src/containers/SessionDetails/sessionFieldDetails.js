@@ -1,5 +1,12 @@
 import { SESSION_PERIOD } from "../../constant/constant";
 import { formatDate } from "../../constant/utils";
+import {
+  ALPHANUMERIC_REGEX,
+  BANK_ACC_NUMBER_REGEX,
+  HSN_SAC_CODE_REGEX,
+  IFSC_CODE_REGEX,
+  PERFORMA_INVOICE_REGEX,
+} from "../../constant/regex";
 
 export const FIELDS = (
   name,
@@ -22,6 +29,7 @@ export const FIELDS = (
       value: name,
       rules: [
         {
+          regex: ALPHANUMERIC_REGEX,
           required: true,
           message: "Please enter Session Name",
         },
@@ -34,6 +42,7 @@ export const FIELDS = (
       value: nature_of_service,
       rules: [
         {
+          regex: ALPHANUMERIC_REGEX,
           required: true,
           message: "Please enter services/goods",
         },
@@ -46,6 +55,7 @@ export const FIELDS = (
       value: perform_invoice_no_format,
       rules: [
         {
+          regex: PERFORMA_INVOICE_REGEX,
           required: true,
           message: "Please enter Performa Invoice Number",
         },
@@ -119,6 +129,7 @@ export const FIELDS = (
       value: hsn_sac_code,
       rules: [
         {
+          regex: HSN_SAC_CODE_REGEX,
           required: true,
           message: "Please enter HSN Code/ SAC",
         },
@@ -131,6 +142,7 @@ export const FIELDS = (
       value: bank_ac_no,
       rules: [
         {
+          regex: BANK_ACC_NUMBER_REGEX,
           required: true,
           message: "Please enter Bank A/C number",
         },
@@ -143,6 +155,7 @@ export const FIELDS = (
       value: bank_ac_ifsc,
       rules: [
         {
+          regex: IFSC_CODE_REGEX,
           required: true,
           message: "Please enter IFSC Code",
         },

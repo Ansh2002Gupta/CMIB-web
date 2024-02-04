@@ -350,7 +350,7 @@ export const SESSION_DETAILS = {
   name: "Jadyn Bartoletti",
   session_start_date: "2023-12-19T05:11:46.000000Z",
   session_end_date: "2023-12-19T05:11:46.000000Z",
-  nature_of_service: "rerum",
+  nature_of_service: "AugSept-*****-2023",
   perform_invoice_no_format: "facere",
   examination_session_period: ["May 2023", "November 2023"],
   gmcs_completion_date: "2023-12-19T05:11:46.000000Z",

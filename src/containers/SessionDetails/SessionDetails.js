@@ -99,10 +99,24 @@ const SessionDetails = ({ addSession, setAddSession }) => {
       if (rule.required && (!value || value.length <= 0)) {
         return rule.message;
       }
+      if (rule.regex && !rule.regex.test(value)) {
+        return rule.message;
+      }
     }
 
     return undefined;
   };
+
+  function errorCheck(obj) {
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (obj[key] !== undefined) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
   const handleCancel = () => {
     setFormData(SESSION_DETAILS);
@@ -111,7 +125,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     setFormErrors({});
   };
   const handleSave = () => {
-    setEdit(false);
+    if (errorCheck(formErrors)) {
+      setEdit(false);
+    }
   };
 
   return fields.length > 0 ? (
