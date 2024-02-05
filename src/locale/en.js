@@ -347,6 +347,7 @@ const locale = {
   "label.path.details": "User Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.passwordChanged": "Password changed successfully",
+  "label.deleteAccount": "Delete Account",
   "label.path.global-configurations": "Configure centres",
   "label.path.centre-details": "Edit centre details",
 };

@@ -10,16 +10,13 @@ import CropAndRotateImage from "../../components/CropAndRotateImage/CropAndRotat
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import useDeleteImageApi from "../../services/api-services/Image/useDeleteImageApi";
 import useUploadImageApi from "../../services/api-services/Image/useUploadImageApi";
-import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
 import useUpdateUserProfileApi from "../../services/api-services/UserProfile/useUpdateUserProfileApi";
 import { getImageSource } from "../../constant/utils";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
-  resetUserDetails,
+  setUserDetails,
   setUserProfileModalNumber,
 } from "../../globalContext/userProfile/userProfileActions";
-import { removeItem } from "../../services/encrypted-storage-service";
-import { STORAGE_KEYS } from "../../constant/constant";
 import { classes } from "./EditProfile.styles";
 import styles from "./EditProfile.module.scss";
 import "./override.css";
@@ -41,14 +38,13 @@ const EditProfile = ({ showNotification }) => {
   const lastName = userName?.split(" ")?.[1] || "";
   const [imageToBeChaged, setImageToBeChanged] = useState(null);
   const { getImage } = useContext(ThemeContext);
-  const { handleUpdatingUserProfile } = useUpdateUserProfileApi();
+  const { handleUpdatingUserProfile, isLoading: isUpdatingUserProfilePicture } =
+    useUpdateUserProfileApi();
 
   const { handleUploadImage, isLoading: isUploadingImage } =
     useUploadImageApi();
 
-  const { handleDeleteImage, } = useDeleteImageApi();
-
-  const { getUserDetails } = useGetUserDetails();
+  const { handleDeleteImage } = useDeleteImageApi();
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -85,7 +81,7 @@ const EditProfile = ({ showNotification }) => {
   const handleOnClose = () => {
     currentlyOpenedUserProfileModal === 2 &&
       userProfileDispatch(setUserProfileModalNumber(1));
-      currentlyOpenedUserProfileModal === 3 &&
+    currentlyOpenedUserProfileModal === 3 &&
       userProfileDispatch(setUserProfileModalNumber(2));
   };
 
@@ -116,17 +112,54 @@ const EditProfile = ({ showNotification }) => {
     );
   };
 
-  const resetUserStoredInfo = () => {
-    removeItem(STORAGE_KEYS.USER_DATA);
-    userProfileDispatch(resetUserDetails());
-    getUserDetails();
+  const resetUserStoredInfo = (uploadedURL) => {
+    const { userDetails } = userProfileDetails;
+    userProfileDispatch(
+      setUserDetails({
+        ...userDetails,
+        profile_photo: uploadedURL || "",
+      })
+    );
+  };
+
+  const updateUserProfilePicture = ({
+    uploadedFile,
+    uploadedImageName,
+    uploadedURL,
+  }) => {
+    setUserProfileImage({
+      file: uploadedFile,
+      src: uploadedURL,
+    });
+    handleUpdatingUserProfile({
+      payload: {
+        profile_photo: uploadedImageName,
+      },
+      onErrorCallback: (errString) => {
+        showNotification(errString, "error");
+        setUserProfileImage(null);
+        userProfileDispatch(setUserProfileModalNumber(1));
+      },
+      onSuccessCallback: () => {
+        resetUserStoredInfo(uploadedURL);
+        userProfileDispatch(setUserProfileModalNumber(1));
+      },
+    });
+  };
+
+  const onErrorUploadingFile = (errMessage) => {
+    showNotification(errMessage, "error");
+    userProfileDispatch(setUserProfileModalNumber(1));
+  };
+
+  const closeCropView = () => {
+    userProfileDispatch(setUserProfileModalNumber(2));
   };
 
   const handleOnRemoveImage = () => {
     handleUpdatingUserProfile({
       payload: {
         profile_photo: "",
-        is_two_factor: userProfileDetails?.userDetails?.is_two_factor,
       },
       onErrorCallback: (errorString) => {
         showNotification(errorString, "error");
@@ -192,6 +225,9 @@ const EditProfile = ({ showNotification }) => {
                       className={[styles.buttonText, styles.cancelButton].join(
                         " "
                       )}
+                      disabled={
+                        isUploadingImage || isUpdatingUserProfilePicture
+                      }
                       icon={
                         <Image src={getImage("trashBlue")} preview={false} />
                       }
@@ -214,13 +250,12 @@ const EditProfile = ({ showNotification }) => {
           isBottomFillSpace
           bottomSection={
             <CropAndRotateImage
-              isLoading={isUploadingImage}
-              file={imageToBeChaged?.file}
-              setFile={setUserProfileImage}
+              isLoading={isUploadingImage || isUpdatingUserProfilePicture}
               photoURL={imageToBeChaged?.src}
               initiateFileUpload={handleUploadImage}
-              handleFileUpload={handleUpdatingUserProfile}
-              {...{ showNotification }}
+              onCancel={closeCropView}
+              onSuccessFileUpload={updateUserProfilePicture}
+              {...{ onErrorUploadingFile, showNotification }}
             />
           }
         />
