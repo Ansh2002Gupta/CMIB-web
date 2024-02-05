@@ -13,6 +13,7 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
+import { CENTRE_DETAILS } from "../../../routes/routeNames";
 import {
   CENTER_END_POINT,
   PLACEMENT_ROUTE,
@@ -71,11 +72,7 @@ const ConfigureCentreContent = () => {
   );
 
   const goToEditCentrePage = (rowData) => {
-    navigate(
-      `/view-centre-details?centreId=${rowData?.centreId}&mode=${
-        true ? "edit" : "view"
-      }`
-    );
+    navigate(`${CENTRE_DETAILS}/${rowData?.id}`);
   };
 
   const onHandleCentreStatus = (centerData) => {
@@ -233,12 +230,15 @@ const ConfigureCentreContent = () => {
       key: "center_code",
       renderText: { visible: true },
     }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.bigSmallCentre" }),
-      dataIndex: "center_type",
-      key: "center_type",
-      renderText: { visible: true },
-    }),
+    {
+      ...renderColumn({
+        title: intl.formatMessage({ id: "label.bigSmallCentre" }),
+        dataIndex: "center_type",
+        key: "center_type",
+        renderText: { visible: true },
+      }),
+      width: "100px",
+    },
     renderColumn({
       title: intl.formatMessage({ id: "label.dateCreated" }),
       dataIndex: "created_at",

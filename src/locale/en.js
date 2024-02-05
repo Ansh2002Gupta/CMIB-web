@@ -182,6 +182,7 @@ const locale = {
   "label.queries": "Queries",
   "label.contactUs": "Contact Us",
   "label.centreDetails": "Centre Details",
+  "label.editCentreDetails": "Edit Centre Details",
   "centre.placeholder.centreName": "Enter Centre Name",
   "centre.placeholder.bigSmallCentre": "Choose Centre Type",
   "centre.placeholder.centreId": "Enter Centre Id",
@@ -350,6 +351,8 @@ const locale = {
   "label.passwordChanged": "Password changed successfully",
   "label.noSessionSetup": "No session is setup currently",
   "label.sessionStatus": "Session Status",
+  "label.path.global-configurations": "Configure centres",
+  "label.path.centre-details": "Edit centre details",
 };
 
 export default locale;
