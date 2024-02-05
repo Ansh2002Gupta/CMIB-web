@@ -26,7 +26,7 @@ import { FIELDS } from "./configureCentreDetailsFields";
 import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
 import { classes } from "./ConfigureCentreDetails.styles";
 import styles from "./ConfigureCentreDetails.module.scss";
-import "./override.css"
+import "./override.css";
 
 const ConfigureCentreDetails = () => {
   const intl = useIntl();
@@ -174,9 +174,7 @@ const ConfigureCentreDetails = () => {
           {(isAddingCentre ||
             isUpdatingCenterDetails ||
             isUpdatingCenterDetails ||
-            isLoading) && (
-            <CustomLoader />
-          )}
+            isLoading) && <CustomLoader />}
           {!isAddingCentre &&
             !isUpdatingCenterDetails &&
             !isUpdatingCenterDetails &&
