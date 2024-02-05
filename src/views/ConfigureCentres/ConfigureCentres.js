@@ -11,7 +11,7 @@ const ConfigureCentres = () => {
     <TwoRow
       isBottomFillSpace
       className={styles.baseLayout}
-      topSection={<ConfigureCentreHeader headingLabel="configureCentres" showButton={true}/>}
+      topSection={<ConfigureCentreHeader showButton={true}/>}
       bottomSection={<ConfigureCentreContent />}
     />
   );
