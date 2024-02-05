@@ -71,12 +71,6 @@
   gap: var(--gapXLarge, 40px);
 }
 
-.profileImageStyle {
-  height: var(--height_150, 150px);
-  width: var(--width_150, 150px);
-  border-radius: var(--radius_50Per, 50%);
-}
-
 .emailAndMobileNoContainer {
   display: flex;
   gap: var(--gapXSmall, 8px);
