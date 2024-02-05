@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import {
   DEFAULT_PAGE_SIZE,
   GENERIC_ERROR_MESSAGE,
@@ -8,9 +8,9 @@ import {
 
 export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   if (date) {
-    return moment(new Date(date)).format(dateFormat);
+    return dayjs(new Date(date)).format(dateFormat);
   }
-  return moment(new Date()).format(dateFormat);
+  return dayjs(new Date()).format(dateFormat);
 };
 
 export const convertStringArrayToObjectOfStringAndIdArray = (
@@ -53,6 +53,19 @@ export function getValidPageSize(currentPageSize) {
     validPageSize = DEFAULT_PAGE_SIZE;
   }
   return validPageSize;
+}
+
+export function getValidFilter(currentFilter) {
+  let decodedFilter;
+  try {
+    const filterParam = currentFilter || "[]";
+    decodedFilter = JSON.parse(decodeURIComponent(filterParam));
+  } catch (e) {
+    console.error("Failed to decode filter parameter:", e);
+    // Fallback to an empty array or some default value
+    decodedFilter = [];
+  }
+  return decodedFilter;
 }
 
 export const toggleSorting = (currentSortValue) => {
@@ -133,4 +146,36 @@ export const getErrorText = (errorText) => {
     return errorText;
   }
   return GENERIC_ERROR_MESSAGE;
+};
+
+export const getImageSource = (uploadedImage) => {
+  if (uploadedImage && typeof uploadedImage === "string") {
+    return uploadedImage;
+  }
+  if (uploadedImage) {
+    return URL.createObjectURL(uploadedImage);
+  }
+  return "";
+};
+
+export const convertPermissionFilter = (roles) => {
+  let result = [
+    {
+      id: 1,
+      name: "Access",
+      isSelected: false,
+      options: [],
+    },
+  ];
+
+  for (const key in roles) {
+    if (roles.hasOwnProperty(key)) {
+      result[0].options.push({
+        optionId: parseInt(key),
+        str: roles[key]?.name,
+      });
+    }
+  }
+
+  return result;
 };

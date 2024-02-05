@@ -31,7 +31,10 @@ function MenuContainer({ openSideMenu, setIsModalOpen, setOpenSideMenu }) {
         collapsedWidth={0}
         trigger={null}
       >
-        <SideMenu logo={<AppLogo />} {...{ setIsModalOpen, setOpenSideMenu }} />
+        <SideMenu
+          logo={<AppLogo className={styles.cmibLogo} />}
+          {...{ setIsModalOpen, setOpenSideMenu }}
+        />
       </Layout.Sider>
     </Layout>
   ) : (
@@ -77,7 +80,7 @@ MenuContainer.defaultProps = {
 MenuContainer.propTypes = {
   setIsModalOpen: PropTypes.func,
   setOpenSideMenu: PropTypes.func,
-  openSideMenu: PropTypes.string,
+  openSideMenu: PropTypes.bool,
 };
 
 export default MenuContainer;

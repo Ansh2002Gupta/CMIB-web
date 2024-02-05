@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Avatar, Dropdown, Space } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 
@@ -9,13 +9,13 @@ import styles from "./profileDropdown.module.scss";
 
 const ProfileDropdown = () => {
   const [userProfileDetails, userProfileDispatch] =
-  useContext(UserProfileContext);
-  const userData= userProfileDetails?.userDetails;
- 
-  const userName = userData?.name||"";
-  const userRole = userData?.user_type||"";
-  const userEmail = userData?.email||"";
-  const userProfilePic = userData?.profile_photo||"";
+    useContext(UserProfileContext);
+  const userData = userProfileDetails?.userDetails;
+
+  const userName = userData?.name || "";
+  const userRole = userData?.user_type || "";
+  const userEmail = userData?.email || "";
+  const userProfilePic = userData?.profile_photo || "";
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const responsive = useResponsive();
@@ -24,9 +24,8 @@ const ProfileDropdown = () => {
     <Dropdown
       dropdownRender={() => (
         <CardDropdownOverlay
-          userName={userName}
-          userEmail={userEmail}
           userProfile={userProfilePic}
+          {...{ userName, userEmail, setDropdownVisible }}
         />
       )}
       trigger={["click"]}

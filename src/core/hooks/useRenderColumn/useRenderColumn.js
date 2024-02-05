@@ -1,8 +1,9 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch } from "antd";
 
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
+import { formatDate } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 
@@ -64,17 +65,19 @@ const useRenderColumn = () => {
       isTypeDate,
       textStyles,
       isCapitalize,
+      mobile,
     } = renderText;
 
     const {
       swithActiveLabel,
       swithInActiveLabel,
       switchToggleHandler = () => {},
+      isActionable = true,
     } = renderSwitch;
 
     const textRenderFormat = ({ text }) => {
       if (isTypeDate) {
-        return moment(new Date(text)).format(dateFormat);
+        return formatDate({ date: text });
       }
       if (includeDotAfterText) {
         return `${text} .`;
@@ -104,8 +107,8 @@ const useRenderColumn = () => {
       (columnObject.sorter = (() => {
         if (sortTypeDate) {
           return (a, b) =>
-            moment(new Date(a[sortKey])).unix() -
-            moment(new Date(b[sortKey])).unix();
+            dayjs(new Date(a[sortKey])).unix() -
+            dayjs(new Date(b[sortKey])).unix();
         }
         if (sortTypeText) {
           return (a, b) => a[sortKey].localeCompare(b[sortKey]);
@@ -120,12 +123,27 @@ const useRenderColumn = () => {
     render && (columnObject.render = render);
 
     renderText?.visible &&
-      (columnObject.render = (text) => {
+      (columnObject.render = (text, rowData) => {
         return {
           props: {
             className: styles.tableCellStyles,
           },
-          children: (
+          children: mobile ? (
+            <p
+              className={[
+                textStyles,
+                isTextBold ? styles.boldText : "",
+                styles.textEllipsis,
+                isCapitalize ? styles.capitalize : "",
+              ].join(" ")}
+            >
+              {`${
+                rowData?.mobile_country_code
+                  ? rowData?.mobile_country_code
+                  : "+91"
+              }-${text}`}
+            </p>
+          ) : (
             <p
               className={[
                 textStyles,
@@ -145,11 +163,13 @@ const useRenderColumn = () => {
         const { status } = data;
         return (
           <div className={styles.centreStatusContainer}>
-            <Switch
-              checked={status}
-              onClick={() => switchToggleHandler(data)}
-              className={status ? styles.switchBgColor : ""}
-            />
+            {isActionable && (
+              <Switch
+                checked={status}
+                onClick={() => switchToggleHandler(data)}
+                className={status ? styles.switchBgColor : ""}
+              />
+            )}
             <p>
               {status
                 ? swithActiveLabel || intl.formatMessage({ id: "label.active" })

@@ -31,6 +31,7 @@ const CustomInput = ({
   messageStyles: customMessageStyles,
   messageToShow,
   min,
+  onBlur,
   onChange,
   onSelectItem,
   onSuffixElementClick,
@@ -70,7 +71,7 @@ const CustomInput = ({
           type === "mobile" ? styles.mobile : "",
         ].join(" ")}
       >
-        {(type === "select" || type === "mobile") && (
+        {type === "select" && (
           <>
             <Select
               mode={isMultiSelect ? "multiple" : ""}
@@ -94,22 +95,17 @@ const CustomInput = ({
             />
           </>
         )}
-        {((type !== "select" && type !== "inputNumber") ||
-          type === "mobile") && (
+        {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
           <Input
             ref={isSuffixRequiredForPassword ? inputFieldRef : null}
             type={type || "text"}
-            className={[
-              styles.inputField,
-              type === "mobile" ? styles.mobileInput : "",
-              ,
-              customInputStyles,
-            ].join(" ")}
+            className={[styles.inputField, customInputStyles].join(" ")}
             {...{
               value,
               placeholder,
               disabled,
               onChange,
+              onBlur,
             }}
             prefix={isPrefixRequired ? prefixElement : null}
             suffix={
@@ -209,6 +205,7 @@ CustomInput.defaultProps = {
   messageStyles: "",
   messageToShow: "",
   min: 0,
+  onBlur: () => {},
   onChange: () => {},
   onSelectItem: () => {},
   onSuffixElementClick: () => {},
@@ -244,6 +241,7 @@ CustomInput.propTypes = {
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
+  onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onSelectItem: PropTypes.func,
   onSuffixElementClick: PropTypes.func,

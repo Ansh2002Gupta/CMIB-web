@@ -35,6 +35,14 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }
+.customContainerStyles {
+  width: var(--width_100);
+}
+
+.inputNumberStyle {
+  border-top-left-radius: var(--radiusNone);
+  border-bottom-left-radius: var(--radiusNone);
+}
 
 .label {
   color: var(--subHeadingColor);
@@ -51,7 +59,7 @@
 .twoFactorContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--gapSmall);
+  gap: var(--gapXXSmall);
 }
 
 .input {
@@ -112,6 +120,8 @@
 
 .chipText {
   color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 .desrciptionText {

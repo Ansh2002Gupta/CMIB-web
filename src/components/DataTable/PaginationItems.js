@@ -6,7 +6,7 @@ import { Button, Image, Typography } from "antd";
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./DataTable.module.scss";
 
-const PaginationItems = ({current, type, originalElement}) => {
+const PaginationItems = ({ current, disabled, type, originalElement }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
 
@@ -15,6 +15,7 @@ const PaginationItems = ({current, type, originalElement}) => {
   if (type === "prev") {
     return (
       <Button
+        {...{ disabled }}
         className={[styles.nextAndPrevArrowContainer, styles.rowReverse].join(
           " "
         )}
@@ -34,7 +35,7 @@ const PaginationItems = ({current, type, originalElement}) => {
   }
   if (type === "next") {
     return (
-      <Button className={styles.nextAndPrevArrowContainer}>
+      <Button className={styles.nextAndPrevArrowContainer} {...{ disabled }}>
         <Image src={getImage("arrowRight")} preview={false} />
         {responsive.isLg ? (
           <Typography className={styles.nextAndPrevText}>

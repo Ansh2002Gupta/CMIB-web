@@ -69,7 +69,8 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
     if (skipApiCallOnMount) {
       return;
     }
-    fetchData({});
+
+    fetchData({ queryParamsObject: {} });
   }, [url]);
 
   useEffect(() => {
