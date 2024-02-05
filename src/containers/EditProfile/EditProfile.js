@@ -111,14 +111,48 @@ const EditProfile = ({ showNotification }) => {
     );
   };
 
-  const resetUserStoredInfo = () => {
+  const resetUserStoredInfo = (uploadedURL) => {
     const { userDetails } = userProfileDetails;
     userProfileDispatch(
       setUserDetails({
         ...userDetails,
-        profile_photo: "",
+        profile_photo: uploadedURL || "",
       })
     );
+  };
+
+  const updateUserProfilePicture = ({
+    uploadedFile,
+    uploadedImageName,
+    uploadedURL,
+  }) => {
+    setUserProfileImage({
+      file: uploadedFile,
+      src: uploadedURL,
+    });
+    handleUpdatingUserProfile({
+      payload: {
+        profile_photo: uploadedImageName,
+      },
+      onErrorCallback: (errString) => {
+        showNotification(errString, "error");
+        setUserProfileImage(null);
+        userProfileDispatch(setUserProfileModalNumber(1));
+      },
+      onSuccessCallback: () => {
+        resetUserStoredInfo(uploadedURL);
+        userProfileDispatch(setUserProfileModalNumber(1));
+      },
+    });
+  };
+
+  const onErrorUploadingFile = (errMessage) => {
+    showNotification(errMessage, "error");
+    userProfileDispatch(setUserProfileModalNumber(1));
+  };
+
+  const closeCropView = () => {
+    userProfileDispatch(setUserProfileModalNumber(2));
   };
 
   const handleOnRemoveImage = () => {
@@ -214,12 +248,11 @@ const EditProfile = ({ showNotification }) => {
           bottomSection={
             <CropAndRotateImage
               isLoading={isUploadingImage}
-              file={imageToBeChaged?.file}
-              setFile={setUserProfileImage}
               photoURL={imageToBeChaged?.src}
               initiateFileUpload={handleUploadImage}
-              handleFileUpload={handleUpdatingUserProfile}
-              {...{ showNotification }}
+              onCancel={closeCropView}
+              onSuccessFileUpload={updateUserProfilePicture}
+              {...{ onErrorUploadingFile, showNotification }}
             />
           }
         />
