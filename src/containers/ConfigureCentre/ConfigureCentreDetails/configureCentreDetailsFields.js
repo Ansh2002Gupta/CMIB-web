@@ -6,7 +6,7 @@ export const FIELDS = (centreName, bigSmallCentre, centreId) => {
     {
       id: 1,
       headingIntl: "centreName",
-      label: "centreName",
+      label: "centre_name",
       value: centreName,
       rules: [
         {
@@ -18,7 +18,7 @@ export const FIELDS = (centreName, bigSmallCentre, centreId) => {
     {
       id: 2,
       headingIntl: "bigSmallCentre",
-      label: "bigSmallCentre",
+      label: "centre_type",
       value: bigSmallCentre,
       selectOptions: CENTRE_TYPE,
       rules: [
@@ -31,7 +31,7 @@ export const FIELDS = (centreName, bigSmallCentre, centreId) => {
     {
       id: 3,
       headingIntl: "centreId",
-      label: "centreId",
+      label: "centre_code",
       value: centreId,
       rules: [
         {
