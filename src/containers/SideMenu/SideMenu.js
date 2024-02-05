@@ -187,9 +187,11 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
           <TwoRow
             className={styles.sessionContainer}
             topSection={
-              <Typography className={styles.sectionHeading}>
-                {intl.formatMessage({ id: "label.session" })}
-              </Typography>
+              !openSessionSelector && (
+                <Typography className={styles.sectionHeading}>
+                  {intl.formatMessage({ id: "label.session" })}
+                </Typography>
+              )
             }
             bottomSection={
               <SideMenuItems
@@ -201,7 +203,6 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                 }))}
                 handleOnSelectItem={handleOnSelectSession}
                 selectedItem={selectedSession}
-                sectionName="session"
               />
             }
           />

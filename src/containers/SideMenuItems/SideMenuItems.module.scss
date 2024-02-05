@@ -19,3 +19,46 @@
   width: var(--width_140);
   white-space: nowrap;
 }
+
+.searchIcon {
+  width: var(--width_30);
+  height: var(--height_30);
+  padding-right: var(--paddingExtraSmall);
+  padding-bottom: 4px;
+}
+
+.searchBar {
+  // width: 30%;
+  min-height: 44px;
+  border-radius: var(--radiusXLg);
+  background-color: #141b43 !important;
+  input {
+    background-color: #141b43 !important;
+
+    color: var(--inputText) !important;
+    font-size: var(--fontSizeSmall) !important;
+    font-weight: var(--fontWeightMedium) !important;
+  }
+}
+
+.imageAndSearchBarContainer {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 16px 16px 16px;
+  gap: 8px;
+}
+
+.searchBarContainer {
+  width: 100%;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  min-height: 44px;
+  background-color: #141b43 !important;
+}
