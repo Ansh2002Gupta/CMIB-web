@@ -27,11 +27,21 @@
   cursor: pointer;
 }
 
+.initialsAvatar {
+  background-color: var(--blackBg, #000833);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .profileAvatar {
   width: var(--width_104, 104px);
   height: var(--height_104, 104px);
   font-size: var(--fontSizeLargeHeading, 36px);
-  background-color: var(--blackBg, #000833);
+}
+
+.initialsAvatar > span {
+  font-weight: 500;
 }
 
 @media (max-width: 551px) {

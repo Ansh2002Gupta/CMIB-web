@@ -41,7 +41,13 @@ const ProfileIcon = ({
       ].join(" ")}
     >
       {imageError || !profileImage ? (
-        <Avatar className={[styles.profileAvatar, profileImageStyle].join(" ")}>
+        <Avatar
+          className={[
+            styles.initialsAvatar,
+            styles.profileAvatar,
+            profileImageStyle,
+          ].join(" ")}
+        >
           {initials}
         </Avatar>
       ) : (
