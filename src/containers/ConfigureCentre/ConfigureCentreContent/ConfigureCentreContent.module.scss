@@ -1,23 +1,24 @@
 .tableContainer {
   background-color: var(--blueBg);
-  width: 100%;
+  width: var(--fullwidth);
   display: flex;
   flex-direction: column;
   gap: var(--gapSmall);
   padding: var(--paddingMedium);
   flex: 1;
+  overflow: auto;
 }
 
 .searchIcon {
   width: var(--width_30);
   height: var(--height_30);
   padding-right: var(--paddingExtraSmall);
-  padding-bottom: 4px;
+  padding-bottom: var(--paddingXXSmall);
 }
 
 .searchBar {
-  width: 30%;
-  min-height: 44px;
+  width: var(--width_30Per);
+  min-height: var(--height_44);
   border-radius: var(--radiusXLg);
 
   input {
@@ -63,7 +64,7 @@ input::placeholder {
 
 @media screen and (max-width: 1023px) {
   .searchBar {
-    width: 50%;
+    width: var(--halfWidth);
   }
 }
 
@@ -73,7 +74,7 @@ input::placeholder {
   }
 
   .searchBar {
-    width: 100%;
-    min-height: 50px;
+    width: var(--fullWidth);
+    min-height: var(--height_50);
   }
 }

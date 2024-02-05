@@ -36,10 +36,6 @@
 }
 
 @media screen and (max-width: 440px) {
-  .headerResponsiveStyle {
-    font-size: var(--fontSizeLarge);
-  }
-
   .btnCustomStyles {
     min-height: var(--height_20);
     padding: var(--paddingXXSmall) var(--paddingExtraSmall);
