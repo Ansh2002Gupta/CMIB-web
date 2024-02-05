@@ -144,3 +144,13 @@ export const getImageSource = (uploadedImage) => {
   }
   return "";
 };
+
+export const checkImageURL = (url, callback) => {
+  const img = new Image();
+  img.onload = function () {
+    callback(true);
+  };
+  img.onerror = function () {
+    callback(false);
+  };
+};

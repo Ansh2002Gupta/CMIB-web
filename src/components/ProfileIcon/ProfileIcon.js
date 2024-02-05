@@ -91,14 +91,14 @@ const ProfileIcon = ({
 
 ProfileIcon.propTypes = {
   firstName: PropTypes.string,
-  icon: PropTypes.element,
+  icon: PropTypes.string,
   iconType: PropTypes.string,
-  imageContainerStyle: PropTypes.object,
-  initialContainerStyle: PropTypes.object,
+  imageContainerStyle: PropTypes.string,
+  initialContainerStyle: PropTypes.string,
   lastName: PropTypes.string,
   onClick: PropTypes.func,
   profileImage: PropTypes.string,
-  profileImageStyle: PropTypes.object,
+  profileImageStyle: PropTypes.string,
   showEditModal: PropTypes.bool,
 };
 
