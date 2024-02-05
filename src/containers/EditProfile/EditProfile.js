@@ -38,7 +38,8 @@ const EditProfile = ({ showNotification }) => {
   const lastName = userName?.split(" ")?.[1] || "";
   const [imageToBeChaged, setImageToBeChanged] = useState(null);
   const { getImage } = useContext(ThemeContext);
-  const { handleUpdatingUserProfile } = useUpdateUserProfileApi();
+  const { handleUpdatingUserProfile, isLoading: isUpdatingUserProfilePicture } =
+    useUpdateUserProfileApi();
 
   const { handleUploadImage, isLoading: isUploadingImage } =
     useUploadImageApi();
@@ -159,7 +160,6 @@ const EditProfile = ({ showNotification }) => {
     handleUpdatingUserProfile({
       payload: {
         profile_photo: "",
-        is_two_factor: userProfileDetails?.userDetails?.is_two_factor,
       },
       onErrorCallback: (errorString) => {
         showNotification(errorString, "error");
@@ -225,6 +225,9 @@ const EditProfile = ({ showNotification }) => {
                       className={[styles.buttonText, styles.cancelButton].join(
                         " "
                       )}
+                      disabled={
+                        isUploadingImage || isUpdatingUserProfilePicture
+                      }
                       icon={
                         <Image src={getImage("trashBlue")} preview={false} />
                       }
@@ -247,7 +250,7 @@ const EditProfile = ({ showNotification }) => {
           isBottomFillSpace
           bottomSection={
             <CropAndRotateImage
-              isLoading={isUploadingImage}
+              isLoading={isUploadingImage || isUpdatingUserProfilePicture}
               photoURL={imageToBeChaged?.src}
               initiateFileUpload={handleUploadImage}
               onCancel={closeCropView}

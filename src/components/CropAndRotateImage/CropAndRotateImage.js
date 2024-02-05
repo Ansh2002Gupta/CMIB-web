@@ -109,15 +109,15 @@ const CropAndRotateImage = ({
       </div>
       <div className={styles.actionBtnContainer}>
         <CustomButton
-          customStyle={styles.cancelButton}
-          onClick={onCancel}
-          isBtnDisable={isCroppingImage || isLoading}
           btnText={intl.formatMessage({ id: "label.cancel" })}
+          customStyle={`${styles.cancelButton} ${styles.commonButtonStyles}`}
+          onClick={onCancel}
         />
         <CustomButton
-          onClick={cropImage}
-          isBtnDisable={isCroppingImage}
           btnText={intl.formatMessage({ id: "label.save" })}
+          customStyle={`${styles.saveButton} ${styles.commonButtonStyles}`}
+          isBtnDisable={isCroppingImage || isLoading}
+          onClick={cropImage}
         />
       </div>
     </div>
