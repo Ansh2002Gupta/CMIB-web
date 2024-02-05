@@ -60,13 +60,6 @@
   border-radius: var(--radius_50Per, 50%);
 }
 
-.initialContainerStyle {
-  background-color: var(--bodyBg, #fff);
-  border-radius: var(--radius_50Per, 50%);
-  height: var(--height_100, 100px);
-  width: var(--width_100, 100px);
-}
-
 .crossIconStyle {
   min-height: var(--height_24, 24px);
   max-height: var(--height_24, 24px);
@@ -92,9 +85,8 @@
 }
 
 .profileImageStyle {
-  height: var(--height_150, 150px);
-  width: var(--width_150, 150px);
-  border-radius: var(--radius_50Per, 50%);
+  height: var(--height_150, 150px) !important;
+  width: var(--width_150, 150px) !important;
 }
 
 .innerContainer-accessAndDateContainer {

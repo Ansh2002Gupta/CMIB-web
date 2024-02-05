@@ -26,5 +26,6 @@
 
 .percentageText {
   font-size: var(--fontSizeSmall, 14px);
-  font-weight: var(--fontWeightBold, 600);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--textDark);
 }

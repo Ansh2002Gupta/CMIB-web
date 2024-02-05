@@ -35,14 +35,12 @@
 }
 
 .rotateIcon {
-  margin-top: var(--margin_16, 16px);
   cursor: pointer;
 }
 
 .containerWithRotate {
   display: flex;
   gap: var(--gapSmallMedium, 12px);
-  align-items: center;
-  justify-content: center;
+  align-items: baseline;
   width: var(--fullWidth, 100%);
 }

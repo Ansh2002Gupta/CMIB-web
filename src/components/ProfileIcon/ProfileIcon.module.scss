@@ -15,29 +15,6 @@
   margin-top: var(--margin_40, 40px);
 }
 
-.profileImageStyle {
-  min-width: var(--width_120, 120px);
-  max-width: var(--width_120, 120px);
-  min-height: var(--height_120, 120px);
-  max-height: var(--height_120, 120px);
-  border-radius: var(--radius_50Per, 50%);
-}
-
-.modalProfileImage {
-  border-radius: var(--radius_50Per, 50%);
-  min-height: var(--height_104, 104px);
-  max-height: var(--height_104, 104px);
-  min-width: var(--width_104, 104px);
-  max-width: var(--width_104, 104px);
-}
-
-.initialsText {
-  font-size: var(--fontSizeSmall, 14px);
-  font-weight: var(--fontWeightMedium, 500);
-  min-width: var(--width_130, 130px);
-  color: var(--bodyBg, #fff);
-}
-
 .iconContainer {
   position: absolute;
   bottom: -5px;
@@ -50,52 +27,15 @@
   cursor: pointer;
 }
 
-.initials {
-  font-size: var(--fontSizeHeading, 32px);
-  border-radius: var(--radius_50Per, 50%);
-  border: 1px solid var(--textBold);
-  padding: var(--paddingMedium, 24px) var(--padding_30, 30px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.circularContainer {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 8px solid var(--bodyBg, #fff);
-  background-color: var(--textBold, #000833) !important;
+.profileAvatar {
+  width: var(--width_104, 104px);
+  height: var(--height_104, 104px);
+  font-size: var(--fontSizeLargeHeading, 36px);
+  background-color: var(--blackBg, #000833);
 }
 
 @media (max-width: 551px) {
-  .profileImageStyle {
-    min-width: var(--width_70, 70px);
-    min-height: var(height_70, 70px);
-  }
-
-  .modalProfileImage {
-    min-width: var(--width_80, 80px);
-    max-width: var(--width_80, 80px);
-    max-height: var(--height_80, 80px);
-    min-height: var(--height_80, 80px);
-    margin-bottom: 12px;
-  }
-
-  .profileImageStyle {
-    min-width: var(--width_100, 100px);
-    max-width: var(--width_100, 100px);
-    min-height: var(--height_100, 100px);
-    max-height: var(--height_100, 100px);
-  }
-
   .editProfileContainer {
     margin-top: var(--margin_20, 20px);
-  }
-
-  .circularContainer {
-    width: var(--width_90, 90px);
-    height: var(--height_90, 90px);
-    margin-bottom: 12px;
   }
 }

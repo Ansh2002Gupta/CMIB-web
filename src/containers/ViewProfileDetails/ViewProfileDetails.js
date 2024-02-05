@@ -17,9 +17,7 @@ import {
   setUserDetails,
   setUserProfileModalNumber,
 } from "../../globalContext/userProfile/userProfileActions";
-import {
-  USER_PROFILE_QUERY_PARAMS,
-} from "../../constant/constant";
+import { USER_PROFILE_QUERY_PARAMS } from "../../constant/constant";
 import { classes } from "./ViewProfileDetails.styles";
 import styles from "./ViewProfileDetails.module.scss";
 
@@ -126,7 +124,6 @@ const ViewProfileDetails = ({ showNotification }) => {
                 lastName={lastName}
                 profileImage={profileImage}
                 imageContainerStyle={styles.imageContainerStyle}
-                initialContainerStyle={styles.initialContainerStyle}
                 onClick={() => {
                   userProfileDispatch(setUserProfileModalNumber(2));
                 }}
@@ -141,7 +138,7 @@ const ViewProfileDetails = ({ showNotification }) => {
           <ThreeRow
             className={styles.bottomBox}
             topSection={
-              <div className={[styles.secondSectionStyle].join(" ")}>
+              <div className={styles.secondSectionStyle}>
                 <Typography className={styles.headingText}>
                   {`${userName}`}
                 </Typography>
@@ -192,7 +189,7 @@ const ViewProfileDetails = ({ showNotification }) => {
                   size={!responsive.isSm ? "small" : "default"}
                   disabled={isLoading}
                 />
-                <Typography className={styles.darkText}>
+                <Typography className={styles.lightText}>
                   {intl.formatMessage({
                     id: "account.enableTwoFactorAuthentication",
                   })}
