@@ -72,9 +72,7 @@ const ConfigureCentreContent = () => {
   );
 
   const goToEditCentrePage = (rowData) => {
-    navigate(
-      `${CENTRE_DETAILS}/${rowData?.id}?mode=edit`
-    );
+    navigate(`${CENTRE_DETAILS}/${rowData?.id}`);
   };
 
   const onHandleCentreStatus = (centerData) => {
@@ -232,12 +230,15 @@ const ConfigureCentreContent = () => {
       key: "center_code",
       renderText: { visible: true },
     }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.bigSmallCentre" }),
-      dataIndex: "center_type",
-      key: "center_type",
-      renderText: { visible: true },
-    }),
+    {
+      ...renderColumn({
+        title: intl.formatMessage({ id: "label.bigSmallCentre" }),
+        dataIndex: "center_type",
+        key: "center_type",
+        renderText: { visible: true },
+      }),
+      width: "100px",
+    },
     renderColumn({
       title: intl.formatMessage({ id: "label.dateCreated" }),
       dataIndex: "created_at",

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useParams, useSearchParams } from "react-router-dom";
-import { Select, Spin, Typography } from "antd";
+import { useParams } from "react-router-dom";
+import { Select, Typography } from "antd";
 
 import { Base, TwoColumn, TwoRow } from "../../../core/layouts";
 
@@ -23,7 +23,6 @@ import {
 } from "../../../constant/apiEndpoints";
 import { CONFIGURE_CENTRES } from "../../../routes/routeNames";
 import { FIELDS } from "./configureCentreDetailsFields";
-import { FORM_STATES } from "../../../constant/constant";
 import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
 import { classes } from "./ConfigureCentreDetails.styles";
 import styles from "./ConfigureCentreDetails.module.scss";
@@ -38,9 +37,6 @@ const ConfigureCentreDetails = () => {
   const [formData, setFormData] = useState(INITIAL_CENTRE_DETAILS);
 
   const { centreId } = useParams();
-  const [searchParams] = useSearchParams();
-  const currentFormState = searchParams.get("mode") || FORM_STATES.EMPTY;
-  const isEditMode = currentFormState === FORM_STATES.EDITABLE;
   const { data, error, fetchData, isLoading, isError } = useFetch({
     url: PLACEMENT_ROUTE + CENTER_END_POINT + `/${centreId}`,
     otherOptions: {
@@ -114,7 +110,7 @@ const ConfigureCentreDetails = () => {
       center_type: formData.centre_type,
       status: formData.status,
     };
-    if (!isEditMode) {
+    if (!centreId) {
       addNewCenter(
         payload,
         () => {
@@ -139,19 +135,19 @@ const ConfigureCentreDetails = () => {
   };
 
   const handleTryAgain = () => {
-    if (isEditMode) {
+    if (centreId) {
       fetchData({});
     }
   };
 
   useEffect(() => {
-    if (isEditMode) {
+    if (centreId) {
       fetchData({});
     }
-  }, [currentFormState]);
+  }, [centreId]);
 
   useEffect(() => {
-    if (isEditMode) {
+    if (centreId) {
       setFormData({
         centre_code: data?.center_code,
         centre_name: data?.center_name,
@@ -294,7 +290,7 @@ const ConfigureCentreDetails = () => {
                       <CustomButton
                         textStyle={styles.saveButtonTextStyles}
                         btnText={intl.formatMessage({
-                          id: `label.${isEditMode ? "saveChanges" : "add"}`,
+                          id: `label.${centreId ? "saveChanges" : "add"}`,
                         })}
                         onClick={handleSave}
                         isBtnDisable={isAddBtnDisable}
