@@ -49,10 +49,6 @@
   min-width: auto;
 }
 
-.suffixElement {
-  cursor: pointer;
-}
-
 .mobile {
   display: flex;
   gap: var(--gapXSmall);
@@ -64,11 +60,15 @@
 }
 
 .selectOptionsMobileStyles {
+  flex: 1;
   min-width: 100px;
 }
 
 .inputNumberStyles {
-  min-width: 100%;
+  padding-top: var(--paddingExtraSmall);
+  flex: 4;
+  align-items: center;
+  justify-content: center;
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightMedium);
