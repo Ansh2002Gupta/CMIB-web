@@ -26,7 +26,6 @@ const ProfileIcon = ({
 
   const handleImgError = () => {
     setImageError(true);
-    return true;
   };
 
   const initials = getInitials(firstName, lastName);
@@ -42,7 +41,13 @@ const ProfileIcon = ({
       ].join(" ")}
     >
       {imageError || !profileImage ? (
-        <Avatar className={[styles.profileAvatar, profileImageStyle].join(" ")}>
+        <Avatar
+          className={[
+            styles.initialsAvatar,
+            styles.profileAvatar,
+            profileImageStyle,
+          ].join(" ")}
+        >
           {initials}
         </Avatar>
       ) : (
@@ -52,7 +57,7 @@ const ProfileIcon = ({
           onError={handleImgError}
         />
       )}
-      {icon && (
+      {!!icon && (
         <div className={styles.iconContainer}>
           <Image
             preview={false}

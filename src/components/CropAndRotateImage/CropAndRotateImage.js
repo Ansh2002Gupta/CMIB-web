@@ -9,27 +9,16 @@ import { ThemeContext } from "core/providers/theme";
 import CustomButton from "../CustomButton";
 import ZoomSliderWithInfo from "../ZoomSliderWithInfo/ZoomSliderWithInfo";
 import getCroppedImg from "../../constant/cropImageUtils";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import {
-  ROTATE_IMAGE_BY,
-  ZOOM_CONSTANT,
-} from "../../constant/constant";
-import {
-  setUserDetails,
-  setUserProfileModalNumber,
-} from "../../globalContext/userProfile/userProfileActions";
-import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
+import { ROTATE_IMAGE_BY, ZOOM_CONSTANT } from "../../constant/constant";
 import styles from "./CropAndRotateImage.module.scss";
 
 const CropAndRotateImage = ({
-  file,
-  handleFileUpload,
-  heading,
   initiateFileUpload,
-  photoURL,
-  setFile,
-  showNotification,
   isLoading,
+  onCancel,
+  onErrorUploadingFile,
+  onSuccessFileUpload,
+  photoURL,
 }) => {
   const intl = useIntl();
 
@@ -41,39 +30,6 @@ const CropAndRotateImage = ({
   const [isErrorCroppingImage, setIsErrorCroppingImage] = useState(false);
 
   const { getImage } = useContext(ThemeContext);
-  const [userProfileDetails, userProfileDispatch] =
-    useContext(UserProfileContext);
-
-  const resetUserStoredInfo = (uploadedURL) => {
-    const { userDetails } = userProfileDetails;
-    userProfileDispatch(
-      setUserDetails({
-        ...userDetails,
-        profile_photo: uploadedURL,
-      })
-    );
-  };
-
-  const uploadImageToServer = ({ uploadedFile, uploadedURL }) => {
-    setFile({
-      file: uploadedFile,
-      src: uploadedURL,
-    });
-    handleFileUpload({
-      payload: {
-        profile_photo: uploadedURL,
-      },
-      onErrorCallback: (errString) => {
-        showNotification(errString, "error");
-        setFile(null);
-        userProfileDispatch(setUserProfileModalNumber(1));
-      },
-      onSuccessCallback: () => {
-        resetUserStoredInfo(uploadedURL);
-        userProfileDispatch(setUserProfileModalNumber(1));
-      },
-    });
-  };
 
   const cropImage = async () => {
     try {
@@ -86,26 +42,23 @@ const CropAndRotateImage = ({
       );
       setIsCroppingImage(false);
       initiateFileUpload({
-        onSuccessCallback: (imgURL) => {
-          uploadImageToServer({
-            uploadedFile: croppedFile,
-            uploadedURL: imgURL,
-          });
+        onSuccessCallback: (imgURL, imgName) => {
+          onSuccessFileUpload &&
+            onSuccessFileUpload({
+              uploadedFile: croppedFile,
+              uploadedImageName: imgName,
+              uploadedURL: imgURL,
+            });
         },
         file: croppedFile,
-        onErrorCallback: (errString) => {
-          showNotification(errString, "error");
-          userProfileDispatch(setUserProfileModalNumber(1));
+        onErrorCallback: (errMessage) => {
+          onErrorUploadingFile && onErrorUploadingFile(errMessage);
         },
       });
     } catch (error) {
       console.log(error);
       setIsErrorCroppingImage(true);
     }
-  };
-
-  const cancelCropHandler = () => {
-    userProfileDispatch(setUserProfileModalNumber(2));
   };
 
   const resetStates = () => {
@@ -156,15 +109,15 @@ const CropAndRotateImage = ({
       </div>
       <div className={styles.actionBtnContainer}>
         <CustomButton
-          customStyle={styles.cancelButton}
-          onClick={cancelCropHandler}
-          isBtnDisable={isCroppingImage || isLoading}
           btnText={intl.formatMessage({ id: "label.cancel" })}
+          customStyle={`${styles.cancelButton} ${styles.commonButtonStyles}`}
+          onClick={onCancel}
         />
         <CustomButton
-          onClick={cropImage}
-          isBtnDisable={isCroppingImage}
           btnText={intl.formatMessage({ id: "label.save" })}
+          customStyle={`${styles.saveButton} ${styles.commonButtonStyles}`}
+          isBtnDisable={isCroppingImage || isLoading}
+          onClick={cropImage}
         />
       </div>
     </div>
@@ -172,22 +125,21 @@ const CropAndRotateImage = ({
 };
 
 CropAndRotateImage.defaultProps = {
-  file: null,
-  handleFileUpload: () => {},
-  heading: "Edit Picture",
   initiateFileUpload: () => {},
+  onCancel: () => {},
+  onErrorUploadingFile: () => {},
+  onSuccessFileUpload: () => {},
   photoURL: "",
   setFile: () => {},
 };
 
 CropAndRotateImage.propTypes = {
-  file: PropTypes.object,
-  handleFileUpload: PropTypes.func,
-  heading: PropTypes.string,
   initiateFileUpload: PropTypes.func,
+  isLoading: PropTypes.bool,
+  onCancel: PropTypes.func,
+  onErrorUploadingFile: PropTypes.func,
+  onSuccessFileUpload: PropTypes.func,
   photoURL: PropTypes.string,
-  setFile: PropTypes.func,
-  setPhotoURL: PropTypes.func,
 };
 
 export default CropAndRotateImage;
