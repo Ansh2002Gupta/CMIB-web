@@ -75,7 +75,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (loginApiStatus === "success") {
-      if (!loginResponse) {
+      if (loginResponse?.token) {
         setCurrentActiveScreen(2);
         return;
       }
@@ -230,7 +230,7 @@ const LoginForm = () => {
                 handleCheckOTP({
                   onSuccessCallback: () => navigate(DASHBOARD),
                   payload: {
-                    email: formInputs.userName,
+                    token: loginResponse?.token,
                     otp,
                     two_factor_check: 1,
                   },
