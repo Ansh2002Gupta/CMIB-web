@@ -233,7 +233,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                                         {convertdateToStringDate(item)}
                                       </Typography>
                                       <Image
-                                        src={getImage("cross")}
+                                        src={getImage("cancel")}
                                         className={styles.crossIcon}
                                         preview={false}
                                         onClick={() => {
