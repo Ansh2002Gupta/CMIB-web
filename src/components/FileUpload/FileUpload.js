@@ -16,6 +16,7 @@ import styles from "./FileUpload.module.scss";
 const FileUpload = ({
   heading,
   isFormEditable,
+  name,
   subHeading,
   updateUserData,
   userImageName,
@@ -78,13 +79,15 @@ const FileUpload = ({
     updateUserData("profile_photo", "");
   };
 
+  console.log(name, "name..");
+
   return (
     <Base className={styles.container}>
       <Typography className={styles.headingText}>{heading}</Typography>
       <div className={styles.uploadBottomContainer}>
         <Typography className={styles.subHeadingText}>{subHeading}</Typography>
         {notificationContextHolder}
-        {userProfilePic ? (
+        {userProfilePic || !isFormEditable ? (
           <UserImage
             onTrashClick={removeSelctedImage}
             src={userProfilePic}
@@ -126,6 +129,7 @@ const FileUpload = ({
 FileUpload.defaultProps = {
   heading: "Profile Photo",
   isFormEditable: false,
+  name: "",
   subHeading: "Photo",
   updateUserData: () => {},
   userProfilePic: "",
@@ -135,6 +139,7 @@ FileUpload.defaultProps = {
 FileUpload.propTypes = {
   heading: PropTypes.string,
   isFormEditable: PropTypes.bool,
+  name: PropTypes.string,
   subHeading: PropTypes.string,
   updateUserData: PropTypes.func,
   userProfilePic: PropTypes.string,

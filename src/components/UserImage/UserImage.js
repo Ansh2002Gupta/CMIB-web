@@ -17,6 +17,8 @@ const UserImage = ({
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
 
+  console.log(src, "src..");
+
   return (
     <div className={[styles.container].join(" ")}>
       <Image
