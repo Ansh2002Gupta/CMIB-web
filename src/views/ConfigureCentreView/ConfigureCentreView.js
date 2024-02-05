@@ -11,7 +11,7 @@ const ConfigureCentreView = () => {
     <TwoRow
       isBottomFillSpace
       className={styles.baseLayout}
-      topSection={<ConfigureCentreHeader headingLabel="addNewCentre" showButton={false}/>}
+      topSection={<ConfigureCentreHeader showButton={false}/>}
       bottomSection={<ConfigureCentreDetails />}
     />
   );

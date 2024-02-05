@@ -68,13 +68,6 @@ export function getValidFilter(currentFilter) {
   return decodedFilter;
 }
 
-export const toggleSorting = (currentSortValue) => {
-  if (SORT_VALUES.ASCENDING === currentSortValue) {
-    return SORT_VALUES.DESCENDING;
-  }
-  return SORT_VALUES.ASCENDING;
-};
-
 export function getCurrentActiveTab(currentTabValue, validTabsValueArray) {
   if (!currentTabValue || !validTabsValueArray.includes(currentTabValue)) {
     return "1";
@@ -105,6 +98,13 @@ export const getAccessibleModules = (useRoles, modules) => {
   });
 
   return filteredModules;
+};
+
+export const toggleSorting = (currentSortValue) => {
+  if (SORT_VALUES.ASCENDING === currentSortValue) {
+    return SORT_VALUES.DESCENDING;
+  }
+  return SORT_VALUES.ASCENDING;
 };
 
 export function filterMenuData(modules, menuItems) {
