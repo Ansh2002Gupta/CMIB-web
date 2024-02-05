@@ -150,7 +150,7 @@ const controlMenu = [
   },
   {
     label: MENU_KEYS.SUPPORT_EMAIL_MANGEMENT,
-    key: "/activity-logs",
+    key: "/email-management",
     icon: <EmailAlias />,
     selectedIcon: <SelectedEmailAlias />,
   },

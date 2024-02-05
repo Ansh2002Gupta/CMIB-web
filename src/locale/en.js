@@ -328,6 +328,10 @@ const locale = {
   "label.disable": "Disable",
   "label.path.users": "Manage Users",
   "label.path.details": "User Details",
+  "label.path.dashboard": "Dashboard",
+  "label.path.subscriptions": "Subscriptions",
+  "label.path.companies": "Companies",
+  "label.path.session": "Session",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",

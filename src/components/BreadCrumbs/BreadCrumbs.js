@@ -10,7 +10,6 @@ const BreadCrumbs = () => {
   const location = useLocation();
   const intl = useIntl();
   const segments = location.pathname.split("/");
-  console.log(segments, "segments..");
   const pathSegments = segments.slice(2, -1).filter(Boolean);
   const { navigateScreen: navigate } = useNavigateScreen();
 
