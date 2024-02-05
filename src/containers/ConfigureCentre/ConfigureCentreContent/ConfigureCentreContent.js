@@ -60,12 +60,13 @@ const ConfigureCentreContent = () => {
   const { isLoading: isUpdatingCenterDetails, updateCenterDetails } =
     useUpdateCenterDetailsApi();
 
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: PLACEMENT_ROUTE + CENTER_END_POINT,
-    otherOptions: {
-      skipApiCallOnMount: true,
-    },
-  });
+  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
+    useFetch({
+      url: PLACEMENT_ROUTE + CENTER_END_POINT,
+      otherOptions: {
+        skipApiCallOnMount: true,
+      },
+    });
   const debounceSearch = useMemo(
     () => _.debounce(fetchData, DEBOUNCE_TIME),
     []
@@ -85,14 +86,12 @@ const ConfigureCentreContent = () => {
       id,
       payload,
       () => {
-        const requestedParams = {
-          perPage: pageSize,
-          page: current,
-          keyword: searchedValue,
-          sort: sortedOrder.sortDirection,
-          order: sortedOrder.sortKeyName,
-        };
-        fetchData({ queryParamsObject: requestedParams });
+        setData({
+          ...data,
+          records: data.records.map((record) =>
+            record.id === id ? { ...record, status: payload.status } : record
+          ),
+        });
       },
       (errorMessage) => {
         showNotification(errorMessage, "error");
