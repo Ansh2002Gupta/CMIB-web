@@ -4,17 +4,16 @@ import { useIntl } from "react-intl";
 import { Avatar, Space, Card, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
-import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
   setUserProfileModalNumber,
 } from "../../globalContext/userProfile/userProfileActions";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
 import headerActionItems from "../../constants/headerActionItems";
-
-import styles from "./profileDropdown.module.scss";
 import { USER_PROFILE_QUERY_PARAMS } from "../../constant/constant";
+import styles from "./profileDropdown.module.scss";
 
 export default function CardDropdownOverlay({
   userName,
@@ -23,8 +22,7 @@ export default function CardDropdownOverlay({
   setDropdownVisible,
 }) {
   const intl = useIntl();
-  const [userProfileDetails, userProfileDispatch] =
-    useContext(UserProfileContext);
+  const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const [, setSearchParams] = useSearchParams();
 
