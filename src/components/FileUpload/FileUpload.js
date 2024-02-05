@@ -79,8 +79,6 @@ const FileUpload = ({
     updateUserData("profile_photo", "");
   };
 
-  console.log(name, "name..");
-
   return (
     <Base className={styles.container}>
       <Typography className={styles.headingText}>{heading}</Typography>
