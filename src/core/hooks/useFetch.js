@@ -85,7 +85,7 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
   const isSuccess = apiStatus === API_STATUS.SUCCESS;
   const isError = apiStatus === API_STATUS.ERROR;
 
-  return { data, error, fetchData, isError, isLoading, isSuccess };
+  return { data, error, fetchData, isError, isLoading, isSuccess, setData };
 };
 
 export default useFetch;
