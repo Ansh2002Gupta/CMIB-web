@@ -1,11 +1,11 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useSearchParams } from "react-router-dom";
 
 import ContentHeader from "../../ContentHeader";
 import CustomButton from "../../../components/CustomButton";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useResponsive from "../../../core/hooks/useResponsive";
-import { useSearchParams } from "react-router-dom";
 import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/plus icon.svg";
 import { FORM_STATES } from "../../../constant/constant";
 import styles from "./ConfigureCentreHeader.module.scss";

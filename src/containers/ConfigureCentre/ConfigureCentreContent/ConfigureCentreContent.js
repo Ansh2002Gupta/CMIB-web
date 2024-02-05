@@ -13,6 +13,7 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
+import { CENTRE_DETAILS } from "../../../routes/routeNames";
 import {
   CENTER_END_POINT,
   PLACEMENT_ROUTE,
@@ -30,7 +31,6 @@ import {
   toggleSorting,
 } from "../../../constant/utils";
 import styles from "./ConfigureCentreContent.module.scss";
-import { CENTRE_DETAILS } from "../../../routes/routeNames";
 
 const ConfigureCentreContent = () => {
   const intl = useIntl();
