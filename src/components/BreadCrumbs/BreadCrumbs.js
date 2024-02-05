@@ -9,15 +9,16 @@ import styles from "./BreadCrumbs.module.scss";
 const BreadCrumbs = () => {
   const location = useLocation();
   const intl = useIntl();
-  const pathSegments = location.pathname
-    .split("/")
-    .slice(0, -1)
-    .filter(Boolean);
+  const segments = location.pathname.split("/");
+  console.log(segments, "segments..");
+  const pathSegments = segments.slice(2, -1).filter(Boolean);
   const { navigateScreen: navigate } = useNavigateScreen();
 
   const breadcrumbItems = pathSegments.map((item, index) => {
     const isLastItem = index === pathSegments.length - 1;
-    const pathTo = `/${pathSegments.slice(0, index + 1).join("/")}`;
+    const pathTo = `/${segments[1]}/${pathSegments
+      .slice(0, index + 1)
+      .join("/")}`;
 
     return (
       <Breadcrumb.Item

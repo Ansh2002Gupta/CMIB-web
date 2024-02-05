@@ -37,11 +37,7 @@ const SetupCenter = () => {
 
   const goToEditCentrePage = (rowData, isEdit) => {
     const centreId = rowData?.centreId;
-    navigate(
-      `/session/setup-centers/details/${centreId}?mode=${
-        isEdit ? "edit" : "view"
-      }`
-    );
+    navigate(`details/${centreId}?mode=${isEdit ? "edit" : "view"}`);
   };
 
   // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated

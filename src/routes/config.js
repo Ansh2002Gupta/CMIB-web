@@ -41,6 +41,12 @@ import {
   QUERY_DETAILS,
   SETUP_CENTERS_DETAILS,
   EDIT_CONFIGURE_CENTRE,
+  CA_JOBS_KEY,
+  CARRER_ASCENT_KEY,
+  CONTROL_KEY,
+  NEWLY_QUALIFIED_PLACEMENTS_KEY,
+  OVERSEAS_CHAPTERS_KEY,
+  WOMEN_PLACEMENT_KEY,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -83,21 +89,71 @@ const config = [
     ],
   },
   {
-    pagePath: DASHBOARD,
+    pagePath: CA_JOBS_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: DASHBOARD,
         element: <DashboardView />,
       },
     ],
   },
   {
-    pagePath: SUBSCRIPTIONS,
+    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
+    ],
+  },
+  {
+    pagePath: OVERSEAS_CHAPTERS_KEY,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
+    ],
+  },
+  {
+    pagePath: CARRER_ASCENT_KEY,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
+    ],
+  },
+  {
+    pagePath: WOMEN_PLACEMENT_KEY,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
+    ],
+  },
+  {
+    pagePath: CONTROL_KEY,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
+    ],
+  },
+  {
+    pagePath: CA_JOBS_KEY,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: SUBSCRIPTIONS,
         element: <Subscriptions />,
       },
     ],
@@ -113,100 +169,277 @@ const config = [
     ],
   },
   {
-    pagePath: COMPANIES,
+    pagePath: CA_JOBS_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
     views: [
       {
-        viewPath: "",
+        viewPath: COMPANIES,
         element: <Companies />,
       },
       {
-        viewPath: COMPANIES_DETAILS,
+        viewPath: COMPANIES + COMPANIES_DETAILS,
         element: <CompaniesDetails />,
       },
     ],
   },
   {
-    pagePath: COMPANIES,
+    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
 
     views: [
       // array of views under Page route
       {
-        viewPath: "",
+        viewPath: COMPANIES,
         element: <Companies />,
       },
       {
-        viewPath: COMPANIES_DETAILS,
+        viewPath: COMPANIES + COMPANIES_DETAILS,
         element: <CompaniesDetails />,
       },
     ],
   },
   {
-    pagePath: USERS,
+    pagePath: OVERSEAS_CHAPTERS_KEY,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+
+    views: [
+      // array of views under Page route
+      {
+        viewPath: COMPANIES,
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES + COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
+    pagePath: CARRER_ASCENT_KEY,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+
+    views: [
+      // array of views under Page route
+      {
+        viewPath: COMPANIES,
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES + COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
+    pagePath: WOMEN_PLACEMENT_KEY,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+
+    views: [
+      // array of views under Page route
+      {
+        viewPath: COMPANIES,
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES + COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+    ],
+  },
+  {
+    pagePath: CONTROL_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: USERS,
         element: <ManageUsers />,
       },
       {
-        viewPath: USER_DETAILS,
+        viewPath: USERS + USER_DETAILS,
         element: <UserDetails />,
       },
       {
-        viewPath: ADD_NEW_USER_DETAILS,
+        viewPath: USERS + ADD_NEW_USER_DETAILS,
         element: <UserDetails />,
       },
     ],
   },
   {
-    pagePath: SESSION,
+    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: SESSION,
         element: <Session />,
       },
       {
-        viewPath: SETUP_CENTERS,
+        viewPath: SESSION + SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
     ],
   },
   {
-    pagePath: CONFIGURE_CENTRES,
+    pagePath: OVERSEAS_CHAPTERS_KEY,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: SESSION,
+        element: <Session />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS,
+        element: <SetupCenter />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        element: <SetupCenterDetails />,
+      },
+      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+    ],
+  },
+  {
+    pagePath: CARRER_ASCENT_KEY,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: SESSION,
+        element: <Session />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS,
+        element: <SetupCenter />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        element: <SetupCenterDetails />,
+      },
+      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+    ],
+  },
+  {
+    pagePath: WOMEN_PLACEMENT_KEY,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: SESSION,
+        element: <Session />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS,
+        element: <SetupCenter />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        element: <SetupCenterDetails />,
+      },
+      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+    ],
+  },
+  {
+    pagePath: CA_JOBS_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
     views: [
       {
-        viewPath: "",
+        viewPath: CONFIGURE_CENTRES,
         element: <ConfigureCentres />,
       },
       {
-        viewPath: ADD,
+        viewPath: CONFIGURE_CENTRES + ADD,
         element: <ConfigureCentreView />,
       },
       {
-        viewPath: EDIT_CONFIGURE_CENTRE,
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
       },
     ],
   },
   {
-    pagePath: CONTACT_US,
+    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
     views: [
       {
-        viewPath: "",
+        viewPath: CONFIGURE_CENTRES,
+        element: <ConfigureCentres />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + ADD,
+        element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
+        element: <ConfigureCentreView />,
+      },
+    ],
+  },
+  {
+    pagePath: OVERSEAS_CHAPTERS_KEY,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: CONFIGURE_CENTRES,
+        element: <ConfigureCentres />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + ADD,
+        element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
+        element: <ConfigureCentreView />,
+      },
+    ],
+  },
+  {
+    pagePath: CARRER_ASCENT_KEY,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: CONFIGURE_CENTRES,
+        element: <ConfigureCentres />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + ADD,
+        element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
+        element: <ConfigureCentreView />,
+      },
+    ],
+  },
+  {
+    pagePath: WOMEN_PLACEMENT_KEY,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: CONFIGURE_CENTRES,
+        element: <ConfigureCentres />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + ADD,
+        element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
+        element: <ConfigureCentreView />,
+      },
+    ],
+  },
+  {
+    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: CONTACT_US,
         element: <ContactUsListing />,
       },
       {
-        viewPath: QUERY_DETAILS,
+        viewPath: CONTACT_US + QUERY_DETAILS,
         element: <QueryDetails />,
       },
     ],

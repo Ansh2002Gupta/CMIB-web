@@ -17,7 +17,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getErrorText } from "../../constant/utils";
 import { ADMIN_ROUTE, VERIFY_OTP } from "../../constant/apiEndpoints";
-import { DASHBOARD, FORGOT_PASSWORD } from "../../routes/routeNames";
+import { FORGOT_PASSWORD, ROOT } from "../../routes/routeNames";
 import { EMAIL_REGEX } from "../../constant/regex";
 import styles from "./loginForm.module.scss";
 
@@ -79,7 +79,7 @@ const LoginForm = () => {
         setCurrentActiveScreen(2);
         return;
       }
-      !loginError && !isLoading && navigate(DASHBOARD);
+      !loginError && !isLoading && navigate(`/${ROOT}`);
     }
   }, [loginApiStatus, loginResponse]);
 

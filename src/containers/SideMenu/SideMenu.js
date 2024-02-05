@@ -44,7 +44,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }
 
   const handleOnClickMenuItem = ({ key }) => {
-    navigate(key);
+    navigate(`/${selectedModule.key}/${key}`);
     setSelectedKey(key);
   };
 
@@ -54,7 +54,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
 
   useEffect(() => {
     const pathSegments = location.pathname.split("/");
-    const select = `/${pathSegments[1]}`;
+    const select = `${pathSegments[2]}/`;
     setSelectedKey(select);
   }, [userProfileDetails, navigate]);
 
