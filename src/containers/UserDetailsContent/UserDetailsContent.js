@@ -67,10 +67,9 @@ const UserDetailsContent = ({
         is_two_factor: userData?.is_two_factor ? 1 : 0,
         mobile_country_code: userData?.mobile_prefix,
         status: userData?.status,
+        profile_photo: userData.profile_photo,
       };
-      if (userData?.profile_photo_url) {
-        payload["profile_photo"] = userData.profile_photo_url;
-      }
+
       updateUserDetails(userId, payload, () => {
         navigate(USERS);
       });
@@ -175,6 +174,7 @@ const UserDetailsContent = ({
                   updateUserData,
                   isFormEditable: currentFormState !== FORM_STATES.VIEW_ONLY,
                 }}
+                name={userData?.name}
                 userProfilePic={userData?.profile_photo_url}
                 userImageName={userData?.profile_photo}
               />
