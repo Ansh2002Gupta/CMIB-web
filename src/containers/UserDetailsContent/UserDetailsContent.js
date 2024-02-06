@@ -71,7 +71,7 @@ const UserDetailsContent = ({
       };
 
       updateUserDetails(userId, payload, () => {
-        navigate(USERS);
+        goBackToViewDetailsPage();
       });
     }
   };

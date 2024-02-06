@@ -40,6 +40,7 @@ iframe#webpack-dev-server-client-overlay {
 .ant-pagination-item-active{
   border:var(--borderBlue1) !important;
   background-color: var(--lightBlueBg) !important;
+  border-radius: var(--radiusLg) !important;
 }
 
 .ant-pagination .ant-pagination-item-active a{
