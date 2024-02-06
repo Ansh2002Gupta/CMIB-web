@@ -15,7 +15,7 @@ import { UserProfileContext } from "../globalContext/userProfile/userProfileProv
 import { USER_PROFILE_QUERY_PARAMS } from "../constant/constant";
 import styles from "./CommonStyles/commonModalStyles.module.scss";
 
-function Home({ noOuterPadding }) {
+function Home() {
   const [openSideMenu, setOpenSideMenu] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,7 +24,7 @@ function Home({ noOuterPadding }) {
     searchParams.get(USER_PROFILE_QUERY_PARAMS) === "open";
   const { showNotification, notificationContextHolder } = useShowNotification();
   const currentlyOpenedUserProfileModal = userModalParams
-    ? (userProfileDetails?.currentlyOpenedUserProfileModal || 1)
+    ? userProfileDetails?.currentlyOpenedUserProfileModal || 1
     : 0;
 
   useEffect(() => {
@@ -59,7 +59,6 @@ function Home({ noOuterPadding }) {
           </Layout>
         }
         content={<Outlet />} // view component
-        {...{ noOuterPadding }}
       />
       <CommonModal isOpen={isModalOpen} width={600}>
         <ModuleChange {...{ setIsModalOpen }} />
