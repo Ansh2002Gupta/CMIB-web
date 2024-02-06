@@ -93,7 +93,7 @@ const locale = {
   "session.ifsc": "IFSC",
   "session.placeholder.sessionName": "Enter Session Name",
   "session.placeholder.natureOfGoods": "Enter Nature of services/goods",
-  "session.placeholder.invoiceNumberFormat": "prefix-*****-suffix Format",
+  "session.placeholder.invoiceNumberFormat": "e.g month-*****-year",
   "session.placeholder.examinationSessionPeriod": "Select Period",
   "session.placeholder.gmcsCompletetionDate": "Select GMCS Completetion Date",
   "session.placeholder.membershipCompletetionDate":
@@ -110,6 +110,23 @@ const locale = {
   "session.lastDateRegistrationCompanies":
     "Last date of registration for companies",
   "session.saveChanges": "Save Changes",
+  "session.error.sessionName": "Please enter Session Name",
+  "session.error.natureOfGoods": "Please enter services/goods",
+  "session.error.invoiceNumberFormat": "Please use prefix-*****-suffix format",
+  "session.error.examinationSessionPeriod": "Please enter Session Name",
+  "session.error.examinationSessionPeriod":
+    "* Please select atleast one Examination Session Period ",
+  "session.error.gmcsCompletetionDate":
+    "* Please select GMCS Completetion Date",
+  "session.error.membershipCompletetionDate":
+    "* Please select Membership Completetion Date",
+  "session.error.articleshipCompletetionFromDate":
+    "* Please select Articleship Completetion From Date",
+  "session.error.articleshipCompletetionToDate":
+    "* Please select Articleship Completetion From Date",
+  "session.error.bankACNumber": "Please enter Bank A/C number",
+  "session.error.ifsc": "Please enter IFSC Code",
+  "session.error.hsnCode": "Please enter HSN Code/ SAC",
   "label.viewProfile": "View Profile",
   "label.changePassword": "Change Password",
   "label.companyProfile": "Company Profile",

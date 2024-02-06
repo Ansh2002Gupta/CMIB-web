@@ -31,7 +31,7 @@ export const FIELDS = (
         {
           regex: ALPHANUMERIC_REGEX,
           required: true,
-          message: "Please enter Session Name",
+          message: "sessionName",
         },
       ],
     },
@@ -44,7 +44,7 @@ export const FIELDS = (
         {
           regex: ALPHANUMERIC_REGEX,
           required: true,
-          message: "Please enter services/goods",
+          message: "natureOfGoods",
         },
       ],
     },
@@ -57,7 +57,7 @@ export const FIELDS = (
         {
           regex: PERFORMA_INVOICE_REGEX,
           required: true,
-          message: "Please use prefix-*****-suffix format",
+          message: "invoiceNumberFormat",
         },
       ],
     },
@@ -70,7 +70,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "* Please select atleast one Examination Session Period ",
+          message: "examinationSessionPeriod",
         },
       ],
     },
@@ -82,7 +82,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "* Please select GMCS Completetion Date",
+          message: "gmcsCompletetionDate",
         },
       ],
     },
@@ -94,7 +94,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "* Please select Membership Completetion Date",
+          message: "membershipCompletetionDate",
         },
       ],
     },
@@ -106,7 +106,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "* Please select Articleship Completetion From Date",
+          message: "articleshipCompletetionFromDate",
         },
       ],
     },
@@ -118,7 +118,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "* Please select Articleship Completetion From Date",
+          message: "articleshipCompletetionToDate",
         },
       ],
     },
@@ -131,7 +131,7 @@ export const FIELDS = (
         {
           regex: HSN_SAC_CODE_REGEX,
           required: true,
-          message: "Please enter HSN Code/ SAC",
+          message: "hsnCode",
         },
       ],
     },
@@ -144,7 +144,7 @@ export const FIELDS = (
         {
           regex: BANK_ACC_NUMBER_REGEX,
           required: true,
-          message: "Please enter Bank A/C number",
+          message: "bankACNumber",
         },
       ],
     },
@@ -157,7 +157,7 @@ export const FIELDS = (
         {
           regex: IFSC_CODE_REGEX,
           required: true,
-          message: "Please enter IFSC Code",
+          message: "ifsc",
         },
       ],
     },

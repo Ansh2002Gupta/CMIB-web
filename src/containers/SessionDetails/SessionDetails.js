@@ -100,10 +100,10 @@ const SessionDetails = ({ addSession, setAddSession }) => {
 
     for (const rule of rules) {
       if (rule.required && (!value || value?.length <= 0)) {
-        return rule.message;
+        return intl.formatMessage({ id: `session.error.${rule.message}` });
       }
       if (rule.regex && !rule.regex.test(value)) {
-        return rule.message;
+        return intl.formatMessage({ id: `session.error.${rule.message}` });
       }
     }
 
