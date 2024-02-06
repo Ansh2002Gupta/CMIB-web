@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch } from "antd";
+import { Dropdown, Image, Switch, } from "antd";
 
+import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import { formatDate } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
@@ -20,6 +21,7 @@ const useRenderColumn = () => {
     renderImage = {},
     renderMenu = {},
     renderText = {},
+    renderTextWithCheckBoxes = {},
     renderSwitch = {},
     sortDirection,
     sorter,
@@ -57,6 +59,14 @@ const useRenderColumn = () => {
       menuPreview,
       triggerType = "",
     } = renderMenu;
+
+    const {
+      onClickCheckbox = () => {},
+      customCheckBoxContainerStyles = "",
+      checkBoxList = [],
+      isCheckBoxTextBold = false,
+      isCheckBoxDisable = false,
+    } = renderTextWithCheckBoxes;
 
     const {
       dateFormat = "DD/MM/YYYY",
@@ -193,7 +203,25 @@ const useRenderColumn = () => {
         );
       });
 
-    render && (columnObject.render = render); // correct this
+    render && (columnObject.render = render);
+
+    renderTextWithCheckBoxes.visible &&
+      (columnObject.render = (textToRender, rowData) => {
+        const { id } = rowData;
+        return (
+          <CustomCheckBox
+            disabled={isCheckBoxDisable}
+            checked={checkBoxList?.includes(id)}
+            onChange={() => onClickCheckbox(rowData)}
+            customStyles={[
+              isCheckBoxTextBold ? styles.boldText : "",
+              customCheckBoxContainerStyles,
+            ].join("")}
+          >
+            {textToRender}
+          </CustomCheckBox>
+        );
+      });
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {

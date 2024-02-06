@@ -22,6 +22,7 @@ const variables = {
   lightRedBg: colorPallets.lightOrange,
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
+  blue6Bg: colorPallets.blue6,
 
   // Text-colors
   textDefault: colorPallets.black,

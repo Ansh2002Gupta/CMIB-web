@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -12,10 +12,13 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../../core/hooks/useFetch";
 import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
+import { getValidSortByValue } from "../../../constant/utils";
 import { ADMIN_ROUTE, QUERIES_LIST } from "../../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
+  SORT_PROPERTIES,
+  SORT_VALUES,
 } from "../../../constant/constant";
 import styles from "../ContactUsListingContent.module.scss";
 
@@ -31,16 +34,39 @@ const QueryTable = ({
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const columns = getTicketOrQueryColumn(
-    currentActiveTab,
+  const [sortedOrder, setSortedOrder] = useState({
+    sortDirection: getValidSortByValue(
+      searchParams.get(SORT_PROPERTIES.SORT_BY)
+    ),
+    sortKeyName: "created_at",
+  });
+  const [
+    selctedQueriesToBeMarkedAsAnswered,
+    setSelctedQueriesToBeMarkedAsAnswered,
+  ] = useState([]);
+
+  let sortArrowStyles = "";
+  if (sortedOrder?.sortDirection === SORT_VALUES.ASCENDING) {
+    sortArrowStyles = styles.upside;
+  } else if (sortedOrder?.sortDirection === SORT_VALUES.DESCENDING) {
+    sortArrowStyles = styles.downside;
+  }
+
+  const columns = getTicketOrQueryColumn({
+    type: currentActiveTab,
     intl,
     getImage,
     navigate,
-    renderColumn
-  );
+    renderColumn,
+    queriesColumnProperties: {
+      sortArrowStyles,
+      selectedItemsList: selctedQueriesToBeMarkedAsAnswered,
+      setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
+    },
+  });
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: ADMIN_ROUTE + QUERIES_LIST,
     otherOptions: { skipApiCallOnMount: true },

@@ -35,13 +35,13 @@ const TicketTable = ({
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const columns = getTicketOrQueryColumn(
-    currentActiveTab,
+  const columns = getTicketOrQueryColumn({
+    type: currentActiveTab,
     intl,
     getImage,
     navigate,
-    renderColumn
-  );
+    renderColumn,
+  });
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: ADMIN_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
