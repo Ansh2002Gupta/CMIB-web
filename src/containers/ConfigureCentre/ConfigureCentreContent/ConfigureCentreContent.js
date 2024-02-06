@@ -13,6 +13,7 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
+import { CENTRE_DETAILS } from "../../../routes/routeNames";
 import {
   CENTER_END_POINT,
   PLACEMENT_ROUTE,
@@ -59,23 +60,20 @@ const ConfigureCentreContent = () => {
   const { isLoading: isUpdatingCenterDetails, updateCenterDetails } =
     useUpdateCenterDetailsApi();
 
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: PLACEMENT_ROUTE + CENTER_END_POINT,
-    otherOptions: {
-      skipApiCallOnMount: true,
-    },
-  });
+  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
+    useFetch({
+      url: PLACEMENT_ROUTE + CENTER_END_POINT,
+      otherOptions: {
+        skipApiCallOnMount: true,
+      },
+    });
   const debounceSearch = useMemo(
     () => _.debounce(fetchData, DEBOUNCE_TIME),
     []
   );
 
   const goToEditCentrePage = (rowData) => {
-    navigate(
-      `/view-centre-details?centreId=${rowData?.centreId}&mode=${
-        true ? "edit" : "view"
-      }`
-    );
+    navigate(`${CENTRE_DETAILS}/${rowData?.id}`);
   };
 
   const onHandleCentreStatus = (centerData) => {
@@ -88,14 +86,12 @@ const ConfigureCentreContent = () => {
       id,
       payload,
       () => {
-        const requestedParams = {
-          perPage: pageSize,
-          page: current,
-          keyword: searchedValue,
-          sort: sortedOrder.sortDirection,
-          order: sortedOrder.sortKeyName,
-        };
-        fetchData({ queryParamsObject: requestedParams });
+        setData({
+          ...data,
+          records: data.records.map((record) =>
+            record.id === id ? { ...record, status: payload.status } : record
+          ),
+        });
       },
       (errorMessage) => {
         showNotification(errorMessage, "error");
@@ -233,12 +229,15 @@ const ConfigureCentreContent = () => {
       key: "center_code",
       renderText: { visible: true },
     }),
-    renderColumn({
-      title: intl.formatMessage({ id: "label.bigSmallCentre" }),
-      dataIndex: "center_type",
-      key: "center_type",
-      renderText: { visible: true },
-    }),
+    {
+      ...renderColumn({
+        title: intl.formatMessage({ id: "label.bigSmallCentre" }),
+        dataIndex: "center_type",
+        key: "center_type",
+        renderText: { visible: true },
+      }),
+      width: "100px",
+    },
     renderColumn({
       title: intl.formatMessage({ id: "label.dateCreated" }),
       dataIndex: "created_at",

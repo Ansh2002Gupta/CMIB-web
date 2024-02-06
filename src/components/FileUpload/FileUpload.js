@@ -8,12 +8,15 @@ import { TwoRow } from "../../core/layouts";
 
 import UserImage from "../UserImage/UserImage";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import useUploadImageApi from "../../services/api-services/Images/useUploadImageApi";
+import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { ReactComponent as UploadImageIcon } from "../../themes/base/assets/images/Upload icon.svg";
 import styles from "./FileUpload.module.scss";
 
 const FileUpload = ({
   heading,
   isFormEditable,
+  name,
   subHeading,
   updateUserData,
   userImageName,
@@ -21,6 +24,8 @@ const FileUpload = ({
 }) => {
   const intl = useIntl();
   const { showNotification, notificationContextHolder } = useShowNotification();
+  const { handleUploadImage } = useUploadImageApi();
+  const { handleDeleteImage } = useDeleteImageApi();
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -45,16 +50,6 @@ const FileUpload = ({
     return isAllowedType && isLessThan5MB;
   };
 
-  const getImageSource = (uploadedImage) => {
-    if (uploadedImage && typeof uploadedImage === "string") {
-      return uploadedImage;
-    }
-    if (uploadedImage) {
-      return URL.createObjectURL(uploadedImage);
-    }
-    return "";
-  };
-
   const handleOnUploadImage = (file) => {
     const { onError } = file;
     const isValid = beforeUpload(file);
@@ -62,12 +57,24 @@ const FileUpload = ({
       onError("error", file?.file);
       return;
     }
-    const imageUrl = getImageSource(file?.file);
-    updateUserData("profile_photo", file);
-    updateUserData("profile_photo_url", imageUrl);
+    if (file?.file) {
+      handleUploadImage({
+        onSuccessCallback: (imgData) => {
+          updateUserData("profile_photo_url", imgData?.url);
+          updateUserData("profile_photo", imgData?.file_name);
+        },
+        file: file?.file,
+        onErrorCallback: (errString) => {
+          showNotification(errString);
+        },
+      });
+    }
   };
 
   const removeSelctedImage = () => {
+    handleDeleteImage({
+      fileName: userImageName,
+    });
     updateUserData("profile_photo_url", "");
     updateUserData("profile_photo", "");
   };
@@ -78,7 +85,7 @@ const FileUpload = ({
       <div className={styles.uploadBottomContainer}>
         <Typography className={styles.subHeadingText}>{subHeading}</Typography>
         {notificationContextHolder}
-        {userProfilePic ? (
+        {userProfilePic || !isFormEditable ? (
           <UserImage
             onTrashClick={removeSelctedImage}
             src={userProfilePic}
@@ -120,6 +127,7 @@ const FileUpload = ({
 FileUpload.defaultProps = {
   heading: "Profile Photo",
   isFormEditable: false,
+  name: "",
   subHeading: "Photo",
   updateUserData: () => {},
   userProfilePic: "",
@@ -129,6 +137,7 @@ FileUpload.defaultProps = {
 FileUpload.propTypes = {
   heading: PropTypes.string,
   isFormEditable: PropTypes.bool,
+  name: PropTypes.string,
   subHeading: PropTypes.string,
   updateUserData: PropTypes.func,
   userProfilePic: PropTypes.string,

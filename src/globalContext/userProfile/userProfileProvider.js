@@ -7,6 +7,7 @@ const initialState = {
   userDetails: {},
   errorGettingUserDetails: "",
   showLogoutModal: false,
+  currentlyOpenedUserProfileModal: 0,
 };
 
 const userProfileReducer = (state, action) => {
@@ -48,6 +49,18 @@ const userProfileReducer = (state, action) => {
       return {
         ...state,
         showLogoutModal: action.payload,
+      };
+
+    case types.SET_USER_PROFILE_MODAL_NUMBER:
+      return {
+        ...state,
+        currentlyOpenedUserProfileModal: action.payload,
+      };
+
+    case types.CLOSE_USER_PROFILE_MODAL:
+      return {
+        ...state,
+        currentlyOpenedUserProfileModal: 0,
       };
 
     default:

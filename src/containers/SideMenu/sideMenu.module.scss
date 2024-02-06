@@ -1,5 +1,5 @@
 .sideMenuContainer {
-  height: var(--fullHeight, 100%);
+  min-height: var(--fullHeight, 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -23,6 +23,7 @@
   margin-top: var(--sizeXSmall, 12px);
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500);
+  overflow-y: auto;
 }
 
 .appLogoContainer {
@@ -112,7 +113,7 @@
 }
 
 .visitText {
-  max-width: 8vw;
+  max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -128,7 +129,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--gapSmallMedium);
 }
 
 .imageItemLogo {
@@ -148,17 +148,56 @@
   min-height: var(--height_100, 100px);
 }
 
+@media (max-width: 1523px) {
+  .sideMenuBottomSection {
+    padding: var(--paddingXXSmall, 4px) var(--paddingMedium, 12px)
+      var(--paddingXXSmall, 4px) var(--paddingXXSmall, 4px);
+  }
+
+  .imageItemLogo {
+    padding: var(--paddingMediumSmall, 12px);
+    padding-left: var(--paddingMedium, 24px);
+  }
+}
+
+@media (max-width: 1279px) {
+  .menuItemsContainer {
+    max-height: var(--height_50vh, 50vh);
+    overflow-y: auto;
+  }
+}
+
 @media (max-width: 767px) {
   .moduleSelectorHeading {
     max-width: var(--widthHalfViewPort, 50vw);
   }
+
   .visitText {
     max-width: var(--widthHalfViewPort, 50vw);
   }
+
+  .width40 {
+    width: var(--width_40, 40px);
+  }
+
+  .imageItemLogo {
+    padding: 0px;
+    padding-left: var(--paddingMedium, 24px);
+  }
+
+  .moduleText {
+    padding: 0px;
+    padding-left: var(--paddingMediumSmall, 12px);
+  }
+
+  .menuItemsContainer {
+    max-height: var(--height_45vh, 45vh);
+    overflow-y: auto;
+  }
 }
 
-@media (max-width: 1000px) and (min-width: 767px) {
-  .globeIcon {
-    display: none;
+@media (max-width: 551px) {
+  .menuItemsContainer {
+    max-height: var(--height_30vh, 30vh);
   }
 }

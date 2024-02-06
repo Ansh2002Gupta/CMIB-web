@@ -17,8 +17,8 @@ const useCheckOTP = () => {
       errorWhileVerifyingOTP && setErrorWhileVeryingOTP("");
       const res = await Http.post(url, payload);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
-        if (res?.data?.token?.access_token) {
-          const auth = res?.data?.token?.access_token;
+        if (res?.data?.access_token) {
+          const auth = res?.data?.access_token;
           setItem("authToken", auth);
         }
         setCheckOTPData(res.data);

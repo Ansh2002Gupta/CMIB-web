@@ -81,7 +81,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
     const pathSegments = location.pathname.split("/");
     const select = `/${pathSegments[1]}`;
     setSelectedKey(select);
-  }, [userProfileDetails]);
+  }, [userProfileDetails, navigate]);
 
   useEffect(() => {
     if (data) {
@@ -202,7 +202,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
         )}
         <div>
           <Space className={styles.imageItemLogo}>
-            <CaIndiaLogo />
+            <CaIndiaLogo className={styles.width40} />
           </Space>
           <Space
             className={styles.sideMenuBottomSection}

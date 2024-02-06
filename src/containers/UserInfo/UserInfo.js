@@ -1,27 +1,30 @@
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import dayjs from "dayjs";
-import { DatePicker, Typography, Descriptions, Switch } from "antd";
+import { Descriptions, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
-import { TwoRow } from "../../core/layouts";
 
 import CheckBoxList from "../CheckBoxList";
 import Chip from "../../components/Chip/Chip";
+import CustomCheckBox from "../../components/CustomCheckBox";
+import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
 import CustomInput from "../../components/CustomInput";
+import CustomSwitch from "../../components/CustomSwitch/CustomSwitch";
+import PhoneInput from "../../components/PhoneInput/PhoneInput";
 import { formatDate } from "../../constant/utils";
 import useResponsive from "../../core/hooks/useResponsive";
-import { ALLOWED_MOBILE_PREFIXES } from "../../constant/constant";
 import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
 const UserInfo = ({
   access,
+  countryData,
   date,
   email,
   emailErrorMessage,
   isDateDisable,
   isEditable,
+  isNotAddable,
   is_two_factor,
   mobileErrorMessage,
   mobileNo,
@@ -29,6 +32,7 @@ const UserInfo = ({
   name,
   permissions,
   roles,
+  rolesData,
   status,
   setIsAccessValid,
   shouldShowDatePickerOption,
@@ -47,7 +51,7 @@ const UserInfo = ({
               <Chip
                 key={key}
                 bgColor={styles.chipBg}
-                label={value}
+                label={value.name}
                 textColor={styles.chipText}
               />
             );
@@ -88,7 +92,7 @@ const UserInfo = ({
         intl.formatMessage({ id: "label.mobileNumber" })
       ),
       span: responsive.isMd ? 1 : 2,
-      children: `+${mobilePrefix}-${mobileNo}`,
+      children: `${mobilePrefix}-${mobileNo}`,
     },
     {
       key: "4",
@@ -105,7 +109,7 @@ const UserInfo = ({
         intl.formatMessage({ id: "label.twoFactorAuth" })
       ),
       children: intl.formatMessage({
-        id: `label.${is_two_factor ? "enabled" : "disabled"}`,
+        id: `label.${is_two_factor ? "enable" : "disable"}`,
       }),
     },
     {
@@ -199,20 +203,21 @@ const UserInfo = ({
               />
             </div>
             <div>
-              <CustomInput
+              <PhoneInput
                 isError={!!mobileErrorMessage}
                 errorMessage={mobileErrorMessage}
-                isSelectBoxDisable
-                type="mobile"
                 label={intl.formatMessage({ id: "label.mobileNumber" })}
                 isRequired
                 value={mobileNo}
+                mobilePrefix={mobilePrefix}
                 disabled={!isEditable}
                 customInputStyles={[styles.text, styles.input].join(" ")}
                 customSelectInputStyles={[styles.selectInput].join(" ")}
                 customLabelStyles={styles.label}
-                onChange={(e) => updateUserData("mobile", e.target.value)}
-                selectOptions={ALLOWED_MOBILE_PREFIXES}
+                onChange={(e) => {
+                  updateUserData("mobile", e);
+                }}
+                selectOptions={countryData}
                 defaultSelectValueString="+91"
                 onSelectItem={(e) =>
                   updateUserData("mobile_prefix", e.target.value)
@@ -222,9 +227,55 @@ const UserInfo = ({
                 })}
               />
             </div>
+            <div className={styles.twoFactorContainer}>
+              <CustomSwitch
+                checked={status}
+                isRequired={true}
+                label={intl.formatMessage({ id: "label.status" })}
+                onChange={() => {
+                  updateUserData("status", !status);
+                }}
+              />
+            </div>
+            <div className={styles.twoFactorContainer}>
+              {getTextWithIsRequiredStart(
+                intl.formatMessage({ id: "label.twoFactorAuth" })
+              )}
+              <CustomCheckBox
+                className={styles.box}
+                onChange={(value) =>
+                  updateUserData("is_two_factor", !is_two_factor)
+                }
+                checked={is_two_factor}
+              >
+                <Typography className={styles.text}>
+                  {intl.formatMessage({
+                    id: `label.${is_two_factor ? "enable" : "disable"}`,
+                  })}
+                </Typography>
+              </CustomCheckBox>
+            </div>
+            {isNotAddable && date && (
+              <CustomDateTimePicker
+                customLabelStyles={styles.label}
+                customTimeStyle={[styles.text, styles.input].join(" ")}
+                customContainerStyles={styles.twoFactorContainer}
+                isRequired
+                label={intl.formatMessage({ id: "label.dateCreatedOn" })}
+                onChange={(date, dateString) =>
+                  updateUserData("date", dateString)
+                }
+                placeholder={intl.formatMessage({
+                  id: "centre.placeholder.selectDate",
+                })}
+                type="date"
+                value={date}
+                isEditable={!shouldShowDatePickerOption}
+              />
+            )}
             <div className={styles.spanOverAllColumns}>
               <CheckBoxList
-                {...{ setIsAccessValid }}
+                {...{ setIsAccessValid, rolesData }}
                 selectedModules={access}
                 setSelectedModules={(value) => updateUserData("access", value)}
                 selectedControls={permissions}
@@ -232,45 +283,6 @@ const UserInfo = ({
                   updateUserData("permissions", value)
                 }
               />
-            </div>
-            {shouldShowDatePickerOption && date && (
-              <TwoRow
-                className={styles.dateContainer}
-                topSection={
-                  <Typography className={styles.accessSelectLabel}>
-                    {intl.formatMessage({ id: "label.dateCreatedOn" })}
-                  </Typography>
-                }
-                bottomSection={
-                  <DatePicker
-                    onChange={(date, dateString) =>
-                      updateUserData("date", dateString)
-                    }
-                    className={[styles.text, styles.input].join(" ")}
-                    defaultValue={dayjs(date)}
-                    disabled={isDateDisable || !isEditable}
-                    customInputStyles={[styles.text, styles.input].join(" ")}
-                    customLabelStyles={styles.label}
-                  />
-                }
-              />
-            )}
-            <div className={styles.twoFactorContainer}>
-              <Typography className={styles.label}>
-                {intl.formatMessage({ id: "label.twoFactorAuth" })}
-              </Typography>
-              <div className={styles.switchAndTextContainer}>
-                <Switch
-                  className={is_two_factor ? styles.active : ""}
-                  defaultChecked={is_two_factor}
-                  onChange={(value) => updateUserData("is_two_factor", value)}
-                />
-                <Typography>
-                  {intl.formatMessage({
-                    id: `label.${is_two_factor ? "on" : "off"}`,
-                  })}
-                </Typography>
-              </div>
             </div>
           </div>
         </Base>
@@ -281,10 +293,12 @@ const UserInfo = ({
 
 UserInfo.defaultProps = {
   access: [],
+  countryData: [],
   date: null,
   email: "",
   isDateDisable: false,
   isEditable: false,
+  isNotAddable: false,
   is_two_factor: false,
   mobileNo: "",
   mobilePrefix: "",
@@ -298,10 +312,12 @@ UserInfo.defaultProps = {
 
 UserInfo.propTypes = {
   access: PropTypes.array,
+  countryData: PropTypes.array,
   date: PropTypes.string,
   email: PropTypes.string,
   isDateDisable: PropTypes.bool,
   isEditable: PropTypes.bool,
+  isNotAddable: PropTypes.bool,
   is_two_factor: PropTypes.bool,
   mobileNo: PropTypes.string,
   mobilePrefix: PropTypes.string,

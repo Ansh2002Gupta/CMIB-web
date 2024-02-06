@@ -215,9 +215,9 @@ export const ACCESS_FILTER_DATA = [
     name: "Access",
     isSelected: false,
     options: [
-      { optionId: 1, str: "All", count: 100 },
-      { optionId: 2, str: "Placements", count: 100 },
-      { optionId: 3, str: "CA Jobs", count: 100 },
+      { optionId: 1, str: "All" },
+      { optionId: 2, str: "Placements" },
+      { optionId: 3, str: "CA Jobs" },
     ],
   },
 ];
@@ -495,7 +495,7 @@ export const INITIAL_CENTRE_DETAILS = {
   centre_name: "",
   centre_code: "",
   status: 1,
-}
+};
 
 export const SETUP_CENTRE_DETAILS = [
   {
