@@ -159,7 +159,7 @@ const locale = {
   "label.searchByComapanyName": "Search by company name",
   "label.centreName": "Centre Name",
   "label.centreId": "Centre Id",
-  "label.bigSmallCentre": "Big/Small Centre",
+  "label.bigSmallCentre": "Big / Small Centre",
   "label.dateCreated": "Date Created",
   "label.searchByCentreNameOrId": "Search by centre name or centre id",
   "label.configureCentres": "Configure Centres",

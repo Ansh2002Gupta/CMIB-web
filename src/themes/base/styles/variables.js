@@ -101,6 +101,7 @@ const variables = {
   width_32: "32px",
   width_40: "40px",
   width_48: "48px",
+  width_50: "50px",
   width_70: "70px",
   sidemenuWidth: "74px",
   width_80: "80px",

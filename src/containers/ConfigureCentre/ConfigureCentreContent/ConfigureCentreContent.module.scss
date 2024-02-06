@@ -62,6 +62,10 @@ input::placeholder {
   transform: rotate(0deg);
 }
 
+.tableCell {
+  min-width: var(--width_100);
+}
+
 @media screen and (max-width: 1023px) {
   .searchBar {
     width: var(--halfWidth);
