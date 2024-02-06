@@ -1,10 +1,9 @@
 /* Routes */
-import { MODULE_KEYS } from "../constant/constant";
-
 export const ROOT = "/";
 export const Configuration = "/configurations";
 export const FORGOT_PASSWORD = "/forgot-password";
 export const LOGIN = "/login";
+
 /* Sub Routes */
 export const ADD = "add";
 export const ADD_NEW_USER_DETAILS = "add";
