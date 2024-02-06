@@ -79,7 +79,7 @@ const LoginForm = () => {
         setCurrentActiveScreen(2);
         return;
       }
-      !loginError && !isLoading && navigate(`/${ROOT}`);
+      !loginError && !isLoading && navigate(ROOT);
     }
   }, [loginApiStatus, loginResponse]);
 
@@ -228,7 +228,7 @@ const LoginForm = () => {
               }}
               onSubmit={(otp) =>
                 handleCheckOTP({
-                  onSuccessCallback: () => navigate(DASHBOARD),
+                  onSuccessCallback: () => navigate(ROOT),
                   payload: {
                     token: loginResponse?.token,
                     otp,

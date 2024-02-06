@@ -22,52 +22,39 @@ import UserDetails from "../views/UserDetails";
 import QueryDetails from "../views/QueryDetails";
 import {
   ADD,
-  DASHBOARD,
-  SUBSCRIPTIONS,
-  LOGIN,
-  COMPANIES,
-  COMPANIES_DETAILS,
-  FORGOT_PASSWORD,
-  ROOT,
-  USERS,
-  USER_DETAILS,
   ADD_NEW_USER_DETAILS,
-  CONFIGURE_CENTRES,
-  SESSION,
-  CONTACT_US,
-  ROUTE,
-  SETUP_CENTERS,
-  CONSENT_MARKING,
-  QUERY_DETAILS,
-  SETUP_CENTERS_DETAILS,
-  EDIT_CONFIGURE_CENTRE,
+  Configurations,
   CA_JOBS_KEY,
   CARRER_ASCENT_KEY,
+  COMPANIES,
+  COMPANIES_DETAILS,
+  CONFIGURE_CENTRES,
+  CONSENT_MARKING,
+  CONTACT_US,
   CONTROL_KEY,
+  DASHBOARD,
+  EDIT_CONFIGURE_CENTRE,
+  FORGOT_PASSWORD,
+  LOGIN,
   NEWLY_QUALIFIED_PLACEMENTS_KEY,
   OVERSEAS_CHAPTERS_KEY,
+  QUERY_DETAILS,
+  ROOT,
+  SESSION,
+  SETUP_CENTERS,
+  SETUP_CENTERS_DETAILS,
+  SUBSCRIPTIONS,
+  USERS,
+  USER_DETAILS,
   WOMEN_PLACEMENT_KEY,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
-const HomeWithPublicAccess = withPublicAccess(Home);
-const AuthWithPublicAccess = withPublicAccess(Auth);
-const AuthWithPrivateAccess = withPrivateAccess(Auth);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
   HeaderContentWithFooter
 );
 
 const config = [
-  {
-    pagePath: LOGIN,
-    element: <HeaderContentWithFooterWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <LoginForm />,
-      },
-    ],
-  },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,
@@ -75,6 +62,16 @@ const config = [
       {
         viewPath: "",
         element: <ForgotPassword />,
+      },
+    ],
+  },
+  {
+    pagePath: LOGIN,
+    element: <HeaderContentWithFooterWithPublicAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <LoginForm />,
       },
     ],
   },
@@ -89,36 +86,6 @@ const config = [
     ],
   },
   {
-    pagePath: CA_JOBS_KEY,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: DASHBOARD,
-        element: <DashboardView />,
-      },
-    ],
-  },
-  {
-    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: DASHBOARD,
-        element: <DashboardView />,
-      },
-    ],
-  },
-  {
-    pagePath: OVERSEAS_CHAPTERS_KEY,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: DASHBOARD,
-        element: <DashboardView />,
-      },
-    ],
-  },
-  {
     pagePath: CARRER_ASCENT_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
@@ -126,52 +93,33 @@ const config = [
         viewPath: DASHBOARD,
         element: <DashboardView />,
       },
-    ],
-  },
-  {
-    pagePath: WOMEN_PLACEMENT_KEY,
-    element: <HomeWithPrivateAccess />,
-    views: [
       {
-        viewPath: DASHBOARD,
-        element: <DashboardView />,
+        viewPath: SESSION,
+        element: <Session />,
       },
-    ],
-  },
-  {
-    pagePath: CONTROL_KEY,
-    element: <HomeWithPrivateAccess />,
-    views: [
       {
-        viewPath: DASHBOARD,
-        element: <DashboardView />,
+        viewPath: SESSION + SETUP_CENTERS,
+        element: <SetupCenter />,
       },
+      {
+        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        element: <SetupCenterDetails />,
+      },
+      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
     ],
   },
   {
     pagePath: CA_JOBS_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
+      {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
       {
         viewPath: SUBSCRIPTIONS,
         element: <Subscriptions />,
       },
-    ],
-  },
-  {
-    pagePath: ROUTE,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <Configurations />,
-      },
-    ],
-  },
-  {
-    pagePath: CA_JOBS_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -180,69 +128,17 @@ const config = [
         viewPath: COMPANIES + COMPANIES_DETAILS,
         element: <CompaniesDetails />,
       },
-    ],
-  },
-  {
-    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-
-    views: [
-      // array of views under Page route
       {
-        viewPath: COMPANIES,
-        element: <Companies />,
+        viewPath: CONFIGURE_CENTRES,
+        element: <ConfigureCentres />,
       },
       {
-        viewPath: COMPANIES + COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
-      },
-    ],
-  },
-  {
-    pagePath: OVERSEAS_CHAPTERS_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-
-    views: [
-      // array of views under Page route
-      {
-        viewPath: COMPANIES,
-        element: <Companies />,
+        viewPath: CONFIGURE_CENTRES + ADD,
+        element: <ConfigureCentreView />,
       },
       {
-        viewPath: COMPANIES + COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
-      },
-    ],
-  },
-  {
-    pagePath: CARRER_ASCENT_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-
-    views: [
-      // array of views under Page route
-      {
-        viewPath: COMPANIES,
-        element: <Companies />,
-      },
-      {
-        viewPath: COMPANIES + COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
-      },
-    ],
-  },
-  {
-    pagePath: WOMEN_PLACEMENT_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-
-    views: [
-      // array of views under Page route
-      {
-        viewPath: COMPANIES,
-        element: <Companies />,
-      },
-      {
-        viewPath: COMPANIES + COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
+        element: <ConfigureCentreView />,
       },
     ],
   },
@@ -250,6 +146,10 @@ const config = [
     pagePath: CONTROL_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
+      {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
       {
         viewPath: USERS,
         element: <ManageUsers />,
@@ -269,6 +169,10 @@ const config = [
     element: <HomeWithPrivateAccess />,
     views: [
       {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
+      {
         viewPath: SESSION,
         element: <Session />,
       },
@@ -288,24 +192,9 @@ const config = [
     element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: SESSION,
-        element: <Session />,
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
       },
-      {
-        viewPath: SESSION + SETUP_CENTERS,
-        element: <SetupCenter />,
-      },
-      {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
-        element: <SetupCenterDetails />,
-      },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
-    ],
-  },
-  {
-    pagePath: CARRER_ASCENT_KEY,
-    element: <HomeWithPrivateAccess />,
-    views: [
       {
         viewPath: SESSION,
         element: <Session />,
@@ -326,6 +215,10 @@ const config = [
     element: <HomeWithPrivateAccess />,
     views: [
       {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
+      {
         viewPath: SESSION,
         element: <Session />,
       },
@@ -341,81 +234,28 @@ const config = [
     ],
   },
   {
-    pagePath: CA_JOBS_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
+    pagePath: Configurations,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: CONFIGURE_CENTRES,
-        element: <ConfigureCentres />,
-      },
-      {
-        viewPath: CONFIGURE_CENTRES + ADD,
-        element: <ConfigureCentreView />,
-      },
-      {
-        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
-        element: <ConfigureCentreView />,
-      },
-    ],
-  },
-  {
-    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
-      {
-        viewPath: CONFIGURE_CENTRES,
-        element: <ConfigureCentres />,
-      },
-      {
-        viewPath: CONFIGURE_CENTRES + ADD,
-        element: <ConfigureCentreView />,
-      },
-      {
-        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
-        element: <ConfigureCentreView />,
-      },
-    ],
-  },
-  {
-    pagePath: OVERSEAS_CHAPTERS_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
-      {
-        viewPath: CONFIGURE_CENTRES,
-        element: <ConfigureCentres />,
-      },
-      {
-        viewPath: CONFIGURE_CENTRES + ADD,
-        element: <ConfigureCentreView />,
-      },
-      {
-        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
-        element: <ConfigureCentreView />,
+        viewPath: "",
+        element: <Configurations />,
       },
     ],
   },
   {
     pagePath: CARRER_ASCENT_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
+
     views: [
       {
-        viewPath: CONFIGURE_CENTRES,
-        element: <ConfigureCentres />,
+        viewPath: COMPANIES,
+        element: <Companies />,
       },
       {
-        viewPath: CONFIGURE_CENTRES + ADD,
-        element: <ConfigureCentreView />,
+        viewPath: COMPANIES + COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
       },
-      {
-        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
-        element: <ConfigureCentreView />,
-      },
-    ],
-  },
-  {
-    pagePath: WOMEN_PLACEMENT_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
       {
         viewPath: CONFIGURE_CENTRES,
         element: <ConfigureCentres />,
@@ -433,7 +273,28 @@ const config = [
   {
     pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
+
     views: [
+      {
+        viewPath: COMPANIES,
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES + COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES,
+        element: <ConfigureCentres />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + ADD,
+        element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
+        element: <ConfigureCentreView />,
+      },
       {
         viewPath: CONTACT_US,
         element: <ContactUsListing />,
@@ -441,6 +302,59 @@ const config = [
       {
         viewPath: CONTACT_US + QUERY_DETAILS,
         element: <QueryDetails />,
+      },
+    ],
+  },
+  {
+    pagePath: OVERSEAS_CHAPTERS_KEY,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+    views: [
+      {
+        viewPath: COMPANIES,
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES + COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES,
+        element: <ConfigureCentres />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + ADD,
+        element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
+        element: <ConfigureCentreView />,
+      },
+    ],
+  },
+  {
+    pagePath: WOMEN_PLACEMENT_KEY,
+    element: <HomeWithPrivateAccess noOuterPadding />,
+
+    views: [
+      {
+        viewPath: COMPANIES,
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES + COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES,
+        element: <ConfigureCentres />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + ADD,
+        element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
+        element: <ConfigureCentreView />,
       },
     ],
   },

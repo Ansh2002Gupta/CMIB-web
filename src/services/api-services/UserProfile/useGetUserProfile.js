@@ -33,7 +33,11 @@ const useGetUserDetails = () => {
     const selectedModule = accessibleModules.filter((item) => {
       return item.key === pathSegments[1];
     });
-    userProfileDispatch(setSelectedModule(selectedModule[0]));
+    if (selectedModule?.length) {
+      userProfileDispatch(setSelectedModule(selectedModule[0]));
+      return;
+    }
+    setFirstActiveModule(userData);
   };
 
   const getUserFromServer = async () => {
@@ -47,7 +51,7 @@ const useGetUserDetails = () => {
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         userProfileDispatch(setUserDetails(res.data));
-        setFirstActiveModule(res.data);
+        setDefaultActiveModule(res.data);
         return;
       }
       userProfileDispatch(
@@ -66,13 +70,7 @@ const useGetUserDetails = () => {
   };
 
   const getUserDetails = () => {
-    const userData = getItem(STORAGE_KEYS?.USER_DATA);
-    if (userData) {
-      userProfileDispatch(setUserDetails(userData));
-      setDefaultActiveModule(userData);
-    } else {
-      getUserFromServer();
-    }
+    getUserFromServer();
   };
 
   return { getUserDetails };

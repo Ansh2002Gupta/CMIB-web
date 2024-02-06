@@ -10,7 +10,7 @@ const BreadCrumbs = () => {
   const location = useLocation();
   const intl = useIntl();
   const segments = location.pathname.split("/");
-  const pathSegments = segments.slice(2, -1).filter(Boolean);
+  const pathSegments = segments.slice(2, -1);
   const { navigateScreen: navigate } = useNavigateScreen();
 
   const breadcrumbItems = pathSegments.map((item, index) => {
