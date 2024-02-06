@@ -12,6 +12,7 @@ import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
 import ManageUsers from "../views/ManageUsers";
+import RedirectToAccessedModule from "./RedirectToAccessModules";
 import Session from "../views/Session";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
@@ -76,7 +77,7 @@ const config = [
     views: [
       {
         viewPath: "",
-        element: <DashboardView />,
+        element: <RedirectToAccessedModule />,
       },
     ],
   },
