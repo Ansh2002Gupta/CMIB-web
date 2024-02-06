@@ -57,4 +57,7 @@ iframe#webpack-dev-server-client-overlay {
 .ant-table-wrapper .ant-table-thead > tr > th:not(:last-child)::before {
   content: none !important;
 }
+.ant-select-selector {
+  border-radius: var(--radiusLg) !important;
+}
 
