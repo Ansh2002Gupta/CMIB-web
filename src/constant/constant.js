@@ -352,3 +352,8 @@ export const INITIAL_PASSWORD_DATA = {
   new_password: "",
   confirm_password: "",
 };
+
+export const SORTING_QUERY_PARAMS = {
+  SORTED_KEY: "sorted-key",
+  SORTED_DIRECTION: "sorted-direction",
+};

@@ -1,6 +1,8 @@
 import { Image, Typography } from "antd";
 import styles from "./ContactUsListingContent.module.scss";
 import CustomCheckBox from "../../components/CustomCheckBox/CustomCheckBox";
+import { toggleSorting } from "../../constant/utils";
+import { SORTING_QUERY_PARAMS } from "../../constant/constant";
 
 const getStatusStyles = (status) => {
   if (
@@ -22,9 +24,15 @@ export const getTicketOrQueryColumn = ({
   navigate,
   renderColumn,
   queriesColumnProperties = {},
+  fetchData,
+  paginationAndSearchProperties,
+  sortedOrder,
+  setSortedOrder,
+  setSearchParams,
 }) => {
   const { sortArrowStyles, selectedItemsList, setSelectedItemsList } =
     queriesColumnProperties;
+  const { pageSize, current, searchedValue } = paginationAndSearchProperties;
   if (type === "2") {
     return [
       renderColumn({
@@ -63,32 +71,35 @@ export const getTicketOrQueryColumn = ({
         title: (
           <Typography
             className={[styles.columnHeading, styles.centerContent].join(" ")}
-            // onClick={() =>
-            //   fetchData({
-            //     queryParamsObject: {
-            //       perPage: pageSize,
-            //       page: current,
-            //       keyword: searchedValue,
-            //       sort: toggleSorting(sortedOrder.sortDirection),
-            //       order: sortedOrder.sortKeyName,
-            //     },
-            //     onSuccessCallback: () => {
-            //       setSearchParams((prevValue) => {
-            //         prevValue.set(
-            //           SORT_PROPERTIES.SORT_BY,
-            //           toggleSorting(sortedOrder.sortDirection)
-            //         );
-            //         return prevValue;
-            //       });
-            //       setSortedOrder((prev) => {
-            //         return {
-            //           ...prev,
-            //           sortDirection: toggleSorting(prev.sortDirection),
-            //         };
-            //       });
-            //     },
-            //   })
-            // }
+            onClick={() =>
+              fetchData({
+                queryParamsObject: {
+                  perPage: pageSize,
+                  page: current,
+                  keyword: searchedValue,
+                  sortDirection: toggleSorting(sortedOrder.sortDirection),
+                  sort: "name",
+                },
+                onSuccessCallback: () => {
+                  console.log("called...");
+                  setSearchParams((prevValue) => {
+                    prevValue.set(
+                      SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+                      toggleSorting(sortedOrder.sortDirection)
+                    );
+                    prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
+                    return prevValue;
+                  });
+                  setSortedOrder((prev) => {
+                    return {
+                      ...prev,
+                      sortDirection: toggleSorting(prev.sortDirection),
+                      sortKeyName: "name",
+                    };
+                  });
+                },
+              })
+            }
           >
             {intl.formatMessage({ id: "label.studentOrCompany" })}
             <div className={styles.sortintArrawContainer}>
@@ -175,32 +186,35 @@ export const getTicketOrQueryColumn = ({
         title: (
           <Typography
             className={styles.columnHeading}
-            // onClick={() =>
-            //   fetchData({
-            //     queryParamsObject: {
-            //       perPage: pageSize,
-            //       page: current,
-            //       keyword: searchedValue,
-            //       sort: toggleSorting(sortedOrder.sortDirection),
-            //       order: sortedOrder.sortKeyName,
-            //     },
-            //     onSuccessCallback: () => {
-            //       setSearchParams((prevValue) => {
-            //         prevValue.set(
-            //           SORT_PROPERTIES.SORT_BY,
-            //           toggleSorting(sortedOrder.sortDirection)
-            //         );
-            //         return prevValue;
-            //       });
-            //       setSortedOrder((prev) => {
-            //         return {
-            //           ...prev,
-            //           sortDirection: toggleSorting(prev.sortDirection),
-            //         };
-            //       });
-            //     },
-            //   })
-            // }
+            onClick={() =>
+              fetchData({
+                queryParamsObject: {
+                  perPage: pageSize,
+                  page: current,
+                  keyword: searchedValue,
+                  sortDirection: toggleSorting(sortedOrder.sortDirection),
+                  sort: "created_at",
+                },
+                onSuccessCallback: () => {
+                  console.log("called...");
+                  setSearchParams((prevValue) => {
+                    prevValue.set(
+                      SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+                      toggleSorting(sortedOrder.sortDirection)
+                    );
+                    prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
+                    return prevValue;
+                  });
+                  setSortedOrder((prev) => {
+                    return {
+                      ...prev,
+                      sortDirection: toggleSorting(prev.sortDirection),
+                      sortKeyName: "created_at",
+                    };
+                  });
+                },
+              })
+            }
           >
             {intl.formatMessage({ id: "label.createdOn" })}
             <Image

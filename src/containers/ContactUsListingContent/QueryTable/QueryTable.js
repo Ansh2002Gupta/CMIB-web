@@ -8,6 +8,7 @@ import { ThemeContext } from "core/providers/theme";
 
 import ErrorMessageBox from "../../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import useQueriesTypesApi from "../../../services/api-services/Queries/useQueriesTypesApi";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../../core/hooks/useFetch";
@@ -17,6 +18,7 @@ import { ADMIN_ROUTE, QUERIES_LIST } from "../../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
+  SORTING_QUERY_PARAMS,
   SORT_PROPERTIES,
   SORT_VALUES,
 } from "../../../constant/constant";
@@ -48,12 +50,30 @@ const QueryTable = ({
     setSelctedQueriesToBeMarkedAsAnswered,
   ] = useState([]);
 
+  const {
+    data: queryTypesData,
+    getQueriesTypes,
+    isLoading: isGettingQueryTypes,
+    error: errorWhileGettingQueryTypes,
+  } = useQueriesTypesApi();
+  console.log({queryTypesData});
+
   let sortArrowStyles = "";
   if (sortedOrder?.sortDirection === SORT_VALUES.ASCENDING) {
     sortArrowStyles = styles.upside;
   } else if (sortedOrder?.sortDirection === SORT_VALUES.DESCENDING) {
     sortArrowStyles = styles.downside;
   }
+
+  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
+    url: ADMIN_ROUTE + QUERIES_LIST,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+  let errorString = error;
+  if (typeof error === "object") {
+    errorString = error?.data?.message;
+  }
+  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
   const columns = getTicketOrQueryColumn({
     type: currentActiveTab,
@@ -66,16 +86,16 @@ const QueryTable = ({
       selectedItemsList: selctedQueriesToBeMarkedAsAnswered,
       setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
     },
+    fetchData,
+    paginationAndSearchProperties: {
+      pageSize,
+      current,
+      searchedValue,
+    },
+    sortedOrder,
+    setSortedOrder,
+    setSearchParams,
   });
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + QUERIES_LIST,
-    otherOptions: { skipApiCallOnMount: true },
-  });
-  let errorString = error;
-  if (typeof error === "object") {
-    errorString = error?.data?.message;
-  }
-  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
@@ -94,7 +114,7 @@ const QueryTable = ({
       page: current,
       q: str,
     };
-    debounceSearch(requestedParams);
+    debounceSearch({ queryParamsObject: requestedParams });
   };
 
   const onChangePageSize = (size) => {
@@ -110,7 +130,7 @@ const QueryTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -124,7 +144,7 @@ const QueryTable = ({
       page: newPageNumber,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnReTry = () => {
@@ -133,7 +153,7 @@ const QueryTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   useEffect(() => {
@@ -152,7 +172,7 @@ const QueryTable = ({
           page: 1,
           q: searchedValue,
         };
-        fetchData(requestedParams);
+        fetchData({ queryParamsObject: requestedParams });
       }
     }
   }, [data?.meta?.total]);
@@ -161,6 +181,11 @@ const QueryTable = ({
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
+      prev.set(
+        SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+        sortedOrder.sortDirection
+      );
+      prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortedOrder.sortKeyName);
       searchedValue &&
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
       return prev;
@@ -171,7 +196,8 @@ const QueryTable = ({
       page: current,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
+    getQueriesTypes({});
   }, []);
 
   return (
