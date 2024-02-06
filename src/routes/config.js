@@ -102,6 +102,26 @@ const config = [
         element: <SetupCenterDetails />,
       },
       { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: COMPANIES,
+        element: <Companies />,
+      },
+      {
+        viewPath: COMPANIES + COMPANIES_DETAILS,
+        element: <CompaniesDetails />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES,
+        element: <ConfigureCentres />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + ADD,
+        element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
+        element: <ConfigureCentreView />,
+      },
     ],
   },
   {
@@ -181,96 +201,6 @@ const config = [
         element: <SetupCenterDetails />,
       },
       { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
-    ],
-  },
-  {
-    pagePath: MODULE_KEYS.OVERSEAS_CHAPTERS_KEY,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: DASHBOARD,
-        element: <DashboardView />,
-      },
-      {
-        viewPath: SESSION,
-        element: <Session />,
-      },
-      {
-        viewPath: SESSION + SETUP_CENTERS,
-        element: <SetupCenter />,
-      },
-      {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
-        element: <SetupCenterDetails />,
-      },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
-    ],
-  },
-  {
-    pagePath: MODULE_KEYS.WOMEN_PARTTIME_KEY,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: DASHBOARD,
-        element: <DashboardView />,
-      },
-      {
-        viewPath: SESSION,
-        element: <Session />,
-      },
-      {
-        viewPath: SESSION + SETUP_CENTERS,
-        element: <SetupCenter />,
-      },
-      {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
-        element: <SetupCenterDetails />,
-      },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
-    ],
-  },
-  {
-    pagePath: CONFIGURATIONS,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <Configurations />,
-      },
-    ],
-  },
-  {
-    pagePath: MODULE_KEYS.CARRER_ASCENT_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-
-    views: [
-      {
-        viewPath: COMPANIES,
-        element: <Companies />,
-      },
-      {
-        viewPath: COMPANIES + COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
-      },
-      {
-        viewPath: CONFIGURE_CENTRES,
-        element: <ConfigureCentres />,
-      },
-      {
-        viewPath: CONFIGURE_CENTRES + ADD,
-        element: <ConfigureCentreView />,
-      },
-      {
-        viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
-        element: <ConfigureCentreView />,
-      },
-    ],
-  },
-  {
-    pagePath: MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-
-    views: [
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -303,8 +233,25 @@ const config = [
   },
   {
     pagePath: MODULE_KEYS.OVERSEAS_CHAPTERS_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
+    element: <HomeWithPrivateAccess />,
     views: [
+      {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
+      {
+        viewPath: SESSION,
+        element: <Session />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS,
+        element: <SetupCenter />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        element: <SetupCenterDetails />,
+      },
+      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -329,9 +276,25 @@ const config = [
   },
   {
     pagePath: MODULE_KEYS.WOMEN_PARTTIME_KEY,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-
+    element: <HomeWithPrivateAccess />,
     views: [
+      {
+        viewPath: DASHBOARD,
+        element: <DashboardView />,
+      },
+      {
+        viewPath: SESSION,
+        element: <Session />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS,
+        element: <SetupCenter />,
+      },
+      {
+        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        element: <SetupCenterDetails />,
+      },
+      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -351,6 +314,16 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
+      },
+    ],
+  },
+  {
+    pagePath: CONFIGURATIONS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <Configurations />,
       },
     ],
   },
