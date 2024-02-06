@@ -65,7 +65,7 @@ const useRenderColumn = () => {
       customCheckBoxContainerStyles = "",
       checkBoxList = [],
       isCheckBoxTextBold = false,
-      isCheckBoxDisable = false,
+      funForCheckingIsCheckBoxDisable = ()=>{},
     } = renderTextWithCheckBoxes;
 
     const {
@@ -210,7 +210,7 @@ const useRenderColumn = () => {
         const { id } = rowData;
         return (
           <CustomCheckBox
-            disabled={isCheckBoxDisable}
+            disabled={funForCheckingIsCheckBoxDisable(rowData)}
             checked={checkBoxList?.includes(id)}
             onChange={() => onClickCheckbox(rowData)}
             customStyles={[
