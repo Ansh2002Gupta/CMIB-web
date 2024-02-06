@@ -209,12 +209,13 @@
 
 .errorText {
   color: var(--error);
-  font-size: var(--fontSizeExtraSmall);
-  margin-top: var(--gapXXSmall);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  margin-top: var(--marginSmall);
 }
 
 .noSessionContainer {
-  min-height: 20vw;
+  min-height: var(--height_50vh);
   background-color: var(--bodyBg);
   padding: var(--fontSizeXlargeMedium);
   border-radius: var(--lineHeightExtraSmall);

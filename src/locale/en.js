@@ -93,8 +93,7 @@ const locale = {
   "session.ifsc": "IFSC",
   "session.placeholder.sessionName": "Enter Session Name",
   "session.placeholder.natureOfGoods": "Enter Nature of services/goods",
-  "session.placeholder.invoiceNumberFormat":
-    "Enter Performa Invoice Number Format",
+  "session.placeholder.invoiceNumberFormat": "prefix-*****-suffix Format",
   "session.placeholder.examinationSessionPeriod": "Select Period",
   "session.placeholder.gmcsCompletetionDate": "Select GMCS Completetion Date",
   "session.placeholder.membershipCompletetionDate":

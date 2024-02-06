@@ -57,7 +57,7 @@ export const FIELDS = (
         {
           regex: PERFORMA_INVOICE_REGEX,
           required: true,
-          message: "Please enter Performa Invoice Number",
+          message: "Please use prefix-*****-suffix format",
         },
       ],
     },
@@ -70,7 +70,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select atleast one Examination Session Period ",
+          message: "* Please select atleast one Examination Session Period ",
         },
       ],
     },
@@ -82,7 +82,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select GMCS Completetion Date",
+          message: "* Please select GMCS Completetion Date",
         },
       ],
     },
@@ -94,7 +94,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select Membership Completetion Date",
+          message: "* Please select Membership Completetion Date",
         },
       ],
     },
@@ -106,7 +106,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select Articleship Completetion From Date",
+          message: "* Please select Articleship Completetion From Date",
         },
       ],
     },
@@ -118,7 +118,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select Articleship Completetion From Date",
+          message: "* Please select Articleship Completetion From Date",
         },
       ],
     },

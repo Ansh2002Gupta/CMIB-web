@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { DatePicker, Image, Select, Switch, Typography } from "antd";
+import { DatePicker, Image, Typography } from "antd";
 
 import { TwoRow, TwoColumn, Base } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
@@ -11,13 +11,16 @@ import useResponsive from "core/hooks/useResponsive";
 import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
-import { convertdateToStringDate } from "../../constant/utils";
+import CustomSwitch from "../../components/CustomSwitch";
+import {
+  convertDateToStringDate,
+  isObjectHasNoValues,
+} from "../../constant/utils";
 import { FIELDS } from "./sessionFieldDetails";
 import { SESSION_DETAILS } from "../../dummyData";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 import "./Override.css";
-import CustomSwitch from "../../components/CustomSwitch";
 
 const SessionDetails = ({ addSession, setAddSession }) => {
   const intl = useIntl();
@@ -107,17 +110,6 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     return undefined;
   };
 
-  function errorCheck(obj) {
-    for (let key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        if (obj[key] !== undefined) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
   const handleCancel = () => {
     setFormData(SESSION_DETAILS);
     setEdit(false);
@@ -125,12 +117,12 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     setFormErrors({});
   };
   const handleSave = () => {
-    if (errorCheck(formErrors)) {
+    if (isObjectHasNoValues(formErrors)) {
       setEdit(false);
     }
   };
 
-  return fields?.length > 0 ? (
+  return fields?.length ? (
     <TwoRow
       className={styles.mainContainer}
       topSection={
@@ -220,7 +212,6 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                                 )
                               }
                             />
-
                             <div className={styles.examinationFieldContainer}>
                               {formData?.examination_session_period?.map(
                                 (item, index) => {
@@ -230,7 +221,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                                       key={index}
                                     >
                                       <Typography className={styles.chipText}>
-                                        {convertdateToStringDate(item)}
+                                        {convertDateToStringDate(item)}
                                       </Typography>
                                       <Image
                                         src={getImage("cancel")}
@@ -259,13 +250,20 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             placeholder={intl.formatMessage({
                               id: `session.placeholder.${item.headingIntl}`,
                             })}
+                            isError={formErrors[item.label]}
+                            errorMessage={formErrors[item.label]}
                           />
                         )}
-                        {formErrors[item.label] && (
-                          <Typography className={styles.errorText}>
-                            {formErrors[item.label]}
-                          </Typography>
-                        )}
+                        {formErrors[item.label] &&
+                          (item.id === 4 ||
+                            item.id === 5 ||
+                            item.id === 6 ||
+                            item.id === 7 ||
+                            item.id === 8) && (
+                            <Typography className={styles.errorText}>
+                              {formErrors[item.label]}
+                            </Typography>
+                          )}
                       </div>
                     ) : item?.id !== 4 ? (
                       <Typography className={styles.blackText}>
@@ -283,7 +281,6 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   }
                 />
               ))}
-
               <CustomSwitch
                 customStyle={styles.gridItem}
                 disabled={!edit}
