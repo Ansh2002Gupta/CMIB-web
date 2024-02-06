@@ -351,6 +351,7 @@ const locale = {
   "label.passwordChanged": "Password changed successfully",
   "label.noSessionSetup": "No session is setup currently",
   "label.sessionStatus": "Session Status",
+  "label.deleteAccount": "Delete Account",
   "label.path.global-configurations": "Configure centres",
   "label.path.centre-details": "Edit centre details",
 };

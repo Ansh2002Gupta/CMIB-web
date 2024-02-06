@@ -3,7 +3,6 @@ import variables from "../../themes/base/styles/variables";
 export const classes = {
   crossStyle: {
     alignSelf: "flex-end",
-    marginBottom: variables.margin_40,
   },
 
   thirdSectionStyle: {
