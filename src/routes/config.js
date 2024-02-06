@@ -23,21 +23,16 @@ import QueryDetails from "../views/QueryDetails";
 import {
   ADD,
   ADD_NEW_USER_DETAILS,
-  Configurations,
-  CA_JOBS_KEY,
-  CARRER_ASCENT_KEY,
+  Configuration,
   COMPANIES,
   COMPANIES_DETAILS,
   CONFIGURE_CENTRES,
   CONSENT_MARKING,
   CONTACT_US,
-  CONTROL_KEY,
   DASHBOARD,
   EDIT_CONFIGURE_CENTRE,
   FORGOT_PASSWORD,
   LOGIN,
-  NEWLY_QUALIFIED_PLACEMENTS_KEY,
-  OVERSEAS_CHAPTERS_KEY,
   QUERY_DETAILS,
   ROOT,
   SESSION,
@@ -46,8 +41,8 @@ import {
   SUBSCRIPTIONS,
   USERS,
   USER_DETAILS,
-  WOMEN_PLACEMENT_KEY,
 } from "./routeNames";
+import { MODULE_KEYS } from "../constant/constant";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
@@ -86,7 +81,7 @@ const config = [
     ],
   },
   {
-    pagePath: CARRER_ASCENT_KEY,
+    pagePath: MODULE_KEYS.CARRER_ASCENT_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
@@ -109,7 +104,7 @@ const config = [
     ],
   },
   {
-    pagePath: CA_JOBS_KEY,
+    pagePath: MODULE_KEYS.CA_JOBS_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
@@ -143,7 +138,7 @@ const config = [
     ],
   },
   {
-    pagePath: CONTROL_KEY,
+    pagePath: MODULE_KEYS.CONTROL_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
@@ -165,7 +160,7 @@ const config = [
     ],
   },
   {
-    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
+    pagePath: MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
@@ -188,7 +183,7 @@ const config = [
     ],
   },
   {
-    pagePath: OVERSEAS_CHAPTERS_KEY,
+    pagePath: MODULE_KEYS.OVERSEAS_CHAPTERS_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
@@ -211,7 +206,7 @@ const config = [
     ],
   },
   {
-    pagePath: WOMEN_PLACEMENT_KEY,
+    pagePath: MODULE_KEYS.WOMEN_PARTTIME_KEY,
     element: <HomeWithPrivateAccess />,
     views: [
       {
@@ -234,7 +229,7 @@ const config = [
     ],
   },
   {
-    pagePath: Configurations,
+    pagePath: Configuration,
     element: <HomeWithPrivateAccess />,
     views: [
       {
@@ -244,7 +239,7 @@ const config = [
     ],
   },
   {
-    pagePath: CARRER_ASCENT_KEY,
+    pagePath: MODULE_KEYS.CARRER_ASCENT_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
 
     views: [
@@ -271,7 +266,7 @@ const config = [
     ],
   },
   {
-    pagePath: NEWLY_QUALIFIED_PLACEMENTS_KEY,
+    pagePath: MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
 
     views: [
@@ -306,7 +301,7 @@ const config = [
     ],
   },
   {
-    pagePath: OVERSEAS_CHAPTERS_KEY,
+    pagePath: MODULE_KEYS.OVERSEAS_CHAPTERS_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
     views: [
       {
@@ -332,7 +327,7 @@ const config = [
     ],
   },
   {
-    pagePath: WOMEN_PLACEMENT_KEY,
+    pagePath: MODULE_KEYS.WOMEN_PARTTIME_KEY,
     element: <HomeWithPrivateAccess noOuterPadding />,
 
     views: [
