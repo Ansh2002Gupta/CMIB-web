@@ -107,6 +107,7 @@ const variables = {
   width_80: "80px",
   width_90: "90px",
   width_100: "100px",
+  width_110: "110px",
   width_104: "104px",
   width_120: "120px",
   width_125: "125px",

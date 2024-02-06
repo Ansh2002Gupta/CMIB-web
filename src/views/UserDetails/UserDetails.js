@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useParams, useSearchParams } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import useAddNewUserApi from "../../services/api-services/Users/useAddNewUserApi
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useFetch from "../../core/hooks/useFetch";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
 import {
@@ -30,6 +31,8 @@ const UserDetails = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams] = useSearchParams();
   const currentFormState = searchParams.get("mode") || FORM_STATES.EMPTY;
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isMobileNumber, setIsMobileNumberValid] = useState(true);
@@ -75,7 +78,7 @@ const UserDetails = () => {
 
   const goBackToViewDetailsPage = () => {
     setErrorWhileUpdatingUserData("");
-    navigate(USERS);
+    navigate(`/${selectedModule?.key}/${USERS}`);
   };
 
   const {

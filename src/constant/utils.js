@@ -13,6 +13,10 @@ export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
   return dayjs(new Date()).format(dateFormat);
 };
 
+export const convertDateToStringDate = (date) => {
+  return date;
+};
+
 export const convertStringArrayToObjectOfStringAndIdArray = (
   stringArray,
   arrayOfObjectWithTextAndId
@@ -167,7 +171,6 @@ export const convertPermissionFilter = (roles) => {
       options: [],
     },
   ];
-
   for (const key in roles) {
     if (roles.hasOwnProperty(key)) {
       result[0].options.push({
@@ -178,4 +181,15 @@ export const convertPermissionFilter = (roles) => {
   }
 
   return result;
+};
+
+export const isObjectHasNoValues = (obj) => {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (obj[key] !== undefined) {
+        return false;
+      }
+    }
+  }
+  return true;
 };
