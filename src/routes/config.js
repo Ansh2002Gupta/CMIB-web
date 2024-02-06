@@ -7,12 +7,13 @@ import ContactUsListing from "../views/ContactUsListing";
 import ConfigureCentreView from "../views/ConfigureCentreView";
 import ConsentMarking from "../views/ConsentMarking";
 import DashboardView from "../views/Dashboard/Dashboard";
+import DefaultRoute from "./components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
 import ManageUsers from "../views/ManageUsers";
-import RedirectToAccessedModule from "./RedirectToAccessModules";
+import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
@@ -34,6 +35,7 @@ import {
   EDIT_CONFIGURE_CENTRE,
   FORGOT_PASSWORD,
   LOGIN,
+  OUT_SOURCED,
   QUERY_DETAILS,
   ROOT,
   SESSION,
@@ -51,6 +53,16 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 );
 
 const config = [
+  {
+    pagePath: OUT_SOURCED,
+    element: <DefaultRoute />,
+    views: [
+      {
+        viewPath: "",
+        element: <DefaultRoute />,
+      },
+    ],
+  },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,

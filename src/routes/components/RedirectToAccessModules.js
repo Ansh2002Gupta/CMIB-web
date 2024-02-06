@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 
-import useNavigateScreen from "../core/hooks/useNavigateScreen";
-import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
-import { DASHBOARD } from "./routeNames";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { DASHBOARD } from "../routeNames";
 
 const RedirectToAccessedModule = () => {
   const [userProfileDetails] = useContext(UserProfileContext);

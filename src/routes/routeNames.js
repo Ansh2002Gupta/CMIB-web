@@ -3,6 +3,7 @@ export const ROOT = "/";
 export const CONFIGURATIONS = "/configurations";
 export const FORGOT_PASSWORD = "/forgot-password";
 export const LOGIN = "/login";
+export const OUT_SOURCED = "*";
 
 /* Sub Routes */
 export const ADD = "add/";
