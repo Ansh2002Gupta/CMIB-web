@@ -44,7 +44,7 @@ const ConfigureCentreHeader = ({ showButton }) => {
               iconStyles={styles.btnIconStyles}
               customStyle={styles.btnCustomStyles}
               onClick={() => {
-                navigate("add");
+                navigate("add/");
               }}
             />
           )

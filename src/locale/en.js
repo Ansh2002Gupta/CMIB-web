@@ -327,6 +327,7 @@ const locale = {
   "label.enable": "Enable",
   "label.disable": "Disable",
   "label.path.users": "Manage Users",
+  "label.path.add": "Add new center",
   "label.path.details": "User Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
