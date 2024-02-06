@@ -24,7 +24,7 @@ import QueryDetails from "../views/QueryDetails";
 import {
   ADD,
   ADD_NEW_USER_DETAILS,
-  Configuration,
+  CONFIGURATIONS,
   COMPANIES,
   COMPANIES_DETAILS,
   CONFIGURE_CENTRES,
@@ -230,7 +230,7 @@ const config = [
     ],
   },
   {
-    pagePath: Configuration,
+    pagePath: CONFIGURATIONS,
     element: <HomeWithPrivateAccess />,
     views: [
       {

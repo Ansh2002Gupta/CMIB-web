@@ -367,6 +367,7 @@ const locale = {
   "label.disabled": "Disabled",
   "label.path.users": "Manage Users",
   "label.path.details": "User Details",
+  "label.path.editDetails": "Edit User Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.passwordChanged": "Password changed successfully",
   "label.noSessionSetup": "No session is setup currently",
@@ -374,6 +375,7 @@ const locale = {
   "label.deleteAccount": "Delete Account",
   "label.path.global-configurations": "Configure centres",
   "label.path.centre-details": "Edit centre details",
+  "label.path.add": "Add New User",
 };
 
 export default locale;

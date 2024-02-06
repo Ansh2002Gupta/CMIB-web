@@ -1,12 +1,12 @@
 /* Routes */
 export const ROOT = "/";
-export const Configuration = "/configurations";
+export const CONFIGURATIONS = "/configurations";
 export const FORGOT_PASSWORD = "/forgot-password";
 export const LOGIN = "/login";
 
 /* Sub Routes */
-export const ADD = "add";
-export const ADD_NEW_USER_DETAILS = "add";
+export const ADD = "add/";
+export const ADD_NEW_USER_DETAILS = "add/";
 export const CENTRE_DETAILS = "centre-details";
 export const COMPANIES = "companies/";
 export const COMPANIES_DETAILS = "company-details/:companyId";
