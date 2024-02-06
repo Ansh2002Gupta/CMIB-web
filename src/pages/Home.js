@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // will be replaced by view component injected through route
-import { Outlet } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import { Layout } from "antd";
 
 import CommonModal from "../components/CommonModal";
@@ -12,14 +12,29 @@ import HeaderContainer from "../containers/Header";
 import ViewProfileDetails from "../containers/ViewProfileDetails";
 import useShowNotification from "../core/hooks/useShowNotification";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
+import { USER_PROFILE_QUERY_PARAMS } from "../constant/constant";
 import styles from "./CommonStyles/commonModalStyles.module.scss";
 
 function Home({ noOuterPadding }) {
   const [openSideMenu, setOpenSideMenu] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userProfileDetails,] = useContext(UserProfileContext);
-  const { currentlyOpenedUserProfileModal } = userProfileDetails;
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const userModalParams =
+    searchParams.get(USER_PROFILE_QUERY_PARAMS) === "open";
   const { showNotification, notificationContextHolder } = useShowNotification();
+  const currentlyOpenedUserProfileModal = userModalParams
+    ? (userProfileDetails?.currentlyOpenedUserProfileModal || 1)
+    : 0;
+
+  useEffect(() => {
+    if (!userModalParams && searchParams.has(USER_PROFILE_QUERY_PARAMS)) {
+      setSearchParams((prev) => {
+        prev.delete(USER_PROFILE_QUERY_PARAMS);
+        return prev;
+      });
+    }
+  }, []);
 
   return (
     <>

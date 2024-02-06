@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 import Http from "../../http-service";
 import useHeader from "../../../core/hooks/useHeader";
 import { filterMenuData } from "../../../constant/utils";
-import { getItem, setItem } from "../../encrypted-storage-service";
 import {
   setErrorGetingUserDetails,
   setIsGettingUserDetails,
@@ -15,7 +14,7 @@ import {
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import modules from "../../../containers/SideMenu/sideMenuItems";
 import { GET_USER_PROFILE_DETAILS } from "../../../constant/apiEndpoints";
-import { STATUS_CODES, STORAGE_KEYS } from "../../../constant/constant";
+import { STATUS_CODES } from "../../../constant/constant";
 
 const useGetUserDetails = () => {
   const intl = useIntl();
@@ -49,7 +48,6 @@ const useGetUserDetails = () => {
       ) {
         userProfileDispatch(setUserDetails(res.data));
         setFirstActiveModule(res.data);
-        setItem(STORAGE_KEYS.USER_DATA, res.data);
         return;
       }
       userProfileDispatch(

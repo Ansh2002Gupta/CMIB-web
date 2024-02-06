@@ -23,10 +23,18 @@
   margin-top: var(--margin_32, 32px);
 }
 
+.commonButtonStyles {
+  height: 44px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .cancelButton {
   background-color: var(--bodyBg, #fff);
   color: var(--textBold, #000833);
   border: 1px solid rgba(161, 159, 159, 0.482) !important;
+  padding: 12px 16px;
+  min-height: auto;
   &:hover {
     background-color: var(--bodyBg, #fff) !important;
     color: var(--textBold, #000833) !important;
@@ -34,14 +42,18 @@
   }
 }
 
+.saveButton {
+  padding: 12px 24px;
+  min-height: auto;
+}
+
 .rotateIcon {
-  margin-top: var(--margin_12, 12px);
   cursor: pointer;
 }
 
 .containerWithRotate {
   display: flex;
   gap: var(--gapSmallMedium, 12px);
-  align-items: center;
+  align-items: baseline;
   width: var(--fullWidth, 100%);
 }
