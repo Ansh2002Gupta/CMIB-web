@@ -9,10 +9,12 @@ const Chip = ({
   customContainerStyles,
   customLabelStyles,
   label,
+  onClick,
   textColor,
 }) => {
   return (
     <div
+      {...{ onClick }}
       className={[styles.container, bgColor, customContainerStyles].join(" ")}
     >
       <Typography
@@ -29,6 +31,7 @@ Chip.defaultProps = {
   customContainerStyles: "",
   customLabelStyles: "",
   label: "",
+  onClick: () => {},
   textColor: "",
 };
 
@@ -37,6 +40,7 @@ Chip.propTypes = {
   customContainerStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   label: PropTypes.string,
+  onClick: PropTypes.func,
   textColor: PropTypes.string,
 };
 

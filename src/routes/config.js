@@ -42,6 +42,7 @@ import {
   QUERY_DETAILS,
   SETUP_CENTERS_DETAILS,
   SETUP_MOCK_INTERVIEW,
+  EDIT_CONFIGURE_CENTRE,
 } from "./routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -194,6 +195,10 @@ const config = [
       },
       {
         viewPath: ADD,
+        element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
       },
     ],

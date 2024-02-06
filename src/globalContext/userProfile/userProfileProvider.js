@@ -7,6 +7,7 @@ const initialState = {
   userDetails: {},
   errorGettingUserDetails: "",
   showLogoutModal: false,
+  currentlyOpenedUserProfileModal: 0,
 };
 
 const userProfileReducer = (state, action) => {
@@ -35,6 +36,12 @@ const userProfileReducer = (state, action) => {
         errorGettingUserDetails: action.payload,
       };
 
+    case types.SET_SHOW_CHANGE_PASSWORD_MODAL:
+      return {
+        ...state,
+        showChangePasswordModal: action.payload,
+      };
+
     case types.RESET_USER_DETAILS:
       return initialState;
 
@@ -42,6 +49,18 @@ const userProfileReducer = (state, action) => {
       return {
         ...state,
         showLogoutModal: action.payload,
+      };
+
+    case types.SET_USER_PROFILE_MODAL_NUMBER:
+      return {
+        ...state,
+        currentlyOpenedUserProfileModal: action.payload,
+      };
+
+    case types.CLOSE_USER_PROFILE_MODAL:
+      return {
+        ...state,
+        currentlyOpenedUserProfileModal: 0,
       };
 
     default:

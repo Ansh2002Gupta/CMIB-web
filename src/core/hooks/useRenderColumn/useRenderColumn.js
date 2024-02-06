@@ -68,12 +68,14 @@ const useRenderColumn = () => {
       isTypeDate,
       textStyles,
       isCapitalize,
+      mobile,
     } = renderText;
 
     const {
       swithActiveLabel,
       swithInActiveLabel,
       switchToggleHandler = () => {},
+      isActionable = true,
     } = renderSwitch;
 
     const {
@@ -138,12 +140,27 @@ const useRenderColumn = () => {
     render && (columnObject.render = render);
 
     renderText?.visible &&
-      (columnObject.render = (text) => {
+      (columnObject.render = (text, rowData) => {
         return {
           props: {
             className: styles.tableCellStyles,
           },
-          children: (
+          children: mobile ? (
+            <p
+              className={[
+                textStyles,
+                isTextBold ? styles.boldText : "",
+                styles.textEllipsis,
+                isCapitalize ? styles.capitalize : "",
+              ].join(" ")}
+            >
+              {`${
+                rowData?.mobile_country_code
+                  ? rowData?.mobile_country_code
+                  : "+91"
+              }-${text}`}
+            </p>
+          ) : (
             <p
               className={[
                 textStyles,
@@ -163,11 +180,13 @@ const useRenderColumn = () => {
         const { status } = data;
         return (
           <div className={styles.centreStatusContainer}>
-            <Switch
-              checked={status}
-              onClick={() => switchToggleHandler(data)}
-              className={status ? styles.switchBgColor : ""}
-            />
+            {isActionable && (
+              <Switch
+                checked={status}
+                onClick={() => switchToggleHandler(data)}
+                className={status ? styles.switchBgColor : ""}
+              />
+            )}
             <p>
               {status
                 ? swithActiveLabel || intl.formatMessage({ id: "label.active" })

@@ -18,3 +18,5 @@ export const SETUP_MOCK_INTERVIEW = "setup-mock-interview";
 export const SUBSCRIPTIONS = "/subscriptions";
 export const USERS = "/users";
 export const USER_DETAILS = "details/:userId";
+export const EDIT_CONFIGURE_CENTRE = "centre-details/:centreId";
+export const CENTRE_DETAILS = "centre-details";

@@ -40,3 +40,23 @@ export const setSelectedModule = (payload) => {
     payload,
   };
 };
+
+export const setShowChangePasswordModal = (payload) => {
+  return {
+    type: types.SET_SHOW_CHANGE_PASSWORD_MODAL,
+    payload,
+  };
+};
+
+export const setUserProfileModalNumber = (payload) => {
+  return {
+    type: types.SET_USER_PROFILE_MODAL_NUMBER,
+    payload,
+  };
+};
+
+export const closeUserProfileModal = () => {
+  return {
+    type: types.CLOSE_USER_PROFILE_MODAL,
+  };
+};

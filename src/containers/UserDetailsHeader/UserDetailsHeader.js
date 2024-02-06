@@ -52,19 +52,21 @@ const UserDetailsHeader = ({
           <>
             {currentFormState === FORM_STATES.VIEW_ONLY ? (
               <div className={styles.activeSwitchAndBtnContainer}>
-                <div className={styles.switchAndTextContainer}>
-                  <Switch
-                    className={userData?.status ? styles.switchBgColor : ""}
-                    onClick={handleOnUserStatusChange}
-                    disabled={isUpdatingUserData}
-                    checked={userData?.status}
-                  />
-                  <Typography className={styles.text}>
-                    {intl.formatMessage({
-                      id: `label.${userData?.status ? "active" : "inactive"}`,
-                    })}
-                  </Typography>
-                </div>
+                {currentFormState !== FORM_STATES.VIEW_ONLY && (
+                  <div className={styles.switchAndTextContainer}>
+                    <Switch
+                      className={userData?.status ? styles.switchBgColor : ""}
+                      onClick={handleOnUserStatusChange}
+                      disabled={isUpdatingUserData}
+                      checked={userData?.status}
+                    />
+                    <Typography className={styles.text}>
+                      {intl.formatMessage({
+                        id: `label.${userData?.status ? "active" : "inactive"}`,
+                      })}
+                    </Typography>
+                  </div>
+                )}
                 <CustomButton
                   isBtnDisable={isUpdatingUserData}
                   btnText={intl.formatMessage({ id: "label.edit" })}
