@@ -510,7 +510,6 @@ export const INITIAL_CENTRE_DETAILS = {
   centre_name: "",
   centre_code: "",
   status: 1,
-  is_editable: true,
 };
 
 export const SETUP_CENTRE_DETAILS = [

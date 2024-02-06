@@ -209,11 +209,13 @@ const ConfigureCentreContent = () => {
           }
         >
           {intl.formatMessage({ id: "label.centreName" })}
-          <Image
-            src={getImage("arrowDownDarkGrey")}
-            preview={false}
-            className={[sortArrowStyles].join(" ")}
-          />
+          <div className={styles.sortArrowImageContainer}>
+            <Image
+              src={getImage("arrowDownDarkGrey")}
+              preview={false}
+              className={[sortArrowStyles].join(" ")}
+            />
+          </div>
         </Typography>
       ),
       dataIndex: "name",

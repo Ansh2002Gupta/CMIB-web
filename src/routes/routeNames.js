@@ -1,4 +1,4 @@
-export const ADD = "add";
+export const ADD = "add/";
 export const LOGIN = "/login";
 export const DASHBOARD = "/dashboard";
 export const SUBSCRIPTIONS = "/subscriptions";

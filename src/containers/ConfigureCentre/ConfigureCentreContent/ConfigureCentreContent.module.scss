@@ -66,6 +66,10 @@ input::placeholder {
   min-width: var(--width_100);
 }
 
+.sortArrowImageContainer {
+  min-width: var(--width_20);
+}
+
 @media screen and (max-width: 1023px) {
   .searchBar {
     width: var(--halfWidth);

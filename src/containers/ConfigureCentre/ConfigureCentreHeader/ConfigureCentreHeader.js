@@ -7,6 +7,7 @@ import CustomButton from "../../../components/CustomButton";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useResponsive from "../../../core/hooks/useResponsive";
 import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/plus icon.svg";
+import { ADD } from "../../../routes/routeNames";
 import styles from "./ConfigureCentreHeader.module.scss";
 
 const ConfigureCentreHeader = ({ showButton }) => {
@@ -44,7 +45,7 @@ const ConfigureCentreHeader = ({ showButton }) => {
               iconStyles={styles.btnIconStyles}
               customStyle={styles.btnCustomStyles}
               onClick={() => {
-                navigate("add/");
+                navigate(ADD);
               }}
             />
           )

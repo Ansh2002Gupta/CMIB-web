@@ -156,10 +156,11 @@ const ConfigureCentreDetails = () => {
         centre_name: data?.center_name,
         centre_type: data?.center_type,
         status: data?.status,
-        is_editable: Boolean(data?.is_editable),
       });
     }
   }, [data]);
+
+  const areFieldsEditable = !centreId || data?.is_editable;
 
   return (
     <>
@@ -214,7 +215,7 @@ const ConfigureCentreDetails = () => {
                               item.id === 2 ? (
                                 <Select
                                   bordered={false}
-                                  disabled={!formData?.is_editable}
+                                  disabled={!areFieldsEditable}
                                   size={"large"}
                                   style={classes.selectStyle}
                                   className={styles.selectInput}
@@ -233,7 +234,7 @@ const ConfigureCentreDetails = () => {
                                     disabled={
                                       item?.id === 3
                                         ? false
-                                        : !formData?.is_editable
+                                        : !areFieldsEditable
                                     }
                                     value={item.value}
                                     customLabelStyles={styles.inputLabel}
@@ -263,7 +264,7 @@ const ConfigureCentreDetails = () => {
                         ))}
                         <CustomSwitch
                           checked={Boolean(formData?.status)}
-                          disabled={!formData?.is_editable}
+                          disabled={!areFieldsEditable}
                           label={intl.formatMessage({ id: "label.status" })}
                           onChange={() => {
                             setFormData((prev) => {
