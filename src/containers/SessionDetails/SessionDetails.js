@@ -2,15 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { DatePicker, Image, Select, Switch, Typography } from "antd";
+import { DatePicker, Image, Typography } from "antd";
 
-import { TwoRow, TwoColumn } from "../../core/layouts";
+import { TwoRow, TwoColumn, Base } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 import useResponsive from "core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
+import CustomSwitch from "../../components/CustomSwitch";
+import {
+  convertDateToStringDate,
+  isObjectHasNoValues,
+} from "../../constant/utils";
 import { FIELDS } from "./sessionFieldDetails";
 import { SESSION_DETAILS } from "../../dummyData";
 import { classes } from "./SessionDetails.styles";
@@ -25,6 +30,35 @@ const SessionDetails = ({ addSession, setAddSession }) => {
   const [formErrors, setFormErrors] = useState({});
   const [edit, setEdit] = useState(addSession);
   const [formData, setFormData] = useState(SESSION_DETAILS);
+  const { MonthPicker } = DatePicker;
+
+  const handleMonthChange = (date, dateString) => {
+    if (date) {
+      let updatedMonths = [...formData.examination_session_period];
+      const formattedDate = dayjs(date).format("MMM YYYY");
+      const index = updatedMonths.findIndex((month) => month === formattedDate);
+
+      if (index === -1) {
+        updatedMonths.push(formattedDate);
+      } else {
+        updatedMonths.splice(index, 1);
+      }
+      setFormData({
+        ...formData,
+        examination_session_period: updatedMonths,
+      });
+    }
+  };
+
+  const handleDeselect = (value) => {
+    const updatedMonths = formData.examination_session_period.filter(
+      (month) => month !== value
+    );
+    setFormData({
+      ...formData,
+      examination_session_period: updatedMonths,
+    });
+  };
 
   const fields = FIELDS(
     formData?.name,
@@ -35,8 +69,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     formData?.membership_completion_date,
     formData?.session_start_date,
     formData?.article_completion_from_date,
-    formData?.bank_account_offline,
-    formData?.bank_account_online
+    formData?.hsn_sac_code,
+    formData?.bank_ac_no,
+    formData?.bank_ac_ifsc
   );
 
   useEffect(() => {
@@ -64,8 +99,11 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     if (!rules) return undefined;
 
     for (const rule of rules) {
-      if (rule.required && (!value || value.length <= 0)) {
-        return rule.message;
+      if (rule.required && (!value || value?.length <= 0)) {
+        return intl.formatMessage({ id: `session.error.${rule.message}` });
+      }
+      if (rule.regex && !rule.regex.test(value)) {
+        return intl.formatMessage({ id: `session.error.${rule.message}` });
       }
     }
 
@@ -79,10 +117,12 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     setFormErrors({});
   };
   const handleSave = () => {
-    setEdit(false);
+    if (isObjectHasNoValues(formErrors)) {
+      setEdit(false);
+    }
   };
 
-  return (
+  return fields?.length ? (
     <TwoRow
       className={styles.mainContainer}
       topSection={
@@ -122,7 +162,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
           }
           bottomSection={
             <CustomGrid>
-              {fields.map((item) => (
+              {fields?.map((item) => (
                 <TwoRow
                   key={item.id}
                   className={styles.gridItem}
@@ -153,22 +193,50 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             value={dayjs(item.value)}
                           />
                         ) : item.id === 4 ? (
-                          //TODO:Replace this component with common component of custom input which contains multiselect
-                          <Select
-                            bordered={false}
-                            size={"large"}
-                            style={classes.multiSelectStyle}
-                            className={styles.multilpleInput}
-                            onChange={(val) => {
-                              handleInputChange(val, item.label);
-                            }}
-                            options={item.selectOptions}
-                            placeholder={intl.formatMessage({
-                              id: `session.placeholder.${item.headingIntl}`,
-                            })}
-                            value={item.value}
-                            mode="multiple"
-                          />
+                          <div>
+                            <MonthPicker
+                              disabled={
+                                formData?.examination_session_period?.length > 3
+                              }
+                              format="YYYY/MM"
+                              className={styles.multilpleInput}
+                              size={"large"}
+                              placeholder={intl.formatMessage({
+                                id: `session.placeholder.${item.headingIntl}`,
+                              })}
+                              onChange={handleMonthChange}
+                              style={classes.multiSelectStyle}
+                              disabledDate={(current) =>
+                                formData.examination_session_period.includes(
+                                  dayjs(current).format("MMM YYYY")
+                                )
+                              }
+                            />
+                            <div className={styles.examinationFieldContainer}>
+                              {formData?.examination_session_period?.map(
+                                (item, index) => {
+                                  return (
+                                    <div
+                                      className={styles.chipContainer}
+                                      key={index}
+                                    >
+                                      <Typography className={styles.chipText}>
+                                        {convertDateToStringDate(item)}
+                                      </Typography>
+                                      <Image
+                                        src={getImage("cancel")}
+                                        className={styles.crossIcon}
+                                        preview={false}
+                                        onClick={() => {
+                                          handleDeselect(item);
+                                        }}
+                                      />
+                                    </div>
+                                  );
+                                }
+                              )}
+                            </div>
+                          </div>
                         ) : (
                           <CustomInput
                             value={item.value}
@@ -182,13 +250,20 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                             placeholder={intl.formatMessage({
                               id: `session.placeholder.${item.headingIntl}`,
                             })}
+                            isError={formErrors[item.label]}
+                            errorMessage={formErrors[item.label]}
                           />
                         )}
-                        {formErrors[item.label] && (
-                          <Typography className={styles.errorText}>
-                            {formErrors[item.label]}
-                          </Typography>
-                        )}
+                        {formErrors[item.label] &&
+                          (item.id === 4 ||
+                            item.id === 5 ||
+                            item.id === 6 ||
+                            item.id === 7 ||
+                            item.id === 8) && (
+                            <Typography className={styles.errorText}>
+                              {formErrors[item.label]}
+                            </Typography>
+                          )}
                       </div>
                     ) : item?.id !== 4 ? (
                       <Typography className={styles.blackText}>
@@ -206,40 +281,18 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   }
                 />
               ))}
-              <TwoRow
-                className={styles.gridItem}
-                topSection={
-                  <Typography className={styles.grayText}>
-                    {intl.formatMessage({ id: "label.status" })}
-                  </Typography>
-                }
-                bottomSection={
-                  <TwoColumn
-                    className={styles.statusContainer}
-                    leftSection={
-                      <Switch
-                        style={formData?.status && classes.switchBackground}
-                        checked={formData?.status}
-                        onChange={() => {
-                          setFormData({
-                            ...formData,
-                            status: !formData.status,
-                          });
-                        }}
-                        disabled={!edit}
-                      />
-                    }
-                    rightSection={
-                      <Typography className={styles.blackText}>
-                        {intl.formatMessage({
-                          id: `label.${
-                            formData?.status ? "active" : "inactive"
-                          }`,
-                        })}
-                      </Typography>
-                    }
-                  />
-                }
+              <CustomSwitch
+                customStyle={styles.gridItem}
+                disabled={!edit}
+                checked={formData?.status}
+                isRequired
+                label={intl.formatMessage({ id: "label.sessionStatus" })}
+                onChange={() => {
+                  setFormData({
+                    ...formData,
+                    status: !formData.status,
+                  });
+                }}
               />
             </CustomGrid>
           }
@@ -275,8 +328,9 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   !formData?.gmcs_completion_date ||
                   !formData?.membership_completion_date ||
                   !formData?.article_completion_from_date ||
-                  !formData?.bank_account_offline ||
-                  !formData?.bank_account_online
+                  !formData?.hsn_sac_code ||
+                  !formData?.bank_ac_no ||
+                  !formData?.bank_ac_ifsc
                 }
                 textStyle={styles.saveButtonTextStyles}
                 btnText={intl.formatMessage({
@@ -290,6 +344,12 @@ const SessionDetails = ({ addSession, setAddSession }) => {
       }
       bottomSectionStyle={classes.bottomSectionStyle}
     />
+  ) : (
+    <Base className={styles.noSessionContainer}>
+      <Typography className={styles.noSessionText}>
+        {intl.formatMessage({ id: "label.noSessionSetup" })}
+      </Typography>
+    </Base>
   );
 };
 

@@ -28,7 +28,7 @@ const ModuleChange = ({ setIsModalOpen }) => {
   const handleModuleSelect = (item) => {
     setIsModalOpen(false);
     userProfileDispatch(setSelectedModule(item));
-    navigate(DASHBOARD);
+    navigate(`/${item.key}/${DASHBOARD}`);
   };
   return (
     <TwoRow

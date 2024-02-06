@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router-dom";
 
 import Http from "../../http-service";
 import useHeader from "../../../core/hooks/useHeader";
@@ -17,12 +18,26 @@ import { STATUS_CODES } from "../../../constant/constant";
 
 const useGetUserDetails = () => {
   const intl = useIntl();
+  const location = useLocation();
   const { onLogout } = useHeader();
   const [, userProfileDispatch] = useContext(UserProfileContext);
+  const pathSegments = location.pathname.split("/");
 
   const setFirstActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
+
     userProfileDispatch(setSelectedModule(accessibleModules[0]));
+  };
+  const setDefaultActiveModule = (userData) => {
+    const accessibleModules = filterMenuData(modules, userData?.menu_items);
+    const selectedModule = accessibleModules.filter((item) => {
+      return item.key === pathSegments[1];
+    });
+    if (selectedModule?.length) {
+      userProfileDispatch(setSelectedModule(selectedModule[0]));
+      return;
+    }
+    setFirstActiveModule(userData);
   };
 
   const getUserFromServer = async () => {
@@ -36,7 +51,7 @@ const useGetUserDetails = () => {
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         userProfileDispatch(setUserDetails(res.data));
-        setFirstActiveModule(res.data);
+        setDefaultActiveModule(res.data);
         return;
       }
       userProfileDispatch(

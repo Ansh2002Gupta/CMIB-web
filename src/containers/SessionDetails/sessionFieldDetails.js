@@ -1,5 +1,12 @@
 import { SESSION_PERIOD } from "../../constant/constant";
 import { formatDate } from "../../constant/utils";
+import {
+  ALPHANUMERIC_REGEX,
+  BANK_ACC_NUMBER_REGEX,
+  HSN_SAC_CODE_REGEX,
+  IFSC_CODE_REGEX,
+  PERFORMA_INVOICE_REGEX,
+} from "../../constant/regex";
 
 export const FIELDS = (
   name,
@@ -10,8 +17,9 @@ export const FIELDS = (
   membership_completion_date,
   session_start_date,
   article_completion_from_date,
-  bank_account_offline,
-  bank_account_online
+  hsn_sac_code,
+  bank_ac_no,
+  bank_ac_ifsc
 ) => {
   return [
     {
@@ -21,8 +29,9 @@ export const FIELDS = (
       value: name,
       rules: [
         {
+          regex: ALPHANUMERIC_REGEX,
           required: true,
-          message: "Please enter Session Name",
+          message: "sessionName",
         },
       ],
     },
@@ -33,8 +42,9 @@ export const FIELDS = (
       value: nature_of_service,
       rules: [
         {
+          regex: ALPHANUMERIC_REGEX,
           required: true,
-          message: "Please enter services/goods",
+          message: "natureOfGoods",
         },
       ],
     },
@@ -45,8 +55,9 @@ export const FIELDS = (
       value: perform_invoice_no_format,
       rules: [
         {
+          regex: PERFORMA_INVOICE_REGEX,
           required: true,
-          message: "Please enter Performa Invoice Number",
+          message: "invoiceNumberFormat",
         },
       ],
     },
@@ -59,7 +70,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select atleast one Examination Session Period ",
+          message: "examinationSessionPeriod",
         },
       ],
     },
@@ -71,7 +82,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select GMCS Completetion Date",
+          message: "gmcsCompletetionDate",
         },
       ],
     },
@@ -83,7 +94,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select Membership Completetion Date",
+          message: "membershipCompletetionDate",
         },
       ],
     },
@@ -95,7 +106,7 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select Articleship Completetion From Date",
+          message: "articleshipCompletetionFromDate",
         },
       ],
     },
@@ -107,31 +118,46 @@ export const FIELDS = (
       rules: [
         {
           required: true,
-          message: "Please select Articleship Completetion From Date",
+          message: "articleshipCompletetionToDate",
         },
       ],
     },
     {
       id: 9,
-      headingIntl: "bankACNumberOffline",
-      label: "bank_account_offline",
-      value: bank_account_offline,
+      headingIntl: "hsnCode",
+      label: "hsn_sac_code",
+      value: hsn_sac_code,
       rules: [
         {
+          regex: HSN_SAC_CODE_REGEX,
           required: true,
-          message: "Please enter Bank A/C number offline",
+          message: "hsnCode",
         },
       ],
     },
     {
       id: 10,
-      headingIntl: "bankACNumberOnline",
-      label: "bank_account_online",
-      value: bank_account_online,
+      headingIntl: "bankACNumber",
+      label: "bank_ac_no",
+      value: bank_ac_no,
       rules: [
         {
+          regex: BANK_ACC_NUMBER_REGEX,
           required: true,
-          message: "Please enter Bank A/C number online",
+          message: "bankACNumber",
+        },
+      ],
+    },
+    {
+      id: 11,
+      headingIntl: "ifsc",
+      label: "bank_ac_ifsc",
+      value: bank_ac_ifsc,
+      rules: [
+        {
+          regex: IFSC_CODE_REGEX,
+          required: true,
+          message: "ifsc",
         },
       ],
     },

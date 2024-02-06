@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router-dom";
 import { Select, Typography } from "antd";
@@ -17,6 +17,7 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useResponsive from "../../../core/hooks/useResponsive";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
+import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import {
   CENTER_END_POINT,
   PLACEMENT_ROUTE,
@@ -32,6 +33,8 @@ const ConfigureCentreDetails = () => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState(INITIAL_CENTRE_DETAILS);
@@ -99,7 +102,7 @@ const ConfigureCentreDetails = () => {
   }
 
   const handleCancel = () => {
-    navigate(CONFIGURE_CENTRES);
+    navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
   };
 
   const handleSave = () => {
@@ -114,7 +117,7 @@ const ConfigureCentreDetails = () => {
       addNewCenter(
         payload,
         () => {
-          navigate(CONFIGURE_CENTRES);
+          navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
         },
         (errorMessage) => {
           showNotification(errorMessage, "error");
@@ -125,7 +128,7 @@ const ConfigureCentreDetails = () => {
         centreId,
         payload,
         () => {
-          navigate(CONFIGURE_CENTRES);
+          navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
         },
         (errorMessage) => {
           showNotification(errorMessage, "error");

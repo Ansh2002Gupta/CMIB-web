@@ -6,6 +6,7 @@ import arrowRightFilter from "./arrow-right-filter.svg";
 import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
 import calendar from "./calendar.svg";
+import cancel from "./cancel.svg";
 import CircleCheck from "./CircleCheck.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
@@ -15,7 +16,7 @@ import dummyPerson from "./dummy person image.png";
 import errorIcon from "./error icon.svg";
 import eye from "./eye.svg";
 import eyeHidden from "./eyeHidden.svg";
-import featuredIcon from "./featured-icon.svg"
+import featuredIcon from "./featured-icon.svg";
 import filter from "./filter.svg";
 import g20 from "./G20.svg";
 import gloPac from "./GloPac.svg";
@@ -63,6 +64,7 @@ const images = {
   Building,
   checkedBox,
   calendar,
+  cancel,
   dummyPerson,
   CircleCheck,
   DeviceMessage,

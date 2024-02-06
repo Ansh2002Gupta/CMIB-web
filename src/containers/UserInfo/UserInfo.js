@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Descriptions, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
-
 import CheckBoxList from "../CheckBoxList";
 import Chip from "../../components/Chip/Chip";
 import CustomCheckBox from "../../components/CustomCheckBox";

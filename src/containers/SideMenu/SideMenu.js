@@ -32,8 +32,8 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
         id: `label.menu.${item.label}`,
       });
       let icon = item.icon;
-      if (item.selectedIcon && item.key === selectedKey) {
-        icon = item.selectedIcon;
+      if (item.selectedicon && item.key === selectedKey) {
+        icon = item.selectedicon;
       }
       return {
         ...item,
@@ -44,17 +44,17 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }
 
   const handleOnClickMenuItem = ({ key }) => {
-    navigate(key);
+    navigate(`/${selectedModule.key}/${key}`);
     setSelectedKey(key);
   };
 
   const handleOnClickLogo = () => {
-    navigate(DASHBOARD);
+    navigate(`/${selectedModule.key}/${DASHBOARD}`);
   };
 
   useEffect(() => {
     const pathSegments = location.pathname.split("/");
-    const select = `/${pathSegments[1]}`;
+    const select = pathSegments?.[2] ? `${pathSegments[2]}/` : "";
     setSelectedKey(select);
   }, [userProfileDetails, navigate]);
 
