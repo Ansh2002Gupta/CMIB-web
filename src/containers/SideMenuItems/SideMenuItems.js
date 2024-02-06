@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Image, Input } from "antd";
 import { useIntl } from "react-intl";
 
 import TwoRow from "../../core/layouts/TwoRow";
@@ -8,7 +9,7 @@ import { ThemeContext } from "core/providers/theme";
 import SideMenuButton from "../../components/SideMenuButton/SideMenuButton";
 import ModuleList from "../SideMenu/ModuleList";
 import styles from "./SideMenuItems.module.scss";
-import { Image, Input } from "antd";
+import "./Override.css"
 
 const SideMenuItems = ({
   openSelector,
@@ -19,6 +20,8 @@ const SideMenuItems = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
+
+  const handleOnUserSearch = (val) =>{}
 
   return (
     <TwoRow
@@ -42,11 +45,11 @@ const SideMenuItems = ({
         ) : (
           <TwoColumn
             className={styles.imageAndSearchBarContainer}
-            leftSection={<div className={styles.imageContainer}>
+            leftSection={<div onClick={() => setOpenSelector((prev) => !prev)} className={styles.imageContainer}>
               <Image src={getImage("arrowLeft")} preview={false} />
             </div>}
+            isRightFillSpace
             rightSection={
-              <div className={styles.searchBarContainer}>
                 <Input
                   prefix={
                     <Image
@@ -56,14 +59,11 @@ const SideMenuItems = ({
                     />
                   }
                   placeholder={intl.formatMessage({
-                    id: "label.searchByCentreNameOrId",
+                    id: "label.search",
                   })}
-                  allowClear
                   className={styles.searchBar}
-                  // value={searchedValue}
-                  // onChange={(e) => handleOnUserSearch(e.target.value)}
+                  onChange={(e) => handleOnUserSearch(e.target.value)}
                 />
-              </div>
             }
           />
         )

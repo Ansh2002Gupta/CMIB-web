@@ -23,6 +23,7 @@ const variables = {
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
   darkBlueBg: colorPallets.darkBlue3,
+  sideMenuBg1: colorPallets.blue4,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -47,6 +48,7 @@ const variables = {
   greenText: colorPallets.darkGreen,
   blueText: colorPallets.darkBlue2,
   redText: colorPallets.darkOrange,
+  whiteText: colorPallets.white,
 
   // Border-Radius
   radiusNone: "0px",
@@ -95,6 +97,7 @@ const variables = {
   width_30: "30px",
   width_32: "32px",
   width_40: "40px",
+  width_42: "42px",
   width_48: "48px",
   sidemenuWidth: "74px",
   width_80: "80px",

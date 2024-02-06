@@ -1,7 +1,7 @@
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);
   color: var(--textPrimary, #fff);
-  background: #141b43;
+  background: var(--sideMenuBg1, #141b43);
   padding: var(--sizeXSmall, 12px);
   display: flex;
   justify-content: space-between;
@@ -11,54 +11,45 @@
 }
 
 .moduleSelectorHeading {
-  font-size: var(--fontSizeXSmall, 12px);
+  font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
-  color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: var(--width_140);
   white-space: nowrap;
 }
 
 .searchIcon {
-  width: var(--width_30);
-  height: var(--height_30);
-  padding-right: var(--paddingExtraSmall);
-  padding-bottom: 4px;
+  width: var(--width_30, 30px);
+  height: var(--height_30, 30px);
+  padding-right: var(--paddingExtraSmall, 8px);
+  padding-bottom: var(--paddingXXSmall, 4px);
 }
 
 .searchBar {
-  // width: 30%;
-  min-height: 44px;
-  border-radius: var(--radiusXLg);
-  background-color: #141b43 !important;
+  border: none;
+  min-height: var(--height_44, 44px);
+  border-radius: var(--radiusLg, 8px);
+  background-color: var(--sideMenuBg1, #141b43)  !important;
   input {
-    background-color: #141b43 !important;
-
-    color: var(--inputText) !important;
-    font-size: var(--fontSizeSmall) !important;
-    font-weight: var(--fontWeightMedium) !important;
+    background-color: var(--sideMenuBg1, #141b43) !important;
+    font-size: var(--fontSizeSmall, 14px) !important;
+    font-weight: var(--fontWeightMedium, 500) !important;
   }
 }
 
 .imageAndSearchBarContainer {
-  margin-top: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 16px 16px 16px;
-  gap: 8px;
-}
-
-.searchBarContainer {
-  width: 100%;
+  margin-top: var(--marginLarge, 24px);
+  padding: var(--paddingNone, 0px) var(--paddingSmall, 16px) var(--paddingSmall, 16px) var(--paddingSmall, 16px);
+  gap: var(--gapXSmall, 8px);
 }
 
 .imageContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  min-height: 44px;
-  background-color: #141b43 !important;
+  cursor: pointer;
+  min-width: var(--width_42, 42px);
+  border-radius: var(--radiusLg, 8px);
+  min-height: var(--height_44, 44px);
+  background-color: var(--sideMenuBg1, #141b43) !important;
 }

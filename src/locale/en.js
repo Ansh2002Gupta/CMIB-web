@@ -331,6 +331,7 @@ const locale = {
   "label.path.details": "User Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.passwordChanged": "Password changed successfully",
+  "label.search": "Search",
 };
 
 export default locale;
