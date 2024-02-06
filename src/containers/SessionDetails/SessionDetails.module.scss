@@ -44,6 +44,12 @@
   height: var(--lineHeightNormal);
 }
 
+.crossIcon {
+  width: var(--xSmallWidth);
+  height: var(--xSmallWidth);
+  cursor: pointer;
+}
+
 .editContainer {
   align-items: center;
   gap: var(--gapXSmall);
@@ -175,8 +181,26 @@
 }
 
 .examinationFieldContainer {
+  padding-top: var(--paddingXXSmall);
+  gap: var(--paddingXXSmall);
   display: flex;
   flex-wrap: wrap;
+}
+
+.chipText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+  margin-right: var(--gapXSmall);
+  margin-top: var(--gapXXSmall);
+}
+
+.chipContainer {
+  display: flex;
+  align-items: center;
+  background-color: var(--lightBlueBg);
+  border-radius: var(--gapSmall);
+  padding: var(--gapXXSmall) var(--gapSmallMedium);
 }
 
 .formInputStyles {
@@ -185,6 +209,23 @@
 
 .errorText {
   color: var(--error);
-  font-size: var(--fontSizeExtraSmall);
-  margin-top: var(--gapXXSmall);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  margin-top: var(--marginSmall);
+}
+
+.noSessionContainer {
+  min-height: var(--height_50vh);
+  background-color: var(--bodyBg);
+  padding: var(--fontSizeXlargeMedium);
+  border-radius: var(--lineHeightExtraSmall);
+  border: var(--borderLight);
+  justify-content: center;
+  align-items: center;
+}
+
+.noSessionText {
+  font-size: var(--fontSizeXlargeMedium);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
 }
