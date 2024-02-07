@@ -28,6 +28,7 @@ const getConfigureDateCoumns = (
         onChange: (val, record) => {
           handleInputChange("scheduleDate", val);
         },
+        isEditable: isEdit,
       },
     }),
     renderColumn({
@@ -47,6 +48,7 @@ const getConfigureDateCoumns = (
         onChange: (val, record) => {
           handleInputChange("startTime", val);
         },
+        isEditable: isEdit,
       },
     }),
     renderColumn({
@@ -66,6 +68,7 @@ const getConfigureDateCoumns = (
         onChange: (val, record) => {
           handleInputChange("endTime", val);
         },
+        isEditable: isEdit,
       },
     }),
     renderColumn({
@@ -76,7 +79,7 @@ const getConfigureDateCoumns = (
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
         inputErrorMessage: errors.facilitiesNumber,
-        visible: true,
+        visible: isEdit,
         inputType: "inputNumber",
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.facilitiesNumber",
@@ -95,7 +98,7 @@ const getConfigureDateCoumns = (
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
         inputErrorMessage: errors.slotDurationInMinutes,
-        visible: true,
+        visible: isEdit,
         inputType: "inputNumber",
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.slotDurationInMinutes",

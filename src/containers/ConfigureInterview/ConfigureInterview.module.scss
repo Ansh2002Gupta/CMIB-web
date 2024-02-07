@@ -9,6 +9,12 @@
   gap: var(--gapMedium);
 }
 
+.viewTopContainer {
+  background-color: var(--bodyBg);
+  border: var(--borderLight);
+  border-radius: var(--radiusMLg);
+}
+
 .titleText {
   font-size: var(--fontSizeNormal);
   color: var(--headingColor);
@@ -41,4 +47,8 @@
   color: var(--subHeadingColor);
   font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
+}
+
+.bottomSectionStyle {
+  background-color: white;
 }

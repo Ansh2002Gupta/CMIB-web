@@ -146,11 +146,13 @@ const ConfigureInterview = () => {
       className={styles.mainContainer}
       topSection={
         <TwoRow
-          className={styles.topContainer}
+          className={[isEdit ? styles.topContainer : styles.viewTopContainer]}
           topSection={
-            <Typography className={styles.titleText}>
-              {intl.formatMessage({ id: "label.configureInterviewDates" })}
-            </Typography>
+            isEdit && (
+              <Typography className={styles.titleText}>
+                {intl.formatMessage({ id: "label.configureInterviewDates" })}
+              </Typography>
+            )
           }
           bottomSection={
             <Table
@@ -159,22 +161,24 @@ const ConfigureInterview = () => {
               pagination={false}
               rowClassName={styles.rowtext}
               scroll={{ x: "max-content" }}
-              className={[styles.table, "customTable"]}
+              className={[styles.table, isEdit && "customTable"]}
               rowKey="id"
             />
           }
         />
       }
       bottomSection={
-        <ActionAndCancelButtons
-          actionBtnText={intl.formatMessage({
-            id: "label.saveChanges",
-          })}
-          cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-          onActionBtnClick={handleOnSubmit}
-          isActionBtnDisable={false}
-          onCancelBtnClick={handleCancel}
-        />
+        isEdit && (
+          <ActionAndCancelButtons
+            actionBtnText={intl.formatMessage({
+              id: "label.saveChanges",
+            })}
+            cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+            onActionBtnClick={handleOnSubmit}
+            isActionBtnDisable={false}
+            onCancelBtnClick={handleCancel}
+          />
+        )
       }
     />
   );
