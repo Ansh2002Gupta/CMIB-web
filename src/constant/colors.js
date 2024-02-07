@@ -34,6 +34,7 @@ export const colorPallets = {
   green2: "#00873E",
   lightGreen: "#DFFFDC",
   darkGreen: "#258B01",
+  frogGreen: "rgba(4, 175, 85, 0.04)",
 
   // White color shades
   white: "#FBFCFF",

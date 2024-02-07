@@ -136,6 +136,10 @@ const config = [
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
       },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW,
+        element: <SetupMockInterview />,
+      },
     ],
   },
   {
@@ -243,6 +247,10 @@ const config = [
         viewPath: CONTACT_US + QUERY_DETAILS,
         element: <QueryDetails />,
       },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW,
+        element: <SetupMockInterview />,
+      },
     ],
   },
   {
@@ -265,7 +273,7 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -287,7 +295,7 @@ const config = [
         element: <ConfigureCentreView />,
       },
       {
-        viewPath: SETUP_MOCK_INTERVIEW,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW,
         element: <SetupMockInterview />,
       },
     ],
@@ -333,6 +341,10 @@ const config = [
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
       },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW,
+        element: <SetupMockInterview />,
+      },
     ],
   },
   {
@@ -342,109 +354,6 @@ const config = [
       {
         viewPath: "",
         element: <Configurations />,
-      },
-    ],
-  },
-  {
-    pagePath: COMPANIES,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
-      {
-        viewPath: "",
-        element: <Companies />,
-      },
-      {
-        viewPath: COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
-      },
-    ],
-  },
-  {
-    pagePath: COMPANIES,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <Companies />,
-      },
-      {
-        viewPath: COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
-      },
-    ],
-  },
-  {
-    pagePath: USERS,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <ManageUsers />,
-      },
-      {
-        viewPath: USER_DETAILS,
-        element: <UserDetails />,
-      },
-      {
-        viewPath: ADD_NEW_USER_DETAILS,
-        element: <UserDetails />,
-      },
-    ],
-  },
-  {
-    pagePath: SESSION,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <Session />,
-      },
-      {
-        viewPath: SETUP_CENTERS,
-        element: <SetupCenter />,
-      },
-      {
-        viewPath: SETUP_CENTERS + SETUP_CENTERS_DETAILS,
-        element: <SetupCenterDetails />,
-      },
-      {
-        viewPath: SETUP_MOCK_INTERVIEW,
-        element: <SetupMockInterview />,
-      },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
-    ],
-  },
-  {
-    pagePath: CONFIGURE_CENTRES,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
-      {
-        viewPath: "",
-        element: <ConfigureCentres />,
-      },
-      {
-        viewPath: ADD,
-        element: <ConfigureCentreView />,
-      },
-      {
-        viewPath: EDIT_CONFIGURE_CENTRE,
-        element: <ConfigureCentreView />,
-      },
-    ],
-  },
-  {
-    pagePath: CONTACT_US,
-    element: <HomeWithPrivateAccess noOuterPadding />,
-    views: [
-      {
-        viewPath: "",
-        element: <ContactUsListing />,
-      },
-      {
-        viewPath: QUERY_DETAILS,
-        element: <QueryDetails />,
       },
     ],
   },

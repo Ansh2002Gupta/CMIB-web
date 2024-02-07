@@ -40,6 +40,7 @@ const SetupMockInterviewContent = () => {
   };
 
   const onChangePageSize = (size) => {
+    //TODO : Replace this code with API Pagination
     setPageSize(Number(size));
     setCurrent(1);
     setSearchParams((prev) => {
@@ -51,6 +52,7 @@ const SetupMockInterviewContent = () => {
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
+    //TODO : Replace this code with API Pagination
     setCurrent(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
