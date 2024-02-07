@@ -209,11 +209,13 @@ const ConfigureCentreContent = () => {
           }
         >
           {intl.formatMessage({ id: "label.centreName" })}
-          <Image
-            src={getImage("arrowDownDarkGrey")}
-            preview={false}
-            className={[sortArrowStyles].join(" ")}
-          />
+          <div className={styles.sortArrowImageContainer}>
+            <Image
+              src={getImage("arrowDownDarkGrey")}
+              preview={false}
+              className={[sortArrowStyles].join(" ")}
+            />
+          </div>
         </Typography>
       ),
       dataIndex: "name",
@@ -234,7 +236,7 @@ const ConfigureCentreContent = () => {
         title: intl.formatMessage({ id: "label.bigSmallCentre" }),
         dataIndex: "center_type",
         key: "center_type",
-        renderText: { visible: true },
+        renderText: { visible: true, textStyles: styles.tableCell },
       }),
       width: "100px",
     },
@@ -252,6 +254,7 @@ const ConfigureCentreContent = () => {
         dataKeyName: "centreId",
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
+        checkIsSwitchEditable: (data) => Boolean(data?.is_editable),
       },
     }),
     renderColumn({

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Switch, Typography } from "antd";
@@ -6,6 +6,7 @@ import { Switch, Typography } from "antd";
 import ContentHeader from "../ContentHeader";
 import CustomButton from "../../components/CustomButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
 import { FORM_STATES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
@@ -21,6 +22,8 @@ const UserDetailsHeader = ({
 }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const getHeaderText = () => {
     if (currentFormState === FORM_STATES.VIEW_ONLY) {
@@ -72,7 +75,9 @@ const UserDetailsHeader = ({
                   btnText={intl.formatMessage({ id: "label.edit" })}
                   IconElement={Edit}
                   onClick={() =>
-                    navigate(USERS + `/details/${userId}?mode=edit`)
+                    navigate(
+                      `/${selectedModule.key}/${USERS}details/${userId}?mode=edit`
+                    )
                   }
                   iconStyles={styles.btnIconStyles}
                   customStyle={styles.btnCustomStyles}
