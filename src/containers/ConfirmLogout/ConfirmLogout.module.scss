@@ -1,0 +1,83 @@
+.container {
+  flex-direction: column;
+  gap: var(--gapLarge, 32px);
+}
+
+.modal{
+    border-radius: var(--radiusXLg, 12px) !important;
+}
+
+.heading {
+  color: var(--textBold, #000833);
+  font-size: var(--fontSizeXlarge, 20px);
+  font-weight: var(--fontWeightBold, 600);
+}
+
+.image {
+  width: var(--width_48, 48px) !important;
+  height: var(--height_48, 48px) !important;
+}
+
+.subHeading {
+  color: var(--subHeadingColor, #616c82);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+}
+
+.headingAndSubHeadingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapXSmall, 8px);
+}
+
+.imageAndHeadingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap_20, 20px);
+}
+
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--gapSmall, 16px);
+}
+
+.btn {
+  min-height: var(--height_44, 44px);
+  border-radius: var(--radiusLg, 8px);
+  color: var(--black1, #000833);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  background-color: var(--white1, #ffffff);
+  &:not(:disabled):hover {
+    color: var(--black1, #000833) !important;
+    background-color: var(--white1, #ffffff) !important;
+    border-color: var(--disableLink, #B1B3B5) !important;
+  }
+}
+
+.logoutBtnStyle {
+  background-color: var(--yellowBg, #fabb00);
+  border: none;
+  &:not(:disabled):hover {
+    background-color: var(--yellowBg, #fabb00) !important;
+    color: var(--black1, #000833) !important;
+  }
+}
+
+.customButtonContainerStyle {
+  flex: 1;
+}
+
+.errorText {
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightBold, 600);
+  color: var(--error, #d93400);
+  padding-bottom: var(--paddingSmall, 16px);
+  min-height: var(--height_20, 20px);
+  opacity: 0;
+}
+
+.showError {
+  opacity: 1;
+}

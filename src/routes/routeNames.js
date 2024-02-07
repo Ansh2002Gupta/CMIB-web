@@ -1,20 +1,27 @@
-export const ADD = "add";
-export const ADD_NEW_USER_DETAILS = "add";
-export const COMPANIES = "/companies";
-export const COMPANIES_DETAILS = "company-details/:companyId";
-export const CONFIGURE_CENTRES = "/global-configurations";
-export const CONSENT_MARKING = "consent-marking";
-export const CONTACT_US = "/contact-us";
-export const DASHBOARD = "/dashboard";
-export const DETAILS = "/details/:centreId";
+/* Routes */
+export const ROOT = "/";
+export const CONFIGURATIONS = "/configurations";
 export const FORGOT_PASSWORD = "/forgot-password";
 export const LOGIN = "/login";
+export const OUT_SOURCED = "*";
+
+/* Sub Routes */
+export const ADD = "add/";
+export const ADD_NEW_USER_DETAILS = "add/";
+export const CENTRE_DETAILS = "centre-details";
+export const COMPANIES = "companies/";
+export const COMPANIES_DETAILS = "company-details/:companyId";
+export const CONFIGURE_CENTRES = "global-configurations/";
+export const CONSENT_MARKING = "consent-marking";
+export const CONTACT_US = "contact-us/";
+export const DASHBOARD = "dashboard/";
+export const DETAILS = "/details/:centreId";
+export const EDIT_CONFIGURE_CENTRE = "centre-details/:centreId";
 export const QUERY_DETAILS = "query/:queryId";
-export const ROOT = "/";
-export const ROUTE = "/configurations";
-export const SESSION = "/session";
-export const SETUP_CENTERS = "setup-centers";
+export const SESSION = "session/";
+export const SETUP_CENTERS = "setup-centers/";
+export const SETUP_CENTERS_DETAILS = "details/:centreId";
 export const SETUP_MOCK_INTERVIEW = "setup-mock-interview";
-export const SUBSCRIPTIONS = "/subscriptions";
-export const USERS = "/users";
+export const SUBSCRIPTIONS = "subscriptions/";
 export const USER_DETAILS = "details/:userId";
+export const USERS = "users/";

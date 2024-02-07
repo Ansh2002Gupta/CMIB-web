@@ -122,7 +122,7 @@ CustomDateTimePicker.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.object,
+  value: PropTypes.string,
 };
 
 export default CustomDateTimePicker;

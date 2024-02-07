@@ -1,21 +1,50 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Avatar, Space, Card, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import {
+  setShowChangePasswordModal,
+  setShowLogoutModal,
+  setUserProfileModalNumber,
+} from "../../globalContext/userProfile/userProfileActions";
 import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
-import useHeader from "../../core/hooks/useHeader";
 import headerActionItems from "../../constants/headerActionItems";
-
+import { USER_PROFILE_QUERY_PARAMS } from "../../constant/constant";
 import styles from "./profileDropdown.module.scss";
 
 export default function CardDropdownOverlay({
   userName,
   userEmail,
   userProfile,
+  setDropdownVisible,
 }) {
   const intl = useIntl();
-  const { onLogout } = useHeader();
+  const [, userProfileDispatch] = useContext(UserProfileContext);
+
+  const [, setSearchParams] = useSearchParams();
+
+  const handleLogoutClick = () => {
+    setDropdownVisible(false);
+    userProfileDispatch(setShowLogoutModal(true));
+  };
+
+  const headerActionMethods = {
+    changePassword: () => {
+      setDropdownVisible(false);
+      userProfileDispatch(setShowChangePasswordModal(true));
+    },
+    viewProfile: () => {
+      setSearchParams((prev) => {
+        prev.set(USER_PROFILE_QUERY_PARAMS, "open");
+        return prev;
+      });
+      setDropdownVisible(false);
+      userProfileDispatch(setUserProfileModalNumber(1));
+    },
+  };
 
   return (
     <Card
@@ -45,22 +74,23 @@ export default function CardDropdownOverlay({
           className={styles.logoutBtn}
           type="text"
           icon={<LogoutIcon />}
-          onClick={onLogout}
+          onClick={handleLogoutClick}
         >
           {intl.formatMessage({ id: "label.logout" })}
         </Button>,
       ]}
     >
       <Space className={styles.profileList} size="small" direction="vertical">
-        {headerActionItems.map((item) => (
+        {headerActionItems?.map((item) => (
           <Button
             key={item?.id}
             className={styles.menuBtn}
             type="text"
             block
             icon={<span>{item.icon}</span>}
+            onClick={headerActionMethods[item?.key]}
           >
-            {intl.formatMessage({ id: item.id })}
+            {intl.formatMessage({ id: item?.id })}
           </Button>
         ))}
       </Space>

@@ -163,9 +163,6 @@ const ConsentMarkingContent = ({ isEdit }) => {
     }
   }, []);
 
-  console.log(tableData, "tableData");
-  console.log(registrationTableData, "registrationTableData");
-
   return (
     <ThreeRow
       className={styles.mainContainer}

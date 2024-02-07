@@ -6,6 +6,7 @@ import styles from "./CustomButton.module.scss";
 
 const CustomButton = ({
   btnText,
+  customButtonContainerStyle,
   customStyle,
   iconStyles,
   IconElement,
@@ -16,7 +17,7 @@ const CustomButton = ({
   type,
 }) => {
   return (
-    <div>
+    <div className={customButtonContainerStyle}>
       <Button
         icon={IconElement ? <IconElement className={iconStyles} /> : null}
         className={[styles.btn, customStyle].join(" ")}
@@ -37,6 +38,7 @@ const CustomButton = ({
 
 CustomButton.defaultProps = {
   btnText: "",
+  customButtonContainerStyle: "",
   customStyle: "",
   iconStyles: "",
   IconElement: null,
@@ -49,6 +51,7 @@ CustomButton.defaultProps = {
 
 CustomButton.propTypes = {
   btnText: PropTypes.string,
+  customButtonContainerStyle: PropTypes.string,
   customStyle: PropTypes.string,
   iconStyles: PropTypes.string,
   IconElement: PropTypes.object,

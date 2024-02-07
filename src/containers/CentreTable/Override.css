@@ -15,8 +15,7 @@
   padding-right: var(--paddingNone) !important;
   border: none !important;
 }
-
-.customTable .ant-table-tbody > tr:hover > td {
+ .ant-table-tbody > tr:hover > td {
   background-color: transparent !important; 
 }
 
@@ -62,6 +61,7 @@
 .ant-input-number-input-wrap input{
   color: var(--textBold) !important;
 }
+
 
 
 
