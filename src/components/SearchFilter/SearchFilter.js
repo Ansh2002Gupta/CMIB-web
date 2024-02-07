@@ -108,7 +108,11 @@ const SearchFilter = ({
             extra={
               <Button
                 type="link"
-                onClick={() => setCurrentFilterStatus([])}
+                onClick={() => {
+                  setCurrentFilterStatus([]);
+                  setFilterArray([]);
+                  setShowFilters(false);
+                }}
                 className={styles.clearAllBtn}
               >
                 {intl.formatMessage({ id: "label.clearAll" })}
