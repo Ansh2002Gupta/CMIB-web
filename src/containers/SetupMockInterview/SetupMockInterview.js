@@ -9,6 +9,7 @@ import DataTable from "../../components/DataTable/DataTable";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
 import {
@@ -28,6 +29,8 @@ const SetupMockInterviewContent = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [currentTableData, setCurrentTableData] = useState(MOCK_INTERVIEW);
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
@@ -38,7 +41,9 @@ const SetupMockInterviewContent = () => {
   const goToConfigureInterview = (rowData, isEdit) => {
     const centreId = rowData?.id;
     navigate(
-      `/session/setup-mock-interview/details/${centreId}?mode=${
+      `/${
+        selectedModule?.key
+      }/session/setup-mock-interview/details/${centreId}?mode=${
         isEdit ? "edit" : "view"
       }`
     );
