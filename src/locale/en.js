@@ -137,7 +137,7 @@ const locale = {
     "*This cannot be edited once the registration for the Company/Candidate starts.",
   "label.dragNdrop": "Drag & drop files or",
   "label.browse": "Browse",
-  "label.supportedFormat": "Supported formates: png, jpg, jpeg",
+  "label.supportedFormat": "Supported formats: png, jpg, jpeg",
   "label.saveChanges": "Save Changes",
   "label.onlyJpgAndPngFile":
     "Format not supported, only jpeg and png can be uploaded. Please upload again",
