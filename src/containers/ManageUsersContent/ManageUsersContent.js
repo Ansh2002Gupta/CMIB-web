@@ -209,6 +209,7 @@ const ManageUsersContent = () => {
       },
     }),
     renderColumn({
+      title:"test",
       dataIndex: "see",
       key: "see",
       renderImage: {
@@ -220,6 +221,7 @@ const ManageUsersContent = () => {
       },
     }),
     renderColumn({
+      title:"test1",
       dataIndex: "edit",
       key: "edit",
       renderImage: {

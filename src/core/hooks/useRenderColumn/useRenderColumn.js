@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch, } from "antd";
+import { Dropdown, Image, Switch } from "antd";
 
 import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
@@ -49,6 +49,7 @@ const useRenderColumn = () => {
       customImageStyle = "",
       src = "",
       onClick = () => {},
+      checkIsImageClickable = () => {},
       preview,
     } = renderImage;
 
@@ -65,7 +66,6 @@ const useRenderColumn = () => {
       customCheckBoxContainerStyles = "",
       checkBoxList = [],
       isCheckBoxTextBold = false,
-      funForCheckingIsCheckBoxDisable = ()=>{},
     } = renderTextWithCheckBoxes;
 
     const {
@@ -194,6 +194,8 @@ const useRenderColumn = () => {
       (columnObject.render = (_, rowData) => {
         return (
           <Image
+          // TODO: add this check below
+          // checkIsImageClickable
             alt={alt}
             src={src}
             preview={preview}
@@ -210,7 +212,6 @@ const useRenderColumn = () => {
         const { id } = rowData;
         return (
           <CustomCheckBox
-            disabled={funForCheckingIsCheckBoxDisable(rowData)}
             checked={checkBoxList?.includes(id)}
             onChange={() => onClickCheckbox(rowData)}
             customStyles={[

@@ -349,7 +349,21 @@ const locale = {
   "label.logoutSuccessful": "Logged out successfully",
   "label.passwordChanged": "Password changed successfully",
   "label.path.global-configurations": "Configure centres",
-  "label.path.centre-details": "Edit centre details",
+  "label.editCentreDetails": "Edit centre details",
+  "label.areYouSureYouWantToMarkQueries":
+    "Are you sure you want to mark the queries as answered?",
+  "label.markQueriesAsAnswered": "Mark Queries as Answered",
+  "label.markAsAnswered": "Mark as Answered",
+  "label.areYouSureWantToMakeQueryAsAnsweredSingle":
+    "Are you sure you want to mark the query as answered?",
+  "label.selectAll": "Select All",
+  "label.markSelectedQueriesAsAnswered": "Mark as Answered",
+  "label.allSelectedQueriesAreAlreadyMarked":
+    "All selected queries have already been marked as answered.",
+  "label.followingQueriesAreMarkedAnAnswered":
+    "Following queries have already been marked as answered:",
+  "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
+    "Some queries have already been marked as answered. Continuing marking for the remaining queries.",
 };
 
 export default locale;

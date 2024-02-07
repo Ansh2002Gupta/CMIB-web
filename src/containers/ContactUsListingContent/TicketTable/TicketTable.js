@@ -35,13 +35,6 @@ const TicketTable = ({
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const columns = getTicketOrQueryColumn({
-    type: currentActiveTab,
-    intl,
-    getImage,
-    navigate,
-    renderColumn,
-  });
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: ADMIN_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
@@ -51,6 +44,24 @@ const TicketTable = ({
     errorString = error?.data?.message;
   }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
+
+  const columns = getTicketOrQueryColumn({
+    type: currentActiveTab,
+    intl,
+    getImage,
+    navigate,
+    renderColumn,
+    queriesColumnProperties: {},
+    fetchData,
+    paginationAndSearchProperties: {
+      pageSize,
+      current,
+      searchedValue,
+    },
+    // sortedOrder,
+    // setSortedOrder,
+    // setSearchParams,
+  });
 
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);

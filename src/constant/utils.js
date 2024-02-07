@@ -158,11 +158,11 @@ export const getImageSource = (uploadedImage) => {
   return "";
 };
 
-export const convertPermissionFilter = (roles) => {
+export const convertPermissionFilter = (roles, singleOptionsGroupName) => {
   let result = [
     {
       id: 1,
-      name: "Access",
+      name: singleOptionsGroupName || "Access",
       isSelected: false,
       options: [],
     },

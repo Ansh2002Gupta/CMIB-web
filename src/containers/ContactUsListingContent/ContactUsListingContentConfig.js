@@ -1,8 +1,8 @@
 import { Image, Typography } from "antd";
-import styles from "./ContactUsListingContent.module.scss";
 import CustomCheckBox from "../../components/CustomCheckBox/CustomCheckBox";
 import { toggleSorting } from "../../constant/utils";
 import { SORTING_QUERY_PARAMS } from "../../constant/constant";
+import styles from "./ContactUsListingContent.module.scss";
 
 const getStatusStyles = (status) => {
   if (
@@ -29,17 +29,34 @@ export const getTicketOrQueryColumn = ({
   sortedOrder,
   setSortedOrder,
   setSearchParams,
+  setIsConfirmationModalOpen,
+  toggleSelectAllItems,
+  areAllItemsSelected,
 }) => {
-  const { sortArrowStyles, selectedItemsList, setSelectedItemsList } =
-    queriesColumnProperties;
+  const {
+    sortArrowStyles,
+    selectedItemsList,
+    setSelectedItemsList,
+    handleMarkMutipleQueriesAsAnswered,
+  } = queriesColumnProperties;
   const { pageSize, current, searchedValue } = paginationAndSearchProperties;
+  const isTableInSelectAllMode = selectedItemsList?.length !== 0;
   if (type === "2") {
     return [
       renderColumn({
         title: (
           <div>
-            <CustomCheckBox customStyles={styles.columnHeading}>
-              {intl.formatMessage({ id: "label.queriesId" })}
+            <CustomCheckBox
+              checked={areAllItemsSelected}
+              customStyles={[
+                styles.columnHeading,
+                isTableInSelectAllMode ? styles.greenText : "",
+              ].join(" ")}
+              onChange={toggleSelectAllItems}
+            >
+              {!isTableInSelectAllMode
+                ? intl.formatMessage({ id: "label.queriesId" })
+                : intl.formatMessage({ id: "label.selectAll" })}
             </CustomCheckBox>
           </div>
         ),
@@ -50,10 +67,6 @@ export const getTicketOrQueryColumn = ({
           isCheckBoxTextBold: true,
           customCheckBoxContainerStyles: [styles.tableCell].join(" "),
           checkBoxList: selectedItemsList,
-          funForCheckingIsCheckBoxDisable: (rowData) => {
-            const { status } = rowData;
-            return status?.toLowerCase() === "answered";
-          },
           onClickCheckbox: (rowData) => {
             const { id } = rowData;
             if (selectedItemsList?.includes(id)) {
@@ -69,47 +82,57 @@ export const getTicketOrQueryColumn = ({
       }),
       renderColumn({
         title: (
-          <Typography
-            className={[styles.columnHeading, styles.centerContent].join(" ")}
-            onClick={() =>
-              fetchData({
-                queryParamsObject: {
-                  perPage: pageSize,
-                  page: current,
-                  keyword: searchedValue,
-                  sortDirection: toggleSorting(sortedOrder.sortDirection),
-                  sort: "name",
-                },
-                onSuccessCallback: () => {
-                  console.log("called...");
-                  setSearchParams((prevValue) => {
-                    prevValue.set(
-                      SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                      toggleSorting(sortedOrder.sortDirection)
-                    );
-                    prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
-                    return prevValue;
-                  });
-                  setSortedOrder((prev) => {
-                    return {
-                      ...prev,
-                      sortDirection: toggleSorting(prev.sortDirection),
-                      sortKeyName: "name",
-                    };
-                  });
-                },
-              })
-            }
-          >
-            {intl.formatMessage({ id: "label.studentOrCompany" })}
-            <div className={styles.sortintArrawContainer}>
-              <Image
-                src={getImage("arrowDownDarkGrey")}
-                preview={false}
-                className={[sortArrowStyles, styles.centerContent].join(" ")}
-              />
-            </div>
-          </Typography>
+          <>
+            {!isTableInSelectAllMode ? (
+              <Typography
+                className={[styles.columnHeading, styles.centerContent].join(
+                  " "
+                )}
+                onClick={() =>
+                  fetchData({
+                    queryParamsObject: {
+                      perPage: pageSize,
+                      page: current,
+                      keyword: searchedValue,
+                      sortDirection: toggleSorting(sortedOrder.sortDirection),
+                      sort: "name",
+                    },
+                    onSuccessCallback: () => {
+                      console.log("called...");
+                      setSearchParams((prevValue) => {
+                        prevValue.set(
+                          SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+                          toggleSorting(sortedOrder.sortDirection)
+                        );
+                        prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
+                        return prevValue;
+                      });
+                      setSortedOrder((prev) => {
+                        return {
+                          ...prev,
+                          sortDirection: toggleSorting(prev.sortDirection),
+                          sortKeyName: "name",
+                        };
+                      });
+                    },
+                  })
+                }
+              >
+                {intl.formatMessage({ id: "label.studentOrCompany" })}
+                <div className={styles.sortintArrawContainer}>
+                  <Image
+                    src={getImage("arrowDownDarkGrey")}
+                    preview={false}
+                    className={[sortArrowStyles, styles.centerContent].join(
+                      " "
+                    )}
+                  />
+                </div>
+              </Typography>
+            ) : (
+              ""
+            )}
+          </>
         ),
         dataIndex: "name",
         key: "name",
@@ -119,9 +142,15 @@ export const getTicketOrQueryColumn = ({
         },
       }),
       renderColumn({
-        title: intl.formatMessage({
-          id: "label.nonRegisteredStudentOrCompany",
-        }),
+        title: (
+          <>
+            {isTableInSelectAllMode
+              ? ""
+              : intl.formatMessage({
+                  id: "label.nonRegisteredStudentOrCompany",
+                })}
+          </>
+        ),
         dataIndex: "type",
         key: "type",
         renderText: {
@@ -130,7 +159,15 @@ export const getTicketOrQueryColumn = ({
         },
       }),
       renderColumn({
-        title: intl.formatMessage({ id: "label.queryStatus" }),
+        title: (
+          <>
+            {isTableInSelectAllMode
+              ? ""
+              : intl.formatMessage({
+                  id: "label.queryStatus",
+                })}
+          </>
+        ),
         dataIndex: "status",
         key: "status",
         render: (data, rowData) => {
@@ -152,7 +189,15 @@ export const getTicketOrQueryColumn = ({
         },
       }),
       renderColumn({
-        title: intl.formatMessage({ id: "label.email" }),
+        title: (
+          <>
+            {isTableInSelectAllMode
+              ? ""
+              : intl.formatMessage({
+                  id: "label.email",
+                })}
+          </>
+        ),
         dataIndex: "email",
         key: "email",
         renderText: {
@@ -162,9 +207,15 @@ export const getTicketOrQueryColumn = ({
       }),
       {
         title: () => (
-          <p className={styles.columnHeading}>
-            {intl.formatMessage({ id: "label.mobileNumber" })}
-          </p>
+          <>
+            {isTableInSelectAllMode ? (
+              ""
+            ) : (
+              <p className={styles.columnHeading}>
+                {intl.formatMessage({ id: "label.mobileNumber" })}
+              </p>
+            )}
+          </>
         ),
         dataIndex: "mobile",
         key: "mobile",
@@ -174,7 +225,15 @@ export const getTicketOrQueryColumn = ({
         },
       },
       renderColumn({
-        title: intl.formatMessage({ id: "label.queryType" }),
+        title: (
+          <>
+            {isTableInSelectAllMode
+              ? ""
+              : intl.formatMessage({
+                  id: "label.queryType",
+                })}
+          </>
+        ),
         dataIndex: "query_type",
         key: "query_type",
         renderText: {
@@ -184,45 +243,64 @@ export const getTicketOrQueryColumn = ({
       }),
       renderColumn({
         title: (
-          <Typography
-            className={styles.columnHeading}
-            onClick={() =>
-              fetchData({
-                queryParamsObject: {
-                  perPage: pageSize,
-                  page: current,
-                  keyword: searchedValue,
-                  sortDirection: toggleSorting(sortedOrder.sortDirection),
-                  sort: "created_at",
-                },
-                onSuccessCallback: () => {
-                  console.log("called...");
-                  setSearchParams((prevValue) => {
-                    prevValue.set(
-                      SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                      toggleSorting(sortedOrder.sortDirection)
-                    );
-                    prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
-                    return prevValue;
-                  });
-                  setSortedOrder((prev) => {
-                    return {
-                      ...prev,
-                      sortDirection: toggleSorting(prev.sortDirection),
-                      sortKeyName: "created_at",
-                    };
-                  });
-                },
-              })
-            }
-          >
-            {intl.formatMessage({ id: "label.createdOn" })}
-            <Image
-              src={getImage("arrowDownDarkGrey")}
-              preview={false}
-              className={[sortArrowStyles].join(" ")}
-            />
-          </Typography>
+          <>
+            {isTableInSelectAllMode ? (
+              <>
+                {isTableInSelectAllMode ? (
+                  <Typography
+                    className={styles.greenText}
+                    onClick={handleMarkMutipleQueriesAsAnswered}
+                  >
+                    {intl.formatMessage({
+                      id: "label.markSelectedQueriesAsAnswered",
+                    })}
+                  </Typography>
+                ) : (
+                  ""
+                )}
+              </>
+            ) : (
+              <Typography
+                className={styles.columnHeading}
+                onClick={() =>
+                  fetchData({
+                    queryParamsObject: {
+                      perPage: pageSize,
+                      page: current,
+                      keyword: searchedValue,
+                      sortDirection: toggleSorting(sortedOrder.sortDirection),
+                      sort: "created_at",
+                    },
+                    onSuccessCallback: () => {
+                      console.log("called...");
+                      setSearchParams((prevValue) => {
+                        prevValue.set(
+                          SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+                          toggleSorting(sortedOrder.sortDirection)
+                        );
+                        prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
+                        return prevValue;
+                      });
+                      setSortedOrder((prev) => {
+                        return {
+                          ...prev,
+                          sortDirection: toggleSorting(prev.sortDirection),
+                          sortKeyName: "created_at",
+                        };
+                      });
+                    },
+                  })
+                }
+              >
+                {intl.formatMessage({ id: "label.createdOn" })}
+                <Image
+                  src={getImage("arrowDownDarkGrey")}
+                  preview={false}
+                  className={[sortArrowStyles].join(" ")}
+                />
+              </Typography>
+            )}
+          </>
         ),
         dataIndex: "created_at",
         key: "created_at",
@@ -251,6 +329,9 @@ export const getTicketOrQueryColumn = ({
           preview: false,
           src: getImage("rightIcon"),
           visible: true,
+          onClick: () => {
+            !isTableInSelectAllMode && setIsConfirmationModalOpen(true);
+          },
         },
       }),
     ];

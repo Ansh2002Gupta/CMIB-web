@@ -55,6 +55,21 @@ iframe#webpack-dev-server-client-overlay {
   content: none !important;
 }
 
-.ant-btn-default:disabled{
+.ant-btn-default:disabled {
   cursor: not-allowed !important;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th {
+  min-width: 250px !important;
+  max-width: 250px !important;
+  /* background-color: red !important; */
+}
+
+.ant-table-wrapper .ant-table-tbody>tr>td{
+  min-width: 250px !important;
+  max-width: 250px !important;
+}
+
+.table{
+  table-layout: unset !important;
 }

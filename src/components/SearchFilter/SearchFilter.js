@@ -18,7 +18,9 @@ const SearchFilter = ({
   setFilterArray,
   setShowFilters,
   showFilters,
+  onFilterApply,
 }) => {
+  console.log({onFilterApply})
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
@@ -117,7 +119,6 @@ const SearchFilter = ({
             bodyStyle={classes.cardBody}
           >
             <TwoColumn
-              // TODO: Srujan will be working on the responsive designs of the filters hence do not touch it much
               isLeftFillSpace
               isRightFillSpace
               leftSectionStyle={
@@ -206,7 +207,9 @@ const SearchFilter = ({
               btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
               onClick={() => {
+                console.log("clicked search filter...")
                 setFilterArray(currentFilterStatus);
+                onFilterApply(currentFilterStatus);
                 setShowFilters(false);
               }}
             />
