@@ -143,7 +143,7 @@ const locale = {
     "Format not supported, only jpeg and png can be uploaded. Please upload again",
   "label.fileUpto5MB": "Max size allowed is 5 mb, please upload again",
   "label.editUserDetails": "Edit User Details",
-  "label.twoFactorAuth": "Two factor authentication",
+  "label.twoFactorAuth": "Two-factor Authentication",
   "label.on": "ON",
   "label.off": "OFF",
   "label.edit": "Edit",

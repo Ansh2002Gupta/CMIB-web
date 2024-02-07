@@ -32,9 +32,7 @@ const DataTable = ({
   };
 
   const responsiveStyle =
-    originalData?.length !== 0
-      ? { x: "max-content", y: 600 }
-      : { x: "max-content" };
+    originalData?.length !== 0 ? { x: "max-content" } : { x: "max-content" };
 
   return (
     <div className={[styles.container, customContainerStyles].join(" ")}>
