@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Spin } from "antd";
@@ -47,11 +47,39 @@ const UserDetailsContent = ({
   const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
 
-  const handleUpdateUserData = () => {
+  const emailRef = useRef();
+  const phoneRef = useRef();
+  const nameRef = useRef();
+
+  const checkForIncorrectFields = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
     setIsMobileNumberValid(MOBILE_NO_REGEX.test(`${userData?.mobile}`));
     setIsUserNameValid(userData.name?.trim()?.length !== 0);
     setIsAccessValid(userData.access?.length !== 0);
+    if (userData.name?.trim()?.length === 0) {
+      nameRef?.current?.input?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      return;
+    }
+    if (!MOBILE_NO_REGEX.test(`${userData?.mobile}`)) {
+      phoneRef?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      return;
+    }
+    if (!EMAIL_REGEX.test(userData?.email)) {
+      emailRef?.current?.input?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
+
+  const handleUpdateUserData = () => {
+    checkForIncorrectFields();
     if (
       EMAIL_REGEX.test(userData?.email) &&
       MOBILE_NO_REGEX.test(`${userData?.mobile}`) &&
@@ -141,7 +169,21 @@ const UserDetailsContent = ({
                   setIsAccessValid,
                   rolesData,
                   updateUserData,
+                  emailRef,
+                  phoneRef,
+                  nameRef,
                 }}
+                checkForCorrectEmail={() =>
+                  setIsEmailValid(EMAIL_REGEX.test(userData?.email))
+                }
+                checkForMobileNumber={() =>
+                  setIsMobileNumberValid(
+                    MOBILE_NO_REGEX.test(`${userData?.mobile}`)
+                  )
+                }
+                checkForUserName={() =>
+                  setIsUserNameValid(userData.name?.trim()?.length !== 0)
+                }
                 name={userData?.name}
                 email={userData?.email}
                 mobileNo={userData?.mobile}

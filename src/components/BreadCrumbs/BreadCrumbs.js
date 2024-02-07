@@ -25,7 +25,6 @@ const BreadCrumbs = () => {
           key={index}
           className={isLastItem ? styles.nonclickable : styles.clickable}
           onClick={() => {
-            console.log(index - (pathSegments.length - 1));
             !isLastItem && navigate(index - (pathSegments.length - 1));
           }}
         >

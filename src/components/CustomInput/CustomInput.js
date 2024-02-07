@@ -7,7 +7,7 @@ import Base from "../../core/layouts/Base/Base";
 
 import styles from "./CustomInput.module.scss";
 
-const CustomInput = ({
+const CustomInput = React.forwardRef(({
   currentSelectedValue,
   customContainerStyles,
   customErrorTextStyles,
@@ -41,7 +41,7 @@ const CustomInput = ({
   SuffixIcon,
   type,
   value,
-}) => {
+}, ref) => {
   const inputFieldRef = useRef();
 
   const restoreCursorPosition = () => {
@@ -97,7 +97,7 @@ const CustomInput = ({
         )}
         {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
           <Input
-            ref={isSuffixRequiredForPassword ? inputFieldRef : null}
+            ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
             type={type || "text"}
             className={[styles.inputField, customInputStyles].join(" ")}
             {...{
@@ -179,7 +179,7 @@ const CustomInput = ({
       )}
     </Base>
   );
-};
+});
 
 CustomInput.defaultProps = {
   currentSelectedValue: "",
