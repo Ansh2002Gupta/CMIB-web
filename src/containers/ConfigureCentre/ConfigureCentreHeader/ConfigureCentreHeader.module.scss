@@ -1,0 +1,37 @@
+.headerContainer {
+  padding: var(--paddingMedium);
+  width: var(--fullWidth);
+  border: var(--borderLight);
+}
+
+.btnCustomStyles {
+  padding: var(--paddingSmall) var(--paddingMediumSmall);
+  border-radius: var(--radiusXLg);
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
+}
+
+.btnIconStyles {
+  width: 24px !important;
+}
+
+@media screen and (max-width: 1535px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeXXlarge);
+  }
+
+  .btnCustomStyles {
+    font-size: var(--fontSizeExtraSmall);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeXlargeMedium);
+  }
+
+  .btnCustomStyles {
+    min-height: var(--height_44);
+    min-width: var(--width_50);
+  }
+}

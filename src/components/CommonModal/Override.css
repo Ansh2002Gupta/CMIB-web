@@ -1,0 +1,6 @@
+.customModal .ant-modal-content {
+  padding: 0;
+  border-radius: var(--radiusXLg,12px); 
+}
+
+

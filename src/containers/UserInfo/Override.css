@@ -1,0 +1,41 @@
+.parentContainer .ant-input-disabled,
+.ant-input[disabled] {
+  border: 0px;
+  background-color: #fff;
+  padding-left: 0px;
+}
+
+.UserInfo_input__GyT0y.ant-picker-disabled {
+  background-color: #fff;
+  font-weight: 500 !important;
+  color: rgba(97, 108, 130, 0.4) !important;
+}
+
+.ant-select-selector {
+  min-width: 100%;
+  border: 0;
+}
+
+.ant-select-customize-input.ant-select-selector {
+  min-height: 48px !important;
+}
+
+.ant-descriptions-item-label {
+  color: var(--On-surface, #616c82) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+
+}
+
+.ant-descriptions-row >th{
+  padding-bottom: var(--paddingXXSmall) !important;
+}
+
+.ant-descriptions-item-content {
+  font-weight: var(--fontWeightMedium) !important;
+  font-size: var(--fontSizeSmall) !important;
+}
+/* For preventing unnecessary scroll from modal */
+.ant-modal-root .ant-modal-wrap {
+  overflow: unset !important;
+}

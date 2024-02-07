@@ -1,0 +1,65 @@
+.customTable .ant-table-thead > tr > th {
+  background-color: var(--bodyBg) !important;
+  padding: var(--paddingNone) !important;
+  border-bottom: none !important;
+}
+
+.customTable .ant-table-tbody > tr > td {
+  border-bottom: none !important;
+  padding-top: var(--paddingNone) !important;
+  padding-bottom: var(--paddingSmall) !important;
+}
+
+
+.customTable .ant-table-thead > tr > th .ant-table-cell {
+  padding-left: var(--paddingNone) !important;
+  padding-right: var(--paddingNone) !important;
+  border: none !important;
+
+}
+ .ant-table-tbody > tr:hover > td {
+  background-color: transparent !important; 
+}
+
+.customTable .ant-table-tbody .ant-table-cell {
+  padding-left: var(--paddingNone) !important;
+  padding-right: var(--paddingMedium) !important;
+  vertical-align: top !important;
+}
+
+.ant-input-number-disabled {
+  background-color: var(--bodyBg) !important;
+  color: var(--textBold) !important;
+}
+
+.ant-input[disabled] {
+  color: var(--textBold) !important;
+}
+
+.ant-picker-input > input {
+  color: var(--textBold) !important;
+  background-color: var(--bodyBg) !important;
+  font-weight: var(--fontWeightMedium) !important;
+}
+
+.ant-picker-disabled,
+.ant-picker-input > input[disabled] {
+  color: var(--textBold) !important;
+  background-color: var(--bodyBg) !important;
+}
+
+.ant-input-number input::placeholder {
+  font-family: var(--fontFamilyRegular) !important;
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
+  color: var(--inputPlaceHolder) !important;
+}
+
+.ant-input-number-handler-wrap {
+  opacity: 1 !important; 
+  visibility: visible !important; 
+}
+
+
+
+

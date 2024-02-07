@@ -1,0 +1,32 @@
+.saveAndCancelBtnContainer {
+  display: flex;
+  gap: var(--gapSmall, 16px);
+  padding: var(--paddingMedium) var(--paddingSmall);
+  justify-content: flex-end;
+}
+
+.cancelBtn {
+  display: flex;
+  padding: var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gapXSmall, 8px);
+  min-height: var(--btnHeight, 56px);
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  border: var(--borderLight, 1px solid #ccd0e5) !important;
+  &:hover {
+    color: var(--textBold) !important;
+    border: var(--borderLight, 1px solid #ccd0e5) !important;
+  }
+}
+
+.saveBtn {
+  font-size: (--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  background-color: var(--greenBtnBg, #04af55);
+  &:hover {
+    border: var(--borderLight) !important;;
+  }
+}

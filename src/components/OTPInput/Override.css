@@ -1,0 +1,9 @@
+.ant-statistic-content-value {
+  color: var(--disableBtn);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  padding-bottom: var(--paddingSmall);
+}
+.ant-statistic.ant-statistic-content {
+  display: flex;
+}

@@ -1,0 +1,7 @@
+.row {
+  display: flex;
+  flex-shrink: 0;
+  &.fillSpace {
+    flex-grow: 1;
+  }
+}

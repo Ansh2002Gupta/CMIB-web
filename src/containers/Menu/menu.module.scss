@@ -1,0 +1,24 @@
+.drawerAppLogoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cmibLogo {
+  width: var(--width_170, 170px);
+  height: var(--height_50, 50px);
+}
+
+.drawerAppLogo {
+  cursor: pointer;
+}
+
+.crossIcon {
+  color: var(--bodyBg, #ffffff);
+}
+
+@media (max-width: 767px) {
+  .drawerAppLogo {
+    width: var(--width_120, 120px);
+  }
+}

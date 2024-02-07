@@ -1,0 +1,30 @@
+.mainContainer {
+  gap: var(--gapXSmall);
+}
+
+.statusContainer {
+  gap: var(--gapXSmall);
+  align-items: center;
+}
+
+.mobileContainer {
+  gap: var(--gapXSmall);
+}
+
+.grayText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.blackText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.isRequired {
+  color: var(--error);
+}

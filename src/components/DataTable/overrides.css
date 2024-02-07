@@ -1,0 +1,64 @@
+.ant-pagination::after {
+  content: none;
+}
+
+.ant-pagination-prev,
+.ant-pagination-next {
+  margin-top: -12px;
+}
+
+iframe#webpack-dev-server-client-overlay {
+  display: none !important;
+}
+
+.ant-table-expanded-row-fixed,
+.table-layout {
+  min-height: var(--height_50vh, 50vh);
+}
+
+.ant-table-column-has-sorters {
+  background-color: var(--bodyBg2) !important;
+}
+
+.ant-table-wrapper td.ant-table-column-sort {
+  background-color: var(--bodyBg) !important;
+}
+
+.ant-table-column-has-sorters {
+  background-color: #fafafa !important;
+}
+
+.ant-table-wrapper td.ant-table-column-sort {
+  background-color: #ffffff !important;
+}
+
+.ant-table-body {
+  overflow: auto !important;
+}
+
+.ant-pagination-item-active {
+  border: var(--borderBlue1) !important;
+  background-color: var(--lightBlueBg) !important;
+  border-radius: var(--radiusLg) !important;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+  color: var(--darkBlue) !important;
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+}
+
+.ant-table-thead > tr > th {
+  padding: var(--paddingMediumSmall) var(--paddingSmall) !important;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th:not(:last-child)::before {
+  content: none !important;
+}
+.ant-select-selector {
+  border-radius: var(--radiusLg) !important;
+}
+
+.ant-btn-default:disabled{
+  cursor: not-allowed !important;
+}

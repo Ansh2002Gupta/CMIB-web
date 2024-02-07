@@ -1,0 +1,55 @@
+.table {
+  flex: 1;
+  width: var(--fullWidth);
+}
+
+.rowtext {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.customContainerStyles {
+  width: var(--width_100);
+}
+
+.customDateContainerStyles {
+  width: auto;
+}
+
+.inputNumbeCustomStyles {
+  width: var(--width_80);
+}
+
+.joinedCustomContainerStyles {
+  width: var(--width_100);
+  border-top-right-radius: var(--radiusNone);
+  border-bottom-right-radius: var(--radiusNone);
+}
+
+.inputNumberStyle {
+  border-top-left-radius: var(--radiusNone);
+  border-bottom-left-radius: var(--radiusNone);
+}
+
+.tableHeader {
+  font-weight: var(--fontWeightMedium);
+  color: var(--inputPlaceHolder) !important;
+  font-size: var(--fontSizeExtraSmall);
+}
+
+.redText {
+  font-weight: var(--fontWeightMedium);
+  color: var(--error) !important;
+  font-size: var(--fontSizeExtraSmall);
+}
+
+.twoJointContainer {
+  gap: var(--gapXLarge);
+}
+
+.imageStyle {
+  cursor: pointer;
+  height: var(--height_24);
+  width: var(--width_24);
+}

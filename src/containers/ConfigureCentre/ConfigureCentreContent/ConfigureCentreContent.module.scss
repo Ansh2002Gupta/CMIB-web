@@ -1,0 +1,88 @@
+.tableContainer {
+  background-color: var(--blueBg);
+  width: var(--fullwidth);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmall);
+  padding: var(--paddingMedium);
+  flex: 1;
+  overflow: auto;
+}
+
+.searchIcon {
+  width: var(--width_30);
+  height: var(--height_30);
+  padding-right: var(--paddingExtraSmall);
+  padding-bottom: var(--paddingXXSmall);
+}
+
+.searchBar {
+  width: var(--width_30Per);
+  min-height: var(--height_44);
+  border-radius: var(--radiusXLg);
+
+  input {
+    color: var(--inputText) !important;
+    font-size: var(--fontSizeSmall) !important;
+    font-weight: var(--fontWeightMedium) !important;
+  }
+}
+
+input::placeholder {
+  color: var(--inputPlaceHolder) !important;
+}
+
+.searchBarContainer {
+  display: flex;
+  justify-content: start;
+  gap: var(--gapSmall);
+  position: relative;
+}
+
+.box {
+  width: var(--fullWidth);
+  height: var(--fullHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.columnHeading {
+  color: var(--subHeadingColor) !important;
+  display: flex;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+}
+
+.upside {
+  transform: rotate(180deg);
+}
+
+.downside {
+  transform: rotate(0deg);
+}
+
+.tableCell {
+  min-width: var(--width_100);
+}
+
+.sortArrowImageContainer {
+  min-width: var(--width_20);
+}
+
+@media screen and (max-width: 1023px) {
+  .searchBar {
+    width: var(--halfWidth);
+  }
+}
+
+@media screen and (max-width: 511px) {
+  .searchBarContainer {
+    flex-direction: column;
+  }
+
+  .searchBar {
+    width: var(--fullWidth);
+    min-height: var(--height_50);
+  }
+}

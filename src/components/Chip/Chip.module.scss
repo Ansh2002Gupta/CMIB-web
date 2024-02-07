@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radiusMLg);
+}
+
+.text {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+}

@@ -1,0 +1,26 @@
+.ant-input::placeholder {
+    font-family: var(--fontFamilyRegular)!important;
+    font-size: var(--fontSizeSmall)!important;
+    font-weight: var(--fontWeightMedium) !important;
+    color: var(--inputPlaceHolder) !important;
+  }
+  .ant-picker input::placeholder {
+    font-family: var(--fontFamilyRegular)!important;
+    font-size: var(--fontSizeSmall)!important;
+    font-weight: var(--fontWeightMedium) !important;
+    color: var(--inputPlaceHolder) !important;
+  }
+  .ant-select .ant-select-selection-placeholder {
+    font-family: var(--fontFamilyRegular)!important;
+    font-size: var(--fontSizeSmall)!important;
+    font-weight: var(--fontWeightMedium) !important;
+    color: var(--inputPlaceHolder) !important;
+    
+  }
+  .ant-picker input{
+    font-family: var(--fontFamilyRegular)!important;
+    font-size: var(--fontSizeSmall)!important;
+    font-weight: var(--fontWeightMedium) !important;
+    color: var(--inputPlaceHolder) !important;
+  }
+ 

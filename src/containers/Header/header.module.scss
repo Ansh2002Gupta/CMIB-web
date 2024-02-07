@@ -1,0 +1,20 @@
+.headerContainer {
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--sizeSmall, 14px);
+  padding-right: 4px;
+  color: black;
+}
+
+.notificationIcon {
+  font-size: var(--fontSizeXXLarge, 22px);
+  cursor: pointer;
+}
+
+.breadCrumbsStyles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex: 1;
+}

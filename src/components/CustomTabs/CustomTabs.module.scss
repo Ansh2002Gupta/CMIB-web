@@ -1,0 +1,38 @@
+@use "core/themes/mixins/responsive.scss" as responsive;
+
+.tab {
+  color: var(--subHeadingColor);
+  padding-bottom: var(--gapXSmall);
+  text-align: center;
+  cursor: pointer;
+  font-weight: var(--fontWeightMedium);
+  font-family: var(--fontFamilyRegular);
+  display: inline-block;
+}
+
+.tab.active {
+  color: var(--textBold);
+  font-weight: var(--fontWeightBold);
+  border-bottom: var(--borderBlue);
+}
+
+.tab-content {
+  text-align: center;
+}
+
+.tab-container {
+  justify-content: center;
+  overflow-x: auto;
+  white-space: nowrap;
+  flex: 1;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.tab-box {
+  display: flex;
+  gap: var(--gapMedium);
+}

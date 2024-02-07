@@ -1,0 +1,167 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapXXLarge);
+  width: 100%;
+  overflow: unset;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--gapSmallMedium);
+}
+
+.inputAndBtnContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--gapLarge);
+}
+
+.inputLabel {
+  color: var(--inputLabel);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.forgotLink {
+  color: var(--linkColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  &:hover {
+    color: var(--linkColor) !important;
+  }
+}
+
+.loginBtn {
+  background: var(--greenBtnBg);
+  border-radius: var(--radiusLg);
+  color: var(--btnText);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 17px var(--paddingLarge);
+  min-height: var(--btnHeight);
+  &:hover {
+    background: var(--greenBtnBg) !important;
+  }
+}
+
+.loginBtn[disabled] {
+  background: var(--disableBtn) !important;
+  color: var(--btnText);
+}
+
+.rememberMeContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+}
+
+.rememberMeText {
+  color: var(--checkBoxText);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.rememberMeImage {
+  width: 20px;
+}
+
+.forgotLinkContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapLarge);
+  flex: 1;
+  justify-content: space-between;
+}
+
+.input {
+  color: var(--inputText);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
+  padding: var(--paddingSmall);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+}
+
+.errorText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--error);
+  padding-bottom: var(--paddingSmall);
+  min-height: var(--height_20);
+  opacity: 0;
+}
+
+.showError {
+  opacity: 1;
+}
+
+@media (max-width: 1523px) {
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--paddingSmall);
+    width: var(--fullWidth);
+  }
+  .inputAndBtnContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--paddingSmall);
+  }
+  .formContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0px;
+  }
+  .inputContainer{
+    gap: var(--gapSmall);
+  }
+  .errorText {
+    padding-bottom: var(--paddingExtraSmall);
+  }
+}
+
+@media (max-width: 511px) {
+  .loginForm {
+    gap: var(--gapXLarge);
+  }
+  .inputAndBtnContainer {
+    flex: 1;
+  }
+  .inputAndBtnContainer {
+    background-color: var(--mobileBg1);
+    padding: var(--paddingMedium) var(--paddingSmall) var(--paddingLarge)
+      var(--paddingSmall);
+  }
+  .borderForMobileScreens {
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-color: var(--borderColor);
+    padding-top: var(--paddingMedium);
+  }
+  .rememberMeText {
+    padding: 6px 0px;
+  }
+}
+
+@media (max-width: 400px) {
+  .errorText {
+    min-height: var(--height_30);
+  }
+}

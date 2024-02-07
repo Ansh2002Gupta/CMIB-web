@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: unset;
+  align-content: flex-start;
+}
+
+.inputLabelContainer {
+  display: flex;
+  gap: var(--gapXXSmall);
+  padding-bottom: var(--paddingXXSmall);
+}
+
+.isRequiredStar {
+  color: var(--requiredStarColor);
+}
+
+.timeInput {
+  background-color: var(--bodyBg);
+}
+.errorText {
+  color: var(--error);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  margin-top: var(--marginSmall);
+}
+.dateText {
+  color: var(--textBold);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+}
