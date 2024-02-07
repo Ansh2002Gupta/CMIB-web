@@ -106,7 +106,9 @@ const ManageUsersContent = () => {
     debounceSearch(
       pageSize,
       current,
-      event.target.value.length > 2 ? event.target.value : "",
+      event.target.value.length > 2
+        ? encodeURIComponent(event.target.value)
+        : "",
       filterArray
     );
 
@@ -285,7 +287,7 @@ const ManageUsersContent = () => {
     fetchUsers(
       pageSize,
       current,
-      searchedValue.length > 2 ? searchedValue : "",
+      searchedValue.length > 2 ? encodeURIComponent(searchedValue) : "",
       filterArray
     );
     let arrayAsString = JSON.stringify(filterArray);

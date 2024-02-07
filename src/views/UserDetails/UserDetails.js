@@ -144,10 +144,7 @@ const UserDetails = () => {
             ([index, item]) => item?.id
           ) || [],
         roles: userAccountInfo?.roles || [],
-        permissions:
-          Object.entries(userAccountInfo?.permissions || {})?.map(
-            ([index, item]) => item?.id
-          ) || [],
+        permissions: userAccountInfo?.permissions || [],
         date: userAccountInfo?.created_at || "",
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,
         status: userAccountInfo?.status,
