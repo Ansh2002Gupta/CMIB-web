@@ -1,5 +1,9 @@
 .sessionContainer {
   color: var(--textDark, #000833);
+  width: var(--width_230);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .customDropdownMenu {
@@ -18,6 +22,8 @@
 
 .menu {
   border: var(--borderLight2, 1px solid #b1b3b5);
+  max-height: var(--height_300, 300px);
+  overflow-y: auto;
 }
 
 .menuItemText {

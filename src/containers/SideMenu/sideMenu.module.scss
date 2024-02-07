@@ -85,6 +85,7 @@
   align-items: flex-start;
   list-style: none;
   cursor: pointer;
+  margin-bottom: var(--marginLarge, 24px);
 }
 
 .moduleListItem {
@@ -140,11 +141,9 @@
 .moduleText {
   font-size: var(--fontSizeSmall, 14px);
   color: var(--subHeadingColor, #616c82);
-  padding: var(--paddingMedium, 16px);
-  padding-bottom: var(--paddingExtraSmall, 8px);
+  font-weight: var(--fontWeightMedium, 500);
 }
 .sessionContainer {
-  margin-bottom: var(--marginLarge, 24px);
   min-height: var(--height_100, 100px);
 }
 
@@ -186,7 +185,7 @@
   }
 
   .moduleText {
-    padding: 0px;
+    padding: var(--paddingExtraSmall, 8px);
     padding-left: var(--paddingMediumSmall, 12px);
   }
 

@@ -123,6 +123,7 @@ const variables = {
   width_176: "176px",
   width_180: "180px",
   width_200: "200px",
+  width_230: "230px",
   width_300: "300px",
   width_350: "350px",
   width_347: "347px",

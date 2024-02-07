@@ -12,10 +12,10 @@ import styles from "./sessions.module.scss";
 function Sessions() {
   const intl = useIntl();
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
-  const { data } = useFetch({ url: CORE_ROUTE + GLOBAL_SESSION_LIST });
+  const { data: globalSessionList } = useFetch({ url: CORE_ROUTE + GLOBAL_SESSION_LIST });
 
   const [selectedKey, setSelectedKey] = useState(
-    data?.length > 0 ? data[0].id : null
+    globalSessionList?.length ? globalSessionList[0].id : null
   );
 
   const handleMenuClick = ({ key }) => {
@@ -24,11 +24,11 @@ function Sessions() {
   };
 
   useEffect(() => {
-    if (data) {
-      setSelectedKey(data[0].id);
-      globalSessionDispatch(setGlobalSessionDetails(data[0].id));
+    if (globalSessionList?.length) {
+      setSelectedKey(globalSessionList[0].id);
+      globalSessionDispatch(setGlobalSessionDetails(globalSessionList[0].id));
     }
-  }, [data]);
+  }, [globalSessionList]);
 
   const menu = (
     <Menu
@@ -37,7 +37,7 @@ function Sessions() {
       className={styles.menu}
     >
       {selectedKey &&
-        data?.map((item) => (
+        globalSessionList?.map((item) => (
           <Menu.Item
             key={+item.id}
             className={`${styles.customDropdownItem} ${
@@ -65,7 +65,7 @@ function Sessions() {
         </Typography.Text>{" "}
         &nbsp;
         <Typography.Text strong>
-          {data?.find((item) => item.id === selectedKey)?.name}
+          {globalSessionList?.find((item) => item.id === selectedKey)?.name}
         </Typography.Text>
         <DownOutlined />
       </Button>

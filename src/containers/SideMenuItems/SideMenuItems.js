@@ -1,28 +1,27 @@
 import React, { useContext } from "react";
-import { Image, Input } from "antd";
 import { useIntl } from "react-intl";
+import { Image, Input } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow";
 import TwoColumn from "../../core/layouts/TwoColumn";
 import { ThemeContext } from "core/providers/theme";
 
-import SideMenuButton from "../../components/SideMenuButton/SideMenuButton";
 import ModuleList from "../SideMenu/ModuleList";
+import SideMenuButton from "../../components/SideMenuButton/SideMenuButton";
 import styles from "./SideMenuItems.module.scss";
 import "./Override.css"
 
 const SideMenuItems = ({
-  openSelector,
-  setOpenSelector,
-  modules,
   handleOnSelectItem,
+  modules,
+  openSelector,
   selectedItem,
+  setOpenSelector,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
 
   const handleOnUserSearch = (val) =>{}
-
   return (
     <TwoRow
       style={{ overflow: "visible" }}
