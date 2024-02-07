@@ -32,28 +32,33 @@ iframe#webpack-dev-server-client-overlay {
   background-color: #ffffff !important;
 }
 
-
 .ant-table-body {
   overflow: auto !important;
 }
 
-.ant-pagination-item-active{
-  border:var(--borderBlue1) !important;
+.ant-pagination-item-active {
+  border: var(--borderBlue1) !important;
   background-color: var(--lightBlueBg) !important;
+  border-radius: var(--radiusLg) !important;
 }
 
-.ant-pagination .ant-pagination-item-active a{
+.ant-pagination .ant-pagination-item-active a {
   color: var(--darkBlue) !important;
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
 }
 
- .ant-table-thead > tr > th {
-  padding:  var(--paddingMediumSmall) var(--paddingSmall) !important;
-
+.ant-table-thead > tr > th {
+  padding: var(--paddingMediumSmall) var(--paddingSmall) !important;
 }
 
 .ant-table-wrapper .ant-table-thead > tr > th:not(:last-child)::before {
   content: none !important;
 }
+.ant-select-selector {
+  border-radius: var(--radiusLg) !important;
+}
 
+.ant-btn-default:disabled{
+  cursor: not-allowed !important;
+}

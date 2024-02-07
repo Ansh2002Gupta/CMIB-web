@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router-dom";
 import { Select, Typography } from "antd";
@@ -24,6 +24,7 @@ import {
 import { CONFIGURE_CENTRES } from "../../../routes/routeNames";
 import { FIELDS } from "./configureCentreDetailsFields";
 import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
+import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import { classes } from "./ConfigureCentreDetails.styles";
 import styles from "./ConfigureCentreDetails.module.scss";
 import "./override.css";
@@ -32,6 +33,9 @@ const ConfigureCentreDetails = () => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const currentlySelectedModuleId = userProfileDetails?.selectedModuleItem?.id;
+  const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState(INITIAL_CENTRE_DETAILS);
@@ -99,13 +103,13 @@ const ConfigureCentreDetails = () => {
   }
 
   const handleCancel = () => {
-    navigate(CONFIGURE_CENTRES);
+    navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
   };
 
   const handleSave = () => {
     const payload = {
       center_name: formData.centre_name,
-      module_id: 1, // TODO: Need to get this from side-menu once sidebar is completely implemented with API integration
+      module_id: currentlySelectedModuleId,
       center_code: formData.centre_code,
       center_type: formData.centre_type,
       status: formData.status,
@@ -114,7 +118,7 @@ const ConfigureCentreDetails = () => {
       addNewCenter(
         payload,
         () => {
-          navigate(CONFIGURE_CENTRES);
+          navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
         },
         (errorMessage) => {
           showNotification(errorMessage, "error");
@@ -125,7 +129,7 @@ const ConfigureCentreDetails = () => {
         centreId,
         payload,
         () => {
-          navigate(CONFIGURE_CENTRES);
+          navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
         },
         (errorMessage) => {
           showNotification(errorMessage, "error");
@@ -156,6 +160,8 @@ const ConfigureCentreDetails = () => {
       });
     }
   }, [data]);
+
+  const areFieldsEditable = !centreId || data?.is_editable;
 
   return (
     <>
@@ -210,6 +216,7 @@ const ConfigureCentreDetails = () => {
                               item.id === 2 ? (
                                 <Select
                                   bordered={false}
+                                  disabled={!areFieldsEditable}
                                   size={"large"}
                                   style={classes.selectStyle}
                                   className={styles.selectInput}
@@ -225,6 +232,11 @@ const ConfigureCentreDetails = () => {
                               ) : (
                                 <div className={styles.formInputStyles}>
                                   <CustomInput
+                                    disabled={
+                                      item?.id === 3
+                                        ? false
+                                        : !areFieldsEditable
+                                    }
                                     value={item.value}
                                     customLabelStyles={styles.inputLabel}
                                     customInputStyles={styles.input}
@@ -253,6 +265,7 @@ const ConfigureCentreDetails = () => {
                         ))}
                         <CustomSwitch
                           checked={Boolean(formData?.status)}
+                          disabled={!areFieldsEditable}
                           label={intl.formatMessage({ id: "label.status" })}
                           onChange={() => {
                             setFormData((prev) => {

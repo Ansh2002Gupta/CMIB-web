@@ -76,6 +76,7 @@ const useRenderColumn = () => {
       swithInActiveLabel,
       switchToggleHandler = () => {},
       isActionable = true,
+      checkIsSwitchEditable = () => {},
     } = renderSwitch;
 
     const {
@@ -182,6 +183,7 @@ const useRenderColumn = () => {
           <div className={styles.centreStatusContainer}>
             {isActionable && (
               <Switch
+                disabled={!checkIsSwitchEditable(data)}
                 checked={status}
                 onClick={() => switchToggleHandler(data)}
                 className={status ? styles.switchBgColor : ""}
