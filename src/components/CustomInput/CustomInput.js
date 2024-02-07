@@ -165,7 +165,7 @@ const CustomInput = ({
             isError ? styles.showError : "",
           ].join(" ")}
         >
-          {errorMessage ? ` * ${errorMessage}` : ""}
+          {errorMessage ? `${errorMessage}` : ""}
         </Typography>
       </div>
       {!!messageToShow && (

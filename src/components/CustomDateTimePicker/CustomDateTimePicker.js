@@ -54,7 +54,11 @@ const CustomDateTimePicker = ({
                   placeholder,
                   disabled,
                 }}
-                className={[styles.timeInput, customTimeStyle]}
+                className={[
+                  styles.timeInput,
+                  customTimeStyle,
+                  errorMessage && styles.errotTimeInput,
+                ]}
                 suffixIcon={<Image src={getImage("clock")} />}
                 value={value ? dayjs(value) : null}
               />
@@ -62,7 +66,11 @@ const CustomDateTimePicker = ({
               <DatePicker
                 {...{ defaultValue, onChange, placeholder, disabled }}
                 format={dateFormat}
-                className={[styles.timeInput, customTimeStyle]}
+                className={[
+                  styles.timeInput,
+                  customTimeStyle,
+                  errorMessage && styles.errotTimeInput,
+                ]}
                 suffixIcon={<Image src={getImage("calendar")} />}
                 value={value ? dayjs(value) : null}
               />
@@ -77,7 +85,7 @@ const CustomDateTimePicker = ({
               <Typography
                 className={[styles.errorText, customErrorTextStyles].join(" ")}
               >
-                * {errorMessage}
+                {errorMessage}
               </Typography>
             )
           }

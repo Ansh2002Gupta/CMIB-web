@@ -87,32 +87,35 @@ const ConfigureInterview = () => {
     if (!addTableData?.scheduleDate) {
       handleError(
         "scheduleDate",
-        intl.formatMessage({ id: "centre.error.selectDate" })
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }
     if (!addTableData?.startTime) {
       handleError(
         "startTime",
-        intl.formatMessage({ id: "label.error.startTime" })
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }
     if (!addTableData?.endTime) {
-      handleError("endTime", intl.formatMessage({ id: "label.error.endTime" }));
+      handleError(
+        "endTime",
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
+      );
       errorCount += 1;
     }
     if (!addTableData?.facilitiesNumber) {
       handleError(
         "facilitiesNumber",
-        intl.formatMessage({ id: "label.error.facilitiesNumber" })
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }
     if (!addTableData?.slotDurationInMinutes) {
       handleError(
         "slotDurationInMinutes",
-        intl.formatMessage({ id: "label.error.slotDurationInMinutes" })
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }

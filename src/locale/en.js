@@ -393,6 +393,7 @@ const locale = {
   "label.path.global-configurations": "Configure centres",
   "label.path.centre-details": "Edit centre details",
   "label.path.add": "Add New User",
+  "label.error.fieldEmpty": "Field cannot be empty.",
 };
 
 export default locale;
