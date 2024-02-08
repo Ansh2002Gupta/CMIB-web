@@ -275,6 +275,8 @@ const ConfigureCentreDetails = () => {
                               };
                             });
                           }}
+                          activeText={"active"}
+                          inActiveText={"inactive"}
                         />
                       </CustomGrid>
                     }
