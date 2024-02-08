@@ -52,18 +52,18 @@ const EditProfile = ({ showNotification }) => {
     const isLessThan5MB = file?.size / 1024 / 1024 < 5;
 
     if (!isAllowedType) {
-      showNotification(
-        intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
-        "error"
-      );
+      showNotification({
+        text: intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
+        type: "error",
+      });
       return Upload.LIST_IGNORE;
     }
 
     if (!isLessThan5MB) {
-      showNotification(
-        intl.formatMessage({ id: "label.fileUpto5MB" }),
-        "error"
-      );
+      showNotification({
+        text: intl.formatMessage({ id: "label.fileUpto5MB" }),
+        type: "error",
+      });
       return Upload.LIST_IGNORE;
     }
 
@@ -136,7 +136,7 @@ const EditProfile = ({ showNotification }) => {
         profile_photo: uploadedImageName,
       },
       onErrorCallback: (errString) => {
-        showNotification(errString, "error");
+        showNotification({ text: errString, type: "error" });
         setUserProfileImage(null);
         userProfileDispatch(setUserProfileModalNumber(1));
       },
@@ -148,7 +148,7 @@ const EditProfile = ({ showNotification }) => {
   };
 
   const onErrorUploadingFile = (errMessage) => {
-    showNotification(errMessage, "error");
+    showNotification({ text: errMessage, type: "error" });
     userProfileDispatch(setUserProfileModalNumber(1));
   };
 
@@ -162,7 +162,7 @@ const EditProfile = ({ showNotification }) => {
         profile_photo: "",
       },
       onErrorCallback: (errorString) => {
-        showNotification(errorString, "error");
+        showNotification({ text: errorString, type: "error" });
       },
       onSuccessCallback: () => {
         handleDeleteImage({

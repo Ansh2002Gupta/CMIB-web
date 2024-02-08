@@ -78,6 +78,7 @@ const useRenderColumn = () => {
       switchToggleHandler = () => {},
       isActionable = true,
       checkIsSwitchEditable = () => {},
+      switchStyle,
     } = renderSwitch;
 
     const {
@@ -190,7 +191,7 @@ const useRenderColumn = () => {
                 className={status ? styles.switchBgColor : ""}
               />
             )}
-            <p>
+            <p className={switchStyle}>
               {status
                 ? swithActiveLabel || intl.formatMessage({ id: "label.active" })
                 : swithInActiveLabel ||

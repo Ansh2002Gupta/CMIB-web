@@ -36,6 +36,8 @@ const SessionRound = ({ roundList, switchLabel }) => {
               onChange={() => {
                 setStatus(!status);
               }}
+              activeText={"active"}
+              inActiveText={"inactive"}
             />
           }
           rightSection={

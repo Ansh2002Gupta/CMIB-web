@@ -143,7 +143,7 @@ const locale = {
     "Format not supported, only jpeg and png can be uploaded. Please upload again",
   "label.fileUpto5MB": "Max size allowed is 5 mb, please upload again",
   "label.editUserDetails": "Edit User Details",
-  "label.twoFactorAuth": "Two factor authentication",
+  "label.twoFactorAuth": "Two-factor Authentication",
   "label.on": "ON",
   "label.off": "OFF",
   "label.edit": "Edit",
@@ -381,6 +381,8 @@ const locale = {
   "label.path.global-configurations": "Configure centres",
   "label.path.centre-details": "Edit centre details",
   "label.path.add": "Add New User",
+  "label.errorMessage": "Error Message",
+  "label.userSuccessfullyAdded":"User Successfully Added"
 };
 
 export default locale;
