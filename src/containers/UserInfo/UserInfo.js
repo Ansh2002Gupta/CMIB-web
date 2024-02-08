@@ -15,7 +15,6 @@ import styles from "./UserInfo.module.scss";
 import "./Override.css";
 
 const UserInfo = ({
-  access,
   countryData,
   checkForCorrectEmail,
   checkForMobileNumber,
@@ -23,7 +22,6 @@ const UserInfo = ({
   date,
   email,
   emailErrorMessage,
-  isDateDisable,
   isEditable,
   isNotAddable,
   is_two_factor,
