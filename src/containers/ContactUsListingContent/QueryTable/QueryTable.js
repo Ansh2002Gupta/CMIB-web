@@ -97,20 +97,28 @@ const QueryTable = ({
   }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
-  // const answeredQueries = data?.records
-  //   ?.filter((query) => query?.status === "answered")
-  //   ?.map((query) => query?.id);
+  const checkAreAllQueryOfCurrentPageSelected = () => {
+    // selctedQueriesToBeMarkedAsAnswered?.length === data?.records?.length
+    const currentPageSelectedQueries = data?.records?.filter((query) => {
+      return selctedQueriesToBeMarkedAsAnswered?.includes(query?.id);
+    });
 
-  const areAllItemsSelected =
-    selctedQueriesToBeMarkedAsAnswered?.length === data?.records?.length;
+    return currentPageSelectedQueries?.length === data?.records?.length;
+  };
+
+  const areAllItemsSelected = checkAreAllQueryOfCurrentPageSelected();
 
   const toggleSelectAllItems = () => {
+    const currentPageIdsArray = data?.records?.map((query) => query?.id);
     if (areAllItemsSelected) {
-      setSelctedQueriesToBeMarkedAsAnswered([]);
+      const updatedData = selctedQueriesToBeMarkedAsAnswered?.filter(
+        (queryId) => !currentPageIdsArray?.includes(queryId)
+      );
+      console.log({currentPageIdsArray, updatedData, selctedQueriesToBeMarkedAsAnswered});
+      setSelctedQueriesToBeMarkedAsAnswered(updatedData);
       return;
     }
-    const allQueriesIds = data?.records?.map((item) => item?.id);
-    setSelctedQueriesToBeMarkedAsAnswered(allQueriesIds);
+    setSelctedQueriesToBeMarkedAsAnswered(prev => [...prev, ...currentPageIdsArray]);
   };
 
   const toggleSelectedQueriesId = (queryId) => {
