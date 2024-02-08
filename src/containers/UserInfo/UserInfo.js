@@ -113,7 +113,7 @@ const UserInfo = ({
         intl.formatMessage({ id: "label.twoFactorAuth" })
       ),
       children: intl.formatMessage({
-        id: `label.${is_two_factor ? "active" : "inactive"}`,
+        id: `label.${is_two_factor ? "enabled" : "disabled"}`,
       }),
     },
     {
