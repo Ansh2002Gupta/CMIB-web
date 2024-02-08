@@ -3,11 +3,13 @@ import arrowDown from "./arrow-down.svg";
 import arrowDownDarkGrey from "./arrow-down-dark-grey.svg";
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
+import blackArrowDown from "./blackArrowDown.svg";
 import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
 import calendar from "./calendar.svg";
 import cancel from "./cancel.svg";
 import CircleCheck from "./CircleCheck.svg";
+import disabledArrowLeft from "./disabledArrowLeft.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
@@ -61,12 +63,14 @@ const images = {
   arrowDownDarkGrey,
   arrowRight,
   arrowRightFilter,
+  blackArrowDown,
   Building,
   checkedBox,
   calendar,
   cancel,
   dummyPerson,
   CircleCheck,
+  disabledArrowLeft,
   DeviceMessage,
   Document,
   edit,

@@ -51,6 +51,11 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }
+.disabledNextAndPrevText {
+  color: var(--On-background, var(--inputPlaceHolder));
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
 
 .nextAndPrevArrowContainer {
   display: flex;

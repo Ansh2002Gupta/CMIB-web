@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Pagination, Select, Table, Typography } from "antd";
+import { Image, Pagination, Select, Table, Typography } from "antd";
+
+import { ThemeContext } from "core/providers/theme";
 
 import PaginationItems from "./PaginationItems";
 import {
@@ -22,6 +24,7 @@ const DataTable = ({
   pageSize,
 }) => {
   const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
 
   const rightPaginationConfig = {
     current,
@@ -55,6 +58,9 @@ const DataTable = ({
             className={styles.rowPerPageCount}
             onChange={onChangePageSize}
             options={ROW_PER_PAGE_OPTIONS}
+            suffixIcon={
+              <Image src={getImage("blackArrowDown")} preview={false} />
+            }
           />
         </div>
         <Pagination

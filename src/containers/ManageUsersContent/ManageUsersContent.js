@@ -103,14 +103,16 @@ const ManageUsersContent = () => {
 
   const handleOnUserSearch = (event) => {
     setSearchedValue(event.target.value);
-    debounceSearch(
-      pageSize,
-      current,
-      event.target.value.length > 2
-        ? encodeURIComponent(event.target.value)
-        : "",
-      filterArray
-    );
+    (event.target.value.length > 2 ||
+      searchedValue.length > event.target.value.length) &&
+      debounceSearch(
+        pageSize,
+        current,
+        event.target.value.length > 2
+          ? encodeURIComponent(event.target.value)
+          : "",
+        filterArray
+      );
 
     setCurrent(1);
     setSearchParams((prev) => {
@@ -196,7 +198,7 @@ const ManageUsersContent = () => {
       key: "status",
       renderSwitch: {
         visible: true,
-        textStyles: styles.tableCell,
+        switchStyle: styles.tableCell,
         isActionable: false,
       },
     }),
@@ -211,6 +213,7 @@ const ManageUsersContent = () => {
       },
     }),
     renderColumn({
+      title: " ",
       dataIndex: "see",
       key: "see",
       renderImage: {
@@ -222,6 +225,7 @@ const ManageUsersContent = () => {
       },
     }),
     renderColumn({
+      title: " ",
       dataIndex: "edit",
       key: "edit",
       renderImage: {

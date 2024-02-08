@@ -79,7 +79,8 @@ const PhoneInput = ({
           ))}
         </Select>
         <InputNumber
-          type="number"
+          type="tel"
+          maxLength={10}
           controls={false}
           className={[styles.inputNumberStyles, customInputNumberStyles]}
           {...{
