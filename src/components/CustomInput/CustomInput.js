@@ -4,8 +4,8 @@ import { Input, Select, Typography, InputNumber } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Base from "../../core/layouts/Base/Base";
-import MarkRequired from "../MarkRequired";
 
+import MarkRequired from "../MarkRequired";
 import styles from "./CustomInput.module.scss";
 
 const CustomInput = React.forwardRef(
