@@ -25,6 +25,8 @@
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500);
   background-color: var(--inputLabel);
+  overflow-x: auto;
+  max-height: var(--height_50vh, 50vh);
 }
 
 .appLogoContainer {
