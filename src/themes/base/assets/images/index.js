@@ -13,6 +13,7 @@ import disabledArrowLeft from "./disabledArrowLeft.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
+import download from "./download.svg";
 import editDark from "./editDark.svg";
 import dummyPerson from "./dummy person image.png";
 import errorIcon from "./error icon.svg";
@@ -66,6 +67,7 @@ const images = {
   blackArrowDown,
   Building,
   checkedBox,
+  download,
   calendar,
   cancel,
   dummyPerson,

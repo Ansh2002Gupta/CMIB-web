@@ -247,6 +247,10 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.session.setupMockInterviews": "Setup Mock Interviews",
+  "label.warning.setupMockInterviews":
+    "*This cannot be edited once registration for the students starts.",
+  "label.totalStudentsBooked": "Total Students Booked",
   "label.consent.placeholder.startDateCompanies":
     " Select Start Date for Companies",
   "label.consent.placeholder.startDateCandidates":
