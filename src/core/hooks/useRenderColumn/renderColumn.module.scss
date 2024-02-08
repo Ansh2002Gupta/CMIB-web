@@ -44,6 +44,14 @@
   cursor: pointer;
 }
 
+.twoImageStyle {
+  gap: var(--gapMedium);
+}
+
+.twoImageContainer {
+  width: var(--width_120);
+}
+
 .isRequiredStar {
   color: var(--requiredStarColor);
 }

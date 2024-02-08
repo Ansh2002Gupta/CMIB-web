@@ -55,7 +55,7 @@ const UserDetailsContent = ({
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
     setIsMobileNumberValid(MOBILE_NO_REGEX.test(`${userData?.mobile}`));
     setIsUserNameValid(userData.name?.trim()?.length !== 0);
-    setIsAccessValid(userData.access?.length !== 0);
+    setIsAccessValid(userData.roles?.length !== 0);
     if (userData.name?.trim()?.length === 0) {
       nameRef?.current?.input?.scrollIntoView({
         behavior: "smooth",
@@ -84,14 +84,18 @@ const UserDetailsContent = ({
       EMAIL_REGEX.test(userData?.email) &&
       MOBILE_NO_REGEX.test(`${userData?.mobile}`) &&
       userData.name?.trim()?.length !== 0 &&
-      userData.access?.length !== 0
+      userData.roles?.length !== 0
     ) {
       const payload = {
         name: userData?.name,
         email: userData?.email,
         mobile_number: userData?.mobile,
-        roles: userData?.access,
-        permissions: userData.permissions,
+        roles: Array.isArray(userData.roles)
+          ? userData.roles
+          : Object.values(userData.roles).map((per) => per.id),
+        permissions: Array.isArray(userData.permissions)
+          ? userData.permissions
+          : Object.values(userData.permissions).map((per) => per.id),
         is_two_factor: userData?.is_two_factor ? 1 : 0,
         mobile_country_code: userData?.mobile_prefix,
         status: userData?.status,
@@ -108,12 +112,12 @@ const UserDetailsContent = ({
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
     setIsMobileNumberValid(MOBILE_NO_REGEX.test(`${userData?.mobile}`));
     setIsUserNameValid(userData.name?.trim()?.length !== 0);
-    setIsAccessValid(userData.access?.length !== 0);
+    setIsAccessValid(userData.roles?.length !== 0);
     if (
       EMAIL_REGEX.test(userData?.email) &&
       MOBILE_NO_REGEX.test(`${userData?.mobile}`) &&
       userData.name?.trim()?.length !== 0 &&
-      userData.access?.length !== 0
+      userData.roles?.length !== 0
     ) {
       const payload = {
         name: userData.name,
@@ -121,8 +125,12 @@ const UserDetailsContent = ({
         mobile_number: userData.mobile,
         mobile_country_code: userData?.mobile_prefix,
         created_by: userProfileDetails?.userDetails?.id,
-        roles: userData.access,
-        permissions: userData.permissions,
+        roles: Array.isArray(userData.roles)
+          ? userData.roles
+          : Object.values(userData.roles).map((per) => per.id),
+        permissions: Array.isArray(userData.permissions)
+          ? userData.permissions
+          : Object.values(userData.permissions).map((per) => per.id),
         is_two_factor: userData.is_two_factor ? 1 : 0,
         status: userData?.status,
       };

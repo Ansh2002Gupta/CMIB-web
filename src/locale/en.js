@@ -137,7 +137,7 @@ const locale = {
     "*This cannot be edited once the registration for the Company/Candidate starts.",
   "label.dragNdrop": "Drag & drop files or",
   "label.browse": "Browse",
-  "label.supportedFormat": "Supported formates: png, jpg, jpeg",
+  "label.supportedFormat": "Supported formats: png, jpg, jpeg",
   "label.saveChanges": "Save Changes",
   "label.onlyJpgAndPngFile":
     "Format not supported, only jpeg and png can be uploaded. Please upload again",
@@ -247,6 +247,10 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.session.setupMockInterviews": "Setup Mock Interviews",
+  "label.warning.setupMockInterviews":
+    "*This cannot be edited once registration for the students starts.",
+  "label.totalStudentsBooked": "Total Students Booked",
   "label.consent.placeholder.startDateCompanies":
     " Select Start Date for Companies",
   "label.consent.placeholder.startDateCandidates":
