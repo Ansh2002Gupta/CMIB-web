@@ -137,10 +137,8 @@ const UserDetailsContent = ({
           : Object.values(userData.permissions).map((per) => per.id),
         is_two_factor: userData.is_two_factor ? 1 : 0,
         status: userData?.status,
+        profile_photo: userData.profile_photo,
       };
-      if (userData?.profile_photo_url) {
-        payload["profile_photo"] = userData.profile_photo_url;
-      }
       addNewUser(payload, () => {
         goBackToViewDetailsPage();
         setUserDetailDispatch(userDetailToast(true));
