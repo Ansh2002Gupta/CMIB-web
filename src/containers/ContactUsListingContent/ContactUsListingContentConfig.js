@@ -36,10 +36,11 @@ export const getTicketOrQueryColumn = ({
   const {
     sortArrowStyles,
     selectedItemsList,
-    setSelectedItemsList,
+    toggleSelectedQueriesId,
     handleMarkMutipleQueriesAsAnswered,
   } = queriesColumnProperties;
-  const { pageSize, current, searchedValue } = paginationAndSearchProperties;
+  const { pageSize, current, searchedValue, selectedQueriesMap } =
+    paginationAndSearchProperties;
   const isTableInSelectAllMode = selectedItemsList?.length !== 0;
   if (type === "2") {
     return [
@@ -69,14 +70,7 @@ export const getTicketOrQueryColumn = ({
           checkBoxList: selectedItemsList,
           onClickCheckbox: (rowData) => {
             const { id } = rowData;
-            if (selectedItemsList?.includes(id)) {
-              const updatedData = selectedItemsList?.filter(
-                (val) => val !== id
-              );
-              setSelectedItemsList(updatedData);
-              return;
-            }
-            setSelectedItemsList((prev) => [...prev, id]);
+            toggleSelectedQueriesId(id);
           },
         },
       }),

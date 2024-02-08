@@ -97,9 +97,9 @@ const QueryTable = ({
   }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
-  const answeredQueries = data?.records
-    ?.filter((query) => query?.status === "answered")
-    ?.map((query) => query?.id);
+  // const answeredQueries = data?.records
+  //   ?.filter((query) => query?.status === "answered")
+  //   ?.map((query) => query?.id);
 
   const areAllItemsSelected =
     selctedQueriesToBeMarkedAsAnswered?.length === data?.records?.length;
@@ -113,6 +113,17 @@ const QueryTable = ({
     setSelctedQueriesToBeMarkedAsAnswered(allQueriesIds);
   };
 
+  const toggleSelectedQueriesId = (queryId) => {
+    if (selctedQueriesToBeMarkedAsAnswered?.includes(queryId)) {
+      const updatedData = selctedQueriesToBeMarkedAsAnswered?.filter(
+        (val) => val !== queryId
+      );
+      setSelctedQueriesToBeMarkedAsAnswered(updatedData);
+      return;
+    }
+    setSelctedQueriesToBeMarkedAsAnswered((prev) => [...prev, queryId]);
+  };
+
   const columns = getTicketOrQueryColumn({
     type: currentActiveTab,
     intl,
@@ -123,6 +134,7 @@ const QueryTable = ({
       sortArrowStyles,
       selectedItemsList: selctedQueriesToBeMarkedAsAnswered,
       setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
+      toggleSelectedQueriesId,
       handleMarkMutipleQueriesAsAnswered: () =>
         setIsConfirmationModalOpen(true),
     },
@@ -213,7 +225,6 @@ const QueryTable = ({
     };
     fetchData({ queryParamsObject: requestedParams });
   };
-
 
   let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
     (item) =>
