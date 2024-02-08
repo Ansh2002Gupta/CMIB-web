@@ -246,6 +246,8 @@ const UserInfo = ({
                 onChange={() => {
                   updateUserData("status", !status);
                 }}
+                activeText={"active"}
+                inActiveText={"inactive"}
               />
             </div>
             <div className={styles.twoFactorContainer}>
@@ -256,6 +258,8 @@ const UserInfo = ({
                 onChange={() => {
                   updateUserData("is_two_factor", !is_two_factor);
                 }}
+                activeText={"enable"}
+                inActiveText={"disable"}
               />
             </div>
             {isNotAddable && date && (
