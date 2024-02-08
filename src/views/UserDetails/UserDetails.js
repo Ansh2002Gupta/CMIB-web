@@ -50,7 +50,7 @@ const UserDetails = () => {
     permissions: [],
     date: "",
     is_two_factor: false,
-    status: 0,
+    status: 1,
   });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -98,7 +98,7 @@ const UserDetails = () => {
   const updateUserData = (key, value) => {
     key === "email" && setIsEmailValid(true);
     key === "mobile" && setIsMobileNumberValid(true);
-    key === "access" && setIsAccessValid(true);
+    key === "roles" && setIsAccessValid(true);
     key === "name" && setIsUserNameValid(true);
     setErrorWhileUpdatingUserData("");
     if (key === "mobile") {
