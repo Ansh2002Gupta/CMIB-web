@@ -187,7 +187,6 @@ const CustomInput = React.forwardRef(
 );
 
 CustomInput.defaultProps = {
-  currentSelectedValue: "",
   customContainerStyles: "",
   customErrorTextStyles: "",
   customInputNumberStyles: "",
@@ -223,7 +222,6 @@ CustomInput.defaultProps = {
 };
 
 CustomInput.propTypes = {
-  currentSelectedValue: PropTypes.string,
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
   customInputNumberStyles: PropTypes.string,
