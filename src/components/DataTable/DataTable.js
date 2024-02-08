@@ -34,8 +34,7 @@ const DataTable = ({
     showSizeChanger: false,
   };
 
-  const responsiveStyle =
-    originalData?.length !== 0 ? { x: "max-content" } : { x: "max-content" };
+  const responsiveStyle = { x: "max-content" };
 
   return (
     <div className={[styles.container, customContainerStyles].join(" ")}>
