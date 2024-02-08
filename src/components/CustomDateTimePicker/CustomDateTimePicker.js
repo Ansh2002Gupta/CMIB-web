@@ -65,7 +65,7 @@ const CustomDateTimePicker = ({
               />
             ) : (
               <Typography className={styles.dateText}>
-                {formatDate(value)}
+                {formatDate({ date: value })}
               </Typography>
             )
           }

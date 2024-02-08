@@ -7,56 +7,74 @@ import Base from "../../core/layouts/Base/Base";
 import { classes } from "./PhoneInput.styles";
 import styles from "./PhoneInput.module.scss";
 
-const PhoneInput = ({
-  customContainerStyles,
-  customErrorTextStyles,
-  customInputNumberStyles,
-  customLabelStyles,
-  customSelectInputStyles,
-  disabled,
-  errorMessage,
-  isError,
-  isRequired,
-  isSelectBoxDisable,
-  label,
-  messageStyles: customMessageStyles,
-  messageToShow,
-  mobilePrefix,
-  onChange,
-  onSelectItem,
-  placeholder,
-  selectOptions,
-  value,
-}) => {
-  return (
-    <Base className={[styles.container, customContainerStyles].join(" ")}>
-      {!!label && (
-        <div className={styles.inputLabelContainer}>
-          <Typography className={customLabelStyles}>{label}</Typography>
-          {isRequired && (
-            <Typography className={styles.isRequiredStar}>*</Typography>
-          )}
-        </div>
-      )}
-      <div className={[styles.formContainer, styles.mobile].join(" ")}>
-        <Select
-          className={[
-            styles.selectInput,
-            customSelectInputStyles,
-            styles.selectOptionsMobileStyles,
-          ].join(" ")}
-          value={mobilePrefix}
-          onChange={(value) => {
-            onSelectItem({ target: { value } });
-          }}
-          disabled={isSelectBoxDisable}
-          optionLabelProp="label"
+const PhoneInput = React.forwardRef(
+  (
+    {
+      customContainerStyles,
+      customErrorTextStyles,
+      customInputNumberStyles,
+      customLabelStyles,
+      customSelectInputStyles,
+      disabled,
+      errorMessage,
+      isError,
+      isRequired,
+      isSelectBoxDisable,
+      label,
+      messageStyles: customMessageStyles,
+      messageToShow,
+      mobilePrefix,
+      onChange,
+      onSelectItem,
+      onBlur,
+      placeholder,
+      selectOptions,
+      value,
+    },
+    ref
+  ) => {
+    return (
+      <Base className={[styles.container, customContainerStyles].join(" ")}>
+        {!!label && (
+          <div className={styles.inputLabelContainer}>
+            <Typography className={customLabelStyles}>{label}</Typography>
+            {isRequired && (
+              <Typography className={styles.isRequiredStar}>*</Typography>
+            )}
+          </div>
+        )}
+        <div
+          className={[styles.formContainer, styles.mobile].join(" ")}
+          ref={ref}
         >
-          {selectOptions?.map((country) => (
-            <Select.Option
-              key={country.dial_code}
-              value={country.dial_code}
-              label={
+          <Select
+            className={[
+              styles.selectInput,
+              customSelectInputStyles,
+              styles.selectOptionsMobileStyles,
+            ].join(" ")}
+            value={mobilePrefix}
+            onChange={(value) => {
+              onSelectItem({ target: { value } });
+            }}
+            disabled={isSelectBoxDisable}
+            optionLabelProp="label"
+          >
+            {selectOptions?.map((country) => (
+              <Select.Option
+                key={country.dial_code}
+                value={country.dial_code}
+                label={
+                  <div>
+                    <img
+                      src={country.flag}
+                      alt={`${country.name} flag`}
+                      style={classes.flagContainer}
+                    />
+                    {country.dial_code}
+                  </div>
+                }
+              >
                 <div>
                   <img
                     src={country.flag}
@@ -65,54 +83,46 @@ const PhoneInput = ({
                   />
                   {country.dial_code}
                 </div>
-              }
-            >
-              <div>
-                <img
-                  src={country.flag}
-                  alt={`${country.name} flag`}
-                  style={classes.flagContainer}
-                />
-                {country.dial_code}
-              </div>
-            </Select.Option>
-          ))}
-        </Select>
-        <InputNumber
-          type="number"
-          controls={false}
-          className={[styles.inputNumberStyles, customInputNumberStyles]}
-          {...{
-            value,
-            placeholder,
-            onChange,
-            disabled,
-          }}
-        />
-      </div>
-      <div>
-        <Typography
-          className={[
-            styles.errorText,
-            customErrorTextStyles,
-            isError ? styles.showError : "",
-          ].join(" ")}
-        >
-          {errorMessage ? ` * ${errorMessage}` : ""}
-        </Typography>
-      </div>
-      {!!messageToShow && (
+              </Select.Option>
+            ))}
+          </Select>
+          <InputNumber
+            type="number"
+            controls={false}
+            className={[styles.inputNumberStyles, customInputNumberStyles]}
+            {...{
+              value,
+              placeholder,
+              onChange,
+              disabled,
+              onBlur,
+            }}
+          />
+        </div>
         <div>
           <Typography
-            className={[styles.messageText, customMessageStyles].join(" ")}
+            className={[
+              styles.errorText,
+              customErrorTextStyles,
+              isError ? styles.showError : "",
+            ].join(" ")}
           >
-            {messageToShow}
+            {errorMessage ? ` * ${errorMessage}` : ""}
           </Typography>
         </div>
-      )}
-    </Base>
-  );
-};
+        {!!messageToShow && (
+          <div>
+            <Typography
+              className={[styles.messageText, customMessageStyles].join(" ")}
+            >
+              {messageToShow}
+            </Typography>
+          </div>
+        )}
+      </Base>
+    );
+  }
+);
 
 PhoneInput.defaultProps = {
   customContainerStyles: "",
