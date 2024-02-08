@@ -43,7 +43,10 @@ const PhoneInput = React.forwardRef(
             )}
           </div>
         )}
-        <div className={[styles.formContainer, styles.mobile].join(" ")}>
+        <div
+          className={[styles.formContainer, styles.mobile].join(" ")}
+          ref={ref}
+        >
           <Select
             className={[
               styles.selectInput,
@@ -84,7 +87,6 @@ const PhoneInput = React.forwardRef(
             ))}
           </Select>
           <InputNumber
-            ref={ref}
             type="number"
             controls={false}
             className={[styles.inputNumberStyles, customInputNumberStyles]}

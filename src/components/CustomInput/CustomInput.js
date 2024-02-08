@@ -70,6 +70,7 @@ const CustomInput = React.forwardRef(({
           styles.formContainer,
           type === "mobile" ? styles.mobile : "",
         ].join(" ")}
+        ref={ref}
       >
         {type === "select" && (
           <>
@@ -97,7 +98,7 @@ const CustomInput = React.forwardRef(({
         )}
         {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
           <Input
-            ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
+            ref={isSuffixRequiredForPassword ? inputFieldRef : null}
             type={type || "text"}
             className={[styles.inputField, customInputStyles].join(" ")}
             {...{

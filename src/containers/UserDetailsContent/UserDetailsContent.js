@@ -57,7 +57,7 @@ const UserDetailsContent = ({
     setIsUserNameValid(userData.name?.trim()?.length !== 0);
     setIsAccessValid(userData.roles?.length !== 0);
     if (userData.name?.trim()?.length === 0) {
-      nameRef?.current?.input?.scrollIntoView({
+      nameRef?.current?.scrollIntoView({
         behavior: "smooth",
         block: "center",
       });
@@ -71,7 +71,7 @@ const UserDetailsContent = ({
       return;
     }
     if (!EMAIL_REGEX.test(userData?.email)) {
-      emailRef?.current?.input?.scrollIntoView({
+      emailRef?.current?.scrollIntoView({
         behavior: "smooth",
         block: "center",
       });
@@ -190,7 +190,7 @@ const UserDetailsContent = ({
                   )
                 }
                 checkForUserName={() =>
-                  setIsUserNameValid(userData.name?.trim()?.length !== 0)
+                  setIsUserNameValid(userData.name?.trim()?.length)
                 }
                 name={userData?.name}
                 email={userData?.email}
@@ -206,7 +206,7 @@ const UserDetailsContent = ({
                 userNameErrorMessage={
                   !isUserNameValid
                     ? intl.formatMessage({
-                        id: "label.userNameLeftEmpty",
+                        id: "label.pleaseEnterUserName",
                       })
                     : ""
                 }
