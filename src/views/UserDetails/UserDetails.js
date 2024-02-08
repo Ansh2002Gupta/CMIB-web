@@ -114,14 +114,20 @@ const UserDetails = () => {
 
   useEffect(() => {
     errorWhileUpdatingUserData &&
-      showNotification(errorWhileUpdatingUserData, NOTIFICATION_TYPES.ERROR);
+      showNotification({
+        text: errorWhileUpdatingUserData,
+        type: NOTIFICATION_TYPES.ERROR,
+      });
     errorWhileAddingNewUser &&
-      showNotification(errorWhileAddingNewUser, NOTIFICATION_TYPES.ERROR);
+      showNotification({
+        text: errorWhileAddingNewUser,
+        type: NOTIFICATION_TYPES.ERROR,
+      });
     isNewUserSuccessfullyAdded &&
-      showNotification(
-        intl.formatMessage({ id: "label.userCreatedSuccessfully" }),
-        NOTIFICATION_TYPES.SUCCESS
-      );
+      showNotification({
+        text: intl.formatMessage({ id: "label.userCreatedSuccessfully" }),
+        type: NOTIFICATION_TYPES.SUCCESS,
+      });
   }, [
     errorWhileUpdatingUserData,
     errorWhileAddingNewUser,
@@ -165,7 +171,7 @@ const UserDetails = () => {
           roleFetchDate({ queryParamsObject: {} });
         },
         onErrorCallBack: (errMessage) => {
-          showNotification(errMessage);
+          showNotification({ text: errMessage });
         },
       });
     }

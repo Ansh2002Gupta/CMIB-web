@@ -121,7 +121,7 @@ const ConfigureCentreDetails = () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
         },
         (errorMessage) => {
-          showNotification(errorMessage, "error");
+          showNotification({ text: errorMessage, type: "error" });
         }
       );
     } else {
@@ -132,7 +132,7 @@ const ConfigureCentreDetails = () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
         },
         (errorMessage) => {
-          showNotification(errorMessage, "error");
+          showNotification({ text: errorMessage, type: "error" });
         }
       );
     }
