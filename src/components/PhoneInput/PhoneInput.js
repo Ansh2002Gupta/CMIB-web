@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { InputNumber, Select, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
+import MarkRequired from "../MarkRequired";
 
 import { classes } from "./PhoneInput.styles";
 import styles from "./PhoneInput.module.scss";
@@ -39,7 +40,7 @@ const PhoneInput = React.forwardRef(
           <div className={styles.inputLabelContainer}>
             <Typography className={customLabelStyles}>
               {label}
-              {isRequired && <span className={styles.isRequiredStar}> *</span>}
+              {isRequired && <MarkRequired />}
             </Typography>
           </div>
         )}
