@@ -113,8 +113,7 @@ const ManageUsersContent = () => {
           : "",
         filterArray
       );
-
-    setCurrent(1);
+    searchedValue.length > 2 && setCurrent(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
