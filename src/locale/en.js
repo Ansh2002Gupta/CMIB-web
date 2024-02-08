@@ -381,6 +381,8 @@ const locale = {
   "label.path.global-configurations": "Configure centres",
   "label.path.centre-details": "Edit centre details",
   "label.path.add": "Add New User",
+  "label.errorMessage": "Error Message",
+  "label.userSuccessfullyAdded":"User Successfully Added"
 };
 
 export default locale;

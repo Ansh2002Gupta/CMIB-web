@@ -94,7 +94,7 @@ const ConfigureCentreContent = () => {
         });
       },
       (errorMessage) => {
-        showNotification(errorMessage, "error");
+        showNotification({ text: errorMessage, type: "error" });
       }
     );
   };
