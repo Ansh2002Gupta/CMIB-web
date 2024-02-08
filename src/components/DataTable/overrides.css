@@ -78,7 +78,7 @@ iframe#webpack-dev-server-client-overlay {
   font-weight: var(--fontWeightMedium);
 }
 
-.ant-btn-default:disabled {
+ .ant-btn-default:disabled {
   background-color: var(--bodyBg) !important;
   border: var(--borderLight);
 }
