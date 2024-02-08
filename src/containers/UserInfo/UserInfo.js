@@ -302,11 +302,9 @@ const UserInfo = ({
 };
 
 UserInfo.defaultProps = {
-  access: [],
   countryData: [],
   date: null,
   email: "",
-  isDateDisable: false,
   isEditable: false,
   isNotAddable: false,
   is_two_factor: false,
@@ -321,11 +319,9 @@ UserInfo.defaultProps = {
 };
 
 UserInfo.propTypes = {
-  access: PropTypes.array,
   countryData: PropTypes.array,
   date: PropTypes.string,
   email: PropTypes.string,
-  isDateDisable: PropTypes.bool,
   isEditable: PropTypes.bool,
   isNotAddable: PropTypes.bool,
   is_two_factor: PropTypes.bool,
