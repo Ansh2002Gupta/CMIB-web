@@ -97,6 +97,7 @@ const FileUpload = ({
             className={styles.uploadContainer}
             customRequest={handleOnUploadImage}
             disabled={!isFormEditable}
+            accept=".jpg,.jpeg,.png"
           >
             <TwoRow
               className={styles.uploadTextContainer}
