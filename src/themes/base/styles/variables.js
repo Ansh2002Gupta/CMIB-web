@@ -23,6 +23,7 @@ const variables = {
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
   lightGrey3Bg: colorPallets.ltGrey3,
+  darkBlueBg: colorPallets.darkBlue3,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -47,6 +48,7 @@ const variables = {
   greenText: colorPallets.darkGreen,
   blueText: colorPallets.darkBlue2,
   redText: colorPallets.darkOrange,
+  greyText: colorPallets.ltGrey1,
 
   // Border-Radius
   radiusNone: "0px",
@@ -124,6 +126,7 @@ const variables = {
   width_347: "347px",
   width_400: "400px",
   width_500: "500px",
+  widthViewPort_16: "16vw",
   widthViewPort_35: "35vw",
   widthHalfViewPort: "50vw",
   widthViewPort_65: "65vw",
@@ -147,6 +150,7 @@ const variables = {
   height_50: "50px",
   height_55: "55px",
   btnHeight: "56px",
+  height_68: "68px",
   height_70: "70px",
   height_80: "80px",
   height_90: "90px",

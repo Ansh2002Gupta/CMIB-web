@@ -107,6 +107,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                       shape="round"
                       type="text"
                       style={{
+                        height:'28px',
                         color: "var(--textPrimary,#fff)",
                         background: "#262d52",
                         fontSize: "var(--fontSizeXSmall,12px)",
@@ -168,7 +169,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                 {intl.formatMessage({ id: "label.visitWebsite" })}
               </Typography.Text>
             </Button>
-            <ArrowRightOutlined />
+            <ArrowRightOutlined className={styles.arrowIcon}/>
           </Space>
         </div>
       </div>

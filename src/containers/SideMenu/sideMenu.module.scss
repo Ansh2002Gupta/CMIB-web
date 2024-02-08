@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  background-color: var(--blackBg, #000833);
 }
 
 .sideMenuTopSection {
@@ -12,7 +13,8 @@
 
 .sideMenuBottomSection {
   width: var(--fullWidth, 100%);
-  background: var(--sideMenuColor, #141b43);
+  min-height: var(--height_68, 68px);
+  background-color: var(--darkBlueBg, #141b43);
   color: var(--textPrimary, #fff);
   justify-content: space-between;
   padding: var(--sizeXXSmall, 12px) var(--sizeXSmall, 12px);
@@ -20,10 +22,16 @@
 }
 
 .sideMenuOptionsContainer {
-  margin-top: var(--sizeXSmall, 12px);
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500);
   overflow-y: auto;
+  padding: var(--paddingMedium, 24px) var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px);
+  background-color: var(--blackBg, #000833);
+}
+
+.menuItemsContainer ul li{
+  padding: var(--paddingNone, 0px) var(--paddingSmall, 16px);
+  min-height: var(--height_50, 50px);
 }
 
 .appLogoContainer {
@@ -51,13 +59,14 @@
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);
   color: var(--textPrimary, #fff);
-  background: #141b43;
+  background-color: var(--darkBlueBg, #141b43);
   padding: var(--sizeXSmall, 12px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--moduleSelectorBorder, #ffffff4d);
   overflow-x: hidden;
+  min-height: var(--btnHeight, 56px);
 }
 
 .menuItemContainer {
@@ -70,7 +79,7 @@
   color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 10vw;
+  max-width: var(--widthViewPort_16);
   white-space: nowrap;
 }
 
@@ -96,7 +105,7 @@
   }
   &:not(.disabled):hover {
     border-left: 2px solid #fff;
-    background-color: #141b43;
+    background-color: var(--darkBlueBg, #141b43);
   }
 }
 
@@ -110,6 +119,7 @@
   max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--greyText);
 }
 
 .moduleListContainer {
@@ -138,6 +148,14 @@
   padding-bottom: var(--paddingExtraSmall, 8px);
 }
 
+.globeIcon{
+  color: var(--greyText);
+}
+
+.arrowIcon{
+  color: var(--greyText, #ccd0e5);
+}
+
 @media (max-width: 1523px) {
   .sideMenuBottomSection {
     padding: var(--paddingXXSmall, 4px) var(--paddingMedium, 12px)
@@ -152,14 +170,13 @@
 
 @media (max-width: 1279px) {
   .menuItemsContainer {
-    max-height: var(--height_50vh, 50vh);
     overflow-y: auto;
   }
 }
 
 @media (max-width: 767px) {
   .moduleSelectorHeading {
-    max-width: var(--widthHalfViewPort, 50vw);
+    max-width: var(--widthViewPort_65, 65vw);
   }
 
   .visitText {
@@ -181,13 +198,6 @@
   }
 
   .menuItemsContainer {
-    max-height: var(--height_45vh, 45vh);
     overflow-y: auto;
-  }
-}
-
-@media (max-width: 551px) {
-  .menuItemsContainer {
-    max-height: var(--height_30vh, 30vh);
   }
 }
