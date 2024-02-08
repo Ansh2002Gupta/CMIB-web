@@ -4,7 +4,7 @@ const locale = {
   "label.signIn": "Sign In",
   "label.userName": "Username",
   "label.userName2": "User Name",
-  "label.userNameLeftEmpty": "user name cannot be left empty!",
+  "label.pleaseEnterUserName": "Please enter user name",
   "label.email": "Email",
   "label.mobileNumber": "Mobile Number",
   "label.access": "Access",
