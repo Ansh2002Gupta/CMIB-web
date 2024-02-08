@@ -24,11 +24,14 @@
 
 @media (max-width: 1523px) {
   .loginHeading {
-    font-size: var(--fontSizeXXlarge);
-    line-height: normal;
+    font-size: var(--fontSizeHeading);
+    line-height: var(--lineHeightHeading);
   }
   .loginSubHeading {
     font-size: var(--fontSizeSmall);
+    font-style: italic;
+    color: var(--inputPlaceHolder);
+    font-weight: var(--fontWeightMedium);
   }
   .headingContainer {
     display: flex;
@@ -45,7 +48,7 @@
     padding: var(--paddingMedium) var(--paddingSmall) 0px var(--paddingSmall);
     background-color: var(--bodyBg);
   }
-  .headingContainer{
+  .headingContainer {
     padding-top: var(--paddingXXSmall);
   }
 }

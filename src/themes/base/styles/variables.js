@@ -11,6 +11,7 @@ const variables = {
   headerBg: colorPallets.whiteSmoke,
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
+  frogGreen: colorPallets.frogGreen,
   mobileBg1: colorPallets.white,
   uploadBg: colorPallets.white1,
   snow: colorPallets.snow,

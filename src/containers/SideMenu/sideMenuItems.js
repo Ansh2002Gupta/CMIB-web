@@ -230,7 +230,6 @@ const newlyQualifiedPlacementsMenu = [
     icon: <Round2 />,
     selectedicon: <SelectedRound2 />,
   },
-
   {
     label: MENU_KEYS.COMPANIES,
     key: COMPANIES,
