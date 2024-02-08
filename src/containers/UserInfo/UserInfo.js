@@ -17,6 +17,9 @@ import "./Override.css";
 const UserInfo = ({
   access,
   countryData,
+  checkForCorrectEmail,
+  checkForMobileNumber,
+  checkForUserName,
   date,
   email,
   emailErrorMessage,
@@ -36,6 +39,9 @@ const UserInfo = ({
   shouldShowDatePickerOption,
   updateUserData,
   userNameErrorMessage,
+  emailRef,
+  phoneRef,
+  nameRef,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -181,10 +187,13 @@ const UserInfo = ({
                 placeholder={intl.formatMessage({
                   id: "label.userNamePlaceholder",
                 })}
+                onBlur={checkForUserName}
+                ref={nameRef}
               />
             </div>
             <div>
               <CustomInput
+                ref={emailRef}
                 isError={!!emailErrorMessage}
                 errorMessage={emailErrorMessage}
                 type={"email"}
@@ -198,10 +207,12 @@ const UserInfo = ({
                 placeholder={intl.formatMessage({
                   id: "label.emailPlaceholder",
                 })}
+                onBlur={checkForCorrectEmail}
               />
             </div>
             <div>
               <PhoneInput
+                ref={phoneRef}
                 isError={!!mobileErrorMessage}
                 errorMessage={mobileErrorMessage}
                 label={intl.formatMessage({ id: "label.mobileNumber" })}
@@ -223,6 +234,7 @@ const UserInfo = ({
                 placeholder={intl.formatMessage({
                   id: "label.mobilePlaceholder",
                 })}
+                onBlur={checkForMobileNumber}
               />
             </div>
             <div className={styles.twoFactorContainer}>
