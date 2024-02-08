@@ -125,7 +125,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
           </Base>
 
           {selectedModule && (
-            <div className={styles.menuItemsContainer}>
+            <div>
               <Menu
                 className={styles.sideMenuOptionsContainer}
                 theme="dark"

@@ -25,7 +25,6 @@ const CheckBoxList = ({
     selectedControls.length === PERMISION_AND_ROLE.data[0].permissions.length;
 
   const controlModuleId = allModuleIdObject.control;
-
   const handleSelect = (selectedOptionArray, setSelectedOptionArray, id) => {
     if (selectedOptionArray.includes(id)) {
       const updatedData = selectedOptionArray.filter(
