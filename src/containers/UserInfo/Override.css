@@ -39,3 +39,7 @@
 .ant-modal-root .ant-modal-wrap {
   overflow: unset !important;
 }
+
+.ant-input-number-handler-wrap {
+  pointer-events: none;
+}
