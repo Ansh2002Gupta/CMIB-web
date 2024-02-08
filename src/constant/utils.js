@@ -173,6 +173,7 @@ export const convertPermissionFilter = (roles, singleOptionsGroupName) => {
       result[0].options.push({
         optionId: parseInt(key),
         str: roles[key]?.name,
+        query_count: roles[key]?.query_count,
       });
     }
   }

@@ -98,7 +98,6 @@ export const getTicketOrQueryColumn = ({
                       sort: "name",
                     },
                     onSuccessCallback: () => {
-                      console.log("called...");
                       setSearchParams((prevValue) => {
                         prevValue.set(
                           SORTING_QUERY_PARAMS.SORTED_DIRECTION,
@@ -272,7 +271,6 @@ export const getTicketOrQueryColumn = ({
                       sort: "created_at",
                     },
                     onSuccessCallback: () => {
-                      console.log("called...");
                       setSearchParams((prevValue) => {
                         prevValue.set(
                           SORTING_QUERY_PARAMS.SORTED_DIRECTION,

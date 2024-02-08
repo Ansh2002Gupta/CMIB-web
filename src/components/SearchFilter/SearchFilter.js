@@ -20,7 +20,6 @@ const SearchFilter = ({
   showFilters,
   onFilterApply,
 }) => {
-  console.log({onFilterApply})
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
@@ -183,8 +182,10 @@ const SearchFilter = ({
                           />
                         )}
                         <Typography className={styles.filterOptionText}>
-                          {item?.str}
-                          {item?.count ? item?.count : ""}
+                          {item?.str}{" "}
+                          {!!item?.query_count >= 0
+                            ? `(${item?.query_count})`
+                            : ""}
                         </Typography>
                       </div>
                     );
@@ -207,7 +208,6 @@ const SearchFilter = ({
               btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
               onClick={() => {
-                console.log("clicked search filter...")
                 setFilterArray(currentFilterStatus);
                 onFilterApply(currentFilterStatus);
                 setShowFilters(false);

@@ -6,6 +6,7 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
+import Chip from "../../../components/Chip/Chip";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import ErrorMessageBox from "../../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
@@ -29,7 +30,6 @@ import {
   SORT_VALUES,
 } from "../../../constant/constant";
 import styles from "../ContactUsListingContent.module.scss";
-import Chip from "../../../components/Chip/Chip";
 
 const QueryTable = ({
   current,
@@ -60,7 +60,7 @@ const QueryTable = ({
     getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
   );
 
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(true);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const {
     data: queryTypesData,
@@ -68,8 +68,8 @@ const QueryTable = ({
     isLoading: isGettingQueryTypes,
     error: errorWhileGettingQueryTypes,
   } = useQueriesTypesApi();
-  console.log({ queryTypesData, selctedQueriesToBeMarkedAsAnswered });
 
+  // TODO: need to inetgrate this API
   const {
     markingQueryAsAnswerData,
     errorWhileMarkingQueryAsAnswered,
@@ -196,7 +196,6 @@ const QueryTable = ({
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-    console.log("updated filtes applied", { updatedFiltersValue });
     const requestedParams = {
       perPage: pageSize,
       page: current,
@@ -215,57 +214,57 @@ const QueryTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const areSomeQueriesAlreadyMarkedAsAnswered = answeredQueries?.some(
-    (element) => selctedQueriesToBeMarkedAsAnswered.includes(element)
+
+  let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
+    (item) =>
+      item?.status?.toLowerCase() === "answered" &&
+      selctedQueriesToBeMarkedAsAnswered.includes(item?.id)
   );
-  const handleMarkMutipleQueriesAsAnswered = () => {
-    //when some queries are already marked as answer
-    if (areSomeQueriesAlreadyMarkedAsAnswered) {
-    } else {
-      // none of the query is already marked as answer
-      setCurrentModalState((prev) => {
-        return {
-          ...prev,
-          heading: "markQueriesAsAnswered",
-          subHeading: "areYouSureYouWantToMarkQueries",
-        };
-      });
+
+  const allQueryAreAlreadyAnswered =
+    queriesSelectedAndMarkedForAnswer?.length ===
+      selctedQueriesToBeMarkedAsAnswered?.length &&
+    selctedQueriesToBeMarkedAsAnswered?.length > 0;
+
+  const getModalHeading = () => {
+    if (allQueryAreAlreadyAnswered) {
+      return "allSelectedQueriesAreAlreadyMarked";
     }
-    setIsConfirmationModalOpen(true);
+    if (queriesSelectedAndMarkedForAnswer?.length) {
+      return "someQueriesAreMarkedAsAnsweredContinueMaringOthers";
+    }
+
+    return "markQueriesAsAnswered";
   };
 
-  //TODO: complete it later
-  // let queriesSelectedAndMarkedForAnswer = data?.records?.filter((item) =>
-  //   item?.status === "answered"
-  // )?.map(item=> )
-  // let currentModalHeading = "markQueriesAsAnswered";
-  // let currentModalSubHeadin = "areYouSureYouWantToMarkQueries";
-  // let currentModalChildren = (
-  //   <div style={{ display: "flex", gap: "12px" }}>
-  //     {queriesSelectedAndMarkedForAnswer?.map((item) => {
-  //       <Chip
-  //         bgColor={styles.chipBg}
-  //         textColor={styles.chipText}
-  //         label={"hello world"}
-  //       />;
-  //     })}
-  //     <Chip
-  //       bgColor={styles.chipBg}
-  //       textColor={styles.chipText}
-  //       label={"hello world"}
-  //     />
-  //     <Chip
-  //       bgColor={styles.chipBg}
-  //       textColor={styles.chipText}
-  //       label={"hello world"}
-  //     />
-  //     <Chip
-  //       bgColor={styles.chipBg}
-  //       textColor={styles.chipText}
-  //       label={"hello world"}
-  //     />
-  //   </div>
-  // );
+  let actionBtnText = allQueryAreAlreadyAnswered
+    ? intl.formatMessage({ id: "label.okay" })
+    : intl.formatMessage({ id: "label.markAsAnswered" });
+
+  let currentModalHeading = getModalHeading();
+
+  const cancelBtnText = allQueryAreAlreadyAnswered ? "" : "cancel";
+  let currentModalSubHeadin = allQueryAreAlreadyAnswered
+    ? "followingQueriesAreMarkedAnAnswered"
+    : "areYouSureYouWantToMarkQueries";
+  let modalIcon =
+    queriesSelectedAndMarkedForAnswer?.length === 0
+      ? getImage("CircleCheck")
+      : "";
+
+  let currentModalChildren = (
+    <div className={styles.chipContainer}>
+      {queriesSelectedAndMarkedForAnswer?.map((item) => {
+        return (
+          <Chip
+            bgColor={styles.chipBg}
+            textColor={styles.chipText}
+            label={item?.readable_id}
+          />
+        );
+      })}
+    </div>
+  );
 
   useEffect(() => {
     if (data?.meta) {
@@ -317,18 +316,18 @@ const QueryTable = ({
     <>
       {
         <CustomModal
-          btnText={intl.formatMessage({ id: "label.markAsAnswered" })}
+          btnText={actionBtnText}
           headingText={intl.formatMessage({
             id: `label.${currentModalHeading}`,
           })}
-          imgElement={getImage("CircleCheck")}
+          imgElement={modalIcon}
           isOpen={isConfirmationModalOpen}
           onBtnClick={() => setIsConfirmationModalOpen(false)}
           onCancel={() => setIsConfirmationModalOpen(false)}
           subHeadingText={intl.formatMessage({
             id: `label.${currentModalSubHeadin}`,
           })}
-          cancelBtnText={"cancel"}
+          cancelBtnText={cancelBtnText}
           content={currentModalChildren}
         />
       }
@@ -348,7 +347,6 @@ const QueryTable = ({
           isLoading={isSuccess && !isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
-          // TODO: change function name
           filterPropertiesArray={convertPermissionFilter(
             queryTypesData || [],
             "Query-Types"

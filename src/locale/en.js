@@ -357,6 +357,7 @@ const locale = {
   "label.areYouSureWantToMakeQueryAsAnsweredSingle":
     "Are you sure you want to mark the query as answered?",
   "label.selectAll": "Select All",
+  "label.okay": "Okay",
   "label.markSelectedQueriesAsAnswered": "Mark as Answered",
   "label.allSelectedQueriesAreAlreadyMarked":
     "All selected queries have already been marked as answered.",

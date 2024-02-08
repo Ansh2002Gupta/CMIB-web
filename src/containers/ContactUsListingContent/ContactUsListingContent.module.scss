@@ -155,6 +155,7 @@ input::placeholder {
   font-size: var(--fontSizeExtraSmall, 12px) !important;
   font-weight: var(--fontWeightBold, 600) !important;
   cursor: pointer;
+  min-width: 120px;
 }
 
 .extraWidth {
@@ -163,10 +164,19 @@ input::placeholder {
 
 .chipBg {
   background-color: var(--lightBlueBg, #f2f4fc);
+  border-radius: var(--radiusLg, 8px);
+  padding: 2px, 6px, 2px, 8px;
 }
 
 .chipText {
   color: var(--textBold, #000833);
+}
+
+.chipContainer {
+  display: flex;
+  gap: var(--gapSmall, 16px);
+  flex-wrap: wrap;
+  padding-top: 8px;
 }
 
 @media screen and (max-width: 1023px) {

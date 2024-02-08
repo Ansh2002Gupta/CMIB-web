@@ -21,7 +21,6 @@ const CustomModal = ({
   content,
 }) => {
 
-  console.log({content})
   return (
     <Modal
       className={styles.modal}
