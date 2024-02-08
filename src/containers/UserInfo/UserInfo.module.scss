@@ -125,7 +125,7 @@
 }
 
 .desrciptionText {
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeExtraSmall, 12px);
   color: var(--subHeadingColor);
 }
 

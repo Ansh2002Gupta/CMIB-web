@@ -23,10 +23,16 @@
 }
 
 .saveBtn {
-  font-size: (--fontSizeSmall, 14px);
+  font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
   background-color: var(--greenBtnBg, #04af55);
   &:hover {
-    border: var(--borderLight) !important;;
+    border: var(--borderLight) !important;
+  }
+}
+
+@media (max-width: 511px) {
+  .cancelBtn {
+    min-height: var(--height_44);
   }
 }

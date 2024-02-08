@@ -7,7 +7,7 @@ import ContentHeader from "../ContentHeader";
 import CustomButton from "../../components/CustomButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
+import { ReactComponent as Edit } from "../../themes/base/assets/images/editDark.svg";
 import { FORM_STATES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
 import styles from "./UserDetailsHeader.module.scss";
