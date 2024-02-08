@@ -30,11 +30,15 @@
   padding-bottom: var(--paddingXXSmall) !important;
 }
 
+.ant-descriptions-row .ant-descriptions-item:not(:last-child) {
+  padding-right: 24px; 
+}
+
 .ant-descriptions-item-content {
   font-weight: var(--fontWeightMedium) !important;
   font-size: var(--fontSizeSmall) !important;
-  padding-right: var(--paddingMedium) !important;
 }
+
 /* For preventing unnecessary scroll from modal */
 .ant-modal-root .ant-modal-wrap {
   overflow: unset !important;
