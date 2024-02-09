@@ -48,6 +48,7 @@ const variables = {
   greenText: colorPallets.darkGreen,
   blueText: colorPallets.darkBlue2,
   redText: colorPallets.darkOrange,
+  darkBlue3: colorPallets.darkBlue3,
 
   // Border-Radius
   radiusNone: "0px",

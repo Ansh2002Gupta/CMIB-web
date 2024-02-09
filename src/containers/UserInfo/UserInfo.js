@@ -247,6 +247,8 @@ const UserInfo = ({
                 onChange={() => {
                   updateUserData("status", !status);
                 }}
+                activeText={"active"}
+                inActiveText={"inactive"}
               />
             </div>
             <div className={styles.twoFactorContainer}>
@@ -257,6 +259,8 @@ const UserInfo = ({
                 onChange={() => {
                   updateUserData("is_two_factor", !is_two_factor);
                 }}
+                activeText={"enable"}
+                inActiveText={"disable"}
               />
             </div>
             {isNotAddable && date && (
@@ -305,11 +309,9 @@ const UserInfo = ({
 };
 
 UserInfo.defaultProps = {
-  access: [],
   countryData: [],
   date: null,
   email: "",
-  isDateDisable: false,
   isEditable: false,
   isNotAddable: false,
   is_two_factor: false,
@@ -324,11 +326,9 @@ UserInfo.defaultProps = {
 };
 
 UserInfo.propTypes = {
-  access: PropTypes.array,
   countryData: PropTypes.array,
   date: PropTypes.string,
   email: PropTypes.string,
-  isDateDisable: PropTypes.bool,
   isEditable: PropTypes.bool,
   isNotAddable: PropTypes.bool,
   is_two_factor: PropTypes.bool,

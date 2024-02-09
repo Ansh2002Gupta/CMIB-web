@@ -51,3 +51,7 @@
 .editUserDetails .ant-select-arrow .anticon > svg {
   color: var(--textBold, #000833);
 }
+
+.ant-input-number-handler-wrap {
+  pointer-events: none;
+}

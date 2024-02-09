@@ -10,6 +10,8 @@ import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { userDetailToast } from "../../globalContext/userDetail/userDetailActions";
+import { UserDetailContext } from "../../globalContext/userDetail/userDetailProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
@@ -44,6 +46,7 @@ const UserDetailsContent = ({
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
+  const [, setUserDetailDispatch] = useContext(UserDetailContext);
   const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
 
@@ -104,6 +107,7 @@ const UserDetailsContent = ({
 
       updateUserDetails(userId, payload, () => {
         goBackToViewDetailsPage();
+        setUserDetailDispatch(userDetailToast(true));
       });
     }
   };
@@ -133,12 +137,11 @@ const UserDetailsContent = ({
           : Object.values(userData.permissions).map((per) => per.id),
         is_two_factor: userData.is_two_factor ? 1 : 0,
         status: userData?.status,
+        profile_photo: userData.profile_photo,
       };
-      if (userData?.profile_photo_url) {
-        payload["profile_photo"] = userData.profile_photo_url;
-      }
       addNewUser(payload, () => {
         goBackToViewDetailsPage();
+        setUserDetailDispatch(userDetailToast(true));
       });
     }
   };
