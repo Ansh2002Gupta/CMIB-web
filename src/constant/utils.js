@@ -171,7 +171,7 @@ export const convertPermissionFilter = (roles, singleOptionsGroupName) => {
   for (const key in roles) {
     if (roles.hasOwnProperty(key)) {
       result[0].options.push({
-        optionId: parseInt(key),
+        optionId: parseInt(roles[key]?.id || key),
         str: roles[key]?.name,
         query_count: roles[key]?.query_count,
       });

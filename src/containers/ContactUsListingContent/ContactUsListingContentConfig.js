@@ -38,9 +38,9 @@ export const getTicketOrQueryColumn = ({
     selectedItemsList,
     toggleSelectedQueriesId,
     handleMarkMutipleQueriesAsAnswered,
+    setSelectedItemsList,
   } = queriesColumnProperties;
-  const { pageSize, current, searchedValue, selectedQueriesMap } =
-    paginationAndSearchProperties;
+  const { pageSize, current, searchedValue } = paginationAndSearchProperties;
   const isTableInSelectAllMode = selectedItemsList?.length !== 0;
   if (type === "2") {
     return [
@@ -239,20 +239,7 @@ export const getTicketOrQueryColumn = ({
         title: (
           <>
             {isTableInSelectAllMode ? (
-              <>
-                {isTableInSelectAllMode ? (
-                  <Typography
-                    className={styles.greenText}
-                    onClick={handleMarkMutipleQueriesAsAnswered}
-                  >
-                    {intl.formatMessage({
-                      id: "label.markSelectedQueriesAsAnswered",
-                    })}
-                  </Typography>
-                ) : (
-                  ""
-                )}
-              </>
+              ""
             ) : (
               <Typography
                 className={styles.columnHeading}
@@ -304,6 +291,22 @@ export const getTicketOrQueryColumn = ({
         },
       }),
       renderColumn({
+        title: (
+          <>
+            {isTableInSelectAllMode ? (
+              <Typography
+                className={styles.greenText}
+                onClick={handleMarkMutipleQueriesAsAnswered}
+              >
+                {intl.formatMessage({
+                  id: "label.markSelectedQueriesAsAnswered",
+                })}
+              </Typography>
+            ) : (
+              ""
+            )}
+          </>
+        ),
         dataIndex: "see",
         key: "see",
         renderImage: {
@@ -317,15 +320,27 @@ export const getTicketOrQueryColumn = ({
       renderColumn({
         dataIndex: "check",
         key: "check",
-        renderImage: {
-          alt: "check",
-          preview: false,
-          src: getImage("checkIcon"),
-          visible: true,
-          customImageStyle: isTableInSelectAllMode ? styles.nonClickable : "",
-          onClick: () => {
-            !isTableInSelectAllMode && setIsConfirmationModalOpen(true);
-          },
+        render: (_, rowData) => {
+          const isAnswered = rowData?.status?.toLowerCase() === "answered";
+          return (
+            <Image
+              src={getImage(`${!isAnswered ? "checkIcon" : "greenTick"}`)}
+              alt="check"
+              preview={false}
+              className={
+                isTableInSelectAllMode || isAnswered
+                  ? styles.nonClickable
+                  : styles.clickable
+              }
+              onClick={() => {
+                if (!isTableInSelectAllMode && !isAnswered) {
+                  setIsConfirmationModalOpen(true);
+                  console.log({ VVVV: [rowData?.id] });
+                  setSelectedItemsList([rowData?.id]);
+                }
+              }}
+            />
+          );
         },
       }),
     ];

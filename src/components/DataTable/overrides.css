@@ -63,8 +63,12 @@ iframe#webpack-dev-server-client-overlay {
   color: var(--textBold);
 }
 
-.ant-select-selection-item{
+.ant-select-selection-item {
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
   color: var(--textBold);
+}
+
+.ant-select .ant-select-selection-item {
+  font-weight: var(--fontWeightMedium, 500) !important;
 }

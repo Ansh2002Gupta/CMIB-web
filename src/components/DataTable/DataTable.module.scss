@@ -26,7 +26,7 @@
   width: var(--height_70);
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
+  font-weight: var(--fontWeightMedium) !important;
 }
 
 .rowPerPageText {
