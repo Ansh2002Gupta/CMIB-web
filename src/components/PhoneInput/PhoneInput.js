@@ -53,6 +53,7 @@ const PhoneInput = React.forwardRef(
               styles.selectInput,
               customSelectInputStyles,
               styles.selectOptionsMobileStyles,
+              "editUserDetails",
             ].join(" ")}
             value={mobilePrefix}
             onChange={(value) => {

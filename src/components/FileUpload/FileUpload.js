@@ -12,6 +12,7 @@ import useUploadImageApi from "../../services/api-services/Images/useUploadImage
 import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { ReactComponent as UploadImageIcon } from "../../themes/base/assets/images/Upload icon.svg";
 import styles from "./FileUpload.module.scss";
+import "./override.css"
 
 const FileUpload = ({
   heading,
@@ -94,7 +95,7 @@ const FileUpload = ({
           />
         ) : (
           <Upload
-            className={styles.uploadContainer}
+            className={[styles.uploadContainer].join(" ")}
             customRequest={handleOnUploadImage}
             disabled={!isFormEditable}
           >

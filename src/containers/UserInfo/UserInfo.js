@@ -113,7 +113,7 @@ const UserInfo = ({
         intl.formatMessage({ id: "label.twoFactorAuth" })
       ),
       children: intl.formatMessage({
-        id: `label.${is_two_factor ? "active" : "inactive"}`,
+        id: `label.${is_two_factor ? "enabled" : "disabled"}`,
       }),
     },
     {
@@ -155,6 +155,7 @@ const UserInfo = ({
       {!isEditable && (
         <div className={styles.nonEditableContainer}>
           <Descriptions
+            className="viewUserDetails"
             colon={false}
             title={intl.formatMessage({ id: "label.userDetails" })}
             layout="vertical"
