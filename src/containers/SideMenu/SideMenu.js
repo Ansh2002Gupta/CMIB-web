@@ -137,7 +137,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                 )}
                 expandIcon={<></>}
                 openKeys={accessibleModules?.map((module) => module?.key)}
-                onSelect={handleOnClickMenuItem}
+                onClick={handleOnClickMenuItem}
                 selectedKeys={selectedKey}
               />
             </div>
