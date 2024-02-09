@@ -66,7 +66,7 @@ const CheckBoxList = ({
 
   return (
     <Base className={styles.parentContainer}>
-      {getTextWithStar(intl.formatMessage({ id: "label.access" }))}
+      {getTextWithStar(intl.formatMessage({ id: "label.moduleAccess" }))}
       <div className={styles.container}>
         {Object.entries(rolesData?.roles || {})?.map(([index, item]) => {
           return (
