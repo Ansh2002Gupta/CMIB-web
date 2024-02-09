@@ -21,12 +21,18 @@ const PaginationItems = ({ current, disabled, type, originalElement }) => {
         )}
       >
         <Image
-          src={getImage("arrowRight")}
+          src={
+            disabled ? getImage("disabledArrowLeft") : getImage("arrowRight")
+          }
           preview={false}
-          className={styles.prevArrow}
+          className={!disabled && styles.prevArrow}
         />
         {responsive.isLg ? (
-          <Typography className={styles.nextAndPrevText}>
+          <Typography
+            className={
+              disabled ? styles.disabledNextAndPrevText : styles.nextAndPrevText
+            }
+          >
             {intl.formatMessage({ id: "label.previous" })}
           </Typography>
         ) : null}
@@ -36,9 +42,19 @@ const PaginationItems = ({ current, disabled, type, originalElement }) => {
   if (type === "next") {
     return (
       <Button className={styles.nextAndPrevArrowContainer} {...{ disabled }}>
-        <Image src={getImage("arrowRight")} preview={false} />
+        <Image
+          src={
+            disabled ? getImage("disabledArrowLeft") : getImage("arrowRight")
+          }
+          preview={false}
+          className={disabled && styles.prevArrow}
+        />
         {responsive.isLg ? (
-          <Typography className={styles.nextAndPrevText}>
+          <Typography
+            className={
+              disabled ? styles.disabledNextAndPrevText : styles.nextAndPrevText
+            }
+          >
             {intl.formatMessage({ id: "label.next" })}
           </Typography>
         ) : null}

@@ -32,7 +32,8 @@
 .searchBar {
   width: 30%;
   min-height: var(--minBtnHeight);
-  border-radius: var(--radiusXLg);
+  border-radius: var(--radiusLg);
+  border-color: var(--borderColor);
   input {
     color: var(--inputText) !important;
     font-size: var(--fontSizeSmall) !important;
@@ -84,7 +85,7 @@ input::placeholder {
 }
 
 .tableCell {
-  min-width: var(--width_100);
+  min-width: var(--width_110);
 }
 .tableCellDate {
   min-width: var(--width_120);
@@ -134,6 +135,7 @@ input::placeholder {
   .searchBar {
     width: var(--fullWidth);
     min-height: var(--height_50);
+    border-color: var(--inputPlaceHolder);
   }
   .filterBtn {
     max-width: var(--width_100);

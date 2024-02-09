@@ -1,4 +1,8 @@
-import { SETUP_CENTERS, CONSENT_MARKING } from "../routes/routeNames";
+import {
+  CONSENT_MARKING,
+  SETUP_CENTERS,
+  SETUP_MOCK_INTERVIEW,
+} from "../routes/routeNames";
 
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
@@ -188,7 +192,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
     headingIntl: "Mock Interviews",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: SETUP_MOCK_INTERVIEW,
   },
   {
     id: 3,
@@ -359,3 +363,6 @@ export const SORTING_QUERY_PARAMS = {
 };
 
 export const NUMBER_OF_CHIPS_TO_SHOW = 15;
+
+export const USER_PROFILE_QUERY_PARAMS = "user-profile";
+

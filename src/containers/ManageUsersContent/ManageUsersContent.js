@@ -103,14 +103,17 @@ const ManageUsersContent = () => {
 
   const handleOnUserSearch = (event) => {
     setSearchedValue(event.target.value);
-    debounceSearch(
-      pageSize,
-      current,
-      event.target.value.length > 2 ? event.target.value : "",
-      filterArray
-    );
-
-    setCurrent(1);
+    (event.target.value.length > 2 ||
+      searchedValue.length > event.target.value.length) &&
+      debounceSearch(
+        pageSize,
+        current,
+        event.target.value.length > 2
+          ? encodeURIComponent(event.target.value)
+          : "",
+        filterArray
+      );
+    searchedValue.length > 2 && setCurrent(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
@@ -194,7 +197,7 @@ const ManageUsersContent = () => {
       key: "status",
       renderSwitch: {
         visible: true,
-        textStyles: styles.tableCell,
+        switchStyle: styles.tableCell,
         isActionable: false,
       },
     }),
@@ -209,6 +212,7 @@ const ManageUsersContent = () => {
       },
     }),
     renderColumn({
+      title: " ",
       dataIndex: "see",
       key: "see",
       renderImage: {
@@ -220,6 +224,7 @@ const ManageUsersContent = () => {
       },
     }),
     renderColumn({
+      title: " ",
       dataIndex: "edit",
       key: "edit",
       renderImage: {
@@ -285,7 +290,7 @@ const ManageUsersContent = () => {
     fetchUsers(
       pageSize,
       current,
-      searchedValue.length > 2 ? searchedValue : "",
+      searchedValue.length > 2 ? encodeURIComponent(searchedValue) : "",
       filterArray
     );
     let arrayAsString = JSON.stringify(filterArray);

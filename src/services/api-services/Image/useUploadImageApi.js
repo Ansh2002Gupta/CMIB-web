@@ -36,7 +36,8 @@ const useUploadImageApi = () => {
       ) {
         setImageUploadApiStatus(API_STATUS.SUCCESS);
         setImageUploadData(res?.data);
-        onSuccessCallback && onSuccessCallback(res?.data?.url);
+        onSuccessCallback &&
+          onSuccessCallback(res?.data?.url, res?.data?.file_name);
         return;
       }
       setImageUploadApiStatus(API_STATUS.ERROR);

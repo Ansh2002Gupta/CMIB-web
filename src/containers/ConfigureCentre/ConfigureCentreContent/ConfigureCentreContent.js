@@ -60,12 +60,13 @@ const ConfigureCentreContent = () => {
   const { isLoading: isUpdatingCenterDetails, updateCenterDetails } =
     useUpdateCenterDetailsApi();
 
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: PLACEMENT_ROUTE + CENTER_END_POINT,
-    otherOptions: {
-      skipApiCallOnMount: true,
-    },
-  });
+  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
+    useFetch({
+      url: PLACEMENT_ROUTE + CENTER_END_POINT,
+      otherOptions: {
+        skipApiCallOnMount: true,
+      },
+    });
   const debounceSearch = useMemo(
     () => _.debounce(fetchData, DEBOUNCE_TIME),
     []
@@ -85,14 +86,12 @@ const ConfigureCentreContent = () => {
       id,
       payload,
       () => {
-        const requestedParams = {
-          perPage: pageSize,
-          page: current,
-          keyword: searchedValue,
-          sort: sortedOrder.sortDirection,
-          order: sortedOrder.sortKeyName,
-        };
-        fetchData({ queryParamsObject: requestedParams });
+        setData({
+          ...data,
+          records: data.records.map((record) =>
+            record.id === id ? { ...record, status: payload.status } : record
+          ),
+        });
       },
       (errorMessage) => {
         showNotification(errorMessage, "error");
@@ -210,11 +209,13 @@ const ConfigureCentreContent = () => {
           }
         >
           {intl.formatMessage({ id: "label.centreName" })}
-          <Image
-            src={getImage("arrowDownDarkGrey")}
-            preview={false}
-            className={[sortArrowStyles].join(" ")}
-          />
+          <div className={styles.sortArrowImageContainer}>
+            <Image
+              src={getImage("arrowDownDarkGrey")}
+              preview={false}
+              className={[sortArrowStyles].join(" ")}
+            />
+          </div>
         </Typography>
       ),
       dataIndex: "name",
@@ -235,7 +236,7 @@ const ConfigureCentreContent = () => {
         title: intl.formatMessage({ id: "label.bigSmallCentre" }),
         dataIndex: "center_type",
         key: "center_type",
-        renderText: { visible: true },
+        renderText: { visible: true, textStyles: styles.tableCell },
       }),
       width: "100px",
     },
@@ -253,6 +254,7 @@ const ConfigureCentreContent = () => {
         dataKeyName: "centreId",
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
+        checkIsSwitchEditable: (data) => Boolean(data?.is_editable),
       },
     }),
     renderColumn({

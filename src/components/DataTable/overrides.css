@@ -39,6 +39,7 @@ iframe#webpack-dev-server-client-overlay {
 .ant-pagination-item-active {
   border: var(--borderBlue1) !important;
   background-color: var(--lightBlueBg) !important;
+  border-radius: var(--radiusLg) !important;
 }
 
 .ant-pagination .ant-pagination-item-active a {
@@ -54,8 +55,37 @@ iframe#webpack-dev-server-client-overlay {
 .ant-table-wrapper .ant-table-thead > tr > th:not(:last-child)::before {
   content: none !important;
 }
+.ant-select-selector {
+  border-radius: var(--radiusLg) !important;
+  border:var(--borderLight) !important ;
+  color: var(--inputText) !important;
+}
+.ant-select .ant-select-selection-item{
+  font-weight: var(--fontWeightMedium) !important;
+}
 
-.ant-btn-default:disabled {
+.ant-btn-default:disabled{
+  cursor: not-allowed !important;
+}
+
+.ant-table-tbody > tr > td{
+  border-bottom: var(--borderLight) !important;
+}
+
+.ant-pagination-item a{
+
+  color: var(--inputPlaceHolder) !important;
+  font-weight: var(--fontWeightMedium);
+}
+
+ .ant-btn-default:disabled {
+  background-color: var(--bodyBg) !important;
+  border: var(--borderLight);
+}
+
+.ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) {
+  margin-inline-end: 0px;
+}.ant-btn-default:disabled {
   cursor: not-allowed !important;
 }
 

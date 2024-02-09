@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useParams, useSearchParams } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import useAddNewUserApi from "../../services/api-services/Users/useAddNewUserApi
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useFetch from "../../core/hooks/useFetch";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
 import {
@@ -30,6 +31,8 @@ const UserDetails = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams] = useSearchParams();
   const currentFormState = searchParams.get("mode") || FORM_STATES.EMPTY;
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isMobileNumber, setIsMobileNumberValid] = useState(true);
@@ -47,7 +50,7 @@ const UserDetails = () => {
     permissions: [],
     date: "",
     is_two_factor: false,
-    status: 0,
+    status: 1,
   });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -75,7 +78,7 @@ const UserDetails = () => {
 
   const goBackToViewDetailsPage = () => {
     setErrorWhileUpdatingUserData("");
-    navigate(USERS);
+    navigate(`/${selectedModule?.key}/${USERS}`);
   };
 
   const {
@@ -95,7 +98,7 @@ const UserDetails = () => {
   const updateUserData = (key, value) => {
     key === "email" && setIsEmailValid(true);
     key === "mobile" && setIsMobileNumberValid(true);
-    key === "access" && setIsAccessValid(true);
+    key === "roles" && setIsAccessValid(true);
     key === "name" && setIsUserNameValid(true);
     setErrorWhileUpdatingUserData("");
     if (key === "mobile") {
@@ -141,10 +144,7 @@ const UserDetails = () => {
             ([index, item]) => item?.id
           ) || [],
         roles: userAccountInfo?.roles || [],
-        permissions:
-          Object.entries(userAccountInfo?.permissions || {})?.map(
-            ([index, item]) => item?.id
-          ) || [],
+        permissions: userAccountInfo?.permissions || [],
         date: userAccountInfo?.created_at || "",
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,
         status: userAccountInfo?.status,

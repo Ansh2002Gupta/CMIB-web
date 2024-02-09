@@ -90,11 +90,9 @@ const SearchFilter = ({
           {intl.formatMessage({ id: "label.filters" })}
         </Typography>
         {filterArray.length > 0 && (
-          <div className={styles.countFilterContainerStyle}>
-            <Typography className={styles.countFilterStyle}>
-              {filterArray.length}
-            </Typography>
-          </div>
+          <Typography className={styles.countFilterStyle}>
+            {filterArray.length}
+          </Typography>
         )}
       </Button>
       {showFilters && (
@@ -109,7 +107,11 @@ const SearchFilter = ({
             extra={
               <Button
                 type="link"
-                onClick={() => setCurrentFilterStatus([])}
+                onClick={() => {
+                  setCurrentFilterStatus([]);
+                  setFilterArray([]);
+                  setShowFilters(false);
+                }}
                 className={styles.clearAllBtn}
               >
                 {intl.formatMessage({ id: "label.clearAll" })}

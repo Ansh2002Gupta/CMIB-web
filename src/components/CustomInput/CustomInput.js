@@ -7,7 +7,7 @@ import Base from "../../core/layouts/Base/Base";
 
 import styles from "./CustomInput.module.scss";
 
-const CustomInput = ({
+const CustomInput = React.forwardRef(({
   currentSelectedValue,
   customContainerStyles,
   customErrorTextStyles,
@@ -41,7 +41,7 @@ const CustomInput = ({
   SuffixIcon,
   type,
   value,
-}) => {
+}, ref) => {
   const inputFieldRef = useRef();
 
   const restoreCursorPosition = () => {
@@ -70,6 +70,7 @@ const CustomInput = ({
           styles.formContainer,
           type === "mobile" ? styles.mobile : "",
         ].join(" ")}
+        ref={ref}
       >
         {type === "select" && (
           <>
@@ -179,7 +180,7 @@ const CustomInput = ({
       )}
     </Base>
   );
-};
+});
 
 CustomInput.defaultProps = {
   currentSelectedValue: "",
