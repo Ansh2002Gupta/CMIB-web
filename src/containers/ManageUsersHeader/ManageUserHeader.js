@@ -23,7 +23,11 @@ const ManageUserHeader = () => {
   useEffect(() => {
     if (userDetailState?.isUserSuccessfullyAdded) {
       showNotification({
-        text: intl.formatMessage({ id: "label.userSuccessfullyAdded" }),
+        text: intl.formatMessage({
+          id: userDetailState?.isUserSuccessfullyAdded?.isUpdate
+            ? "label.userSuccessfullyEdited"
+            : "label.userSuccessfullyAdded",
+        }),
         type: "success",
       });
       setUserDetailDispatch(userDetailToast(false));
