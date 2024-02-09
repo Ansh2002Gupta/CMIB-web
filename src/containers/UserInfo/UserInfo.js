@@ -238,19 +238,21 @@ const UserInfo = ({
                 onBlur={checkForMobileNumber}
               />
             </div>
-            <div className={styles.twoFactorContainer}>
-              <CustomSwitch
-                checked={status}
-                isRequired={true}
-                isEditable={isNotAddable}
-                label={intl.formatMessage({ id: "label.status" })}
-                onChange={() => {
-                  updateUserData("status", !status);
-                }}
-                activeText={"active"}
-                inActiveText={"inactive"}
-              />
-            </div>
+            {isNotAddable && (
+              <div className={styles.twoFactorContainer}>
+                <CustomSwitch
+                  checked={status}
+                  isRequired={true}
+                  isEditable={isNotAddable}
+                  label={intl.formatMessage({ id: "label.status" })}
+                  onChange={() => {
+                    updateUserData("status", !status);
+                  }}
+                  activeText={"active"}
+                  inActiveText={"inactive"}
+                />
+              </div>
+            )}
             <div className={styles.twoFactorContainer}>
               <CustomSwitch
                 checked={is_two_factor}
