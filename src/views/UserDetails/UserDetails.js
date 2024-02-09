@@ -179,11 +179,13 @@ const UserDetails = () => {
   }, []);
 
   useEffect(() => {
-    currentFormState !== FORM_STATES.EMPTY &&
-      setSearchParams((prev) => {
-        prev.set("mode", currentFormState);
-        return prev;
-      });
+    if (currentFormState !== searchParams.get("mode")) {
+      currentFormState !== FORM_STATES.EMPTY &&
+        setSearchParams((prev) => {
+          prev.set("mode", currentFormState);
+          return prev;
+        });
+    }
   }, []);
 
   useEffect(() => {
