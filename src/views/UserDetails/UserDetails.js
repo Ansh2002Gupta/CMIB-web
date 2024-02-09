@@ -29,7 +29,7 @@ const UserDetails = () => {
   const intl = useIntl();
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const currentFormState = searchParams.get("mode") || FORM_STATES.EMPTY;
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
@@ -171,6 +171,19 @@ const UserDetails = () => {
           showNotification({ text: errMessage });
         },
       });
+    }
+    if (
+      currentFormState !== "edit" &&
+      currentFormState !== "view" &&
+      currentFormState !== "empty"
+    ) {
+      setSearchParams(
+        (prev) => {
+          prev.set("mode", "view");
+          return prev;
+        },
+        { replace: true }
+      );
     }
   }, []);
 
