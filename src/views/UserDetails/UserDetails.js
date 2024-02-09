@@ -187,14 +187,6 @@ const UserDetails = () => {
   }, []);
 
   useEffect(() => {
-    currentFormState !== FORM_STATES.EMPTY &&
-      setSearchParams((prev) => {
-        prev.set("mode", currentFormState);
-        return prev;
-      });
-  }, []);
-
-  useEffect(() => {
     return () => {
       setIsEmailValid(true);
       setIsMobileNumberValid(true);
