@@ -38,7 +38,7 @@
   min-width: 100%;
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
-  font-weight: var(--fontWeightMedium);
+  font-weight: var(--fontWeightMedium, 500) !important;
 
   &::placeholder {
     color: var(--inputPlaceHolder) !important;

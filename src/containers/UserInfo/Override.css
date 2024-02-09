@@ -43,6 +43,10 @@
   font-size: 16px !important;
 }
 
-.ant-btn-icon{
+.ant-btn-icon {
   margin: 0px !important;
+}
+
+.editUserDetails .ant-select-arrow .anticon > svg {
+  color: var(--textBold, #000833);
 }
