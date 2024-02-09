@@ -12,8 +12,9 @@
 .userImage {
   width: var(--fullWidth);
   object-fit: contain;
-  max-height: var(--height_400);
-  min-height: var(--height_250);
+  max-width: var(--width_363, 363px) !important;
+  max-height: var(--height_184, 184px) !important;
+  min-height: var(--height_184, 184px) !important;
 }
 
 .trashAndIconContainer {
