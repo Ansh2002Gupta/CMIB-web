@@ -15,6 +15,7 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
+import useShowNotification from "../../../core/hooks/useShowNotification";
 import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
 import {
   convertPermissionFilter,
@@ -24,6 +25,7 @@ import {
 import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
+  NUMBER_OF_CHIPS_TO_SHOW,
   PAGINATION_PROPERTIES,
   SORTING_QUERY_PARAMS,
   SORT_PROPERTIES,
@@ -61,6 +63,7 @@ const QueryTable = ({
   );
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const {
     data: queryTypesData,
@@ -69,16 +72,8 @@ const QueryTable = ({
     error: errorWhileGettingQueryTypes,
   } = useQueriesTypesApi();
 
-  // TODO: need to inetgrate this API
-  const {
-    markingQueryAsAnswerData,
-    errorWhileMarkingQueryAsAnswered,
-    apiStatus,
-    handleMarkQueriesAsAnswered,
-    isLoading: isMarkingQueryAsAnswered,
-    // isSuccess,
-    setErrorWhileMarkingQueryAsAnswered,
-  } = useMarkQueriesAsAnswerApi();
+  const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
+    useMarkQueriesAsAnswerApi();
 
   let sortArrowStyles = "";
   if (sortedOrder?.sortDirection === SORT_VALUES.ASCENDING) {
@@ -98,6 +93,35 @@ const QueryTable = ({
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
   // functions
+  const onRetry = () => {
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      queryType: filterArray,
+    };
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
+  const handleMarkQuery = () => {
+    handleMarkQueriesAsAnswered({
+      payload: {
+        query_id: selctedQueriesToBeMarkedAsAnswered,
+      },
+      onSuccessCallback: () => {
+        setIsConfirmationModalOpen(false);
+        onRetry();
+        setSelctedQueriesToBeMarkedAsAnswered([]);
+      },
+      onErrorCallback: (errorString) => {
+        setIsConfirmationModalOpen(false);
+        showNotification(errorString, "error");
+      },
+    });
+  };
+
   const checkAreAllQueryOfCurrentPageSelected = (checkFor) => {
     const currentPageSelectedQueries = data?.records?.filter((query) => {
       return selctedQueriesToBeMarkedAsAnswered?.includes(query?.id);
@@ -191,7 +215,7 @@ const QueryTable = ({
       q: str,
       sortField: sortedOrder?.sortKeyName,
       sortDirection: sortedOrder?.sortDirection,
-      "query-type": filterArray,
+      queryType: filterArray,
     };
     debounceSearch({ queryParamsObject: requestedParams });
   };
@@ -210,7 +234,7 @@ const QueryTable = ({
       q: searchedValue,
       sortField: sortedOrder?.sortKeyName,
       sortDirection: sortedOrder?.sortDirection,
-      "query-type": filterArray,
+      queryType: filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -227,7 +251,7 @@ const QueryTable = ({
       q: searchedValue,
       sortField: sortedOrder?.sortKeyName,
       sortDirection: sortedOrder?.sortDirection,
-      "query-type": filterArray,
+      queryType: filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -242,7 +266,7 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: searchedValue,
-      "query-type": updatedFiltersValue,
+      queryType: updatedFiltersValue,
       sortField: sortedOrder?.sortKeyName,
       sortDirection: sortedOrder?.sortDirection,
     };
@@ -256,7 +280,7 @@ const QueryTable = ({
       q: searchedValue,
       sortField: sortedOrder?.sortKeyName,
       sortDirection: sortedOrder?.sortDirection,
-      "query-type": filterArray,
+      queryType: filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -272,27 +296,37 @@ const QueryTable = ({
       selctedQueriesToBeMarkedAsAnswered?.length &&
     selctedQueriesToBeMarkedAsAnswered?.length > 0;
 
-  const getModalHeading = () => {
+  const getModalProperties = () => {
     if (allQueryAreAlreadyAnswered) {
-      return "allSelectedQueriesAreAlreadyMarked";
+      return {
+        currentModalHeading: "allSelectedQueriesAreAlreadyMarked",
+        cancelBtnText: "",
+        actionBtnText: "okay",
+        currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
+      };
     }
     if (queriesSelectedAndMarkedForAnswer?.length) {
-      return "someQueriesAreMarkedAsAnsweredContinueMaringOthers";
+      return {
+        currentModalHeading:
+          "someQueriesAreMarkedAsAnsweredContinueMaringOthers",
+        cancelBtnText: "",
+        actionBtnText: "okay",
+        currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
+      };
     }
 
-    return "markQueriesAsAnswered";
+    return {
+      currentModalHeading: "markQueriesAsAnswered",
+      cancelBtnText: "cancel",
+      actionBtnText: "markAsAnswered",
+      currentModalSubHeading: "areYouSureYouWantToMarkQueries",
+    };
   };
 
-  let actionBtnText = allQueryAreAlreadyAnswered
-    ? intl.formatMessage({ id: "label.okay" })
-    : intl.formatMessage({ id: "label.markAsAnswered" });
-
-  let currentModalHeading = getModalHeading();
-
-  const cancelBtnText = allQueryAreAlreadyAnswered ? "" : "cancel";
-  let currentModalSubHeadin = allQueryAreAlreadyAnswered
-    ? "followingQueriesAreMarkedAnAnswered"
-    : "areYouSureYouWantToMarkQueries";
+  let currentModalHeading = getModalProperties()?.currentModalHeading;
+  const cancelBtnText = getModalProperties()?.cancelBtnText;
+  let actionBtnText = getModalProperties()?.actionBtnText;
+  let currentModalSubHeading = getModalProperties()?.currentModalSubHeading;
   let modalIcon =
     queriesSelectedAndMarkedForAnswer?.length === 0
       ? getImage("CircleCheck")
@@ -300,14 +334,25 @@ const QueryTable = ({
 
   let currentModalChildren = (
     <div className={styles.chipContainer}>
-      {queriesSelectedAndMarkedForAnswer?.map((item) => {
-        return (
-          <Chip
-            bgColor={styles.chipBg}
-            textColor={styles.chipText}
-            label={item?.readable_id}
-          />
-        );
+      {queriesSelectedAndMarkedForAnswer?.map((item, index) => {
+        if (index <= NUMBER_OF_CHIPS_TO_SHOW) {
+          return (
+            <Chip
+              bgColor={styles.chipBg}
+              textColor={styles.chipText}
+              label={item?.readable_id}
+            />
+          );
+        } else if (index === NUMBER_OF_CHIPS_TO_SHOW + 1) {
+          const totalLeft = queriesSelectedAndMarkedForAnswer?.length - 15;
+          return (
+            <Chip
+              bgColor={styles.chipBg}
+              textColor={styles.chipText}
+              label={`+${totalLeft}`}
+            />
+          );
+        }
       })}
     </div>
   );
@@ -330,7 +375,7 @@ const QueryTable = ({
           q: searchedValue,
           sortField: sortedOrder?.sortKeyName,
           sortDirection: sortedOrder?.sortDirection,
-          "query-type": filterArray,
+          queryType: filterArray,
         };
         fetchData({ queryParamsObject: requestedParams });
       }
@@ -359,7 +404,7 @@ const QueryTable = ({
       q: searchedValue,
       sortField: sortedOrder?.sortKeyName,
       sortDirection: sortedOrder?.sortDirection,
-      "query-type": filterArray,
+      queryType: filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
     getQueriesTypes({});
@@ -367,20 +412,21 @@ const QueryTable = ({
 
   return (
     <>
+      {notificationContextHolder}
       {
         <CustomModal
-          btnText={actionBtnText}
+          btnText={intl.formatMessage({ id: `label.${actionBtnText}` })}
           headingText={intl.formatMessage({
             id: `label.${currentModalHeading}`,
           })}
           imgElement={modalIcon}
           isOpen={isConfirmationModalOpen}
-          onBtnClick={() => setIsConfirmationModalOpen(false)}
+          onBtnClick={handleMarkQuery}
           onCancel={() => setIsConfirmationModalOpen(false)}
           subHeadingText={intl.formatMessage({
-            id: `label.${currentModalSubHeadin}`,
+            id: `label.${currentModalSubHeading}`,
           })}
-          cancelBtnText={cancelBtnText}
+          cancelBtnText={intl.formatMessage({ id: `label.${cancelBtnText}` })}
           content={currentModalChildren}
         />
       }
@@ -397,7 +443,7 @@ const QueryTable = ({
             filterArray,
             setFilterArray,
           }}
-          isLoading={isSuccess && !isLoading}
+          isLoading={(isSuccess && !isLoading) || isMarkingQueryAsAnswered}
           data={data?.records}
           currentDataLength={data?.meta?.total}
           filterPropertiesArray={convertPermissionFilter(
@@ -410,7 +456,7 @@ const QueryTable = ({
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
-            onClick={handleOnReTry}
+            onRetry={handleOnReTry}
             errorText={errorString}
             errorHeading={intl.formatMessage({
               id: "label.error",

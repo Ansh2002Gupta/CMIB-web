@@ -291,6 +291,18 @@ export const getTicketOrQueryColumn = ({
         },
       }),
       renderColumn({
+        dataIndex: "see",
+        key: "see",
+        render: () => (
+          <Image
+            src={getImage("eye")}
+            alt="eye"
+            preview={false}
+            onClick={(rowData) => navigate(`query/${rowData?.id}`)}
+          />
+        ),
+      }),
+      renderColumn({
         title: (
           <>
             {isTableInSelectAllMode ? (
@@ -307,39 +319,29 @@ export const getTicketOrQueryColumn = ({
             )}
           </>
         ),
-        dataIndex: "see",
-        key: "see",
-        renderImage: {
-          alt: "eye",
-          preview: false,
-          src: getImage("eye"),
-          visible: true,
-          onClick: (rowData) => navigate(`query/${rowData?.id}`),
-        },
-      }),
-      renderColumn({
         dataIndex: "check",
         key: "check",
         render: (_, rowData) => {
           const isAnswered = rowData?.status?.toLowerCase() === "answered";
           return (
-            <Image
-              src={getImage(`${!isAnswered ? "checkIcon" : "greenTick"}`)}
-              alt="check"
-              preview={false}
-              className={
-                isTableInSelectAllMode || isAnswered
-                  ? styles.nonClickable
-                  : styles.clickable
-              }
-              onClick={() => {
-                if (!isTableInSelectAllMode && !isAnswered) {
-                  setIsConfirmationModalOpen(true);
-                  console.log({ VVVV: [rowData?.id] });
-                  setSelectedItemsList([rowData?.id]);
+            <div className={isTableInSelectAllMode ? styles.iconBox : ""}>
+              <Image
+                src={getImage(`${!isAnswered ? "checkIcon" : "greenTick"}`)}
+                alt="check"
+                preview={false}
+                className={
+                  isTableInSelectAllMode || isAnswered
+                    ? styles.nonClickable
+                    : styles.clickable
                 }
-              }}
-            />
+                onClick={() => {
+                  if (!isTableInSelectAllMode && !isAnswered) {
+                    setIsConfirmationModalOpen(true);
+                    setSelectedItemsList([rowData?.id]);
+                  }
+                }}
+              />
+            </div>
           );
         },
       }),

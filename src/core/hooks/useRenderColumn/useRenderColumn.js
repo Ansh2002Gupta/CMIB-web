@@ -49,7 +49,6 @@ const useRenderColumn = () => {
       customImageStyle = "",
       src = "",
       onClick = () => {},
-      checkIsImageClickable = () => {},
       preview,
     } = renderImage;
 

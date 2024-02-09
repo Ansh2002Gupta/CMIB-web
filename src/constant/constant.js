@@ -357,3 +357,5 @@ export const SORTING_QUERY_PARAMS = {
   SORTED_KEY: "sorted-key",
   SORTED_DIRECTION: "sorted-direction",
 };
+
+export const NUMBER_OF_CHIPS_TO_SHOW = 15;
