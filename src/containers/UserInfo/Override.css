@@ -26,12 +26,8 @@
   font-weight: 500 !important;
 }
 
-.ant-descriptions-row >th{
+.ant-descriptions-row > th {
   padding-bottom: var(--paddingXXSmall) !important;
-}
-
-.ant-descriptions-row .ant-descriptions-item:not(:last-child) {
-  padding-right: 24px; 
 }
 
 .ant-descriptions-item-content {
@@ -42,6 +38,18 @@
 /* For preventing unnecessary scroll from modal */
 .ant-modal-root .ant-modal-wrap {
   overflow: unset !important;
+}
+
+.viewUserDetails .ant-descriptions-title {
+  font-size: 16px !important;
+}
+
+.ant-btn-icon {
+  margin: 0px !important;
+}
+
+.editUserDetails .ant-select-arrow .anticon > svg {
+  color: var(--textBold, #000833);
 }
 
 .ant-input-number-handler-wrap {

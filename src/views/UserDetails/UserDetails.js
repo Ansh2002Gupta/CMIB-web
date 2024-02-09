@@ -13,6 +13,7 @@ import useFetch from "../../core/hooks/useFetch";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
+import { getCurrentFormState } from "../../constant/utils";
 import {
   CONTROL_MODULE_ID,
   FORM_STATES,
@@ -30,7 +31,10 @@ const UserDetails = () => {
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentFormState = searchParams.get("mode") || FORM_STATES.EMPTY;
+  const currentFormState = getCurrentFormState(
+    searchParams.get("mode"),
+    userId
+  );
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
@@ -159,7 +163,7 @@ const UserDetails = () => {
   };
 
   useEffect(() => {
-    if (userId) {
+    if (userId && currentFormState !== FORM_STATES.EMPTY) {
       getUserData({
         userId,
         onSuccessCallBack: (userAccountInfo) => {
@@ -172,19 +176,22 @@ const UserDetails = () => {
         },
       });
     }
-    if (
-      currentFormState !== "edit" &&
-      currentFormState !== "view" &&
-      currentFormState !== "empty"
-    ) {
-      setSearchParams(
-        (prev) => {
-          prev.set("mode", "view");
-          return prev;
-        },
-        { replace: true }
-      );
-    }
+  }, []);
+
+  useEffect(() => {
+    currentFormState !== FORM_STATES.EMPTY &&
+      setSearchParams((prev) => {
+        prev.set("mode", currentFormState);
+        return prev;
+      });
+  }, []);
+
+  useEffect(() => {
+    currentFormState !== FORM_STATES.EMPTY &&
+      setSearchParams((prev) => {
+        prev.set("mode", currentFormState);
+        return prev;
+      });
   }, []);
 
   useEffect(() => {
