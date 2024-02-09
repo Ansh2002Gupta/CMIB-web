@@ -29,7 +29,7 @@ const SearchFilter = ({
     data.forEach((item) => {
       if (item.options && Array.isArray(item.options)) {
         item.options.forEach((option) => {
-          if (option.optionId) {
+          if (option?.optionId || option?.optionId === 0) {
             optionIds.push(option.optionId);
           }
         });
@@ -183,9 +183,11 @@ const SearchFilter = ({
                         )}
                         <Typography className={styles.filterOptionText}>
                           {item?.str}{" "}
-                          {!!item?.query_count >= 0
-                            ? `(${item?.query_count})`
-                            : ""}
+                          <span className={styles.textInBrackets}>
+                            {!!item?.query_count >= 0
+                              ? `(${item?.query_count})`
+                              : ""}
+                          </span>
                         </Typography>
                       </div>
                     );

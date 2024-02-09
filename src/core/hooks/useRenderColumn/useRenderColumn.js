@@ -65,7 +65,7 @@ const useRenderColumn = () => {
       onClickCheckbox = () => {},
       customCheckBoxContainerStyles = "",
       checkBoxList = [],
-      isCheckBoxTextBold = false,
+      isCheckBoxTextBold,
     } = renderTextWithCheckBoxes;
 
     const {
@@ -194,8 +194,6 @@ const useRenderColumn = () => {
       (columnObject.render = (_, rowData) => {
         return (
           <Image
-          // TODO: add this check below
-          // checkIsImageClickable
             alt={alt}
             src={src}
             preview={preview}

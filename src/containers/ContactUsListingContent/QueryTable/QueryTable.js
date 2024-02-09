@@ -97,16 +97,26 @@ const QueryTable = ({
   }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
-  const checkAreAllQueryOfCurrentPageSelected = () => {
-    // selctedQueriesToBeMarkedAsAnswered?.length === data?.records?.length
+  // functions
+  const checkAreAllQueryOfCurrentPageSelected = (checkFor) => {
     const currentPageSelectedQueries = data?.records?.filter((query) => {
       return selctedQueriesToBeMarkedAsAnswered?.includes(query?.id);
     });
 
-    return currentPageSelectedQueries?.length === data?.records?.length;
+    if (checkFor === "all") {
+      return currentPageSelectedQueries?.length === data?.records?.length;
+    }
+
+    if (checkFor === "some") {
+      return (
+        currentPageSelectedQueries?.length !== 0 &&
+        currentPageSelectedQueries?.length !== data?.records?.length
+      );
+    }
   };
 
-  const areAllItemsSelected = checkAreAllQueryOfCurrentPageSelected();
+  const areAllItemsSelected = checkAreAllQueryOfCurrentPageSelected("all");
+  const areSomeItemsSelected = checkAreAllQueryOfCurrentPageSelected("some");
 
   const toggleSelectAllItems = () => {
     const currentPageIdsArray = data?.records?.map((query) => query?.id);
@@ -114,11 +124,13 @@ const QueryTable = ({
       const updatedData = selctedQueriesToBeMarkedAsAnswered?.filter(
         (queryId) => !currentPageIdsArray?.includes(queryId)
       );
-      console.log({currentPageIdsArray, updatedData, selctedQueriesToBeMarkedAsAnswered});
       setSelctedQueriesToBeMarkedAsAnswered(updatedData);
       return;
     }
-    setSelctedQueriesToBeMarkedAsAnswered(prev => [...prev, ...currentPageIdsArray]);
+    setSelctedQueriesToBeMarkedAsAnswered((prev) => [
+      ...prev,
+      ...currentPageIdsArray,
+    ]);
   };
 
   const toggleSelectedQueriesId = (queryId) => {
@@ -158,6 +170,7 @@ const QueryTable = ({
     setIsConfirmationModalOpen,
     toggleSelectAllItems,
     areAllItemsSelected,
+    areSomeItemsSelected,
   });
 
   const handleOnUserSearch = (str) => {
@@ -176,6 +189,9 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: str,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      "query-type": filterArray,
     };
     debounceSearch({ queryParamsObject: requestedParams });
   };
@@ -192,6 +208,9 @@ const QueryTable = ({
       perPage: size,
       page: 1,
       q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      "query-type": filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -206,6 +225,9 @@ const QueryTable = ({
       perPage: pageSize,
       page: newPageNumber,
       q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      "query-type": filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -221,6 +243,8 @@ const QueryTable = ({
       page: current,
       q: searchedValue,
       "query-type": updatedFiltersValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -230,6 +254,9 @@ const QueryTable = ({
       perPage: DEFAULT_PAGE_SIZE,
       page: 1,
       q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      "query-type": filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -285,6 +312,7 @@ const QueryTable = ({
     </div>
   );
 
+  // useEffects hooks
   useEffect(() => {
     if (data?.meta) {
       const { total } = data?.meta;
@@ -300,6 +328,9 @@ const QueryTable = ({
           perPage: pageSize,
           page: 1,
           q: searchedValue,
+          sortField: sortedOrder?.sortKeyName,
+          sortDirection: sortedOrder?.sortDirection,
+          "query-type": filterArray,
         };
         fetchData({ queryParamsObject: requestedParams });
       }
@@ -326,6 +357,9 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      "query-type": filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
     getQueriesTypes({});

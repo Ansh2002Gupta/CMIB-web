@@ -6,7 +6,7 @@ import {
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
 
-export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
+export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
   if (date) {
     return dayjs(new Date(date)).format(dateFormat);
   }

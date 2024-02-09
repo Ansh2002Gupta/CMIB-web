@@ -1,5 +1,4 @@
-import { Image, Typography } from "antd";
-import CustomCheckBox from "../../components/CustomCheckBox/CustomCheckBox";
+import { Checkbox, Image, Typography } from "antd";
 import { toggleSorting } from "../../constant/utils";
 import { SORTING_QUERY_PARAMS } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
@@ -32,6 +31,7 @@ export const getTicketOrQueryColumn = ({
   setIsConfirmationModalOpen,
   toggleSelectAllItems,
   areAllItemsSelected,
+  areSomeItemsSelected,
 }) => {
   const {
     sortArrowStyles,
@@ -47,9 +47,10 @@ export const getTicketOrQueryColumn = ({
       renderColumn({
         title: (
           <div>
-            <CustomCheckBox
+            <Checkbox
+              indeterminate={areSomeItemsSelected}
               checked={areAllItemsSelected}
-              customStyles={[
+              className={[
                 styles.columnHeading,
                 isTableInSelectAllMode ? styles.greenText : "",
               ].join(" ")}
@@ -58,7 +59,7 @@ export const getTicketOrQueryColumn = ({
               {!isTableInSelectAllMode
                 ? intl.formatMessage({ id: "label.queriesId" })
                 : intl.formatMessage({ id: "label.selectAll" })}
-            </CustomCheckBox>
+            </Checkbox>
           </div>
         ),
         dataIndex: "readable_id",
@@ -89,7 +90,7 @@ export const getTicketOrQueryColumn = ({
                       page: current,
                       keyword: searchedValue,
                       sortDirection: toggleSorting(sortedOrder.sortDirection),
-                      sort: "name",
+                      sortField: "name",
                     },
                     onSuccessCallback: () => {
                       setSearchParams((prevValue) => {
@@ -262,7 +263,7 @@ export const getTicketOrQueryColumn = ({
                       page: current,
                       keyword: searchedValue,
                       sortDirection: toggleSorting(sortedOrder.sortDirection),
-                      sort: "created_at",
+                      sortField: "created_at",
                     },
                     onSuccessCallback: () => {
                       setSearchParams((prevValue) => {
@@ -319,8 +320,9 @@ export const getTicketOrQueryColumn = ({
         renderImage: {
           alt: "check",
           preview: false,
-          src: getImage("rightIcon"),
+          src: getImage("checkIcon"),
           visible: true,
+          customImageStyle: isTableInSelectAllMode ? styles.nonClickable : "",
           onClick: () => {
             !isTableInSelectAllMode && setIsConfirmationModalOpen(true);
           },

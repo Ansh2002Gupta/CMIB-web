@@ -19,6 +19,7 @@ export const colorPallets = {
   // Grey color shades
   ltGrey1: "#ccd0e5",
   ltGrey2: "#cecece36",
+  ltGrey3: "#717B9E",
   mediumGrey: "#B1B3B5",
   darkGrey1: "#616C82",
   darkGrey2: "#5a5a5a",
