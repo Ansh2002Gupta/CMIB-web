@@ -12,16 +12,19 @@ import useUploadImageApi from "../../services/api-services/Images/useUploadImage
 import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { ReactComponent as UploadImageIcon } from "../../themes/base/assets/images/Upload icon.svg";
 import styles from "./FileUpload.module.scss";
-import "./override.css"
+import "./override.css";
 
 const FileUpload = ({
   heading,
   isFormEditable,
+  isNotAddable,
   name,
   subHeading,
   updateUserData,
   userImageName,
   userProfilePic,
+  deletedImage,
+  setDeletedImage,
 }) => {
   const intl = useIntl();
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -60,23 +63,25 @@ const FileUpload = ({
       return;
     }
     if (file?.file) {
-      handleUploadImage({
-        onSuccessCallback: (imgData) => {
-          updateUserData("profile_photo_url", imgData?.url);
-          updateUserData("profile_photo", imgData?.file_name);
-        },
-        file: file?.file,
-        onErrorCallback: (errString) => {
-          showNotification(errString);
-        },
-      });
+      isNotAddable &&
+        handleUploadImage({
+          onSuccessCallback: (imgData) => {
+            updateUserData("profile_photo_url", imgData?.url);
+            updateUserData("profile_photo", imgData?.file_name);
+          },
+          file: file?.file,
+          onErrorCallback: (errString) => {
+            showNotification(errString);
+          },
+        });
     }
   };
-
   const removeSelctedImage = () => {
-    handleDeleteImage({
-      fileName: userImageName,
-    });
+    setDeletedImage([...deletedImage, userImageName]);
+    !isNotAddable &&
+      handleDeleteImage({
+        fileName: userImageName,
+      });
     updateUserData("profile_photo_url", "");
     updateUserData("profile_photo", "");
   };

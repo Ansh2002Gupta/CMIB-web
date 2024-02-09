@@ -77,7 +77,8 @@ const UserDetailsHeader = ({
                   IconElement={Edit}
                   onClick={() =>
                     navigate(
-                      `/${selectedModule.key}/${USERS}details/${userId}?mode=edit`
+                      `/${selectedModule.key}/${USERS}details/${userId}?mode=edit`,
+                      true
                     )
                   }
                   iconStyles={styles.btnIconStyles}
