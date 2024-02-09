@@ -43,10 +43,16 @@
 
 .table {
   min-height: min(var(--height_50vh), var(--height_300));
+  overflow-y: auto;
 }
 
 .nextAndPrevText {
   color: var(--On-background, var(--textBold));
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+.disabledNextAndPrevText {
+  color: var(--On-background, var(--inputPlaceHolder));
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }

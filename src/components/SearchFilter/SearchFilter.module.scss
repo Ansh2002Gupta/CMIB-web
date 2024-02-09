@@ -31,6 +31,7 @@
   &:hover {
     border: var(--borderLight) !important;
   }
+  border-radius: var(--radiusLg);
 }
 
 .filterBtnText {
@@ -136,14 +137,16 @@
 .countFilterStyle {
   color: var(--bodyBg);
   font-weight: var(--fontWeightBold);
-}
-
-.countFilterContainerStyle {
+  font-size: var(--fontSizeExtraSmall);
   background-color: var(--greenBtnBg);
-  border-radius: var(--radiusXXLg);
-  align-items: center;
-  height: 22px;
-  width: 22px;
+  border-radius: 15px;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1px;
+  align-self: center;
+  align-content: center;
+  height: var(--height_20);
+  width: var(--width_20);
 }
 
 @media screen and (max-width: 900px) and (min-width: 510px) {
