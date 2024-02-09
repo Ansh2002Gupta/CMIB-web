@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Spin } from "antd";
@@ -13,6 +13,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { userDetailToast } from "../../globalContext/userDetail/userDetailActions";
 import { UserDetailContext } from "../../globalContext/userDetail/userDetailProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
@@ -48,6 +49,8 @@ const UserDetailsContent = ({
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [, setUserDetailDispatch] = useContext(UserDetailContext);
+  const { handleDeleteImage } = useDeleteImageApi();
+  const [deletedImage, setDeletedImage] = useState([]);
   const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
 
@@ -109,6 +112,11 @@ const UserDetailsContent = ({
       updateUserDetails(userId, payload, () => {
         goBackToViewDetailsPage();
         setUserDetailDispatch(userDetailToast({ isUpdate: true }));
+        deletedImage.map((item) => {
+          handleDeleteImage({
+            fileName: item,
+          });
+        });
       });
     }
   };
@@ -265,6 +273,8 @@ const UserDetailsContent = ({
               />
               <FileUpload
                 {...{
+                  deletedImage,
+                  setDeletedImage,
                   updateUserData,
                   isFormEditable: currentFormState !== FORM_STATES.VIEW_ONLY,
                 }}
@@ -283,6 +293,7 @@ const UserDetailsContent = ({
                     ? viewUserData?.profile_photo
                     : userData?.profile_photo
                 }
+                isNotAddable
               />
             </div>
           )}
