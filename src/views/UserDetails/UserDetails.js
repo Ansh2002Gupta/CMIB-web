@@ -176,6 +176,7 @@ const UserDetails = () => {
         },
       });
     }
+  }, []);
 
   useEffect(() => {
     currentFormState !== FORM_STATES.EMPTY &&
