@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import * as types from "./types";
 
 const initialState = {
-  isUserSuccessfullyAdded: false,
+  isUserSuccessfullyAdded: null,
 };
 
 const userDetailReducer = (state, action) => {

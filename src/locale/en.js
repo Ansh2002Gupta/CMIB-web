@@ -382,7 +382,8 @@ const locale = {
   "label.path.centre-details": "Edit centre details",
   "label.path.add": "Add New User",
   "label.errorMessage": "Error Message",
-  "label.userSuccessfullyAdded":"User Successfully Added"
+  "label.userSuccessfullyAdded": "User Successfully Added",
+  "label.userSuccessfullyEdited": "User Successfully Edited",
 };
 
 export default locale;

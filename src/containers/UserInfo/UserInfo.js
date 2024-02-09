@@ -42,6 +42,7 @@ const UserInfo = ({
   emailRef,
   phoneRef,
   nameRef,
+  viewUserData,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
