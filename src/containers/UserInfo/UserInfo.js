@@ -153,6 +153,7 @@ const UserInfo = ({
       {!isEditable && (
         <div className={styles.nonEditableContainer}>
           <Descriptions
+            className="viewUserDetails"
             colon={false}
             title={intl.formatMessage({ id: "label.userDetails" })}
             layout="vertical"
