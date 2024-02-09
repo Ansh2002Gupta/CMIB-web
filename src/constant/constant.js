@@ -313,7 +313,7 @@ export const MENU_KEYS = {
   ROASTER: "roster",
   FEEDBACK: "feedback",
   CONTACT_US: "contact-us",
-  ACTIVITY_LOGS: "activity-logs",
+  ACTIVITY_LOGS: "activity-log",
   ALL_JOBS: "all-job-listing",
   ROUND_1_PLACEMENT: "round-1",
   ROUND_2_PLACEMENT: "round-2",
@@ -358,4 +358,3 @@ export const INITIAL_PASSWORD_DATA = {
 };
 
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
-
