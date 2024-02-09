@@ -29,7 +29,7 @@ const UserDetails = () => {
   const intl = useIntl();
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const currentFormState = searchParams.get("mode") || FORM_STATES.EMPTY;
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
@@ -114,14 +114,20 @@ const UserDetails = () => {
 
   useEffect(() => {
     errorWhileUpdatingUserData &&
-      showNotification(errorWhileUpdatingUserData, NOTIFICATION_TYPES.ERROR);
+      showNotification({
+        text: errorWhileUpdatingUserData,
+        type: NOTIFICATION_TYPES.ERROR,
+      });
     errorWhileAddingNewUser &&
-      showNotification(errorWhileAddingNewUser, NOTIFICATION_TYPES.ERROR);
+      showNotification({
+        text: errorWhileAddingNewUser,
+        type: NOTIFICATION_TYPES.ERROR,
+      });
     isNewUserSuccessfullyAdded &&
-      showNotification(
-        intl.formatMessage({ id: "label.userCreatedSuccessfully" }),
-        NOTIFICATION_TYPES.SUCCESS
-      );
+      showNotification({
+        text: intl.formatMessage({ id: "label.userCreatedSuccessfully" }),
+        type: NOTIFICATION_TYPES.SUCCESS,
+      });
   }, [
     errorWhileUpdatingUserData,
     errorWhileAddingNewUser,
@@ -162,9 +168,22 @@ const UserDetails = () => {
           roleFetchDate({ queryParamsObject: {} });
         },
         onErrorCallBack: (errMessage) => {
-          showNotification(errMessage);
+          showNotification({ text: errMessage });
         },
       });
+    }
+    if (
+      currentFormState !== "edit" &&
+      currentFormState !== "view" &&
+      currentFormState !== "empty"
+    ) {
+      setSearchParams(
+        (prev) => {
+          prev.set("mode", "view");
+          return prev;
+        },
+        { replace: true }
+      );
     }
   }, []);
 

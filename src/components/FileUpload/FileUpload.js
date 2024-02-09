@@ -33,18 +33,19 @@ const FileUpload = ({
     const isLessThan5MB = file?.file?.size / 1024 / 1024 < 5;
 
     if (!isAllowedType) {
-      showNotification(
-        intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
-        "error"
-      );
+      showNotification({
+        text: intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
+        type: "error",
+        headingText: intl.formatMessage({ id: "label.errorMessage" }),
+      });
       return Upload.LIST_IGNORE;
     }
 
     if (!isLessThan5MB) {
-      showNotification(
-        intl.formatMessage({ id: "label.fileUpto5MB" }),
-        "error"
-      );
+      showNotification({
+        text: intl.formatMessage({ id: "label.fileUpto5MB" }),
+        type: "error",
+      });
       return Upload.LIST_IGNORE;
     }
     return isAllowedType && isLessThan5MB;
@@ -97,6 +98,7 @@ const FileUpload = ({
             className={styles.uploadContainer}
             customRequest={handleOnUploadImage}
             disabled={!isFormEditable}
+            accept=".jpg,.jpeg,.png"
           >
             <TwoRow
               className={styles.uploadTextContainer}
