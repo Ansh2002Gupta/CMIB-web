@@ -56,6 +56,20 @@ const UserDetails = () => {
     is_two_factor: false,
     status: 1,
   });
+  const [viewUserData, setViewUserData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    mobile_prefix: "+91",
+    profile_photo: "",
+    profile_photo_url: "",
+    access: [],
+    roles: [],
+    permissions: [],
+    date: "",
+    is_two_factor: false,
+    status: 1,
+  });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
@@ -159,6 +173,23 @@ const UserDetails = () => {
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,
         status: userAccountInfo?.status,
       });
+      setViewUserData({
+        name: userAccountInfo?.name || "",
+        email: userAccountInfo?.email || "",
+        mobile: userAccountInfo?.mobile_number || "",
+        mobile_prefix: userAccountInfo?.mobile_country_code || "+91",
+        profile_photo_url: userAccountInfo?.profile_photo || "",
+        profile_photo: imageName || "",
+        access:
+          Object.entries(userAccountInfo?.roles || {})?.map(
+            ([index, item]) => item?.id
+          ) || [],
+        roles: userAccountInfo?.roles || [],
+        permissions: userAccountInfo?.permissions || [],
+        date: userAccountInfo?.created_at || "",
+        is_two_factor: userAccountInfo?.is_two_factor ? true : false,
+        status: userAccountInfo?.status,
+      });
     }
   };
 
@@ -226,6 +257,7 @@ const UserDetails = () => {
                 currentFormState,
                 updateUserData,
                 userId,
+                viewUserData,
               }}
             />
           )
@@ -255,6 +287,7 @@ const UserDetails = () => {
               isAccessValid,
               setIsAccessValid,
               addNewUser,
+              viewUserData,
             }}
             isLoading={isLoading || isUpdatingUserData || isAddingUser}
           />

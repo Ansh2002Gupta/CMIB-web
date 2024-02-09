@@ -19,6 +19,7 @@ const UserDetailsHeader = ({
   updateUserDetails,
   userData,
   userId,
+  viewUserData,
 }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -27,7 +28,7 @@ const UserDetailsHeader = ({
 
   const getHeaderText = () => {
     if (currentFormState === FORM_STATES.VIEW_ONLY) {
-      return userData?.name;
+      return viewUserData?.name;
     }
     if (currentFormState === FORM_STATES.EDITABLE) {
       return intl.formatMessage({ id: "label.editUserDetails" });
