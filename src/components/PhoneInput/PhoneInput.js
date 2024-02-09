@@ -89,7 +89,7 @@ const PhoneInput = React.forwardRef(
             ))}
           </Select>
           <InputNumber
-            type="phone"
+            type="tel"
             maxLength={10}
             controls={false}
             className={[styles.inputNumberStyles, customInputNumberStyles]}
