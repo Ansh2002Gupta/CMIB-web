@@ -187,6 +187,7 @@ const QueryTable = ({
       pageSize,
       current,
       searchedValue,
+      filterArray,
     },
     sortedOrder,
     setSortedOrder,
