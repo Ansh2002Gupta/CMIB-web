@@ -11,6 +11,7 @@ const variables = {
   headerBg: colorPallets.whiteSmoke,
   sidemenuBgColor: "var(--primaryBg)",
   greenBtnBg: colorPallets.green1,
+  frogGreen: colorPallets.frogGreen,
   mobileBg1: colorPallets.white,
   uploadBg: colorPallets.white1,
   snow: colorPallets.snow,
@@ -23,7 +24,7 @@ const variables = {
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
   lightGrey3Bg: colorPallets.ltGrey3,
-  darkBlueBg: colorPallets.darkBlue3,
+  darkBlueBg: colorPallets.darkBlue4,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -49,6 +50,7 @@ const variables = {
   blueText: colorPallets.darkBlue2,
   redText: colorPallets.darkOrange,
   greyText: colorPallets.ltGrey1,
+  darkBlue3: colorPallets.darkBlue3,
 
   // Border-Radius
   radiusNone: "0px",

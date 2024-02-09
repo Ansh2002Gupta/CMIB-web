@@ -20,6 +20,7 @@ export const QUERY_DETAILS = "query/:queryId";
 export const SESSION = "session/";
 export const SETUP_CENTERS = "setup-centers/";
 export const SETUP_CENTERS_DETAILS = "details/:centreId";
+export const SETUP_MOCK_INTERVIEW = "setup-mock-interview";
 export const SUBSCRIPTIONS = "subscriptions/";
 export const USER_DETAILS = "details/:userId";
 export const USERS = "users/";

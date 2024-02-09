@@ -11,7 +11,8 @@ export const colorPallets = {
   greyBlue: "#FCFCFD",
   skyBlue: "#E8FCFF",
   darkBlue2: "#0099CA",
-  darkBlue3: "#141b43",
+  darkBlue3: "rgba(0,21,42,255)",
+  darkBlue4: "#141b43",
 
   // Red color shades
   red1: "#D93400",
@@ -35,6 +36,7 @@ export const colorPallets = {
   green2: "#00873E",
   lightGreen: "#DFFFDC",
   darkGreen: "#258B01",
+  frogGreen: "rgba(4, 175, 85, 0.04)",
 
   // White color shades
   white: "#FBFCFF",

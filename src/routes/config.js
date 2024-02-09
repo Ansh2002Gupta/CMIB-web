@@ -18,6 +18,7 @@ import Session from "../views/Session";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import SetupCenterDetails from "../views/SetupCenterDetails";
+import SetupMockInterview from "../views/SetupMockInterview";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
@@ -41,6 +42,7 @@ import {
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
+  SETUP_MOCK_INTERVIEW,
   SUBSCRIPTIONS,
   USERS,
   USER_DETAILS,
@@ -133,6 +135,10 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW,
+        element: <SetupMockInterview />,
       },
     ],
   },
@@ -241,6 +247,10 @@ const config = [
         viewPath: CONTACT_US + QUERY_DETAILS,
         element: <QueryDetails />,
       },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW,
+        element: <SetupMockInterview />,
+      },
     ],
   },
   {
@@ -284,6 +294,10 @@ const config = [
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
       },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW,
+        element: <SetupMockInterview />,
+      },
     ],
   },
   {
@@ -326,6 +340,10 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW,
+        element: <SetupMockInterview />,
       },
     ],
   },

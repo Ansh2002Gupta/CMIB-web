@@ -4,7 +4,7 @@ const locale = {
   "label.signIn": "Sign In",
   "label.userName": "Username",
   "label.userName2": "User Name",
-  "label.userNameLeftEmpty": "user name cannot be left empty!",
+  "label.pleaseEnterUserName": "Please enter user name",
   "label.email": "Email",
   "label.mobileNumber": "Mobile Number",
   "label.access": "Access",
@@ -143,7 +143,7 @@ const locale = {
     "Format not supported, only jpeg and png can be uploaded. Please upload again",
   "label.fileUpto5MB": "Max size allowed is 5 mb, please upload again",
   "label.editUserDetails": "Edit User Details",
-  "label.twoFactorAuth": "Two factor authentication",
+  "label.twoFactorAuth": "Two-factor Authentication",
   "label.on": "ON",
   "label.off": "OFF",
   "label.edit": "Edit",
@@ -247,6 +247,10 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.session.setupMockInterviews": "Setup Mock Interviews",
+  "label.warning.setupMockInterviews":
+    "*This cannot be edited once registration for the students starts.",
+  "label.totalStudentsBooked": "Total Students Booked",
   "label.consent.placeholder.startDateCompanies":
     " Select Start Date for Companies",
   "label.consent.placeholder.startDateCandidates":

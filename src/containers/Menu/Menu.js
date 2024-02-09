@@ -50,7 +50,7 @@ function MenuContainer({ openSideMenu, setIsModalOpen, setOpenSideMenu }) {
           padding: 0,
         },
         content: {
-          background: "var(--blackBg, #000833)",
+          background: "var(--inputLabel, #000833)",
         },
         mask: {
           backdropFilter: "blur(3px)",
