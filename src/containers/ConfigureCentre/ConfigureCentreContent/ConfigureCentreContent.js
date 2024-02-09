@@ -126,9 +126,9 @@ const ConfigureCentreContent = () => {
     const requestedParams = {
       perPage: pageSize,
       page: newPageNumber,
-      keyword: searchedValue,
-      sort: sortedOrder.sortDirection,
-      order: sortedOrder.sortKeyName,
+      q: searchedValue,
+      sortDirection: sortedOrder.sortDirection,
+      sortField: sortedOrder.sortKeyName,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
