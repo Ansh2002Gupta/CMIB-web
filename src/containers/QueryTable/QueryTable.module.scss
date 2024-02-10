@@ -3,55 +3,7 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightBold);
 }
-.textEllipsis {
-  max-width: var(--width_200);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.filterAndTableContainer {
-  background-color: var(--blueBg);
-  width: var(--fullWidth);
-  display: flex;
-  flex-direction: column;
-  gap: var(--gapSmall);
-  padding: var(--paddingMedium);
-  flex: 1;
-}
-.tableContainer {
-  border-radius: var(--radiusMLg) !important;
-  overflow: hidden !important;
-  border: var(--borderLight);
-}
-.searchIcon {
-  width: var(--width_30);
-  height: var(--height_30);
-  padding-right: var(--paddingExtraSmall);
-  padding-bottom: var(--paddingXXSmall);
-}
-.searchBar {
-  width: var(--width_30Per);
-  min-height: var(--minBtnHeight);
-  border-radius: var(--radiusXLg);
-  input {
-    color: var(--inputText) !important;
-    font-size: var(--fontSizeSmall) !important;
-    font-weight: var(--fontWeightMedium) !important;
-  }
-}
-.loaderContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: var(--height_50vh);
-  width: var(--fullWidth);
-}
-.searchBarContainer {
-  display: flex;
-  justify-content: flex-start;
-  gap: var(--gapSmall);
-  position: relative;
-}
+
 .errorContainer {
   width: var(--fullWidth);
   height: var(--fullHeight);
@@ -98,10 +50,12 @@
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
 }
+
 .alertBox {
   max-width: var(--width_300);
   font-weight: var(--fontWeightBold);
 }
+
 .errorTextContainer {
   display: flex;
   flex-direction: column;
@@ -196,23 +150,4 @@ input::placeholder {
 
 .arrowSytles {
   margin-bottom: 6px;
-}
-
-@media screen and (max-width: 1023px) {
-  .searchBar {
-    width: var(--halfWidth);
-  }
-}
-@media screen and (max-width: 511px) {
-  .searchBarContainer {
-    flex-direction: column;
-  }
-  .searchBar {
-    width: var(--fullWidth);
-    min-height: var(--height_50);
-  }
-  .filterBtn {
-    max-width: var(--width_100);
-    align-self: flex-end;
-  }
 }

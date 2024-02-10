@@ -5,6 +5,7 @@ import {
   SESSION,
   USERS,
   SUBSCRIPTIONS,
+  QUERIES,
 } from "../../routes/routeNames";
 import { MODULE_KEYS, MENU_KEYS } from "../../constant/constant";
 import { ReactComponent as Activity } from "../../themes/base/assets/icons/activity.svg";
@@ -108,7 +109,7 @@ const controlMenu = [
   },
   {
     label: MENU_KEYS.QUERY_MANAGEMENT,
-    key: "/query-management",
+    key: QUERIES,
     icon: <SMS />,
     selectedicon: <SelectedSMS />,
   },

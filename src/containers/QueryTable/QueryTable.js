@@ -6,23 +6,23 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
-import Chip from "../../../components/Chip/Chip";
-import CustomModal from "../../../components/CustomModal/CustomModal";
-import ErrorMessageBox from "../../../components/ErrorMessageBox";
-import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
-import useQueriesTypesApi from "../../../services/api-services/Queries/useQueriesTypesApi";
-import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
-import useFetch from "../../../core/hooks/useFetch";
-import useMarkQueriesAsAnswerApi from "../../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
-import useShowNotification from "../../../core/hooks/useShowNotification";
-import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
+import Chip from "../../components/Chip/Chip";
+import CustomModal from "../../components/CustomModal/CustomModal";
+import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
+import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import useQueriesTypesApi from "../../services/api-services/Queries/useQueriesTypesApi";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useFetch from "../../core/hooks/useFetch";
+import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
+import useShowNotification from "../../core/hooks/useShowNotification";
+import { getTicketOrQueryColumn } from "./QueriesTableConfig";
 import {
   convertPermissionFilter,
   getValidFilter,
   getValidSortByValue,
-} from "../../../constant/utils";
-import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../../constant/apiEndpoints";
+} from "../../constant/utils";
+import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
   NUMBER_OF_CHIPS_TO_SHOW,
@@ -30,12 +30,11 @@ import {
   SORTING_QUERY_PARAMS,
   SORT_PROPERTIES,
   SORT_VALUES,
-} from "../../../constant/constant";
-import styles from "../ContactUsListingContent.module.scss";
+} from "../../constant/constant";
+import styles from "./QueryTable.module.scss";
 
 const QueryTable = ({
   current,
-  currentActiveTab,
   pageSize,
   setCurrent,
   setPageSize,
@@ -192,7 +191,6 @@ const QueryTable = ({
   };
 
   const columns = getTicketOrQueryColumn({
-    type: currentActiveTab,
     intl,
     getImage,
     navigate,
@@ -494,7 +492,6 @@ const QueryTable = ({
 
 QueryTable.defaultProps = {
   current: 1,
-  currentActiveTab: "1",
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
   setCurrent: () => {},
@@ -506,7 +503,6 @@ QueryTable.defaultProps = {
 
 QueryTable.propTypes = {
   current: PropTypes.number,
-  currentActiveTab: PropTypes.string,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
   setCurrent: PropTypes.func,
