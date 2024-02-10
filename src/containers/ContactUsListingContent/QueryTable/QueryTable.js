@@ -93,6 +93,7 @@ const QueryTable = ({
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
   // functions
+  // Query selections/toggle related functions
   const onRetry = () => {
     const requestedParams = {
       perPage: pageSize,
@@ -198,6 +199,7 @@ const QueryTable = ({
     areSomeItemsSelected,
   });
 
+  // Pagination, search and filter related functions
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
     str &&
@@ -301,7 +303,6 @@ const QueryTable = ({
     if (allQueryAreAlreadyAnswered) {
       return {
         currentModalHeading: "allSelectedQueriesAreAlreadyMarked",
-        cancelBtnText: "",
         actionBtnText: "okay",
         currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
       };
@@ -310,7 +311,6 @@ const QueryTable = ({
       return {
         currentModalHeading:
           "someQueriesAreMarkedAsAnsweredContinueMaringOthers",
-        cancelBtnText: "",
         actionBtnText: "okay",
         currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
       };
@@ -318,21 +318,19 @@ const QueryTable = ({
 
     return {
       currentModalHeading: "markQueriesAsAnswered",
-      cancelBtnText: "cancel",
       actionBtnText: "markAsAnswered",
       currentModalSubHeading: "areYouSureYouWantToMarkQueries",
     };
   };
 
+  // MODAL PROPERTIES
   let currentModalHeading = getModalProperties()?.currentModalHeading;
-  const cancelBtnText = getModalProperties()?.cancelBtnText;
   let actionBtnText = getModalProperties()?.actionBtnText;
   let currentModalSubHeading = getModalProperties()?.currentModalSubHeading;
   let modalIcon =
     queriesSelectedAndMarkedForAnswer?.length === 0
       ? getImage("CircleCheck")
       : "";
-
   let currentModalChildren = (
     <div className={styles.chipContainer}>
       {queriesSelectedAndMarkedForAnswer?.map((item, index) => {
@@ -427,7 +425,7 @@ const QueryTable = ({
           subHeadingText={intl.formatMessage({
             id: `label.${currentModalSubHeading}`,
           })}
-          cancelBtnText={intl.formatMessage({ id: `label.${cancelBtnText}` })}
+          cancelBtnText={intl.formatMessage({ id: `label.cancel` })}
           content={currentModalChildren}
         />
       }

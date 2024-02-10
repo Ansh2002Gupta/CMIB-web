@@ -40,7 +40,8 @@ export const getTicketOrQueryColumn = ({
     handleMarkMutipleQueriesAsAnswered,
     setSelectedItemsList,
   } = queriesColumnProperties;
-  const { pageSize, current, searchedValue } = paginationAndSearchProperties;
+  const { pageSize, current, searchedValue, filterArray } =
+    paginationAndSearchProperties;
   const isTableInSelectAllMode = selectedItemsList?.length !== 0;
   if (type === "2") {
     return [
@@ -89,6 +90,7 @@ export const getTicketOrQueryColumn = ({
                       perPage: pageSize,
                       page: current,
                       keyword: searchedValue,
+                      queryType: filterArray,
                       sortDirection: toggleSorting(sortedOrder.sortDirection),
                       sortField: "name",
                     },
@@ -249,6 +251,7 @@ export const getTicketOrQueryColumn = ({
                       perPage: pageSize,
                       page: current,
                       keyword: searchedValue,
+                      queryType: filterArray,
                       sortDirection: toggleSorting(sortedOrder.sortDirection),
                       sortField: "created_at",
                     },
