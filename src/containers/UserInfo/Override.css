@@ -21,13 +21,27 @@
 }
 
 .ant-descriptions-item-label {
-  color: var(--subHeadingColor, #616c82) !important;
-  font-size: var(--padding_14, 14px) !important;
-  font-weight: var(--fontWeightMedium, 500) !important;
+  color: var(--On-surface, #616c82) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+
+}
+
+.ant-descriptions-row >th{
+  padding-bottom: var(--paddingXXSmall) !important;
 }
 
 .ant-descriptions-item-content {
-  font-weight: var(--fontWeightMedium, 500) !important;
+  font-weight: var(--fontWeightMedium) !important;
+  font-size: var(--fontSizeSmall) !important;
+}
+/* For preventing unnecessary scroll from modal */
+.ant-modal-root .ant-modal-wrap {
+  overflow: unset !important;
+}
+
+.ant-input-number-handler-wrap {
+  pointer-events: none;
 }
 
 .ant-descriptions .ant-descriptions-row > th {

@@ -6,9 +6,17 @@ import Base from "../../core/layouts/Base/Base";
 
 import styles from "./PointsList.module.scss";
 
-const PointsList = ({ customHeadingStyles, pointsArray, pointsHeading }) => {
+const PointsList = ({
+  customHeadingStyles,
+  isBulletColorRed,
+  pointsArray,
+  pointsHeading,
+}) => {
   const getBulletStyles = (isValid) => {
-    return [styles.bullet, isValid ? styles.active : ""].join(" ");
+    return [
+      styles.bullet,
+      isValid ? styles.active : isBulletColorRed ? styles.error : "",
+    ].join(" ");
   };
   return (
     <Base className={styles.container}>

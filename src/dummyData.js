@@ -214,20 +214,9 @@ export const ACCESS_FILTER_DATA = [
     id: 1,
     name: "Access 1",
     options: [
-      { optionId: 2, name: "Placements 1 ", count: 100 },
-      { optionId: 3, name: "CA Jobs 1 ", count: 100 },
-    ],
-  },
-  {
-    id: 2,
-    name: "Access 2",
-    options: [
-      { optionId: 5, name: "Placements 2 ", count: 100 },
-      { optionId: 6, name: "CA Jobs 2 ", count: 100 },
-      { optionId: 7, name: "Placements 2 ", count: 100 },
-      { optionId: 8, name: "CA Jobs 2 ", count: 100 },
-      { optionId: 9, name: "Placements 2 ", count: 100 },
-      { optionId: 10, name: "CA Jobs 2 ", count: 100 },
+      { optionId: 1, str: "All" },
+      { optionId: 2, str: "Placements" },
+      { optionId: 3, str: "CA Jobs" },
     ],
   },
 ];
@@ -360,14 +349,15 @@ export const SESSION_DETAILS = {
   name: "Jadyn Bartoletti",
   session_start_date: "2023-12-19T05:11:46.000000Z",
   session_end_date: "2023-12-19T05:11:46.000000Z",
-  nature_of_service: "rerum",
-  perform_invoice_no_format: "facere",
+  nature_of_service: "nature",
+  perform_invoice_no_format: "AugSept-*****-2023",
   examination_session_period: ["May 2023", "November 2023"],
   gmcs_completion_date: "2023-12-19T05:11:46.000000Z",
   membership_completion_date: "2023-12-19T05:11:46.000000Z",
   article_completion_from_date: "2023-12-19T05:11:46.000000Z",
-  bank_account_online: "88896186",
-  bank_account_offline: "1791686",
+  bank_ac_no: "88896186",
+  hsn_sac_code: "1791686",
+  bank_ac_ifsc: "SBIN0005836",
   status: true,
   created_at: "2023-12-19T05:11:46.000000Z",
   updated_at: "2023-12-19T05:11:46.000000Z",
@@ -531,9 +521,9 @@ export const TICKET_DATA_LIST = [
 ];
 
 export const INITIAL_CENTRE_DETAILS = {
-  centreName: "",
-  centreId: "",
-  status: true,
+  centre_name: "",
+  centre_code: "",
+  status: 1,
 };
 
 export const SETUP_CENTRE_DETAILS = [
@@ -581,6 +571,75 @@ export const SETUP_CENTRE_DETAILS = [
     norm1: "17000",
     norm2: "54000",
     norm2MinVacancy: "23",
+  },
+];
+export const MOCK_INTERVIEW = [
+  {
+    id: 1,
+    sNo: "1",
+    centreName: "Ghaziabad-I",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 2,
+    sNo: "2",
+    centreName: "Ghaziabad-II",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 3,
+    sNo: "3",
+    centreName: "Meerut-I",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 4,
+    sNo: "4",
+    centreName: "Meerut-II",
+    totalStudentBooked: "12",
+  },
+  { id: 5, sNo: "5", centreName: "Delhi-I", totalStudentBooked: "12" },
+  {
+    id: 6,
+    sNo: "6",
+    centreName: "Delhi-II",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 7,
+    sNo: "7",
+    centreName: "Ahmedabad-I",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 8,
+    sNo: "8",
+    centreName: "Ahmedabad-II",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 9,
+    sNo: "9",
+    centreName: "Akola-I",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 10,
+    sNo: "10",
+    centreName: "Akola-II",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 11,
+    sNo: "11",
+    centreName: "Akola-III",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 12,
+    sNo: "12",
+    centreName: "Akola-III",
+    totalStudentBooked: "12",
   },
 ];
 

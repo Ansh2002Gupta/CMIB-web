@@ -7,7 +7,7 @@ import Base from "../../core/layouts/Base/Base";
 
 import styles from "./CustomInput.module.scss";
 
-const CustomInput = ({
+const CustomInput = React.forwardRef(({
   currentSelectedValue,
   customContainerStyles,
   customErrorTextStyles,
@@ -31,6 +31,7 @@ const CustomInput = ({
   messageStyles: customMessageStyles,
   messageToShow,
   min,
+  onBlur,
   onChange,
   onSelectItem,
   onSuffixElementClick,
@@ -40,7 +41,7 @@ const CustomInput = ({
   SuffixIcon,
   type,
   value,
-}) => {
+}, ref) => {
   const inputFieldRef = useRef();
 
   const restoreCursorPosition = () => {
@@ -69,8 +70,9 @@ const CustomInput = ({
           styles.formContainer,
           type === "mobile" ? styles.mobile : "",
         ].join(" ")}
+        ref={ref}
       >
-        {(type === "select" || type === "mobile") && (
+        {type === "select" && (
           <>
             <Select
               mode={isMultiSelect ? "multiple" : ""}
@@ -94,22 +96,17 @@ const CustomInput = ({
             />
           </>
         )}
-        {((type !== "select" && type !== "inputNumber") ||
-          type === "mobile") && (
+        {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
           <Input
             ref={isSuffixRequiredForPassword ? inputFieldRef : null}
             type={type || "text"}
-            className={[
-              styles.inputField,
-              type === "mobile" ? styles.mobileInput : "",
-              ,
-              customInputStyles,
-            ].join(" ")}
+            className={[styles.inputField, customInputStyles].join(" ")}
             {...{
               value,
               placeholder,
               disabled,
               onChange,
+              onBlur,
             }}
             prefix={isPrefixRequired ? prefixElement : null}
             suffix={
@@ -183,7 +180,7 @@ const CustomInput = ({
       )}
     </Base>
   );
-};
+});
 
 CustomInput.defaultProps = {
   currentSelectedValue: "",
@@ -209,6 +206,7 @@ CustomInput.defaultProps = {
   messageStyles: "",
   messageToShow: "",
   min: 0,
+  onBlur: () => {},
   onChange: () => {},
   onSelectItem: () => {},
   onSuffixElementClick: () => {},
@@ -244,6 +242,7 @@ CustomInput.propTypes = {
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
+  onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onSelectItem: PropTypes.func,
   onSuffixElementClick: PropTypes.func,

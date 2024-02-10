@@ -31,6 +31,7 @@
   &:hover {
     border: var(--borderLight) !important;
   }
+  border-radius: var(--radiusLg);
 }
 
 .filterBtnText {
@@ -70,7 +71,17 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   white-space: nowrap;
-  max-width: var(--width_200);
+  width: 10vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leftFilterOptionText {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  white-space: nowrap;
+  width: 10vw;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -141,8 +152,39 @@
   font-weight: var(--fontWeightMedium);
 }
 
-@media screen and (max-width: 1279px) {
-  .filterOptionContainer {
-    flex-direction: column;
+.countFilterStyle {
+  color: var(--bodyBg);
+  font-weight: var(--fontWeightBold);
+  font-size: var(--fontSizeExtraSmall);
+  background-color: var(--greenBtnBg);
+  border-radius: 15px;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1px;
+  align-self: center;
+  align-content: center;
+  height: var(--height_20);
+  width: var(--width_20);
+}
+
+.textInBrackets {
+  color: var(--lightGreyText3);
+}
+
+@media screen and (max-width: 900px) and (min-width: 510px) {
+  .cardParentContainer {
+    left: -100px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .filterContainer {
+    min-width: 60vw;
+  }
+  .filterOptionText {
+    width: 28vw;
+  }
+  .leftFilterOptionText {
+    width: 19vw;
   }
 }

@@ -4,12 +4,21 @@ import { Checkbox } from "antd";
 import styles from "./CustomCheckBox.module.scss";
 import "./override.css";
 
-const CustomCheckBox = ({ checked, children, customStyles, onChange }) => {
+const CustomCheckBox = ({
+  checked,
+  children,
+  customStyles,
+  disabled,
+  onChange,
+}) => {
   return (
     <Checkbox
-      className={[styles.box, customStyles].join(" ")}
-      onChange={onChange}
-      checked={checked}
+      {...{ checked, disabled, onChange }}
+      className={[
+        styles.box,
+        disabled ? styles.disable : "",
+        customStyles,
+      ].join(" ")}
     >
       {children}
     </Checkbox>

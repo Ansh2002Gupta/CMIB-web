@@ -6,21 +6,30 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
-import CustomLoader from "../../../components/CustomLoader/CustomLoader";
+import Chip from "../../../components/Chip/Chip";
+import CustomModal from "../../../components/CustomModal/CustomModal";
 import ErrorMessageBox from "../../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import useQueriesTypesApi from "../../../services/api-services/Queries/useQueriesTypesApi";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import useFetch from "../../../core/hooks/useFetch";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
-import useMarkedQueryAsAnweredApi from "../../../services/api-services/Queries/useMarkedQueryAsAnweredApi";
+import useFetch from "../../../core/hooks/useFetch";
+import useMarkQueriesAsAnswerApi from "../../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../../core/hooks/useShowNotification";
-import useGetAllQueryTypesApi from "../../../services/api-services/Query/useGetAllQueryTypesApi";
 import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
-import { toggleSortDirection } from "../../../constant/utils";
-import { ADMIN_ROUTE, QUERY_END_POINT } from "../../../constant/apiEndpoints";
+import {
+  convertPermissionFilter,
+  getValidFilter,
+  getValidSortByValue,
+} from "../../../constant/utils";
+import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
+  NUMBER_OF_CHIPS_TO_SHOW,
   PAGINATION_PROPERTIES,
+  SORTING_QUERY_PARAMS,
+  SORT_PROPERTIES,
+  SORT_VALUES,
 } from "../../../constant/constant";
 import styles from "../ContactUsListingContent.module.scss";
 
@@ -36,103 +45,161 @@ const QueryTable = ({
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const [sortDirection, setSortDirection] = useState({
-    direction: "asc",
-    key: "name",
+  const [sortedOrder, setSortedOrder] = useState({
+    sortDirection: getValidSortByValue(
+      searchParams.get(SORT_PROPERTIES.SORT_BY)
+    ),
+    sortKeyName: "created_at",
   });
-  const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
+  const [
+    selctedQueriesToBeMarkedAsAnswered,
+    setSelctedQueriesToBeMarkedAsAnswered,
+  ] = useState([]);
+  const [filterArray, setFilterArray] = useState(
+    getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
+  );
+
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const { showNotification, notificationContextHolder } = useShowNotification();
+
+  const {
+    data: queryTypesData,
+    getQueriesTypes,
+    isLoading: isGettingQueryTypes,
+    error: errorWhileGettingQueryTypes,
+  } = useQueriesTypesApi();
+
+  const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
+    useMarkQueriesAsAnswerApi();
+
+  let sortArrowStyles = "";
+  if (sortedOrder?.sortDirection === SORT_VALUES.ASCENDING) {
+    sortArrowStyles = styles.upside;
+  } else if (sortedOrder?.sortDirection === SORT_VALUES.DESCENDING) {
+    sortArrowStyles = styles.downside;
+  }
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + QUERY_END_POINT,
+    url: ADMIN_ROUTE + QUERIES_END_POINT,
     otherOptions: { skipApiCallOnMount: true },
   });
   let errorString = error;
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
+  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
-  const {
-    isError: isErrorGettingQueryTypes,
-    isSuccess: isSuccessFullgetQueryTypes,
-    error: errorWhileGettingQueryTypes,
-    isLoading: isLoadingWhileGettingQueryTypes,
-    data: queryTypesData,
-    getAllQueryTypes,
-  } = useGetAllQueryTypesApi();
-
-  const filtersData = isErrorGettingQueryTypes
-    ? null
-    : [
-        {
-          id: 1,
-          name: intl.formatMessage({ id: "label.queryTypes" }),
-          options: queryTypesData,
-        },
-      ];
-
-  const onSuccessfullUpdateQueryStatus = () => {
+  // functions
+  // Query selections/toggle related functions
+  const onRetry = () => {
     const requestedParams = {
       perPage: pageSize,
       page: current,
       q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      queryType: filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const handleOnFilterApply = () => {
-    // TODO: change the name of the key required to sending the filters value to the backend
-    const requestedParams = {
-      perPage: pageSize,
-      page: current,
-      q: searchedValue,
-      queryType: currentFilterStatus,
-    };
-    fetchData({ queryParamsObject: requestedParams });
-  };
-
-  const handleOnSort = () => {
-    fetchData({
-      queryParamsObject: {
-        perPage: pageSize,
-        page: current,
-        q: searchedValue,
-        sort: sortDirection.key,
-        sortDirection: toggleSortDirection(sortDirection.direction),
+  const handleMarkQuery = () => {
+    handleMarkQueriesAsAnswered({
+      payload: {
+        query_id: selctedQueriesToBeMarkedAsAnswered,
       },
       onSuccessCallback: () => {
-        setSortDirection((prev) => {
-          return {
-            ...prev,
-            direction: toggleSortDirection(sortDirection.direction),
-          };
-        });
+        setIsConfirmationModalOpen(false);
+        onRetry();
+        setSelctedQueriesToBeMarkedAsAnswered([]);
+      },
+      onErrorCallback: (errorString) => {
+        setIsConfirmationModalOpen(false);
+        showNotification(errorString, "error");
       },
     });
   };
 
-  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
-    useMarkedQueryAsAnweredApi();
+  const checkAreAllQueryOfCurrentPageSelected = (checkFor) => {
+    const currentPageSelectedQueries = data?.records?.filter((query) => {
+      return selctedQueriesToBeMarkedAsAnswered?.includes(query?.id);
+    });
 
-  const columns = getTicketOrQueryColumn(
-    currentActiveTab,
+    if (checkFor === "all") {
+      return currentPageSelectedQueries?.length === data?.records?.length;
+    }
+
+    if (checkFor === "some") {
+      return (
+        currentPageSelectedQueries?.length !== 0 &&
+        currentPageSelectedQueries?.length !== data?.records?.length
+      );
+    }
+  };
+
+  const areAllItemsSelected = checkAreAllQueryOfCurrentPageSelected("all");
+  const areSomeItemsSelected = checkAreAllQueryOfCurrentPageSelected("some");
+
+  const toggleSelectAllItems = () => {
+    const currentPageIdsArray = data?.records?.map((query) => query?.id);
+    if (areAllItemsSelected) {
+      const updatedData = selctedQueriesToBeMarkedAsAnswered?.filter(
+        (queryId) => !currentPageIdsArray?.includes(queryId)
+      );
+      setSelctedQueriesToBeMarkedAsAnswered(updatedData);
+      return;
+    }
+    setSelctedQueriesToBeMarkedAsAnswered((prev) => [
+      ...prev,
+      ...currentPageIdsArray,
+    ]);
+  };
+
+  const toggleSelectedQueriesId = (queryId) => {
+    if (selctedQueriesToBeMarkedAsAnswered?.includes(queryId)) {
+      const updatedData = selctedQueriesToBeMarkedAsAnswered?.filter(
+        (val) => val !== queryId
+      );
+      setSelctedQueriesToBeMarkedAsAnswered(updatedData);
+      return;
+    }
+    setSelctedQueriesToBeMarkedAsAnswered((prev) => [...prev, queryId]);
+  };
+
+  const columns = getTicketOrQueryColumn({
+    type: currentActiveTab,
     intl,
     getImage,
     navigate,
     renderColumn,
-    sortDirection.direction,
-    handleOnSort,
-    markedQueryAsAnswered,
-    onSuccessfullUpdateQueryStatus,
-    (errorText) => showNotification(errorText, "error")
-  );
+    queriesColumnProperties: {
+      sortArrowStyles,
+      selectedItemsList: selctedQueriesToBeMarkedAsAnswered,
+      setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
+      toggleSelectedQueriesId,
+      handleMarkMutipleQueriesAsAnswered: () =>
+        setIsConfirmationModalOpen(true),
+    },
+    fetchData,
+    paginationAndSearchProperties: {
+      pageSize,
+      current,
+      searchedValue,
+      filterArray,
+    },
+    sortedOrder,
+    setSortedOrder,
+    setSearchParams,
+    setIsConfirmationModalOpen,
+    toggleSelectAllItems,
+    areAllItemsSelected,
+    areSomeItemsSelected,
+  });
 
-  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
-
-  const { showNotification, notificationContextHolder } = useShowNotification();
-
+  // Pagination, search and filter related functions
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
     str &&
@@ -149,6 +216,9 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: str,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      queryType: filterArray,
     };
     debounceSearch({ queryParamsObject: requestedParams });
   };
@@ -165,6 +235,9 @@ const QueryTable = ({
       perPage: size,
       page: 1,
       q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      queryType: filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -179,6 +252,26 @@ const QueryTable = ({
       perPage: pageSize,
       page: newPageNumber,
       q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      queryType: filterArray,
+    };
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
+  const handleOnFilterApply = (updatedFiltersValue) => {
+    let arrayAsString = JSON.stringify(updatedFiltersValue);
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
+      return prev;
+    });
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      q: searchedValue,
+      queryType: updatedFiltersValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -188,10 +281,82 @@ const QueryTable = ({
       perPage: DEFAULT_PAGE_SIZE,
       page: 1,
       q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      queryType: filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
 
+  let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
+    (item) =>
+      item?.status?.toLowerCase() === "answered" &&
+      selctedQueriesToBeMarkedAsAnswered.includes(item?.id)
+  );
+
+  const allQueryAreAlreadyAnswered =
+    queriesSelectedAndMarkedForAnswer?.length ===
+      selctedQueriesToBeMarkedAsAnswered?.length &&
+    selctedQueriesToBeMarkedAsAnswered?.length > 0;
+
+  const getModalProperties = () => {
+    if (allQueryAreAlreadyAnswered) {
+      return {
+        currentModalHeading: "allSelectedQueriesAreAlreadyMarked",
+        actionBtnText: "okay",
+        currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
+      };
+    }
+    if (queriesSelectedAndMarkedForAnswer?.length) {
+      return {
+        currentModalHeading:
+          "someQueriesAreMarkedAsAnsweredContinueMaringOthers",
+        actionBtnText: "okay",
+        currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
+      };
+    }
+
+    return {
+      currentModalHeading: "markQueriesAsAnswered",
+      actionBtnText: "markAsAnswered",
+      currentModalSubHeading: "areYouSureYouWantToMarkQueries",
+    };
+  };
+
+  // MODAL PROPERTIES
+  let currentModalHeading = getModalProperties()?.currentModalHeading;
+  let actionBtnText = getModalProperties()?.actionBtnText;
+  let currentModalSubHeading = getModalProperties()?.currentModalSubHeading;
+  let modalIcon =
+    queriesSelectedAndMarkedForAnswer?.length === 0
+      ? getImage("CircleCheck")
+      : "";
+  let currentModalChildren = (
+    <div className={styles.chipContainer}>
+      {queriesSelectedAndMarkedForAnswer?.map((item, index) => {
+        if (index <= NUMBER_OF_CHIPS_TO_SHOW) {
+          return (
+            <Chip
+              bgColor={styles.chipBg}
+              textColor={styles.chipText}
+              label={item?.readable_id}
+            />
+          );
+        } else if (index === NUMBER_OF_CHIPS_TO_SHOW + 1) {
+          const totalLeft = queriesSelectedAndMarkedForAnswer?.length - 15;
+          return (
+            <Chip
+              bgColor={styles.chipBg}
+              textColor={styles.chipText}
+              label={`+${totalLeft}`}
+            />
+          );
+        }
+      })}
+    </div>
+  );
+
+  // useEffects hooks
   useEffect(() => {
     if (data?.meta) {
       const { total } = data?.meta;
@@ -207,6 +372,9 @@ const QueryTable = ({
           perPage: pageSize,
           page: 1,
           q: searchedValue,
+          sortField: sortedOrder?.sortKeyName,
+          sortDirection: sortedOrder?.sortDirection,
+          queryType: filterArray,
         };
         fetchData({ queryParamsObject: requestedParams });
       }
@@ -214,9 +382,16 @@ const QueryTable = ({
   }, [data?.meta?.total]);
 
   useEffect(() => {
+    let arrayAsString = JSON.stringify(filterArray);
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
+      prev.set(
+        SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+        sortedOrder.sortDirection
+      );
+      prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
+      prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortedOrder.sortKeyName);
       searchedValue &&
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
       return prev;
@@ -226,16 +401,35 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: searchedValue,
+      sortField: sortedOrder?.sortKeyName,
+      sortDirection: sortedOrder?.sortDirection,
+      queryType: filterArray,
     };
     fetchData({ queryParamsObject: requestedParams });
-    getAllQueryTypes();
+    getQueriesTypes({});
   }, []);
 
   return (
     <>
       {notificationContextHolder}
-      {isMarkingQueryAsAnswered && <CustomLoader />}
-      {!isError && !isMarkingQueryAsAnswered && (
+      {
+        <CustomModal
+          btnText={intl.formatMessage({ id: `label.${actionBtnText}` })}
+          headingText={intl.formatMessage({
+            id: `label.${currentModalHeading}`,
+          })}
+          imgElement={modalIcon}
+          isOpen={isConfirmationModalOpen}
+          onBtnClick={handleMarkQuery}
+          onCancel={() => setIsConfirmationModalOpen(false)}
+          subHeadingText={intl.formatMessage({
+            id: `label.${currentModalSubHeading}`,
+          })}
+          cancelBtnText={intl.formatMessage({ id: `label.cancel` })}
+          content={currentModalChildren}
+        />
+      }
+      {!isError && (
         <TableWithSearchAndFilters
           {...{
             current,
@@ -245,16 +439,17 @@ const QueryTable = ({
             columns,
             onChangePageSize,
             onChangeCurrentPage,
-            filtersData,
-            currentFilterStatus,
-            setCurrentFilterStatus,
+            filterArray,
+            setFilterArray,
           }}
-          isLoading={isSuccess && !isLoading}
+          isLoading={(isSuccess && !isLoading) || isMarkingQueryAsAnswered}
           data={data?.records}
           currentDataLength={data?.meta?.total}
-          optionsIdKey={"id"}
-          optionsNameKey={"name"}
-          onSearch={handleOnFilterApply}
+          filterPropertiesArray={convertPermissionFilter(
+            queryTypesData || [],
+            "Query-Types"
+          )}
+          onFilterApply={handleOnFilterApply}
         />
       )}
       {isError && (

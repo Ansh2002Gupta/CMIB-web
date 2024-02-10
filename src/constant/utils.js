@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import {
   DEFAULT_PAGE_SIZE,
   GENERIC_ERROR_MESSAGE,
@@ -6,11 +6,15 @@ import {
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
 
-export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
+export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
   if (date) {
-    return moment(new Date(date)).format(dateFormat);
+    return dayjs(new Date(date)).format(dateFormat);
   }
-  return moment(new Date()).format(dateFormat);
+  return dayjs(new Date()).format(dateFormat);
+};
+
+export const convertDateToStringDate = (date) => {
+  return date;
 };
 
 export const convertStringArrayToObjectOfStringAndIdArray = (
@@ -55,19 +59,18 @@ export function getValidPageSize(currentPageSize) {
   return validPageSize;
 }
 
-export const getErrorMessage = (errorObjectOrMessage) => {
-  if (typeof errorObjectOrMessage === "string") {
-    return errorObjectOrMessage;
+export function getValidFilter(currentFilter) {
+  let decodedFilter;
+  try {
+    const filterParam = currentFilter || "[]";
+    decodedFilter = JSON.parse(decodeURIComponent(filterParam));
+  } catch (e) {
+    console.error("Failed to decode filter parameter:", e);
+    // Fallback to an empty array or some default value
+    decodedFilter = [];
   }
-  return errorObjectOrMessage?.data?.message;
-};
-
-export const toggleSorting = (currentSortValue) => {
-  if (SORT_VALUES.ASCENDING === currentSortValue) {
-    return SORT_VALUES.DESCENDING;
-  }
-  return SORT_VALUES.ASCENDING;
-};
+  return decodedFilter;
+}
 
 export function getCurrentActiveTab(currentTabValue, validTabsValueArray) {
   if (!currentTabValue || !validTabsValueArray.includes(currentTabValue)) {
@@ -99,6 +102,13 @@ export const getAccessibleModules = (useRoles, modules) => {
   });
 
   return filteredModules;
+};
+
+export const toggleSorting = (currentSortValue) => {
+  if (SORT_VALUES.ASCENDING === currentSortValue) {
+    return SORT_VALUES.DESCENDING;
+  }
+  return SORT_VALUES.ASCENDING;
 };
 
 export function filterMenuData(modules, menuItems) {
@@ -135,16 +145,59 @@ export const getValidSortByValue = (currentSortByValue) => {
   return SORT_VALUES.ASCENDING;
 };
 
-export const toggleSortDirection = (direction) => {
-  if (direction === SORT_VALUES.ASCENDING) {
-    return SORT_VALUES.DESCENDING;
-  }
-  return SORT_VALUES.ASCENDING;
-};
-
 export const getErrorText = (errorText) => {
   if (errorText) {
     return errorText;
   }
   return GENERIC_ERROR_MESSAGE;
+};
+
+export const getImageSource = (uploadedImage) => {
+  if (uploadedImage && typeof uploadedImage === "string") {
+    return uploadedImage;
+  }
+  if (uploadedImage) {
+    return URL.createObjectURL(uploadedImage);
+  }
+  return "";
+};
+
+export const convertPermissionFilter = (roles, singleOptionsGroupName) => {
+  let result = [
+    {
+      id: 1,
+      name: singleOptionsGroupName || "Access",
+      isSelected: false,
+      options: [],
+    },
+  ];
+  for (const key in roles) {
+    if (roles.hasOwnProperty(key)) {
+      result[0].options.push({
+        optionId: parseInt(roles[key]?.id || key),
+        str: roles[key]?.name,
+        query_count: roles[key]?.query_count,
+      });
+    }
+  }
+
+  return result;
+};
+
+export const isObjectHasNoValues = (obj) => {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (obj[key] !== undefined) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+export const getErrorMessage = (errorObjectOrMessage) => {
+  if (typeof errorObjectOrMessage === "string") {
+    return errorObjectOrMessage;
+  }
+  return errorObjectOrMessage?.data?.message;
 };

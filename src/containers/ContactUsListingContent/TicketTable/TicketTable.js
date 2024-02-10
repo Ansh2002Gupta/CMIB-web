@@ -49,79 +49,33 @@ const TicketTable = ({
     otherOptions: { skipApiCallOnMount: true },
   });
 
-  const columns = getTicketOrQueryColumn(
-    currentActiveTab,
-    intl,
-    getImage,
-    navigate,
-    renderColumn,
-    sortDirection.direction,
-    () =>
-      fetchData({
-        queryParamsObject: {
-          perPage: pageSize,
-          page: current,
-          q: searchedValue,
-          sort: sortDirection.key,
-          sortDirection: toggleSortDirection(sortDirection.direction),
-        },
-        onSuccessCallback: () => {
-          setSortDirection((prev) => {
-            return {
-              ...prev,
-              direction: toggleSortDirection(sortDirection.direction),
-            };
-          });
-        },
-      })
-  );
+  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
+    url: ADMIN_ROUTE + TICKET_LIST,
+    otherOptions: { skipApiCallOnMount: true },
+  });
   let errorString = error;
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
-  const {
-    isError: isErrorGettingQueryTypes,
-    isSuccess: isSuccessFullgetQueryTypes,
-    error: errorWhileGettingQueryTypes,
-    isLoading: isLoadingWhileGettingQueryTypes,
-    data: queryTypesData,
-    getAllQueryTypes,
-  } = useGetAllQueryTypesApi();
-
-  const filtersData = [
-    {
-      id: 1,
-      name: intl.formatMessage({ id: "label.status" }),
-      options: queryTypesData, // TODO: need to get this from API
+  const columns = getTicketOrQueryColumn({
+    type: currentActiveTab,
+    intl,
+    getImage,
+    navigate,
+    renderColumn,
+    queriesColumnProperties: {},
+    fetchData,
+    paginationAndSearchProperties: {
+      pageSize,
+      current,
+      searchedValue,
     },
-    {
-      // TODO: need to remove below object
-      id: 2,
-      name: "Access 1",
-      options: [
-        { id: 21, name: "Placements 1 ", count: 100 },
-        { id: 31, name: "CA Jobs 1 ", count: 100 },
-      ],
-    },
-    {
-      id: 3,
-      name: intl.formatMessage({ id: "label.queryTypes" }),
-      options: queryTypesData,
-    },
-  ];
-
-  const handleOnFilterApply = () => {
-    // TODO: change the name of the key required to sending the filters value to the backend
-    const requestedParams = {
-      perPage: pageSize,
-      page: current,
-      q: searchedValue,
-      queryType: currentFilterStatus,
-    };
-    fetchData({ queryParamsObject: requestedParams });
-  };
+    // sortedOrder,
+    // setSortedOrder,
+    // setSearchParams,
+  });
 
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);

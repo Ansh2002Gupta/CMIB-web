@@ -8,12 +8,7 @@
   cursor: pointer;
   &:hover {
     border: var(--borderGreen) !important;
-    background: linear-gradient(
-        0deg,
-        var(--green3) 0%,
-        var(--green3) 100%
-      ),
-      var(--bodyBg);
+    background: var(--frogGreen);
   }
 }
 

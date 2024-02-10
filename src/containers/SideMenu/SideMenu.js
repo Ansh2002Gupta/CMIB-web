@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
-import { ArrowRightOutlined, GlobalOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 import { Base, TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
@@ -12,6 +12,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { filterMenuData } from "../../constant/utils";
 import { DASHBOARD } from "../../routes/routeNames";
 import modules from "./sideMenuItems";
+import { ReactComponent as Globe } from "../../themes/base/assets/icons/globe.svg";
 import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
 import styles from "./sideMenu.module.scss";
 
@@ -32,8 +33,8 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
         id: `label.menu.${item.label}`,
       });
       let icon = item.icon;
-      if (item.selectedIcon && item.key === selectedKey) {
-        icon = item.selectedIcon;
+      if (item?.selectedicon && item.key === selectedKey) {
+        icon = item?.selectedicon;
       }
       return {
         ...item,
@@ -44,19 +45,19 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }
 
   const handleOnClickMenuItem = ({ key }) => {
-    navigate(key);
+    navigate(`/${selectedModule.key}/${key}`);
     setSelectedKey(key);
   };
 
   const handleOnClickLogo = () => {
-    navigate(DASHBOARD);
+    navigate(`/${selectedModule.key}/${DASHBOARD}`);
   };
 
   useEffect(() => {
     const pathSegments = location.pathname.split("/");
-    const select = `/${pathSegments[1]}`;
+    const select = pathSegments?.[2] ? `${pathSegments[2]}/` : "";
     setSelectedKey(select);
-  }, [userProfileDetails]);
+  }, [userProfileDetails, navigate]);
 
   return (
     <ConfigProvider
@@ -125,22 +126,27 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
           </Base>
 
           {selectedModule && (
-            <Menu
-              className={styles.sideMenuOptionsContainer}
-              theme="dark"
-              defaultSelectedKeys={selectedKey}
-              mode="inline"
-              items={updateLabelsForIntl(selectedModule.children, selectedKey)}
-              expandIcon={<></>}
-              openKeys={accessibleModules?.map((module) => module?.key)}
-              onSelect={handleOnClickMenuItem}
-              selectedKeys={selectedKey}
-            />
+            <div>
+              <Menu
+                className={styles.sideMenuOptionsContainer}
+                theme="dark"
+                defaultSelectedKeys={selectedKey}
+                mode="inline"
+                items={updateLabelsForIntl(
+                  selectedModule.children,
+                  selectedKey
+                )}
+                expandIcon={<></>}
+                openKeys={accessibleModules?.map((module) => module?.key)}
+                onSelect={handleOnClickMenuItem}
+                selectedKeys={selectedKey}
+              />
+            </div>
           )}
         </div>
         <div>
           <Space className={styles.imageItemLogo}>
-            <CaIndiaLogo />
+            <CaIndiaLogo className={styles.width40} />
           </Space>
           <Space
             className={styles.sideMenuBottomSection}
@@ -157,7 +163,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
               size="large"
               type="text"
               block
-              icon={<GlobalOutlined className={styles.globeIcon} />}
+              icon={<Globe className={styles.globeIcon} />}
             >
               <Typography.Text className={styles.visitText}>
                 {intl.formatMessage({ id: "label.visitWebsite" })}

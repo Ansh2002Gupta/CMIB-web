@@ -1,13 +1,16 @@
-import { Image, Typography } from "antd";
-
-import { SORT_VALUES, STATUS } from "../../constant/constant";
+import { Checkbox, Image, Typography } from "antd";
+import { toggleSorting } from "../../constant/utils";
+import { SORTING_QUERY_PARAMS } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
 
 const getStatusStyles = (status) => {
-  if (status === STATUS.CLOSED) {
+  if (
+    status?.toLowerCase() === "closed" ||
+    status?.toLowerCase() === "answered"
+  ) {
     return ["statusContainer_success", "statusText_success"];
   }
-  if (status === STATUS.PENDING) {
+  if (status?.toLowerCase() === "pending") {
     return ["statusContainer_failed", "statusText_failed"];
   }
   return ["statusContainer_progress", "statusText_progress"];
@@ -20,47 +23,119 @@ const getArrowStyles = (str) => {
   return styles.downside;
 };
 
-export const getTicketOrQueryColumn = (
+export const getTicketOrQueryColumn = ({
   type,
   intl,
   getImage,
   navigate,
   renderColumn,
-  sortDirection,
-  changeDirections,
-  markedQueryAsAnswered,
-  onSuccessCallback,
-  onErrorCallBack
-) => {
+  queriesColumnProperties = {},
+  fetchData,
+  paginationAndSearchProperties,
+  sortedOrder,
+  setSortedOrder,
+  setSearchParams,
+  setIsConfirmationModalOpen,
+  toggleSelectAllItems,
+  areAllItemsSelected,
+  areSomeItemsSelected,
+}) => {
+  const {
+    sortArrowStyles,
+    selectedItemsList,
+    toggleSelectedQueriesId,
+    handleMarkMutipleQueriesAsAnswered,
+    setSelectedItemsList,
+  } = queriesColumnProperties;
+  const { pageSize, current, searchedValue, filterArray } =
+    paginationAndSearchProperties;
+  const isTableInSelectAllMode = selectedItemsList?.length !== 0;
   if (type === "2") {
     return [
       renderColumn({
-        title: intl.formatMessage({ id: "label.queriesId" }),
+        title: (
+          <div>
+            <Checkbox
+              indeterminate={areSomeItemsSelected}
+              checked={areAllItemsSelected}
+              className={[
+                styles.columnHeading,
+                isTableInSelectAllMode ? styles.greenText : "",
+              ].join(" ")}
+              onChange={toggleSelectAllItems}
+            >
+              {!isTableInSelectAllMode
+                ? intl.formatMessage({ id: "label.queriesId" })
+                : intl.formatMessage({ id: "label.selectAll" })}
+            </Checkbox>
+          </div>
+        ),
         dataIndex: "readable_id",
         key: "readable_id",
-        renderText: {
-          isTextBold: true,
+        renderTextWithCheckBoxes: {
           visible: true,
-          textStyles: [styles.tableCell].join(" "),
+          isCheckBoxTextBold: true,
+          customCheckBoxContainerStyles: [styles.tableCell].join(" "),
+          checkBoxList: selectedItemsList,
+          onClickCheckbox: (rowData) => {
+            const { id } = rowData;
+            toggleSelectedQueriesId(id);
+          },
         },
       }),
       renderColumn({
         title: (
-          <div className={styles.arrowContainer} onClick={changeDirections}>
-            <Typography className={styles.columnHeader}>
-              {intl.formatMessage({ id: "label.studentOrCompany" })}
-            </Typography>
-            <div>
-              <Image
-                preview={false}
-                src={getImage("arrowDownDarkGrey")}
-                className={[
-                  styles.arrowDown,
-                  getArrowStyles(sortDirection),
-                ].join(" ")}
-              />
-            </div>
-          </div>
+          <>
+            {!isTableInSelectAllMode ? (
+              <Typography
+                className={[styles.columnHeading, styles.centerContent].join(
+                  " "
+                )}
+                onClick={() =>
+                  fetchData({
+                    queryParamsObject: {
+                      perPage: pageSize,
+                      page: current,
+                      keyword: searchedValue,
+                      queryType: filterArray,
+                      sortDirection: toggleSorting(sortedOrder.sortDirection),
+                      sortField: "name",
+                    },
+                    onSuccessCallback: () => {
+                      setSearchParams((prevValue) => {
+                        prevValue.set(
+                          SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+                          toggleSorting(sortedOrder.sortDirection)
+                        );
+                        prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
+                        return prevValue;
+                      });
+                      setSortedOrder((prev) => {
+                        return {
+                          ...prev,
+                          sortDirection: toggleSorting(prev.sortDirection),
+                          sortKeyName: "name",
+                        };
+                      });
+                    },
+                  })
+                }
+              >
+                {intl.formatMessage({ id: "label.studentOrCompany" })}
+                <div className={styles.sortintArrawContainer}>
+                  <Image
+                    src={getImage("arrowDownDarkGrey")}
+                    preview={false}
+                    className={[sortArrowStyles, styles.centerContent].join(
+                      " "
+                    )}
+                  />
+                </div>
+              </Typography>
+            ) : (
+              ""
+            )}
+          </>
         ),
         dataIndex: "name",
         key: "name",
@@ -70,9 +145,15 @@ export const getTicketOrQueryColumn = (
         },
       }),
       renderColumn({
-        title: intl.formatMessage({
-          id: "label.nonRegisteredStudentOrCompany",
-        }),
+        title: (
+          <>
+            {isTableInSelectAllMode
+              ? ""
+              : intl.formatMessage({
+                  id: "label.nonRegisteredStudentOrCompany",
+                })}
+          </>
+        ),
         dataIndex: "type",
         key: "type",
         renderText: {
@@ -80,11 +161,64 @@ export const getTicketOrQueryColumn = (
           textStyles: [styles.tableCell].join(" "),
         },
       }),
+      renderColumn({
+        title: (
+          <>
+            {isTableInSelectAllMode
+              ? ""
+              : intl.formatMessage({
+                  id: "label.queryStatus",
+                })}
+          </>
+        ),
+        dataIndex: "status",
+        key: "status",
+        render: (data, rowData) => {
+          const { status } = rowData;
+          const styleClassForContainer = getStatusStyles(status)[0];
+          const styleClassForText = getStatusStyles(status)[1];
+          return (
+            <div
+              className={[
+                styles.statusBox,
+                styles[styleClassForContainer],
+              ].join(" ")}
+            >
+              <Typography className={styles[styleClassForText]}>
+                {status}
+              </Typography>
+            </div>
+          );
+        },
+      }),
+      renderColumn({
+        title: (
+          <>
+            {isTableInSelectAllMode
+              ? ""
+              : intl.formatMessage({
+                  id: "label.email",
+                })}
+          </>
+        ),
+        dataIndex: "email",
+        key: "email",
+        renderText: {
+          visible: true,
+          textStyles: [styles.tableCell].join(" "),
+        },
+      }),
       {
         title: () => (
-          <p className={styles.columnHeading}>
-            {intl.formatMessage({ id: "label.mobile" })}
-          </p>
+          <>
+            {isTableInSelectAllMode ? (
+              ""
+            ) : (
+              <p className={styles.columnHeading}>
+                {intl.formatMessage({ id: "label.mobileNumber" })}
+              </p>
+            )}
+          </>
         ),
         dataIndex: "mobile",
         key: "mobile",
@@ -94,7 +228,15 @@ export const getTicketOrQueryColumn = (
         },
       },
       renderColumn({
-        title: intl.formatMessage({ id: "label.queryType" }),
+        title: (
+          <>
+            {isTableInSelectAllMode
+              ? ""
+              : intl.formatMessage({
+                  id: "label.queryType",
+                })}
+          </>
+        ),
         dataIndex: "query_type",
         key: "query_type",
         renderText: {
@@ -103,16 +245,55 @@ export const getTicketOrQueryColumn = (
         },
       }),
       renderColumn({
-        title: intl.formatMessage({ id: "label.email" }),
-        dataIndex: "email",
-        key: "email",
-        renderText: {
-          visible: true,
-          textStyles: [styles.tableCell].join(" "),
-        },
-      }),
-      renderColumn({
-        title: intl.formatMessage({ id: "label.createdOn" }),
+        title: (
+          <>
+            {isTableInSelectAllMode ? (
+              ""
+            ) : (
+              <Typography
+                className={styles.columnHeading}
+                onClick={() =>
+                  fetchData({
+                    queryParamsObject: {
+                      perPage: pageSize,
+                      page: current,
+                      keyword: searchedValue,
+                      queryType: filterArray,
+                      sortDirection: toggleSorting(sortedOrder.sortDirection),
+                      sortField: "created_at",
+                    },
+                    onSuccessCallback: () => {
+                      setSearchParams((prevValue) => {
+                        prevValue.set(
+                          SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+                          toggleSorting(sortedOrder.sortDirection)
+                        );
+                        prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
+                        return prevValue;
+                      });
+                      setSortedOrder((prev) => {
+                        return {
+                          ...prev,
+                          sortDirection: toggleSorting(prev.sortDirection),
+                          sortKeyName: "created_at",
+                        };
+                      });
+                    },
+                  })
+                }
+              >
+                {intl.formatMessage({ id: "label.createdOn" })}
+                <div className={styles.sortintArrawContainer}>
+                  <Image
+                    src={getImage("arrowDownDarkGrey")}
+                    preview={false}
+                    className={[sortArrowStyles, styles.arrowSytles].join(" ")}
+                  />
+                </div>
+              </Typography>
+            )}
+          </>
+        ),
         dataIndex: "created_at",
         key: "created_at",
         renderText: {
@@ -124,45 +305,53 @@ export const getTicketOrQueryColumn = (
       renderColumn({
         dataIndex: "see",
         key: "see",
-        renderImage: {
-          alt: "eye",
-          preview: false,
-          src: getImage("eye"),
-          visible: true,
-          onClick: (rowData) => navigate(`query/${rowData?.id}`),
-        },
+        render: () => (
+          <Image
+            src={getImage("eye")}
+            alt="eye"
+            preview={false}
+            onClick={(rowData) => navigate(`query/${rowData?.id}`)}
+          />
+        ),
       }),
       renderColumn({
+        title: (
+          <>
+            {isTableInSelectAllMode ? (
+              <Typography
+                className={styles.greenText}
+                onClick={handleMarkMutipleQueriesAsAnswered}
+              >
+                {intl.formatMessage({
+                  id: "label.markSelectedQueriesAsAnswered",
+                })}
+              </Typography>
+            ) : (
+              ""
+            )}
+          </>
+        ),
         dataIndex: "check",
         key: "check",
         render: (_, rowData) => {
+          const isAnswered = rowData?.status?.toLowerCase() === "answered";
           return (
-            <div
-              className={[
-                styles.checkIcon,
-                rowData?.status === STATUS.PENDING.toLowerCase()
-                  ? styles.cursor
-                  : styles.disable,
-              ].join(" ")}
-              onClick={
-                rowData?.status === STATUS.PENDING.toLowerCase()
-                  ? () =>
-                      markedQueryAsAnswered({
-                        queryId: rowData?.id,
-                        onSuccessCallback,
-                        onErrorCallBack,
-                      })
-                  : () => {}
-              }
-            >
+            <div className={isTableInSelectAllMode ? styles.iconBox : ""}>
               <Image
-                alt="CheckIcon"
+                src={getImage(`${!isAnswered ? "checkIcon" : "greenTick"}`)}
+                alt="check"
                 preview={false}
-                src={getImage(
-                  rowData?.status === STATUS.PENDING.toLowerCase()
-                    ? "rightIcon"
-                    : "greenTickSign"
-                )}
+                className={
+                  isTableInSelectAllMode || isAnswered
+                    ? styles.nonClickable
+                    : styles.clickable
+                }
+                onClick={() => {
+                  if (!isTableInSelectAllMode && !isAnswered) {
+                    setIsConfirmationModalOpen(true);
+                    setSelectedItemsList([rowData?.id]);
+                  }
+                }}
               />
             </div>
           );

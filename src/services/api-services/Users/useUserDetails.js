@@ -10,7 +10,11 @@ const useUserDetails = () => {
   const [error, setError] = useState("");
   const [userData, setUsersData] = useState(null);
 
-  const getUserData = async (userId) => {
+  const getUserData = async ({
+    userId,
+    onErrorCallBack,
+    onSuccessCallBack,
+  }) => {
     setError("");
     setIsLoading(true);
     try {
@@ -27,10 +31,12 @@ const useUserDetails = () => {
         return;
       }
       setUsersData(res?.data);
+      onSuccessCallBack(res?.data);
     } catch (err) {
       setIsLoading(false);
       if (err?.response?.data?.message) {
         setError(err?.response?.data?.message);
+        onErrorCallBack(err?.response?.data?.message);
         return;
       }
       setError(

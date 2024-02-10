@@ -1,4 +1,8 @@
-import { SETUP_CENTERS, CONSENT_MARKING } from "../routes/routeNames";
+import {
+  CONSENT_MARKING,
+  SETUP_CENTERS,
+  SETUP_MOCK_INTERVIEW,
+} from "../routes/routeNames";
 
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
@@ -133,6 +137,10 @@ export const allAccessIdObject = [
   { text: "Control", id: 1 },
 ];
 
+export const allModuleIdObject = {
+  control: 12,
+};
+
 export const ALLOWED_MOBILE_PREFIXES = [
   {
     value: "91",
@@ -144,6 +152,7 @@ export const PAGINATION_PROPERTIES = {
   CURRENT_PAGE: "current-page",
   ROW_PER_PAGE: "row-per-page",
   SEARCH_QUERY: "search-query",
+  FILTER: "filter",
 };
 
 //TODO:need to implement it using api
@@ -183,7 +192,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
     headingIntl: "Mock Interviews",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: SETUP_MOCK_INTERVIEW,
   },
   {
     id: 3,
@@ -338,3 +347,29 @@ export const SORT_PROPERTIES = {
 };
 
 export const GENERIC_ERROR_MESSAGE = "Placeholder text";
+
+export const ZOOM_CONSTANT = {
+  MAX_ZOOM: 3,
+  MIN_ZOOM: 1,
+  ZOOM_STEP: 0.1,
+};
+
+export const NUMBER_OF_CHIPS_TO_BE_SHOWN = 2;
+
+export const ROTATE_IMAGE_BY = 90;
+
+export const INITIAL_PASSWORD_DATA = {
+  old_password: "",
+  new_password: "",
+  confirm_password: "",
+};
+
+export const SORTING_QUERY_PARAMS = {
+  SORTED_KEY: "sorted-key",
+  SORTED_DIRECTION: "sorted-direction",
+};
+
+export const NUMBER_OF_CHIPS_TO_SHOW = 15;
+
+export const USER_PROFILE_QUERY_PARAMS = "user-profile";
+

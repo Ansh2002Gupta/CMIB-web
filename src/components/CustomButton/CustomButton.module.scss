@@ -1,21 +1,27 @@
 .btn {
   display: flex;
-  padding: 17px var(--paddingSmall);
+  padding: 17px var(--paddingSmall, 16px);
   justify-content: center;
   align-items: center;
-  gap: var(--gapXSmall);
-  border-radius: var(--radiusLg);
-  background-color: var(--greenBtnBg);
-  min-height: var(--btnHeight);
-  color: var(--btnText);
-  font-weight: var(--fontWeightBold);
+  gap: var(--gapXSmall, 8px);
+  border-radius: var(--radiusLg, 8px);
+  background-color: var(--greenBtnBg, #04af55);
+  min-height: var(--btnHeight, 56px);
+  color: var(--btnText, #fbfcff);
+  font-weight: var(--fontWeightBold, 600);
   &:hover {
-    background-color: var(--greenBtnBg) !important;
-    color: var(--btnText) !important;
+    background-color: var(--greenBtnBg, #04af55) !important;
+    color: var(--btnText, #fbfcff) !important;
   }
 }
 
 .btn[disabled] {
-  background-color: var(--disableBtn) !important;
-  color: var(--btnText) !important;
+  background-color: var(--disableBtn, #b1b3b5) !important;
+  color: var(--btnText, #fbfcff) !important;
+}
+
+@media (max-width: 511px) {
+  .btn {
+    min-height: var(--height_44, 44px);
+  }
 }

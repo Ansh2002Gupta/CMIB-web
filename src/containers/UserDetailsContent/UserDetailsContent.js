@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useRef } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Spin } from "antd";
@@ -10,6 +10,7 @@ import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
@@ -17,8 +18,11 @@ import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 
 const UserDetailsContent = ({
+  fetchData,
+  roleFetchDate,
   addNewUser,
   currentFormState,
+  countryData,
   errorWhileGettingUsersData,
   getUserData,
   goBackToViewDetailsPage,
@@ -27,6 +31,7 @@ const UserDetailsContent = ({
   isLoading,
   isMobileNumber,
   isUserNameValid,
+  rolesData,
   setIsAccessValid,
   setIsEmailValid,
   setIsMobileNumberValid,
@@ -38,64 +43,99 @@ const UserDetailsContent = ({
 }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
-
+  const [userProfileDetails] = useContext(UserProfileContext);
   const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
 
-  const handleUpdateUserData = () => {
+  const emailRef = useRef();
+  const phoneRef = useRef();
+  const nameRef = useRef();
+
+  const checkForIncorrectFields = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
-    setIsMobileNumberValid(
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
-    );
+    setIsMobileNumberValid(MOBILE_NO_REGEX.test(`${userData?.mobile}`));
     setIsUserNameValid(userData.name?.trim()?.length !== 0);
-    setIsAccessValid(userData.access?.length !== 0);
+    setIsAccessValid(userData.roles?.length !== 0);
+    if (userData.name?.trim()?.length === 0) {
+      nameRef?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      return;
+    }
+    if (!MOBILE_NO_REGEX.test(`${userData?.mobile}`)) {
+      phoneRef?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      return;
+    }
+    if (!EMAIL_REGEX.test(userData?.email)) {
+      emailRef?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
+
+  const handleUpdateUserData = () => {
+    checkForIncorrectFields();
     if (
       EMAIL_REGEX.test(userData?.email) &&
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`) &&
+      MOBILE_NO_REGEX.test(`${userData?.mobile}`) &&
       userData.name?.trim()?.length !== 0 &&
-      userData.access?.length !== 0
+      userData.roles?.length !== 0
     ) {
       const payload = {
         name: userData?.name,
         email: userData?.email,
         mobile_number: userData?.mobile,
-        roles: userData?.access,
-        permissions: userData.permissions,
+        roles: Array.isArray(userData.roles)
+          ? userData.roles
+          : Object.values(userData.roles).map((per) => per.id),
+        permissions: Array.isArray(userData.permissions)
+          ? userData.permissions
+          : Object.values(userData.permissions).map((per) => per.id),
         is_two_factor: userData?.is_two_factor ? 1 : 0,
+        mobile_country_code: userData?.mobile_prefix,
+        status: userData?.status,
+        profile_photo: userData.profile_photo,
       };
-      if (userData?.profile_photo) {
-        payload["profile_photo"] = userData.profile_photo.file;
-      }
+
       updateUserDetails(userId, payload, () => {
-        navigate(USERS);
+        goBackToViewDetailsPage();
       });
     }
   };
 
   const handleOnAddNewUser = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
-    setIsMobileNumberValid(
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`)
-    );
+    setIsMobileNumberValid(MOBILE_NO_REGEX.test(`${userData?.mobile}`));
     setIsUserNameValid(userData.name?.trim()?.length !== 0);
-    setIsAccessValid(userData.access?.length !== 0);
+    setIsAccessValid(userData.roles?.length !== 0);
     if (
       EMAIL_REGEX.test(userData?.email) &&
-      MOBILE_NO_REGEX.test(`+${userData?.mobile_prefix}${userData?.mobile}`) &&
+      MOBILE_NO_REGEX.test(`${userData?.mobile}`) &&
       userData.name?.trim()?.length !== 0 &&
-      userData.access?.length !== 0
+      userData.roles?.length !== 0
     ) {
       const payload = {
         name: userData.name,
         email: userData.email,
         mobile_number: userData.mobile,
-        created_by: 1, // TODO: Get this id from get-Logged-In-User-details API (once it is integrated)
-        roles: userData.access,
-        permissions: userData.permissions,
+        mobile_country_code: userData?.mobile_prefix,
+        created_by: userProfileDetails?.userDetails?.id,
+        roles: Array.isArray(userData.roles)
+          ? userData.roles
+          : Object.values(userData.roles).map((per) => per.id),
+        permissions: Array.isArray(userData.permissions)
+          ? userData.permissions
+          : Object.values(userData.permissions).map((per) => per.id),
         is_two_factor: userData.is_two_factor ? 1 : 0,
+        status: userData?.status,
       };
-      if (userData?.profile_photo) {
-        payload["profile_photo"] = userData.profile_photo.file;
+      if (userData?.profile_photo_url) {
+        payload["profile_photo"] = userData.profile_photo_url;
       }
       addNewUser(payload, () => {
         goBackToViewDetailsPage();
@@ -131,7 +171,27 @@ const UserDetailsContent = ({
                     : ""
                 }
                 isEditable={currentFormState !== FORM_STATES.VIEW_ONLY}
-                {...{ updateUserData, setIsAccessValid }}
+                isNotAddable={currentFormState === FORM_STATES.EDITABLE}
+                {...{
+                  countryData,
+                  setIsAccessValid,
+                  rolesData,
+                  updateUserData,
+                  emailRef,
+                  phoneRef,
+                  nameRef,
+                }}
+                checkForCorrectEmail={() =>
+                  setIsEmailValid(EMAIL_REGEX.test(userData?.email))
+                }
+                checkForMobileNumber={() =>
+                  setIsMobileNumberValid(
+                    MOBILE_NO_REGEX.test(`${userData?.mobile}`)
+                  )
+                }
+                checkForUserName={() =>
+                  setIsUserNameValid(userData.name?.trim()?.length)
+                }
                 name={userData?.name}
                 email={userData?.email}
                 mobileNo={userData?.mobile}
@@ -141,11 +201,12 @@ const UserDetailsContent = ({
                 permissions={userData?.permissions}
                 roles={userData?.roles}
                 is_two_factor={userData?.is_two_factor}
+                status={userData?.status}
                 isDateDisable
                 userNameErrorMessage={
                   !isUserNameValid
                     ? intl.formatMessage({
-                        id: "label.userNameLeftEmpty",
+                        id: "label.pleaseEnterUserName",
                       })
                     : ""
                 }
@@ -156,15 +217,16 @@ const UserDetailsContent = ({
                       })
                     : ""
                 }
-                shouldShowDatePickerOption={false}
+                shouldShowDatePickerOption={true}
               />
               <FileUpload
                 {...{
                   updateUserData,
                   isFormEditable: currentFormState !== FORM_STATES.VIEW_ONLY,
                 }}
+                name={userData?.name}
                 userProfilePic={userData?.profile_photo_url}
-                userImageName={userData?.profile_photo?.file?.name}
+                userImageName={userData?.profile_photo}
               />
             </div>
           )}
@@ -212,6 +274,7 @@ const UserDetailsContent = ({
 };
 
 UserDetailsContent.defaultProps = {
+  countryData: [],
   currentFormState: "",
   errorWhileGettingUsersData: "",
   getUserData: () => {},
@@ -221,6 +284,7 @@ UserDetailsContent.defaultProps = {
   isLoading: false,
   isMobileNumber: true,
   isUserNameValid: true,
+  rolesData: {},
   setIsAccessValid: () => {},
   setIsEmailValid: () => {},
   setIsMobileNumberValid: () => {},
@@ -232,6 +296,7 @@ UserDetailsContent.defaultProps = {
 };
 
 UserDetailsContent.propTypes = {
+  countryData: PropTypes.array,
   currentFormState: PropTypes.string,
   errorWhileGettingUsersData: PropTypes.string,
   getUserData: PropTypes.func,
@@ -241,6 +306,7 @@ UserDetailsContent.propTypes = {
   isLoading: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isUserNameValid: PropTypes.bool,
+  rolesData: PropTypes.object,
   setIsAccessValid: PropTypes.func,
   setIsEmailValid: PropTypes.func,
   setIsMobileNumberValid: PropTypes.func,

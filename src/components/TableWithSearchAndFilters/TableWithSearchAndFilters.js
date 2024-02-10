@@ -10,14 +10,14 @@ import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
 import { DEFAULT_PAGE_SIZE } from "../../constant/constant";
 import styles from "./TableWithSearchAndFilters.module.scss";
-
+//TODO: update default props.
 const TableWithSearchAndFilters = ({
   columns,
   current,
   currentFilterStatus,
   currentDataLength,
   data,
-  filtersData,
+  filterPropertiesArray,
   handleOnUserSearch,
   onChangeCurrentPage,
   onChangePageSize,
@@ -27,7 +27,9 @@ const TableWithSearchAndFilters = ({
   searchedValue,
   setCurrentFilterStatus,
   isLoading,
-  onSearch,
+  filterArray,
+  setFilterArray,
+  onFilterApply,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -55,15 +57,13 @@ const TableWithSearchAndFilters = ({
             onChange={(e) => handleOnUserSearch(e.target.value)}
           />
           <SearchFilter
-            filterPropertiesArray={filtersData}
             {...{
               showFilters,
               setShowFilters,
-              optionsIdKey,
-              optionsNameKey,
-              currentFilterStatus,
-              setCurrentFilterStatus,
-              onSearch,
+              filterPropertiesArray,
+              filterArray,
+              setFilterArray,
+              onFilterApply,
             }}
           />
         </div>

@@ -5,6 +5,7 @@ import CustomButton from "../../components/CustomButton";
 import ContentHeader from "../ContentHeader";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
+import { ADD } from "../../routes/routeNames";
 import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./ManageUserHeader.module.scss";
 
@@ -26,7 +27,7 @@ const ManageUserHeader = () => {
             IconElement={PlusIcon}
             iconStyles={styles.btnIconStyles}
             customStyle={styles.btnCustomStyles}
-            onClick={() => navigate(`add`)}
+            onClick={() => navigate(ADD)}
           />
         }
       />

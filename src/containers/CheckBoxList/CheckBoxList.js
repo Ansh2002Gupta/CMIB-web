@@ -6,10 +6,12 @@ import Typography from "antd/es/typography/Typography";
 import Base from "../../core/layouts/Base/Base";
 
 import CustomCheckBox from "../../components/CustomCheckBox";
+import { allModuleIdObject } from "../../constant/constant";
 import { PERMISION_AND_ROLE } from "../../dummyData";
 import styles from "./CheckBoxList.module.scss";
 
 const CheckBoxList = ({
+  rolesData,
   selectedControls,
   selectedModules,
   setIsAccessValid,
@@ -22,12 +24,7 @@ const CheckBoxList = ({
   const areAllControlsSelected =
     selectedControls.length === PERMISION_AND_ROLE.data[0].permissions.length;
 
-  const controlModuleId = useMemo(() => {
-    return PERMISION_AND_ROLE?.data?.filter(
-      (item) => item.slug === "control"
-    )[0].id;
-  }, []);
-
+  const controlModuleId = allModuleIdObject.control;
   const handleSelect = (selectedOptionArray, setSelectedOptionArray, id) => {
     if (selectedOptionArray.includes(id)) {
       const updatedData = selectedOptionArray.filter(
@@ -69,27 +66,12 @@ const CheckBoxList = ({
 
   return (
     <Base className={styles.parentContainer}>
-      {getTextWithStar(intl.formatMessage({ id: "label.moduleAccess" }))}
+      {getTextWithStar(intl.formatMessage({ id: "label.access" }))}
       <div className={styles.container}>
-        <CustomCheckBox
-          className={styles.box}
-          onChange={() =>
-            handleSelectAll(
-              areAllModulesSelected,
-              setSelectedModules,
-              PERMISION_AND_ROLE?.data
-            )
-          }
-          checked={areAllModulesSelected}
-        >
-          <Typography className={styles.text}>
-            {intl.formatMessage({ id: "label.all" })}
-          </Typography>
-        </CustomCheckBox>
-        {/* TODO: PERMISSION and ROLES Will come from API */}
-        {PERMISION_AND_ROLE?.data?.map((item, index) => {
+        {Object.entries(rolesData?.roles || {})?.map(([index, item]) => {
           return (
             <CustomCheckBox
+              disabled={item.disabled}
               key={item.id}
               className={[styles.box].join(" ")}
               onChange={() =>
@@ -108,35 +90,29 @@ const CheckBoxList = ({
             intl.formatMessage({ id: "label.controlAccessHeading" })
           )}
           <div className={styles.container}>
-            <CustomCheckBox
-              className={styles.box}
-              onChange={() =>
-                handleSelectAll(
-                  areAllControlsSelected,
-                  setSelectedControls,
-                  PERMISION_AND_ROLE?.data[0]?.permissions
-                )
+            {Object.entries(rolesData?.permissions || {})?.map(
+              ([index, item]) => {
+                return (
+                  <CustomCheckBox
+                    disabled={item.disabled}
+                    key={item.id}
+                    className={styles.box}
+                    onChange={() =>
+                      handleSelect(
+                        selectedControls,
+                        setSelectedControls,
+                        item.id
+                      )
+                    }
+                    checked={
+                      selectedControls && selectedControls.includes(item.id)
+                    }
+                  >
+                    <Typography className={styles.text}>{item.name}</Typography>
+                  </CustomCheckBox>
+                );
               }
-              checked={areAllControlsSelected}
-            >
-              <Typography className={styles.text}>
-                {intl.formatMessage({ id: "label.all" })}
-              </Typography>
-            </CustomCheckBox>
-            {PERMISION_AND_ROLE?.data[0]?.permissions?.map((item) => {
-              return (
-                <CustomCheckBox
-                  key={item.id}
-                  className={styles.box}
-                  onChange={() =>
-                    handleSelect(selectedControls, setSelectedControls, item.id)
-                  }
-                  checked={selectedControls.includes(item.id)}
-                >
-                  <Typography className={styles.text}>{item.name}</Typography>
-                </CustomCheckBox>
-              );
-            })}
+            )}
           </div>
         </>
       )}
@@ -145,6 +121,7 @@ const CheckBoxList = ({
 };
 
 CheckBoxList.defaultProps = {
+  rolesData: {},
   setIsAccessValid: () => {},
   selectedControls: [],
   selectedModules: [],
@@ -153,6 +130,7 @@ CheckBoxList.defaultProps = {
 };
 
 CheckBoxList.propTypes = {
+  rolesData: PropTypes.object,
   setIsAccessValid: PropTypes.func,
   selectedControls: PropTypes.array,
   selectedModules: PropTypes.array,

@@ -9,49 +9,69 @@ import useResponsive from "core/hooks/useResponsive";
 import { classes } from "./CustomSwitch.styles";
 import styles from "./CustomSwitch.module.scss";
 
-const CustomSwitch = ({ checked, customStyle, disabled, label, onChange }) => {
+const CustomSwitch = ({
+  checked,
+  customStyle,
+  disabled,
+  isEditable,
+  isRequired,
+  label,
+  onChange,
+}) => {
   const intl = useIntl();
   const responsive = useResponsive();
 
   return (
     <TwoRow
       className={[styles.mainContainer, customStyle].join(" ")}
-      topSection={<Typography className={styles.grayText}>{label}</Typography>}
+      topSection={
+        <Typography className={styles.grayText}>
+          {label} {isRequired && <span className={styles.isRequired}>*</span>}
+        </Typography>
+      }
       bottomSection={
-        responsive.isMd ? (
-          <TwoColumn
-            className={styles.statusContainer}
-            leftSection={
-              <Switch
-                {...{ checked, onChange, disabled }}
-                style={checked && classes.switchContainer}
-              />
-            }
-            rightSection={
-              <Typography className={styles.blackText}>
-                {intl.formatMessage({
-                  id: `label.${checked ? "active" : "inactive"}`,
-                })}
-              </Typography>
-            }
-          />
+        isEditable ? (
+          responsive.isMd ? (
+            <TwoColumn
+              className={styles.statusContainer}
+              leftSection={
+                <Switch
+                  {...{ checked, onChange, disabled }}
+                  style={checked && classes.switchContainer}
+                />
+              }
+              rightSection={
+                <Typography className={styles.blackText}>
+                  {intl.formatMessage({
+                    id: `label.${checked ? "active" : "inactive"}`,
+                  })}
+                </Typography>
+              }
+            />
+          ) : (
+            <TwoRow
+              className={styles.mobileContainer}
+              topSection={
+                <Switch
+                  {...{ checked, onChange, disabled }}
+                  style={checked && classes.switchContainer}
+                />
+              }
+              bottomSection={
+                <Typography className={styles.blackText}>
+                  {intl.formatMessage({
+                    id: `label.${checked ? "active" : "inactive"}`,
+                  })}
+                </Typography>
+              }
+            />
+          )
         ) : (
-          <TwoRow
-            className={styles.mobileContainer}
-            topSection={
-              <Switch
-                {...{ checked, onChange, disabled }}
-                style={checked && classes.switchContainer}
-              />
-            }
-            bottomSection={
-              <Typography className={styles.blackText}>
-                {intl.formatMessage({
-                  id: `label.${checked ? "active" : "inactive"}`,
-                })}
-              </Typography>
-            }
-          />
+          <Typography className={styles.blackText}>
+            {intl.formatMessage({
+              id: `label.${checked ? "active" : "inactive"}`,
+            })}
+          </Typography>
         )
       }
     />
@@ -62,6 +82,8 @@ CustomSwitch.defaultProps = {
   checked: false,
   customStyle: "",
   disabled: false,
+  isEditable: true,
+  isRequired: false,
   label: "",
   onChange: () => {},
 };
@@ -70,6 +92,8 @@ CustomSwitch.propTypes = {
   checked: PropTypes.bool,
   customStyle: PropTypes.string,
   disabled: PropTypes.bool,
+  isEditable: PropTypes.bool,
+  isRequired: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
 };

@@ -5,14 +5,7 @@ import useResponsive from "core/hooks/useResponsive";
 import { classes } from "./MainLayout.styles";
 import styles from "./mainLayout.module.scss";
 
-function MainLayout({
-  className,
-  style,
-  header,
-  menu,
-  content,
-  noOuterPadding,
-}) {
+function MainLayout({ className, style, header, menu, content }) {
   // responsive variables based upon config set under `/core/themes/mixins/responsive.scss`
   // larger screen first approach
   const responsive = useResponsive();
@@ -23,14 +16,14 @@ function MainLayout({
         className={`${styles.mainLayout} ${className}`}
         style={style}
         leftSection={menu}
-        leftSectionStyle={classes.leftSectionStyle}
+        leftSectionStyle={{
+          ...classes.leftSectionStyle,
+          ...(!responsive.isXxl ? classes.responsiveHeight : {}),
+        }}
         rightSectionStyle={classes.rightSectionStyle}
         rightSection={
           <TwoRow
-            className={`${[
-              styles.mainLayoutRightSection,
-              noOuterPadding ? styles.noPadding : "",
-            ].join(" ")}`}
+            className={`${[styles.mainLayoutRightSection].join(" ")}`}
             topSection={header}
             bottomSection={content}
             isBottomFillSpace

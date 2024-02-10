@@ -65,7 +65,7 @@ const CustomDateTimePicker = ({
               />
             ) : (
               <Typography className={styles.dateText}>
-                {formatDate(value)}
+                {formatDate({ date: value })}
               </Typography>
             )
           }
@@ -119,7 +119,7 @@ CustomDateTimePicker.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.object,
+  value: PropTypes.string,
 };
 
 export default CustomDateTimePicker;
