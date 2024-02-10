@@ -7,7 +7,7 @@
 }
 
 .buttonStyles {
-  padding: var(--paddingExtraSmall);
+  min-width: var(--width_48, 48px);
   min-height: var(--minBtnHeight);
 }
 

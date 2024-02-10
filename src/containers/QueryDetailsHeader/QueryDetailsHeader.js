@@ -47,11 +47,15 @@ const QueryDetailsHeader = ({
         rightSection={
           status?.toLowerCase() === STATUS.PENDING?.toLowerCase() ? (
             <CustomButton
-              IconElement={responsive?.isSm ? CheckIconWhite : null}
+              IconElement={CheckIconWhite}
               customStyle={!responsive?.isSm ? styles.buttonStyles : ""}
-              btnText={intl.formatMessage({
-                id: "label.markAnswered",
-              })}
+              btnText={
+                responsive?.isSm
+                  ? intl.formatMessage({
+                      id: "label.markAnswered",
+                    })
+                  : ""
+              }
               onClick={() =>
                 handleMarkQueriesAsAnswered({
                   payload: {
