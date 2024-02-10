@@ -4,8 +4,6 @@ import { Dropdown, Image, Switch } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
-import { TwoColumn } from "../../layouts";
-
 import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import { formatDate } from "../../../constant/utils";
