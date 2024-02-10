@@ -13,7 +13,6 @@
 .userImage {
   width: var(--fullWidth);
   object-fit: contain;
-  max-width: var(--width_363, 363px) !important;
   max-height: var(--height_184, 184px) !important;
   min-height: var(--height_184, 184px) !important;
 }
