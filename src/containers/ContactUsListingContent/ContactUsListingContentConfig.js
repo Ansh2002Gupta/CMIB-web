@@ -276,11 +276,13 @@ export const getTicketOrQueryColumn = ({
                 }
               >
                 {intl.formatMessage({ id: "label.createdOn" })}
-                <Image
-                  src={getImage("arrowDownDarkGrey")}
-                  preview={false}
-                  className={[sortArrowStyles].join(" ")}
-                />
+                <div className={styles.sortintArrawContainer}>
+                  <Image
+                    src={getImage("arrowDownDarkGrey")}
+                    preview={false}
+                    className={[sortArrowStyles, styles.arrowSytles].join(" ")}
+                  />
+                </div>
               </Typography>
             )}
           </>
