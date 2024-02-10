@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Pagination, Select, Table, Typography } from "antd";
+import { Image, Pagination, Select, Table, Typography } from "antd";
+
+import { ThemeContext } from "core/providers/theme";
 
 import PaginationItems from "./PaginationItems";
 import {
@@ -22,6 +24,7 @@ const DataTable = ({
   pageSize,
 }) => {
   const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
 
   const rightPaginationConfig = {
     current,
@@ -31,10 +34,7 @@ const DataTable = ({
     showSizeChanger: false,
   };
 
-  const responsiveStyle =
-    originalData?.length !== 0
-      ? { x: "max-content", y: 600 }
-      : { x: "max-content" };
+  const responsiveStyle = { x: "max-content" };
 
   return (
     <div className={[styles.container, customContainerStyles].join(" ")}>
@@ -57,12 +57,15 @@ const DataTable = ({
             className={styles.rowPerPageCount}
             onChange={onChangePageSize}
             options={ROW_PER_PAGE_OPTIONS}
+            suffixIcon={
+              <Image src={getImage("blackArrowDown")} preview={false} />
+            }
           />
         </div>
         <Pagination
           disabled={originalData.length <= 0}
           {...rightPaginationConfig}
-          className={styles.paginationContainer}
+          className={[styles.paginationContainer].join(" ")}
           itemRender={(current, type, originalElement) => (
             <PaginationItems
               {...{ current, type, originalElement }}

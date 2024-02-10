@@ -23,7 +23,8 @@ const variables = {
   lightRedBg: colorPallets.lightOrange,
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
-  lightGrey3Bg: colorPallets.ltGrey3,
+  blue6Bg: colorPallets.blue6,
+  lightGrey3Bg: colorPallets.ltGrey4,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -48,6 +49,8 @@ const variables = {
   greenText: colorPallets.darkGreen,
   blueText: colorPallets.darkBlue2,
   redText: colorPallets.darkOrange,
+  lightGreyText3: colorPallets.ltGrey4,
+  darkBlue3: colorPallets.darkBlue3,
 
   // Border-Radius
   radiusNone: "0px",

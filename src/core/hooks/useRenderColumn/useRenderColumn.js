@@ -4,6 +4,7 @@ import { Dropdown, Image, Switch } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
+import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import { formatDate } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
@@ -23,6 +24,7 @@ const useRenderColumn = () => {
     renderImage = {},
     renderMenu = {},
     renderText = {},
+    renderTextWithCheckBoxes = {},
     renderSwitch = {},
     renderTwoImage = {},
     sortDirection,
@@ -63,6 +65,13 @@ const useRenderColumn = () => {
     } = renderMenu;
 
     const {
+      onClickCheckbox = () => {},
+      customCheckBoxContainerStyles = "",
+      checkBoxList = [],
+      isCheckBoxTextBold,
+    } = renderTextWithCheckBoxes;
+
+    const {
       dateFormat = "DD/MM/YYYY",
       includeDotAfterText,
       isTextBold,
@@ -78,6 +87,7 @@ const useRenderColumn = () => {
       switchToggleHandler = () => {},
       isActionable = true,
       checkIsSwitchEditable = () => {},
+      switchStyle,
     } = renderSwitch;
 
     const {
@@ -190,7 +200,7 @@ const useRenderColumn = () => {
                 className={status ? styles.switchBgColor : ""}
               />
             )}
-            <p>
+            <p className={switchStyle}>
               {status
                 ? swithActiveLabel || intl.formatMessage({ id: "label.active" })
                 : swithInActiveLabel ||
@@ -245,7 +255,24 @@ const useRenderColumn = () => {
         };
       });
 
-    render && (columnObject.render = render); // correct this
+    render && (columnObject.render = render);
+
+    renderTextWithCheckBoxes.visible &&
+      (columnObject.render = (textToRender, rowData) => {
+        const { id } = rowData;
+        return (
+          <CustomCheckBox
+            checked={checkBoxList?.includes(id)}
+            onChange={() => onClickCheckbox(rowData)}
+            customStyles={[
+              isCheckBoxTextBold ? styles.boldText : "",
+              customCheckBoxContainerStyles,
+            ].join("")}
+          >
+            {textToRender}
+          </CustomCheckBox>
+        );
+      });
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {
