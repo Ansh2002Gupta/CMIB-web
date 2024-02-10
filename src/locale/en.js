@@ -329,7 +329,7 @@ const locale = {
   "label.menu.roster": "Roster",
   "label.menu.feedback": "Feedback",
   "label.menu.contact-us": "Contact Us",
-  "label.menu.activity-logs": "Activity Logs",
+  "label.menu.activity-log": "Activity Log",
   "label.menu.all-job-listing": "All Job listing",
   "label.menu.round-1": "Round 1",
   "label.menu.round-2": "Round 2",
@@ -381,6 +381,9 @@ const locale = {
   "label.path.global-configurations": "Configure centres",
   "label.path.centre-details": "Edit centre details",
   "label.path.add": "Add New User",
+  "label.errorMessage": "Error Message",
+  "label.userSuccessfullyAdded": "User Successfully Added",
+  "label.userSuccessfullyEdited": "User Successfully Edited",
 };
 
 export default locale;

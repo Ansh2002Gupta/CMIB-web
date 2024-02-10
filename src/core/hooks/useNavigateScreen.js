@@ -4,9 +4,9 @@ const useNavigateScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navigateScreen = (route) => {
+  const navigateScreen = (route, replace = true) => {
     if (location.pathname !== route) {
-      navigate(route);
+      navigate(route, { replace: replace });
     }
   };
 
