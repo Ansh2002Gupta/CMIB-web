@@ -19,6 +19,7 @@ import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import SetupCenterDetails from "../views/SetupCenterDetails";
 import SetupMockInterview from "../views/SetupMockInterview";
+import TicketListing from "../views/TicketListing/TicketListing";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
@@ -46,6 +47,7 @@ import {
   SUBSCRIPTIONS,
   USERS,
   USER_DETAILS,
+  TICKETS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 
@@ -203,6 +205,10 @@ const config = [
       {
         viewPath: QUERY_DETAILS,
         element: <QueryDetails />,
+      },
+      {
+        viewPath: TICKETS,
+        element: <TicketListing />,
       },
     ],
   },

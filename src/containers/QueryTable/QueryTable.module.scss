@@ -149,5 +149,9 @@ input::placeholder {
 }
 
 .arrowSytles {
-  margin-bottom: 6px;
+  margin-bottom: 4px;
+}
+
+.extraWidth {
+  min-width: var(--width_250, 250px) !important;
 }

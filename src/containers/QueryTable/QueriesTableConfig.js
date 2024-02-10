@@ -82,7 +82,7 @@ export const getTicketOrQueryColumn = ({
         <>
           {!isTableInSelectAllMode ? (
             <Typography
-              className={[styles.columnHeading, styles.centerContent].join(" ")}
+              className={[styles.columnHeading].join(" ")}
               onClick={() =>
                 fetchData({
                   queryParamsObject: {
@@ -127,28 +127,32 @@ export const getTicketOrQueryColumn = ({
           )}
         </>
       ),
+      customColumnHeading: styles.extraWidth,
       dataIndex: "name",
       key: "name",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
+        isRequiredTooltip: true,
       },
     }),
     renderColumn({
       title: (
-        <>
+        <span className={styles.extraWidth}>
           {isTableInSelectAllMode
             ? ""
             : intl.formatMessage({
                 id: "label.nonRegisteredStudentOrCompany",
               })}
-        </>
+        </span>
       ),
+      customColumnHeading: styles.extraWidth,
       dataIndex: "type",
       key: "type",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
+        isRequiredTooltip: true,
       },
     }),
     renderColumn({
@@ -195,6 +199,7 @@ export const getTicketOrQueryColumn = ({
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
+        isRequiredTooltip: true,
       },
     }),
     {
@@ -214,6 +219,7 @@ export const getTicketOrQueryColumn = ({
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
+        isRequiredTooltip: true,
       },
     },
     renderColumn({
