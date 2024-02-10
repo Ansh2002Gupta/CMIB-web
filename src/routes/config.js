@@ -3,7 +3,7 @@ import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
-import ContactUsListing from "../views/ContactUsListing";
+import QueriesListing from "../views/QueriesListing";
 import ConfigureCentreView from "../views/ConfigureCentreView";
 import ConsentMarking from "../views/ConsentMarking";
 import DashboardView from "../views/Dashboard/Dashboard";
@@ -31,12 +31,12 @@ import {
   COMPANIES_DETAILS,
   CONFIGURE_CENTRES,
   CONSENT_MARKING,
-  CONTACT_US,
   DASHBOARD,
   EDIT_CONFIGURE_CENTRE,
   FORGOT_PASSWORD,
   LOGIN,
   OUT_SOURCED,
+  QUERIES,
   QUERY_DETAILS,
   ROOT,
   SESSION,
@@ -196,6 +196,14 @@ const config = [
         viewPath: USERS + ADD_NEW_USER_DETAILS,
         element: <UserDetails />,
       },
+      {
+        viewPath: QUERIES,
+        element: <QueriesListing />,
+      },
+      {
+        viewPath: QUERY_DETAILS,
+        element: <QueryDetails />,
+      },
     ],
   },
   {
@@ -238,14 +246,6 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
-      },
-      {
-        viewPath: CONTACT_US,
-        element: <ContactUsListing />,
-      },
-      {
-        viewPath: CONTACT_US + QUERY_DETAILS,
-        element: <QueryDetails />,
       },
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW,
