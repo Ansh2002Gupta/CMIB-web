@@ -18,7 +18,7 @@ const useTableColumns = () => {
   };
 
   const getLayout = (type, data) => {
-    if (type === "company") {
+    if (type?.toLowerCase() === "company") {
       const columnsData = [
         {
           key: "1",
@@ -110,7 +110,6 @@ const useTableColumns = () => {
         children: data?.name || "--",
       },
       {
-        // TODO: please confirm that this data will shown as it is or require some changes.
         key: "2",
         label: intl.formatMessage({
           id: "label.nonRegisteredStudentOrCompany",
