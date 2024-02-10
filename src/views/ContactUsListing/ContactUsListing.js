@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
@@ -18,7 +18,7 @@ import {
 } from "../../constant/constant";
 
 const ContactUsListing = () => {
-  const [searchParams,] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [currentActiveTab, setCurrentActiveTab] = useState(
     getCurrentActiveTab(searchParams.get(ACTIVE_TAB), VALID_CONTACT_US_TABS_ID)
   );
@@ -31,6 +31,13 @@ const ContactUsListing = () => {
   const [searchedValue, setSearchedValue] = useState(
     searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
+
+  useEffect(() => {
+    setSearchParams((prev) => {
+      prev.set(ACTIVE_TAB, currentActiveTab);
+      return prev;
+    });
+  }, []);
 
   return (
     <TwoRow

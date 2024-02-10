@@ -6,7 +6,7 @@ import {
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
 
-export const formatDate = ({ date, dateFormat = "MM/DD/YYYY" }) => {
+export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
   if (date) {
     return dayjs(new Date(date)).format(dateFormat);
   }
@@ -162,11 +162,11 @@ export const getImageSource = (uploadedImage) => {
   return "";
 };
 
-export const convertPermissionFilter = (roles) => {
+export const convertPermissionFilter = (roles, singleOptionsGroupName) => {
   let result = [
     {
       id: 1,
-      name: "Access",
+      name: singleOptionsGroupName || "Access",
       isSelected: false,
       options: [],
     },
@@ -174,8 +174,9 @@ export const convertPermissionFilter = (roles) => {
   for (const key in roles) {
     if (roles.hasOwnProperty(key)) {
       result[0].options.push({
-        optionId: parseInt(key),
+        optionId: parseInt(roles[key]?.id || key),
         str: roles[key]?.name,
+        query_count: roles[key]?.query_count,
       });
     }
   }
@@ -192,4 +193,11 @@ export const isObjectHasNoValues = (obj) => {
     }
   }
   return true;
+};
+
+export const getErrorMessage = (errorObjectOrMessage) => {
+  if (typeof errorObjectOrMessage === "string") {
+    return errorObjectOrMessage;
+  }
+  return errorObjectOrMessage?.data?.message;
 };

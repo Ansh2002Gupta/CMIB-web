@@ -4,6 +4,7 @@ import { Dropdown, Image, Switch } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
+import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import { formatDate } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
@@ -23,6 +24,7 @@ const useRenderColumn = () => {
     renderImage = {},
     renderMenu = {},
     renderText = {},
+    renderTextWithCheckBoxes = {},
     renderSwitch = {},
     renderTwoImage = {},
     sortDirection,
@@ -61,6 +63,13 @@ const useRenderColumn = () => {
       menuPreview,
       triggerType = "",
     } = renderMenu;
+
+    const {
+      onClickCheckbox = () => {},
+      customCheckBoxContainerStyles = "",
+      checkBoxList = [],
+      isCheckBoxTextBold,
+    } = renderTextWithCheckBoxes;
 
     const {
       dateFormat = "DD/MM/YYYY",
@@ -139,8 +148,6 @@ const useRenderColumn = () => {
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
 
     sortDirection && (columnObject.sortDirection = sortDirection);
-
-    render && (columnObject.render = render);
 
     renderText?.visible &&
       (columnObject.render = (text, rowData) => {
@@ -246,7 +253,24 @@ const useRenderColumn = () => {
         };
       });
 
-    render && (columnObject.render = render); // correct this
+    render && (columnObject.render = render);
+
+    renderTextWithCheckBoxes.visible &&
+      (columnObject.render = (textToRender, rowData) => {
+        const { id } = rowData;
+        return (
+          <CustomCheckBox
+            checked={checkBoxList?.includes(id)}
+            onChange={() => onClickCheckbox(rowData)}
+            customStyles={[
+              isCheckBoxTextBold ? styles.boldText : "",
+              customCheckBoxContainerStyles,
+            ].join("")}
+          >
+            {textToRender}
+          </CustomCheckBox>
+        );
+      });
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {

@@ -34,9 +34,14 @@
   min-height: var(--minBtnHeight);
   border-radius: var(--radiusXLg);
   input {
+    overflow: hidden;
     color: var(--inputText) !important;
     font-size: var(--fontSizeSmall) !important;
     font-weight: var(--fontWeightMedium) !important;
+    min-height: var(--height_44);
+    &:hover {
+      border-radius: var(--radiusXLg) !important;
+    }
   }
 }
 .loaderContainer {
@@ -61,6 +66,7 @@
 }
 
 .statusBox {
+  text-transform: capitalize;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,11 +76,11 @@
 }
 
 .statusContainer_success {
-  background-color: var(--lightGreenBg);
+  background-color: var(--greenBg);
 }
 
 .statusContainer_failed {
-  background-color: var(--lightRedBg);
+  background-color: var(--orangeBg);
 }
 
 .statusContainer_progress {
@@ -114,12 +120,126 @@
 }
 
 .tableCell {
-  min-width: var(--width_100);
+  min-width: var(--width_140);
+}
+
+.arrowContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  gap: var(--gapXXSmall);
+}
+
+.upside {
+  transform: rotate(0deg);
+}
+
+.downside {
+  transform: rotate(180deg);
+}
+
+.arrowDown {
+  min-height: var(--height_20);
+  max-height: var(--height_20);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.columnHeader {
+  color: var(--inputPlaceHolder);
+  font-size: var(--fontSizeSmall);
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.disable {
+  cursor: not-allowed;
 }
 
 input::placeholder {
   color: var(--inputPlaceHolder) !important;
 }
+
+.columnHeading {
+  color: var(--subHeadingColor) !important;
+  display: flex;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+}
+
+.upside {
+  transform: rotate(180deg);
+}
+
+.downside {
+  transform: rotate(0deg);
+}
+
+.sortintArrawContainer {
+  min-width: var(--width_20);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centerContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.greenText {
+  color: var(--greenBtnBg, #04af55) !important;
+  font-size: var(--fontSizeExtraSmall, 12px) !important;
+  font-weight: var(--fontWeightBold, 600) !important;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.extraWidth {
+  min-width: 180px;
+}
+
+.chipBg {
+  background-color: var(--lightBlueBg, #f2f4fc);
+  border-radius: var(--radiusLg, 8px);
+  padding: 2px 6px 2px 8px;
+}
+
+.chipText {
+  color: var(--textBold, #000833);
+}
+
+.chipContainer {
+  display: flex;
+  gap: var(--gapSmall, 16px);
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+
+.nonClickable {
+  cursor: not-allowed;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.iconBox {
+  min-width: var(--width_120);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrowSytles {
+  margin-bottom: 6px;
+}
+
 @media screen and (max-width: 1023px) {
   .searchBar {
     width: var(--halfWidth);

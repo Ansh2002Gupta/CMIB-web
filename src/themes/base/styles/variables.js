@@ -19,11 +19,16 @@ const variables = {
   greyBlue: colorPallets.greyBlue,
   blackBg: colorPallets.black1,
   lightGreenBg: colorPallets.lightGreen,
-  lightBlueBg2: colorPallets.skyBlue,
+  lightBlueBg2: colorPallets.snow,
   lightRedBg: colorPallets.lightOrange,
+  orangeBg: colorPallets.orange1,
+  blueBg2: colorPallets.blue4,
+  greenBg: colorPallets.green3,
+  greyBg: colorPallets.ltGrey1,
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
-  lightGrey3Bg: colorPallets.ltGrey3,
+  blue6Bg: colorPallets.blue6,
+  lightGrey3Bg: colorPallets.ltGrey4,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -45,9 +50,11 @@ const variables = {
   error: colorPallets.red1,
   requiredStarColor: colorPallets.red1,
   sideMenuMaskBg: colorPallets.maskBlack,
-  greenText: colorPallets.darkGreen,
-  blueText: colorPallets.darkBlue2,
-  redText: colorPallets.darkOrange,
+  orangeText: colorPallets.orange2,
+  blueText: colorPallets.blue5,
+  greenText: colorPallets.green4,
+  redText: colorPallets.red1,
+  lightGreyText3: colorPallets.ltGrey4,
   darkBlue3: colorPallets.darkBlue3,
 
   // Border-Radius
@@ -126,6 +133,7 @@ const variables = {
   width_347: "347px",
   width_400: "400px",
   width_500: "500px",
+  widthViewPort_30: "30vw",
   widthViewPort_35: "35vw",
   widthHalfViewPort: "50vw",
   widthViewPort_65: "65vw",
@@ -156,10 +164,12 @@ const variables = {
   height_104: "104px",
   height_120: "120px",
   height_150: "150px",
+  height_200: "200px",
   height_240: "240px",
   height_250: "250px",
   height_300: "300px",
   height_400: "400px",
+  height_600: "600px",
   height_30vh: "30vh",
   height_35vh: "35vh",
   height_40vh: "40vh",
@@ -247,5 +257,4 @@ const variables = {
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };
-
 export default variables;

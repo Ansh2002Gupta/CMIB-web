@@ -8,21 +8,28 @@ import { ThemeContext } from "core/providers/theme";
 
 import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
-import { ACCESS_FILTER_DATA } from "../../dummyData";
 import { DEFAULT_PAGE_SIZE } from "../../constant/constant";
 import styles from "./TableWithSearchAndFilters.module.scss";
-
+//TODO: update default props.
 const TableWithSearchAndFilters = ({
   columns,
   current,
+  currentFilterStatus,
   currentDataLength,
   data,
+  filterPropertiesArray,
   handleOnUserSearch,
   onChangeCurrentPage,
   onChangePageSize,
+  optionsIdKey,
+  optionsNameKey,
   pageSize,
   searchedValue,
+  setCurrentFilterStatus,
   isLoading,
+  filterArray,
+  setFilterArray,
+  onFilterApply,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -50,8 +57,14 @@ const TableWithSearchAndFilters = ({
             onChange={(e) => handleOnUserSearch(e.target.value)}
           />
           <SearchFilter
-            filterPropertiesArray={ACCESS_FILTER_DATA}
-            {...{ showFilters, setShowFilters }}
+            {...{
+              showFilters,
+              setShowFilters,
+              filterPropertiesArray,
+              filterArray,
+              setFilterArray,
+              onFilterApply,
+            }}
           />
         </div>
         {isLoading && (
@@ -82,26 +95,38 @@ TableWithSearchAndFilters.defaultProps = {
   columns: [],
   current: 1,
   currentDataLength: 0,
+  currentFilterStatus: [],
   data: [],
+  filtersData: [],
   handleOnUserSearch: () => {},
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
+  optionsIdKey: "",
+  optionsNameKey: "",
   pageSize: DEFAULT_PAGE_SIZE,
   searchedValue: "",
+  setCurrentFilterStatus: () => {},
   isLoading: false,
+  onSearch: ()=>{},
 };
 
 TableWithSearchAndFilters.propTypes = {
   columns: PropTypes.array,
   current: PropTypes.number,
   currentDataLength: PropTypes.number,
+  currentFilterStatus: PropTypes.array,
   data: PropTypes.array,
+  filtersData: PropTypes.array,
   handleOnUserSearch: PropTypes.func,
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
+  optionsIdKey: PropTypes.string,
+  optionsNameKey: PropTypes.string,
   pageSize: PropTypes.number,
   searchedValue: PropTypes.string,
+  setCurrentFilterStatus: PropTypes.func,
   isLoading: PropTypes.bool,
+  onSearch: PropTypes.func,
 };
 
 export default TableWithSearchAndFilters;

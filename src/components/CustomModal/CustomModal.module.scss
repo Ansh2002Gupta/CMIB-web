@@ -51,6 +51,25 @@
   }
 }
 
+.actionBtnContainer {
+  width: var(--fullWidth, 100%);
+}
+
 .modal {
   top: 30%;
+}
+
+.btnContainer {
+  width: var(--fullWidth, 100%);
+  display: flex;
+  gap: var(--gapSmall, 16px);
+}
+
+.cancelBtn {
+  min-height: var(--btnHeight, 56px);
+  font-weight: var(--fontWeightMedium, 500);
+  &:hover {
+    color: var(--textBold, #000833) !important;
+    border: "1px solid #ccd0e5" !important;
+  }
 }

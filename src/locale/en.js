@@ -183,11 +183,18 @@ const locale = {
   "label.configureCentres": "Configure Centres",
   "label.addNewCentre": "Add New Centre",
   "label.newCentre": "New Centre",
+  "label.add": "Add",
+  "label.centreDetails": "Centre Details",
+  "centre.placeholder.centreName": "Enter Centre Name",
+  "centre.placeholder.bigSmallCentre": "Choose Centre Type",
+  "centre.placeholder.centreId": "Enter Centre Id",
   "label.queriesId": "Query ID",
-  "label.studentOrCompany": "Student/Company Name",
-  "label.nonRegisteredStudentOrCompany": "Non-Registered Student/Company",
+  "label.studentOrCompany": "Student / Company Name",
+  "label.nonRegisteredStudentOrCompany": "Non-Registered Student / Company",
   "label.mobile": "Mobile",
   "label.queryType": "Query Type",
+  "label.queryTypes": "Query Types",
+  "label.queryStatus": "Query Status",
   "label.createdOn": "Created On",
   "label.ticketId": "Ticket ID",
   "label.createdBy": "Created By",
@@ -247,6 +254,11 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.pending": "Pending",
+  "label.progress": "Progress",
+  "label.answered": "Answered",
+  "label.markAnswered": "Mark Answered",
+  "label.errorOccured": "Error Occured",
   "label.session.setupMockInterviews": "Setup Mock Interviews",
   "label.warning.setupMockInterviews":
     "*This cannot be edited once registration for the students starts.",
@@ -302,6 +314,15 @@ const locale = {
   "label.companyIciaMessage":
     "We wish to use your company logo in ICAI’s future Promotional materials stating that your company has participated in the Career Ascent programme of ICAI",
   "label.visitWebsite": "Visit Website",
+  "label.query": "Query",
+  "label.firmRegistrationNo": "Firm Registration No. [FRN]",
+  "label.partnersNo": "Partners (No.)",
+  "label.currentIndustry": "Current Industry",
+  "label.contactPersonName": "Contact Person Name",
+  "label.contactPersonDesignation": "Contact Person Designation",
+  "label.dummyName": "Dummy Name",
+  "label.studentName": "Student Name",
+  "label.noFilterIsAvailable": "No filter is available",
   "label.logoutConfirmationMessage":
     "Are you sure you want to logout of the portal?",
   "label.menu.user-management": "Users",
@@ -355,6 +376,8 @@ const locale = {
   "label.path.subscriptions": "Subscriptions",
   "label.path.companies": "Companies",
   "label.path.session": "Session",
+  "label.path.contact-us": "Queries",
+  "label.path.query": "Query Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
@@ -379,7 +402,22 @@ const locale = {
   "label.sessionStatus": "Session Status",
   "label.deleteAccount": "Delete Account",
   "label.path.global-configurations": "Configure centres",
-  "label.path.centre-details": "Edit centre details",
+  "label.editCentreDetails": "Edit centre details",
+  "label.areYouSureYouWantToMarkQueries":
+    "Are you sure you want to mark the queries as answered?",
+  "label.markQueriesAsAnswered": "Mark Queries as Answered",
+  "label.markAsAnswered": "Mark as Answered",
+  "label.areYouSureWantToMakeQueryAsAnsweredSingle":
+    "Are you sure you want to mark the query as answered?",
+  "label.selectAll": "Select All",
+  "label.okay": "Okay",
+  "label.markSelectedQueriesAsAnswered": "Mark as Answered",
+  "label.allSelectedQueriesAreAlreadyMarked":
+    "All selected queries have already been marked as answered.",
+  "label.followingQueriesAreMarkedAnAnswered":
+    "Following queries have already been marked as answered:",
+  "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
+    "Some queries have already been marked as answered. Continuing marking for the remaining queries.",
   "label.path.add": "Add New User",
 };
 

@@ -280,6 +280,13 @@ export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
 
+export const STATUS = {
+  CLOSED: "Closed",
+  PENDING: "Pending",
+  SUCCESS: "Success",
+  ANSWERED: "Answered",
+};
+
 export const MODULE_KEYS = {
   CONTROL_KEY: "control",
   NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placements",
@@ -356,6 +363,13 @@ export const INITIAL_PASSWORD_DATA = {
   new_password: "",
   confirm_password: "",
 };
+
+export const SORTING_QUERY_PARAMS = {
+  SORTED_KEY: "sorted-key",
+  SORTED_DIRECTION: "sorted-direction",
+};
+
+export const NUMBER_OF_CHIPS_TO_SHOW = 15;
 
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
 
