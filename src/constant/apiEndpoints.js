@@ -30,5 +30,4 @@ export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
 export const VERIFY_OTP = "/otp/verify";
 export const CHANGE_PASSWORD = "/password";
 export const QUERY_TYPES_END_POINT = "/get-all-query-types";
-export const GET_ALL_QUERY_TYPES = "/get-all-query-types";
-export const MARKED_QUERY_END_POINT = "/resolve";
+export const MARK_AS_ANSWER_END_POINT = "/answer";

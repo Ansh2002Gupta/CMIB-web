@@ -12,7 +12,8 @@
 }
 
 .label{
-  color: var(--inputPlaceHolder)
+  color: var(--inputPlaceHolder);
+  font-size: 12px !important;
 }
 
 .isRequired{

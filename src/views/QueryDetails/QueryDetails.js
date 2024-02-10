@@ -9,10 +9,10 @@ import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import QueryDetailsContent from "../../containers/QueryDetailsContent";
 import QueryDetailsHeader from "../../containers/QueryDetailsHeader";
 import useFetch from "../../core/hooks/useFetch";
-import useMarkedQueryAsAnweredApi from "../../services/api-services/Queries/useMarkedQueryAsAnweredApi";
+import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getErrorMessage } from "../../constant/utils";
-import { ADMIN_ROUTE, QUERY_END_POINT } from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import { classes } from "./QueryDetails.styles";
 import styles from "./QueryDetails.module.scss";
 
@@ -20,8 +20,7 @@ const QueryDetails = () => {
   const { queryId } = useParams();
   const intl = useIntl();
 
-  const GET_QUERY_URL =
-    ADMIN_ROUTE + QUERY_END_POINT + "/" + queryId + "/details";
+  const GET_QUERY_URL = ADMIN_ROUTE + QUERIES_END_POINT + "/" + queryId;
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: GET_QUERY_URL,
@@ -33,8 +32,10 @@ const QueryDetails = () => {
   });
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const { markedQueryAsAnswered, isLoading: isMarkingQueryAsAnswered } =
-    useMarkedQueryAsAnweredApi();
+  const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
+    useMarkQueriesAsAnswerApi();
+
+  const typeOfData = data?.type?.split(" ")[1];
 
   return (
     <>
@@ -44,7 +45,7 @@ const QueryDetails = () => {
         <div className={styles.errorContainer}>
           <ErrorMessageBox
             errorText={getErrorMessage(error)}
-            onRetry={()=>fetchData({})}
+            onRetry={() => fetchData({})}
             errorHeading={intl.formatMessage({ id: "label.errorOccured" })}
           />
         </div>
@@ -57,14 +58,14 @@ const QueryDetails = () => {
               readable_id={data?.readable_id}
               status={data?.status}
               {...{
-                markedQueryAsAnswered,
+                handleMarkQueriesAsAnswered,
                 showNotification,
                 fetchData,
               }}
             />
           }
           bottomSection={
-            <QueryDetailsContent type={data?.type} {...{ data }} />
+            <QueryDetailsContent type={typeOfData} {...{ data }} />
           }
           isBottomFillSpace
           bottomSectionStyle={classes.bottomContainer}

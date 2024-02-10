@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -9,11 +9,9 @@ import { ThemeContext } from "core/providers/theme";
 import ErrorMessageBox from "../../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import useFetch from "../../../core/hooks/useFetch";
-import useGetAllQueryTypesApi from "../../../services/api-services/Query/useGetAllQueryTypesApi";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
-import { toggleSortDirection } from "../../../constant/utils";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
@@ -26,8 +24,8 @@ const TicketTable = ({
   current,
   currentActiveTab,
   pageSize,
-  setCurrentPage,
-  setPage,
+  setCurrent,
+  setPageSize,
   searchedValue,
   setSearchedValue,
 }) => {
@@ -36,18 +34,6 @@ const TicketTable = ({
   const { getImage } = useContext(ThemeContext);
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-
-  const [currentFilterStatus, setCurrentFilterStatus] = useState([]);
-
-  const [sortDirection, setSortDirection] = useState({
-    direction: "asc",
-    key: "name",
-  });
-
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + TICKET_LIST,
-    otherOptions: { skipApiCallOnMount: true },
-  });
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: ADMIN_ROUTE + TICKET_LIST,
@@ -94,12 +80,12 @@ const TicketTable = ({
       page: current,
       q: str,
     };
-    debounceSearch({ queryParamsObject: requestedParams });
+    debounceSearch(requestedParams);
   };
 
   const onChangePageSize = (size) => {
-    setPage(size);
-    setCurrentPage(1);
+    setPageSize(size);
+    setCurrent(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
@@ -110,11 +96,11 @@ const TicketTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData({ queryParamsObject: requestedParams });
+    fetchData(requestedParams);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
-    setCurrentPage(newPageNumber);
+    setCurrent(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
@@ -124,7 +110,7 @@ const TicketTable = ({
       page: newPageNumber,
       q: searchedValue,
     };
-    fetchData({ queryParamsObject: requestedParams });
+    fetchData(requestedParams);
   };
 
   useEffect(() => {
@@ -133,10 +119,9 @@ const TicketTable = ({
       const total = 14;
       const numberOfPages = Math.ceil(total / pageSize);
       if (current > numberOfPages) {
-        setCurrentPage(1);
+        setCurrent(1);
         setSearchParams((prev) => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-          return prev;
         });
 
         const requestedParams = {
@@ -144,7 +129,7 @@ const TicketTable = ({
           page: 1,
           q: searchedValue,
         };
-        fetchData({ queryParamsObject: requestedParams });
+        fetchData(requestedParams);
       }
     }
   }, [data?.meta?.total]);
@@ -163,8 +148,7 @@ const TicketTable = ({
       page: current,
       q: searchedValue,
     };
-    fetchData({ queryParamsObject: requestedParams });
-    getAllQueryTypes();
+    fetchData(requestedParams);
   }, []);
 
   const handleOnReTry = () => {
@@ -173,7 +157,7 @@ const TicketTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData({ queryParamsObject: requestedParams });
+    fetchData(requestedParams);
   };
 
   useEffect(() => {
@@ -202,23 +186,17 @@ const TicketTable = ({
             columns,
             onChangePageSize,
             onChangeCurrentPage,
-            filtersData,
-            currentFilterStatus,
-            setCurrentFilterStatus,
           }}
           isLoading={isSuccess && !isLoading}
           // TODO: please remove the dummy data once the data start coming from API
           data={TICKET_DATA_LIST.slice(startIndex, endIndex)}
           currentDataLength={TICKET_DATA_LIST.length}
-          optionsIdKey={"id"}
-          optionsNameKey={"name"}
-          onSearch={handleOnFilterApply}
         />
       )}
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
-            onRetry={handleOnReTry}
+            onClick={handleOnReTry}
             errorText={errorString}
             errorHeading={intl.formatMessage({
               id: "label.error",

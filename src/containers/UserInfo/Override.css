@@ -24,10 +24,9 @@
   color: var(--On-surface, #616c82) !important;
   font-size: 12px !important;
   font-weight: 500 !important;
-
 }
 
-.ant-descriptions-row >th{
+.ant-descriptions-row > th {
   padding-bottom: var(--paddingXXSmall) !important;
 }
 
@@ -45,5 +44,9 @@
 }
 
 .ant-descriptions .ant-descriptions-row > th {
-  padding-bottom: var(--paddingExtraSmall, 8px);
+  padding-bottom: var(--paddingExtraSmall, 8px) !important;
+}
+
+.ant-descriptions .ant-descriptions-row > td {
+  padding-bottom: var(--paddingMedium, 24px) !important;
 }

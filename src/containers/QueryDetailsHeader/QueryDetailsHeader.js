@@ -13,7 +13,7 @@ import styles from "./QueryDetailsHeader.module.scss";
 const QueryDetailsHeader = ({
   fetchData,
   id,
-  markedQueryAsAnswered,
+  handleMarkQueriesAsAnswered,
   readable_id,
   showNotification,
   status,
@@ -53,10 +53,14 @@ const QueryDetailsHeader = ({
                 id: "label.markAnswered",
               })}
               onClick={() =>
-                markedQueryAsAnswered({
-                  queryId: id,
+                handleMarkQueriesAsAnswered({
+                  payload: {
+                    query_id: [id],
+                  },
                   onSuccessCallback: () => fetchData({}),
-                  onErrorCallBack: (error) => showNotification(error, "error"),
+                  onErrorCallback: (error) => {
+                    showNotification(error, "error");
+                  },
                 })
               }
             />

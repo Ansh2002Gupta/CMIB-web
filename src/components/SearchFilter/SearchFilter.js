@@ -75,16 +75,8 @@ const SearchFilter = ({
     if (currentFilterStatus?.length === allOptionId.length) {
       return getImage("checkedBox");
     }
-    if (containsSome) {
-      return getImage("someFiltersAreSelected");
-    }
-
-    return getImage("unCheckedBox");
+    return getImage("someFiltersAreSelected");
   };
-
-  const optionsToBeShown = filterPropertiesArray?.filter(
-    (item) => item.id === currentlySelectOptionsGroup
-  )[0]?.options;
 
   return (
     <div className={styles.container}>

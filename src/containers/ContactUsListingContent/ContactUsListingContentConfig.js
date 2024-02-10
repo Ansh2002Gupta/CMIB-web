@@ -16,13 +16,6 @@ const getStatusStyles = (status) => {
   return ["statusContainer_progress", "statusText_progress"];
 };
 
-const getArrowStyles = (str) => {
-  if (str === SORT_VALUES.ASCENDING) {
-    return styles.upside;
-  }
-  return styles.downside;
-};
-
 export const getTicketOrQueryColumn = ({
   type,
   intl,
@@ -305,14 +298,17 @@ export const getTicketOrQueryColumn = ({
       renderColumn({
         dataIndex: "see",
         key: "see",
-        render: () => (
-          <Image
-            src={getImage("eye")}
-            alt="eye"
-            preview={false}
-            onClick={(rowData) => navigate(`query/${rowData?.id}`)}
-          />
-        ),
+        render: (_, rowData) => {
+          return (
+            <Image
+              src={getImage("eye")}
+              alt="eye"
+              className={styles.clickable}
+              preview={false}
+              onClick={() => navigate(`query/${rowData?.id}`)}
+            />
+          );
+        },
       }),
       renderColumn({
         title: (
@@ -372,24 +368,11 @@ export const getTicketOrQueryColumn = ({
       },
     }),
     renderColumn({
-      title: (
-        <div className={styles.arrowContainer} onClick={changeDirections}>
-          <Typography className={styles.columnHeader}>
-            {intl.formatMessage({ id: "label.createdBy" })}
-          </Typography>
-          <div>
-            <Image
-              preview={false}
-              src={getImage("arrowDownDarkGrey")}
-              className={[styles.arrowDown, getArrowStyles(sortDirection)].join(
-                " "
-              )}
-            />
-          </div>
-        </div>
-      ),
+      title: intl.formatMessage({ id: "label.createdBy" }),
       dataIndex: "created_by",
       key: "created_by",
+      sortKey: "created_by",
+      sortTypeText: true,
       renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
@@ -453,6 +436,10 @@ export const getTicketOrQueryColumn = ({
         visible: true,
         textStyles: [styles.tableCell].join(" "),
       },
+      sortDirection: ["ascend"],
+      sortKey: "created_at",
+      sortTypeDate: true,
+      defaultSortOrder: "ascend",
     }),
     renderColumn({
       dataIndex: "see",
