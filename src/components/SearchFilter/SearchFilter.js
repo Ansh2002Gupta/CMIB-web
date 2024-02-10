@@ -186,9 +186,7 @@ const SearchFilter = ({
                         <Typography className={styles.filterOptionText}>
                           {item?.str}{" "}
                           <span className={styles.textInBrackets}>
-                            {item?.query_count >= 0 && !!item?.query_count
-                              ? `(${item?.query_count})`
-                              : ""}
+                            {!isNaN(item?.count) ? `(${item?.count})` : ""}
                           </span>
                         </Typography>
                       </div>

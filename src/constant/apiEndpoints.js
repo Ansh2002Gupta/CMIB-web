@@ -29,5 +29,5 @@ export const CREATE = "/create";
 export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
 export const VERIFY_OTP = "/otp/verify";
 export const CHANGE_PASSWORD = "/password";
-export const QUERY_TYPES_END_POINT = "/get-all-query-types";
+export const QUERY_TYPES_END_POINT = "/types";
 export const MARK_AS_ANSWER_END_POINT = "/answer";

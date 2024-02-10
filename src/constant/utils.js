@@ -162,7 +162,11 @@ export const getImageSource = (uploadedImage) => {
   return "";
 };
 
-export const convertPermissionFilter = (roles, singleOptionsGroupName) => {
+export const convertPermissionFilter = (
+  roles,
+  singleOptionsGroupName,
+  countFieldName
+) => {
   let result = [
     {
       id: 1,
@@ -176,7 +180,7 @@ export const convertPermissionFilter = (roles, singleOptionsGroupName) => {
       result[0].options.push({
         optionId: parseInt(roles[key]?.id || key),
         str: roles[key]?.name,
-        query_count: roles[key]?.query_count,
+        count: roles[key]?.[countFieldName],
       });
     }
   }

@@ -42,12 +42,14 @@ const QueryTable = ({
   searchedValue,
   setSearchedValue,
 }) => {
+  // third party hooks
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
+  // useState hooks
   const [sortedOrder, setSortedOrder] = useState({
     sortDirection: getValidSortByValue(
       searchParams.get(SORT_PROPERTIES.SORT_BY)
@@ -61,8 +63,10 @@ const QueryTable = ({
   const [filterArray, setFilterArray] = useState(
     getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
   );
-
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [isSingleSelect, setIsSingleSelect] = useState(false);
+
+  // custom hooks
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   const {
@@ -94,6 +98,17 @@ const QueryTable = ({
 
   // functions
   // Query selections/toggle related functions
+  let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
+    (item) =>
+      item?.status?.toLowerCase() === "answered" &&
+      selctedQueriesToBeMarkedAsAnswered.includes(item?.id)
+  );
+
+  const allQueryAreAlreadyAnswered =
+    queriesSelectedAndMarkedForAnswer?.length ===
+      selctedQueriesToBeMarkedAsAnswered?.length &&
+    selctedQueriesToBeMarkedAsAnswered?.length > 0;
+
   const onRetry = () => {
     const requestedParams = {
       perPage: pageSize,
@@ -107,6 +122,10 @@ const QueryTable = ({
   };
 
   const handleMarkQuery = () => {
+    if (allQueryAreAlreadyAnswered) {
+      setIsConfirmationModalOpen(false);
+      return;
+    }
     handleMarkQueriesAsAnswered({
       payload: {
         query_id: selctedQueriesToBeMarkedAsAnswered,
@@ -176,6 +195,7 @@ const QueryTable = ({
     navigate,
     renderColumn,
     queriesColumnProperties: {
+      setIsSingleSelect,
       sortArrowStyles,
       selectedItemsList: selctedQueriesToBeMarkedAsAnswered,
       setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
@@ -288,23 +308,14 @@ const QueryTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
-    (item) =>
-      item?.status?.toLowerCase() === "answered" &&
-      selctedQueriesToBeMarkedAsAnswered.includes(item?.id)
-  );
-
-  const allQueryAreAlreadyAnswered =
-    queriesSelectedAndMarkedForAnswer?.length ===
-      selctedQueriesToBeMarkedAsAnswered?.length &&
-    selctedQueriesToBeMarkedAsAnswered?.length > 0;
-
+  // MODAL PROPERTIES
   const getModalProperties = () => {
     if (allQueryAreAlreadyAnswered) {
       return {
         currentModalHeading: "allSelectedQueriesAreAlreadyMarked",
         actionBtnText: "okay",
         currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
+        cancelBtnText: "",
       };
     }
     if (queriesSelectedAndMarkedForAnswer?.length) {
@@ -313,6 +324,7 @@ const QueryTable = ({
           "someQueriesAreMarkedAsAnsweredContinueMaringOthers",
         actionBtnText: "okay",
         currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
+        cancelBtnText: "cancel",
       };
     }
 
@@ -320,13 +332,14 @@ const QueryTable = ({
       currentModalHeading: "markQueriesAsAnswered",
       actionBtnText: "markAsAnswered",
       currentModalSubHeading: "areYouSureYouWantToMarkQueries",
+      cancelBtnText: "cancel",
     };
   };
 
-  // MODAL PROPERTIES
   let currentModalHeading = getModalProperties()?.currentModalHeading;
   let actionBtnText = getModalProperties()?.actionBtnText;
   let currentModalSubHeading = getModalProperties()?.currentModalSubHeading;
+  let cancelBtnText = getModalProperties()?.cancelBtnText;
   let modalIcon =
     queriesSelectedAndMarkedForAnswer?.length === 0
       ? getImage("CircleCheck")
@@ -355,6 +368,14 @@ const QueryTable = ({
       })}
     </div>
   );
+
+  const handleOnModalCancel = () => {
+    if (isSingleSelect) {
+      setSelctedQueriesToBeMarkedAsAnswered([]);
+      setIsSingleSelect(false);
+    }
+    setIsConfirmationModalOpen(false);
+  };
 
   // useEffects hooks
   useEffect(() => {
@@ -421,7 +442,7 @@ const QueryTable = ({
           imgElement={modalIcon}
           isOpen={isConfirmationModalOpen}
           onBtnClick={handleMarkQuery}
-          onCancel={() => setIsConfirmationModalOpen(false)}
+          onCancel={handleOnModalCancel}
           subHeadingText={intl.formatMessage({
             id: `label.${currentModalSubHeading}`,
           })}
@@ -447,7 +468,8 @@ const QueryTable = ({
           currentDataLength={data?.meta?.total}
           filterPropertiesArray={convertPermissionFilter(
             queryTypesData || [],
-            "Query-Types"
+            "Query-Types",
+            "queries_count"
           )}
           onFilterApply={handleOnFilterApply}
         />

@@ -39,6 +39,7 @@ export const getTicketOrQueryColumn = ({
     toggleSelectedQueriesId,
     handleMarkMutipleQueriesAsAnswered,
     setSelectedItemsList,
+    setIsSingleSelect,
   } = queriesColumnProperties;
   const { pageSize, current, searchedValue, filterArray } =
     paginationAndSearchProperties;
@@ -345,6 +346,7 @@ export const getTicketOrQueryColumn = ({
                 onClick={() => {
                   if (!isTableInSelectAllMode && !isAnswered) {
                     setIsConfirmationModalOpen(true);
+                    setIsSingleSelect(true);
                     setSelectedItemsList([rowData?.id]);
                   }
                 }}
