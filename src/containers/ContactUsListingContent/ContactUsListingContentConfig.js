@@ -298,14 +298,17 @@ export const getTicketOrQueryColumn = ({
       renderColumn({
         dataIndex: "see",
         key: "see",
-        render: () => (
-          <Image
-            src={getImage("eye")}
-            alt="eye"
-            preview={false}
-            onClick={(rowData) => navigate(`query/${rowData?.id}`)}
-          />
-        ),
+        render: (_, rowData) => {
+          return (
+            <Image
+              src={getImage("eye")}
+              alt="eye"
+              className={styles.clickable}
+              preview={false}
+              onClick={() => navigate(`query/${rowData?.id}`)}
+            />
+          );
+        },
       }),
       renderColumn({
         title: (
