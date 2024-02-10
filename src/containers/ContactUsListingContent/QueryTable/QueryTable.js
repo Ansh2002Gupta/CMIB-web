@@ -148,7 +148,10 @@ const QueryTable = ({
     });
 
     if (checkFor === "all") {
-      return currentPageSelectedQueries?.length === data?.records?.length;
+      return (
+        currentPageSelectedQueries?.length === data?.records?.length &&
+        data?.records?.length !== 0
+      );
     }
 
     if (checkFor === "some") {
