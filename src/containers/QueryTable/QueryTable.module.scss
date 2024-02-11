@@ -155,3 +155,8 @@ input::placeholder {
 .extraWidth {
   min-width: var(--width_250, 250px) !important;
 }
+
+.disable{
+  // TODO: need to correct this
+  cursor: not-allowed;
+}

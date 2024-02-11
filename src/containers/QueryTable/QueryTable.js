@@ -340,7 +340,9 @@ const QueryTable = ({
   let currentModalHeading = getModalProperties()?.currentModalHeading;
   let actionBtnText = getModalProperties()?.actionBtnText;
   let currentModalSubHeading = getModalProperties()?.currentModalSubHeading;
-  let cancelBtnText = getModalProperties()?.cancelBtnText;
+  let cancelBtnText = getModalProperties()?.cancelBtnText
+    ? intl.formatMessage({ id: `label.cancel` })
+    : "";
   let modalIcon =
     queriesSelectedAndMarkedForAnswer?.length === 0
       ? getImage("CircleCheck")
@@ -447,7 +449,7 @@ const QueryTable = ({
           subHeadingText={intl.formatMessage({
             id: `label.${currentModalSubHeading}`,
           })}
-          cancelBtnText={intl.formatMessage({ id: `label.cancel` })}
+          cancelBtnText={cancelBtnText}
           content={currentModalChildren}
         />
       }

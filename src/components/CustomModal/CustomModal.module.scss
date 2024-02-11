@@ -67,6 +67,7 @@
 
 .cancelBtn {
   min-height: var(--btnHeight, 56px);
+  font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
   &:hover {
     color: var(--textBold, #000833) !important;
