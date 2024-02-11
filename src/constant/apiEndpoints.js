@@ -27,3 +27,5 @@ export const USERS_END_POINT = "/users";
 export const CENTER_END_POINT = "/centres";
 export const VERIFY_OTP = "/otp/verify";
 export const CHANGE_PASSWORD = "/password";
+export const QUERY_TYPE = "/queries/types";
+export const STATUS = "/status";
