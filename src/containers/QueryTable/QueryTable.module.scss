@@ -90,6 +90,14 @@ input::placeholder {
   align-items: center;
 }
 
+.upside {
+  transform: rotate(180deg);
+}
+
+.downside {
+  transform: rotate(0deg);
+}
+
 .sortintArrawContainer {
   min-width: var(--width_20);
   display: flex;
