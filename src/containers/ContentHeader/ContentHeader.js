@@ -6,7 +6,12 @@ import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 
 import styles from "./contentHeader.module.scss";
 
-const ContentHeader = ({ headerText, rightSection, customStyles }) => {
+const ContentHeader = ({
+  headerText,
+  rightSection,
+  customStyles,
+  isLeftFillSpace,
+}) => {
   const Header = () => {
     return (
       <div>
@@ -21,6 +26,7 @@ const ContentHeader = ({ headerText, rightSection, customStyles }) => {
 
   return (
     <TwoColumn
+      {...{ isLeftFillSpace }}
       leftSection={<Header />}
       rightSection={rightSection}
       className={styles.twoColumnBox}

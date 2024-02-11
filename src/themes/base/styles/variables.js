@@ -24,7 +24,7 @@ const variables = {
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
   blue6Bg: colorPallets.blue6,
-  lightGrey3Bg: colorPallets.ltGrey4,
+  lightGrey3Bg: colorPallets.ltGrey3,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -124,6 +124,7 @@ const variables = {
   width_176: "176px",
   width_180: "180px",
   width_200: "200px",
+  width_250: "250px",
   width_300: "300px",
   width_347: "347px",
   width_350: "350px",

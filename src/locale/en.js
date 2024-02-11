@@ -190,6 +190,7 @@ const locale = {
   "label.queryStatus": "Query Status",
   "label.createdOn": "Created On",
   "label.ticketId": "Ticket ID",
+  "label.tickets": "Tickets",
   "label.createdBy": "Created By",
   "label.role": "Role",
   "label.registrationOrMembershipNumber": "Registration/Membership No.",

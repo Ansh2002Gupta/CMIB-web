@@ -6,23 +6,23 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
-import ErrorMessageBox from "../../../components/ErrorMessageBox";
-import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
-import useFetch from "../../../core/hooks/useFetch";
-import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
-import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
+import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import useFetch from "../../core/hooks/useFetch";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { getTicketOrQueryColumn } from "./TicketTableConfig";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
-} from "../../../constant/constant";
+} from "../../constant/constant";
 import {
   CORE_ROUTE,
   QUERY_TYPE,
   STATUS,
   TICKET_LIST,
-} from "../../../constant/apiEndpoints";
-import styles from "../ContactUsListingContent.module.scss";
+} from "../../constant/apiEndpoints";
+import styles from "./TicketTable.module.scss";
 
 const TicketTable = ({
   current,
@@ -87,9 +87,6 @@ const TicketTable = ({
       current,
       searchedValue,
     },
-    // sortedOrder,
-    // setSortedOrder,
-    // setSearchParams,
   });
 
   const handleOnUserSearch = (str) => {

@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch } from "antd";
+import { Dropdown, Image, Switch, Tooltip } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
@@ -77,6 +77,7 @@ const useRenderColumn = () => {
       isTypeDate,
       textStyles,
       isCapitalize,
+      isRequiredTooltip,
       mobile,
     } = renderText;
 
@@ -111,6 +112,21 @@ const useRenderColumn = () => {
         return `${text} .`;
       }
       return text;
+    };
+
+    const getRenderText = (text) => {
+      return (
+        <p
+          className={[
+            textStyles,
+            isTextBold ? styles.boldText : "",
+            styles.textEllipsis,
+            isCapitalize ? styles.capitalize : "",
+          ].join(" ")}
+        >
+          {textRenderFormat({ text: text || "--" })}
+        </p>
+      );
     };
 
     title &&
@@ -171,17 +187,10 @@ const useRenderColumn = () => {
                   : "+91"
               }-${text}`}
             </p>
+          ) : isRequiredTooltip ? (
+            <Tooltip title={text}>{getRenderText(text)}</Tooltip>
           ) : (
-            <p
-              className={[
-                textStyles,
-                isTextBold ? styles.boldText : "",
-                styles.textEllipsis,
-                isCapitalize ? styles.capitalize : "",
-              ].join(" ")}
-            >
-              {textRenderFormat({ text: text || "--" })}
-            </p>
+            getRenderText(text)
           ),
         };
       });
@@ -263,12 +272,11 @@ const useRenderColumn = () => {
           <CustomCheckBox
             checked={checkBoxList?.includes(id)}
             onChange={() => onClickCheckbox(rowData)}
-            customStyles={[
-              isCheckBoxTextBold ? styles.boldText : "",
-              customCheckBoxContainerStyles,
-            ].join("")}
+            customStyles={[customCheckBoxContainerStyles].join("")}
           >
-            {textToRender}
+            <p className={isCheckBoxTextBold ? styles.boldText : ""}>
+              {textToRender || "--"}
+            </p>
           </CustomCheckBox>
         );
       });
