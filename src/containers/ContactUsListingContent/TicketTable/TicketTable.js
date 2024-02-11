@@ -67,7 +67,7 @@ const TicketTable = ({
     return _.debounce((requestedParams) => {
       fetchData({ queryParamsObject: requestedParams });
     }, 300);
-  }, [fetchData]);
+  }, []);
 
   const queryTypeOptions = useMemo(() => {
     return queryTypes?.map((queryType) => ({
@@ -81,7 +81,7 @@ const TicketTable = ({
       optionId: status.id,
       str: status.name,
     }));
-  });
+  }, [status]);
 
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
@@ -133,7 +133,7 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  // TODO: Need to refactor 
+  // TODO: Need to refactor
   // useEffect(() => {
   //   if (data?.meta) {
   //     const { total } = data?.meta;

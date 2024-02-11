@@ -71,7 +71,7 @@ export const getTicketOrQueryColumn = (
         key: "query_type",
         renderText: {
           visible: true,
-          textStyles: [styles.tableCell].join(" "),
+          textStyles: styles.tableCell,
         },
       }),
       renderColumn({
@@ -162,7 +162,7 @@ export const getTicketOrQueryColumn = (
       key: "query_type",
       renderText: {
         visible: true,
-        textStyles: [styles.centerText, styles.tableCell].join(" "),
+        textStyles: styles.tableCell,
       },
     }),
     renderColumn({
