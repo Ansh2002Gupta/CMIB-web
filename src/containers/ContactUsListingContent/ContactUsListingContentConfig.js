@@ -136,6 +136,7 @@ export const getTicketOrQueryColumn = ({
         renderText: {
           visible: true,
           textStyles: [styles.tableCell].join(" "),
+          isCapitalize: true,
         },
       }),
       renderColumn({
@@ -178,7 +179,9 @@ export const getTicketOrQueryColumn = ({
                 styles[styleClassForContainer],
               ].join(" ")}
             >
-              <Typography className={styles[styleClassForText]}>
+              <Typography
+                className={`${styles[styleClassForText]} ${styles["defaultStatusStyles"]}`}
+              >
                 {status}
               </Typography>
             </div>
@@ -281,7 +284,7 @@ export const getTicketOrQueryColumn = ({
                   <Image
                     src={getImage("arrowDownDarkGrey")}
                     preview={false}
-                    className={[sortArrowStyles, styles.arrowSytles].join(" ")}
+                    className={[sortArrowStyles].join(" ")}
                   />
                 </div>
               </Typography>

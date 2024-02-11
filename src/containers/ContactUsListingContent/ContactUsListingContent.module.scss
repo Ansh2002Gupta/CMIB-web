@@ -82,6 +82,11 @@
   background-color: var(--lightBlueBg2);
 }
 
+.defaultStatusStyles {
+  font-size: 12px;
+  line-height: 18px;
+}
+
 .statusText_success {
   color: var(--greenText);
 }
@@ -127,6 +132,7 @@ input::placeholder {
   display: flex;
   gap: var(--gapXSmall);
   cursor: pointer;
+  align-items: center;
 }
 
 .upside {
@@ -192,10 +198,6 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.arrowSytles {
-  margin-bottom: 6px;
 }
 
 @media screen and (max-width: 1023px) {
