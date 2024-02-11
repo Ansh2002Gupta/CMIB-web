@@ -36,8 +36,9 @@
 
 .filterBtnText {
   color: var(--textBold);
-  font-size: var(--fontSizeNormal);
+  font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
+  align-self: 'center';
 }
 
 .active {
@@ -151,6 +152,7 @@
 
 .buttonTextStyle {
   font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 @media screen and (max-width: 900px) and (min-width: 510px) {

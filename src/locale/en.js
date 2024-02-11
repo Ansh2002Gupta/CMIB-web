@@ -65,7 +65,6 @@ const locale = {
   "label.clearAll": "Clear all",
   "label.cancel": "Cancel",
   "label.rowPerPage": "Rows per page",
-  "label.searchResult": "Search results",
   "label.next": "Next",
   "label.previous": "Previous",
   "label.active": "Active",
@@ -367,11 +366,8 @@ const locale = {
   "label.save": "Save",
   "label.cropProfilePicture": "Crop Profile Picture",
   "label.profilePictureIsUpdated": "User profile picture is updated",
-  "label.save": "Save",
   "label.enabled": "Enabled",
   "label.disabled": "Disabled",
-  "label.path.users": "Manage Users",
-  "label.path.details": "User Details",
   "label.path.editDetails": "Edit User Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.passwordChanged": "Password changed successfully",
@@ -384,6 +380,7 @@ const locale = {
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
+  "label.show_result": "Show Result",
 };
 
 export default locale;

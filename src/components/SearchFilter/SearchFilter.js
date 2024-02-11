@@ -205,7 +205,7 @@ const SearchFilter = ({
               {intl.formatMessage({ id: "label.cancel" })}
             </Button>
             <CustomButton
-              btnText={intl.formatMessage({ id: "label.searchResult" })}
+              btnText={intl.formatMessage({ id: "label.show_result" })}
               customStyle={styles.showResultBtn}
               onClick={() => {
                 setFilterArray(currentFilterStatus);

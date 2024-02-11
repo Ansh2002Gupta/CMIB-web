@@ -71,7 +71,7 @@ export const getTicketOrQueryColumn = (
         key: "query_type",
         renderText: {
           visible: true,
-          textStyles: [styles.centerText, styles.tableCell].join(" "),
+          textStyles: [styles.tableCell].join(" "),
         },
       }),
       renderColumn({
@@ -144,7 +144,11 @@ export const getTicketOrQueryColumn = (
       title: intl.formatMessage({ id: "label.role" }),
       dataIndex: "role",
       key: "role",
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+        isCapitalize: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.registrationOrMembershipNumber" }),
