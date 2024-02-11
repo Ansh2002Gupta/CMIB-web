@@ -17,19 +17,13 @@ import useFetch from "../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketOrQueryColumn } from "./QueriesTableConfig";
-import {
-  convertPermissionFilter,
-  getValidFilter,
-  getValidSortByValue,
-} from "../../constant/utils";
+import { convertPermissionFilter, getValidFilter } from "../../constant/utils";
 import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
   NUMBER_OF_CHIPS_TO_SHOW,
   PAGINATION_PROPERTIES,
   SORTING_QUERY_PARAMS,
-  SORT_PROPERTIES,
-  SORT_VALUES,
 } from "../../constant/constant";
 import styles from "./QueryTable.module.scss";
 
@@ -70,12 +64,7 @@ const QueryTable = ({
   // custom hooks
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const {
-    data: queryTypesData,
-    getQueriesTypes,
-    isLoading: isGettingQueryTypes,
-    error: errorWhileGettingQueryTypes,
-  } = useQueriesTypesApi();
+  const { data: queryTypesData, getQueriesTypes } = useQueriesTypesApi();
 
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkQueriesAsAnswerApi();

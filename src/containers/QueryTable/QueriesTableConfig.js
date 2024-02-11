@@ -98,25 +98,24 @@ export const getTicketOrQueryColumn = ({
                     setSearchParams((prevValue) => {
                       prevValue.set(
                         SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                        toggleSorting(sortByName?.direction),
+                        toggleSorting(sortByName?.direction)
                       );
                       prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
                       return prevValue;
                     });
-
                     setSortByName((prev) => {
                       return {
                         ...prev,
                         direction: toggleSorting(prev?.direction),
                         isDisable: false,
                       };
-                    }),
-                      setSortByCreatedAt((prev) => {
-                        return {
-                          ...prev,
-                          isDisable: true,
-                        };
-                      });
+                    });
+                    setSortByCreatedAt((prev) => {
+                      return {
+                        ...prev,
+                        isDisable: true,
+                      };
+                    });
                   },
                 })
               }
@@ -274,9 +273,12 @@ export const getTicketOrQueryColumn = ({
                     setSearchParams((prevValue) => {
                       prevValue.set(
                         SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                        toggleSorting(sortByCreatedAt?.direction),
+                        toggleSorting(sortByCreatedAt?.direction)
                       );
-                      prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "created_at");
+                      prevValue.set(
+                        SORTING_QUERY_PARAMS.SORTED_KEY,
+                        "created_at"
+                      );
                       return prevValue;
                     });
 
@@ -285,14 +287,14 @@ export const getTicketOrQueryColumn = ({
                         ...prev,
                         isDisable: true,
                       };
-                    }),
-                      setSortByCreatedAt((prev) => {
-                        return {
-                          ...prev,
-                          direction: toggleSorting(prev.direction),
-                          isDisable: false,
-                        };
-                      });
+                    });
+                    setSortByCreatedAt((prev) => {
+                      return {
+                        ...prev,
+                        direction: toggleSorting(prev.direction),
+                        isDisable: false,
+                      };
+                    });
                   },
                 })
               }
