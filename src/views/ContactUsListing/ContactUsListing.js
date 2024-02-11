@@ -6,6 +6,7 @@ import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 import ContactUsListingHeader from "../../containers/ContactUsListingHeader";
 import QueryTable from "../../containers/ContactUsListingContent/QueryTable";
 import TicketTable from "../../containers/ContactUsListingContent/TicketTable/TicketTable";
+import TicketChatScreen from "../TicketChatScreen";
 import {
   getCurrentActiveTab,
   getValidPageNumber,
@@ -18,7 +19,7 @@ import {
 } from "../../constant/constant";
 
 const ContactUsListing = () => {
-  const [searchParams,] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [currentActiveTab, setCurrentActiveTab] = useState(
     getCurrentActiveTab(searchParams.get(ACTIVE_TAB), VALID_CONTACT_US_TABS_ID)
   );
@@ -47,17 +48,18 @@ const ContactUsListing = () => {
       isBottomFillSpace
       bottomSection={
         currentActiveTab === "1" ? (
-          <TicketTable
-            {...{
-              current,
-              currentActiveTab,
-              pageSize,
-              setCurrent,
-              setPageSize,
-              searchedValue,
-              setSearchedValue,
-            }}
-          />
+          // <TicketTable
+          //   {...{
+          //     current,
+          //     currentActiveTab,
+          //     pageSize,
+          //     setCurrent,
+          //     setPageSize,
+          //     searchedValue,
+          //     setSearchedValue,
+          //   }}
+          // />
+          <TicketChatScreen />
         ) : (
           <QueryTable
             {...{

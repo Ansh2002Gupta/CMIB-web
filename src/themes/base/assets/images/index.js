@@ -1,3 +1,4 @@
+import activeSend from "./activeSend.svg";
 import addCircle from "./addCircle.svg";
 import arrowDown from "./arrow-down.svg";
 import arrowDownDarkGrey from "./arrow-down-dark-grey.svg";
@@ -34,6 +35,7 @@ import more from "./more.svg";
 import plusIcon from "./plus icon.svg";
 import rightIcon from "./check icon.svg";
 import searchIcon from "./search icon.svg";
+import send from "./send.svg";
 import seventyFive from "./75.svg";
 import someFiltersAreSelected from "./some filters are selected.svg";
 import trash from "./trash.svg";
@@ -59,6 +61,7 @@ import addCircleBlue from "./add-circle-blue.svg";
 import publicLogoWhite from "./public_logo_white_transparent.svg";
 
 const images = {
+  activeSend,
   addCircle,
   arrowDown,
   arrowDownDarkGrey,
@@ -95,6 +98,7 @@ const images = {
   plusIcon,
   rightIcon,
   searchIcon,
+  send,
   seventyFive,
   someFiltersAreSelected,
   trash,

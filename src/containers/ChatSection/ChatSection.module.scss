@@ -1,0 +1,57 @@
+.mainContainer {
+  border-right: var(--borderLight);
+  padding: 64px 40px var(--padding_20);
+  gap: var(--gapMedium);
+  background-color: var(--blueBg);
+}
+.textInputFormContainer {
+  flex: 1;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+  background-color: var(--bodyBg);
+  align-content: center;
+  border: var(--borderLight);
+  border-radius: var(--radiusXLg);
+  padding: var(--paddingXXSmall);
+}
+.disableTextInputFormContainer {
+  flex: 1;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+  background-color: var(--blueBg);
+  align-content: center;
+}
+.textInputContainer {
+  gap: var(--gapXXSmall);
+}
+
+.customContainerStyles {
+  width: var(--fullWidth);
+  justify-content: center;
+  display: flex;
+  flex: 1;
+  padding-left: var(--padding_20);
+}
+
+.customInputStyles {
+  height: 100%;
+  border-width: 0;
+  width: var(--fullWidth);
+  flex: 1;
+  display: flex;
+  background-color: transparent;
+  padding: 0;
+  align-self: center;
+  align-items: center;
+}
+
+.messagesContainer {
+  max-height: 45vh;
+  overflow-x: auto;
+  width: var(--fullWidth);
+  padding: var(--paddingXXSmall);
+}

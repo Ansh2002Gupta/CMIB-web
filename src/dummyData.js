@@ -939,3 +939,350 @@ export const PERMISION_AND_ROLE = {
     },
   ],
 };
+
+export const ticket_replies = {
+  records: [
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 156,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 1,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 2,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 156,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 1,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 2,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 156,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 1,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 2,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 156,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 1,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 2,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 156,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 1,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 2,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 156,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 1,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 2,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 156,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 1,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 2,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 156,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 1,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 2,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 155,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 2,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 1,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+    {
+      id: 156,
+      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
+      file_path: "xxxxxxxxxxxxxxxx",
+      from: {
+        id: 1,
+        name: "xxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      to: {
+        id: 2,
+        name: "xxxxxxxxxxxxxxx",
+        profile_photo:
+          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
+      },
+      created_at: "xxxxxxxxx",
+    },
+  ],
+};

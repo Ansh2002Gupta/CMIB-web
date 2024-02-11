@@ -11,6 +11,7 @@ import styles from "./CustomInput.module.scss";
 const CustomInput = React.forwardRef(
   (
     {
+      currentSelectedValue,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,
@@ -136,11 +137,13 @@ const CustomInput = React.forwardRef(
                       </span>
                     ))}
                   {SuffixIcon && (
-                    <SuffixIcon
-                      onClick={() => {
-                        onSuffixElementClick && onSuffixElementClick();
-                      }}
-                    />
+                    <span className={styles.suffixElement}>
+                      <SuffixIcon
+                        onClick={() => {
+                          onSuffixElementClick && onSuffixElementClick();
+                        }}
+                      />
+                    </span>
                   )}
                 </>
               }
@@ -162,17 +165,20 @@ const CustomInput = React.forwardRef(
             />
           )}
         </div>
-        <div>
-          <Typography
-            className={[
-              styles.errorText,
-              customErrorTextStyles,
-              isError ? styles.showError : "",
-            ].join(" ")}
-          >
-            {errorMessage ? ` * ${errorMessage}` : ""}
-          </Typography>
-        </div>
+        {errorMessage && (
+          <div>
+            <Typography
+              className={[
+                styles.errorText,
+                customErrorTextStyles,
+                isError ? styles.showError : "",
+              ].join(" ")}
+            >
+              {errorMessage ? ` * ${errorMessage}` : ""}
+            </Typography>
+          </div>
+        )}
+
         {!!messageToShow && (
           <div>
             <Typography

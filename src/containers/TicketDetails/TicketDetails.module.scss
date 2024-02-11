@@ -1,0 +1,45 @@
+.profileContainer {
+  padding: var(--paddingMedium);
+}
+
+.profileDetails {
+  align-items: center;
+  align-content: center;
+  width: var(--fullWidth);
+  flex: 1;
+  padding-bottom: var(--paddingLarge);
+  border-bottom: var(--borderLight);
+}
+
+.bottomContainer {
+  padding-top: var(--paddingLarge);
+  gap: var(--gapMedium);
+}
+
+.contentDetails {
+  gap: var(--gapXSmall);
+}
+
+.contentHeadingText {
+  font-size: var(--fontSizeExtraSmall);
+  color: var(--inputPlaceHolder);
+  font-weight: var(--fontWeightMedium);
+}
+
+.contentDetailText {
+  font-size: var(--fontSizeSmall);
+  color: var(--textBold);
+  font-weight: var(--fontWeightMedium);
+}
+
+.nameText {
+  font-size: var(--fontSizeNormal);
+  color: var(--textBold);
+  font-weight: var(--fontWeightBold);
+}
+
+.ticketIdText {
+  font-size: var(--fontSizeSmall);
+  color: var(--inputPlaceHolder);
+  font-weight: var(--fontWeightMedium);
+}

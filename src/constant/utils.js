@@ -210,3 +210,11 @@ export const getCurrentFormState = (
   }
   return FORM_STATES.VIEW_ONLY;
 };
+
+export const splitName = (fullName) => {
+  const parts = fullName.split(" ");
+  const firstName = parts[0];
+  const lastName = parts.slice(1).join(" ");
+
+  return { firstName, lastName };
+};

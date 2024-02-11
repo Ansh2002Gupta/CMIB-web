@@ -19,6 +19,7 @@ import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import SetupCenterDetails from "../views/SetupCenterDetails";
 import SetupMockInterview from "../views/SetupMockInterview";
+import TicketChatScreen from "../views/TicketChatScreen";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
@@ -55,16 +56,16 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 );
 
 const config = [
-  {
-    pagePath: OUT_SOURCED,
-    element: <DefaultRoute />,
-    views: [
-      {
-        viewPath: "",
-        element: <DefaultRoute />,
-      },
-    ],
-  },
+  // {
+  //   pagePath: OUT_SOURCED,
+  //   element: <DefaultRoute />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <DefaultRoute />,
+  //     },
+  //   ],
+  // },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,
@@ -196,6 +197,14 @@ const config = [
         viewPath: USERS + ADD_NEW_USER_DETAILS,
         element: <UserDetails />,
       },
+      {
+        viewPath: CONTACT_US,
+        element: <TicketChatScreen />,
+      },
+      {
+        viewPath: CONTACT_US + QUERY_DETAILS,
+        element: <QueryDetails />,
+      },
     ],
   },
   {
@@ -239,14 +248,7 @@ const config = [
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
       },
-      {
-        viewPath: CONTACT_US,
-        element: <ContactUsListing />,
-      },
-      {
-        viewPath: CONTACT_US + QUERY_DETAILS,
-        element: <QueryDetails />,
-      },
+
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW,
         element: <SetupMockInterview />,

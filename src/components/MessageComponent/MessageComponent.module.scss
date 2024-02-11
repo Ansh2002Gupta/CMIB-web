@@ -1,0 +1,48 @@
+.profileImageStyle {
+  width: var(--width_32);
+  height: var(--height_32);
+}
+
+.fromMessageText {
+  background-color: var(--bulletPoint);
+  padding: var(--paddingSmall);
+  border-radius: var(--radiusMLg) var(--radiusXss) var(--radiusMLg)
+    var(--radiusMLg);
+  border: var(--borderLight);
+  color: var(--textBold);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+}
+
+.toMessageText {
+  background-color: var(--bodyBg);
+  padding: var(--paddingSmall);
+  border-radius: var(--radiusXss) var(--radiusMLg) var(--radiusMLg)
+    var(--radiusMLg);
+  border: var(--borderLight);
+  color: var(--textBold);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+}
+
+.leftMessageContaier {
+}
+
+.rightMessageContaier {
+  justify-content: flex-end;
+}
+
+.rightTimeText {
+  color: var(--inputPlaceHolder);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeExtraSmall);
+  width: var(--fullWidth);
+  display: flex;
+  justify-content: flex-end;
+}
+.leftTimeText {
+  color: var(--inputPlaceHolder);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeExtraSmall);
+  width: var(--fullWidth);
+}

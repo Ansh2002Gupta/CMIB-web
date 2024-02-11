@@ -59,13 +59,13 @@ const useGetUserDetails = () => {
           intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
         )
       );
-      onLogout();
+      // onLogout();
     } catch (err) {
       const errorMessage =
         err.response?.data?.message ||
         intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" });
       userProfileDispatch(setErrorGetingUserDetails(errorMessage));
-      onLogout();
+      // onLogout();
     }
   };
 

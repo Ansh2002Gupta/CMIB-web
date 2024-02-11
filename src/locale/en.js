@@ -384,6 +384,7 @@ const locale = {
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
+  "label.typeHere": "Type here...",
 };
 
 export default locale;
