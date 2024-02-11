@@ -8,15 +8,16 @@ import { ThemeContext } from "core/providers/theme";
 
 import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
-import { ACCESS_FILTER_DATA } from "../../dummyData";
 import { DEFAULT_PAGE_SIZE } from "../../constant/constant";
+import { ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./TableWithSearchAndFilters.module.scss";
-
+//TODO: update default props.
 const TableWithSearchAndFilters = ({
   columns,
   current,
   currentDataLength,
   data,
+  filterPropertiesArray,
   filterOptions,
   handleOnUserSearch,
   onChangeCurrentPage,
@@ -24,6 +25,9 @@ const TableWithSearchAndFilters = ({
   pageSize,
   searchedValue,
   isLoading,
+  filterArray,
+  setFilterArray,
+  onFilterApply,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);

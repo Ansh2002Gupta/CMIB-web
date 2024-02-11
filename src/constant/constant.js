@@ -357,4 +357,11 @@ export const INITIAL_PASSWORD_DATA = {
   confirm_password: "",
 };
 
+export const SORTING_QUERY_PARAMS = {
+  SORTED_KEY: "sorted-key",
+  SORTED_DIRECTION: "sorted-direction",
+};
+
+export const NUMBER_OF_CHIPS_TO_SHOW = 15;
+
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
