@@ -143,6 +143,7 @@ const variables = {
   height_24: "24px",
   height_30: "30px",
   height_32: "32px",
+  height_36: "36px",
   height_40: "40px",
   height_44: "44px",
   minBtnHeight: "45px",

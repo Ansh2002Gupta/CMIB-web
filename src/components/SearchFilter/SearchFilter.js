@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { ThemeContext } from "core/providers/theme";
@@ -211,6 +211,7 @@ const SearchFilter = ({
                 setFilterArray(currentFilterStatus);
                 setShowFilters(false);
               }}
+              textStyle={styles.buttonTextStyle}
             />
           </div>
         </div>

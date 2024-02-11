@@ -1,14 +1,16 @@
 .columnHeading {
   color: var(--subHeadingColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightBold);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
 }
+
 .textEllipsis {
   max-width: var(--width_200);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
+
 .filterAndTableContainer {
   background-color: var(--blueBg);
   width: var(--fullWidth);
@@ -83,14 +85,17 @@
 
 .statusText_success {
   color: var(--greenText);
+  font-size: var(--fontSizeExtraSmall);
 }
 
 .statusText_failed {
   color: var(--redText);
+  font-size: var(--fontSizeExtraSmall);
 }
 
 .statusText_progress {
   color: var(--blueText);
+  font-size: var(--fontSizeExtraSmall);
 }
 
 .errorText {

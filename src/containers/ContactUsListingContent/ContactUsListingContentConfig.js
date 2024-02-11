@@ -18,11 +18,11 @@ export const getTicketOrQueryColumn = (
   navigate,
   renderColumn
 ) => {
-  if (type === '2') {
+  if (type === "2") {
     return [
       renderColumn({
         title: intl.formatMessage({ id: "label.queriesId" }),
-        dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
+        dataIndex: "id", //TODO: change key name to another the one which is having alphanumeric value
         key: "id",
         renderText: {
           isTextBold: true,
@@ -124,8 +124,8 @@ export const getTicketOrQueryColumn = (
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.ticketId" }),
-      dataIndex: "id",//TODO: change key name to another the one which is having alphanumeric value
-      key: "id",
+      dataIndex: "readable_id",
+      key: "readable_id",
       renderText: {
         isTextBold: true,
         visible: true,
@@ -171,10 +171,9 @@ export const getTicketOrQueryColumn = (
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <div
-            className={[
-              styles.statusBox,
-              styles[styleClassForContainer],
-            ].join(" ")}
+            className={[styles.statusBox, styles[styleClassForContainer]].join(
+              " "
+            )}
           >
             <Typography className={styles[styleClassForText]}>
               {status}
@@ -202,10 +201,6 @@ export const getTicketOrQueryColumn = (
         visible: true,
         textStyles: [styles.tableCell].join(" "),
       },
-      sortDirection: ["ascend"],
-      sortKey: "created_at",
-      sortTypeDate: true,
-      defaultSortOrder: "ascend",
     }),
     renderColumn({
       dataIndex: "see",

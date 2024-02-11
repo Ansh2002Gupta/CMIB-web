@@ -7,12 +7,15 @@
   border-radius: var(--radiusLg, 8px);
   background-color: var(--greenBtnBg, #04af55);
   min-height: var(--btnHeight, 56px);
-  color: var(--btnText, #fbfcff);
-  font-weight: var(--fontWeightBold, 600);
   &:hover {
     background-color: var(--greenBtnBg, #04af55) !important;
     color: var(--btnText, #fbfcff) !important;
   }
+}
+
+.buttonTextStyle {
+  font-weight: var(--fontWeightBold, 600);
+  color: var(--btnText, #fbfcff);
 }
 
 .btn[disabled] {
