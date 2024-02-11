@@ -313,7 +313,7 @@ export const MENU_KEYS = {
   ROASTER: "roster",
   FEEDBACK: "feedback",
   CONTACT_US: "contact-us",
-  ACTIVITY_LOGS: "activity-logs",
+  ACTIVITY_LOGS: "activity-log",
   ALL_JOBS: "all-job-listing",
   ROUND_1_PLACEMENT: "round-1",
   ROUND_2_PLACEMENT: "round-2",
@@ -365,4 +365,3 @@ export const SORTING_QUERY_PARAMS = {
 export const NUMBER_OF_CHIPS_TO_SHOW = 15;
 
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
-

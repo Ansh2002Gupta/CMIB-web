@@ -14,10 +14,7 @@ import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import { CENTRE_DETAILS } from "../../../routes/routeNames";
-import {
-  CENTER_END_POINT,
-  PLACEMENT_ROUTE,
-} from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CENTER_END_POINT } from "../../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   PAGINATION_PROPERTIES,
@@ -62,7 +59,7 @@ const ConfigureCentreContent = () => {
 
   const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
     useFetch({
-      url: PLACEMENT_ROUTE + CENTER_END_POINT,
+      url: ADMIN_ROUTE + CENTER_END_POINT,
       otherOptions: {
         skipApiCallOnMount: true,
       },
@@ -94,7 +91,7 @@ const ConfigureCentreContent = () => {
         });
       },
       (errorMessage) => {
-        showNotification(errorMessage, "error");
+        showNotification({ text: errorMessage, type: "error" });
       }
     );
   };
@@ -126,9 +123,9 @@ const ConfigureCentreContent = () => {
     const requestedParams = {
       perPage: pageSize,
       page: newPageNumber,
-      keyword: searchedValue,
-      sort: sortedOrder.sortDirection,
-      order: sortedOrder.sortKeyName,
+      q: searchedValue,
+      sortDirection: sortedOrder.sortDirection,
+      sortField: sortedOrder.sortKeyName,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -254,7 +251,6 @@ const ConfigureCentreContent = () => {
         dataKeyName: "centreId",
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
-        checkIsSwitchEditable: (data) => Boolean(data?.is_editable),
       },
     }),
     renderColumn({
