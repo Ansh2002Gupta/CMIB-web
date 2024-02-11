@@ -51,7 +51,8 @@
 
 .messagesContainer {
   max-height: 45vh;
-  overflow-x: auto;
+  overflow-y: auto;
   width: var(--fullWidth);
   padding: var(--paddingXXSmall);
+  gap: var(--gapXXSmall);
 }

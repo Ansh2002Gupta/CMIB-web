@@ -4,7 +4,7 @@ import { Typography } from "antd";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import ProfileIcon from "../ProfileIcon/ProfileIcon";
-import { splitName } from "../../constant/utils";
+import { splitName, formatDate } from "../../constant/utils";
 import styles from "./MessageComponent.module.scss";
 
 const MessageComponent = ({ messageData }) => {
@@ -17,7 +17,10 @@ const MessageComponent = ({ messageData }) => {
         <TwoRow
           topSection={
             <Typography className={styles.rightTimeText}>
-              {messageData?.created_at}
+              {formatDate({
+                date: messageData?.created_at,
+                dateFormat: "hh:mm A",
+              })}
             </Typography>
           }
           bottomSection={
@@ -29,6 +32,7 @@ const MessageComponent = ({ messageData }) => {
       }
       rightSection={
         <ProfileIcon
+          imageContainerStyle={styles.rightImageContainerStyle}
           profileImageStyle={styles.profileImageStyle}
           {...{ firstName, lastName }}
           profileImage={messageData?.from?.profile_photo}
@@ -40,6 +44,7 @@ const MessageComponent = ({ messageData }) => {
       className={styles.leftMessageContaier}
       leftSection={
         <ProfileIcon
+          imageContainerStyle={styles.leftImageContainerStyle}
           profileImageStyle={styles.profileImageStyle}
           {...{ firstName, lastName }}
           profileImage={messageData?.from?.profile_photo}
@@ -49,7 +54,10 @@ const MessageComponent = ({ messageData }) => {
         <TwoRow
           topSection={
             <Typography className={styles.leftTimeText}>
-              {messageData?.created_at}
+              {formatDate({
+                date: messageData?.created_at,
+                dateFormat: "hh:mm A",
+              })}
             </Typography>
           }
           bottomSection={

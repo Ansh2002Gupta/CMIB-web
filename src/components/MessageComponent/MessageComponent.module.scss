@@ -12,6 +12,7 @@
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
+  max-width: 30vw;
 }
 
 .toMessageText {
@@ -23,9 +24,11 @@
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
+  max-width: 30vw;
 }
 
 .leftMessageContaier {
+  justify-content: flex-start;
 }
 
 .rightMessageContaier {
@@ -45,4 +48,24 @@
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeExtraSmall);
   width: var(--fullWidth);
+}
+
+.leftImageContainerStyle {
+  border-width: 0px;
+  margin-top: var(--marginMedium);
+  margin-right: var(--marginSmall);
+}
+.rightImageContainerStyle {
+  border-width: 0px;
+  margin-top: var(--marginMedium);
+  margin-left: var(--marginSmall);
+}
+
+@media screen and (max-width: 767px) {
+  .fromMessageText {
+    max-width: var(--widthHalfViewPort);
+  }
+  .toMessageText {
+    max-width: var(--widthHalfViewPort);
+  }
 }
