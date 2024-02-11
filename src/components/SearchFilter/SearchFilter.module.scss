@@ -149,6 +149,10 @@
   width: var(--width_20);
 }
 
+.textInBrackets {
+  color: var(--lightGreyText3);
+}
+
 @media screen and (max-width: 900px) and (min-width: 510px) {
   .cardParentContainer {
     left: -100px;

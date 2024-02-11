@@ -12,7 +12,11 @@ export const objectToQueryString = (requestedParams) => {
   );
   const keys = Object.keys(validParams);
   for (let key of keys) {
-    queryString += `${key}=${validParams[key]}&`;
+    if (Array.isArray(validParams[key])) {
+      queryString += `${key}=[${validParams[key]}]&`;
+    } else {
+      queryString += `${key}=${validParams[key]}&`;
+    }
   }
   return queryString.slice(0, queryString.length - 1);
 };

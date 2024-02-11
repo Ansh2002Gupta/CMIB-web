@@ -32,7 +32,7 @@ import Monitor from "./Monitor.svg";
 import minusCircle from "./minusCircle.svg";
 import more from "./more.svg";
 import plusIcon from "./plus icon.svg";
-import rightIcon from "./check icon.svg";
+import checkIcon from "./check icon.svg";
 import searchIcon from "./search icon.svg";
 import seventyFive from "./75.svg";
 import someFiltersAreSelected from "./some filters are selected.svg";
@@ -57,6 +57,7 @@ import rotateIcon from "./rotate-Icon.svg";
 import minusCircleBlue from "./minus-cirlce-blue.svg";
 import addCircleBlue from "./add-circle-blue.svg";
 import publicLogoWhite from "./public_logo_white_transparent.svg";
+import greenTick from "./green-tick.svg";
 
 const images = {
   addCircle,
@@ -93,7 +94,7 @@ const images = {
   minusCircle,
   more,
   plusIcon,
-  rightIcon,
+  checkIcon,
   searchIcon,
   seventyFive,
   someFiltersAreSelected,
@@ -118,6 +119,7 @@ const images = {
   addCircleBlue,
   minusCircleBlue,
   publicLogoWhite,
+  greenTick,
 };
 
 export default images;

@@ -184,10 +184,11 @@ const locale = {
   "label.addNewCentre": "Add New Centre",
   "label.newCentre": "New Centre",
   "label.queriesId": "Query ID",
-  "label.studentOrCompany": "Student/Company Name",
-  "label.nonRegisteredStudentOrCompany": "Non-Registered Student/Company",
+  "label.studentOrCompany": "Student / Company Name",
+  "label.nonRegisteredStudentOrCompany": "Non-Registered Student / Company",
   "label.mobile": "Mobile",
   "label.queryType": "Query Type",
+  "label.queryStatus": "Query Status",
   "label.createdOn": "Created On",
   "label.ticketId": "Ticket ID",
   "label.createdBy": "Created By",
@@ -379,7 +380,22 @@ const locale = {
   "label.sessionStatus": "Session Status",
   "label.deleteAccount": "Delete Account",
   "label.path.global-configurations": "Configure centres",
-  "label.path.centre-details": "Edit centre details",
+  "label.editCentreDetails": "Edit centre details",
+  "label.areYouSureYouWantToMarkQueries":
+    "Are you sure you want to mark the queries as answered?",
+  "label.markQueriesAsAnswered": "Mark Queries as Answered",
+  "label.markAsAnswered": "Mark as Answered",
+  "label.areYouSureWantToMakeQueryAsAnsweredSingle":
+    "Are you sure you want to mark the query as answered?",
+  "label.selectAll": "Select All",
+  "label.okay": "Okay",
+  "label.markSelectedQueriesAsAnswered": "Mark as Answered",
+  "label.allSelectedQueriesAreAlreadyMarked":
+    "All selected queries have already been marked as answered.",
+  "label.followingQueriesAreMarkedAnAnswered":
+    "Following queries have already been marked as answered:",
+  "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
+    "Some queries have already been marked as answered. Continuing marking for the remaining queries.",
   "label.path.add": "Add New User",
 };
 

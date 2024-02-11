@@ -15,6 +15,17 @@
   }
 }
 
+.whiteBgBtn {
+  background-color: var(--bodyBg, #fff);
+  color: var(--black1, #000);
+  font-weight: var(--fontWeightBold, 500);
+  &:hover {
+    background-color: var(--bodyBg, #fff) !important;
+    color: var(--black1, #000) !important;
+    border-color: var(--ltGrey5, #d9d9d9) !important;
+  }
+}
+
 .btn[disabled] {
   background-color: var(--disableBtn, #b1b3b5) !important;
   color: var(--btnText, #fbfcff) !important;
