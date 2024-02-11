@@ -17,7 +17,6 @@ import {
   PAGINATION_PROPERTIES,
 } from "../../../constant/constant";
 import {
-  ADMIN_ROUTE,
   CORE_ROUTE,
   QUERY_TYPE,
   STATUS,
@@ -49,7 +48,7 @@ const TicketTable = ({
   );
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + TICKET_LIST,
+    url: CORE_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
   });
   const { data: queryTypes } = useFetch({
