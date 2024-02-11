@@ -25,16 +25,17 @@ export const getTicketOrQueryColumn = ({
   queriesColumnProperties = {},
   fetchData,
   paginationAndSearchProperties,
-  sortedOrder,
-  setSortedOrder,
   setSearchParams,
   setIsConfirmationModalOpen,
   toggleSelectAllItems,
   areAllItemsSelected,
   areSomeItemsSelected,
+  setSortByName,
+  setSortByCreatedAt,
+  sortByCreatedAt,
+  sortByName,
 }) => {
   const {
-    sortArrowStyles,
     selectedItemsList,
     toggleSelectedQueriesId,
     handleMarkMutipleQueriesAsAnswered,
@@ -88,27 +89,34 @@ export const getTicketOrQueryColumn = ({
                   queryParamsObject: {
                     perPage: pageSize,
                     page: current,
-                    keyword: searchedValue,
+                    q: searchedValue,
                     queryType: filterArray,
-                    sortDirection: toggleSorting(sortedOrder.sortDirection),
+                    sortDirection: toggleSorting(sortByName?.direction),
                     sortField: "name",
                   },
                   onSuccessCallback: () => {
                     setSearchParams((prevValue) => {
                       prevValue.set(
                         SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                        toggleSorting(sortedOrder.sortDirection)
+                        toggleSorting(sortByName?.direction),
                       );
                       prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
                       return prevValue;
                     });
-                    setSortedOrder((prev) => {
+
+                    setSortByName((prev) => {
                       return {
                         ...prev,
-                        sortDirection: toggleSorting(prev.sortDirection),
-                        sortKeyName: "name",
+                        direction: toggleSorting(prev?.direction),
+                        isDisable: false,
                       };
-                    });
+                    }),
+                      setSortByCreatedAt((prev) => {
+                        return {
+                          ...prev,
+                          isDisable: true,
+                        };
+                      });
                   },
                 })
               }
@@ -118,7 +126,11 @@ export const getTicketOrQueryColumn = ({
                 <Image
                   src={getImage("arrowDownDarkGrey")}
                   preview={false}
-                  className={[sortArrowStyles, styles.centerContent].join(" ")}
+                  className={[
+                    styles[sortByName?.direction],
+                    styles.centerContent,
+                    !sortByName?.isDisable ? styles.active : "",
+                  ].join(" ")}
                 />
               </div>
             </Typography>
@@ -237,6 +249,7 @@ export const getTicketOrQueryColumn = ({
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
+        isRequiredTooltip: true,
       },
     }),
     renderColumn({
@@ -252,27 +265,34 @@ export const getTicketOrQueryColumn = ({
                   queryParamsObject: {
                     perPage: pageSize,
                     page: current,
-                    keyword: searchedValue,
+                    q: searchedValue,
                     queryType: filterArray,
-                    sortDirection: toggleSorting(sortedOrder.sortDirection),
+                    sortDirection: toggleSorting(sortByCreatedAt?.direction),
                     sortField: "created_at",
                   },
                   onSuccessCallback: () => {
                     setSearchParams((prevValue) => {
                       prevValue.set(
                         SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                        toggleSorting(sortedOrder.sortDirection)
+                        toggleSorting(sortByCreatedAt?.direction),
                       );
-                      prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
+                      prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "created_at");
                       return prevValue;
                     });
-                    setSortedOrder((prev) => {
+
+                    setSortByName((prev) => {
                       return {
                         ...prev,
-                        sortDirection: toggleSorting(prev.sortDirection),
-                        sortKeyName: "created_at",
+                        isDisable: true,
                       };
-                    });
+                    }),
+                      setSortByCreatedAt((prev) => {
+                        return {
+                          ...prev,
+                          direction: toggleSorting(prev.direction),
+                          isDisable: false,
+                        };
+                      });
                   },
                 })
               }
@@ -282,7 +302,11 @@ export const getTicketOrQueryColumn = ({
                 <Image
                   src={getImage("arrowDownDarkGrey")}
                   preview={false}
-                  className={[sortArrowStyles, styles.arrowSytles].join(" ")}
+                  className={[
+                    styles[sortByCreatedAt?.direction],
+                    styles.arrowSytles,
+                    !sortByCreatedAt?.isDisable ? styles.active : "",
+                  ].join(" ")}
                 />
               </div>
             </Typography>

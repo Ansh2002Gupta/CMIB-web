@@ -49,11 +49,13 @@ const QueryTable = ({
   const { navigateScreen: navigate } = useNavigateScreen();
 
   // useState hooks
-  const [sortedOrder, setSortedOrder] = useState({
-    sortDirection: getValidSortByValue(
-      searchParams.get(SORT_PROPERTIES.SORT_BY)
-    ),
-    sortKeyName: "created_at",
+  const [sortByCreatedAt, setSortByCreatedAt] = useState({
+    direction: "asc",
+    isDisable: false,
+  });
+  const [sortByName, setSortByName] = useState({
+    direction: "asc",
+    isDisable: true,
   });
   const [
     selctedQueriesToBeMarkedAsAnswered,
@@ -78,13 +80,6 @@ const QueryTable = ({
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkQueriesAsAnswerApi();
 
-  let sortArrowStyles = "";
-  if (sortedOrder?.sortDirection === SORT_VALUES.ASCENDING) {
-    sortArrowStyles = styles.upside;
-  } else if (sortedOrder?.sortDirection === SORT_VALUES.DESCENDING) {
-    sortArrowStyles = styles.downside;
-  }
-
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: ADMIN_ROUTE + QUERIES_END_POINT,
     otherOptions: { skipApiCallOnMount: true },
@@ -94,6 +89,20 @@ const QueryTable = ({
     errorString = error?.data?.message;
   }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
+
+  // funtions related to sorting
+  const getSortProperties = () => {
+    if (sortByCreatedAt?.isDisable) {
+      return {
+        sortField: "name",
+        sortDirection: sortByName?.direction,
+      };
+    }
+    return {
+      sortField: "created_at",
+      sortDirection: sortByCreatedAt?.direction,
+    };
+  };
 
   // functions
   // Query selections/toggle related functions
@@ -113,9 +122,8 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -197,7 +205,6 @@ const QueryTable = ({
     renderColumn,
     queriesColumnProperties: {
       setIsSingleSelect,
-      sortArrowStyles,
       selectedItemsList: selctedQueriesToBeMarkedAsAnswered,
       setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
       toggleSelectedQueriesId,
@@ -211,8 +218,11 @@ const QueryTable = ({
       searchedValue,
       filterArray,
     },
-    sortedOrder,
-    setSortedOrder,
+    setSortByName,
+    setSortByCreatedAt,
+    getSortProperties,
+    sortByCreatedAt,
+    sortByName,
     setSearchParams,
     setIsConfirmationModalOpen,
     toggleSelectAllItems,
@@ -237,9 +247,8 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: str,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     debounceSearch({ queryParamsObject: requestedParams });
   };
@@ -256,9 +265,8 @@ const QueryTable = ({
       perPage: size,
       page: 1,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -273,9 +281,8 @@ const QueryTable = ({
       perPage: pageSize,
       page: newPageNumber,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -291,8 +298,7 @@ const QueryTable = ({
       page: current,
       q: searchedValue,
       queryType: updatedFiltersValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -302,9 +308,8 @@ const QueryTable = ({
       perPage: DEFAULT_PAGE_SIZE,
       page: 1,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -396,9 +401,8 @@ const QueryTable = ({
           perPage: pageSize,
           page: 1,
           q: searchedValue,
-          sortField: sortedOrder?.sortKeyName,
-          sortDirection: sortedOrder?.sortDirection,
           queryType: filterArray,
+          ...getSortProperties(),
         };
         fetchData({ queryParamsObject: requestedParams });
       }
@@ -412,10 +416,10 @@ const QueryTable = ({
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
       prev.set(
         SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-        sortedOrder.sortDirection
+        getSortProperties()?.sortDirection
       );
+      prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, getSortProperties()?.sortField);
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
-      prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortedOrder.sortKeyName);
       searchedValue &&
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
       return prev;
@@ -425,9 +429,8 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
     getQueriesTypes({});

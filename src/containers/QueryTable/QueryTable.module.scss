@@ -80,15 +80,8 @@ input::placeholder {
   color: var(--subHeadingColor) !important;
   display: flex;
   gap: var(--gapXSmall);
+  align-items: center;
   cursor: pointer;
-}
-
-.upside {
-  transform: rotate(180deg);
-}
-
-.downside {
-  transform: rotate(0deg);
 }
 
 .sortintArrawContainer {
@@ -156,7 +149,15 @@ input::placeholder {
   min-width: var(--width_250, 250px) !important;
 }
 
-.disable{
-  // TODO: need to correct this
-  cursor: not-allowed;
+.active {
+  background-color: var(--lightGrey3Bg);
+  border-radius: 50%;
+}
+
+.asc {
+  transform: rotate(180deg);
+}
+
+.desc {
+  transform: rotate(0deg);
 }
