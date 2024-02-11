@@ -63,7 +63,11 @@ const TicketTable = ({
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
-  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
+  const debounceSearch = useMemo(() => {
+    return _.debounce((requestedParams) => {
+      fetchData({ queryParamsObject: requestedParams });
+    }, 300);
+  }, [fetchData]);
 
   const queryTypeOptions = useMemo(() => {
     return queryTypes?.map((queryType) => ({
@@ -129,25 +133,26 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  useEffect(() => {
-    if (data?.meta) {
-      const { total } = data?.meta;
-      const numberOfPages = Math.ceil(total / pageSize);
-      if (current > numberOfPages) {
-        setCurrent(1);
-        setSearchParams((prev) => {
-          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        });
+  // TODO: Need to refactor 
+  // useEffect(() => {
+  //   if (data?.meta) {
+  //     const { total } = data?.meta;
+  //     const numberOfPages = Math.ceil(total / pageSize);
+  //     if (current > numberOfPages) {
+  //       setCurrent(1);
+  //       setSearchParams((prev) => {
+  //         prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+  //       });
 
-        const requestedParams = {
-          perPage: pageSize,
-          page: 1,
-          q: searchedValue,
-        };
-        fetchData(requestedParams);
-      }
-    }
-  }, [data?.meta?.total]);
+  //       const requestedParams = {
+  //         perPage: pageSize,
+  //         page: 1,
+  //         q: searchedValue,
+  //       };
+  //       fetchData({ queryParamsObject: requestedParams });
+  //     }
+  //   }
+  // }, [data?.meta?.total]);
 
   useEffect(() => {
     setSearchParams((prev) => {
