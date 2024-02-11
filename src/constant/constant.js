@@ -347,8 +347,6 @@ export const ZOOM_CONSTANT = {
   ZOOM_STEP: 0.1,
 };
 
-export const NUMBER_OF_CHIPS_TO_BE_SHOWN = 2;
-
 export const ROTATE_IMAGE_BY = 90;
 
 export const INITIAL_PASSWORD_DATA = {
@@ -365,4 +363,3 @@ export const SORTING_QUERY_PARAMS = {
 export const NUMBER_OF_CHIPS_TO_SHOW = 15;
 
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
-
