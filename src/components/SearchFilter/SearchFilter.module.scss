@@ -38,6 +38,7 @@
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
+  align-self: 'center';
 }
 
 .active {
@@ -96,7 +97,7 @@
 
 .footerBtnContainer {
   display: flex;
-  padding: var(--paddingExtraSmall);
+  padding: var(--paddingSmall);
   justify-content: flex-end;
   align-items: center;
   gap: var(--gapSmall);
@@ -108,8 +109,8 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   background-color: var(--bodyBg);
-  min-height: var(--minBtnHeight);
-  border-radius: var(--radiusXLg);
+  min-height: var(--height_36);
+  border-radius: var(--radiusLg);
   border: var(--borderLight);
   &:hover {
     border: var(--borderLight) !important;
@@ -119,7 +120,7 @@
 
 .showResultBtn {
   padding: var(--paddingExtraSmall) var(--paddingSmall);
-  min-height: var(--minBtnHeight);
+  min-height: var(--height_36);
 }
 
 .clearAllBtn {
@@ -147,6 +148,11 @@
   align-content: center;
   height: var(--height_20);
   width: var(--width_20);
+}
+
+.buttonTextStyle {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 @media screen and (max-width: 900px) and (min-width: 510px) {

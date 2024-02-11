@@ -63,7 +63,6 @@ const useRenderColumn = () => {
     } = renderMenu;
 
     const {
-      dateFormat = "DD/MM/YYYY",
       includeDotAfterText,
       isTextBold,
       isTypeDate,
@@ -172,7 +171,7 @@ const useRenderColumn = () => {
                 isCapitalize ? styles.capitalize : "",
               ].join(" ")}
             >
-              {textRenderFormat({ text })}
+              {textRenderFormat({ text: text || "--" })}
             </p>
           ),
         };
