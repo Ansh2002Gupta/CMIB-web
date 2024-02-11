@@ -63,7 +63,6 @@ const useRenderColumn = () => {
     } = renderMenu;
 
     const {
-      dateFormat = "DD/MM/YYYY",
       includeDotAfterText,
       isTextBold,
       isTypeDate,
