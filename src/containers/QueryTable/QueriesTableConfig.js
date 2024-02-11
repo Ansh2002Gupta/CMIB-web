@@ -98,7 +98,7 @@ export const getTicketOrQueryColumn = ({
                     setSearchParams((prevValue) => {
                       prevValue.set(
                         SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                        toggleSorting(sortByName?.direction),
+                        toggleSorting(sortByName?.direction)
                       );
                       prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
                       return prevValue;
@@ -110,13 +110,13 @@ export const getTicketOrQueryColumn = ({
                         direction: toggleSorting(prev?.direction),
                         isDisable: false,
                       };
-                    }),
-                      setSortByCreatedAt((prev) => {
-                        return {
-                          ...prev,
-                          isDisable: true,
-                        };
-                      });
+                    });
+                    setSortByCreatedAt((prev) => {
+                      return {
+                        ...prev,
+                        isDisable: true,
+                      };
+                    });
                   },
                 })
               }
@@ -124,12 +124,17 @@ export const getTicketOrQueryColumn = ({
               {intl.formatMessage({ id: "label.studentOrCompany" })}
               <div className={styles.sortintArrawContainer}>
                 <Image
-                  src={getImage("arrowDownDarkGrey")}
+                  src={getImage(
+                    `${
+                      sortByName?.isDisable
+                        ? "disabledArrow"
+                        : "arrowDownDarkGrey"
+                    }`
+                  )}
                   preview={false}
                   className={[
                     styles[sortByName?.direction],
                     styles.centerContent,
-                    !sortByName?.isDisable ? styles.active : "",
                   ].join(" ")}
                 />
               </div>
@@ -274,9 +279,12 @@ export const getTicketOrQueryColumn = ({
                     setSearchParams((prevValue) => {
                       prevValue.set(
                         SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                        toggleSorting(sortByCreatedAt?.direction),
+                        toggleSorting(sortByCreatedAt?.direction)
                       );
-                      prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "created_at");
+                      prevValue.set(
+                        SORTING_QUERY_PARAMS.SORTED_KEY,
+                        "created_at"
+                      );
                       return prevValue;
                     });
 
@@ -285,14 +293,14 @@ export const getTicketOrQueryColumn = ({
                         ...prev,
                         isDisable: true,
                       };
-                    }),
-                      setSortByCreatedAt((prev) => {
-                        return {
-                          ...prev,
-                          direction: toggleSorting(prev.direction),
-                          isDisable: false,
-                        };
-                      });
+                    });
+                    setSortByCreatedAt((prev) => {
+                      return {
+                        ...prev,
+                        direction: toggleSorting(prev.direction),
+                        isDisable: false,
+                      };
+                    });
                   },
                 })
               }
@@ -300,12 +308,17 @@ export const getTicketOrQueryColumn = ({
               {intl.formatMessage({ id: "label.createdOn" })}
               <div className={styles.sortintArrawContainer}>
                 <Image
-                  src={getImage("arrowDownDarkGrey")}
+                  src={getImage(
+                    `${
+                      sortByCreatedAt?.isDisable
+                        ? "disabledArrow"
+                        : "arrowDownDarkGrey"
+                    }`
+                  )}
                   preview={false}
                   className={[
                     styles[sortByCreatedAt?.direction],
                     styles.arrowSytles,
-                    !sortByCreatedAt?.isDisable ? styles.active : "",
                   ].join(" ")}
                 />
               </div>
@@ -319,21 +332,6 @@ export const getTicketOrQueryColumn = ({
         isTypeDate: true,
         visible: true,
         textStyles: [styles.tableCell].join(" "),
-      },
-    }),
-    renderColumn({
-      dataIndex: "see",
-      key: "see",
-      render: (_, rowData) => {
-        return (
-          <Image
-            src={getImage("eye")}
-            alt="eye"
-            className={styles.clickable}
-            preview={false}
-            onClick={() => navigate(`query/${rowData?.id}`)}
-          />
-        );
       },
     }),
     renderColumn({
@@ -358,7 +356,19 @@ export const getTicketOrQueryColumn = ({
       render: (_, rowData) => {
         const isAnswered = rowData?.status?.toLowerCase() === "answered";
         return (
-          <div className={isTableInSelectAllMode ? styles.iconBox : ""}>
+          <div
+            className={[
+              styles.iconContainer,
+              isTableInSelectAllMode ? styles.iconBox : "",
+            ].join(" ")}
+          >
+            <Image
+              src={getImage("eye")}
+              alt="eye"
+              className={styles.clickable}
+              preview={false}
+              onClick={() => navigate(`/control/query/${rowData?.id}`)}
+            />
             <Image
               src={getImage(`${!isAnswered ? "checkIcon" : "greenTick"}`)}
               alt="check"
