@@ -26,11 +26,9 @@ const CustomButton = ({
         htmlType={type}
         block
       >
-        {textStyle ? (
-          <Typography className={textStyle}>{btnText}</Typography>
-        ) : (
-          btnText
-        )}
+        <Typography className={[styles.buttonTextStyle, textStyle]}>
+          {btnText}
+        </Typography>
       </Button>
     </div>
   );
