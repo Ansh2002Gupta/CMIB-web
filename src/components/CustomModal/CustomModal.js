@@ -20,7 +20,6 @@ const CustomModal = ({
   cancelBtnText,
   content,
 }) => {
-
   return (
     <Modal
       className={styles.modal}
@@ -47,15 +46,19 @@ const CustomModal = ({
               <Typography className={styles.subHeading}>
                 {subHeadingText}
               </Typography>
-            {content}
+              {content}
             </div>
           </div>
         </div>
         <div className={styles.btnContainer}>
           {!!cancelBtnText && (
-            <Button className={styles.cancelBtn} block onClick={onCancel}>
-              {cancelBtnText}
-            </Button>
+            <CustomButton
+              customButtonContainerStyle={styles.actionBtnContainer}
+              customStyle={styles.btn}
+              onClick={onCancel}
+              {...{ btnText: cancelBtnText }}
+              withWhiteBackground
+            />
           )}
           <CustomButton
             customButtonContainerStyle={styles.actionBtnContainer}

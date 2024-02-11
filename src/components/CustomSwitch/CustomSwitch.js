@@ -10,9 +10,11 @@ import { classes } from "./CustomSwitch.styles";
 import styles from "./CustomSwitch.module.scss";
 
 const CustomSwitch = ({
+  activeText,
   checked,
   customStyle,
   disabled,
+  inActiveText,
   isEditable,
   isRequired,
   label,
@@ -43,7 +45,7 @@ const CustomSwitch = ({
               rightSection={
                 <Typography className={styles.blackText}>
                   {intl.formatMessage({
-                    id: `label.${checked ? "active" : "inactive"}`,
+                    id: `label.${checked ? activeText : inActiveText}`,
                   })}
                 </Typography>
               }
@@ -60,7 +62,7 @@ const CustomSwitch = ({
               bottomSection={
                 <Typography className={styles.blackText}>
                   {intl.formatMessage({
-                    id: `label.${checked ? "active" : "inactive"}`,
+                    id: `label.${checked ? activeText : inActiveText}`,
                   })}
                 </Typography>
               }
@@ -79,9 +81,11 @@ const CustomSwitch = ({
 };
 
 CustomSwitch.defaultProps = {
+  activeText: "",
   checked: false,
   customStyle: "",
   disabled: false,
+  inActiveText: "",
   isEditable: true,
   isRequired: false,
   label: "",
@@ -89,9 +93,11 @@ CustomSwitch.defaultProps = {
 };
 
 CustomSwitch.propTypes = {
+  activeText: PropTypes.string,
   checked: PropTypes.bool,
   customStyle: PropTypes.string,
   disabled: PropTypes.bool,
+  inActiveText: PropTypes.string,
   isEditable: PropTypes.bool,
   isRequired: PropTypes.bool,
   label: PropTypes.string,

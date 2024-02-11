@@ -4,6 +4,7 @@ import { InputNumber, Select, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
+import MarkRequired from "../MarkRequired";
 import { classes } from "./PhoneInput.styles";
 import styles from "./PhoneInput.module.scss";
 
@@ -37,10 +38,10 @@ const PhoneInput = React.forwardRef(
       <Base className={[styles.container, customContainerStyles].join(" ")}>
         {!!label && (
           <div className={styles.inputLabelContainer}>
-            <Typography className={customLabelStyles}>{label}</Typography>
-            {isRequired && (
-              <Typography className={styles.isRequiredStar}>*</Typography>
-            )}
+            <Typography className={customLabelStyles}>
+              {label}
+              {isRequired && <MarkRequired />}
+            </Typography>
           </div>
         )}
         <div
@@ -52,6 +53,7 @@ const PhoneInput = React.forwardRef(
               styles.selectInput,
               customSelectInputStyles,
               styles.selectOptionsMobileStyles,
+              "editUserDetails",
             ].join(" ")}
             value={mobilePrefix}
             onChange={(value) => {
@@ -87,7 +89,8 @@ const PhoneInput = React.forwardRef(
             ))}
           </Select>
           <InputNumber
-            type="number"
+            type="tel"
+            maxLength={10}
             controls={false}
             className={[styles.inputNumberStyles, customInputNumberStyles]}
             {...{

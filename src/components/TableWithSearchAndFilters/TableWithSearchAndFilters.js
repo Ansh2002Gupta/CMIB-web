@@ -9,6 +9,7 @@ import { ThemeContext } from "core/providers/theme";
 import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
 import { DEFAULT_PAGE_SIZE } from "../../constant/constant";
+import { ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./TableWithSearchAndFilters.module.scss";
 //TODO: update default props.
 const TableWithSearchAndFilters = ({
@@ -18,6 +19,7 @@ const TableWithSearchAndFilters = ({
   currentDataLength,
   data,
   filterPropertiesArray,
+  filterOptions,
   handleOnUserSearch,
   onChangeCurrentPage,
   onChangePageSize,
@@ -37,57 +39,49 @@ const TableWithSearchAndFilters = ({
   const [showFilters, setShowFilters] = useState(false);
 
   return (
-    <>
-      <div className={styles.filterAndTableContainer}>
-        <div className={styles.searchBarContainer}>
-          <Input
-            prefix={
-              <Image
-                src={getImage("searchIcon")}
-                className={styles.searchIcon}
-                preview={false}
-              />
-            }
-            placeholder={intl.formatMessage({
-              id: "label.searchByUserNameAndEmail",
-            })}
-            allowClear
-            className={styles.searchBar}
-            value={searchedValue}
-            onChange={(e) => handleOnUserSearch(e.target.value)}
-          />
-          <SearchFilter
-            {...{
-              showFilters,
-              setShowFilters,
-              filterPropertiesArray,
-              filterArray,
-              setFilterArray,
-              onFilterApply,
-            }}
-          />
-        </div>
-        {isLoading && (
-          <DataTable
-            {...{
-              columns,
-              pageSize,
-              current,
-              onChangePageSize,
-              onChangeCurrentPage,
-            }}
-            originalData={data || []}
-            customContainerStyles={styles.tableContainer}
-            {...{ currentDataLength }}
-          />
-        )}
-        {!isLoading && (
-          <div className={styles.loaderContainer}>
-            <Spin size="large" />
-          </div>
-        )}
+    <div className={styles.filterAndTableContainer}>
+      <div className={styles.searchBarContainer}>
+        <Input
+          prefix={
+            <Image
+              src={getImage("searchIcon")}
+              className={styles.searchIcon}
+              preview={false}
+            />
+          }
+          placeholder={intl.formatMessage({
+            id: "label.searchByUserNameAndEmail",
+          })}
+          allowClear
+          className={styles.searchBar}
+          value={searchedValue}
+          onChange={(e) => handleOnUserSearch(e.target.value)}
+        />
+        <SearchFilter
+          filterPropertiesArray={filterOptions || ACCESS_FILTER_DATA}
+          {...{ showFilters, setShowFilters }}
+        />
       </div>
-    </>
+      {isLoading && (
+        <DataTable
+          {...{
+            columns,
+            pageSize,
+            current,
+            onChangePageSize,
+            onChangeCurrentPage,
+          }}
+          originalData={data || []}
+          customContainerStyles={styles.tableContainer}
+          {...{ currentDataLength }}
+        />
+      )}
+      {!isLoading && (
+        <div className={styles.loaderContainer}>
+          <Spin size="large" />
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -97,7 +91,7 @@ TableWithSearchAndFilters.defaultProps = {
   currentDataLength: 0,
   currentFilterStatus: [],
   data: [],
-  filtersData: [],
+  filterOptions: [],
   handleOnUserSearch: () => {},
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
@@ -116,7 +110,7 @@ TableWithSearchAndFilters.propTypes = {
   currentDataLength: PropTypes.number,
   currentFilterStatus: PropTypes.array,
   data: PropTypes.array,
-  filtersData: PropTypes.array,
+  filterOptions: PropTypes.array,
   handleOnUserSearch: PropTypes.func,
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,

@@ -34,6 +34,7 @@
   font-weight: var(--fontWeightMedium) !important;
   font-size: var(--fontSizeSmall) !important;
 }
+
 /* For preventing unnecessary scroll from modal */
 .ant-modal-root .ant-modal-wrap {
   overflow: unset !important;
@@ -49,4 +50,20 @@
 
 .ant-descriptions .ant-descriptions-row > td {
   padding-bottom: var(--paddingMedium, 24px) !important;
+}
+
+.viewUserDetails .ant-descriptions-title {
+  font-size: 16px !important;
+}
+
+.ant-btn-icon {
+  margin: 0px !important;
+}
+
+.editUserDetails .ant-select-arrow .anticon > svg {
+  color: var(--textBold, #000833);
+}
+
+.ant-input-number-handler-wrap {
+  pointer-events: none;
 }

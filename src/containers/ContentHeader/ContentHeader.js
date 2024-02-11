@@ -5,12 +5,13 @@ import { Typography } from "antd";
 import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 
 import styles from "./contentHeader.module.scss";
-// TODO: check everywhere it is used
+
 const ContentHeader = ({
   headerComponent,
   headerText,
   rightSection,
   customStyles,
+  isLeftFillSpace,
 }) => {
   const Header = () => {
     return (
@@ -27,6 +28,7 @@ const ContentHeader = ({
 
   return (
     <TwoColumn
+      {...{ isLeftFillSpace }}
       leftSection={<Header />}
       rightSection={rightSection}
       className={styles.twoColumnBox}

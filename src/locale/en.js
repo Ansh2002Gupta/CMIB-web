@@ -65,7 +65,6 @@ const locale = {
   "label.clearAll": "Clear all",
   "label.cancel": "Cancel",
   "label.rowPerPage": "Rows per page",
-  "label.searchResult": "Search results",
   "label.next": "Next",
   "label.previous": "Previous",
   "label.active": "Active",
@@ -197,6 +196,7 @@ const locale = {
   "label.queryStatus": "Query Status",
   "label.createdOn": "Created On",
   "label.ticketId": "Ticket ID",
+  "label.tickets": "Tickets",
   "label.createdBy": "Created By",
   "label.role": "Role",
   "label.registrationOrMembershipNumber": "Registration/Membership No.",
@@ -350,7 +350,7 @@ const locale = {
   "label.menu.roster": "Roster",
   "label.menu.feedback": "Feedback",
   "label.menu.contact-us": "Contact Us",
-  "label.menu.activity-logs": "Activity Logs",
+  "label.menu.activity-log": "Activity Log",
   "label.menu.all-job-listing": "All Job listing",
   "label.menu.round-1": "Round 1",
   "label.menu.round-2": "Round 2",
@@ -390,11 +390,8 @@ const locale = {
   "label.save": "Save",
   "label.cropProfilePicture": "Crop Profile Picture",
   "label.profilePictureIsUpdated": "User profile picture is updated",
-  "label.save": "Save",
   "label.enabled": "Enabled",
   "label.disabled": "Disabled",
-  "label.path.users": "Manage Users",
-  "label.path.details": "User Details",
   "label.path.editDetails": "Edit User Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.passwordChanged": "Password changed successfully",
@@ -419,6 +416,10 @@ const locale = {
   "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
     "Some queries have already been marked as answered. Continuing marking for the remaining queries.",
   "label.path.add": "Add New User",
+  "label.errorMessage": "Error Message",
+  "label.userSuccessfullyAdded": "User Successfully Added",
+  "label.userSuccessfullyEdited": "User Successfully Edited",
+  "label.show_result": "Show Result",
 };
 
 export default locale;

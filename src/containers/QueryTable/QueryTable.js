@@ -6,53 +6,50 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
-import Chip from "../../../components/Chip/Chip";
-import CustomModal from "../../../components/CustomModal/CustomModal";
-import ErrorMessageBox from "../../../components/ErrorMessageBox";
-import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
-import useQueriesTypesApi from "../../../services/api-services/Queries/useQueriesTypesApi";
-import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
-import useFetch from "../../../core/hooks/useFetch";
-import useMarkQueriesAsAnswerApi from "../../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
-import useShowNotification from "../../../core/hooks/useShowNotification";
-import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
-import {
-  convertPermissionFilter,
-  getValidFilter,
-  getValidSortByValue,
-} from "../../../constant/utils";
-import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../../constant/apiEndpoints";
+import Chip from "../../components/Chip/Chip";
+import CustomModal from "../../components/CustomModal/CustomModal";
+import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
+import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import useQueriesTypesApi from "../../services/api-services/Queries/useQueriesTypesApi";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useFetch from "../../core/hooks/useFetch";
+import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
+import useShowNotification from "../../core/hooks/useShowNotification";
+import { getTicketOrQueryColumn } from "./QueriesTableConfig";
+import { convertPermissionFilter, getValidFilter } from "../../constant/utils";
+import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
   NUMBER_OF_CHIPS_TO_SHOW,
   PAGINATION_PROPERTIES,
   SORTING_QUERY_PARAMS,
-  SORT_PROPERTIES,
-  SORT_VALUES,
-} from "../../../constant/constant";
-import styles from "../ContactUsListingContent.module.scss";
+} from "../../constant/constant";
+import styles from "./QueryTable.module.scss";
 
 const QueryTable = ({
   current,
-  currentActiveTab,
   pageSize,
   setCurrent,
   setPageSize,
   searchedValue,
   setSearchedValue,
 }) => {
+  // third party hooks
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const [sortedOrder, setSortedOrder] = useState({
-    sortDirection: getValidSortByValue(
-      searchParams.get(SORT_PROPERTIES.SORT_BY)
-    ),
-    sortKeyName: "created_at",
+  // useState hooks
+  const [sortByCreatedAt, setSortByCreatedAt] = useState({
+    direction: "asc",
+    isDisable: false,
+  });
+  const [sortByName, setSortByName] = useState({
+    direction: "asc",
+    isDisable: true,
   });
   const [
     selctedQueriesToBeMarkedAsAnswered,
@@ -61,26 +58,16 @@ const QueryTable = ({
   const [filterArray, setFilterArray] = useState(
     getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
   );
-
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [isSingleSelect, setIsSingleSelect] = useState(false);
+
+  // custom hooks
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const {
-    data: queryTypesData,
-    getQueriesTypes,
-    isLoading: isGettingQueryTypes,
-    error: errorWhileGettingQueryTypes,
-  } = useQueriesTypesApi();
+  const { data: queryTypesData, getQueriesTypes } = useQueriesTypesApi();
 
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkQueriesAsAnswerApi();
-
-  let sortArrowStyles = "";
-  if (sortedOrder?.sortDirection === SORT_VALUES.ASCENDING) {
-    sortArrowStyles = styles.upside;
-  } else if (sortedOrder?.sortDirection === SORT_VALUES.DESCENDING) {
-    sortArrowStyles = styles.downside;
-  }
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: ADMIN_ROUTE + QUERIES_END_POINT,
@@ -92,21 +79,49 @@ const QueryTable = ({
   }
   const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
+  // funtions related to sorting
+  const getSortProperties = () => {
+    if (sortByCreatedAt?.isDisable) {
+      return {
+        sortField: "name",
+        sortDirection: sortByName?.direction,
+      };
+    }
+    return {
+      sortField: "created_at",
+      sortDirection: sortByCreatedAt?.direction,
+    };
+  };
+
   // functions
   // Query selections/toggle related functions
+  let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
+    (item) =>
+      item?.status?.toLowerCase() === "answered" &&
+      selctedQueriesToBeMarkedAsAnswered.includes(item?.id)
+  );
+
+  const allQueryAreAlreadyAnswered =
+    queriesSelectedAndMarkedForAnswer?.length ===
+      selctedQueriesToBeMarkedAsAnswered?.length &&
+    selctedQueriesToBeMarkedAsAnswered?.length > 0;
+
   const onRetry = () => {
     const requestedParams = {
       perPage: pageSize,
       page: current,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleMarkQuery = () => {
+    if (allQueryAreAlreadyAnswered) {
+      setIsConfirmationModalOpen(false);
+      return;
+    }
     handleMarkQueriesAsAnswered({
       payload: {
         query_id: selctedQueriesToBeMarkedAsAnswered,
@@ -129,7 +144,10 @@ const QueryTable = ({
     });
 
     if (checkFor === "all") {
-      return currentPageSelectedQueries?.length === data?.records?.length;
+      return (
+        currentPageSelectedQueries?.length === data?.records?.length &&
+        data?.records?.length !== 0
+      );
     }
 
     if (checkFor === "some") {
@@ -170,13 +188,12 @@ const QueryTable = ({
   };
 
   const columns = getTicketOrQueryColumn({
-    type: currentActiveTab,
     intl,
     getImage,
     navigate,
     renderColumn,
     queriesColumnProperties: {
-      sortArrowStyles,
+      setIsSingleSelect,
       selectedItemsList: selctedQueriesToBeMarkedAsAnswered,
       setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
       toggleSelectedQueriesId,
@@ -190,8 +207,11 @@ const QueryTable = ({
       searchedValue,
       filterArray,
     },
-    sortedOrder,
-    setSortedOrder,
+    setSortByName,
+    setSortByCreatedAt,
+    getSortProperties,
+    sortByCreatedAt,
+    sortByName,
     setSearchParams,
     setIsConfirmationModalOpen,
     toggleSelectAllItems,
@@ -216,9 +236,8 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: str,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     debounceSearch({ queryParamsObject: requestedParams });
   };
@@ -235,9 +254,8 @@ const QueryTable = ({
       perPage: size,
       page: 1,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -252,9 +270,8 @@ const QueryTable = ({
       perPage: pageSize,
       page: newPageNumber,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -270,8 +287,7 @@ const QueryTable = ({
       page: current,
       q: searchedValue,
       queryType: updatedFiltersValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -281,30 +297,20 @@ const QueryTable = ({
       perPage: DEFAULT_PAGE_SIZE,
       page: 1,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
-    (item) =>
-      item?.status?.toLowerCase() === "answered" &&
-      selctedQueriesToBeMarkedAsAnswered.includes(item?.id)
-  );
-
-  const allQueryAreAlreadyAnswered =
-    queriesSelectedAndMarkedForAnswer?.length ===
-      selctedQueriesToBeMarkedAsAnswered?.length &&
-    selctedQueriesToBeMarkedAsAnswered?.length > 0;
-
+  // MODAL PROPERTIES
   const getModalProperties = () => {
     if (allQueryAreAlreadyAnswered) {
       return {
         currentModalHeading: "allSelectedQueriesAreAlreadyMarked",
         actionBtnText: "okay",
         currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
+        cancelBtnText: "",
       };
     }
     if (queriesSelectedAndMarkedForAnswer?.length) {
@@ -313,6 +319,7 @@ const QueryTable = ({
           "someQueriesAreMarkedAsAnsweredContinueMaringOthers",
         actionBtnText: "okay",
         currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
+        cancelBtnText: "cancel",
       };
     }
 
@@ -320,13 +327,16 @@ const QueryTable = ({
       currentModalHeading: "markQueriesAsAnswered",
       actionBtnText: "markAsAnswered",
       currentModalSubHeading: "areYouSureYouWantToMarkQueries",
+      cancelBtnText: "cancel",
     };
   };
 
-  // MODAL PROPERTIES
   let currentModalHeading = getModalProperties()?.currentModalHeading;
   let actionBtnText = getModalProperties()?.actionBtnText;
   let currentModalSubHeading = getModalProperties()?.currentModalSubHeading;
+  let cancelBtnText = getModalProperties()?.cancelBtnText
+    ? intl.formatMessage({ id: `label.cancel` })
+    : "";
   let modalIcon =
     queriesSelectedAndMarkedForAnswer?.length === 0
       ? getImage("CircleCheck")
@@ -356,6 +366,14 @@ const QueryTable = ({
     </div>
   );
 
+  const handleOnModalCancel = () => {
+    if (isSingleSelect) {
+      setSelctedQueriesToBeMarkedAsAnswered([]);
+      setIsSingleSelect(false);
+    }
+    setIsConfirmationModalOpen(false);
+  };
+
   // useEffects hooks
   useEffect(() => {
     if (data?.meta) {
@@ -372,9 +390,8 @@ const QueryTable = ({
           perPage: pageSize,
           page: 1,
           q: searchedValue,
-          sortField: sortedOrder?.sortKeyName,
-          sortDirection: sortedOrder?.sortDirection,
           queryType: filterArray,
+          ...getSortProperties(),
         };
         fetchData({ queryParamsObject: requestedParams });
       }
@@ -388,10 +405,10 @@ const QueryTable = ({
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
       prev.set(
         SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-        sortedOrder.sortDirection
+        getSortProperties()?.sortDirection
       );
+      prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, getSortProperties()?.sortField);
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
-      prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortedOrder.sortKeyName);
       searchedValue &&
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
       return prev;
@@ -401,9 +418,8 @@ const QueryTable = ({
       perPage: pageSize,
       page: current,
       q: searchedValue,
-      sortField: sortedOrder?.sortKeyName,
-      sortDirection: sortedOrder?.sortDirection,
       queryType: filterArray,
+      ...getSortProperties(),
     };
     fetchData({ queryParamsObject: requestedParams });
     getQueriesTypes({});
@@ -421,11 +437,11 @@ const QueryTable = ({
           imgElement={modalIcon}
           isOpen={isConfirmationModalOpen}
           onBtnClick={handleMarkQuery}
-          onCancel={() => setIsConfirmationModalOpen(false)}
+          onCancel={handleOnModalCancel}
           subHeadingText={intl.formatMessage({
             id: `label.${currentModalSubHeading}`,
           })}
-          cancelBtnText={intl.formatMessage({ id: `label.cancel` })}
+          cancelBtnText={cancelBtnText}
           content={currentModalChildren}
         />
       }
@@ -447,7 +463,8 @@ const QueryTable = ({
           currentDataLength={data?.meta?.total}
           filterPropertiesArray={convertPermissionFilter(
             queryTypesData || [],
-            "Query-Types"
+            "Query-Types",
+            "queries_count"
           )}
           onFilterApply={handleOnFilterApply}
         />
@@ -469,7 +486,6 @@ const QueryTable = ({
 
 QueryTable.defaultProps = {
   current: 1,
-  currentActiveTab: "1",
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
   setCurrent: () => {},
@@ -481,7 +497,6 @@ QueryTable.defaultProps = {
 
 QueryTable.propTypes = {
   current: PropTypes.number,
-  currentActiveTab: PropTypes.string,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
   setCurrent: PropTypes.func,
