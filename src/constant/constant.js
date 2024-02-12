@@ -280,6 +280,13 @@ export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
 
+export const STATUS = {
+  CLOSED: "Closed",
+  PENDING: "Pending",
+  SUCCESS: "Success",
+  ANSWERED: "Answered",
+};
+
 export const MODULE_KEYS = {
   CONTROL_KEY: "control",
   NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placements",

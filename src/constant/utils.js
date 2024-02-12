@@ -200,6 +200,13 @@ export const isObjectHasNoValues = (obj) => {
   return true;
 };
 
+export const getErrorMessage = (errorObjectOrMessage) => {
+  if (typeof errorObjectOrMessage === "string") {
+    return errorObjectOrMessage;
+  }
+  return errorObjectOrMessage?.data?.message;
+};
+
 export const getCurrentFormState = (
   currentQueryParamsValue,
   isUserIdAvailable

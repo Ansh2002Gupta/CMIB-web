@@ -8,14 +8,16 @@ const QueriesListingHeader = () => {
   const intl = useIntl();
 
   return (
-    <ContentHeader
-      headerText={intl.formatMessage({
-        id: "label.queries",
-      })}
-      isLeftFillSpace
-      customStyles={styles.container}
-      customContainerStyle={styles.parentContainer}
-    />
+    <div className={styles.headerBox}>
+      <ContentHeader
+        headerText={intl.formatMessage({
+          id: "label.queries",
+        })}
+        isLeftFillSpace
+        customStyles={styles.container}
+        customContainerStyle={styles.parentContainer}
+      />
+    </div>
   );
 };
 

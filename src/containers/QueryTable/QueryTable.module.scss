@@ -23,11 +23,11 @@
 }
 
 .statusContainer_success {
-  background-color: var(--lightGreenBg);
+  background-color: var(--greenBg);
 }
 
 .statusContainer_failed {
-  background-color: var(--lightRedBg);
+  background-color: var(--orangeBg);
 }
 
 .statusContainer_progress {
@@ -68,7 +68,44 @@
 }
 
 .tableCell {
-  min-width: var(--width_100);
+  min-width: var(--width_140);
+}
+
+.arrowContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  gap: var(--gapXXSmall);
+}
+
+.upside {
+  transform: rotate(0deg);
+}
+
+.downside {
+  transform: rotate(180deg);
+}
+
+.arrowDown {
+  min-height: var(--height_20);
+  max-height: var(--height_20);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.columnHeader {
+  color: var(--inputPlaceHolder);
+  font-size: var(--fontSizeSmall);
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.disable {
+  cursor: not-allowed;
 }
 
 input::placeholder {
