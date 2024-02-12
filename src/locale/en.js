@@ -127,9 +127,10 @@ const locale = {
   "session.error.ifsc": "Please enter IFSC Code",
   "session.error.hsnCode": "Please enter HSN Code/ SAC",
   "label.viewProfile": "View Profile",
+  "label.myProfile": "My Profile",
   "label.changePassword": "Change Password",
   "label.companyProfile": "Company Profile",
-  "label.logout": "Logout",
+  "label.logout": "Log out",
   "label.left": "left",
   "setupCentres.heading": "Setup Centres",
   "setupCentres.warning":
