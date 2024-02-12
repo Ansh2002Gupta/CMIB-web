@@ -85,13 +85,12 @@ TableWithSearchAndFilters.defaultProps = {
   data: [],
   filterOptions: [],
   handleOnUserSearch: () => {},
+  isLoading: false,
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
+  onFilterApply: () => {},
   pageSize: DEFAULT_PAGE_SIZE,
   searchedValue: "",
-  isLoading: false,
-  onSearch: () => {},
-  onFilterApply: () => {},
 };
 
 TableWithSearchAndFilters.propTypes = {
@@ -101,12 +100,12 @@ TableWithSearchAndFilters.propTypes = {
   data: PropTypes.array,
   filterOptions: PropTypes.array,
   handleOnUserSearch: PropTypes.func,
+  isLoading: PropTypes.bool,
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
+  onFilterApply: PropTypes.func,
   pageSize: PropTypes.number,
   searchedValue: PropTypes.string,
-  isLoading: PropTypes.bool,
-  onFilterApply: PropTypes.func,
 };
 
 export default TableWithSearchAndFilters;

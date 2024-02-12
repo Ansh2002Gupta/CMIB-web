@@ -15,10 +15,10 @@ import styles from "./SearchFilter.module.scss";
 const SearchFilter = ({
   filterArray,
   filterPropertiesArray,
+  onFilterApply,
   setFilterArray,
   setShowFilters,
   showFilters,
-  onFilterApply,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
