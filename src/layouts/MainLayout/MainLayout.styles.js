@@ -5,5 +5,9 @@ export const classes = {
     width: "25%",
     maxHeight: variables.heightFullViewPort,
   },
-  rightSectionStyle: { width: "75%", maxHeight: variables.heightFullViewPort },
+  rightSectionStyle: {
+    width: "75%",
+    maxHeight: variables.heightFullViewPort,
+    overflowX: "auto",
+  },
 };

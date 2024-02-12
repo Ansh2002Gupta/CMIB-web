@@ -1,7 +1,7 @@
 .columnHeading {
   color: var(--subHeadingColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightBold);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
   max-width: 200px;
 }
 
@@ -54,4 +54,8 @@
 
 .isRequiredStar {
   color: var(--requiredStarColor);
+}
+
+.selectedRow{
+  background-color: var(--blue6Bg);
 }

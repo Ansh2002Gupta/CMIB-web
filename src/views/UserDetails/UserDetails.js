@@ -13,6 +13,7 @@ import useFetch from "../../core/hooks/useFetch";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
+import { getCurrentFormState } from "../../constant/utils";
 import {
   CONTROL_MODULE_ID,
   FORM_STATES,
@@ -29,8 +30,11 @@ const UserDetails = () => {
   const intl = useIntl();
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [searchParams] = useSearchParams();
-  const currentFormState = searchParams.get("mode") || FORM_STATES.EMPTY;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentFormState = getCurrentFormState(
+    searchParams.get("mode"),
+    userId
+  );
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
@@ -50,7 +54,21 @@ const UserDetails = () => {
     permissions: [],
     date: "",
     is_two_factor: false,
-    status: 0,
+    status: 1,
+  });
+  const [viewUserData, setViewUserData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    mobile_prefix: "+91",
+    profile_photo: "",
+    profile_photo_url: "",
+    access: [],
+    roles: [],
+    permissions: [],
+    date: "",
+    is_two_factor: false,
+    status: 1,
   });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -98,7 +116,7 @@ const UserDetails = () => {
   const updateUserData = (key, value) => {
     key === "email" && setIsEmailValid(true);
     key === "mobile" && setIsMobileNumberValid(true);
-    key === "access" && setIsAccessValid(true);
+    key === "roles" && setIsAccessValid(true);
     key === "name" && setIsUserNameValid(true);
     setErrorWhileUpdatingUserData("");
     if (key === "mobile") {
@@ -114,14 +132,20 @@ const UserDetails = () => {
 
   useEffect(() => {
     errorWhileUpdatingUserData &&
-      showNotification(errorWhileUpdatingUserData, NOTIFICATION_TYPES.ERROR);
+      showNotification({
+        text: errorWhileUpdatingUserData,
+        type: NOTIFICATION_TYPES.ERROR,
+      });
     errorWhileAddingNewUser &&
-      showNotification(errorWhileAddingNewUser, NOTIFICATION_TYPES.ERROR);
+      showNotification({
+        text: errorWhileAddingNewUser,
+        type: NOTIFICATION_TYPES.ERROR,
+      });
     isNewUserSuccessfullyAdded &&
-      showNotification(
-        intl.formatMessage({ id: "label.userCreatedSuccessfully" }),
-        NOTIFICATION_TYPES.SUCCESS
-      );
+      showNotification({
+        text: intl.formatMessage({ id: "label.userCreatedSuccessfully" }),
+        type: NOTIFICATION_TYPES.SUCCESS,
+      });
   }, [
     errorWhileUpdatingUserData,
     errorWhileAddingNewUser,
@@ -144,10 +168,24 @@ const UserDetails = () => {
             ([index, item]) => item?.id
           ) || [],
         roles: userAccountInfo?.roles || [],
-        permissions:
-          Object.entries(userAccountInfo?.permissions || {})?.map(
+        permissions: userAccountInfo?.permissions || [],
+        date: userAccountInfo?.created_at || "",
+        is_two_factor: userAccountInfo?.is_two_factor ? true : false,
+        status: userAccountInfo?.status,
+      });
+      setViewUserData({
+        name: userAccountInfo?.name || "",
+        email: userAccountInfo?.email || "",
+        mobile: userAccountInfo?.mobile_number || "",
+        mobile_prefix: userAccountInfo?.mobile_country_code || "+91",
+        profile_photo_url: userAccountInfo?.profile_photo || "",
+        profile_photo: imageName || "",
+        access:
+          Object.entries(userAccountInfo?.roles || {})?.map(
             ([index, item]) => item?.id
           ) || [],
+        roles: userAccountInfo?.roles || [],
+        permissions: userAccountInfo?.permissions || [],
         date: userAccountInfo?.created_at || "",
         is_two_factor: userAccountInfo?.is_two_factor ? true : false,
         status: userAccountInfo?.status,
@@ -156,7 +194,7 @@ const UserDetails = () => {
   };
 
   useEffect(() => {
-    if (userId) {
+    if (userId && currentFormState !== FORM_STATES.EMPTY) {
       getUserData({
         userId,
         onSuccessCallBack: (userAccountInfo) => {
@@ -165,9 +203,19 @@ const UserDetails = () => {
           roleFetchDate({ queryParamsObject: {} });
         },
         onErrorCallBack: (errMessage) => {
-          showNotification(errMessage);
+          showNotification({ text: errMessage });
         },
       });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (currentFormState !== searchParams.get("mode")) {
+      currentFormState !== FORM_STATES.EMPTY &&
+        setSearchParams((prev) => {
+          prev.set("mode", currentFormState);
+          return prev;
+        });
     }
   }, []);
 
@@ -209,6 +257,7 @@ const UserDetails = () => {
                 currentFormState,
                 updateUserData,
                 userId,
+                viewUserData,
               }}
             />
           )
@@ -238,6 +287,7 @@ const UserDetails = () => {
               isAccessValid,
               setIsAccessValid,
               addNewUser,
+              viewUserData,
             }}
             isLoading={isLoading || isUpdatingUserData || isAddingUser}
           />

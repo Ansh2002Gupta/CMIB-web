@@ -3,12 +3,15 @@ import arrowDown from "./arrow-down.svg";
 import arrowDownDarkGrey from "./arrow-down-dark-grey.svg";
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
+import blackArrowDown from "./blackArrowDown.svg";
 import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
+import checkIconWhite from "./check-white.svg";
 import calendar from "./calendar.svg";
 import clock from "./clock.svg";
 import cancel from "./cancel.svg";
 import CircleCheck from "./CircleCheck.svg";
+import disabledArrowLeft from "./disabledArrowLeft.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
@@ -31,7 +34,7 @@ import Monitor from "./Monitor.svg";
 import minusCircle from "./minusCircle.svg";
 import more from "./more.svg";
 import plusIcon from "./plus icon.svg";
-import rightIcon from "./check icon.svg";
+import checkIcon from "./check icon.svg";
 import searchIcon from "./search icon.svg";
 import seventyFive from "./75.svg";
 import someFiltersAreSelected from "./some filters are selected.svg";
@@ -43,6 +46,7 @@ import addIcon from "./add.png";
 import editIcon from "./edit.png";
 import TempCompanyLogo from "./TempCompanyLogo.svg";
 import publicFooter from "./PublicFooter.svg";
+import greenTickSign from "./green tick sign.svg"
 import flagOnPedestal from "./flag on pedestal.svg";
 import global from "./global.svg";
 import scholar from "./scholar.svg";
@@ -56,13 +60,16 @@ import rotateIcon from "./rotate-Icon.svg";
 import minusCircleBlue from "./minus-cirlce-blue.svg";
 import addCircleBlue from "./add-circle-blue.svg";
 import publicLogoWhite from "./public_logo_white_transparent.svg";
+import greenTick from "./green-tick.svg";
 
 const images = {
   addCircle,
   arrowDown,
   arrowDownDarkGrey,
   arrowRight,
+  arrowDownDarkGrey,
   arrowRightFilter,
+  blackArrowDown,
   Building,
   checkedBox,
   download,
@@ -71,6 +78,8 @@ const images = {
   cancel,
   dummyPerson,
   CircleCheck,
+  checkIconWhite,
+  disabledArrowLeft,
   DeviceMessage,
   Document,
   edit,
@@ -91,7 +100,7 @@ const images = {
   minusCircle,
   more,
   plusIcon,
-  rightIcon,
+  checkIcon,
   searchIcon,
   seventyFive,
   someFiltersAreSelected,
@@ -103,6 +112,7 @@ const images = {
   editIcon,
   TempCompanyLogo,
   publicFooter,
+  greenTickSign,
   flagOnPedestal,
   global,
   scholar,
@@ -116,6 +126,7 @@ const images = {
   addCircleBlue,
   minusCircleBlue,
   publicLogoWhite,
+  greenTick,
 };
 
 export default images;

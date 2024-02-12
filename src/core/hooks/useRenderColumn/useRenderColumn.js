@@ -1,9 +1,10 @@
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch } from "antd";
+import { Dropdown, Image, Switch, Tooltip } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
+import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import CustomInput from "../../../components/CustomInput";
 import { formatDate } from "../../../constant/utils";
@@ -25,6 +26,7 @@ const useRenderColumn = () => {
     renderInput = {},
     renderMenu = {},
     renderText = {},
+    renderTextWithCheckBoxes = {},
     renderSwitch = {},
     renderTwoImage = {},
     sortDirection,
@@ -80,12 +82,19 @@ const useRenderColumn = () => {
     } = renderMenu;
 
     const {
-      dateFormat = "DD/MM/YYYY",
+      onClickCheckbox = () => {},
+      customCheckBoxContainerStyles = "",
+      checkBoxList = [],
+      isCheckBoxTextBold,
+    } = renderTextWithCheckBoxes;
+
+    const {
       includeDotAfterText,
       isTextBold,
       isTypeDate,
       textStyles,
       isCapitalize,
+      isRequiredTooltip,
       mobile,
     } = renderText;
 
@@ -95,6 +104,7 @@ const useRenderColumn = () => {
       switchToggleHandler = () => {},
       isActionable = true,
       checkIsSwitchEditable = () => {},
+      switchStyle,
     } = renderSwitch;
 
     const {
@@ -119,6 +129,21 @@ const useRenderColumn = () => {
         return `${text} .`;
       }
       return text;
+    };
+
+    const getRenderText = (text) => {
+      return (
+        <p
+          className={[
+            textStyles,
+            isTextBold ? styles.boldText : "",
+            styles.textEllipsis,
+            isCapitalize ? styles.capitalize : "",
+          ].join(" ")}
+        >
+          {textRenderFormat({ text: text || "--" })}
+        </p>
+      );
     };
 
     title &&
@@ -156,8 +181,6 @@ const useRenderColumn = () => {
 
     sortDirection && (columnObject.sortDirection = sortDirection);
 
-    render && (columnObject.render = render);
-
     renderText?.visible &&
       (columnObject.render = (text, rowData) => {
         return {
@@ -179,17 +202,10 @@ const useRenderColumn = () => {
                   : "+91"
               }-${text}`}
             </p>
+          ) : isRequiredTooltip ? (
+            <Tooltip title={text}>{getRenderText(text)}</Tooltip>
           ) : (
-            <p
-              className={[
-                textStyles,
-                isTextBold ? styles.boldText : "",
-                styles.textEllipsis,
-                isCapitalize ? styles.capitalize : "",
-              ].join(" ")}
-            >
-              {textRenderFormat({ text })}
-            </p>
+            getRenderText(text)
           ),
         };
       });
@@ -207,7 +223,7 @@ const useRenderColumn = () => {
                 className={status ? styles.switchBgColor : ""}
               />
             )}
-            <p>
+            <p className={switchStyle}>
               {status
                 ? swithActiveLabel || intl.formatMessage({ id: "label.active" })
                 : swithInActiveLabel ||
@@ -264,7 +280,23 @@ const useRenderColumn = () => {
         };
       });
 
-    render && (columnObject.render = render); // correct this
+    render && (columnObject.render = render);
+
+    renderTextWithCheckBoxes.visible &&
+      (columnObject.render = (textToRender, rowData) => {
+        const { id } = rowData;
+        return (
+          <CustomCheckBox
+            checked={checkBoxList?.includes(id)}
+            onChange={() => onClickCheckbox(rowData)}
+            customStyles={[customCheckBoxContainerStyles].join("")}
+          >
+            <p className={isCheckBoxTextBold ? styles.boldText : ""}>
+              {textToRender || "--"}
+            </p>
+          </CustomCheckBox>
+        );
+      });
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {

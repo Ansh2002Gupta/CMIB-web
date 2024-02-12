@@ -1,18 +1,20 @@
 .headerContainer {
   padding: var(--paddingMedium);
   width: var(--fullWidth);
-  border: var(--borderLight);
+  border-top: var(--borderLight);
+  border-bottom: var(--borderLight);
 }
 
 .btnIconStyles {
-  width: var(--width_24) !important;
+  width: var(--width_20) !important;
 }
 
 .btnCustomStyles {
-  padding: var(--paddingSmall) 12px;
+  padding: 12px var(--paddingSmall);
   border-radius: var(--radiusXLg);
   font-size: var(--fontSizeSmall) !important;
   font-weight: var(--fontWeightMedium) !important;
+  border-width: 0;
 }
 
 @media screen and (max-width: 1535px) {

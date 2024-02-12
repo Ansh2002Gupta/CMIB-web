@@ -280,6 +280,13 @@ export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
 
+export const STATUS = {
+  CLOSED: "Closed",
+  PENDING: "Pending",
+  SUCCESS: "Success",
+  ANSWERED: "Answered",
+};
+
 export const MODULE_KEYS = {
   CONTROL_KEY: "control",
   NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placements",
@@ -313,7 +320,7 @@ export const MENU_KEYS = {
   ROASTER: "roster",
   FEEDBACK: "feedback",
   CONTACT_US: "contact-us",
-  ACTIVITY_LOGS: "activity-logs",
+  ACTIVITY_LOGS: "activity-log",
   ALL_JOBS: "all-job-listing",
   ROUND_1_PLACEMENT: "round-1",
   ROUND_2_PLACEMENT: "round-2",
@@ -347,8 +354,6 @@ export const ZOOM_CONSTANT = {
   ZOOM_STEP: 0.1,
 };
 
-export const NUMBER_OF_CHIPS_TO_BE_SHOWN = 2;
-
 export const ROTATE_IMAGE_BY = 90;
 
 export const INITIAL_PASSWORD_DATA = {
@@ -357,5 +362,11 @@ export const INITIAL_PASSWORD_DATA = {
   confirm_password: "",
 };
 
-export const USER_PROFILE_QUERY_PARAMS = "user-profile";
+export const SORTING_QUERY_PARAMS = {
+  SORTED_KEY: "sorted-key",
+  SORTED_DIRECTION: "sorted-direction",
+};
 
+export const NUMBER_OF_CHIPS_TO_SHOW = 15;
+
+export const USER_PROFILE_QUERY_PARAMS = "user-profile";

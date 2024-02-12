@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { ThemeContext } from "core/providers/theme";
@@ -18,6 +18,7 @@ const SearchFilter = ({
   setFilterArray,
   setShowFilters,
   showFilters,
+  onFilterApply,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -28,7 +29,7 @@ const SearchFilter = ({
     data.forEach((item) => {
       if (item.options && Array.isArray(item.options)) {
         item.options.forEach((option) => {
-          if (option.optionId) {
+          if (option?.optionId || option?.optionId === 0) {
             optionIds.push(option.optionId);
           }
         });
@@ -89,11 +90,9 @@ const SearchFilter = ({
           {intl.formatMessage({ id: "label.filters" })}
         </Typography>
         {filterArray.length > 0 && (
-          <div className={styles.countFilterContainerStyle}>
-            <Typography className={styles.countFilterStyle}>
-              {filterArray.length}
-            </Typography>
-          </div>
+          <Typography className={styles.countFilterStyle}>
+            {filterArray.length}
+          </Typography>
         )}
       </Button>
       {showFilters && (
@@ -108,7 +107,11 @@ const SearchFilter = ({
             extra={
               <Button
                 type="link"
-                onClick={() => setCurrentFilterStatus([])}
+                onClick={() => {
+                  setCurrentFilterStatus([]);
+                  setFilterArray([]);
+                  setShowFilters(false);
+                }}
                 className={styles.clearAllBtn}
               >
                 {intl.formatMessage({ id: "label.clearAll" })}
@@ -117,7 +120,6 @@ const SearchFilter = ({
             bodyStyle={classes.cardBody}
           >
             <TwoColumn
-              // TODO: Srujan will be working on the responsive designs of the filters hence do not touch it much
               isLeftFillSpace
               isRightFillSpace
               leftSectionStyle={
@@ -182,8 +184,10 @@ const SearchFilter = ({
                           />
                         )}
                         <Typography className={styles.filterOptionText}>
-                          {item?.str}
-                          {item?.count ? item?.count : ""}
+                          {item?.str}{" "}
+                          <span className={styles.textInBrackets}>
+                            {!isNaN(item?.count) ? `(${item?.count})` : ""}
+                          </span>
                         </Typography>
                       </div>
                     );
@@ -203,12 +207,14 @@ const SearchFilter = ({
               {intl.formatMessage({ id: "label.cancel" })}
             </Button>
             <CustomButton
-              btnText={intl.formatMessage({ id: "label.searchResult" })}
+              btnText={intl.formatMessage({ id: "label.show_result" })}
               customStyle={styles.showResultBtn}
               onClick={() => {
                 setFilterArray(currentFilterStatus);
+                onFilterApply(currentFilterStatus);
                 setShowFilters(false);
               }}
+              textStyle={styles.buttonTextStyle}
             />
           </div>
         </div>

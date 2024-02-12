@@ -14,7 +14,9 @@ const CustomCheckBox = ({
   return (
     <Checkbox
       {...{ checked, disabled, onChange }}
-      className={[styles.box, customStyles].join(" ")}
+      className={[disabled ? styles.disableBox : styles.box, customStyles].join(
+        " "
+      )}
     >
       {children}
     </Checkbox>
