@@ -121,6 +121,7 @@ const variables = {
   width_176: "176px",
   width_180: "180px",
   width_200: "200px",
+  width_250: "250px",
   width_300: "300px",
   width_347: "347px",
   width_350: "350px",
@@ -134,6 +135,7 @@ const variables = {
   width_30Per: "30%",
   width_45Per: "45%",
   halfWidth: "50%",
+  width90Per: "90%",
   fullWidth: "100%",
 
   // Heights
@@ -147,6 +149,7 @@ const variables = {
   height_40: "40px",
   height_44: "44px",
   minBtnHeight: "45px",
+  height_46: "46px",
   height_48: "48px",
   height_50: "50px",
   height_55: "55px",
