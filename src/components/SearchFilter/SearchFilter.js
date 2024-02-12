@@ -110,7 +110,6 @@ const SearchFilter = ({
                 onClick={() => {
                   setCurrentFilterStatus([]);
                   setFilterArray([]);
-                  setShowFilters(false);
                 }}
                 className={styles.clearAllBtn}
               >

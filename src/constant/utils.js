@@ -198,3 +198,29 @@ export const isObjectHasNoValues = (obj) => {
   }
   return true;
 };
+
+export const getSortingDirection = (direction) => {
+  direction = direction?.toLowerCase();
+  if (direction === "asc" || direction === "desc") {
+    return direction;
+  }
+  return "asc";
+};
+
+export const getSortQueryParamsValue = ({
+  direction,
+  keyName,
+  stateKeyName,
+}) => {
+  direction = getSortingDirection(direction);
+  if (keyName === stateKeyName) {
+    return {
+      direction,
+      isDisable: false,
+    };
+  }
+  return {
+    direction: "asc",
+    isDisable: true,
+  };
+};

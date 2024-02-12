@@ -163,15 +163,15 @@ input::placeholder {
   min-width: var(--width_250, 250px) !important;
 }
 
-.active {
-  background-color: var(--lightGrey3Bg);
-  border-radius: 50%;
-}
-
 .asc {
   transform: rotate(180deg);
 }
 
 .desc {
   transform: rotate(0deg);
+}
+
+.iconContainer{
+  display: flex;
+  gap: var(--gapLarge);
 }

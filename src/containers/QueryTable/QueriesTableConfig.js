@@ -123,12 +123,17 @@ export const getTicketOrQueryColumn = ({
               {intl.formatMessage({ id: "label.studentOrCompany" })}
               <div className={styles.sortintArrawContainer}>
                 <Image
-                  src={getImage("arrowDownDarkGrey")}
+                  src={getImage(
+                    `${
+                      sortByName?.isDisable
+                        ? "disabledArrow"
+                        : "arrowDownDarkGrey"
+                    }`
+                  )}
                   preview={false}
                   className={[
                     styles[sortByName?.direction],
                     styles.centerContent,
-                    !sortByName?.isDisable ? styles.active : "",
                   ].join(" ")}
                 />
               </div>
@@ -302,12 +307,17 @@ export const getTicketOrQueryColumn = ({
               {intl.formatMessage({ id: "label.createdOn" })}
               <div className={styles.sortintArrawContainer}>
                 <Image
-                  src={getImage("arrowDownDarkGrey")}
+                  src={getImage(
+                    `${
+                      sortByCreatedAt?.isDisable
+                        ? "disabledArrow"
+                        : "arrowDownDarkGrey"
+                    }`
+                  )}
                   preview={false}
                   className={[
                     styles[sortByCreatedAt?.direction],
                     styles.arrowSytles,
-                    !sortByCreatedAt?.isDisable ? styles.active : "",
                   ].join(" ")}
                 />
               </div>
@@ -321,21 +331,6 @@ export const getTicketOrQueryColumn = ({
         isTypeDate: true,
         visible: true,
         textStyles: [styles.tableCell].join(" "),
-      },
-    }),
-    renderColumn({
-      dataIndex: "see",
-      key: "see",
-      render: (_, rowData) => {
-        return (
-          <Image
-            src={getImage("eye")}
-            alt="eye"
-            className={styles.clickable}
-            preview={false}
-            onClick={() => navigate(`query/${rowData?.id}`)}
-          />
-        );
       },
     }),
     renderColumn({
@@ -360,7 +355,19 @@ export const getTicketOrQueryColumn = ({
       render: (_, rowData) => {
         const isAnswered = rowData?.status?.toLowerCase() === "answered";
         return (
-          <div className={isTableInSelectAllMode ? styles.iconBox : ""}>
+          <div
+            className={[
+              styles.iconContainer,
+              isTableInSelectAllMode ? styles.iconBox : "",
+            ].join(" ")}
+          >
+            <Image
+              src={getImage("eye")}
+              alt="eye"
+              className={styles.clickable}
+              preview={false}
+              onClick={() => navigate(`/control/query/${rowData?.id}`)}
+            />
             <Image
               src={getImage(`${!isAnswered ? "checkIcon" : "greenTick"}`)}
               alt="check"

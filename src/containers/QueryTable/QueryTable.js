@@ -17,7 +17,11 @@ import useFetch from "../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketOrQueryColumn } from "./QueriesTableConfig";
-import { convertPermissionFilter, getValidFilter } from "../../constant/utils";
+import {
+  convertPermissionFilter,
+  getSortQueryParamsValue,
+  getValidFilter,
+} from "../../constant/utils";
 import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
@@ -44,12 +48,18 @@ const QueryTable = ({
 
   // useState hooks
   const [sortByCreatedAt, setSortByCreatedAt] = useState({
-    direction: "asc",
-    isDisable: false,
+    ...getSortQueryParamsValue({
+      direction: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_DIRECTION),
+      keyName: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_KEY),
+      stateKeyName: "created_at",
+    }),
   });
   const [sortByName, setSortByName] = useState({
-    direction: "asc",
-    isDisable: true,
+    ...getSortQueryParamsValue({
+      direction: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_DIRECTION),
+      keyName: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_KEY),
+      stateKeyName: "name",
+    }),
   });
   const [
     selctedQueriesToBeMarkedAsAnswered,
