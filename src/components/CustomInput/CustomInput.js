@@ -20,6 +20,7 @@ const CustomInput = React.forwardRef(
       defaultSelectValueArray,
       defaultSelectValueString,
       disabled,
+      errorInput,
       errorMessage,
       isError,
       isMultiSelect,
@@ -104,7 +105,11 @@ const CustomInput = React.forwardRef(
             <Input
               ref={isSuffixRequiredForPassword ? inputFieldRef : null}
               type={type || "text"}
-              className={[styles.inputField, customInputStyles].join(" ")}
+              className={[
+                styles.inputField,
+                customInputStyles,
+                isError && errorMessage && styles.errorInput,
+              ].join(" ")}
               {...{
                 value,
                 placeholder,
@@ -150,7 +155,11 @@ const CustomInput = React.forwardRef(
             <InputNumber
               type="number"
               controls={false}
-              className={[styles.inputNumberStyles, customInputNumberStyles]}
+              className={[
+                styles.inputNumberStyles,
+                customInputNumberStyles,
+                isError && errorMessage && errorInput,
+              ]}
               {...{
                 value,
                 placeholder,
@@ -197,6 +206,7 @@ CustomInput.defaultProps = {
   defaultSelectValueArray: [],
   defaultSelectValueString: "",
   disabled: false,
+  errorInput: "",
   errorMessage: "",
   isError: false,
   isMultiSelect: false,
@@ -232,6 +242,7 @@ CustomInput.propTypes = {
   defaultSelectValueArray: PropTypes.array,
   defaultSelectValueString: PropTypes.string,
   disabled: PropTypes.bool,
+  errorInput: PropTypes.string,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
   isMultiSelect: PropTypes.bool,

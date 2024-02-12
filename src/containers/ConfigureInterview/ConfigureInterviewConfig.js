@@ -102,7 +102,7 @@ const getConfigureDateCoumns = (
         }),
         customInputNumberStyles: styles.customInputStyle,
         onInputChange: (val) => {
-          handleInputChange("slotDurationInMinutes", val.target.value);
+          handleInputChange("slotDurationInMinutes", val);
         },
       },
     }),

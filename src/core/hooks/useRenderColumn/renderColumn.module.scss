@@ -56,6 +56,10 @@
   color: var(--requiredStarColor);
 }
 
-.selectedRow{
+.selectedRow {
   background-color: var(--blue6Bg);
+}
+
+.errotTimeInput {
+  border: var(--borderError);
 }

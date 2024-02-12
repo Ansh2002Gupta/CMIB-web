@@ -136,10 +136,10 @@ const ConfigureInterview = () => {
   );
 
   const handleOnSubmit = () => {
-    navigate(`${SESSION}/${SETUP_MOCK_INTERVIEW}`);
+    navigate(-1);
   };
   const handleCancel = () => {
-    navigate(`${SESSION}/${SETUP_MOCK_INTERVIEW}`);
+    navigate(-1);
   };
 
   const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;

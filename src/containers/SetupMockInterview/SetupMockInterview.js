@@ -91,6 +91,7 @@ const SetupMockInterviewContent = () => {
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
+
     let startIndex = (currentPage - 1) * currentPagePerRow;
     let endIndex = currentPage * currentPagePerRow;
     const availalblePage = Math.ceil(MOCK_INTERVIEW.length / currentPagePerRow);
@@ -104,11 +105,10 @@ const SetupMockInterviewContent = () => {
         prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
         return prev;
       });
-      setCurrent(1);
+      // setCurrent(1);
       startIndex = 0;
       endIndex = currentPagePerRow;
     }
-
     if (
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
@@ -120,7 +120,6 @@ const SetupMockInterviewContent = () => {
       startIndex = currentPage;
       endIndex = DEFAULT_PAGE_SIZE;
     }
-
     const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
   }, []);
