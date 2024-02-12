@@ -1,7 +1,7 @@
 .profileDropdown {
   cursor: pointer;
-  color: var(--textDefault, #000000);
-  width: 100%;
+  color: var(--textDefault, #000833);
+  width: var(--fullWidth, 100%);
 }
 
 .profileName {
@@ -44,7 +44,7 @@
 
 .profileMenu {
   border-radius: var(--sizeXXLarge, 22px);
-  width: 250px;
+  width: var(--width_250, 250px);
   margin-top: var(--sizeXSmall, 12px);
   border: "1px solid #ccd0e5";
   overflow: hidden;
@@ -54,12 +54,12 @@
   padding: var(--paddingSmall, 16px);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--gapSmallMedium, 12px);
 }
 
 .profileList {
   font-size: var(--fontSizeSmall, 14px);
-  width: 100%;
+  width: var(--fullWidth, 100%);
 }
 
 .logoutBtn {
