@@ -12,6 +12,7 @@ const Chip = ({
   onClick,
   textColor,
 }) => {
+  console.log({ textColor, bgColor });
   return (
     <div
       {...{ onClick }}

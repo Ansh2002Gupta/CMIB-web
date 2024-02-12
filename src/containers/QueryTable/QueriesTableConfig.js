@@ -4,19 +4,6 @@ import { SORTING_QUERY_PARAMS } from "../../constant/constant";
 
 import styles from "./QueryTable.module.scss";
 
-const getStatusStyles = (status) => {
-  if (
-    status?.toLowerCase() === "closed" ||
-    status?.toLowerCase() === "answered"
-  ) {
-    return ["statusContainer_success", "statusText_success"];
-  }
-  if (status?.toLowerCase() === "pending") {
-    return ["statusContainer_failed", "statusText_failed"];
-  }
-  return ["statusContainer_progress", "statusText_progress"];
-};
-
 export const getTicketOrQueryColumn = ({
   intl,
   getImage,
@@ -45,6 +32,48 @@ export const getTicketOrQueryColumn = ({
   const { pageSize, current, searchedValue, filterArray } =
     paginationAndSearchProperties;
   const isTableInSelectAllMode = selectedItemsList?.length !== 0;
+
+  const getSortedData = ({
+    sortKeyName,
+    direction,
+    setSortByNameObj,
+    setSortByCreatedAtObj,
+  }) => {
+    fetchData({
+      queryParamsObject: {
+        perPage: pageSize,
+        page: current,
+        q: searchedValue,
+        queryType: filterArray,
+        sortDirection: toggleSorting(direction),
+        sortField: sortKeyName,
+      },
+      onSuccessCallback: () => {
+        setSearchParams((prevValue) => {
+          prevValue.set(
+            SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+            toggleSorting(direction)
+          );
+          prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortKeyName);
+          return prevValue;
+        });
+
+        setSortByName((prev) => {
+          return {
+            ...prev,
+            ...setSortByNameObj,
+          };
+        });
+
+        setSortByCreatedAt((prev) => {
+          return {
+            ...prev,
+            ...setSortByCreatedAtObj,
+          };
+        });
+      },
+    });
+  };
 
   return [
     renderColumn({
@@ -85,37 +114,15 @@ export const getTicketOrQueryColumn = ({
             <Typography
               className={[styles.columnHeading].join(" ")}
               onClick={() =>
-                fetchData({
-                  queryParamsObject: {
-                    perPage: pageSize,
-                    page: current,
-                    q: searchedValue,
-                    queryType: filterArray,
-                    sortDirection: toggleSorting(sortByName?.direction),
-                    sortField: "name",
+                getSortedData({
+                  sortKeyName: "name",
+                  direction: sortByName?.direction,
+                  setSortByNameObj: {
+                    direction: toggleSorting(sortByName?.direction),
+                    isDisable: false,
                   },
-                  onSuccessCallback: () => {
-                    setSearchParams((prevValue) => {
-                      prevValue.set(
-                        SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                        toggleSorting(sortByName?.direction)
-                      );
-                      prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
-                      return prevValue;
-                    });
-                    setSortByName((prev) => {
-                      return {
-                        ...prev,
-                        direction: toggleSorting(prev?.direction),
-                        isDisable: false,
-                      };
-                    });
-                    setSortByCreatedAt((prev) => {
-                      return {
-                        ...prev,
-                        isDisable: true,
-                      };
-                    });
+                  setSortByCreatedAtObj: {
+                    isDisable: true,
                   },
                 })
               }
@@ -183,21 +190,8 @@ export const getTicketOrQueryColumn = ({
       ),
       dataIndex: "status",
       key: "status",
-      render: (data, rowData) => {
-        const { status } = rowData;
-        const styleClassForContainer = getStatusStyles(status)[0];
-        const styleClassForText = getStatusStyles(status)[1];
-        return (
-          <div
-            className={[styles.statusBox, styles[styleClassForContainer]].join(
-              " "
-            )}
-          >
-            <Typography className={styles[styleClassForText]}>
-              {status}
-            </Typography>
-          </div>
-        );
+      renderChip: {
+        visible: true,
       },
     }),
     renderColumn({
@@ -265,41 +259,15 @@ export const getTicketOrQueryColumn = ({
             <Typography
               className={styles.columnHeading}
               onClick={() =>
-                fetchData({
-                  queryParamsObject: {
-                    perPage: pageSize,
-                    page: current,
-                    q: searchedValue,
-                    queryType: filterArray,
-                    sortDirection: toggleSorting(sortByCreatedAt?.direction),
-                    sortField: "created_at",
+                getSortedData({
+                  sortKeyName: "created_at",
+                  direction: sortByCreatedAt?.direction,
+                  setSortByNameObj: {
+                    isDisable: true,
                   },
-                  onSuccessCallback: () => {
-                    setSearchParams((prevValue) => {
-                      prevValue.set(
-                        SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-                        toggleSorting(sortByCreatedAt?.direction)
-                      );
-                      prevValue.set(
-                        SORTING_QUERY_PARAMS.SORTED_KEY,
-                        "created_at"
-                      );
-                      return prevValue;
-                    });
-
-                    setSortByName((prev) => {
-                      return {
-                        ...prev,
-                        isDisable: true,
-                      };
-                    });
-                    setSortByCreatedAt((prev) => {
-                      return {
-                        ...prev,
-                        direction: toggleSorting(prev.direction),
-                        isDisable: false,
-                      };
-                    });
+                  setSortByCreatedAtObj: {
+                    direction: toggleSorting(sortByCreatedAt?.direction),
+                    isDisable: false,
                   },
                 })
               }

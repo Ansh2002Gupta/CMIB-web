@@ -1,14 +1,17 @@
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 import { useSearchParams } from "react-router-dom";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
-import TicketListingHeader from "../../containers/TicketListingHeader";
+import ContentHeader from "../../containers/ContentHeader/ContentHeader";
 import TicketTable from "../../containers/TicketTable/TicketTable";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import { PAGINATION_PROPERTIES } from "../../constant/constant";
+import styles from "./TicketListing.module.scss";
 
 const TicketListing = () => {
+  const intl = useIntl();
   const [searchParams] = useSearchParams();
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
@@ -22,7 +25,16 @@ const TicketListing = () => {
 
   return (
     <TwoRow
-      topSection={<TicketListingHeader />}
+      topSection={
+        <ContentHeader
+          headerText={intl.formatMessage({
+            id: "label.tickets",
+          })}
+          isLeftFillSpace
+          customStyles={styles.container}
+          customContainerStyle={styles.parentContainer}
+        />
+      }
       isBottomFillSpace
       bottomSection={
         <TicketTable
