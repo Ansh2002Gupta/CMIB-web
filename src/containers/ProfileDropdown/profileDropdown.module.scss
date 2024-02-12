@@ -46,7 +46,7 @@
   border-radius: var(--sizeXXLarge, 22px);
   width: var(--width_250, 250px);
   margin-top: var(--sizeXSmall, 12px);
-  border: "1px solid #ccd0e5";
+  border: 1px solid var(--borderColor, #ccd0e5);
   overflow: hidden;
 }
 
