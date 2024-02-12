@@ -239,8 +239,8 @@ const useRenderColumn = () => {
         return (
           <Chip
             label={status}
-            bgColor={[styles.chipContainer, styles[styleClassForText]].join(" ")}
-            textColor={styles[styleClassForContainer]}
+            bgColor={[styles.chipContainer, styles[styleClassForContainer]].join(" ")}
+            textColor={styles[styleClassForText]}
           />
         );
       });
