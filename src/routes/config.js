@@ -5,6 +5,7 @@ import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
 import QueriesListing from "../views/QueriesListing";
 import ConfigureCentreView from "../views/ConfigureCentreView";
+import ConfigureInterviewDates from "../views/ConfigureInterviewDates";
 import ConsentMarking from "../views/ConsentMarking";
 import DashboardView from "../views/Dashboard/Dashboard";
 import DefaultRoute from "./components/DefaultRoute";
@@ -33,6 +34,7 @@ import {
   CONFIGURE_CENTRES,
   CONSENT_MARKING,
   DASHBOARD,
+  DETAILS,
   EDIT_CONFIGURE_CENTRE,
   FORGOT_PASSWORD,
   LOGIN,
@@ -57,16 +59,16 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 );
 
 const config = [
-  {
-    pagePath: OUT_SOURCED,
-    element: <DefaultRoute />,
-    views: [
-      {
-        viewPath: "",
-        element: <DefaultRoute />,
-      },
-    ],
-  },
+  // {
+  //   pagePath: OUT_SOURCED,
+  //   element: <DefaultRoute />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <DefaultRoute />,
+  //     },
+  //   ],
+  // },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,
@@ -141,6 +143,10 @@ const config = [
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW,
         element: <SetupMockInterview />,
+      },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        element: <ConfigureInterviewDates />,
       },
     ],
   },
@@ -257,6 +263,10 @@ const config = [
         viewPath: SESSION + SETUP_MOCK_INTERVIEW,
         element: <SetupMockInterview />,
       },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        element: <ConfigureInterviewDates />,
+      },
     ],
   },
   {
@@ -304,6 +314,10 @@ const config = [
         viewPath: SESSION + SETUP_MOCK_INTERVIEW,
         element: <SetupMockInterview />,
       },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        element: <ConfigureInterviewDates />,
+      },
     ],
   },
   {
@@ -350,6 +364,10 @@ const config = [
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW,
         element: <SetupMockInterview />,
+      },
+      {
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        element: <ConfigureInterviewDates />,
       },
     ],
   },

@@ -7,7 +7,9 @@ import { TwoRow } from "../../core/layouts";
 
 import DataTable from "../../components/DataTable/DataTable";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
 import {
@@ -21,16 +23,31 @@ import styles from "./SetupMockInterview.module.scss";
 
 const SetupMockInterviewContent = () => {
   const intl = useIntl();
+  const isEdit = true;
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const [currentTableData, setCurrentTableData] = useState(MOCK_INTERVIEW);
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
   const [pageSize, setPageSize] = useState(
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
+
+  const goToConfigureInterview = (rowData, isEdit) => {
+    const centreId = rowData?.id;
+    navigate(
+      `/${
+        selectedModule?.key
+      }/session/setup-mock-interview/details/${centreId}?mode=${
+        isEdit ? "edit" : "view"
+      }`
+    );
+  };
 
   const updateTableData = (currentPageNumber, currentPageSize) => {
     const startIndex = (currentPageNumber - 1) * currentPageSize;
@@ -61,7 +78,13 @@ const SetupMockInterviewContent = () => {
     updateTableData(newPageNumber, pageSize);
   };
 
-  const columns = getSetupMockColumn(intl, getImage, renderColumn);
+  const columns = getSetupMockColumn(
+    intl,
+    isEdit,
+    getImage,
+    goToConfigureInterview,
+    renderColumn
+  );
 
   useEffect(() => {
     const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);

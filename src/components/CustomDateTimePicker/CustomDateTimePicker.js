@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { DatePicker, Image, TimePicker, Typography } from "antd";
 
@@ -53,16 +54,26 @@ const CustomDateTimePicker = ({
                   onChange,
                   placeholder,
                   disabled,
-                  value,
                 }}
-                className={[styles.timeInput, customTimeStyle]}
+                className={[
+                  styles.timeInput,
+                  customTimeStyle,
+                  errorMessage && styles.errotTimeInput,
+                ]}
+                suffixIcon={<Image src={getImage("clock")} />}
+                value={value ? dayjs(value) : null}
               />
             ) : isEditable ? (
               <DatePicker
-                {...{ defaultValue, onChange, placeholder, disabled, value }}
+                {...{ defaultValue, onChange, placeholder, disabled }}
                 format={dateFormat}
-                className={[styles.timeInput, customTimeStyle]}
+                className={[
+                  styles.timeInput,
+                  customTimeStyle,
+                  errorMessage && styles.errotTimeInput,
+                ]}
                 suffixIcon={<Image src={getImage("calendar")} />}
+                value={value ? dayjs(value) : null}
               />
             ) : (
               <Typography className={styles.dateText}>
@@ -75,7 +86,7 @@ const CustomDateTimePicker = ({
               <Typography
                 className={[styles.errorText, customErrorTextStyles].join(" ")}
               >
-                * {errorMessage}
+                {errorMessage}
               </Typography>
             )
           }

@@ -14,11 +14,15 @@
 .timeInput {
   background-color: var(--bodyBg);
 }
+.errotTimeInput {
+  border: var(--borderError);
+}
+
 .errorText {
   color: var(--error);
   font-weight: var(--fontWeightMedium);
-  font-size: var(--fontSizeSmall);
-  margin-top: var(--marginSmall);
+  font-size: var(--fontSizeExtraSmall);
+  margin-top: var(--marginXXSmall);
 }
 .dateText {
   color: var(--textBold);

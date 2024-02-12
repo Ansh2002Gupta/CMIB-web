@@ -795,3 +795,38 @@ export const PERMISION_AND_ROLE = {
     },
   ],
 };
+
+export const CONFIGURE_INTERVIEW_DATES = [
+  {
+    id: 1,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+  {
+    id: 2,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+  {
+    id: 3,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+  {
+    id: 4,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+];

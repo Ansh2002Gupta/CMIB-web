@@ -195,6 +195,7 @@ const variables = {
   borderBlue: `2px solid ${colorPallets.darkBlue}`,
   borderBlue1: `1px solid ${colorPallets.darkBlue}`,
   borderGreen: `1px solid ${colorPallets.green1}`,
+  borderError: `1px solid ${colorPallets.red1}`,
   borderColor: colorPallets.ltGrey1,
 
   // Box shadow

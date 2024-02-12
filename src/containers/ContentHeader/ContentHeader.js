@@ -30,6 +30,7 @@ const ContentHeader = ({
     <TwoColumn
       {...{ isLeftFillSpace }}
       leftSection={<Header />}
+      leftSectionStyle={{ flex: 1 }}
       rightSection={rightSection}
       className={styles.twoColumnBox}
     ></TwoColumn>

@@ -102,7 +102,7 @@
   border: var(--borderLight);
   background-color: var(--bodyBg);
   &::placeholder {
-    color: red !important;
+    color: var(--textBold) !important;
   }
 }
 

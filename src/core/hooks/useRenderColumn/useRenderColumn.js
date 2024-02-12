@@ -6,6 +6,7 @@ import { TwoColumn } from "../../layouts";
 
 import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
+import CustomInput from "../../../components/CustomInput";
 import { formatDate } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
@@ -22,6 +23,7 @@ const useRenderColumn = () => {
     renderDateTime = {},
     render,
     renderImage = {},
+    renderInput = {},
     renderMenu = {},
     renderText = {},
     renderTextWithCheckBoxes = {},
@@ -41,6 +43,7 @@ const useRenderColumn = () => {
       customTimeStyle,
       defaultValue,
       disabled = false,
+      errorMessage,
       isEditable = true,
       isRequired = false,
       onChange = () => {},
@@ -50,11 +53,25 @@ const useRenderColumn = () => {
 
     const {
       alt = "",
+      alternateSrc = "",
+      alternateOnClick = () => {},
       customImageStyle = "",
       src = "",
       onClick = () => {},
       preview,
     } = renderImage;
+
+    const {
+      customInputContainerStyles,
+      customInputNumberStyles,
+      customInputStyles,
+      customSelectInputStyles,
+      inputDisabled,
+      inputErrorMessage,
+      inputPlaceholder = "",
+      inputType,
+      onInputChange,
+    } = renderInput;
 
     const {
       items = [],
@@ -221,10 +238,12 @@ const useRenderColumn = () => {
         return (
           <Image
             alt={alt}
-            src={src}
+            src={rowData?.isAddRow ? alternateSrc : src}
             preview={preview}
             className={`${customImageStyle} ${styles.editIcon}`}
-            onClick={onClick ? () => onClick(rowData) : () => {}}
+            onClick={() =>
+              rowData?.isAddRow ? alternateOnClick(rowData) : onClick(rowData)
+            }
           />
         );
       });
@@ -313,7 +332,6 @@ const useRenderColumn = () => {
               customContainerStyles,
               customTimeStyle,
               defaultValue,
-              disabled,
               isEditable,
               isRequired,
               type,
@@ -323,6 +341,29 @@ const useRenderColumn = () => {
             onChange={(val) => {
               onChange(val, record);
             }}
+            disabled={disabled || !record?.isAddRow}
+            errorMessage={record?.isAddRow && errorMessage}
+          />
+        );
+      });
+
+    renderInput.visible &&
+      (columnObject.render = (value, record) => {
+        return (
+          <CustomInput
+            {...{
+              value,
+              customInputNumberStyles,
+              customInputStyles,
+              customSelectInputStyles,
+            }}
+            disabled={inputDisabled || !record?.isAddRow}
+            placeholder={inputPlaceholder}
+            type={inputType}
+            customContainerStyles={customInputContainerStyles}
+            onChange={onInputChange}
+            errorMessage={record.isAddRow && inputErrorMessage}
+            isError={record.isAddRow && inputErrorMessage}
           />
         );
       });
