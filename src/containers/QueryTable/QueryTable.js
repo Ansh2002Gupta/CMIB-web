@@ -74,12 +74,7 @@ const QueryTable = ({
   // custom hooks
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const {
-    data: queryTypesData,
-    getQueriesTypes,
-    isLoading: isGettingQueryTypes,
-    error: errorWhileGettingQueryTypes,
-  } = useQueriesTypesApi();
+  const { data: queryTypesData, getQueriesTypes } = useQueriesTypesApi();
 
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkQueriesAsAnswerApi();

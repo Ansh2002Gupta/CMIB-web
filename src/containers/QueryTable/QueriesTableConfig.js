@@ -103,7 +103,6 @@ export const getTicketOrQueryColumn = ({
                       prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, "name");
                       return prevValue;
                     });
-
                     setSortByName((prev) => {
                       return {
                         ...prev,
