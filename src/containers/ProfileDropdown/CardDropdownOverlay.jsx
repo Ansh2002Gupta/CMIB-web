@@ -37,7 +37,7 @@ export default function CardDropdownOverlay({
       setDropdownVisible(false);
       userProfileDispatch(setShowChangePasswordModal(true));
     },
-    viewProfile: () => {
+    myProfile: () => {
       setSearchParams((prev) => {
         prev.set(USER_PROFILE_QUERY_PARAMS, "open");
         return prev;
