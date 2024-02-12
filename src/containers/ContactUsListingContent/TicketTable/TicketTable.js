@@ -205,6 +205,17 @@ const TicketTable = ({
     },
   ];
 
+  const onFilterApply = (currentFilterStatus) => {
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      q: searchedValue,
+      status: JSON.stringify(currentFilterStatus["1"]),
+      queryType: JSON.stringify(currentFilterStatus["2"]),
+    };
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
   return (
     <>
       {!isError && (
@@ -218,6 +229,7 @@ const TicketTable = ({
             columns,
             onChangePageSize,
             onChangeCurrentPage,
+            onFilterApply,
           }}
           isLoading={isSuccess && !isLoading}
           data={data?.records}

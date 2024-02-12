@@ -52,6 +52,16 @@
   background-color: var(--lightBlueBg);
   padding: var(--fontSizeNormal);
   cursor: pointer;
+  line-height: 20px;
+}
+
+.iconStyle {
+  display: flex;
+}
+
+.arrowStyle {
+  height: '16px';
+  width: '16px';
 }
 
 .filterTextAndCheckContainer {
@@ -127,6 +137,7 @@
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
+  padding: var(--paddingNone);
   &:hover {
     color: var(--textBold) !important;
   }

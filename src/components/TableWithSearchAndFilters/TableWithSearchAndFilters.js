@@ -24,6 +24,7 @@ const TableWithSearchAndFilters = ({
   pageSize,
   searchedValue,
   isLoading,
+  onFilterApply,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -51,7 +52,7 @@ const TableWithSearchAndFilters = ({
         />
         <SearchFilter
           filterPropertiesArray={filterOptions || ACCESS_FILTER_DATA}
-          {...{ showFilters, setShowFilters }}
+          {...{ showFilters, setShowFilters, onFilterApply }}
         />
       </div>
       {isLoading && (
@@ -89,6 +90,8 @@ TableWithSearchAndFilters.defaultProps = {
   pageSize: DEFAULT_PAGE_SIZE,
   searchedValue: "",
   isLoading: false,
+  onSearch: () => {},
+  onFilterApply: () => {},
 };
 
 TableWithSearchAndFilters.propTypes = {
@@ -103,6 +106,7 @@ TableWithSearchAndFilters.propTypes = {
   pageSize: PropTypes.number,
   searchedValue: PropTypes.string,
   isLoading: PropTypes.bool,
+  onFilterApply: PropTypes.func,
 };
 
 export default TableWithSearchAndFilters;

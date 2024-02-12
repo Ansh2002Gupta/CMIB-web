@@ -10,6 +10,7 @@ export const classes = {
     fontSize: variables.fontSizeNormal,
     color: variables.textBold,
     fontWeight: variables.fontWeightBold,
+    padding: "0 16px",
   },
   filterLeftSectionMobile: {
     borderRight: variables.borderLight,
