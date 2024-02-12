@@ -51,7 +51,7 @@ const locale = {
   "label.newPasswordAndConfirmPasswordMatched":
     "Your password has been changed successfully",
   "label.otpHeading":
-    "Please enter the one time password that you have received on your registered email address/mobile number",
+    "Please enter the one time password that you have received on your registered mobile number",
   "label.otp": "OTP",
   "label.sendAgain": "Send Again",
   "label.fourteenMinTimerText1": "You have requested OTP for 4 times!",
