@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch, Tooltip } from "antd";
+import { Checkbox, Dropdown, Image, Switch, Tooltip } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
@@ -35,6 +35,10 @@ const useRenderColumn = () => {
     sortTypeDate,
     sortTypeText,
     title,
+    titleWithCheckBoxes,
+    isIntermidiate,
+    isChecked,
+    onToggleCheckBox,
   }) => {
     const columnObject = {};
 
@@ -159,6 +163,22 @@ const useRenderColumn = () => {
         );
       });
 
+    titleWithCheckBoxes &&
+      (columnObject.title = () => {
+        return (
+          <div>
+            <Checkbox
+              indeterminate={isIntermidiate}
+              checked={isChecked}
+              className={[styles.chipContainer, customColumnHeading].join(" ")}
+              onChange={onToggleCheckBox}
+            >
+              {titleWithCheckBoxes}
+            </Checkbox>
+          </div>
+        );
+      });
+
     dataIndex && (columnObject.dataIndex = dataIndex);
 
     key && (columnObject.key = key);
@@ -216,13 +236,11 @@ const useRenderColumn = () => {
         const { status } = rowData;
         const styleClassForContainer = getStatusStyles(status)[0];
         const styleClassForText = getStatusStyles(status)[1];
-        console.log({styleClassForContainer, styleClassForText})
         return (
           <Chip
-            // className={customChip}
             label={status}
-            bgColor={styleClassForText}
-            textColor={styleClassForContainer}
+            bgColor={[styles.chipContainer, styles[styleClassForText]].join(" ")}
+            textColor={styles[styleClassForContainer]}
           />
         );
       });

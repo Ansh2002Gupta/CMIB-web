@@ -1,4 +1,4 @@
-import { Checkbox, Image, Typography } from "antd";
+import { Image, Typography } from "antd";
 import { toggleSorting } from "../../constant/utils";
 import { SORTING_QUERY_PARAMS } from "../../constant/constant";
 
@@ -77,23 +77,16 @@ export const getTicketOrQueryColumn = ({
 
   return [
     renderColumn({
-      title: (
-        <div>
-          <Checkbox
-            indeterminate={areSomeItemsSelected}
-            checked={areAllItemsSelected}
-            className={[
-              styles.columnHeading,
-              isTableInSelectAllMode ? styles.greenText : "",
-            ].join(" ")}
-            onChange={toggleSelectAllItems}
-          >
-            {!isTableInSelectAllMode
-              ? intl.formatMessage({ id: "label.queriesId" })
-              : intl.formatMessage({ id: "label.selectAll" })}
-          </Checkbox>
-        </div>
-      ),
+      titleWithCheckBoxes: !isTableInSelectAllMode
+        ? intl.formatMessage({ id: "label.queriesId" })
+        : intl.formatMessage({ id: "label.selectAll" }),
+      onToggleCheckBox: toggleSelectAllItems,
+      customColumnHeading: [
+        styles.columnHeading,
+        isTableInSelectAllMode ? styles.greenText : "",
+      ].join(" "),
+      isIntermidiate: areSomeItemsSelected,
+      isChecked: areAllItemsSelected,
       dataIndex: "readable_id",
       key: "readable_id",
       renderTextWithCheckBoxes: {

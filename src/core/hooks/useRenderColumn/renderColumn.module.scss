@@ -88,3 +88,9 @@
 .statusText_progress {
   color: var(--blueText);
 }
+
+.chipContainer {
+  padding: var(--paddingXXXSmall, 2px) var(--paddingExtraSmall, 8px)
+    var(--paddingXXXSmall, 2px) var(--paddingExtraSmall, 8px);
+  border-radius: var(--paddingSmall, 16px);
+}
