@@ -171,7 +171,7 @@ const useRenderColumn = () => {
                 isCapitalize ? styles.capitalize : "",
               ].join(" ")}
             >
-              {textRenderFormat({ text: text || "--" })}
+              {textRenderFormat({ text: text || "-" })}
             </p>
           ),
         };

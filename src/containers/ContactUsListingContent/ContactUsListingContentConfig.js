@@ -210,9 +210,19 @@ export const getTicketOrQueryColumn = (
       dataIndex: "see",
       key: "see",
       renderImage: {
-        alt: "eye",
+        alt: "msg",
         preview: false,
         src: getImage("messageText"),
+        visible: true,
+      },
+    }),
+    renderColumn({
+      dataIndex: "see",
+      key: "see",
+      renderImage: {
+        alt: "options",
+        preview: false,
+        src: getImage("more"),
         visible: true,
       },
     }),
