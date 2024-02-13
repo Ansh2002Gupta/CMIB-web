@@ -178,7 +178,7 @@ const ConfigureCentreContent = () => {
     renderColumn({
       title: (
         <Typography
-          className={styles.columnHeading}
+          className={[styles.columnHeading, styles.sortColumn]}
           onClick={() =>
             fetchData({
               queryParamsObject: {
@@ -216,6 +216,7 @@ const ConfigureCentreContent = () => {
           </div>
         </Typography>
       ),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "name",
       key: "name",
       renderText: {
@@ -225,6 +226,7 @@ const ConfigureCentreContent = () => {
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreId" }),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "centre_code",
       key: "centre_code",
       renderText: { visible: true },
@@ -232,6 +234,7 @@ const ConfigureCentreContent = () => {
     {
       ...renderColumn({
         title: intl.formatMessage({ id: "label.bigSmallCentre" }),
+        customColumnHeading: styles.columnHeading,
         dataIndex: "centre_size",
         key: "centre_size",
         renderText: { visible: true, textStyles: styles.tableCell },
@@ -240,12 +243,14 @@ const ConfigureCentreContent = () => {
     },
     renderColumn({
       title: intl.formatMessage({ id: "label.dateCreated" }),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "created_at",
       key: "created_at",
       renderText: { isTypeDate: true, visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.status" }),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "status",
       key: "status",
       renderSwitch: {

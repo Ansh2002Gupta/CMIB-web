@@ -422,6 +422,7 @@ const locale = {
   "label.userSuccessfullyEdited": "User Successfully Edited",
   "label.show_result": "Show Result",
   "label.centreCode": "Centre code",
+  "label.path.centre-details": "Edit centre details",
 };
 
 export default locale;
