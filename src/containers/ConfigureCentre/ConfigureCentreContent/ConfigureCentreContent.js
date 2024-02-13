@@ -107,7 +107,7 @@ const ConfigureCentreContent = () => {
     const requestedParams = {
       perPage: size,
       page: 1,
-      keyword: searchedValue,
+      q: searchedValue,
       sort: sortedOrder.sortDirection,
       order: sortedOrder.sortKeyName,
     };
@@ -148,7 +148,7 @@ const ConfigureCentreContent = () => {
     const requestedParams = {
       perPage: pageSize,
       page: 1,
-      keyword: str,
+      q: str,
       sort: sortedOrder.sortDirection,
       order: sortedOrder.sortKeyName,
     };
@@ -159,7 +159,7 @@ const ConfigureCentreContent = () => {
     const requestedParams = {
       perPage: pageSize,
       page: current,
-      keyword: searchedValue,
+      q: searchedValue,
       sort: sortedOrder.sortDirection,
       order: sortedOrder.sortKeyName,
     };
@@ -183,7 +183,7 @@ const ConfigureCentreContent = () => {
               queryParamsObject: {
                 perPage: pageSize,
                 page: current,
-                keyword: searchedValue,
+                q: searchedValue,
                 sort: toggleSorting(sortedOrder.sortDirection),
                 order: sortedOrder.sortKeyName,
               },
@@ -224,15 +224,15 @@ const ConfigureCentreContent = () => {
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreId" }),
-      dataIndex: "center_code",
-      key: "center_code",
+      dataIndex: "centre_code",
+      key: "centre_code",
       renderText: { visible: true },
     }),
     {
       ...renderColumn({
         title: intl.formatMessage({ id: "label.bigSmallCentre" }),
-        dataIndex: "center_type",
-        key: "center_type",
+        dataIndex: "centre_size",
+        key: "centre_size",
         renderText: { visible: true, textStyles: styles.tableCell },
       }),
       width: "100px",
@@ -248,7 +248,7 @@ const ConfigureCentreContent = () => {
       dataIndex: "status",
       key: "status",
       renderSwitch: {
-        dataKeyName: "centreId",
+        dataKeyName: "status",
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
       },
@@ -279,7 +279,7 @@ const ConfigureCentreContent = () => {
         const requestedParams = {
           perPage: pageSize,
           page: 1,
-          keyword: searchedValue,
+          q: searchedValue,
           sort: sortedOrder.sortDirection,
           order: sortedOrder.sortKeyName,
         };
@@ -307,7 +307,7 @@ const ConfigureCentreContent = () => {
     const requestedParams = {
       perPage: validPageSize,
       page: validPageNumber,
-      keyword: searchedValue,
+      q: searchedValue,
       sort: validSortByValue,
       order: sortedOrder.sortKeyName,
     };
