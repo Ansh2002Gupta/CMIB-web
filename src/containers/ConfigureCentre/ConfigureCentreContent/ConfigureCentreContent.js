@@ -183,13 +183,10 @@ const ConfigureCentreContent = () => {
           className={[styles.columnHeading, styles.sortColumn]}
           onClick={() =>
             fetchData({
-              queryParamsObject: {
-                perPage: pageSize,
-                page: current,
-                q: searchedValue,
-                sortDirection: toggleSorting(sortedOrder.sortDirection),
-                sortField: sortedOrder.sortKeyName,
-              },
+              queryParamsObject: getRequestedParams({
+                search: searchedValue,
+                validSortByValue: toggleSorting(sortedOrder.sortDirection),
+              }),
               onSuccessCallback: () => {
                 setSearchParams((prevValue) => {
                   prevValue.set(
