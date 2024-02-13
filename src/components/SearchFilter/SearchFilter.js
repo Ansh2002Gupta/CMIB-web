@@ -138,7 +138,6 @@ const SearchFilter = ({
             bodyStyle={classes.cardBody}
           >
             <TwoColumn
-              // TODO: Srujan will be working on the responsive designs of the filters hence do not touch it much
               isLeftFillSpace
               isRightFillSpace
               leftSectionStyle={
@@ -159,7 +158,7 @@ const SearchFilter = ({
                       <div
                         className={[
                           styles.filterOption,
-                          item.isSelected ? styles.active : "",
+                          selectedIndex === index ? styles.active : "",
                         ].join(" ")}
                         onClick={() => showOption(index)}
                         key={index}
@@ -174,16 +173,16 @@ const SearchFilter = ({
                           <Typography className={styles.leftFilterOptionText}>
                             {item.name}
                           </Typography>
+                          {item?.options?.length && (
+                            <div className={styles.filterRightArrow}>
+                              <Image
+                                src={getImage("arrowRightFilter")}
+                                preview={false}
+                                className={styles.arrowStyle}
+                              />
+                            </div>
+                          )}
                         </div>
-                        {item?.options?.length && (
-                          <div className={styles.filterRightArrow}>
-                            <Image
-                              src={getImage("arrowRightFilter")}
-                              preview={false}
-                              className={styles.arrowStyle}
-                            />
-                          </div>
-                        )}
                       </div>
                     );
                   })}
