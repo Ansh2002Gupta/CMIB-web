@@ -103,9 +103,9 @@ const ConfigureCentreContent = () => {
       () => {
         setData({
           ...data,
-          records: data.records.map((record) => {
-            record.id === id ? { ...record, status: payload.status } : record;
-          }),
+          records: data.records.map((record) =>
+            record.id === id ? { ...record, status: payload.status } : record
+          ),
         });
       },
       (errorMessage) => {
