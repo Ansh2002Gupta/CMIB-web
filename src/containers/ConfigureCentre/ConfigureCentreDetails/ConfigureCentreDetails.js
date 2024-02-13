@@ -31,7 +31,8 @@ const ConfigureCentreDetails = () => {
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
-  const currentlySelectedModuleId = userProfileDetails?.selectedModuleItem?.id;
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const [formErrors, setFormErrors] = useState({});
@@ -105,10 +106,10 @@ const ConfigureCentreDetails = () => {
 
   const handleSave = () => {
     const payload = {
-      center_name: formData.centre_name,
-      module_id: currentlySelectedModuleId,
-      center_code: formData.centre_code,
-      center_type: formData.centre_type,
+      name: formData.centre_name,
+      module: currentlySelectedModuleKey,
+      centre_code: formData.centre_code,
+      centre_size: formData.centre_type,
       status: formData.status,
     };
     if (!centreId) {

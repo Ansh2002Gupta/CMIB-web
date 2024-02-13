@@ -6,20 +6,25 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
-import ErrorMessageBox from "../../../components/ErrorMessageBox";
-import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
-import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
-import useFetch from "../../../core/hooks/useFetch";
-import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
-import { ADMIN_ROUTE, QUERIES_LIST } from "../../../constant/apiEndpoints";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
+import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import useFetch from "../../core/hooks/useFetch";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { getTicketOrQueryColumn } from "./TicketTableConfig";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
-} from "../../../constant/constant";
-import styles from "../ContactUsListingContent.module.scss";
+} from "../../constant/constant";
+import {
+  CORE_ROUTE,
+  QUERY_TYPE,
+  STATUS,
+  TICKET_LIST,
+} from "../../constant/apiEndpoints";
+import styles from "./TicketTable.module.scss";
 
-const QueryTable = ({
+const TicketTable = ({
   current,
   currentActiveTab,
   pageSize,
@@ -34,22 +39,55 @@ const QueryTable = ({
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const columns = getTicketOrQueryColumn(
-    currentActiveTab,
-    intl,
-    getImage,
-    navigate,
-    renderColumn
-  );
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + QUERIES_LIST,
+    url: CORE_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
   });
+  const { data: queryTypes } = useFetch({
+    url: CORE_ROUTE + QUERY_TYPE,
+  });
+  const { data: status } = useFetch({
+    url: CORE_ROUTE + STATUS,
+  });
+
   let errorString = error;
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
-  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
+  const debounceSearch = useMemo(() => {
+    return _.debounce((requestedParams) => {
+      fetchData({ queryParamsObject: requestedParams });
+    }, 300);
+  }, []);
+
+  const queryTypeOptions = useMemo(() => {
+    return queryTypes?.map((queryType) => ({
+      optionId: queryType.id,
+      str: queryType.name,
+    }));
+  }, [queryTypes]);
+
+  const statusOptions = useMemo(() => {
+    return status?.map((status) => ({
+      optionId: status.id,
+      str: status.name,
+    }));
+  }, [status]);
+
+  const columns = getTicketOrQueryColumn({
+    type: currentActiveTab,
+    intl,
+    getImage,
+    navigate,
+    renderColumn,
+    queriesColumnProperties: {},
+    fetchData,
+    paginationAndSearchProperties: {
+      pageSize,
+      current,
+      searchedValue,
+    },
+  });
 
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
@@ -84,7 +122,7 @@ const QueryTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -98,38 +136,29 @@ const QueryTable = ({
       page: newPageNumber,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
-  const handleOnReTry = () => {
-    const requestedParams = {
-      perPage: DEFAULT_PAGE_SIZE,
-      page: 1,
-      q: searchedValue,
-    };
-    fetchData(requestedParams);
-  };
+  // TODO: Need to refactor
+  // useEffect(() => {
+  //   if (data?.meta) {
+  //     const { total } = data?.meta;
+  //     const numberOfPages = Math.ceil(total / pageSize);
+  //     if (current > numberOfPages) {
+  //       setCurrent(1);
+  //       setSearchParams((prev) => {
+  //         prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+  //       });
 
-  useEffect(() => {
-    if (data?.meta) {
-      const { total } = data?.meta;
-      const numberOfPages = Math.ceil(total / pageSize);
-      if (current > numberOfPages) {
-        setCurrent(1);
-        setSearchParams((prev) => {
-          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-          return prev;
-        });
-
-        const requestedParams = {
-          perPage: pageSize,
-          page: 1,
-          q: searchedValue,
-        };
-        fetchData(requestedParams);
-      }
-    }
-  }, [data?.meta?.total]);
+  //       const requestedParams = {
+  //         perPage: pageSize,
+  //         page: 1,
+  //         q: searchedValue,
+  //       };
+  //       fetchData({ queryParamsObject: requestedParams });
+  //     }
+  //   }
+  // }, [data?.meta?.total]);
 
   useEffect(() => {
     setSearchParams((prev) => {
@@ -145,8 +174,42 @@ const QueryTable = ({
       page: current,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   }, []);
+
+  const handleOnReTry = () => {
+    const requestedParams = {
+      perPage: DEFAULT_PAGE_SIZE,
+      page: 1,
+      q: searchedValue,
+    };
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
+  useEffect(() => {
+    return () => {
+      setSearchedValue("");
+      setSearchParams((prev) => {
+        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
+        return prev;
+      });
+    };
+  }, []);
+
+  const filterOptions = [
+    {
+      id: 1,
+      name: "Status",
+      isSelected: false,
+      options: statusOptions,
+    },
+    {
+      id: 2,
+      name: "Query Type",
+      isSelected: false,
+      options: queryTypeOptions,
+    },
+  ];
 
   return (
     <>
@@ -156,6 +219,7 @@ const QueryTable = ({
             current,
             pageSize,
             searchedValue,
+            filterOptions,
             handleOnUserSearch,
             columns,
             onChangePageSize,
@@ -181,7 +245,7 @@ const QueryTable = ({
   );
 };
 
-QueryTable.defaultProps = {
+TicketTable.defaultProps = {
   current: 1,
   currentActiveTab: "1",
   pageSize: DEFAULT_PAGE_SIZE,
@@ -193,7 +257,7 @@ QueryTable.defaultProps = {
   setSearchedValue: () => {},
 };
 
-QueryTable.propTypes = {
+TicketTable.propTypes = {
   current: PropTypes.number,
   currentActiveTab: PropTypes.string,
   pageSize: PropTypes.number,
@@ -205,4 +269,4 @@ QueryTable.propTypes = {
   setSearchedValue: PropTypes.func,
 };
 
-export default QueryTable;
+export default TicketTable;
