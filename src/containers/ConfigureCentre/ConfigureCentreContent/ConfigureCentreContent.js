@@ -49,7 +49,7 @@ const ConfigureCentreContent = () => {
     sortDirection: getValidSortByValue(
       searchParams.get(SORT_PROPERTIES.SORT_BY)
     ),
-    sortKeyName: "center_name",
+    sortKeyName: "name",
   });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -108,8 +108,8 @@ const ConfigureCentreContent = () => {
       perPage: size,
       page: 1,
       q: searchedValue,
-      sort: sortedOrder.sortDirection,
-      order: sortedOrder.sortKeyName,
+      sortDirection: sortedOrder.sortDirection,
+      sortField: sortedOrder.sortKeyName,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -149,8 +149,8 @@ const ConfigureCentreContent = () => {
       perPage: pageSize,
       page: 1,
       q: str,
-      sort: sortedOrder.sortDirection,
-      order: sortedOrder.sortKeyName,
+      sortDirection: sortedOrder.sortDirection,
+      sortField: sortedOrder.sortKeyName,
     };
     debounceSearch({ queryParamsObject: requestedParams });
   };
@@ -160,8 +160,8 @@ const ConfigureCentreContent = () => {
       perPage: pageSize,
       page: current,
       q: searchedValue,
-      sort: sortedOrder.sortDirection,
-      order: sortedOrder.sortKeyName,
+      sortDirection: sortedOrder.sortDirection,
+      sortField: sortedOrder.sortKeyName,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -184,8 +184,8 @@ const ConfigureCentreContent = () => {
                 perPage: pageSize,
                 page: current,
                 q: searchedValue,
-                sort: toggleSorting(sortedOrder.sortDirection),
-                order: sortedOrder.sortKeyName,
+                sortDirection: toggleSorting(sortedOrder.sortDirection),
+                sortField: sortedOrder.sortKeyName,
               },
               onSuccessCallback: () => {
                 setSearchParams((prevValue) => {
@@ -280,8 +280,8 @@ const ConfigureCentreContent = () => {
           perPage: pageSize,
           page: 1,
           q: searchedValue,
-          sort: sortedOrder.sortDirection,
-          order: sortedOrder.sortKeyName,
+          sortDirection: sortedOrder.sortDirection,
+          sortField: sortedOrder.sortKeyName,
         };
         fetchData({ queryParamsObject: requestedParams });
       }
@@ -308,8 +308,8 @@ const ConfigureCentreContent = () => {
       perPage: validPageSize,
       page: validPageNumber,
       q: searchedValue,
-      sort: validSortByValue,
-      order: sortedOrder.sortKeyName,
+      sortDirection: validSortByValue,
+      sortField: sortedOrder.sortKeyName,
     };
     fetchData({ queryParamsObject: requestedParams });
   }, []);

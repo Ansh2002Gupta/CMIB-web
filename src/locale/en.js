@@ -223,7 +223,7 @@ const locale = {
   "label.consent.lastDateSmallCentres":
     "Last Date of Registration for Candidates for Small Centres",
   "label.tryAgain": "Try Again",
-  "label.centreCode": "Centre code: ",
+  "label.centreCodeColon": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
   "label.centreStartTime": "Centre Start Time",
   "label.centreEndTime": "Centre End Time",
@@ -421,6 +421,7 @@ const locale = {
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
   "label.show_result": "Show Result",
+  "label.centreCode": "Centre code",
 };
 
 export default locale;
