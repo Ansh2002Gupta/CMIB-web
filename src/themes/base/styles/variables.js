@@ -19,10 +19,15 @@ const variables = {
   greyBlue: colorPallets.greyBlue,
   blackBg: colorPallets.black1,
   lightGreenBg: colorPallets.lightGreen,
-  lightBlueBg2: colorPallets.skyBlue,
+  lightBlueBg2: colorPallets.snow,
   lightRedBg: colorPallets.lightOrange,
+  orangeBg: colorPallets.orange1,
+  blueBg2: colorPallets.blue4,
+  greenBg: colorPallets.green3,
+  greyBg: colorPallets.ltGrey1,
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
+  blue6Bg: colorPallets.blue6,
   lightGrey3Bg: colorPallets.ltGrey3,
 
   // Text-colors
@@ -45,10 +50,13 @@ const variables = {
   error: colorPallets.red1,
   requiredStarColor: colorPallets.red1,
   sideMenuMaskBg: colorPallets.maskBlack,
-  greenText: colorPallets.darkGreen,
-  blueText: colorPallets.darkBlue2,
-  redText: colorPallets.darkOrange,
+  orangeText: colorPallets.orange2,
+  blueText: colorPallets.blue5,
+  greenText: colorPallets.green4,
+  redText: colorPallets.red1,
+  lightGreyText3: colorPallets.ltGrey4,
   darkBlue3: colorPallets.darkBlue3,
+  ltGrey5: colorPallets.ltGrey5,
 
   // Border-Radius
   radiusNone: "0px",
@@ -121,12 +129,14 @@ const variables = {
   width_176: "176px",
   width_180: "180px",
   width_200: "200px",
+  width_250: "250px",
   width_300: "300px",
   width_347: "347px",
   width_350: "350px",
   width_363: "363px",
   width_400: "400px",
   width_500: "500px",
+  widthViewPort_30: "30vw",
   widthViewPort_35: "35vw",
   widthHalfViewPort: "50vw",
   widthViewPort_65: "65vw",
@@ -134,6 +144,7 @@ const variables = {
   width_30Per: "30%",
   width_45Per: "45%",
   halfWidth: "50%",
+  width90Per: "90%",
   fullWidth: "100%",
 
   // Heights
@@ -143,9 +154,11 @@ const variables = {
   height_24: "24px",
   height_30: "30px",
   height_32: "32px",
+  height_36: "36px",
   height_40: "40px",
   height_44: "44px",
   minBtnHeight: "45px",
+  height_46: "46px",
   height_48: "48px",
   height_50: "50px",
   height_55: "55px",
@@ -157,11 +170,13 @@ const variables = {
   height_104: "104px",
   height_120: "120px",
   height_150: "150px",
+  height_200: "200px",
   height_184: "184px",
   height_240: "240px",
   height_250: "250px",
   height_300: "300px",
   height_400: "400px",
+  height_600: "600px",
   height_25vh: "25vh",
   height_30vh: "30vh",
   height_35vh: "35vh",
@@ -250,5 +265,4 @@ const variables = {
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };
-
 export default variables;
