@@ -73,6 +73,16 @@ const ConfigureCentreContent = () => {
     navigate(`${CENTRE_DETAILS}/${rowData?.id}`);
   };
 
+  const getRequestedParams = ({ page, search, size, validSortByValue }) => {
+    return {
+      perPage: size || pageSize,
+      page: page || current,
+      q: search || searchedValue,
+      sortDirection: validSortByValue || sortedOrder.sortDirection,
+      sortField: sortedOrder.sortKeyName,
+    };
+  };
+
   const onHandleCentreStatus = (centerData) => {
     const { id } = centerData;
     const payload = {
@@ -85,9 +95,9 @@ const ConfigureCentreContent = () => {
       () => {
         setData({
           ...data,
-          records: data.records.map((record) =>
-            record.id === id ? { ...record, status: payload.status } : record
-          ),
+          records: data.records.map((record) => {
+            record.id === id ? { ...record, status: payload.status } : record;
+          }),
         });
       },
       (errorMessage) => {
@@ -104,14 +114,14 @@ const ConfigureCentreContent = () => {
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
       return prev;
     });
-    const requestedParams = {
-      perPage: size,
-      page: 1,
-      q: searchedValue,
-      sortDirection: sortedOrder.sortDirection,
-      sortField: sortedOrder.sortKeyName,
-    };
-    fetchData({ queryParamsObject: requestedParams });
+    // const requestedParams = {
+    //   perPage: size,
+    //   page: 1,
+    //   q: searchedValue,
+    //   sortDirection: sortedOrder.sortDirection,
+    //   sortField: sortedOrder.sortKeyName,
+    // };
+    fetchData({ queryParamsObject: getRequestedParams({ page: 1 }) });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -120,14 +130,16 @@ const ConfigureCentreContent = () => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
       return prev;
     });
-    const requestedParams = {
-      perPage: pageSize,
-      page: newPageNumber,
-      q: searchedValue,
-      sortDirection: sortedOrder.sortDirection,
-      sortField: sortedOrder.sortKeyName,
-    };
-    fetchData({ queryParamsObject: requestedParams });
+    // const requestedParams = {
+    //   perPage: pageSize,
+    //   page: newPageNumber,
+    //   q: searchedValue,
+    //   sortDirection: sortedOrder.sortDirection,
+    //   sortField: sortedOrder.sortKeyName,
+    // };
+    fetchData({
+      queryParamsObject: getRequestedParams({ page: newPageNumber }),
+    });
   };
 
   const handleOnUserSearch = (str) => {
@@ -145,26 +157,28 @@ const ConfigureCentreContent = () => {
         prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
         return prev;
       });
-    const requestedParams = {
-      perPage: pageSize,
-      page: 1,
-      q: str,
-      sortDirection: sortedOrder.sortDirection,
-      sortField: sortedOrder.sortKeyName,
-    };
+    // const requestedParams = {
+    //   perPage: pageSize,
+    //   page: 1,
+    //   q: str,
+    //   sortDirection: sortedOrder.sortDirection,
+    //   sortField: sortedOrder.sortKeyName,
+    // };
     (str.length > 2 || searchedValue.length > str.length) &&
-      debounceSearch({ queryParamsObject: requestedParams });
+      debounceSearch({
+        queryParamsObject: getRequestedParams({ page: 1, search: str }),
+      });
   };
 
   const handleTryAgain = () => {
-    const requestedParams = {
-      perPage: pageSize,
-      page: current,
-      q: searchedValue,
-      sortDirection: sortedOrder.sortDirection,
-      sortField: sortedOrder.sortKeyName,
-    };
-    fetchData({ queryParamsObject: requestedParams });
+    // const requestedParams = {
+    //   perPage: pageSize,
+    //   page: current,
+    //   q: searchedValue,
+    //   sortDirection: sortedOrder.sortDirection,
+    //   sortField: sortedOrder.sortKeyName,
+    // };
+    fetchData({ queryParamsObject: getRequestedParams({}) });
   };
 
   let sortArrowStyles = "";
@@ -225,7 +239,7 @@ const ConfigureCentreContent = () => {
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.centreId" }),
+      title: intl.formatMessage({ id: "label.centreCode" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "centre_code",
       key: "centre_code",
@@ -237,7 +251,11 @@ const ConfigureCentreContent = () => {
         customColumnHeading: styles.columnHeading,
         dataIndex: "centre_size",
         key: "centre_size",
-        renderText: { visible: true, textStyles: styles.tableCell },
+        renderText: {
+          visible: true,
+          textStyles: styles.tableCell,
+          isCapitalize: true,
+        },
       }),
       width: "100px",
     },
@@ -257,6 +275,9 @@ const ConfigureCentreContent = () => {
         dataKeyName: "status",
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
+        checkIsSwitchEditable: (data) => {
+          return false;
+        },
       },
     }),
     renderColumn({
@@ -282,14 +303,7 @@ const ConfigureCentreContent = () => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
         });
-        const requestedParams = {
-          perPage: pageSize,
-          page: 1,
-          q: searchedValue,
-          sortDirection: sortedOrder.sortDirection,
-          sortField: sortedOrder.sortKeyName,
-        };
-        fetchData({ queryParamsObject: requestedParams });
+        fetchData({ queryParamsObject: getRequestedParams({ page: 1 }) });
       }
     }
   }, [data?.meta?.total]);
@@ -310,14 +324,14 @@ const ConfigureCentreContent = () => {
       prev.set(SORT_PROPERTIES.SORT_BY, validSortByValue);
       return prev;
     });
-    const requestedParams = {
-      perPage: validPageSize,
-      page: validPageNumber,
-      q: searchedValue,
-      sortDirection: validSortByValue,
-      sortField: sortedOrder.sortKeyName,
-    };
-    fetchData({ queryParamsObject: requestedParams });
+    // const requestedParams = {
+    //   perPage: validPageSize,
+    //   page: validPageNumber,
+    //   q: searchedValue,
+    //   sortDirection: validSortByValue,
+    //   sortField: sortedOrder.sortKeyName,
+    // };
+    fetchData({ queryParamsObject: getRequestedParams({ validSortByValue }) });
   }, []);
 
   useEffect(() => {
