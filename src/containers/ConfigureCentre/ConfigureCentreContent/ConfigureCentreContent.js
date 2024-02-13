@@ -78,7 +78,6 @@ const ConfigureCentreContent = () => {
   };
 
   const getRequestedParams = ({ page, search, size, validSortByValue }) => {
-    console.log(search, "search121..", page, "page121");
     return {
       perPage: size || pageSize,
       page: page || current,
@@ -144,12 +143,6 @@ const ConfigureCentreContent = () => {
   };
 
   const handleOnUserSearch = (str) => {
-    console.log(
-      "str",
-      str,
-      "length",
-      str.length > 2 || searchedValue.length > str.length
-    );
     setCurrent(1);
     str &&
       setSearchParams((prev) => {
