@@ -152,7 +152,8 @@ const ConfigureCentreContent = () => {
       sortDirection: sortedOrder.sortDirection,
       sortField: sortedOrder.sortKeyName,
     };
-    debounceSearch({ queryParamsObject: requestedParams });
+    (str.length > 2 || searchedValue.length > str.length) &&
+      debounceSearch({ queryParamsObject: requestedParams });
   };
 
   const handleTryAgain = () => {
