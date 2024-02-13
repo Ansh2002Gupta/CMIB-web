@@ -126,9 +126,10 @@ const SearchFilter = ({
               <Button
                 type="link"
                 onClick={() => {
-                  setCurrentFilterStatus([]);
+                  setCurrentFilterStatus({});
                   setFilterArray([]);
                   setShowFilters(false);
+                  onFilterApply({});
                 }}
                 className={styles.clearAllBtn}
               >
