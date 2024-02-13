@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Table, Typography } from "antd";
 import { ThemeContext } from "core/providers/theme";
@@ -8,10 +8,12 @@ import { TwoRow } from "../../core/layouts";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import getConfigureDateCoumns from "./ConfigureInterviewConfig";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { CONFIGURE_INTERVIEW_DATES } from "../../dummyData";
 import { SETUP_MOCK_INTERVIEW, SESSION } from "../../routes/routeNames";
+import { PAGINATION_PROPERTIES } from "../../constant/constant";
 import styles from "./ConfigureInterview.module.scss";
 
 const ConfigureInterview = () => {
@@ -20,6 +22,8 @@ const ConfigureInterview = () => {
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
   const isEdit = searchParams.get("mode") === "edit";
   const [tableData, setTableData] = useState(CONFIGURE_INTERVIEW_DATES);
   const [addTableData, setAddTableData] = useState({
@@ -38,6 +42,8 @@ const ConfigureInterview = () => {
     facilitiesNumber: "",
     slotDurationInMinutes: "",
   });
+
+  const location = useLocation();
 
   const handleRemove = (record) => {
     const filteredData = tableData.filter((item) => item.id !== record.id);
@@ -136,10 +142,14 @@ const ConfigureInterview = () => {
   );
 
   const handleOnSubmit = () => {
-    navigate(-1);
+    navigate(
+      `/${selectedModule?.key}/${SESSION}${SETUP_MOCK_INTERVIEW}?${PAGINATION_PROPERTIES.CURRENT_PAGE}=${location.state.current}&${PAGINATION_PROPERTIES.ROW_PER_PAGE}=${location.state.pageSize}`
+    );
   };
   const handleCancel = () => {
-    navigate(-1);
+    navigate(
+      `/${selectedModule?.key}/${SESSION}${SETUP_MOCK_INTERVIEW}?${PAGINATION_PROPERTIES.CURRENT_PAGE}=${location.state.current}&${PAGINATION_PROPERTIES.ROW_PER_PAGE}=${location.state.pageSize}`
+    );
   };
 
   const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;

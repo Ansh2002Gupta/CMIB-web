@@ -18,7 +18,9 @@ const ConfigureInterviewDates = () => {
           headerText={intl.formatMessage({
             id: "label.configureInterviewDates",
           })}
+          isLeftFillSpace={true}
           customStyles={styles.headerCustomStyles}
+          customContainerStyle={styles.parentContainer}
         />
       }
       bottomSection={<ConfigureInterview />}

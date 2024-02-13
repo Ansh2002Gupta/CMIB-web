@@ -45,7 +45,9 @@ const SetupMockInterviewContent = () => {
         selectedModule?.key
       }/session/setup-mock-interview/details/${centreId}?mode=${
         isEdit ? "edit" : "view"
-      }`
+      }`,
+      false,
+      { current: current, pageSize: pageSize }
     );
   };
 
@@ -105,7 +107,7 @@ const SetupMockInterviewContent = () => {
         prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
         return prev;
       });
-      // setCurrent(1);
+      setCurrent(1);
       startIndex = 0;
       endIndex = currentPagePerRow;
     }
