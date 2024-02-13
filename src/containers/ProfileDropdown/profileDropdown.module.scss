@@ -15,6 +15,9 @@
   border: var(--fontSizeNormal, 16px);
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightBold, 600);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .profileRole {
@@ -92,4 +95,8 @@
   &:hover {
     background-color: var(--bodyBg, #fff) !important;
   }
+}
+
+.nameAndEmailContainer {
+  width: var(--fullWidth, 100%);
 }
