@@ -45,6 +45,7 @@ const ConfigureCentreDetails = () => {
       skipApiCallOnMount: true,
     },
   });
+
   const { isLoading: isUpdatingCenterDetails, updateCenterDetails } =
     useUpdateCenterDetailsApi();
 
@@ -151,9 +152,9 @@ const ConfigureCentreDetails = () => {
   useEffect(() => {
     if (centreId) {
       setFormData({
-        centre_code: data?.center_code,
-        centre_name: data?.center_name,
-        centre_type: data?.center_type,
+        centre_code: data?.centre_code,
+        centre_name: data?.name,
+        centre_type: data?.centre_size,
         status: data?.status,
       });
     }
