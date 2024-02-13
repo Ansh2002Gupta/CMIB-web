@@ -179,7 +179,8 @@ const SearchFilter = ({
                               <Image
                                 src={getImage("arrowRightFilter")}
                                 preview={false}
-                                className={styles.arrowStyle}
+                                style={classes.iconStyle}
+                                className={styles.iconStyle}
                               />
                             </div>
                           )}
@@ -212,11 +213,13 @@ const SearchFilter = ({
                             <Image
                               src={getImage("checkedBox")}
                               preview={false}
+                              className={styles.iconStyle}
                             />
                           ) : (
                             <Image
                               src={getImage("unCheckedBox")}
                               preview={false}
+                              className={styles.iconStyle}
                             />
                           )}
                           <Typography className={styles.filterOptionText}>

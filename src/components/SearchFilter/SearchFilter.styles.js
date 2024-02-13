@@ -36,4 +36,8 @@ export const classes = {
     overflowX: "auto",
     minWidth: "15vw",
   },
+  iconStyle: {
+    height: "16px",
+    width: "16px",
+  },
 };
