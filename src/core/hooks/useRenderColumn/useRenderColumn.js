@@ -130,7 +130,7 @@ const useRenderColumn = () => {
             dayjs(new Date(b[sortKey])).unix();
         }
         if (sortTypeText) {
-          return (a, b) => a[sortKey].localeCompare(b[sortKey]);
+          return (a, b) => a[sortKey]?.localeCompare(b[sortKey]);
         }
         return sorter;
       })());
