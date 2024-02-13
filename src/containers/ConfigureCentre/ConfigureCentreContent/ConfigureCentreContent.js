@@ -114,13 +114,6 @@ const ConfigureCentreContent = () => {
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
       return prev;
     });
-    // const requestedParams = {
-    //   perPage: size,
-    //   page: 1,
-    //   q: searchedValue,
-    //   sortDirection: sortedOrder.sortDirection,
-    //   sortField: sortedOrder.sortKeyName,
-    // };
     fetchData({ queryParamsObject: getRequestedParams({ page: 1 }) });
   };
 
@@ -130,13 +123,7 @@ const ConfigureCentreContent = () => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
       return prev;
     });
-    // const requestedParams = {
-    //   perPage: pageSize,
-    //   page: newPageNumber,
-    //   q: searchedValue,
-    //   sortDirection: sortedOrder.sortDirection,
-    //   sortField: sortedOrder.sortKeyName,
-    // };
+
     fetchData({
       queryParamsObject: getRequestedParams({ page: newPageNumber }),
     });
@@ -157,13 +144,6 @@ const ConfigureCentreContent = () => {
         prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
         return prev;
       });
-    // const requestedParams = {
-    //   perPage: pageSize,
-    //   page: 1,
-    //   q: str,
-    //   sortDirection: sortedOrder.sortDirection,
-    //   sortField: sortedOrder.sortKeyName,
-    // };
     (str.length > 2 || searchedValue.length > str.length) &&
       debounceSearch({
         queryParamsObject: getRequestedParams({ page: 1, search: str }),
@@ -171,13 +151,6 @@ const ConfigureCentreContent = () => {
   };
 
   const handleTryAgain = () => {
-    // const requestedParams = {
-    //   perPage: pageSize,
-    //   page: current,
-    //   q: searchedValue,
-    //   sortDirection: sortedOrder.sortDirection,
-    //   sortField: sortedOrder.sortKeyName,
-    // };
     fetchData({ queryParamsObject: getRequestedParams({}) });
   };
 
