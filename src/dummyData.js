@@ -346,24 +346,6 @@ export const CONFIGURE_CENTRES = [
   },
 ];
 
-export const SESSION_DETAILS = {
-  name: "Jadyn Bartoletti",
-  session_end_date: "2023-12-19T05:11:46.000000Z",
-  nature_of_services: "nature",
-  pi_number_format: "AugSept-*****-2023",
-  ps_examination_periods: ["May 2023", "November 2023"],
-  mcs_completion_date: "2023-12-19T05:11:46.000000Z",
-  membership_completion_date: "2023-12-19T05:11:46.000000Z",
-  article_completion_from_date: "2023-12-19T05:11:46.000000Z",
-  article_completion_to_date: "2023-12-19T05:11:46.000000Z",
-  bank_ac_no: "88896186",
-  hsn_sac_code: "1791686",
-  bank_ac_ifsc: "SBIN0005836",
-  status: true,
-  created_at: "2023-12-19T05:11:46.000000Z",
-  updated_at: "2023-12-19T05:11:46.000000Z",
-};
-
 export const TICKET_DATA_LIST = [
   {
     id: 1,
