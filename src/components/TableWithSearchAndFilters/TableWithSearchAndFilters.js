@@ -10,8 +10,9 @@ import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
 import { DEFAULT_PAGE_SIZE } from "../../constant/constant";
 import styles from "./TableWithSearchAndFilters.module.scss";
-//TODO: update default props.
+
 const TableWithSearchAndFilters = ({
+  arrayContainingSelectedRow,
   columns,
   current,
   currentDataLength,
@@ -71,6 +72,7 @@ const TableWithSearchAndFilters = ({
               current,
               onChangePageSize,
               onChangeCurrentPage,
+              arrayContainingSelectedRow,
             }}
             originalData={data || []}
             customContainerStyles={styles.tableContainer}
@@ -88,6 +90,7 @@ const TableWithSearchAndFilters = ({
 };
 
 TableWithSearchAndFilters.defaultProps = {
+  arrayContainingSelectedRow: [],
   columns: [],
   current: 1,
   currentDataLength: 0,
@@ -101,6 +104,7 @@ TableWithSearchAndFilters.defaultProps = {
 };
 
 TableWithSearchAndFilters.propTypes = {
+  arrayContainingSelectedRow: PropTypes.array,
   columns: PropTypes.array,
   current: PropTypes.number,
   currentDataLength: PropTypes.number,

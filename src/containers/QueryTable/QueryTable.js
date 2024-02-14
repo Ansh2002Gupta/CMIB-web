@@ -451,6 +451,7 @@ const QueryTable = ({
             filterArray,
             setFilterArray,
           }}
+          arrayContainingSelectedRow={selectedQueriesToBeMarkedAsAnswered}
           isLoading={(isSuccess && !isLoading) || isMarkingQueryAsAnswered}
           data={data?.records}
           currentDataLength={data?.meta?.total}
