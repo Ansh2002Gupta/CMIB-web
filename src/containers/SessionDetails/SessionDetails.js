@@ -53,7 +53,7 @@ const SessionDetails = ({
   const { updateSessionDetails } = useUpdateSessionApi();
   const { MonthPicker } = DatePicker;
 
-  const handleMonthChange = (date, dateString) => {
+  const handleMonthChange = (date) => {
     if (date) {
       let updatedMonths = [...formData.ps_examination_periods];
       const formattedDate = dayjs(date).format("MM-YYYY");
@@ -68,6 +68,15 @@ const SessionDetails = ({
         ...formData,
         ps_examination_periods: updatedMonths,
       });
+
+      const fieldRules = fields.find(
+        (field) => field.label === "ps_examination_periods"
+      )?.rules;
+      const error = validateField(updatedMonths, fieldRules);
+      setFormErrors({
+        ...formErrors,
+        ["ps_examination_periods"]: error,
+      });
     }
   };
 
@@ -78,6 +87,14 @@ const SessionDetails = ({
     setFormData({
       ...formData,
       ps_examination_periods: updatedMonths,
+    });
+    const fieldRules = fields.find(
+      (field) => field.label === "ps_examination_periods"
+    )?.rules;
+    const error = validateField(updatedMonths, fieldRules);
+    setFormErrors({
+      ...formErrors,
+      ["ps_examination_periods"]: error,
     });
   };
 
@@ -94,8 +111,6 @@ const SessionDetails = ({
     formData?.bank_ac_no,
     formData?.bank_ac_ifsc
   );
-
-  // useEffect(()=>{},[])
 
   useEffect(() => {
     setEdit(addSession);
@@ -429,7 +444,7 @@ const SessionDetails = ({
                       !formData?.article_completion_to_date ||
                       !formData?.nature_of_services ||
                       !formData?.pi_number_format ||
-                      !formData?.ps_examination_periods ||
+                      !formData?.ps_examination_periods.length > 0 ||
                       !formData?.mcs_completion_date ||
                       !formData?.membership_completion_date ||
                       !formData?.article_completion_from_date ||
