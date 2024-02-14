@@ -370,3 +370,5 @@ export const SORTING_QUERY_PARAMS = {
 export const NUMBER_OF_CHIPS_TO_SHOW = 15;
 
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
+
+export const MIN_SEARCH_TEXT_LENGTH = 2;
