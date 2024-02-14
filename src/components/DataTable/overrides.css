@@ -78,12 +78,10 @@ iframe#webpack-dev-server-client-overlay {
   font-weight: var(--fontWeightMedium);
 }
 
-#myButton.ant-btn-default:disabled,
-.customDiable.ant-btn-default:disabled {
+ .ant-btn-default:disabled {
   background-color: var(--bodyBg) !important;
   border: var(--borderLight);
 }
-
 
 .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) {
   margin-inline-end: 0px;

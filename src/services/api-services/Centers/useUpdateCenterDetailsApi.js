@@ -3,7 +3,11 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import { ADMIN_ROUTE, CENTER_END_POINT } from "../../../constant/apiEndpoints";
+import {
+  CENTER_END_POINT,
+  PLACEMENT_ROUTE,
+  UPDATE_CENTER_DETAILS_END_POINT,
+} from "../../../constant/apiEndpoints";
 
 const useUpdateCenterDetailsApi = () => {
   const intl = useIntl();
@@ -24,8 +28,12 @@ const useUpdateCenterDetailsApi = () => {
       setUpdateCenterApiStatus(API_STATUS.LOADING);
       setUpdatedCenterData(null);
       errorWhileUpdatingCenter && setErrorWhileUpdatingCenter("");
-      const url = ADMIN_ROUTE + CENTER_END_POINT + `/${centerId}`;
-      const res = await Http.put(url, payload);
+      const url =
+        PLACEMENT_ROUTE +
+        CENTER_END_POINT +
+        `/${centerId}` +
+        UPDATE_CENTER_DETAILS_END_POINT;
+      const res = await Http.post(url, payload);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS

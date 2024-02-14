@@ -5,7 +5,8 @@ import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 import {
   CENTER_END_POINT,
-  ADMIN_ROUTE,
+  CREATE,
+  PLACEMENT_ROUTE,
 } from "../../../constant/apiEndpoints";
 
 const useAddNewCenterApi = () => {
@@ -23,7 +24,8 @@ const useAddNewCenterApi = () => {
       setAddNewCenterApiStatus(API_STATUS.LOADING);
       setAddNewCenterData(null);
       errorWhileAddingNewCenter && setErrorWhileAddingNewCenter("");
-      const url = ADMIN_ROUTE + CENTER_END_POINT;
+      const url =
+        PLACEMENT_ROUTE + CENTER_END_POINT + CREATE;
       const res = await Http.post(url, payload);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||

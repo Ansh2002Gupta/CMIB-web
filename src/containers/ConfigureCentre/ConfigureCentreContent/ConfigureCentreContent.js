@@ -10,12 +10,14 @@ import DataTable from "../../../components/DataTable";
 import ErrorMessageBox from "../../../components/ErrorMessageBox/ErrorMessageBox";
 import useFetch from "../../../core/hooks/useFetch";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import { CENTRE_DETAILS } from "../../../routes/routeNames";
-import { ADMIN_ROUTE, CENTER_END_POINT } from "../../../constant/apiEndpoints";
+import {
+  CENTER_END_POINT,
+  PLACEMENT_ROUTE,
+} from "../../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   PAGINATION_PROPERTIES,
@@ -36,9 +38,6 @@ const ConfigureCentreContent = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [userProfileDetails] = useContext(UserProfileContext);
-  const currentlySelectedModuleKey =
-    userProfileDetails?.selectedModuleItem?.key;
 
   const [searchedValue, setSearchedValue] = useState(
     searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
@@ -53,7 +52,7 @@ const ConfigureCentreContent = () => {
     sortDirection: getValidSortByValue(
       searchParams.get(SORT_PROPERTIES.SORT_BY)
     ),
-    sortKeyName: "name",
+    sortKeyName: "center_name",
   });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -63,7 +62,7 @@ const ConfigureCentreContent = () => {
 
   const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
     useFetch({
-      url: ADMIN_ROUTE + CENTER_END_POINT,
+      url: PLACEMENT_ROUTE + CENTER_END_POINT,
       otherOptions: {
         skipApiCallOnMount: true,
       },
@@ -77,23 +76,9 @@ const ConfigureCentreContent = () => {
     navigate(`${CENTRE_DETAILS}/${rowData?.id}`);
   };
 
-  const getRequestedParams = ({ page, search, size, validSortByValue }) => {
-    return {
-      perPage: size || pageSize,
-      page: page || current,
-      q: search || "",
-      sortDirection: validSortByValue || sortedOrder.sortDirection,
-      sortField: sortedOrder.sortKeyName,
-    };
-  };
-
   const onHandleCentreStatus = (centerData) => {
     const { id } = centerData;
     const payload = {
-      centre_size: centerData.centre_size,
-      centre_code: centerData.centre_code,
-      name: centerData.name,
-      module: currentlySelectedModuleKey,
       status: !centerData?.status,
     };
 
@@ -109,7 +94,7 @@ const ConfigureCentreContent = () => {
         });
       },
       (errorMessage) => {
-        showNotification({ text: errorMessage, type: "error" });
+        showNotification(errorMessage, "error");
       }
     );
   };
@@ -122,9 +107,14 @@ const ConfigureCentreContent = () => {
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
       return prev;
     });
-    fetchData({
-      queryParamsObject: getRequestedParams({ page: 1, search: searchedValue }),
-    });
+    const requestedParams = {
+      perPage: size,
+      page: 1,
+      keyword: searchedValue,
+      sort: sortedOrder.sortDirection,
+      order: sortedOrder.sortKeyName,
+    };
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -133,16 +123,18 @@ const ConfigureCentreContent = () => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
       return prev;
     });
-
-    fetchData({
-      queryParamsObject: getRequestedParams({
-        page: newPageNumber,
-        search: searchedValue,
-      }),
-    });
+    const requestedParams = {
+      perPage: pageSize,
+      page: newPageNumber,
+      keyword: searchedValue,
+      sort: sortedOrder.sortDirection,
+      order: sortedOrder.sortKeyName,
+    };
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnUserSearch = (str) => {
+    setSearchedValue(str);
     setCurrent(1);
     str &&
       setSearchParams((prev) => {
@@ -156,17 +148,25 @@ const ConfigureCentreContent = () => {
         prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
         return prev;
       });
-    (str.length > 2 || searchedValue.length > str.length) &&
-      debounceSearch({
-        queryParamsObject: getRequestedParams({ page: 1, search: str }),
-      });
-    setSearchedValue(str);
+    const requestedParams = {
+      perPage: pageSize,
+      page: 1,
+      keyword: str,
+      sort: sortedOrder.sortDirection,
+      order: sortedOrder.sortKeyName,
+    };
+    debounceSearch({ queryParamsObject: requestedParams });
   };
 
   const handleTryAgain = () => {
-    fetchData({
-      queryParamsObject: getRequestedParams({ search: searchedValue }),
-    });
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      keyword: searchedValue,
+      sort: sortedOrder.sortDirection,
+      order: sortedOrder.sortKeyName,
+    };
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   let sortArrowStyles = "";
@@ -180,13 +180,16 @@ const ConfigureCentreContent = () => {
     renderColumn({
       title: (
         <Typography
-          className={[styles.columnHeading, styles.sortColumn]}
+          className={styles.columnHeading}
           onClick={() =>
             fetchData({
-              queryParamsObject: getRequestedParams({
-                search: searchedValue,
-                validSortByValue: toggleSorting(sortedOrder.sortDirection),
-              }),
+              queryParamsObject: {
+                perPage: pageSize,
+                page: current,
+                keyword: searchedValue,
+                sort: toggleSorting(sortedOrder.sortDirection),
+                order: sortedOrder.sortKeyName,
+              },
               onSuccessCallback: () => {
                 setSearchParams((prevValue) => {
                   prevValue.set(
@@ -215,7 +218,6 @@ const ConfigureCentreContent = () => {
           </div>
         </Typography>
       ),
-      customColumnHeading: styles.columnHeading,
       dataIndex: "name",
       key: "name",
       renderText: {
@@ -224,45 +226,35 @@ const ConfigureCentreContent = () => {
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.centreCode" }),
-      customColumnHeading: styles.columnHeading,
-      dataIndex: "centre_code",
-      key: "centre_code",
+      title: intl.formatMessage({ id: "label.centreId" }),
+      dataIndex: "center_code",
+      key: "center_code",
       renderText: { visible: true },
     }),
     {
       ...renderColumn({
         title: intl.formatMessage({ id: "label.bigSmallCentre" }),
-        customColumnHeading: styles.columnHeading,
-        dataIndex: "centre_size",
-        key: "centre_size",
-        renderText: {
-          visible: true,
-          textStyles: styles.tableCell,
-          isCapitalize: true,
-        },
+        dataIndex: "center_type",
+        key: "center_type",
+        renderText: { visible: true, textStyles: styles.tableCell },
       }),
       width: "100px",
     },
     renderColumn({
       title: intl.formatMessage({ id: "label.dateCreated" }),
-      customColumnHeading: styles.columnHeading,
       dataIndex: "created_at",
       key: "created_at",
       renderText: { isTypeDate: true, visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.status" }),
-      customColumnHeading: styles.columnHeading,
       dataIndex: "status",
       key: "status",
       renderSwitch: {
-        dataKeyName: "status",
+        dataKeyName: "centreId",
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
-        checkIsSwitchEditable: (data) => {
-          return true;
-        },
+        checkIsSwitchEditable: (data) => Boolean(data?.is_editable),
       },
     }),
     renderColumn({
@@ -288,12 +280,14 @@ const ConfigureCentreContent = () => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
         });
-        fetchData({
-          queryParamsObject: getRequestedParams({
-            page: 1,
-            search: searchedValue,
-          }),
-        });
+        const requestedParams = {
+          perPage: pageSize,
+          page: 1,
+          keyword: searchedValue,
+          sort: sortedOrder.sortDirection,
+          order: sortedOrder.sortKeyName,
+        };
+        fetchData({ queryParamsObject: requestedParams });
       }
     }
   }, [data?.meta?.total]);
@@ -314,12 +308,14 @@ const ConfigureCentreContent = () => {
       prev.set(SORT_PROPERTIES.SORT_BY, validSortByValue);
       return prev;
     });
-    fetchData({
-      queryParamsObject: getRequestedParams({
-        search: searchedValue,
-        validSortByValue: validSortByValue,
-      }),
-    });
+    const requestedParams = {
+      perPage: validPageSize,
+      page: validPageNumber,
+      keyword: searchedValue,
+      sort: validSortByValue,
+      order: sortedOrder.sortKeyName,
+    };
+    fetchData({ queryParamsObject: requestedParams });
   }, []);
 
   useEffect(() => {

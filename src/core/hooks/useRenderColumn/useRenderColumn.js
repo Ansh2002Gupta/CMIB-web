@@ -72,6 +72,7 @@ const useRenderColumn = () => {
     } = renderTextWithCheckBoxes;
 
     const {
+      dateFormat = "DD/MM/YYYY",
       includeDotAfterText,
       isTextBold,
       isTypeDate,
@@ -124,7 +125,7 @@ const useRenderColumn = () => {
             isCapitalize ? styles.capitalize : "",
           ].join(" ")}
         >
-          {textRenderFormat({ text: text || "--" })}
+          {textRenderFormat({ text })}
         </p>
       );
     };
@@ -163,6 +164,8 @@ const useRenderColumn = () => {
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
 
     sortDirection && (columnObject.sortDirection = sortDirection);
+
+    render && (columnObject.render = render);
 
     renderText?.visible &&
       (columnObject.render = (text, rowData) => {

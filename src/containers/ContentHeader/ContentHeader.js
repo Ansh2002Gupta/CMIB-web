@@ -7,7 +7,6 @@ import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 import styles from "./contentHeader.module.scss";
 
 const ContentHeader = ({
-  headerComponent,
   headerText,
   rightSection,
   customStyles,
@@ -15,13 +14,12 @@ const ContentHeader = ({
 }) => {
   const Header = () => {
     return (
-      <div className={headerComponent ? styles.container : ""}>
+      <div>
         <Typography
           className={[styles.contentHeaderText, customStyles].join(" ")}
         >
           {headerText}
         </Typography>
-        {headerComponent}
       </div>
     );
   };
@@ -39,7 +37,6 @@ const ContentHeader = ({
 ContentHeader.defaultProps = {
   className: "",
   customStyles: "",
-  headerComponent: null,
   headerText: "",
   rightSection: <></>,
   style: {},
@@ -48,7 +45,6 @@ ContentHeader.defaultProps = {
 ContentHeader.propTypes = {
   className: PropTypes.string,
   customStyles: PropTypes.string,
-  headerComponent: PropTypes.node,
   headerText: PropTypes.string.isRequired,
   rightSection: PropTypes.node,
   style: PropTypes.object,

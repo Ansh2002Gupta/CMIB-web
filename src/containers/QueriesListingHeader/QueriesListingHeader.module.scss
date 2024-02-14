@@ -2,15 +2,11 @@
   width: var(--fullWidth);
 }
 
-.headerBox {
-  border-top: var(--borderLight);
-  border-bottom: var(--borderLight);
-  width: var(--fullWidth);
-}
-
 .container {
   padding: var(--paddingMedium);
   gap: var(--gapMedium);
+  border-top: var(--borderLight);
+  border-bottom: var(--borderLight);
   width: var(--fullWidth);
 }
 

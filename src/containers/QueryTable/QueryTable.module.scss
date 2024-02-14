@@ -1,7 +1,7 @@
 .columnHeading {
   color: var(--subHeadingColor);
-  font-size: var(--fontSizeExtraSmall);
-  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
 }
 
 .errorContainer {
@@ -23,11 +23,11 @@
 }
 
 .statusContainer_success {
-  background-color: var(--greenBg);
+  background-color: var(--lightGreenBg);
 }
 
 .statusContainer_failed {
-  background-color: var(--orangeBg);
+  background-color: var(--lightRedBg);
 }
 
 .statusContainer_progress {
@@ -67,45 +67,14 @@
   gap: var(--gapXSmall);
 }
 
+.centerText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .tableCell {
-  min-width: var(--width_140);
-}
-
-.arrowContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  gap: var(--gapXXSmall);
-}
-
-.upside {
-  transform: rotate(0deg);
-}
-
-.downside {
-  transform: rotate(180deg);
-}
-
-.arrowDown {
-  min-height: var(--height_20);
-  max-height: var(--height_20);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.columnHeader {
-  color: var(--inputPlaceHolder);
-  font-size: var(--fontSizeSmall);
-}
-
-.cursor {
-  cursor: pointer;
-}
-
-.disable {
-  cursor: not-allowed;
+  min-width: var(--width_100);
 }
 
 input::placeholder {
@@ -202,12 +171,7 @@ input::placeholder {
   transform: rotate(0deg);
 }
 
-.iconContainer {
+.iconContainer{
   display: flex;
   gap: var(--gapLarge);
-}
-
-.defaultStatusStyles {
-  font-size: var(--fontSizeExtraSmall, 12px);
-  line-height: var(--lineHeightSmall, 18px);
 }

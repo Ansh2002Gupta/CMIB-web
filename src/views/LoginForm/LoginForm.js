@@ -98,7 +98,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (logoutInfo.isSuccess) {
-      showNotification({ text: logoutInfo.message, type: "success" });
+      showNotification(logoutInfo.message, "success");
       setLogoutDispatch(
         setLogoutToast({
           isSuccess: false,

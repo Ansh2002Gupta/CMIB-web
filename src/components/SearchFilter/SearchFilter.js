@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { ThemeContext } from "core/providers/theme";
@@ -206,14 +206,13 @@ const SearchFilter = ({
               {intl.formatMessage({ id: "label.cancel" })}
             </Button>
             <CustomButton
-              btnText={intl.formatMessage({ id: "label.show_result" })}
+              btnText={intl.formatMessage({ id: "label.searchResult" })}
               customStyle={styles.showResultBtn}
               onClick={() => {
                 setFilterArray(currentFilterStatus);
                 onFilterApply(currentFilterStatus);
                 setShowFilters(false);
               }}
-              textStyle={styles.buttonTextStyle}
             />
           </div>
         </div>
