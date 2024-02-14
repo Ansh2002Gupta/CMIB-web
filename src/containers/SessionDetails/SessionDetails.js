@@ -18,7 +18,6 @@ import {
   isObjectHasNoValues,
 } from "../../constant/utils";
 import { FIELDS } from "./sessionFieldDetails";
-import { SESSION_DETAILS } from "../../dummyData";
 import { ADMIN_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
