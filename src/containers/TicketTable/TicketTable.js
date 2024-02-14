@@ -16,8 +16,12 @@ import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
 } from "../../constant/constant";
-import { ADMIN_ROUTE, TICKET_LIST } from "../../constant/apiEndpoints";
-import { TICKET_DATA_LIST } from "../../dummyData";
+import {
+  CORE_ROUTE,
+  QUERY_TYPE,
+  STATUS,
+  TICKET_LIST,
+} from "../../constant/apiEndpoints";
 import styles from "./TicketTable.module.scss";
 
 const TicketTable = ({
@@ -36,14 +40,39 @@ const TicketTable = ({
   const { navigateScreen: navigate } = useNavigateScreen();
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: ADMIN_ROUTE + TICKET_LIST,
+    url: CORE_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
   });
+  const { data: queryTypes } = useFetch({
+    url: CORE_ROUTE + QUERY_TYPE,
+  });
+  const { data: status } = useFetch({
+    url: CORE_ROUTE + STATUS,
+  });
+
   let errorString = error;
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
-  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
+  const debounceSearch = useMemo(() => {
+    return _.debounce((requestedParams) => {
+      fetchData({ queryParamsObject: requestedParams });
+    }, 300);
+  }, []);
+
+  const queryTypeOptions = useMemo(() => {
+    return queryTypes?.map((queryType) => ({
+      optionId: queryType.id,
+      str: queryType.name,
+    }));
+  }, [queryTypes]);
+
+  const statusOptions = useMemo(() => {
+    return status?.map((status) => ({
+      optionId: status.id,
+      str: status.name,
+    }));
+  }, [status]);
 
   const columns = getTicketOrQueryColumn({
     type: currentActiveTab,
@@ -93,7 +122,7 @@ const TicketTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -107,29 +136,29 @@ const TicketTable = ({
       page: newPageNumber,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
-  useEffect(() => {
-    if (data?.meta) {
-      // const { total } = data?.meta; :TODO: un-comment once backend start providing records
-      const total = 14;
-      const numberOfPages = Math.ceil(total / pageSize);
-      if (current > numberOfPages) {
-        setCurrent(1);
-        setSearchParams((prev) => {
-          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        });
+  // TODO: Need to refactor
+  // useEffect(() => {
+  //   if (data?.meta) {
+  //     const { total } = data?.meta;
+  //     const numberOfPages = Math.ceil(total / pageSize);
+  //     if (current > numberOfPages) {
+  //       setCurrent(1);
+  //       setSearchParams((prev) => {
+  //         prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+  //       });
 
-        const requestedParams = {
-          perPage: pageSize,
-          page: 1,
-          q: searchedValue,
-        };
-        fetchData(requestedParams);
-      }
-    }
-  }, [data?.meta?.total]);
+  //       const requestedParams = {
+  //         perPage: pageSize,
+  //         page: 1,
+  //         q: searchedValue,
+  //       };
+  //       fetchData({ queryParamsObject: requestedParams });
+  //     }
+  //   }
+  // }, [data?.meta?.total]);
 
   useEffect(() => {
     setSearchParams((prev) => {
@@ -145,7 +174,7 @@ const TicketTable = ({
       page: current,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   }, []);
 
   const handleOnReTry = () => {
@@ -154,7 +183,7 @@ const TicketTable = ({
       page: 1,
       q: searchedValue,
     };
-    fetchData(requestedParams);
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   useEffect(() => {
@@ -167,9 +196,20 @@ const TicketTable = ({
     };
   }, []);
 
-  // TODO: remove this once API start providing data
-  const startIndex = (current - 1) * pageSize;
-  const endIndex = current * pageSize;
+  const filterOptions = [
+    {
+      id: 1,
+      name: "Status",
+      isSelected: false,
+      options: statusOptions,
+    },
+    {
+      id: 2,
+      name: "Query Type",
+      isSelected: false,
+      options: queryTypeOptions,
+    },
+  ];
 
   return (
     <>
@@ -179,15 +219,15 @@ const TicketTable = ({
             current,
             pageSize,
             searchedValue,
+            filterOptions,
             handleOnUserSearch,
             columns,
             onChangePageSize,
             onChangeCurrentPage,
           }}
           isLoading={isSuccess && !isLoading}
-          // TODO: please remove the dummy data once the data start coming from API
-          data={TICKET_DATA_LIST.slice(startIndex, endIndex)}
-          currentDataLength={TICKET_DATA_LIST.length}
+          data={data?.records}
+          currentDataLength={data?.meta?.total}
         />
       )}
       {isError && (

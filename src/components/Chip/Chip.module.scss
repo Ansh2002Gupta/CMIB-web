@@ -9,4 +9,5 @@
 .text {
   font-size: var(--fontSizeExtraSmall, 12px);
   font-weight: var(--fontWeightMedium, 500);
+  text-transform: capitalize;
 }

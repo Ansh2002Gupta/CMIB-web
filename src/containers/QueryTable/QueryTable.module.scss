@@ -1,7 +1,7 @@
 .columnHeading {
   color: var(--subHeadingColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightBold);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
 }
 
 .errorContainer {
@@ -23,11 +23,11 @@
 }
 
 .statusContainer_success {
-  background-color: var(--lightGreenBg);
+  background-color: var(--greenBg);
 }
 
 .statusContainer_failed {
-  background-color: var(--lightRedBg);
+  background-color: var(--orangeBg);
 }
 
 .statusContainer_progress {
@@ -67,14 +67,45 @@
   gap: var(--gapXSmall);
 }
 
-.centerText {
+.tableCell {
+  min-width: var(--width_140);
+}
+
+.arrowContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  gap: var(--gapXXSmall);
+}
+
+.upside {
+  transform: rotate(0deg);
+}
+
+.downside {
+  transform: rotate(180deg);
+}
+
+.arrowDown {
+  min-height: var(--height_20);
+  max-height: var(--height_20);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.tableCell {
-  min-width: var(--width_100);
+.columnHeader {
+  color: var(--inputPlaceHolder);
+  font-size: var(--fontSizeSmall);
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.disable {
+  cursor: not-allowed;
 }
 
 input::placeholder {
@@ -171,7 +202,12 @@ input::placeholder {
   transform: rotate(0deg);
 }
 
-.iconContainer{
+.iconContainer {
   display: flex;
   gap: var(--gapLarge);
+}
+
+.defaultStatusStyles {
+  font-size: var(--fontSizeExtraSmall, 12px);
+  line-height: var(--lineHeightSmall, 18px);
 }

@@ -8,14 +8,16 @@ const TicketListingHeader = () => {
   const intl = useIntl();
 
   return (
-    <ContentHeader
-      headerText={intl.formatMessage({
-        id: "label.tickets",
-      })}
-      isLeftFillSpace
-      customStyles={styles.container}
-      customContainerStyle={styles.parentContainer}
-    />
+    <div className={styles.headerBox}>
+      <ContentHeader
+        headerText={intl.formatMessage({
+          id: "label.tickets",
+        })}
+        isLeftFillSpace
+        customStyles={styles.container}
+        customContainerStyle={styles.parentContainer}
+      />
+    </div>
   );
 };
 

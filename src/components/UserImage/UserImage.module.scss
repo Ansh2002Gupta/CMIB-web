@@ -7,13 +7,14 @@
   width: 40vw;
   max-width: var(--width_400);
   overflow: hidden;
+  position: relative;
 }
 
 .userImage {
   width: var(--fullWidth);
   object-fit: contain;
-  max-height: var(--height_400);
-  min-height: var(--height_250);
+  max-height: var(--height_184, 184px) !important;
+  min-height: var(--height_184, 184px) !important;
 }
 
 .trashAndIconContainer {
@@ -28,6 +29,10 @@
   width: var(--width_20);
   height: var(--height_20);
   cursor: pointer;
+  position: absolute;
+  right: 0;
+  margin-right: 4px;
+  margin-top: 4px;
 }
 
 .text {

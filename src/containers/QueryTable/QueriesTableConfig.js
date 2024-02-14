@@ -193,7 +193,12 @@ export const getTicketOrQueryColumn = ({
               " "
             )}
           >
-            <Typography className={styles[styleClassForText]}>
+            <Typography
+              className={[
+                styles[styleClassForText],
+                styles.defaultStatusStyles,
+              ]}
+            >
               {status}
             </Typography>
           </div>
