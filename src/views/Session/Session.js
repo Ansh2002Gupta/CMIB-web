@@ -52,6 +52,7 @@ function Session() {
             isSessionError,
             fetchData,
             sessionData,
+            sessionId,
             sessionError,
             setAddSession,
             setSessionId,

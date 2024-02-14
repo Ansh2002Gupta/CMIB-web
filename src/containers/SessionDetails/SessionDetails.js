@@ -14,6 +14,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import useAddNewSessionApi from "../../services/api-services/Sessions/useAddNewSessionApi";
+import useUpdateSessionApi from "../../services/api-services/Sessions/useUpdateSessionApi";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import {
@@ -49,6 +50,7 @@ const SessionDetails = ({
   const [edit, setEdit] = useState(addSession);
   const [formData, setFormData] = useState(sessionData);
   const { addNewSession } = useAddNewSessionApi();
+  const { updateSessionDetails } = useUpdateSessionApi();
   const { MonthPicker } = DatePicker;
 
   const handleMonthChange = (date, dateString) => {
@@ -152,31 +154,46 @@ const SessionDetails = ({
   };
   const handleSave = () => {
     if (isObjectHasNoValues(formErrors)) {
+      let payload = fields.reduce((acc, item) => {
+        acc[item.label] = item.value;
+        return acc;
+      }, {});
+
+      console.log("payload...", payload);
+
+      payload["module"] = currentlySelectedModuleKey;
+      payload["mcs_completion_date"] = dayjs(
+        payload["mcs_completion_date"]
+      ).format("YYYY-MM-DD");
+      payload["article_completion_from_date"] = dayjs(
+        payload["article_completion_from_date"]
+      ).format("YYYY-MM-DD");
+      payload["article_completion_to_date"] = dayjs(
+        payload["article_completion_to_date"]
+      ).format("YYYY-MM-DD");
+      payload["membership_completion_date"] = dayjs(
+        payload["membership_completion_date"]
+      ).format("YYYY-MM-DD");
       if (addSession) {
-        let payload = fields.reduce((acc, item) => {
-          acc[item.label] = item.value;
-          return acc;
-        }, {});
-
-        payload["module"] = currentlySelectedModuleKey;
-        payload["mcs_completion_date"] = dayjs(
-          payload["mcs_completion_date"]
-        ).format("YYYY-MM-DD");
-        payload["article_completion_from_date"] = dayjs(
-          payload["article_completion_from_date"]
-        ).format("YYYY-MM-DD");
-        payload["article_completion_to_date"] = dayjs(
-          payload["article_completion_to_date"]
-        ).format("YYYY-MM-DD");
-        payload["membership_completion_date"] = dayjs(
-          payload["membership_completion_date"]
-        ).format("YYYY-MM-DD");
-
         addNewSession({
           payload,
           onSuccessCallback: (res) => {
             setAddSession(false);
             setSessionId(res.id);
+          },
+          onErrorCallback: (errString) => {
+            showNotification({
+              text: errString,
+              type: NOTIFICATION_TYPES.ERROR,
+            });
+          },
+        });
+      } else {
+        updateSessionDetails({
+          sessionId: sessionId,
+          payload,
+          onSuccessCallback: (res) => {
+            setEdit(false);
           },
           onErrorCallback: (errString) => {
             showNotification({
