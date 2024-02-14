@@ -384,6 +384,8 @@ const locale = {
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
+  "label.big_centres": "Big Centres",
+  "label.small_centres": "Small Centres",
 };
 
 export default locale;

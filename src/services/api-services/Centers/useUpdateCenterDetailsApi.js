@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 import {
-  CENTER_END_POINT,
+  CENTRE_END_POINT,
   PLACEMENT_ROUTE,
   UPDATE_CENTER_DETAILS_END_POINT,
 } from "../../../constant/apiEndpoints";
@@ -30,7 +30,7 @@ const useUpdateCenterDetailsApi = () => {
       errorWhileUpdatingCenter && setErrorWhileUpdatingCenter("");
       const url =
         PLACEMENT_ROUTE +
-        CENTER_END_POINT +
+        CENTRE_END_POINT +
         `/${centerId}` +
         UPDATE_CENTER_DETAILS_END_POINT;
       const res = await Http.post(url, payload);
