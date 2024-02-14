@@ -11,7 +11,6 @@ import useResponsive from "core/hooks/useResponsive";
 import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
-import CustomSwitch from "../../components/CustomSwitch";
 import useFetch from "../../core/hooks/useFetch";
 import {
   convertDateToStringDate,
@@ -290,21 +289,6 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   }
                 />
               ))}
-              <CustomSwitch
-                customStyle={styles.gridItem}
-                disabled={!edit}
-                checked={formData?.status}
-                isRequired
-                label={intl.formatMessage({ id: "label.sessionStatus" })}
-                onChange={() => {
-                  setFormData({
-                    ...formData,
-                    status: !formData.status,
-                  });
-                }}
-                activeText={"active"}
-                inActiveText={"inactive"}
-              />
             </CustomGrid>
           }
         />
