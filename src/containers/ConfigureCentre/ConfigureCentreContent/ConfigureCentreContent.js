@@ -28,6 +28,7 @@ import {
   getValidSortByValue,
   toggleSorting,
 } from "../../../constant/utils";
+import { validateSearchTextLength } from "../../../Utils/validations";
 import styles from "./ConfigureCentreContent.module.scss";
 
 const ConfigureCentreContent = () => {
@@ -63,7 +64,7 @@ const ConfigureCentreContent = () => {
 
   const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
     useFetch({
-      url: ADMIN_ROUTE + CENTER_END_POINT,
+      url: ADMIN_ROUTE + `/${currentlySelectedModuleKey}` + CENTER_END_POINT,
       otherOptions: {
         skipApiCallOnMount: true,
       },
@@ -93,19 +94,19 @@ const ConfigureCentreContent = () => {
       centre_size: centerData.centre_size,
       centre_code: centerData.centre_code,
       name: centerData.name,
-      module: currentlySelectedModuleKey,
       status: !centerData?.status,
     };
 
     updateCenterDetails(
       id,
+      currentlySelectedModuleKey,
       payload,
       () => {
         setData({
           ...data,
-          records: data.records.map((record) => {
-            record.id === id ? { ...record, status: payload.status } : record;
-          }),
+          records: data.records.map((record) =>
+            record.id === id ? { ...record, status: payload.status } : record
+          ),
         });
       },
       (errorMessage) => {
@@ -123,7 +124,10 @@ const ConfigureCentreContent = () => {
       return prev;
     });
     fetchData({
-      queryParamsObject: getRequestedParams({ page: 1, search: searchedValue }),
+      queryParamsObject: getRequestedParams({
+        page: 1,
+        search: validateSearchTextLength(searchedValue),
+      }),
     });
   };
 
@@ -137,7 +141,7 @@ const ConfigureCentreContent = () => {
     fetchData({
       queryParamsObject: getRequestedParams({
         page: newPageNumber,
-        search: searchedValue,
+        search: validateSearchTextLength(searchedValue),
       }),
     });
   };
@@ -158,14 +162,19 @@ const ConfigureCentreContent = () => {
       });
     (str.length > 2 || searchedValue.length > str.length) &&
       debounceSearch({
-        queryParamsObject: getRequestedParams({ page: 1, search: str }),
+        queryParamsObject: getRequestedParams({
+          page: 1,
+          search: validateSearchTextLength(str),
+        }),
       });
     setSearchedValue(str);
   };
 
   const handleTryAgain = () => {
     fetchData({
-      queryParamsObject: getRequestedParams({ search: searchedValue }),
+      queryParamsObject: getRequestedParams({
+        search: validateSearchTextLength(searchedValue),
+      }),
     });
   };
 
@@ -184,7 +193,7 @@ const ConfigureCentreContent = () => {
           onClick={() =>
             fetchData({
               queryParamsObject: getRequestedParams({
-                search: searchedValue,
+                search: validateSearchTextLength(searchedValue),
                 validSortByValue: toggleSorting(sortedOrder.sortDirection),
               }),
               onSuccessCallback: () => {
@@ -288,12 +297,6 @@ const ConfigureCentreContent = () => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
         });
-        fetchData({
-          queryParamsObject: getRequestedParams({
-            page: 1,
-            search: searchedValue,
-          }),
-        });
       }
     }
   }, [data?.meta?.total]);
@@ -314,13 +317,15 @@ const ConfigureCentreContent = () => {
       prev.set(SORT_PROPERTIES.SORT_BY, validSortByValue);
       return prev;
     });
-    fetchData({
-      queryParamsObject: getRequestedParams({
-        search: searchedValue,
-        validSortByValue: validSortByValue,
-      }),
-    });
-  }, []);
+    if (userProfileDetails?.selectedModuleItem?.key) {
+      fetchData({
+        queryParamsObject: getRequestedParams({
+          search: validateSearchTextLength(searchedValue),
+          validSortByValue: validSortByValue,
+        }),
+      });
+    }
+  }, [userProfileDetails]);
 
   useEffect(() => {
     return () => {
