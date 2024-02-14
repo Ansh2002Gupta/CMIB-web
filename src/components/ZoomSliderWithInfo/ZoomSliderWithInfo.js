@@ -8,7 +8,7 @@ import Slider from "../Slider";
 import { ZOOM_CONSTANT } from "../../constant/constant";
 import styles from "./ZoomSliderWithInfo.module.scss";
 
-const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
+const ZoomSliderWithInfo = ({ zoom, setZoom, isDisable }) => {
   const { getImage } = useContext(ThemeContext);
 
   const zoomPercentage = Math.floor(
@@ -18,7 +18,7 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
   );
 
   const zoomOutHandler = () => {
-    if (zoom === ZOOM_CONSTANT.MIN_ZOOM) {
+    if (zoom === ZOOM_CONSTANT.MIN_ZOOM || isDisable) {
       return;
     }
     const decrement = +(zoom - ZOOM_CONSTANT.ZOOM_STEP).toFixed(1);
@@ -26,7 +26,7 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
   };
 
   const zoomInHandler = () => {
-    if (zoom >= ZOOM_CONSTANT.MAX_ZOOM) {
+    if (zoom >= ZOOM_CONSTANT.MAX_ZOOM || isDisable) {
       return;
     }
     const increment = +(zoom + ZOOM_CONSTANT.ZOOM_STEP).toFixed(1);
@@ -41,7 +41,9 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
           alt="Zoom out"
           width={24}
           height={24}
-          className={styles.zoomIcon}
+          className={[styles.zoomIcon, isDisable ? styles.noCursor : ""].join(
+            " "
+          )}
           onClick={zoomOutHandler}
           preview={false}
         />
@@ -52,6 +54,7 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
             onChange={setZoom}
             step={ZOOM_CONSTANT.ZOOM_STEP}
             value={+zoom}
+            {...{ isDisable }}
           />
         </div>
         <Image
@@ -59,7 +62,9 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
           alt="Zoom in"
           width={24}
           height={24}
-          className={styles.zoomIcon}
+          className={[styles.zoomIcon, isDisable ? styles.noCursor : ""].join(
+            " "
+          )}
           onClick={zoomInHandler}
           preview={false}
         />
@@ -72,11 +77,13 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
 };
 
 ZoomSliderWithInfo.defaultProps = {
+  isDisable: false,
   setZoom: () => {},
   zoom: 1,
 };
 
 ZoomSliderWithInfo.propTypes = {
+  isDisable: PropTypes.bool,
   setZoom: PropTypes.func,
   zoom: PropTypes.number,
 };
