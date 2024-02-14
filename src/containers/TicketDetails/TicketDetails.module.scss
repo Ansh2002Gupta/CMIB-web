@@ -43,3 +43,14 @@
   color: var(--inputPlaceHolder);
   font-weight: var(--fontWeightMedium);
 }
+
+.errorContainer {
+  width: 20vw;
+}
+
+.errorBox {
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+  height: "100%";
+}
