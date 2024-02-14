@@ -83,10 +83,6 @@ const SessionDetails = ({
   );
 
   useEffect(() => {
-    setFormData(sessionData);
-  }, [sessionData]);
-
-  useEffect(() => {
     setEdit(addSession);
     if (addSession) {
       setFormData({});
