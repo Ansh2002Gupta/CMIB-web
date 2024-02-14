@@ -95,10 +95,9 @@ export const getTicketOrQueryColumn = ({
       renderTextWithCheckBoxes: {
         visible: true,
         isCheckBoxTextBold: true,
-        customCheckBoxContainerStyles: [
-          styles.tableCell,
-          styles.gap_12px,
-        ].join(" "),
+        customCheckBoxContainerStyles: [styles.tableCell, styles.gap_12px].join(
+          " "
+        ),
         checkBoxList: selectedItemsList,
         onClickCheckbox: (rowData) => {
           const { id } = rowData;
@@ -305,7 +304,7 @@ export const getTicketOrQueryColumn = ({
         <>
           {isTableInSelectAllMode ? (
             <Typography
-              className={styles.greenText}
+              className={[styles.greenText, styles.textAtEnd].join(" ")}
               onClick={handleMarkMutipleQueriesAsAnswered}
             >
               {intl.formatMessage({
