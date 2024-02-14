@@ -61,6 +61,13 @@ const CropAndRotateImage = ({
     }
   };
 
+  const onClickRotate = () => {
+    if (isLoading) {
+      return;
+    }
+    setRotation((prev) => (prev + ROTATE_IMAGE_BY) % 360);
+  };
+
   const resetStates = () => {
     setCrop({ x: 0, y: 0 });
     setZoom(1);
@@ -85,37 +92,43 @@ const CropAndRotateImage = ({
           cropShape="round"
           image={photoURL}
           onCropChange={(val) => {
-            setCrop(val);
+            !isLoading && setCrop(val);
           }}
           onCropComplete={(croppedArea, croppedAreaPixels) => {
-            setCroppedAreaPixels(croppedAreaPixels);
+            !isLoading && setCroppedAreaPixels(croppedAreaPixels);
           }}
-          onRotationChange={setRotation}
-          onZoomChange={setZoom}
+          onRotationChange={!isLoading ? setRotation : () => {}}
+          onZoomChange={!isLoading ? setZoom : () => {}}
           rotation={rotation}
           zoom={zoom}
         />
       </div>
       <div className={styles.containerWithRotate}>
-        <ZoomSliderWithInfo {...{ setZoom, zoom }} />
+        <ZoomSliderWithInfo {...{ setZoom, zoom }} isDisable={isLoading} />
         <Image
           src={getImage("rotateIcon")}
           preview={false}
           width={24}
           height={24}
-          className={styles.rotateIcon}
-          onClick={() => setRotation((prev) => (prev + ROTATE_IMAGE_BY) % 360)}
+          className={[styles.rotateIcon, isLoading ? styles.noCursor : ""].join(
+            " "
+          )}
+          onClick={onClickRotate}
         />
       </div>
       <div className={styles.actionBtnContainer}>
         <CustomButton
+          isBtnDisable={isLoading}
           btnText={intl.formatMessage({ id: "label.cancel" })}
           customStyle={`${styles.cancelButton} ${styles.commonButtonStyles}`}
           onClick={onCancel}
         />
         <CustomButton
-          btnText={intl.formatMessage({ id: "label.save" })}
-          customStyle={`${styles.saveButton} ${styles.commonButtonStyles}`}
+          loading={isLoading}
+          btnText={!isLoading ? intl.formatMessage({ id: "label.save" }) : ""}
+          customStyle={`${styles.saveButton} ${styles.commonButtonStyles} ${
+            isLoading ? styles.minWidth : ""
+          }`}
           isBtnDisable={isCroppingImage || isLoading}
           onClick={cropImage}
         />
@@ -131,6 +144,7 @@ CropAndRotateImage.defaultProps = {
   onSuccessFileUpload: () => {},
   photoURL: "",
   setFile: () => {},
+  isLoading: false,
 };
 
 CropAndRotateImage.propTypes = {

@@ -1,4 +1,8 @@
 .loadingContainer {
   align-items: center;
   justify-content: center;
+  min-height: var(--height_100, 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

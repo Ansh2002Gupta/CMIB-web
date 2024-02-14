@@ -42,6 +42,11 @@
   }
 }
 
+.cancelButton[disabled]:hover {
+  background-color: var(--disableBtn, #b1b3b5) !important;
+  color: var(--btnText, #fbfcff) !important;
+}
+
 .saveButton {
   padding: 12px 24px;
   min-height: auto;
@@ -56,4 +61,12 @@
   gap: var(--gapSmallMedium, 12px);
   align-items: baseline;
   width: var(--fullWidth, 100%);
+}
+
+.minWidth {
+  min-width: var(--width_80, 80px);
+}
+
+.noCursor {
+  cursor: not-allowed;
 }
