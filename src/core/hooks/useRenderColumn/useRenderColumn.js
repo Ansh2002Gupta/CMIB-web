@@ -1,32 +1,39 @@
 import dayjs from "dayjs";
+import { useContext, useState } from "react";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch } from "antd";
+import { Dropdown, Image, Switch, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
-import { formatDate } from "../../../constant/utils";
+import { formatDate, toggleSorting } from "../../../constant/utils";
+import { SORT_VALUES } from "../../../constant/constant";
+import { ThemeContext } from "core/providers/theme";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 
 const useRenderColumn = () => {
   const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
 
   const renderColumn = ({
     customColumnHeading,
     dataIndex,
     defaultSortOrder,
+    handleSorting,
     isRequiredField,
     key,
     renderDateTime = {},
     render,
     renderImage = {},
     renderMenu = {},
+    renderSorterColumn,
     renderText = {},
     renderSwitch = {},
     renderTwoImage = {},
     sortDirection,
     sorter,
+    sortIcon = "arrowDownDarkGrey",
     sortKey,
     sortTypeDate,
     sortTypeText,
@@ -94,6 +101,8 @@ const useRenderColumn = () => {
       rightPreview,
     } = renderTwoImage;
 
+    const [sortBy, setSortBy] = useState("default");
+
     const textRenderFormat = ({ text }) => {
       if (isTypeDate) {
         return formatDate({ date: text });
@@ -106,7 +115,28 @@ const useRenderColumn = () => {
 
     title &&
       (columnObject.title = () => {
-        return (
+        return renderSorterColumn ? (
+          <Typography
+            className={[styles.columnHeading].join(" ")}
+            onClick={() => {
+              handleSorting(toggleSorting(sortBy));
+              setSortBy((prev) => toggleSorting(prev));
+            }}
+          >
+            <div className={styles.sortintArrawContainer}>
+              {title}
+              <Image
+                src={getImage(sortIcon)}
+                preview={false}
+                className={[
+                  styles[sortBy],
+                  styles.centerContent,
+                  sortBy !== SORT_VALUES.DEFAULT ? styles.active : "",
+                ].join(" ")}
+              />
+            </div>
+          </Typography>
+        ) : (
           <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
             {title}
             {isRequiredField && (
