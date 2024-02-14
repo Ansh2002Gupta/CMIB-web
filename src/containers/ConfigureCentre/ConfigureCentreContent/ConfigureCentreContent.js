@@ -103,9 +103,9 @@ const ConfigureCentreContent = () => {
       () => {
         setData({
           ...data,
-          records: data.records.map((record) => {
-            record.id === id ? { ...record, status: payload.status } : record;
-          }),
+          records: data.records.map((record) =>
+            record.id === id ? { ...record, status: payload.status } : record
+          ),
         });
       },
       (errorMessage) => {
@@ -123,7 +123,10 @@ const ConfigureCentreContent = () => {
       return prev;
     });
     fetchData({
-      queryParamsObject: getRequestedParams({ page: 1, search: searchedValue }),
+      queryParamsObject: getRequestedParams({
+        page: 1,
+        search: searchedValue.length > 2 ? searchedValue : "",
+      }),
     });
   };
 
@@ -137,7 +140,7 @@ const ConfigureCentreContent = () => {
     fetchData({
       queryParamsObject: getRequestedParams({
         page: newPageNumber,
-        search: searchedValue,
+        search: searchedValue.length > 2 ? searchedValue : "",
       }),
     });
   };
@@ -158,14 +161,19 @@ const ConfigureCentreContent = () => {
       });
     (str.length > 2 || searchedValue.length > str.length) &&
       debounceSearch({
-        queryParamsObject: getRequestedParams({ page: 1, search: str }),
+        queryParamsObject: getRequestedParams({
+          page: 1,
+          search: str.length > 2 ? str : "",
+        }),
       });
     setSearchedValue(str);
   };
 
   const handleTryAgain = () => {
     fetchData({
-      queryParamsObject: getRequestedParams({ search: searchedValue }),
+      queryParamsObject: getRequestedParams({
+        search: searchedValue.length > 2 ? searchedValue : "",
+      }),
     });
   };
 
@@ -184,7 +192,7 @@ const ConfigureCentreContent = () => {
           onClick={() =>
             fetchData({
               queryParamsObject: getRequestedParams({
-                search: searchedValue,
+                search: searchedValue.length > 2 ? searchedValue : "",
                 validSortByValue: toggleSorting(sortedOrder.sortDirection),
               }),
               onSuccessCallback: () => {
@@ -310,7 +318,7 @@ const ConfigureCentreContent = () => {
     });
     fetchData({
       queryParamsObject: getRequestedParams({
-        search: searchedValue,
+        search: searchedValue.length > 2 ? searchedValue : "",
         validSortByValue: validSortByValue,
       }),
     });
