@@ -1,5 +1,4 @@
 import { SESSION_PERIOD } from "../../constant/constant";
-import { formatDate } from "../../constant/utils";
 import {
   ALPHANUMERIC_REGEX,
   BANK_ACC_NUMBER_REGEX,
