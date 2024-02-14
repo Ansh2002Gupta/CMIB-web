@@ -13,7 +13,6 @@ const locale = {
   "label.emailId": "Enter ID",
   "label.password": "Password",
   "label.thanks": "Thanks!",
-  "label.confirmPassword": "Confirm password",
   "label.loginHeading": "Login to CMI&B",
   "label.loginSubheading": "Secure login for personalized access.",
   "label.rememberMe": "Remember Me",
@@ -304,9 +303,7 @@ const locale = {
   "label.visitWebsite": "Visit Website",
   "label.logoutConfirmationMessage":
     "Are you sure you want to logout of the portal?",
-  "label.menu.user-management": "Users",
   "label.menu.bulk-notifications": "Notifications",
-  "label.menu.ticket-management": "Tickets",
   "label.menu.user-management": "User Management",
   "label.menu.bulk-notifications-management": "Bulk Notifications Management",
   "label.menu.ticket-management": "Ticket Management",
@@ -373,7 +370,6 @@ const locale = {
   "label.path.users": "Manage Users",
   "label.path.details": "User Details",
   "label.path.editDetails": "Edit User Details",
-  "label.logoutSuccessful": "Logged out successfully",
   "label.passwordChanged": "Password changed successfully",
   "label.noSessionSetup": "No session is setup currently",
   "label.sessionStatus": "Session Status",
@@ -384,6 +380,16 @@ const locale = {
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
+  "label.show_result": "Show Result",
+  "label.centreCode": "Centre Code",
+  "label.path.centre-details": "Edit centre details",
+  "label.setup_orientation_centers": "Setup Orientation Centers",
+  "label.orientation_centers_warning":
+    "*This cannot be edited once registration for the students starts. Only Venue can be edited",
+  "label.total_students_booked": "Total Students Booked",
+  "label.schedule_date": "Schedule Date",
+  "label.venue": "Venue",
+  "label.enter_location": "Enter location of venue",
 };
 
 export default locale;
