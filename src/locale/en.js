@@ -188,6 +188,7 @@ const locale = {
   "centre.placeholder.centreName": "Enter Centre Name",
   "centre.placeholder.bigSmallCentre": "Choose Centre Type",
   "centre.placeholder.centreId": "Enter Centre Id",
+  "centre.placeholder.centreCode": "Enter Centre Code",
   "label.queriesId": "Query ID",
   "label.studentOrCompany": "Student / Company Name",
   "label.nonRegisteredStudentOrCompany": "Non-Registered Student / Company",
@@ -223,7 +224,7 @@ const locale = {
   "label.consent.lastDateSmallCentres":
     "Last Date of Registration for Candidates for Small Centres",
   "label.tryAgain": "Try Again",
-  "label.centreCode": "Centre code: ",
+  "label.centreCodeColon": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
   "label.centreStartTime": "Centre Start Time",
   "label.centreEndTime": "Centre End Time",
@@ -340,7 +341,7 @@ const locale = {
   "label.menu.setup-session": "Set up session",
   "label.menu.dashboard": "Dashboard",
   "label.menu.manage-subscriptions": "Manage Subscriptions",
-  "label.menu.global-configs": "GLOBAL CONFIGS",
+  "label.menu.global-configs": "Global Configurations",
   "label.menu.configurations": "Configurations",
   "label.menu.manage-payments": "Manage Payments",
   "label.menu.payments": "Payments",
@@ -379,6 +380,7 @@ const locale = {
   "label.path.session": "Session",
   "label.path.contact-us": "Queries",
   "label.path.query": "Query Details",
+  "label.path.queries": "Queries",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
@@ -421,6 +423,8 @@ const locale = {
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
   "label.show_result": "Show Result",
+  "label.centreCode": "Centre Code",
+  "label.path.centre-details": "Edit centre details",
 };
 
 export default locale;

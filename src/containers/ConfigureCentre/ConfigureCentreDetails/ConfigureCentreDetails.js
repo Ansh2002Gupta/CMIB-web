@@ -40,11 +40,16 @@ const ConfigureCentreDetails = () => {
 
   const { centreId } = useParams();
   const { data, error, fetchData, isLoading, isError } = useFetch({
-    url: ADMIN_ROUTE + CENTER_END_POINT + `/${centreId}`,
+    url:
+      ADMIN_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      CENTER_END_POINT +
+      `/${centreId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
+
   const { isLoading: isUpdatingCenterDetails, updateCenterDetails } =
     useUpdateCenterDetailsApi();
 
@@ -107,13 +112,13 @@ const ConfigureCentreDetails = () => {
   const handleSave = () => {
     const payload = {
       name: formData.centre_name,
-      module: currentlySelectedModuleKey,
       centre_code: formData.centre_code,
       centre_size: formData.centre_type,
       status: formData.status,
     };
     if (!centreId) {
       addNewCenter(
+        currentlySelectedModuleKey,
         payload,
         () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
@@ -125,6 +130,7 @@ const ConfigureCentreDetails = () => {
     } else {
       updateCenterDetails(
         centreId,
+        currentlySelectedModuleKey,
         payload,
         () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
@@ -143,17 +149,17 @@ const ConfigureCentreDetails = () => {
   };
 
   useEffect(() => {
-    if (centreId) {
+    if (centreId && userProfileDetails?.selectedModuleItem?.key) {
       fetchData({});
     }
-  }, [centreId]);
+  }, [centreId, userProfileDetails]);
 
   useEffect(() => {
     if (centreId) {
       setFormData({
-        centre_code: data?.center_code,
-        centre_name: data?.center_name,
-        centre_type: data?.center_type,
+        centre_code: data?.centre_code,
+        centre_name: data?.name,
+        centre_type: data?.centre_size,
         status: data?.status,
       });
     }
