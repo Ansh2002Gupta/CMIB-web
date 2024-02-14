@@ -12,12 +12,14 @@ import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
 import CustomSwitch from "../../components/CustomSwitch";
+import useFetch from "../../core/hooks/useFetch";
 import {
   convertDateToStringDate,
   isObjectHasNoValues,
 } from "../../constant/utils";
 import { FIELDS } from "./sessionFieldDetails";
 import { SESSION_DETAILS } from "../../dummyData";
+import { ADMIN_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 import "./Override.css";
@@ -29,7 +31,11 @@ const SessionDetails = ({ addSession, setAddSession }) => {
 
   const [formErrors, setFormErrors] = useState({});
   const [edit, setEdit] = useState(addSession);
-  const [formData, setFormData] = useState(SESSION_DETAILS);
+  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
+    useFetch({
+      url: ADMIN_ROUTE + SESSIONS + "/1", //TODO : 1 has to replace once Global Session will implement as we will take id from there
+    });
+  const [formData, setFormData] = useState(data);
   const { MonthPicker } = DatePicker;
 
   const handleMonthChange = (date, dateString) => {
@@ -62,17 +68,21 @@ const SessionDetails = ({ addSession, setAddSession }) => {
 
   const fields = FIELDS(
     formData?.name,
-    formData?.nature_of_service,
-    formData?.perform_invoice_no_format,
+    formData?.nature_of_services,
+    formData?.pi_number_format,
     formData?.examination_session_period,
-    formData?.gmcs_completion_date,
+    formData?.mcs_completion_date,
     formData?.membership_completion_date,
-    formData?.session_start_date,
+    formData?.article_completion_to_date,
     formData?.article_completion_from_date,
     formData?.hsn_sac_code,
     formData?.bank_ac_no,
     formData?.bank_ac_ifsc
   );
+
+  useEffect(() => {
+    setFormData(data);
+  }, [data]);
 
   useEffect(() => {
     setEdit(addSession);
@@ -111,7 +121,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
   };
 
   const handleCancel = () => {
-    setFormData(SESSION_DETAILS);
+    setFormData(data);
     setEdit(false);
     setAddSession(false);
     setFormErrors({});
@@ -323,11 +333,11 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                 isBtnDisable={
                   Object.values(formErrors).some((error) => !!error) ||
                   !formData?.name ||
-                  !formData?.session_start_date ||
-                  !formData?.nature_of_service ||
-                  !formData?.perform_invoice_no_format ||
+                  !formData?.article_completion_to_date ||
+                  !formData?.nature_of_services ||
+                  !formData?.pi_number_format ||
                   !formData?.examination_session_period ||
-                  !formData?.gmcs_completion_date ||
+                  !formData?.mcs_completion_date ||
                   !formData?.membership_completion_date ||
                   !formData?.article_completion_from_date ||
                   !formData?.hsn_sac_code ||

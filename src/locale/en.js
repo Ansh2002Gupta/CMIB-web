@@ -83,7 +83,7 @@ const locale = {
   "session.natureOfGoods": "Nature of services/goods",
   "session.invoiceNumberFormat": "Performa Invoice Number Format",
   "session.examinationSessionPeriod": "Examination Session Period",
-  "session.gmcsCompletetionDate": "MCS Completetion Date",
+  "session.mcsCompletetionDate": "MCS Completetion Date",
   "session.membershipCompletetionDate": "Membership Completetion Date",
   "session.articleshipCompletetionFromDate":
     "Articleship Completetion From Date",
@@ -95,7 +95,7 @@ const locale = {
   "session.placeholder.natureOfGoods": "Enter Nature of services/goods",
   "session.placeholder.invoiceNumberFormat": "e.g month-*****-year",
   "session.placeholder.examinationSessionPeriod": "Select Period",
-  "session.placeholder.gmcsCompletetionDate": "Select GMCS Completetion Date",
+  "session.placeholder.mcsCompletetionDate": "Select MCS Completetion Date",
   "session.placeholder.membershipCompletetionDate":
     "Select Membership Completetion Date",
   "session.placeholder.articleshipCompletetionFromDate":
@@ -116,8 +116,7 @@ const locale = {
   "session.error.examinationSessionPeriod": "Please enter Session Name",
   "session.error.examinationSessionPeriod":
     "* Please select atleast one Examination Session Period ",
-  "session.error.gmcsCompletetionDate":
-    "* Please select GMCS Completetion Date",
+  "session.error.mcsCompletetionDate": "* Please select GMCS Completetion Date",
   "session.error.membershipCompletetionDate":
     "* Please select Membership Completetion Date",
   "session.error.articleshipCompletetionFromDate":
