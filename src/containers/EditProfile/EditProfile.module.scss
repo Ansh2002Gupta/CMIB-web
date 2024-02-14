@@ -31,6 +31,9 @@
   font-weight: var(--fontWeightMedium, 500);
   min-height: var(--height_48, 48px);
   width: var(--fullWidth, 100%);
+  display: flex;
+  justify-content: center;
+  gap: var(--gapXSmall, 8px);
   &:hover {
     color: var(--textBold, #000833) !important;
     border: 1px solid var(--borderColor, #ccd0e5) !important;
@@ -139,6 +142,10 @@
 
 .fullWidth {
   width: var(--fullWidth, 100%);
+}
+
+.minWidth {
+  min-width: var(--fullWidth, 100%);
 }
 
 @media (max-width: 551px) {
