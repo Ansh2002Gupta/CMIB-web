@@ -3,7 +3,6 @@ import {
   DEFAULT_PAGE_SIZE,
   FORM_STATES,
   GENERIC_ERROR_MESSAGE,
-  MIN_SEARCH_TEXT_LENGTH,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
@@ -222,8 +221,4 @@ export const getCurrentFormState = (
     return currentQueryParamsValue?.toLowerCase();
   }
   return FORM_STATES.VIEW_ONLY;
-};
-
-export const validateSearchTextLength = (str) => {
-  return str.length > MIN_SEARCH_TEXT_LENGTH ? str : "";
 };

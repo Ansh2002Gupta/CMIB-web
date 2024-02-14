@@ -27,8 +27,8 @@ import {
   getValidPageSize,
   getValidSortByValue,
   toggleSorting,
-  validateSearchTextLength,
 } from "../../../constant/utils";
+import { validateSearchTextLength } from "../../../Utils/validations";
 import styles from "./ConfigureCentreContent.module.scss";
 
 const ConfigureCentreContent = () => {
@@ -94,7 +94,6 @@ const ConfigureCentreContent = () => {
       centre_size: centerData.centre_size,
       centre_code: centerData.centre_code,
       name: centerData.name,
-      module: currentlySelectedModuleKey,
       status: !centerData?.status,
     };
 

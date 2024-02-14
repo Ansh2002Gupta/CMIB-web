@@ -112,13 +112,13 @@ const ConfigureCentreDetails = () => {
   const handleSave = () => {
     const payload = {
       name: formData.centre_name,
-      module: currentlySelectedModuleKey,
       centre_code: formData.centre_code,
       centre_size: formData.centre_type,
       status: formData.status,
     };
     if (!centreId) {
       addNewCenter(
+        currentlySelectedModuleKey,
         payload,
         () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
