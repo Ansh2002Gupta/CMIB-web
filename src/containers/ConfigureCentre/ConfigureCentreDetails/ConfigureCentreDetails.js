@@ -40,7 +40,11 @@ const ConfigureCentreDetails = () => {
 
   const { centreId } = useParams();
   const { data, error, fetchData, isLoading, isError } = useFetch({
-    url: ADMIN_ROUTE + CENTER_END_POINT + `/${centreId}`,
+    url:
+      ADMIN_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      CENTER_END_POINT +
+      `/${centreId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -126,6 +130,7 @@ const ConfigureCentreDetails = () => {
     } else {
       updateCenterDetails(
         centreId,
+        currentlySelectedModuleKey,
         payload,
         () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
@@ -144,10 +149,10 @@ const ConfigureCentreDetails = () => {
   };
 
   useEffect(() => {
-    if (centreId) {
+    if (centreId && userProfileDetails?.selectedModuleItem?.key) {
       fetchData({});
     }
-  }, [centreId]);
+  }, [centreId, userProfileDetails]);
 
   useEffect(() => {
     if (centreId) {
