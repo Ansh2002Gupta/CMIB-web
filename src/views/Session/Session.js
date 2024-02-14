@@ -25,7 +25,7 @@ function Session() {
   const [addSession, setAddSession] = useState(false);
   const {
     data: sessionData,
-    error: SessionError,
+    error: sessionError,
     fetchData,
     isError: isSessionError,
     isLoading: isGettingSessions,
@@ -50,7 +50,7 @@ function Session() {
             isSessionError,
             fetchData,
             sessionData,
-            SessionError,
+            sessionError,
             setAddSession,
           }}
         />
@@ -128,7 +128,7 @@ function Session() {
               isSessionError,
               fetchData,
               sessionData,
-              SessionError,
+              sessionError,
               setAddSession,
             }}
           />

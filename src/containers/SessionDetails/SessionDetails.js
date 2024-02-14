@@ -23,13 +23,12 @@ import styles from "./SessionDetails.module.scss";
 import "./Override.css";
 
 const SessionDetails = ({
-  Key,
   addSession,
   isGettingSessions,
   isSessionError,
   fetchData,
   sessionData,
-  SessionError,
+  sessionError,
   setAddSession,
 }) => {
   const intl = useIntl();
@@ -150,7 +149,7 @@ const SessionDetails = ({
         <Base className={styles.noSessionContainer}>
           <ErrorMessageBox
             onRetry={handleTryAgain}
-            errorText={SessionError?.data?.message || SessionError}
+            errorText={sessionError?.data?.message || sessionError}
             errorHeading={intl.formatMessage({ id: "label.error" })}
           />
         </Base>
