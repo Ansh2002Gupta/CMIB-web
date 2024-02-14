@@ -15,6 +15,7 @@ import styles from "./SearchFilter.module.scss";
 const SearchFilter = ({
   filterArray,
   filterPropertiesArray,
+  onFilterApply,
   setFilterArray,
   setShowFilters,
   showFilters,
@@ -22,23 +23,9 @@ const SearchFilter = ({
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [currentFilterStatus, setCurrentFilterStatus] = useState({});
 
-  function getAllOptionIds(data) {
-    const optionIds = [];
-    data.forEach((item) => {
-      if (item.options && Array.isArray(item.options)) {
-        item.options.forEach((option) => {
-          if (option.optionId) {
-            optionIds.push(option.optionId);
-          }
-        });
-      }
-    });
-    return optionIds;
-  }
-  const allOptionId = getAllOptionIds(filterPropertiesArray);
-
-  const [currentFilterStatus, setCurrentFilterStatus] = useState(filterArray);
   const elementNotConsideredInOutSideClick = useRef();
 
   const { wrapperRef } = useOutSideClick({
@@ -48,30 +35,58 @@ const SearchFilter = ({
     elementNotToBeConsidered: elementNotConsideredInOutSideClick,
   });
 
-  const handleOnUpdateAccessFilterStatus = (optionId) => {
-    let updateData;
-    if (currentFilterStatus.includes(optionId)) {
-      updateData = currentFilterStatus.filter((item) => item !== optionId);
-      setCurrentFilterStatus(updateData);
-      return;
-    }
-    updateData = [...currentFilterStatus, optionId];
-    setCurrentFilterStatus(updateData);
+  const handleOnUpdateAccessFilterStatus = (itemId, optionId) => {
+    setCurrentFilterStatus((prevStatus) => {
+      const updatedStatus = { ...prevStatus };
+
+      if (updatedStatus[itemId] && updatedStatus[itemId].includes(optionId)) {
+        updatedStatus[itemId] = updatedStatus[itemId].filter(
+          (id) => id !== optionId
+        );
+      } else {
+        updatedStatus[itemId] = [...(updatedStatus[itemId] || []), optionId];
+      }
+      return updatedStatus;
+    });
   };
 
-  const selectOrRemoveAll = () => {
-    if (currentFilterStatus.length === 0) {
-      setCurrentFilterStatus(allOptionId);
-      return;
-    }
-    setCurrentFilterStatus([]);
+  const showOption = (index) => {
+    setSelectedIndex(index);
   };
 
-  const getCheckBoxes = () => {
-    if (!currentFilterStatus?.length) {
+  const selectOrRemoveAll = (item) => {
+    const itemOptionIds = item.options.map((option) => option.optionId);
+    const itemId = item.id;
+
+    if (
+      currentFilterStatus[itemId] &&
+      currentFilterStatus[itemId]?.length === 0
+    ) {
+      setCurrentFilterStatus({
+        ...currentFilterStatus,
+        [itemId]: itemOptionIds,
+      });
+    } else {
+      const isSelectedItemOptions = itemOptionIds.every((optionId) =>
+        (currentFilterStatus[itemId] || []).includes(optionId)
+      );
+      const updatedStatus = { ...currentFilterStatus };
+      if (isSelectedItemOptions) {
+        delete updatedStatus[itemId];
+      } else {
+        updatedStatus[itemId] = itemOptionIds;
+      }
+
+      setCurrentFilterStatus(updatedStatus);
+    }
+  };
+
+  const getCheckBoxes = (item) => {
+    const selectedOptionIds = currentFilterStatus[item.id] || [];
+    if (selectedOptionIds.length === 0) {
       return getImage("unCheckedBox");
     }
-    if (currentFilterStatus?.length === allOptionId.length) {
+    if (selectedOptionIds.length === item.options.length) {
       return getImage("checkedBox");
     }
     return getImage("someFiltersAreSelected");
@@ -84,7 +99,11 @@ const SearchFilter = ({
         className={styles.filterBtn}
         onClick={() => setShowFilters((prev) => !prev)}
       >
-        <Image src={getImage("filter")} preview={false} />
+        <Image
+          src={getImage("filter")}
+          preview={false}
+          className={styles.iconStyle}
+        />
         <Typography className={styles.filterBtnText}>
           {intl.formatMessage({ id: "label.filters" })}
         </Typography>
@@ -107,9 +126,10 @@ const SearchFilter = ({
               <Button
                 type="link"
                 onClick={() => {
-                  setCurrentFilterStatus([]);
+                  setCurrentFilterStatus({});
                   setFilterArray([]);
                   setShowFilters(false);
+                  onFilterApply({});
                 }}
                 className={styles.clearAllBtn}
               >
@@ -119,7 +139,6 @@ const SearchFilter = ({
             bodyStyle={classes.cardBody}
           >
             <TwoColumn
-              // TODO: Srujan will be working on the responsive designs of the filters hence do not touch it much
               isLeftFillSpace
               isRightFillSpace
               leftSectionStyle={
@@ -140,25 +159,32 @@ const SearchFilter = ({
                       <div
                         className={[
                           styles.filterOption,
-                          item.isSelected ? styles.active : "",
+                          selectedIndex === index ? styles.active : "",
                         ].join(" ")}
-                        onClick={selectOrRemoveAll}
+                        onClick={() => showOption(index)}
                         key={index}
                       >
                         <div className={styles.filterTextAndCheckContainer}>
-                          <Image src={getCheckBoxes()} preview={false} />
+                          <Image
+                            className={styles.iconStyle}
+                            src={getCheckBoxes(item)}
+                            preview={false}
+                            onClick={() => selectOrRemoveAll(item)}
+                          />
                           <Typography className={styles.leftFilterOptionText}>
                             {item.name}
                           </Typography>
+                          {item?.options?.length && (
+                            <div className={styles.filterRightArrow}>
+                              <Image
+                                src={getImage("arrowRightFilter")}
+                                preview={false}
+                                style={classes.iconStyle}
+                                className={styles.iconStyle}
+                              />
+                            </div>
+                          )}
                         </div>
-                        {item?.options?.length && (
-                          <div className={styles.filterRightArrow}>
-                            <Image
-                              src={getImage("arrowRightFilter")}
-                              preview={false}
-                            />
-                          </div>
-                        )}
                       </div>
                     );
                   })}
@@ -166,30 +192,46 @@ const SearchFilter = ({
               }
               rightSection={
                 <div>
-                  {filterPropertiesArray[0]?.options?.map((item, index) => {
-                    return (
-                      <div
-                        className={[styles.filterSecondLevelOption].join(" ")}
-                        onClick={() =>
-                          handleOnUpdateAccessFilterStatus(item.optionId)
-                        }
-                        key={index}
-                      >
-                        {currentFilterStatus.includes(item.optionId) ? (
-                          <Image src={getImage("checkedBox")} preview={false} />
-                        ) : (
-                          <Image
-                            src={getImage("unCheckedBox")}
-                            preview={false}
-                          />
-                        )}
-                        <Typography className={styles.filterOptionText}>
-                          {item?.str}
-                          {item?.count ? item?.count : ""}
-                        </Typography>
-                      </div>
-                    );
-                  })}
+                  {filterPropertiesArray[selectedIndex]?.options?.map(
+                    (item, index) => {
+                      return (
+                        <div
+                          className={[styles.filterSecondLevelOption].join(" ")}
+                          onClick={() =>
+                            handleOnUpdateAccessFilterStatus(
+                              filterPropertiesArray[selectedIndex].id,
+                              item.optionId
+                            )
+                          }
+                          key={index}
+                        >
+                          {(
+                            currentFilterStatus[
+                              filterPropertiesArray[selectedIndex].id
+                            ] || []
+                          ).includes(item.optionId) ? (
+                            <Image
+                              src={getImage("checkedBox")}
+                              preview={false}
+                              className={styles.iconStyle}
+                            />
+                          ) : (
+                            <Image
+                              src={getImage("unCheckedBox")}
+                              preview={false}
+                              className={styles.iconStyle}
+                            />
+                          )}
+                          <Typography className={styles.filterOptionText}>
+                            {item?.str}{" "}
+                            <span className={styles.textInBrackets}>
+                              {!isNaN(item?.count) ? `(${item?.count})` : ""}
+                            </span>
+                          </Typography>
+                        </div>
+                      );
+                    }
+                  )}
                 </div>
               }
             />
@@ -209,6 +251,7 @@ const SearchFilter = ({
               customStyle={styles.showResultBtn}
               onClick={() => {
                 setFilterArray(currentFilterStatus);
+                onFilterApply(currentFilterStatus);
                 setShowFilters(false);
               }}
               textStyle={styles.buttonTextStyle}
