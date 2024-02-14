@@ -29,3 +29,7 @@
   font-weight: var(--fontWeightMedium, 500);
   color: var(--textDark);
 }
+
+.noCursor{
+  cursor: not-allowed;
+}
