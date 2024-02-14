@@ -65,7 +65,7 @@ const CropAndRotateImage = ({
     if (isLoading) {
       return;
     }
-    setRotation((prev) => (prev + ROTATE_IMAGE_BY) % 360);
+    setRotation((prev) => (prev - ROTATE_IMAGE_BY) % 360);
   };
 
   const resetStates = () => {
