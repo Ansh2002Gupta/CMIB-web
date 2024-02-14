@@ -1,8 +1,8 @@
 import {
   CONSENT_MARKING,
+  ORIENTATION_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
-  ORIENTATION_CENTERS,
 } from "../routes/routeNames";
 
 export const DEFAULT_PAGE_SIZE = 10;

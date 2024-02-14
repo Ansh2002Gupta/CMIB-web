@@ -5,6 +5,7 @@ import { ThemeContext } from "core/providers/theme";
 import { Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import DataTable from "../../components/DataTable";
 import { ORIENTATION_CENTERS } from "../../dummyData";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
@@ -13,7 +14,6 @@ import {
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
-import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 
 import { classes } from "./OrientationCenter.styles";
 import styles from "./OrientationCenter.module.scss";
@@ -110,7 +110,7 @@ const OrientationCenter = () => {
       title: intl.formatMessage({ id: "label.venue" }),
       dataIndex: "bigSmallCentre",
       key: "bigSmallCentre",
-      renderAutoPlace: { visible: true },
+      renderAutoPlaceComplete: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.actions" }),

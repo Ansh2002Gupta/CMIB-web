@@ -20,7 +20,7 @@ const useRenderColumn = () => {
     defaultSortOrder,
     isRequiredField,
     key,
-    renderAutoPlace = {},
+    renderAutoPlaceComplete = {},
     renderDateTime = {},
     render,
     renderImage = {},
@@ -143,7 +143,7 @@ const useRenderColumn = () => {
 
     sortDirection && (columnObject.sortDirection = sortDirection);
 
-    renderAutoPlace.visible &&
+    renderAutoPlaceComplete.visible &&
       (columnObject.render = () => {
         return <AutoPlaceComplete />;
       });
@@ -211,7 +211,7 @@ const useRenderColumn = () => {
       (columnObject.render = (_, rowData) => {
         return {
           props: {
-            className: customStyles,
+            className: customStyles || "",
           },
           children: (
             <Image

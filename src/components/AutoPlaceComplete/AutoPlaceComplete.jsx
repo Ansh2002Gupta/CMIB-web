@@ -81,7 +81,6 @@ const AutoPlaceComplete = () => {
   };
 
   return (
-    // <div>
       <AutoComplete
         options={suggestedLocations}
         onChange={(data) => {
@@ -95,7 +94,6 @@ const AutoPlaceComplete = () => {
         onSearch={(item) => setSuggestedLocations(getPanelValue(item))}
         placeholder={intl.formatMessage({ id: "label.enter_location" })}
       />
-    // </div>
   );
 };
 
