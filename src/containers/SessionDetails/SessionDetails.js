@@ -159,8 +159,6 @@ const SessionDetails = ({
         return acc;
       }, {});
 
-      console.log("payload...", payload);
-
       payload["module"] = currentlySelectedModuleKey;
       payload["mcs_completion_date"] = dayjs(
         payload["mcs_completion_date"]
