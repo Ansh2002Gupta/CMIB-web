@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { TwoRow } from "core/layouts";
@@ -9,6 +9,8 @@ import CustomButton from "../../components/CustomButton";
 import CustomTabs from "../../components/CustomTabs";
 import SessionDetails from "../../containers/SessionDetails";
 import SessionRound from "../SessionRound";
+import useFetch from "../../core/hooks/useFetch";
+import { ADMIN_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import {
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
@@ -21,6 +23,17 @@ function Session() {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState("1");
   const [addSession, setAddSession] = useState(false);
+  const {
+    data: sessionData,
+    error: sessionError,
+    fetchData,
+    isError: isSessionError,
+    isLoading: isGettingSessions,
+    isSuccess,
+    setData,
+  } = useFetch({
+    url: ADMIN_ROUTE + SESSIONS + "/1", //TODO : 1 has to replace once Global Session will implement as we will take id from there
+  });
 
   const responsive = useResponsive();
 
@@ -29,7 +42,18 @@ function Session() {
       key: "1",
       title: intl.formatMessage({ id: "session.sessionDetails" }),
       children: (
-        <SessionDetails addSession={addSession} setAddSession={setAddSession} />
+        <SessionDetails
+          key={Date.now()}
+          {...{
+            addSession,
+            isGettingSessions,
+            isSessionError,
+            fetchData,
+            sessionData,
+            sessionError,
+            setAddSession,
+          }}
+        />
       ),
     },
     {
@@ -96,7 +120,18 @@ function Session() {
       }
       bottomSection={
         addSession ? (
-          <SessionDetails {...{ addSession, setAddSession }} />
+          <SessionDetails
+            key={Date.now()}
+            {...{
+              addSession,
+              isGettingSessions,
+              isSessionError,
+              fetchData,
+              sessionData,
+              sessionError,
+              setAddSession,
+            }}
+          />
         ) : (
           !!activeTabChildren && activeTabChildren.children
         )
