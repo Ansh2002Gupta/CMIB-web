@@ -13,10 +13,15 @@ import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
 import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
+import useAddNewSessionApi from "../../services/api-services/Sessions/useAddNewSessionApi";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import {
+  formatDate,
   convertDateToStringDate,
   isObjectHasNoValues,
 } from "../../constant/utils";
+import { NOTIFICATION_TYPES } from "../../constant/constant";
 import { FIELDS } from "./sessionFieldDetails";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
@@ -28,22 +33,28 @@ const SessionDetails = ({
   isSessionError,
   fetchData,
   sessionData,
+  sessionId,
   sessionError,
   setAddSession,
+  setSessionId,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { getImage } = useContext(ThemeContext);
-
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
+  const { showNotification, notificationContextHolder } = useShowNotification();
   const [formErrors, setFormErrors] = useState({});
   const [edit, setEdit] = useState(addSession);
   const [formData, setFormData] = useState(sessionData);
+  const { addNewSession } = useAddNewSessionApi();
   const { MonthPicker } = DatePicker;
 
   const handleMonthChange = (date, dateString) => {
     if (date) {
       let updatedMonths = [...formData.ps_examination_periods];
-      const formattedDate = dayjs(date).format("MMM YYYY");
+      const formattedDate = dayjs(date).format("MM-YYYY");
       const index = updatedMonths.findIndex((month) => month === formattedDate);
 
       if (index === -1) {
@@ -82,10 +93,25 @@ const SessionDetails = ({
     formData?.bank_ac_ifsc
   );
 
+  // useEffect(()=>{},[])
+
   useEffect(() => {
     setEdit(addSession);
     if (addSession) {
-      setFormData({});
+      setFormData({
+        name: "",
+        module: "",
+        nature_of_services: "",
+        pi_number_format: "",
+        bank_ac_no: "",
+        bank_ac_ifsc: "",
+        hsn_sac_code: "",
+        ps_examination_periods: [],
+        mcs_completion_date: "",
+        membership_completion_date: "",
+        article_completion_from_date: "",
+        article_completion_to_date: "",
+      });
     }
   }, [addSession]);
 
@@ -126,7 +152,40 @@ const SessionDetails = ({
   };
   const handleSave = () => {
     if (isObjectHasNoValues(formErrors)) {
-      setEdit(false);
+      if (addSession) {
+        let payload = fields.reduce((acc, item) => {
+          acc[item.label] = item.value;
+          return acc;
+        }, {});
+
+        payload["module"] = currentlySelectedModuleKey;
+        payload["mcs_completion_date"] = dayjs(
+          payload["mcs_completion_date"]
+        ).format("YYYY-MM-DD");
+        payload["article_completion_from_date"] = dayjs(
+          payload["article_completion_from_date"]
+        ).format("YYYY-MM-DD");
+        payload["article_completion_to_date"] = dayjs(
+          payload["article_completion_to_date"]
+        ).format("YYYY-MM-DD");
+        payload["membership_completion_date"] = dayjs(
+          payload["membership_completion_date"]
+        ).format("YYYY-MM-DD");
+
+        addNewSession({
+          payload,
+          onSuccessCallback: (res) => {
+            setAddSession(false);
+            setSessionId(res.id);
+          },
+          onErrorCallback: (errString) => {
+            showNotification({
+              text: errString,
+              type: NOTIFICATION_TYPES.ERROR,
+            });
+          },
+        });
+      }
     }
   };
 
@@ -136,6 +195,7 @@ const SessionDetails = ({
 
   return fields?.length ? (
     <>
+      {notificationContextHolder}
       {isGettingSessions && (
         <Base className={styles.noSessionContainer}>
           <CustomLoader />
@@ -193,7 +253,7 @@ const SessionDetails = ({
                   {fields?.map((item) => (
                     <TwoRow
                       key={item.id}
-                      className={styles.gridItem}
+                      className={edit ? styles.editGridItem : styles.gridItem}
                       topSection={
                         <Typography className={styles.grayText}>
                           {intl.formatMessage({
@@ -213,19 +273,17 @@ const SessionDetails = ({
                                 format="MM/DD/YYYY"
                                 className={styles.dateInput}
                                 onChange={(val, dateString) => {
-                                  handleInputChange(dateString, item.label);
+                                  handleInputChange(val, item.label);
                                 }}
                                 placeholder={intl.formatMessage({
                                   id: `session.placeholder.${item.headingIntl}`,
                                 })}
-                                value={dayjs(item.value)}
+                                value={item.value ? dayjs(item.value) : null}
                               />
                             ) : item.id === 4 ? (
                               <div>
                                 <MonthPicker
-                                  disabled={
-                                    formData?.ps_examination_periods?.length > 3
-                                  }
+                                  disabled={item.value?.length > 3}
                                   format="YYYY/MM"
                                   className={styles.multilpleInput}
                                   size={"large"}
@@ -235,38 +293,36 @@ const SessionDetails = ({
                                   onChange={handleMonthChange}
                                   style={classes.multiSelectStyle}
                                   disabledDate={(current) =>
-                                    formData.ps_examination_periods.includes(
+                                    item.value?.includes(
                                       dayjs(current).format("MMM YYYY")
                                     )
                                   }
                                 />
                                 <div
-                                  className={styles.examinationFieldContainer}
+                                  className={
+                                    styles.editExaminationFieldContainer
+                                  }
                                 >
-                                  {formData?.ps_examination_periods?.map(
-                                    (item, index) => {
-                                      return (
-                                        <div
-                                          className={styles.chipContainer}
-                                          key={index}
-                                        >
-                                          <Typography
-                                            className={styles.chipText}
-                                          >
-                                            {convertDateToStringDate(item)}
-                                          </Typography>
-                                          <Image
-                                            src={getImage("cancel")}
-                                            className={styles.crossIcon}
-                                            preview={false}
-                                            onClick={() => {
-                                              handleDeselect(item);
-                                            }}
-                                          />
-                                        </div>
-                                      );
-                                    }
-                                  )}
+                                  {item.value?.map((item, index) => {
+                                    return (
+                                      <div
+                                        className={styles.chipContainer}
+                                        key={index}
+                                      >
+                                        <Typography className={styles.chipText}>
+                                          {convertDateToStringDate(item)}
+                                        </Typography>
+                                        <Image
+                                          src={getImage("cancel")}
+                                          className={styles.crossIcon}
+                                          preview={false}
+                                          onClick={() => {
+                                            handleDeselect(item);
+                                          }}
+                                        />
+                                      </div>
+                                    );
+                                  })}
                                 </div>
                               </div>
                             ) : (
@@ -302,6 +358,13 @@ const SessionDetails = ({
                                 </Typography>
                               )}
                           </div>
+                        ) : item.id === 5 ||
+                          item.id === 6 ||
+                          item.id === 7 ||
+                          item.id === 8 ? (
+                          <Typography className={styles.blackText}>
+                            {formatDate({ date: item.value })}
+                          </Typography>
                         ) : item?.id !== 4 ? (
                           <Typography className={styles.blackText}>
                             {item.value}
@@ -313,7 +376,7 @@ const SessionDetails = ({
                                 key={index}
                                 className={styles.periodText}
                               >
-                                {val}
+                                {convertDateToStringDate(val)}
                               </Typography>
                             ))}
                           </div>

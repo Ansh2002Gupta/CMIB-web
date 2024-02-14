@@ -21,8 +21,10 @@ import styles from "./session.module.scss";
 
 function Session() {
   const intl = useIntl();
+
   const [activeTab, setActiveTab] = useState("1");
   const [addSession, setAddSession] = useState(false);
+  const [sessionId, setSessionId] = useState(1); //TODO : 1 has to replace once Global Session will implement as we will take id from there using useContext
   const {
     data: sessionData,
     error: sessionError,
@@ -32,7 +34,7 @@ function Session() {
     isSuccess,
     setData,
   } = useFetch({
-    url: ADMIN_ROUTE + SESSIONS + "/1", //TODO : 1 has to replace once Global Session will implement as we will take id from there
+    url: ADMIN_ROUTE + SESSIONS + `/${sessionId}`,
   });
 
   const responsive = useResponsive();
@@ -52,6 +54,7 @@ function Session() {
             sessionData,
             sessionError,
             setAddSession,
+            setSessionId,
           }}
         />
       ),
@@ -128,8 +131,10 @@ function Session() {
               isSessionError,
               fetchData,
               sessionData,
+              sessionId,
               sessionError,
               setAddSession,
+              setSessionId,
             }}
           />
         ) : (

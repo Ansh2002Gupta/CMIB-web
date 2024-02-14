@@ -78,7 +78,7 @@ export const FIELDS = (
       id: 5,
       headingIntl: "mcsCompletetionDate",
       label: "mcs_completion_date",
-      value: formatDate({ date: mcs_completion_date }),
+      value: mcs_completion_date,
       rules: [
         {
           required: true,
@@ -90,7 +90,7 @@ export const FIELDS = (
       id: 6,
       headingIntl: "membershipCompletetionDate",
       label: "membership_completion_date",
-      value: formatDate({ date: membership_completion_date }),
+      value: membership_completion_date,
       rules: [
         {
           required: true,
@@ -102,7 +102,7 @@ export const FIELDS = (
       id: 7,
       headingIntl: "articleshipCompletetionFromDate",
       label: "article_completion_from_date",
-      value: formatDate({ date: article_completion_from_date }),
+      value: article_completion_from_date,
 
       rules: [
         {
@@ -115,7 +115,7 @@ export const FIELDS = (
       id: 8,
       headingIntl: "articleshipCompletetionToDate",
       label: "article_completion_to_date",
-      value: formatDate({ date: article_completion_to_date }),
+      value: article_completion_to_date,
       rules: [
         {
           required: true,
