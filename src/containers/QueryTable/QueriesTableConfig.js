@@ -77,16 +77,19 @@ export const getTicketOrQueryColumn = ({
 
   return [
     renderColumn({
-      titleWithCheckBoxes: !isTableInSelectAllMode
-        ? intl.formatMessage({ id: "label.queriesId" })
-        : intl.formatMessage({ id: "label.selectAll" }),
-      onToggleCheckBox: toggleSelectAllItems,
+      renderTitleWithCheckbox: {
+        visible: true,
+        titleWithCheckBoxes: !isTableInSelectAllMode
+          ? intl.formatMessage({ id: "label.queriesId" })
+          : intl.formatMessage({ id: "label.selectAll" }),
+        onToggleCheckBox: toggleSelectAllItems,
+        isIntermidiate: areSomeItemsSelected,
+        isChecked: areAllItemsSelected,
+      },
       customColumnHeading: [
         styles.columnHeading,
         isTableInSelectAllMode ? styles.greenText : "",
       ].join(" "),
-      isIntermidiate: areSomeItemsSelected,
-      isChecked: areAllItemsSelected,
       dataIndex: "readable_id",
       key: "readable_id",
       renderTextWithCheckBoxes: {

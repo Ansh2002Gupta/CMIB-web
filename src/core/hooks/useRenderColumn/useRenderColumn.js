@@ -29,16 +29,13 @@ const useRenderColumn = () => {
     renderTextWithCheckBoxes = {},
     renderSwitch = {},
     renderTwoImage = {},
+    renderTitleWithCheckbox = {},
     sortDirection,
     sorter,
     sortKey,
     sortTypeDate,
     sortTypeText,
     title,
-    titleWithCheckBoxes,
-    isIntermidiate,
-    isChecked,
-    onToggleCheckBox,
   }) => {
     const columnObject = {};
 
@@ -111,6 +108,9 @@ const useRenderColumn = () => {
       rightPreview,
     } = renderTwoImage;
 
+    const { titleWithCheckBoxes, isIntermidiate, isChecked, onToggleCheckBox } =
+      renderTitleWithCheckbox;
+
     const getStatusStyles = (status) => {
       if (
         status?.toLowerCase() === "closed" ||
@@ -163,7 +163,7 @@ const useRenderColumn = () => {
         );
       });
 
-    titleWithCheckBoxes &&
+    renderTitleWithCheckbox?.visible &&
       (columnObject.title = () => {
         return (
           <div>
@@ -239,8 +239,11 @@ const useRenderColumn = () => {
         return (
           <Chip
             label={status}
-            bgColor={[styles.chipContainer, styles[styleClassForContainer]].join(" ")}
-            textColor={styles[styleClassForText]}
+            bgStyles={[
+              styles.chipContainer,
+              styles[styleClassForContainer],
+            ].join(" ")}
+            textStyles={styles[styleClassForText]}
           />
         );
       });

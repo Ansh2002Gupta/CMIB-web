@@ -57,35 +57,36 @@ iframe#webpack-dev-server-client-overlay {
 }
 .ant-select-selector {
   border-radius: var(--radiusLg) !important;
-  border:var(--borderLight) !important ;
+  border: var(--borderLight) !important ;
   color: var(--inputText) !important;
 }
-.ant-select .ant-select-selection-item{
+.ant-select .ant-select-selection-item {
   font-weight: var(--fontWeightMedium) !important;
 }
 
-.ant-btn-default:disabled{
+.ant-btn-default:disabled {
   cursor: not-allowed !important;
 }
 
-.ant-table-tbody > tr > td{
+.ant-table-tbody > tr > td {
   border-bottom: var(--borderLight) !important;
 }
 
-.ant-pagination-item a{
-
+.ant-pagination-item a {
   color: var(--inputPlaceHolder) !important;
   font-weight: var(--fontWeightMedium);
 }
 
- .ant-btn-default:disabled {
+.ant-btn-default:disabled {
   background-color: var(--bodyBg) !important;
   border: var(--borderLight);
 }
 
-.ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) {
+.ant-btn:not(.ant-btn-icon-only) > .ant-btn-icon:not(:last-child) {
   margin-inline-end: 0px;
-}.ant-btn-default:disabled {
+}
+
+.ant-btn-default:disabled {
   cursor: not-allowed !important;
 }
 
@@ -101,4 +102,12 @@ iframe#webpack-dev-server-client-overlay {
 
 .ant-select .ant-select-selection-item {
   font-weight: var(--fontWeightMedium, 500) !important;
+}
+
+.ant-table-tbody > tr > td {
+  padding: var(--paddingMedium, 24px) !important;
+}
+
+.ant-table-tbody > tr:first-child {
+  display: none !important;
 }
