@@ -38,7 +38,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
 
   const handleMonthChange = (date, dateString) => {
     if (date) {
-      let updatedMonths = [...formData.examination_session_period];
+      let updatedMonths = [...formData.ps_examination_periods];
       const formattedDate = dayjs(date).format("MMM YYYY");
       const index = updatedMonths.findIndex((month) => month === formattedDate);
 
@@ -49,18 +49,18 @@ const SessionDetails = ({ addSession, setAddSession }) => {
       }
       setFormData({
         ...formData,
-        examination_session_period: updatedMonths,
+        ps_examination_periods: updatedMonths,
       });
     }
   };
 
   const handleDeselect = (value) => {
-    const updatedMonths = formData.examination_session_period.filter(
+    const updatedMonths = formData.ps_examination_periods.filter(
       (month) => month !== value
     );
     setFormData({
       ...formData,
-      examination_session_period: updatedMonths,
+      ps_examination_periods: updatedMonths,
     });
   };
 
@@ -68,7 +68,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
     formData?.name,
     formData?.nature_of_services,
     formData?.pi_number_format,
-    formData?.examination_session_period,
+    formData?.ps_examination_periods,
     formData?.mcs_completion_date,
     formData?.membership_completion_date,
     formData?.article_completion_to_date,
@@ -204,7 +204,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                           <div>
                             <MonthPicker
                               disabled={
-                                formData?.examination_session_period?.length > 3
+                                formData?.ps_examination_periods?.length > 3
                               }
                               format="YYYY/MM"
                               className={styles.multilpleInput}
@@ -215,13 +215,13 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                               onChange={handleMonthChange}
                               style={classes.multiSelectStyle}
                               disabledDate={(current) =>
-                                formData.examination_session_period.includes(
+                                formData.ps_examination_periods.includes(
                                   dayjs(current).format("MMM YYYY")
                                 )
                               }
                             />
                             <div className={styles.examinationFieldContainer}>
-                              {formData?.examination_session_period?.map(
+                              {formData?.ps_examination_periods?.map(
                                 (item, index) => {
                                   return (
                                     <div
@@ -319,7 +319,7 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                   !formData?.article_completion_to_date ||
                   !formData?.nature_of_services ||
                   !formData?.pi_number_format ||
-                  !formData?.examination_session_period ||
+                  !formData?.ps_examination_periods ||
                   !formData?.mcs_completion_date ||
                   !formData?.membership_completion_date ||
                   !formData?.article_completion_from_date ||

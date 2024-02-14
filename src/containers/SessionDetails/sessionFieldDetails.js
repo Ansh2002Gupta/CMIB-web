@@ -12,7 +12,7 @@ export const FIELDS = (
   name,
   nature_of_services,
   pi_number_format,
-  examination_session_period,
+  ps_examination_periods,
   mcs_completion_date,
   membership_completion_date,
   article_completion_to_date,
@@ -64,8 +64,8 @@ export const FIELDS = (
     {
       id: 4,
       headingIntl: "examinationSessionPeriod",
-      label: "examination_session_period",
-      value: examination_session_period,
+      label: "ps_examination_periods",
+      value: ps_examination_periods,
       selectOptions: SESSION_PERIOD,
       rules: [
         {
