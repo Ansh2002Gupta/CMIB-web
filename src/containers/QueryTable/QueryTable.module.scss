@@ -142,7 +142,11 @@ input::placeholder {
   transform: rotate(0deg);
 }
 
-.iconContainer{
+.iconContainer {
   display: flex;
   gap: var(--gapLarge);
+}
+
+.gap_12px {
+  gap: var(--paddingMediumSmall, 12px) !important;
 }

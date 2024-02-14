@@ -95,7 +95,10 @@ export const getTicketOrQueryColumn = ({
       renderTextWithCheckBoxes: {
         visible: true,
         isCheckBoxTextBold: true,
-        customCheckBoxContainerStyles: [styles.tableCell].join(" "),
+        customCheckBoxContainerStyles: [
+          styles.tableCell,
+          styles.gap_12px,
+        ].join(" "),
         checkBoxList: selectedItemsList,
         onClickCheckbox: (rowData) => {
           const { id } = rowData;
