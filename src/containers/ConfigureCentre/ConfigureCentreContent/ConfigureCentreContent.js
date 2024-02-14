@@ -288,12 +288,6 @@ const ConfigureCentreContent = () => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
         });
-        fetchData({
-          queryParamsObject: getRequestedParams({
-            page: 1,
-            search: searchedValue,
-          }),
-        });
       }
     }
   }, [data?.meta?.total]);
