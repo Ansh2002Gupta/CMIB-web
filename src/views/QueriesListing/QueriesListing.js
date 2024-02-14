@@ -8,7 +8,6 @@ import ContentHeader from "../../containers/ContentHeader/ContentHeader";
 import QueryTable from "../../containers/QueryTable/QueryTable";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import { PAGINATION_PROPERTIES } from "../../constant/constant";
-import styles from "./QueriesListing.module.scss"
 
 const QueriesListing = () => {
   const intl = useIntl();
@@ -31,8 +30,7 @@ const QueriesListing = () => {
             id: "label.queries",
           })}
           isLeftFillSpace
-          customStyles={styles.container}
-          customContainerStyle={styles.parentContainer}
+          containedInBorder
         />
       }
       isBottomFillSpace

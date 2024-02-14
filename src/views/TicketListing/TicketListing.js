@@ -8,7 +8,6 @@ import ContentHeader from "../../containers/ContentHeader/ContentHeader";
 import TicketTable from "../../containers/TicketTable/TicketTable";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import { PAGINATION_PROPERTIES } from "../../constant/constant";
-import styles from "./TicketListing.module.scss";
 
 const TicketListing = () => {
   const intl = useIntl();
@@ -31,8 +30,7 @@ const TicketListing = () => {
             id: "label.tickets",
           })}
           isLeftFillSpace
-          customStyles={styles.container}
-          customContainerStyle={styles.parentContainer}
+          containedInBorder
         />
       }
       isBottomFillSpace
