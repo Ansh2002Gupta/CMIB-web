@@ -121,7 +121,7 @@ const useRenderColumn = () => {
               setSortBy((prev) => toggleSorting(prev));
             }}
           >
-            <div className={styles.sortintArrawContainer}>
+            <div className={styles.sortingArrowContainer}>
               {title}
               <Image
                 src={getImage(sortIcon)}
