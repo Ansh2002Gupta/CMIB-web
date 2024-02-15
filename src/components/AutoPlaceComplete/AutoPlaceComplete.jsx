@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { AutoComplete } from "antd";
 
 import { loadScript } from "../../Utils/loadScript";
+import { styles } from "./AutoPlaceComplete.styles";
 
 const AutoPlaceComplete = () => {
   const intl = useIntl();
@@ -86,10 +87,7 @@ const AutoPlaceComplete = () => {
         onChange={(data) => {
           setSearchedLocation(data);
         }}
-        style={{
-          maxWidth: '358px',
-          width: '100%'
-        }}
+        style={styles.inputStyle}
         onSelect={setLatLngFromAddress}
         onSearch={(item) => setSuggestedLocations(getPanelValue(item))}
         placeholder={intl.formatMessage({ id: "label.enter_location" })}
