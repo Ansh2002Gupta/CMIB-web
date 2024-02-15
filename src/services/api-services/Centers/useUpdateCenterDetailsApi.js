@@ -16,6 +16,7 @@ const useUpdateCenterDetailsApi = () => {
 
   const updateCenterDetails = async (
     centerId,
+    currentlySelectedModuleKey,
     payload,
     onSuccessCallback,
     onErrorCallback
@@ -24,7 +25,11 @@ const useUpdateCenterDetailsApi = () => {
       setUpdateCenterApiStatus(API_STATUS.LOADING);
       setUpdatedCenterData(null);
       errorWhileUpdatingCenter && setErrorWhileUpdatingCenter("");
-      const url = ADMIN_ROUTE + CENTER_END_POINT + `/${centerId}`;
+      const url =
+        ADMIN_ROUTE +
+        `/${currentlySelectedModuleKey}` +
+        CENTER_END_POINT +
+        `/${centerId}`;
       const res = await Http.put(url, payload);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
