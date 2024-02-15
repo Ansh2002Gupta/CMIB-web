@@ -79,6 +79,7 @@ const useRenderColumn = () => {
       isCapitalize,
       isRequiredTooltip,
       mobile,
+      isIntl,
     } = renderText;
 
     const {
@@ -110,6 +111,9 @@ const useRenderColumn = () => {
       }
       if (includeDotAfterText) {
         return `${text} .`;
+      }
+      if (isIntl) {
+        return intl.formatMessage({ id: `label.${text}` });
       }
       return text;
     };
