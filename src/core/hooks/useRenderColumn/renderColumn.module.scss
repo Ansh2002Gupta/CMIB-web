@@ -65,19 +65,6 @@
   display: flex;
 }
 
-.asc {
-  transform: rotate(180deg);
-}
-
-.desc {
-  transform: rotate(0deg);
-}
-
-.active {
-  background-color: var(--lightGrey3Bg);
-  border-radius: 50%;
-}
-
 .sortintArrawContainer {
   min-width: var(--width_20);
   display: flex;

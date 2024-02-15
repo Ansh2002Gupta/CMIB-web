@@ -109,7 +109,7 @@ export const toggleSorting = (currentSortValue) => {
   if (SORT_VALUES.ASCENDING === currentSortValue) {
     return SORT_VALUES.DESCENDING;
   } else if (SORT_VALUES.DESCENDING === currentSortValue) {
-    return SORT_VALUES.DEFAULT;
+    return "";
   }
   return SORT_VALUES.ASCENDING;
 };

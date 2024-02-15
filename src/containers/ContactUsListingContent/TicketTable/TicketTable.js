@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -38,6 +38,7 @@ const TicketTable = ({
   const { getImage } = useContext(ThemeContext);
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [sortBy, setSortBy] = useState("");
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
@@ -49,6 +50,10 @@ const TicketTable = ({
   const { data: status } = useFetch({
     url: CORE_ROUTE + STATUS,
   });
+
+  useEffect(() => {
+    handleSorting();
+  }, [sortBy]);
 
   let errorString = error;
   if (typeof error === "object") {
@@ -94,13 +99,13 @@ const TicketTable = ({
     debounceSearch(requestedParams);
   };
 
-  const handleSorting = (direction) => {
+  const handleSorting = () => {
     const requestedParams = {
       perPage: pageSize,
       page: 1,
       q: searchedValue,
       sortField: "created_by",
-      sortDirection: direction,
+      sortDirection: sortBy,
     };
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -111,7 +116,8 @@ const TicketTable = ({
     getImage,
     navigate,
     renderColumn,
-    handleSorting
+    setSortBy,
+    sortBy
   );
 
   const onChangePageSize = (size) => {

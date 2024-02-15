@@ -329,7 +329,6 @@ export const STORAGE_KEYS = {
 };
 
 export const SORT_VALUES = {
-  DEFAULT: "default",
   ASCENDING: "asc",
   DESCENDING: "desc",
 };

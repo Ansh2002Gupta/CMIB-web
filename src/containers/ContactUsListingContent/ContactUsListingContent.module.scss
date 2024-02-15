@@ -121,6 +121,19 @@
   min-width: var(--width_100);
 }
 
+.asc {
+  transform: rotate(180deg);
+}
+
+.desc {
+  transform: rotate(0deg);
+}
+
+.active {
+  background-color: var(--lightGrey3Bg);
+  border-radius: 50%;
+}
+
 input::placeholder {
   color: var(--inputPlaceHolder) !important;
 }
