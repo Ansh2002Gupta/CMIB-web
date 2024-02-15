@@ -30,6 +30,7 @@ import {
   getValidSortByValue,
   toggleSorting,
 } from "../../../constant/utils";
+import { validateSearchTextLength } from "../../../Utils/validations";
 import styles from "./ConfigureCentreContent.module.scss";
 
 const ConfigureCentreContent = () => {
@@ -62,15 +63,14 @@ const ConfigureCentreContent = () => {
 
   const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
     useFetch({
-      url: PLACEMENT_ROUTE + CENTER_END_POINT,
+      url: ADMIN_ROUTE + `/${currentlySelectedModuleKey}` + CENTER_END_POINT,
       otherOptions: {
         skipApiCallOnMount: true,
       },
     });
-  const debounceSearch = useMemo(
-    () => _.debounce(fetchData, DEBOUNCE_TIME),
-    []
-  );
+  const debounceSearch = useMemo(() => {
+    return _.debounce(fetchData, DEBOUNCE_TIME);
+  }, [currentlySelectedModuleKey]);
 
   const goToEditCentrePage = (rowData) => {
     navigate(`${CENTRE_DETAILS}/${rowData?.id}`);
@@ -79,11 +79,15 @@ const ConfigureCentreContent = () => {
   const onHandleCentreStatus = (centerData) => {
     const { id } = centerData;
     const payload = {
+      centre_size: centerData.centre_size,
+      centre_code: centerData.centre_code,
+      name: centerData.name,
       status: !centerData?.status,
     };
 
     updateCenterDetails(
       id,
+      currentlySelectedModuleKey,
       payload,
       () => {
         setData({
@@ -107,14 +111,12 @@ const ConfigureCentreContent = () => {
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
       return prev;
     });
-    const requestedParams = {
-      perPage: size,
-      page: 1,
-      keyword: searchedValue,
-      sort: sortedOrder.sortDirection,
-      order: sortedOrder.sortKeyName,
-    };
-    fetchData({ queryParamsObject: requestedParams });
+    fetchData({
+      queryParamsObject: getRequestedParams({
+        page: 1,
+        search: validateSearchTextLength(searchedValue),
+      }),
+    });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -123,50 +125,54 @@ const ConfigureCentreContent = () => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
       return prev;
     });
-    const requestedParams = {
-      perPage: pageSize,
-      page: newPageNumber,
-      keyword: searchedValue,
-      sort: sortedOrder.sortDirection,
-      order: sortedOrder.sortKeyName,
-    };
-    fetchData({ queryParamsObject: requestedParams });
+
+    fetchData({
+      queryParamsObject: getRequestedParams({
+        page: newPageNumber,
+        search: validateSearchTextLength(searchedValue),
+      }),
+    });
   };
 
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
     setCurrent(1);
-    str &&
+    if (str?.trim()?.length > 2) {
+      debounceSearch({
+        queryParamsObject: getRequestedParams({
+          page: 1,
+          search: validateSearchTextLength(str),
+        }),
+      });
       setSearchParams((prev) => {
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
         prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
         return prev;
       });
+    }
 
-    !str &&
+    if (!str?.trim() && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
+      debounceSearch({
+        queryParamsObject: getRequestedParams({
+          page: 1,
+          search: "",
+        }),
+      });
       setSearchParams((prev) => {
         prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
         return prev;
       });
-    const requestedParams = {
-      perPage: pageSize,
-      page: 1,
-      keyword: str,
-      sort: sortedOrder.sortDirection,
-      order: sortedOrder.sortKeyName,
-    };
-    debounceSearch({ queryParamsObject: requestedParams });
+    }
+    setSearchedValue(str);
   };
 
   const handleTryAgain = () => {
-    const requestedParams = {
-      perPage: pageSize,
-      page: current,
-      keyword: searchedValue,
-      sort: sortedOrder.sortDirection,
-      order: sortedOrder.sortKeyName,
-    };
-    fetchData({ queryParamsObject: requestedParams });
+    fetchData({
+      queryParamsObject: getRequestedParams({
+        search: validateSearchTextLength(searchedValue),
+      }),
+    });
   };
 
   let sortArrowStyles = "";
@@ -180,16 +186,13 @@ const ConfigureCentreContent = () => {
     renderColumn({
       title: (
         <Typography
-          className={styles.columnHeading}
-          onClick={() =>
+          className={[styles.columnHeading, styles.sortColumn]}
+          onClick={() => {
             fetchData({
-              queryParamsObject: {
-                perPage: pageSize,
-                page: current,
-                keyword: searchedValue,
-                sort: toggleSorting(sortedOrder.sortDirection),
-                order: sortedOrder.sortKeyName,
-              },
+              queryParamsObject: getRequestedParams({
+                search: validateSearchTextLength(searchedValue),
+                validSortByValue: toggleSorting(sortedOrder.sortDirection),
+              }),
               onSuccessCallback: () => {
                 setSearchParams((prevValue) => {
                   prevValue.set(
@@ -205,8 +208,8 @@ const ConfigureCentreContent = () => {
                   };
                 });
               },
-            })
-          }
+            });
+          }}
         >
           {intl.formatMessage({ id: "label.centreName" })}
           <div className={styles.sortArrowImageContainer}>
@@ -234,9 +237,14 @@ const ConfigureCentreContent = () => {
     {
       ...renderColumn({
         title: intl.formatMessage({ id: "label.bigSmallCentre" }),
-        dataIndex: "center_type",
-        key: "center_type",
-        renderText: { visible: true, textStyles: styles.tableCell },
+        customColumnHeading: styles.columnHeading,
+        dataIndex: "centre_size",
+        key: "centre_size",
+        renderText: {
+          visible: true,
+          textStyles: styles.tableCell,
+          isIntl: true,
+        },
       }),
       width: "100px",
     },
@@ -254,7 +262,9 @@ const ConfigureCentreContent = () => {
         dataKeyName: "centreId",
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
-        checkIsSwitchEditable: (data) => Boolean(data?.is_editable),
+        checkIsSwitchEditable: (data) => {
+          return !isUpdatingCenterDetails;
+        },
       },
     }),
     renderColumn({
@@ -280,14 +290,6 @@ const ConfigureCentreContent = () => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
         });
-        const requestedParams = {
-          perPage: pageSize,
-          page: 1,
-          keyword: searchedValue,
-          sort: sortedOrder.sortDirection,
-          order: sortedOrder.sortKeyName,
-        };
-        fetchData({ queryParamsObject: requestedParams });
       }
     }
   }, [data?.meta?.total]);
@@ -308,15 +310,15 @@ const ConfigureCentreContent = () => {
       prev.set(SORT_PROPERTIES.SORT_BY, validSortByValue);
       return prev;
     });
-    const requestedParams = {
-      perPage: validPageSize,
-      page: validPageNumber,
-      keyword: searchedValue,
-      sort: validSortByValue,
-      order: sortedOrder.sortKeyName,
-    };
-    fetchData({ queryParamsObject: requestedParams });
-  }, []);
+    if (userProfileDetails?.selectedModuleItem?.key) {
+      fetchData({
+        queryParamsObject: getRequestedParams({
+          search: validateSearchTextLength(searchedValue),
+          validSortByValue: validSortByValue,
+        }),
+      });
+    }
+  }, [userProfileDetails]);
 
   useEffect(() => {
     return () => {
@@ -352,11 +354,11 @@ const ConfigureCentreContent = () => {
               })}
               allowClear
               className={styles.searchBar}
-              value={searchedValue}
+              value={searchedValue?.trim()}
               onChange={(e) => handleOnUserSearch(e.target.value)}
             />
           </div>
-          {isSuccess && !isUpdatingCenterDetails && (
+          {isSuccess && (
             <DataTable
               {...{
                 columns,
@@ -370,7 +372,7 @@ const ConfigureCentreContent = () => {
               originalData={data?.records}
             />
           )}
-          {(isLoading || isUpdatingCenterDetails) && <CustomLoader />}
+          {isLoading && <CustomLoader />}
         </div>
       )}
     </>

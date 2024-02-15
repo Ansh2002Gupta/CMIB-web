@@ -183,6 +183,12 @@ const locale = {
   "label.configureCentres": "Configure Centres",
   "label.addNewCentre": "Add New Centre",
   "label.newCentre": "New Centre",
+  "label.add": "Add",
+  "label.centreDetails": "Centre Details",
+  "centre.placeholder.centreName": "Enter Centre Name",
+  "centre.placeholder.bigSmallCentre": "Choose Centre Type",
+  "centre.placeholder.centreId": "Enter Centre Id",
+  "centre.placeholder.centreCode": "Enter Centre Id",
   "label.queriesId": "Query ID",
   "label.studentOrCompany": "Student / Company Name",
   "label.nonRegisteredStudentOrCompany": "Non-Registered Student / Company",
@@ -398,6 +404,14 @@ const locale = {
   "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
     "Some queries have already been marked as answered. Continuing marking for the remaining queries.",
   "label.path.add": "Add New User",
+  "label.errorMessage": "Error Message",
+  "label.userSuccessfullyAdded": "User Successfully Added",
+  "label.userSuccessfullyEdited": "User Successfully Edited",
+  "label.show_result": "Show Result",
+  "label.centreCode": "Centre Id",
+  "label.path.centre-details": "Edit centre details",
+  "label.big": "Big Centre",
+  "label.small": "Small Centre",
 };
 
 export default locale;

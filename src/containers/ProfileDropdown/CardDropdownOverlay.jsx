@@ -59,7 +59,7 @@ export default function CardDropdownOverlay({
           size="middle"
         >
           <Avatar size={64} src={userProfile} icon={<UserOutlined />} />
-          <Space direction="vertical" size="1">
+          <Space direction="vertical" size="1" className={styles.nameAndEmailContainer}>
             <span className={`${styles.profileName} ${styles.profileMenuName}`}>
               {userName}
             </span>
