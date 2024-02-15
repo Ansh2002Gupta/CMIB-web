@@ -16,7 +16,8 @@ export const getTicketOrQueryColumn = (
   intl,
   getImage,
   navigate,
-  renderColumn
+  renderColumn,
+  handleSorting
 ) => {
   if (type === "2") {
     return [
@@ -137,7 +138,8 @@ export const getTicketOrQueryColumn = (
       dataIndex: "created_by",
       key: "created_by",
       sortKey: "created_by",
-      sortTypeText: true,
+      renderSorterColumn: true,
+      handleSorting,
       renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({

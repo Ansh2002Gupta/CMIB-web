@@ -39,14 +39,6 @@ const TicketTable = ({
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const columns = getTicketOrQueryColumn(
-    currentActiveTab,
-    intl,
-    getImage,
-    navigate,
-    renderColumn
-  );
-
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
@@ -101,6 +93,26 @@ const TicketTable = ({
     };
     debounceSearch(requestedParams);
   };
+
+  const handleSorting = (direction) => {
+    const requestedParams = {
+      perPage: pageSize,
+      page: 1,
+      q: searchedValue,
+      sortField: "created_by",
+      sortDirection: direction,
+    };
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
+  const columns = getTicketOrQueryColumn(
+    currentActiveTab,
+    intl,
+    getImage,
+    navigate,
+    renderColumn,
+    handleSorting
+  );
 
   const onChangePageSize = (size) => {
     setPageSize(size);
