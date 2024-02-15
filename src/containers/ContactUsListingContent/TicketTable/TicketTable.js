@@ -91,22 +91,28 @@ const TicketTable = ({
         prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
         return prev;
       });
-    const requestedParams = {
-      perPage: pageSize,
-      page: current,
-      q: str,
-    };
+    const requestedParams = getRequestedQueryParams({ str });
     debounceSearch(requestedParams);
   };
 
-  const handleSorting = () => {
-    const requestedParams = {
-      perPage: pageSize,
-      page: 1,
-      q: searchedValue,
+  const getRequestedQueryParams = ({
+    currentFilterStatus,
+    page,
+    rowPerPage,
+    str,
+  }) => {
+    return {
+      perPage: rowPerPage || pageSize,
+      page: page || current,
+      q: str || searchedValue,
       sortField: "created_by",
       sortDirection: sortBy,
+      status: JSON.stringify(currentFilterStatus?.["1"]),
+      queryType: JSON.stringify(currentFilterStatus?.["2"]),
     };
+  };
+  const handleSorting = () => {
+    const requestedParams = getRequestedQueryParams({ page: 1 });
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -128,11 +134,7 @@ const TicketTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    const requestedParams = {
-      perPage: size,
-      page: 1,
-      q: searchedValue,
-    };
+    const requestedParams = getRequestedQueryParams({ perPage: size, page: 1 });
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -142,11 +144,10 @@ const TicketTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    const requestedParams = {
-      perPage: pageSize,
+    const requestedParams = getRequestedQueryParams({
       page: newPageNumber,
-      q: searchedValue,
-    };
+    });
+
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -180,20 +181,16 @@ const TicketTable = ({
       return prev;
     });
 
-    const requestedParams = {
-      perPage: pageSize,
-      page: current,
-      q: searchedValue,
-    };
+    const requestedParams = getRequestedQueryParams({});
+
     fetchData({ queryParamsObject: requestedParams });
   }, []);
 
   const handleOnReTry = () => {
-    const requestedParams = {
+    const requestedParams = getRequestedQueryParams({
       perPage: DEFAULT_PAGE_SIZE,
       page: 1,
-      q: searchedValue,
-    };
+    });
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -223,13 +220,7 @@ const TicketTable = ({
   ];
 
   const onFilterApply = (currentFilterStatus) => {
-    const requestedParams = {
-      perPage: pageSize,
-      page: current,
-      q: searchedValue,
-      status: JSON.stringify(currentFilterStatus["1"]),
-      queryType: JSON.stringify(currentFilterStatus["2"]),
-    };
+    const requestedParams = getRequestedQueryParams({ currentFilterStatus });
     fetchData({ queryParamsObject: requestedParams });
   };
 
