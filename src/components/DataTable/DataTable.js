@@ -89,10 +89,12 @@ const DataTable = ({
 };
 
 DataTable.defaultProps = {
+  arrayContainingSelectedRow: [],
   columns: [],
   current: 1,
   currentDataLength: 0,
   customContainerStyles: "",
+  keytoFindSelectedRow: "id",
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
   originalData: [],
@@ -102,10 +104,12 @@ DataTable.defaultProps = {
 };
 
 DataTable.propTypes = {
+  arrayContainingSelectedRow: PropTypes.array,
   columns: PropTypes.array,
   current: PropTypes.number,
   currentDataLength: PropTypes.number,
   customContainerStyles: PropTypes.string,
+  keytoFindSelectedRow: PropTypes.string,
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
   originalData: PropTypes.array,

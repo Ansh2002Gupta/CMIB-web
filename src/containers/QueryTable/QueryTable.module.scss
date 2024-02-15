@@ -1,9 +1,3 @@
-.columnHeading {
-  color: var(--subHeadingColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightBold);
-}
-
 .errorContainer {
   width: var(--fullWidth);
   height: var(--fullHeight);
@@ -54,6 +48,8 @@ input::placeholder {
 
 .columnHeading {
   color: var(--subHeadingColor) !important;
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightBold);
   display: flex;
   gap: var(--gapXSmall);
   align-items: center;

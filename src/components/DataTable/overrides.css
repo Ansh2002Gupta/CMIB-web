@@ -60,6 +60,7 @@ iframe#webpack-dev-server-client-overlay {
   border: var(--borderLight) !important ;
   color: var(--inputText) !important;
 }
+
 .ant-select .ant-select-selection-item {
   font-weight: var(--fontWeightMedium) !important;
 }

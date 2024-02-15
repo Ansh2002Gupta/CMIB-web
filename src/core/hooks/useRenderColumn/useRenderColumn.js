@@ -239,11 +239,11 @@ const useRenderColumn = () => {
         return (
           <Chip
             label={status}
-            bgStyles={[
+            bgColor={[
               styles.chipContainer,
               styles[styleClassForContainer],
             ].join(" ")}
-            textStyles={styles[styleClassForText]}
+            textColor={styles[styleClassForText]}
           />
         );
       });
