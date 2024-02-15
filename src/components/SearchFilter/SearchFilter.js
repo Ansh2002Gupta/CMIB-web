@@ -78,10 +78,12 @@ const SearchFilter = ({
   };
 
   const handleClearFilter = () => {
-    setCurrentFilterStatus({});
-    setFilterArray([]);
+    if (Object.keys(currentFilterStatus).length !== 0) {
+      setCurrentFilterStatus({});
+      setFilterArray([]);
+      onFilterApply({});
+    }
     setShowFilters(false);
-    onFilterApply({});
   };
 
   const getCheckBoxes = (item) => {
