@@ -188,7 +188,7 @@ const locale = {
   "centre.placeholder.centreName": "Enter Centre Name",
   "centre.placeholder.bigSmallCentre": "Choose Centre Type",
   "centre.placeholder.centreId": "Enter Centre Id",
-  "centre.placeholder.centreCode": "Enter Centre Code",
+  "centre.placeholder.centreCode": "Enter Centre Id",
   "label.queriesId": "Query ID",
   "label.studentOrCompany": "Student / Company Name",
   "label.nonRegisteredStudentOrCompany": "Non-Registered Student / Company",
@@ -422,7 +422,7 @@ const locale = {
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
   "label.show_result": "Show Result",
-  "label.centreCode": "Centre Code",
+  "label.centreCode": "Centre Id",
   "label.path.centre-details": "Edit centre details",
 };
 

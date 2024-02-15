@@ -43,7 +43,7 @@ iframe#webpack-dev-server-client-overlay {
 }
 
 .ant-pagination .ant-pagination-item-active a {
-  color: var(--darkBlue) !important;
+  color: var(--linkColor) !important;
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
 }
@@ -73,7 +73,6 @@ iframe#webpack-dev-server-client-overlay {
 }
 
 .ant-pagination-item a{
-
   color: var(--inputPlaceHolder) !important;
   font-weight: var(--fontWeightMedium);
 }

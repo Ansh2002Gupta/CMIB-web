@@ -69,10 +69,9 @@ const ConfigureCentreContent = () => {
         skipApiCallOnMount: true,
       },
     });
-  const debounceSearch = useMemo(
-    () => _.debounce(fetchData, DEBOUNCE_TIME),
-    []
-  );
+  const debounceSearch = useMemo(() => {
+    return _.debounce(fetchData, DEBOUNCE_TIME);
+  }, [currentlySelectedModuleKey]);
 
   const goToEditCentrePage = (rowData) => {
     navigate(`${CENTRE_DETAILS}/${rowData?.id}`);
@@ -160,7 +159,8 @@ const ConfigureCentreContent = () => {
         prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
         return prev;
       });
-    (str.length > 2 || searchedValue.length > str.length) &&
+
+    (str.length > 2 || (searchedValue.length > str.length && str.length > 1)) &&
       debounceSearch({
         queryParamsObject: getRequestedParams({
           page: 1,
@@ -190,7 +190,7 @@ const ConfigureCentreContent = () => {
       title: (
         <Typography
           className={[styles.columnHeading, styles.sortColumn]}
-          onClick={() =>
+          onClick={() => {
             fetchData({
               queryParamsObject: getRequestedParams({
                 search: validateSearchTextLength(searchedValue),
@@ -211,8 +211,8 @@ const ConfigureCentreContent = () => {
                   };
                 });
               },
-            })
-          }
+            });
+          }}
         >
           {intl.formatMessage({ id: "label.centreName" })}
           <div className={styles.sortArrowImageContainer}>
@@ -270,7 +270,7 @@ const ConfigureCentreContent = () => {
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
         checkIsSwitchEditable: (data) => {
-          return true;
+          return !isUpdatingCenterDetails;
         },
       },
     }),
@@ -365,7 +365,7 @@ const ConfigureCentreContent = () => {
               onChange={(e) => handleOnUserSearch(e.target.value)}
             />
           </div>
-          {isSuccess && !isUpdatingCenterDetails && (
+          {isSuccess && (
             <DataTable
               {...{
                 columns,
@@ -379,7 +379,7 @@ const ConfigureCentreContent = () => {
               originalData={data?.records}
             />
           )}
-          {(isLoading || isUpdatingCenterDetails) && <CustomLoader />}
+          {isLoading && <CustomLoader />}
         </div>
       )}
     </>
