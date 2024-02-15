@@ -19,6 +19,7 @@ const useRenderColumn = () => {
   const renderColumn = ({
     customColumnHeading,
     customIconStyle,
+    columnSortByHandler,
     dataIndex,
     defaultSortOrder,
     isRequiredField,
@@ -118,7 +119,11 @@ const useRenderColumn = () => {
           <Typography
             className={[styles.columnHeading].join(" ")}
             onClick={() => {
-              setSortBy((prev) => toggleSorting(prev));
+              setSortBy((prev) => {
+                const newSortOrder = toggleSorting(prev);
+                columnSortByHandler(newSortOrder);
+                return newSortOrder;
+              });
             }}
           >
             <div className={styles.sortingArrowContainer}>

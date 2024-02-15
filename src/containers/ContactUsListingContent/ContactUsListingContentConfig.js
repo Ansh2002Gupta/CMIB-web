@@ -19,7 +19,8 @@ export const getTicketOrQueryColumn = (
   navigate,
   renderColumn,
   setSortBy,
-  sortBy
+  sortBy,
+  handleSorting
 ) => {
   if (type === "2") {
     return [
@@ -142,6 +143,7 @@ export const getTicketOrQueryColumn = (
       sortKey: "created_by",
       renderSorterColumn: true,
       setSortBy: setSortBy,
+      columnSortByHandler: handleSorting,
       customIconStyle: [
         styles[sortBy],
         sortBy === SORT_VALUES.ASCENDING || sortBy === SORT_VALUES.DESCENDING
