@@ -57,11 +57,7 @@ const SearchFilter = ({
   const selectOrRemoveAll = (item) => {
     const itemOptionIds = item.options.map((option) => option.optionId);
     const itemId = item.id;
-
-    if (
-      currentFilterStatus[itemId] &&
-      currentFilterStatus[itemId]?.length === 0
-    ) {
+    if (!currentFilterStatus?.[itemId]?.length) {
       setCurrentFilterStatus({
         ...currentFilterStatus,
         [itemId]: itemOptionIds,
@@ -79,6 +75,13 @@ const SearchFilter = ({
 
       setCurrentFilterStatus(updatedStatus);
     }
+  };
+
+  const handleClearFilter = () => {
+    setCurrentFilterStatus({});
+    setFilterArray([]);
+    setShowFilters(false);
+    onFilterApply({});
   };
 
   const getCheckBoxes = (item) => {
@@ -125,12 +128,7 @@ const SearchFilter = ({
             extra={
               <Button
                 type="link"
-                onClick={() => {
-                  setCurrentFilterStatus({});
-                  setFilterArray([]);
-                  setShowFilters(false);
-                  onFilterApply({});
-                }}
+                onClick={handleClearFilter}
                 className={styles.clearAllBtn}
               >
                 {intl.formatMessage({ id: "label.clearAll" })}
