@@ -17,14 +17,13 @@ const useShowNotification = () => {
       ) : (
         intl.formatMessage({ id: "label.notification" })
       ),
-      description:
-        Object.entries(text?.errors || {})?.length > 0 ? (
-          Object.entries(text?.errors)?.map(([item, value]) => {
-            return <Typography>{value}</Typography>;
-          })
-        ) : (
-          <Typography>{text}</Typography>
-        ),
+      description: Object.entries(text?.errors || {})?.length ? (
+        Object.entries(text?.errors)?.map(([item, value]) => {
+          return <Typography>{value}</Typography>;
+        })
+      ) : (
+        <Typography>{text}</Typography>
+      ),
       placement: placement || NOTIFICATION_POSITIONS.TOP_RIGHT,
     });
   };

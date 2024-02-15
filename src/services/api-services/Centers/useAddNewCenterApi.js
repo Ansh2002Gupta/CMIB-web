@@ -53,7 +53,7 @@ const useAddNewCenterApi = () => {
         if (
           err.response?.data?.data &&
           err.response?.data?.data?.errors &&
-          Object.entries(err.response?.data?.data?.errors).length > 0
+          Object.entries(err.response?.data?.data?.errors).length
         ) {
           onErrorCallback && onErrorCallback(err.response?.data?.data);
         } else {
