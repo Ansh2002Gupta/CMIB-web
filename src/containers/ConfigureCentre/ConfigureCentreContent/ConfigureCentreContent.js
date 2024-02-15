@@ -255,7 +255,7 @@ const ConfigureCentreContent = () => {
         renderText: {
           visible: true,
           textStyles: styles.tableCell,
-          isCapitalize: true,
+          isIntl: true,
         },
       }),
       width: "100px",
