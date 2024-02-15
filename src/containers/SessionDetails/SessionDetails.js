@@ -293,6 +293,8 @@ const SessionDetails = ({ addSession, setAddSession }) => {
                     status: !formData.status,
                   });
                 }}
+                activeText={"active"}
+                inActiveText={"inactive"}
               />
             </CustomGrid>
           }

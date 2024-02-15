@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
-import { ArrowRightOutlined, GlobalOutlined } from "@ant-design/icons";
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
@@ -18,6 +18,7 @@ import { CORE_ROUTE, GLOBAL_SESSION_LIST } from "../../constant/apiEndpoints";
 import { DASHBOARD } from "../../routes/routeNames";
 import { filterMenuData } from "../../constant/utils";
 import modules from "./sideMenuItems";
+import { ReactComponent as Globe } from "../../themes/base/assets/icons/globe.svg";
 import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
 import styles from "./sideMenu.module.scss";
 
@@ -51,8 +52,8 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
         id: `label.menu.${item.label}`,
       });
       let icon = item.icon;
-      if (item.selectedicon && item.key === selectedKey) {
-        icon = item.selectedicon;
+      if (item?.selectedicon && item.key === selectedKey) {
+        icon = item?.selectedicon;
       }
       return {
         ...item,
@@ -231,7 +232,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
               size="large"
               type="text"
               block
-              icon={<GlobalOutlined className={styles.globeIcon} />}
+              icon={<Globe className={styles.globeIcon} />}
             >
               <Typography.Text className={styles.visitText}>
                 {intl.formatMessage({ id: "label.visitWebsite" })}

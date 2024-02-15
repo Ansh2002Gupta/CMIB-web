@@ -9,6 +9,10 @@
   font-size: var(--fontSizeHeading);
   font-weight: var(--fontWeightBold);
   line-height: var(--lineHeightHeading);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 50vw;
 }
 
 @media screen and (max-width: 767px) {

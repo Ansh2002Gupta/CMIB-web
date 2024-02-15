@@ -144,7 +144,7 @@ const controlMenu = [
   },
   {
     label: MENU_KEYS.ACTIVITY_LOGS,
-    key: "/activity-logs",
+    key: "/activity-log",
     icon: <Activity />,
     selectedicon: <SelectedActivity />,
   },
@@ -230,7 +230,6 @@ const newlyQualifiedPlacementsMenu = [
     icon: <Round2 />,
     selectedicon: <SelectedRound2 />,
   },
-
   {
     label: MENU_KEYS.COMPANIES,
     key: COMPANIES,

@@ -5,6 +5,7 @@ import { DatePicker, Image, TimePicker, Typography } from "antd";
 import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 
+import MarkRequired from "../MarkRequired";
 import { formatDate } from "../../constant/utils";
 import styles from "./CustomDateTimePicker.module.scss";
 
@@ -36,7 +37,7 @@ const CustomDateTimePicker = ({
           <div className={styles.inputLabelContainer}>
             <Typography className={customLabelStyles}>
               {label}
-              {isRequired && <span className={styles.isRequiredStar}> *</span>}
+              {isRequired && <MarkRequired />}
             </Typography>
           </div>
         )
@@ -65,7 +66,7 @@ const CustomDateTimePicker = ({
               />
             ) : (
               <Typography className={styles.dateText}>
-                {formatDate(value)}
+                {formatDate({ date: value })}
               </Typography>
             )
           }

@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch } from "antd";
 
+import { TwoColumn } from "../../layouts";
+
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import { formatDate } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
@@ -11,6 +13,7 @@ const useRenderColumn = () => {
   const intl = useIntl();
 
   const renderColumn = ({
+    customColumnHeading,
     dataIndex,
     defaultSortOrder,
     isRequiredField,
@@ -21,6 +24,7 @@ const useRenderColumn = () => {
     renderMenu = {},
     renderText = {},
     renderSwitch = {},
+    renderTwoImage = {},
     sortDirection,
     sorter,
     sortKey,
@@ -74,7 +78,22 @@ const useRenderColumn = () => {
       switchToggleHandler = () => {},
       isActionable = true,
       checkIsSwitchEditable = () => {},
+      switchStyle,
     } = renderSwitch;
+
+    const {
+      leftAlt = "",
+      rightAlt = "",
+      customTwoImageStyle = "",
+      leftCustomImageStyle = "",
+      rightCustomImageStyle,
+      leftSrc = "",
+      rightSrc = "",
+      leftOnClick = () => {},
+      rightOnClick = () => {},
+      leftPreview,
+      rightPreview,
+    } = renderTwoImage;
 
     const textRenderFormat = ({ text }) => {
       if (isTypeDate) {
@@ -89,7 +108,7 @@ const useRenderColumn = () => {
     title &&
       (columnObject.title = () => {
         return (
-          <p className={styles.columnHeading}>
+          <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
             {title}
             {isRequiredField && (
               <>
@@ -172,7 +191,7 @@ const useRenderColumn = () => {
                 className={status ? styles.switchBgColor : ""}
               />
             )}
-            <p>
+            <p className={switchStyle}>
               {status
                 ? swithActiveLabel || intl.formatMessage({ id: "label.active" })
                 : swithInActiveLabel ||
@@ -193,6 +212,38 @@ const useRenderColumn = () => {
             onClick={onClick ? () => onClick(rowData) : () => {}}
           />
         );
+      });
+
+    renderTwoImage.visible &&
+      (columnObject.render = (_, rowData) => {
+        return {
+          props: { className: styles.twoImageContainer },
+          children: (
+            <TwoColumn
+              className={`${customTwoImageStyle} ${styles.twoImageStyle}`}
+              leftSection={
+                <Image
+                  alt={leftAlt}
+                  src={leftSrc}
+                  preview={leftPreview}
+                  className={`${leftCustomImageStyle} ${styles.editIcon}`}
+                  onClick={leftOnClick ? () => leftOnClick(rowData) : () => {}}
+                />
+              }
+              rightSection={
+                <Image
+                  alt={rightAlt}
+                  src={rightSrc}
+                  preview={rightPreview}
+                  className={`${rightCustomImageStyle} ${styles.editIcon}`}
+                  onClick={
+                    rightOnClick ? () => rightOnClick(rowData) : () => {}
+                  }
+                />
+              }
+            />
+          ),
+        };
       });
 
     render && (columnObject.render = render); // correct this

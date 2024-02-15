@@ -71,6 +71,7 @@
   border-radius: var(--radiusLg);
   border: var(--borderLight);
   background: var(--bodyBg);
+  font-weight: var(--fontWeightMedium, 500) !important;
 }
 
 .selectInput {
@@ -125,7 +126,7 @@
 }
 
 .desrciptionText {
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeExtraSmall, 12px);
   color: var(--subHeadingColor);
 }
 

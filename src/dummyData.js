@@ -545,6 +545,75 @@ export const SETUP_CENTRE_DETAILS = [
     norm2MinVacancy: "23",
   },
 ];
+export const MOCK_INTERVIEW = [
+  {
+    id: 1,
+    sNo: "1",
+    centreName: "Ghaziabad-I",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 2,
+    sNo: "2",
+    centreName: "Ghaziabad-II",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 3,
+    sNo: "3",
+    centreName: "Meerut-I",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 4,
+    sNo: "4",
+    centreName: "Meerut-II",
+    totalStudentBooked: "12",
+  },
+  { id: 5, sNo: "5", centreName: "Delhi-I", totalStudentBooked: "12" },
+  {
+    id: 6,
+    sNo: "6",
+    centreName: "Delhi-II",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 7,
+    sNo: "7",
+    centreName: "Ahmedabad-I",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 8,
+    sNo: "8",
+    centreName: "Ahmedabad-II",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 9,
+    sNo: "9",
+    centreName: "Akola-I",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 10,
+    sNo: "10",
+    centreName: "Akola-II",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 11,
+    sNo: "11",
+    centreName: "Akola-III",
+    totalStudentBooked: "12",
+  },
+  {
+    id: 12,
+    sNo: "12",
+    centreName: "Akola-III",
+    totalStudentBooked: "12",
+  },
+];
 
 export const CONSENT_MARKING_REGESTRATION_DETAILS = [
   {

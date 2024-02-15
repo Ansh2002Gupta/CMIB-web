@@ -5,7 +5,6 @@ import { Descriptions, Typography } from "antd";
 import Base from "../../core/layouts/Base/Base";
 import CheckBoxList from "../CheckBoxList";
 import Chip from "../../components/Chip/Chip";
-import CustomCheckBox from "../../components/CustomCheckBox";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
 import CustomInput from "../../components/CustomInput";
 import CustomSwitch from "../../components/CustomSwitch/CustomSwitch";
@@ -18,6 +17,9 @@ import "./Override.css";
 const UserInfo = ({
   access,
   countryData,
+  checkForCorrectEmail,
+  checkForMobileNumber,
+  checkForUserName,
   date,
   email,
   emailErrorMessage,
@@ -37,6 +39,10 @@ const UserInfo = ({
   shouldShowDatePickerOption,
   updateUserData,
   userNameErrorMessage,
+  emailRef,
+  phoneRef,
+  nameRef,
+  viewUserData,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -108,7 +114,7 @@ const UserInfo = ({
         intl.formatMessage({ id: "label.twoFactorAuth" })
       ),
       children: intl.formatMessage({
-        id: `label.${is_two_factor ? "enable" : "disable"}`,
+        id: `label.${is_two_factor ? "enabled" : "disabled"}`,
       }),
     },
     {
@@ -150,6 +156,7 @@ const UserInfo = ({
       {!isEditable && (
         <div className={styles.nonEditableContainer}>
           <Descriptions
+            className="viewUserDetails"
             colon={false}
             title={intl.formatMessage({ id: "label.userDetails" })}
             layout="vertical"
@@ -182,10 +189,13 @@ const UserInfo = ({
                 placeholder={intl.formatMessage({
                   id: "label.userNamePlaceholder",
                 })}
+                onBlur={checkForUserName}
+                ref={nameRef}
               />
             </div>
             <div>
               <CustomInput
+                ref={emailRef}
                 isError={!!emailErrorMessage}
                 errorMessage={emailErrorMessage}
                 type={"email"}
@@ -199,10 +209,12 @@ const UserInfo = ({
                 placeholder={intl.formatMessage({
                   id: "label.emailPlaceholder",
                 })}
+                onBlur={checkForCorrectEmail}
               />
             </div>
             <div>
               <PhoneInput
+                ref={phoneRef}
                 isError={!!mobileErrorMessage}
                 errorMessage={mobileErrorMessage}
                 label={intl.formatMessage({ id: "label.mobileNumber" })}
@@ -224,35 +236,35 @@ const UserInfo = ({
                 placeholder={intl.formatMessage({
                   id: "label.mobilePlaceholder",
                 })}
+                onBlur={checkForMobileNumber}
               />
             </div>
+            {isNotAddable && (
+              <div className={styles.twoFactorContainer}>
+                <CustomSwitch
+                  checked={status}
+                  isRequired={true}
+                  isEditable={isNotAddable}
+                  label={intl.formatMessage({ id: "label.status" })}
+                  onChange={() => {
+                    updateUserData("status", !status);
+                  }}
+                  activeText={"active"}
+                  inActiveText={"inactive"}
+                />
+              </div>
+            )}
             <div className={styles.twoFactorContainer}>
               <CustomSwitch
-                checked={status}
-                isRequired={true}
-                label={intl.formatMessage({ id: "label.status" })}
-                onChange={() => {
-                  updateUserData("status", !status);
-                }}
-              />
-            </div>
-            <div className={styles.twoFactorContainer}>
-              {getTextWithIsRequiredStart(
-                intl.formatMessage({ id: "label.twoFactorAuth" })
-              )}
-              <CustomCheckBox
-                className={styles.box}
-                onChange={(value) =>
-                  updateUserData("is_two_factor", !is_two_factor)
-                }
                 checked={is_two_factor}
-              >
-                <Typography className={styles.text}>
-                  {intl.formatMessage({
-                    id: `label.${is_two_factor ? "enable" : "disable"}`,
-                  })}
-                </Typography>
-              </CustomCheckBox>
+                isRequired={true}
+                label={intl.formatMessage({ id: "label.twoFactorAuth" })}
+                onChange={() => {
+                  updateUserData("is_two_factor", !is_two_factor);
+                }}
+                activeText={"enable"}
+                inActiveText={"disable"}
+              />
             </div>
             {isNotAddable && date && (
               <CustomDateTimePicker
@@ -272,15 +284,24 @@ const UserInfo = ({
                 isEditable={!shouldShowDatePickerOption}
               />
             )}
+
             <div className={styles.spanOverAllColumns}>
               <CheckBoxList
                 {...{ setIsAccessValid, rolesData }}
-                selectedModules={access}
-                setSelectedModules={(value) => updateUserData("access", value)}
-                selectedControls={permissions}
-                setSelectedControls={(value) =>
-                  updateUserData("permissions", value)
+                selectedModules={
+                  Array.isArray(roles)
+                    ? roles
+                    : Object.values(roles).map((role) => role.id)
                 }
+                setSelectedModules={(value) => updateUserData("roles", value)}
+                selectedControls={
+                  Array.isArray(permissions)
+                    ? permissions
+                    : Object.values(permissions).map((per) => per.id)
+                }
+                setSelectedControls={(value) => {
+                  updateUserData("permissions", value);
+                }}
               />
             </div>
           </div>
@@ -291,11 +312,9 @@ const UserInfo = ({
 };
 
 UserInfo.defaultProps = {
-  access: [],
   countryData: [],
   date: null,
   email: "",
-  isDateDisable: false,
   isEditable: false,
   isNotAddable: false,
   is_two_factor: false,
@@ -310,11 +329,9 @@ UserInfo.defaultProps = {
 };
 
 UserInfo.propTypes = {
-  access: PropTypes.array,
   countryData: PropTypes.array,
   date: PropTypes.string,
   email: PropTypes.string,
-  isDateDisable: PropTypes.bool,
   isEditable: PropTypes.bool,
   isNotAddable: PropTypes.bool,
   is_two_factor: PropTypes.bool,

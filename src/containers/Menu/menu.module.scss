@@ -16,6 +16,9 @@
 .crossIcon {
   color: var(--bodyBg, #ffffff);
 }
+.sideDrawer {
+  background-color: var(--inputLabel);
+}
 
 @media (max-width: 767px) {
   .drawerAppLogo {

@@ -4,7 +4,7 @@ const locale = {
   "label.signIn": "Sign In",
   "label.userName": "Username",
   "label.userName2": "User Name",
-  "label.userNameLeftEmpty": "user name cannot be left empty!",
+  "label.pleaseEnterUserName": "Please enter user name",
   "label.email": "Email",
   "label.mobileNumber": "Mobile Number",
   "label.access": "Access",
@@ -51,7 +51,7 @@ const locale = {
   "label.newPasswordAndConfirmPasswordMatched":
     "Your password has been changed successfully",
   "label.otpHeading":
-    "Please enter the one time password that you have received on your registered email address/mobile number",
+    "Please enter the one time password that you have received on your registered mobile number",
   "label.otp": "OTP",
   "label.sendAgain": "Send Again",
   "label.fourteenMinTimerText1": "You have requested OTP for 4 times!",
@@ -137,13 +137,13 @@ const locale = {
     "*This cannot be edited once the registration for the Company/Candidate starts.",
   "label.dragNdrop": "Drag & drop files or",
   "label.browse": "Browse",
-  "label.supportedFormat": "Supported formates: png, jpg, jpeg",
+  "label.supportedFormat": "Supported formats: png, jpg, jpeg",
   "label.saveChanges": "Save Changes",
   "label.onlyJpgAndPngFile":
     "Format not supported, only jpeg and png can be uploaded. Please upload again",
   "label.fileUpto5MB": "Max size allowed is 5 mb, please upload again",
   "label.editUserDetails": "Edit User Details",
-  "label.twoFactorAuth": "Two factor authentication",
+  "label.twoFactorAuth": "Two-factor Authentication",
   "label.on": "ON",
   "label.off": "OFF",
   "label.edit": "Edit",
@@ -247,6 +247,10 @@ const locale = {
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
   "label.emailPlaceholder": "Please enter your email",
+  "label.session.setupMockInterviews": "Setup Mock Interviews",
+  "label.warning.setupMockInterviews":
+    "*This cannot be edited once registration for the students starts.",
+  "label.totalStudentsBooked": "Total Students Booked",
   "label.consent.placeholder.startDateCompanies":
     " Select Start Date for Companies",
   "label.consent.placeholder.startDateCandidates":
@@ -325,7 +329,7 @@ const locale = {
   "label.menu.roster": "Roster",
   "label.menu.feedback": "Feedback",
   "label.menu.contact-us": "Contact Us",
-  "label.menu.activity-logs": "Activity Logs",
+  "label.menu.activity-log": "Activity Log",
   "label.menu.all-job-listing": "All Job listing",
   "label.menu.round-1": "Round 1",
   "label.menu.round-2": "Round 2",
@@ -379,6 +383,9 @@ const locale = {
   "label.path.global-configurations": "Configure centres",
   "label.path.centre-details": "Edit centre details",
   "label.path.add": "Add New User",
+  "label.errorMessage": "Error Message",
+  "label.userSuccessfullyAdded": "User Successfully Added",
+  "label.userSuccessfullyEdited": "User Successfully Edited",
 };
 
 export default locale;
