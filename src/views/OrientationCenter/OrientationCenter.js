@@ -4,9 +4,10 @@ import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Typography } from "antd";
 
-import { TwoRow } from "../../core/layouts";
-import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { TwoColumn, TwoRow } from "../../core/layouts";
+import CustomButton from "../../components/CustomButton";
 import DataTable from "../../components/DataTable";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { ORIENTATION_CENTERS } from "../../dummyData";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import {
@@ -170,17 +171,46 @@ const OrientationCenter = () => {
         />
       }
       bottomSection={
-        <DataTable
-          {...{
-            columns,
-            current,
-            pageSize,
-            onChangePageSize,
-            onChangeCurrentPage,
-          }}
-          currentDataLength={ORIENTATION_CENTERS.length}
-          customContainerStyles={styles.tableContainer}
-          originalData={currentTableData}
+        <TwoRow
+          topSection={
+            <DataTable
+              {...{
+                columns,
+                current,
+                pageSize,
+                onChangePageSize,
+                onChangeCurrentPage,
+              }}
+              currentDataLength={ORIENTATION_CENTERS.length}
+              customContainerStyles={styles.tableContainer}
+              originalData={currentTableData}
+            />
+          }
+          bottomSection={
+            <TwoColumn
+              className={styles.buttonContainer}
+              leftSection={
+                <CustomButton
+                  btnText={intl.formatMessage({
+                    id: "label.cancel",
+                  })}
+                  customStyle={styles.mobileButtonStyles}
+                  textStyle={styles.textStyle}
+                  onClick={() => {}}
+                />
+              }
+              rightSection={
+                <CustomButton
+                  textStyle={styles.saveButtonTextStyles}
+                  customStyle={styles.saveButtonStyle}
+                  btnText={intl.formatMessage({
+                    id: "session.saveChanges",
+                  })}
+                  onClick={() => {}}
+                />
+              }
+            />
+          }
         />
       }
       bottomSectionStyle={classes.bottomSectionStyle}
