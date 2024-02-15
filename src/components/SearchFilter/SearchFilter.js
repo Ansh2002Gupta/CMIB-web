@@ -8,6 +8,7 @@ import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomButton from "../CustomButton";
+import CustomCheckBox from "../CustomCheckBox";
 import useOutSideClick from "../../core/hooks/useOutSideClick";
 import { classes } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
@@ -195,40 +196,27 @@ const SearchFilter = ({
                   {filterPropertiesArray[selectedIndex]?.options?.map(
                     (item, index) => {
                       return (
-                        <div
-                          className={[styles.filterSecondLevelOption].join(" ")}
-                          onClick={() =>
+                        <CustomCheckBox
+                          checked={(
+                            currentFilterStatus[
+                              filterPropertiesArray[selectedIndex].id
+                            ] || []
+                          ).includes(item.optionId)}
+                          onChange={() =>
                             handleOnUpdateAccessFilterStatus(
                               filterPropertiesArray[selectedIndex].id,
                               item.optionId
                             )
                           }
-                          key={index}
+                          customStyles={styles.filterSecondLevelOption}
                         >
-                          {(
-                            currentFilterStatus[
-                              filterPropertiesArray[selectedIndex].id
-                            ] || []
-                          ).includes(item.optionId) ? (
-                            <Image
-                              src={getImage("checkedBox")}
-                              preview={false}
-                              className={styles.iconStyle}
-                            />
-                          ) : (
-                            <Image
-                              src={getImage("unCheckedBox")}
-                              preview={false}
-                              className={styles.iconStyle}
-                            />
-                          )}
                           <Typography className={styles.filterOptionText}>
                             {item?.str}{" "}
                             <span className={styles.textInBrackets}>
                               {!isNaN(item?.count) ? `(${item?.count})` : ""}
                             </span>
                           </Typography>
-                        </div>
+                        </CustomCheckBox>
                       );
                     }
                   )}
