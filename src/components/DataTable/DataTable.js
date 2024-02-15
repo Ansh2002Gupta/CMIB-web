@@ -14,16 +14,16 @@ import styles from "./DataTable.module.scss";
 import "./overrides.css";
 
 const DataTable = ({
+  arrayContainingSelectedRow,
   columns,
   current,
   currentDataLength,
   customContainerStyles,
+  keytoFindSelectedRow,
   onChangeCurrentPage,
   onChangePageSize,
   originalData,
   pageSize,
-  keytoFindSelectedRow,
-  arrayContainingSelectedRow,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
