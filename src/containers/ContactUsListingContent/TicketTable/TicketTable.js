@@ -132,7 +132,10 @@ const TicketTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    const requestedParams = getRequestedQueryParams({ perPage: size, page: 1 });
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: size,
+      page: 1,
+    });
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -186,7 +189,7 @@ const TicketTable = ({
 
   const handleOnReTry = () => {
     const requestedParams = getRequestedQueryParams({
-      perPage: DEFAULT_PAGE_SIZE,
+      rowPerPage: DEFAULT_PAGE_SIZE,
       page: 1,
     });
     fetchData({ queryParamsObject: requestedParams });
