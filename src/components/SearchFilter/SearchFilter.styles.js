@@ -7,7 +7,7 @@ export const classes = {
     borderBottom: variables.borderLight,
   },
   filterHeaderText: {
-    fontSize: variables.fontSizeNormal,
+    fontSize: variables.fontSizeSmall,
     color: variables.textBold,
     fontWeight: variables.fontWeightBold,
   },

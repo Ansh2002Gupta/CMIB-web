@@ -1,10 +1,3 @@
-.container {
-  display: flex;
-  gap: var(--gapSmall);
-  justify-content: center;
-  align-items: center;
-}
-
 .twoColumnBox {
   justify-content: space-between;
   align-items: center;
@@ -16,10 +9,14 @@
   font-size: var(--fontSizeHeading);
   font-weight: var(--fontWeightBold);
   line-height: var(--lineHeightHeading);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 50vw;
+}
+
+.borders {
+  padding: var(--paddingMedium);
+  gap: var(--gapMedium);
+  border-top: var(--borderLight);
+  border-bottom: var(--borderLight);
+  width: var(--fullWidth);
 }
 
 @media screen and (max-width: 767px) {

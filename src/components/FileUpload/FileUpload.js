@@ -12,19 +12,15 @@ import useUploadImageApi from "../../services/api-services/Images/useUploadImage
 import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { ReactComponent as UploadImageIcon } from "../../themes/base/assets/images/Upload icon.svg";
 import styles from "./FileUpload.module.scss";
-import "./override.css";
 
 const FileUpload = ({
   heading,
   isFormEditable,
-  isNotAddable,
   name,
   subHeading,
   updateUserData,
   userImageName,
   userProfilePic,
-  deletedImage,
-  setDeletedImage,
 }) => {
   const intl = useIntl();
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -37,19 +33,18 @@ const FileUpload = ({
     const isLessThan5MB = file?.file?.size / 1024 / 1024 < 5;
 
     if (!isAllowedType) {
-      showNotification({
-        text: intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
-        type: "error",
-        headingText: intl.formatMessage({ id: "label.errorMessage" }),
-      });
+      showNotification(
+        intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
+        "error"
+      );
       return Upload.LIST_IGNORE;
     }
 
     if (!isLessThan5MB) {
-      showNotification({
-        text: intl.formatMessage({ id: "label.fileUpto5MB" }),
-        type: "error",
-      });
+      showNotification(
+        intl.formatMessage({ id: "label.fileUpto5MB" }),
+        "error"
+      );
       return Upload.LIST_IGNORE;
     }
     return isAllowedType && isLessThan5MB;
@@ -63,25 +58,23 @@ const FileUpload = ({
       return;
     }
     if (file?.file) {
-      isNotAddable &&
-        handleUploadImage({
-          onSuccessCallback: (imgData) => {
-            updateUserData("profile_photo_url", imgData?.url);
-            updateUserData("profile_photo", imgData?.file_name);
-          },
-          file: file?.file,
-          onErrorCallback: (errString) => {
-            showNotification(errString);
-          },
-        });
+      handleUploadImage({
+        onSuccessCallback: (imgData) => {
+          updateUserData("profile_photo_url", imgData?.url);
+          updateUserData("profile_photo", imgData?.file_name);
+        },
+        file: file?.file,
+        onErrorCallback: (errString) => {
+          showNotification(errString);
+        },
+      });
     }
   };
+
   const removeSelctedImage = () => {
-    setDeletedImage([...deletedImage, userImageName]);
-    !isNotAddable &&
-      handleDeleteImage({
-        fileName: userImageName,
-      });
+    handleDeleteImage({
+      fileName: userImageName,
+    });
     updateUserData("profile_photo_url", "");
     updateUserData("profile_photo", "");
   };
@@ -101,10 +94,9 @@ const FileUpload = ({
           />
         ) : (
           <Upload
-            className={[styles.uploadContainer].join(" ")}
+            className={styles.uploadContainer}
             customRequest={handleOnUploadImage}
             disabled={!isFormEditable}
-            accept=".jpg,.jpeg,.png"
           >
             <TwoRow
               className={styles.uploadTextContainer}

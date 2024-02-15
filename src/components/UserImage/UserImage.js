@@ -23,9 +23,14 @@ const UserImage = ({
         src={src ? src : getImage("dummyPerson")}
         className={[styles.userImage, customImageStyles].join(" ")}
       />
-      {editable && (
-        <Trash className={styles.trashIcon} onClick={onTrashClick} />
-      )}
+      <div className={styles.trashAndIconContainer}>
+        <Typography className={styles.text}>
+          {imageName ? imageName : intl.formatMessage({ id: "label.photo" })}
+        </Typography>
+        {editable && (
+          <Trash className={styles.trashIcon} onClick={onTrashClick} />
+        )}
+      </div>
     </div>
   );
 };

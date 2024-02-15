@@ -11,3 +11,7 @@
 .ant-checkbox .ant-checkbox-inner:after {
   border-color: #04af55 !important;
 }
+
+.ant-checkbox-wrapper {
+  font-size: var(--fontSizeSmall, 14px);
+}

@@ -16,11 +16,9 @@ const PaginationItems = ({ current, disabled, type, originalElement }) => {
     return (
       <Button
         {...{ disabled }}
-        className={[
-          styles.nextAndPrevArrowContainer,
-          styles.rowReverse,
-          "customDiable",
-        ].join(" ")}
+        className={[styles.nextAndPrevArrowContainer, styles.rowReverse].join(
+          " "
+        )}
       >
         <Image
           src={
@@ -43,10 +41,7 @@ const PaginationItems = ({ current, disabled, type, originalElement }) => {
   }
   if (type === "next") {
     return (
-      <Button
-        className={[styles.nextAndPrevArrowContainer, "customDiable"]}
-        {...{ disabled }}
-      >
+      <Button className={styles.nextAndPrevArrowContainer} {...{ disabled }}>
         <Image
           src={
             disabled ? getImage("disabledArrowLeft") : getImage("arrowRight")

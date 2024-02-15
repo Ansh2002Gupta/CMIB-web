@@ -1,9 +1,10 @@
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch, Tooltip } from "antd";
+import { Checkbox, Dropdown, Image, Switch, Tooltip } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
+import Chip from "../../../components/Chip/Chip";
 import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import { formatDate } from "../../../constant/utils";
@@ -21,12 +22,14 @@ const useRenderColumn = () => {
     key,
     renderDateTime = {},
     render,
+    renderChip = {},
     renderImage = {},
     renderMenu = {},
     renderText = {},
     renderTextWithCheckBoxes = {},
     renderSwitch = {},
     renderTwoImage = {},
+    renderTitleWithCheckbox = {},
     sortDirection,
     sorter,
     sortKey,
@@ -72,6 +75,7 @@ const useRenderColumn = () => {
     } = renderTextWithCheckBoxes;
 
     const {
+      dateFormat = "DD/MM/YYYY",
       includeDotAfterText,
       isTextBold,
       isTypeDate,
@@ -79,7 +83,6 @@ const useRenderColumn = () => {
       isCapitalize,
       isRequiredTooltip,
       mobile,
-      isIntl,
     } = renderText;
 
     const {
@@ -105,15 +108,28 @@ const useRenderColumn = () => {
       rightPreview,
     } = renderTwoImage;
 
+    const { titleWithCheckBoxes, isIntermidiate, isChecked, onToggleCheckBox } =
+      renderTitleWithCheckbox;
+
+    const getStatusStyles = (status) => {
+      if (
+        status?.toLowerCase() === "closed" ||
+        status?.toLowerCase() === "answered"
+      ) {
+        return ["statusContainer_success", "statusText_success"];
+      }
+      if (status?.toLowerCase() === "pending") {
+        return ["statusContainer_failed", "statusText_failed"];
+      }
+      return ["statusContainer_progress", "statusText_progress"];
+    };
+
     const textRenderFormat = ({ text }) => {
       if (isTypeDate) {
         return formatDate({ date: text });
       }
       if (includeDotAfterText) {
         return `${text} .`;
-      }
-      if (isIntl) {
-        return intl.formatMessage({ id: `label.${text}` });
       }
       return text;
     };
@@ -128,7 +144,7 @@ const useRenderColumn = () => {
             isCapitalize ? styles.capitalize : "",
           ].join(" ")}
         >
-          {textRenderFormat({ text: text || "--" })}
+          {textRenderFormat({ text })}
         </p>
       );
     };
@@ -144,6 +160,22 @@ const useRenderColumn = () => {
               </>
             )}
           </p>
+        );
+      });
+
+    renderTitleWithCheckbox?.visible &&
+      (columnObject.title = () => {
+        return (
+          <div>
+            <Checkbox
+              indeterminate={isIntermidiate}
+              checked={isChecked}
+              className={[styles.chipContainer, customColumnHeading].join(" ")}
+              onChange={onToggleCheckBox}
+            >
+              {titleWithCheckBoxes}
+            </Checkbox>
+          </div>
         );
       });
 
@@ -167,6 +199,8 @@ const useRenderColumn = () => {
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
 
     sortDirection && (columnObject.sortDirection = sortDirection);
+
+    render && (columnObject.render = render);
 
     renderText?.visible &&
       (columnObject.render = (text, rowData) => {
@@ -195,6 +229,23 @@ const useRenderColumn = () => {
             getRenderText(text)
           ),
         };
+      });
+
+    renderChip?.visible &&
+      (columnObject.render = (_, rowData) => {
+        const { status } = rowData;
+        const styleClassForContainer = getStatusStyles(status)[0];
+        const styleClassForText = getStatusStyles(status)[1];
+        return (
+          <Chip
+            label={status}
+            bgColor={[
+              styles.chipContainer,
+              styles[styleClassForContainer],
+            ].join(" ")}
+            textColor={styles[styleClassForText]}
+          />
+        );
       });
 
     renderSwitch.visible &&
