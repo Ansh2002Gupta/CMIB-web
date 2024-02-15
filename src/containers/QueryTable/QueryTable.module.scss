@@ -1,9 +1,3 @@
-.columnHeading {
-  color: var(--subHeadingColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightBold);
-}
-
 .errorContainer {
   width: var(--fullWidth);
   height: var(--fullHeight);
@@ -20,35 +14,6 @@
   border-radius: var(--radiusXLg);
   padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
   width: fit-content;
-}
-
-.statusContainer_success {
-  background-color: var(--lightGreenBg);
-}
-
-.statusContainer_failed {
-  background-color: var(--lightRedBg);
-}
-
-.statusContainer_progress {
-  background-color: var(--lightBlueBg2);
-}
-
-.defaultStatusStyles {
-  font-size: 12px;
-  line-height: 18px;
-}
-
-.statusText_success {
-  color: var(--greenText);
-}
-
-.statusText_failed {
-  color: var(--redText);
-}
-
-.statusText_progress {
-  color: var(--blueText);
 }
 
 .errorText {
@@ -83,6 +48,8 @@ input::placeholder {
 
 .columnHeading {
   color: var(--subHeadingColor) !important;
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightBold);
   display: flex;
   gap: var(--gapXSmall);
   align-items: center;
@@ -116,7 +83,12 @@ input::placeholder {
   font-size: var(--fontSizeExtraSmall, 12px) !important;
   font-weight: var(--fontWeightBold, 600) !important;
   cursor: pointer;
-  min-width: 120px;
+}
+
+.textAtEnd {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: var(--paddingExtraSmall, 8px);
 }
 
 .extraWidth {
@@ -171,7 +143,11 @@ input::placeholder {
   transform: rotate(0deg);
 }
 
-.iconContainer{
+.iconContainer {
   display: flex;
   gap: var(--gapLarge);
+}
+
+.gap_12px {
+  gap: var(--paddingMediumSmall, 12px) !important;
 }
