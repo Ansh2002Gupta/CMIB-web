@@ -10,7 +10,9 @@ import CustomTabs from "../../components/CustomTabs";
 import SessionDetails from "../../containers/SessionDetails";
 import SessionRound from "../SessionRound";
 import useFetch from "../../core/hooks/useFetch";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { ADMIN_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
+import { ADD_SESSION } from "../../routes/routeNames";
 import {
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
@@ -21,9 +23,9 @@ import styles from "./session.module.scss";
 
 function Session() {
   const intl = useIntl();
+  const { navigateScreen: navigate } = useNavigateScreen();
 
   const [activeTab, setActiveTab] = useState("1");
-  const [addSession, setAddSession] = useState(false);
   const [sessionId, setSessionId] = useState(1); //TODO : 1 has to replace once Global Session will implement as we will take id from there using useContext
   const {
     data: sessionData,
@@ -47,14 +49,13 @@ function Session() {
         <SessionDetails
           key={Date.now()}
           {...{
-            addSession,
+            isEditable: false,
             isGettingSessions,
             isSessionError,
             fetchData,
             sessionData,
             sessionId,
             sessionError,
-            setAddSession,
             setSessionId,
           }}
         />
@@ -95,53 +96,30 @@ function Session() {
               customStyles={!responsive?.isMd ? styles.customStyles : ""}
               headerText={intl.formatMessage({ id: "label.session" })}
               rightSection={
-                !addSession && (
-                  <CustomButton
-                    btnText={intl.formatMessage({
-                      id: "session.setUpNewSession",
-                    })}
-                    customStyle={!responsive.isMd ? styles.buttonStyles : ""}
-                    IconElement={responsive.isMd ? AddIcon : null}
-                    textStyle={styles.textStyle}
-                    onClick={() => {
-                      setAddSession(true);
-                    }}
-                  />
-                )
+                <CustomButton
+                  btnText={intl.formatMessage({
+                    id: "session.setUpNewSession",
+                  })}
+                  customStyle={!responsive.isMd ? styles.buttonStyles : ""}
+                  IconElement={responsive.isMd ? AddIcon : null}
+                  textStyle={styles.textStyle}
+                  onClick={() => {
+                    navigate(ADD_SESSION, false);
+                  }}
+                />
               }
             />
           }
           bottomSection={
-            !addSession && (
-              <CustomTabs
-                tabs={tabItems}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-              />
-            )
+            <CustomTabs
+              tabs={tabItems}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
           }
         />
       }
-      bottomSection={
-        addSession ? (
-          <SessionDetails
-            key={Date.now()}
-            {...{
-              addSession,
-              isGettingSessions,
-              isSessionError,
-              fetchData,
-              sessionData,
-              sessionId,
-              sessionError,
-              setAddSession,
-              setSessionId,
-            }}
-          />
-        ) : (
-          !!activeTabChildren && activeTabChildren.children
-        )
-      }
+      bottomSection={!!activeTabChildren && activeTabChildren.children}
       bottomSectionStyle={{
         padding: variables.fontSizeXlargeMedium,
       }}

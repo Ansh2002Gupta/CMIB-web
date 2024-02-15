@@ -6,7 +6,12 @@ import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 
 import styles from "./contentHeader.module.scss";
 
-const ContentHeader = ({ headerText, rightSection, customStyles }) => {
+const ContentHeader = ({
+  headerText,
+  rightSection,
+  customStyles,
+  customContainerStyle,
+}) => {
   const Header = () => {
     return (
       <div>
@@ -23,7 +28,7 @@ const ContentHeader = ({ headerText, rightSection, customStyles }) => {
     <TwoColumn
       leftSection={<Header />}
       rightSection={rightSection}
-      className={styles.twoColumnBox}
+      className={[styles.twoColumnBox, customContainerStyle].join(" ")}
     ></TwoColumn>
   );
 };
@@ -31,6 +36,7 @@ const ContentHeader = ({ headerText, rightSection, customStyles }) => {
 ContentHeader.defaultProps = {
   className: "",
   customStyles: "",
+  customContainerStyle: "",
   headerText: "",
   rightSection: <></>,
   style: {},
@@ -39,6 +45,7 @@ ContentHeader.defaultProps = {
 ContentHeader.propTypes = {
   className: PropTypes.string,
   customStyles: PropTypes.string,
+  customContainerStyle: PropTypes.string,
   headerText: PropTypes.string.isRequired,
   rightSection: PropTypes.node,
   style: PropTypes.object,

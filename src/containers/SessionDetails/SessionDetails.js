@@ -14,6 +14,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import useAddNewSessionApi from "../../services/api-services/Sessions/useAddNewSessionApi";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useUpdateSessionApi from "../../services/api-services/Sessions/useUpdateSessionApi";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useShowNotification from "../../core/hooks/useShowNotification";
@@ -24,19 +25,20 @@ import {
 } from "../../constant/utils";
 import { NOTIFICATION_TYPES } from "../../constant/constant";
 import { FIELDS } from "./sessionFieldDetails";
+import { EDIT_SESSION, SESSION } from "../../routes/routeNames";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 import "./Override.css";
 
 const SessionDetails = ({
   addSession,
+  isEditable,
   isGettingSessions,
   isSessionError,
   fetchData,
   sessionData,
   sessionId,
   sessionError,
-  setAddSession,
   setSessionId,
 }) => {
   const intl = useIntl();
@@ -46,8 +48,9 @@ const SessionDetails = ({
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const { showNotification, notificationContextHolder } = useShowNotification();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const [formErrors, setFormErrors] = useState({});
-  const [edit, setEdit] = useState(addSession);
+  const [edit, setEdit] = useState(isEditable);
   const [formData, setFormData] = useState(sessionData);
   const { addNewSession } = useAddNewSessionApi();
   const { updateSessionDetails } = useUpdateSessionApi();
@@ -113,7 +116,6 @@ const SessionDetails = ({
   );
 
   useEffect(() => {
-    setEdit(addSession);
     if (addSession) {
       setFormData({
         name: "",
@@ -163,8 +165,7 @@ const SessionDetails = ({
 
   const handleCancel = () => {
     setFormData(sessionData);
-    setEdit(false);
-    setAddSession(false);
+    navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
     setFormErrors({});
   };
   const handleSave = () => {
@@ -191,7 +192,7 @@ const SessionDetails = ({
         addNewSession({
           payload,
           onSuccessCallback: (res) => {
-            setAddSession(false);
+            navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
             setSessionId(res.id);
           },
           onErrorCallback: (errString) => {
@@ -206,7 +207,7 @@ const SessionDetails = ({
           sessionId: sessionId,
           payload,
           onSuccessCallback: (res) => {
-            setEdit(false);
+            navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
           },
           onErrorCallback: (errString) => {
             showNotification({
@@ -258,7 +259,7 @@ const SessionDetails = ({
                     !edit && (
                       <TwoColumn
                         onClick={() => {
-                          setEdit(true);
+                          navigate(`${EDIT_SESSION}?mode=edit`, false);
                         }}
                         className={styles.editContainer}
                         leftSection={

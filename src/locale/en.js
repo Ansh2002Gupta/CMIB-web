@@ -354,6 +354,8 @@ const locale = {
   "label.path.subscriptions": "Subscriptions",
   "label.path.companies": "Companies",
   "label.path.session": "Session",
+  "label.path.add-session": "Set up new session",
+  "label.path.edit-session": "Update Session",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
