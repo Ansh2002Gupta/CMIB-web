@@ -17,10 +17,7 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useResponsive from "../../../core/hooks/useResponsive";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
-import {
-  CENTER_END_POINT,
-  PLACEMENT_ROUTE,
-} from "../../../constant/apiEndpoints";
+import { CENTER_END_POINT, ADMIN_ROUTE } from "../../../constant/apiEndpoints";
 import { CONFIGURE_CENTRES } from "../../../routes/routeNames";
 import { FIELDS } from "./configureCentreDetailsFields";
 import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
@@ -34,7 +31,8 @@ const ConfigureCentreDetails = () => {
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
-  const currentlySelectedModuleId = userProfileDetails?.selectedModuleItem?.id;
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const [formErrors, setFormErrors] = useState({});
@@ -51,6 +49,7 @@ const ConfigureCentreDetails = () => {
       skipApiCallOnMount: true,
     },
   });
+
   const { isLoading: isUpdatingCenterDetails, updateCenterDetails } =
     useUpdateCenterDetailsApi();
 
@@ -125,7 +124,7 @@ const ConfigureCentreDetails = () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
         },
         (errorMessage) => {
-          showNotification(errorMessage, "error");
+          showNotification({ text: errorMessage, type: "error" });
         }
       );
     } else {
@@ -137,7 +136,7 @@ const ConfigureCentreDetails = () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
         },
         (errorMessage) => {
-          showNotification(errorMessage, "error");
+          showNotification({ text: errorMessage, type: "error" });
         }
       );
     }
@@ -158,15 +157,15 @@ const ConfigureCentreDetails = () => {
   useEffect(() => {
     if (centreId) {
       setFormData({
-        centre_code: data?.center_code,
-        centre_name: data?.center_name,
-        centre_type: data?.center_type,
+        centre_code: data?.centre_code,
+        centre_name: data?.name,
+        centre_type: data?.centre_size,
         status: data?.status,
       });
     }
   }, [data]);
 
-  const areFieldsEditable = !centreId || data?.is_editable;
+  const areFieldsEditable = true;
 
   return (
     <>
@@ -280,6 +279,8 @@ const ConfigureCentreDetails = () => {
                               };
                             });
                           }}
+                          activeText={"active"}
+                          inActiveText={"inactive"}
                         />
                       </CustomGrid>
                     }

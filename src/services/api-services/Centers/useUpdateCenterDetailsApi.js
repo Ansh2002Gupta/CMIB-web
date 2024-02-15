@@ -3,11 +3,7 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import {
-  CENTER_END_POINT,
-  PLACEMENT_ROUTE,
-  UPDATE_CENTER_DETAILS_END_POINT,
-} from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CENTER_END_POINT } from "../../../constant/apiEndpoints";
 
 const useUpdateCenterDetailsApi = () => {
   const intl = useIntl();

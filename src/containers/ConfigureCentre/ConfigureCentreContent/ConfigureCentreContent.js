@@ -10,14 +10,12 @@ import DataTable from "../../../components/DataTable";
 import ErrorMessageBox from "../../../components/ErrorMessageBox/ErrorMessageBox";
 import useFetch from "../../../core/hooks/useFetch";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
+import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import { CENTRE_DETAILS } from "../../../routes/routeNames";
-import {
-  CENTER_END_POINT,
-  PLACEMENT_ROUTE,
-} from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CENTER_END_POINT } from "../../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   PAGINATION_PROPERTIES,
@@ -39,6 +37,9 @@ const ConfigureCentreContent = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
 
   const [searchedValue, setSearchedValue] = useState(
     searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
@@ -53,7 +54,7 @@ const ConfigureCentreContent = () => {
     sortDirection: getValidSortByValue(
       searchParams.get(SORT_PROPERTIES.SORT_BY)
     ),
-    sortKeyName: "center_name",
+    sortKeyName: "name",
   });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -74,6 +75,16 @@ const ConfigureCentreContent = () => {
 
   const goToEditCentrePage = (rowData) => {
     navigate(`${CENTRE_DETAILS}/${rowData?.id}`);
+  };
+
+  const getRequestedParams = ({ page, search, size, validSortByValue }) => {
+    return {
+      perPage: size || pageSize,
+      page: page || current,
+      q: search || "",
+      sortDirection: validSortByValue || sortedOrder.sortDirection,
+      sortField: sortedOrder.sortKeyName,
+    };
   };
 
   const onHandleCentreStatus = (centerData) => {
@@ -98,7 +109,7 @@ const ConfigureCentreContent = () => {
         });
       },
       (errorMessage) => {
-        showNotification(errorMessage, "error");
+        showNotification({ text: errorMessage, type: "error" });
       }
     );
   };
@@ -135,7 +146,6 @@ const ConfigureCentreContent = () => {
   };
 
   const handleOnUserSearch = (str) => {
-    setSearchedValue(str);
     setCurrent(1);
     if (str?.trim()?.length > 2) {
       debounceSearch({
@@ -221,6 +231,7 @@ const ConfigureCentreContent = () => {
           </div>
         </Typography>
       ),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "name",
       key: "name",
       renderText: {
@@ -229,9 +240,10 @@ const ConfigureCentreContent = () => {
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.centreId" }),
-      dataIndex: "center_code",
-      key: "center_code",
+      title: intl.formatMessage({ id: "label.centreCode" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "centre_code",
+      key: "centre_code",
       renderText: { visible: true },
     }),
     {
@@ -250,16 +262,18 @@ const ConfigureCentreContent = () => {
     },
     renderColumn({
       title: intl.formatMessage({ id: "label.dateCreated" }),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "created_at",
       key: "created_at",
       renderText: { isTypeDate: true, visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.status" }),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "status",
       key: "status",
       renderSwitch: {
-        dataKeyName: "centreId",
+        dataKeyName: "status",
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
         checkIsSwitchEditable: (data) => {
