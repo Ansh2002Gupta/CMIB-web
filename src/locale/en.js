@@ -424,6 +424,8 @@ const locale = {
   "label.show_result": "Show Result",
   "label.centreCode": "Centre Id",
   "label.path.centre-details": "Edit centre details",
+  "label.big": "Big Centre",
+  "label.small": "Small Centre",
 };
 
 export default locale;
