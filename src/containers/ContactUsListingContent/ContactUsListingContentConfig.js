@@ -1,4 +1,5 @@
 import { Typography } from "antd";
+import { SORT_VALUES } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
 
 const getStatusStyles = (status) => {
@@ -16,7 +17,10 @@ export const getTicketOrQueryColumn = (
   intl,
   getImage,
   navigate,
-  renderColumn
+  renderColumn,
+  setSortBy,
+  sortBy,
+  handleSorting
 ) => {
   if (type === "2") {
     return [
@@ -137,7 +141,15 @@ export const getTicketOrQueryColumn = (
       dataIndex: "created_by",
       key: "created_by",
       sortKey: "created_by",
-      sortTypeText: true,
+      renderSorterColumn: true,
+      setSortBy: setSortBy,
+      columnSortByHandler: handleSorting,
+      customIconStyle: [
+        styles[sortBy],
+        sortBy === SORT_VALUES.ASCENDING || sortBy === SORT_VALUES.DESCENDING
+          ? styles.active
+          : "",
+      ],
       renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
@@ -210,9 +222,19 @@ export const getTicketOrQueryColumn = (
       dataIndex: "see",
       key: "see",
       renderImage: {
-        alt: "eye",
+        alt: "msg",
         preview: false,
         src: getImage("messageText"),
+        visible: true,
+      },
+    }),
+    renderColumn({
+      dataIndex: "see",
+      key: "see",
+      renderImage: {
+        alt: "options",
+        preview: false,
+        src: getImage("more"),
         visible: true,
       },
     }),

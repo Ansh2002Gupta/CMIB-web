@@ -1,19 +1,25 @@
+import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch } from "antd";
+import { Dropdown, Image, Switch, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
-import { formatDate } from "../../../constant/utils";
+import { ThemeContext } from "core/providers/theme";
+import { formatDate, toggleSorting } from "../../../constant/utils";
+import { SORT_VALUES } from "../../../constant/constant";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 
 const useRenderColumn = () => {
   const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
 
   const renderColumn = ({
     customColumnHeading,
+    customIconStyle,
+    columnSortByHandler,
     dataIndex,
     defaultSortOrder,
     isRequiredField,
@@ -22,11 +28,14 @@ const useRenderColumn = () => {
     render,
     renderImage = {},
     renderMenu = {},
+    renderSorterColumn,
     renderText = {},
     renderSwitch = {},
     renderTwoImage = {},
+    setSortBy,
     sortDirection,
     sorter,
+    sortIcon = "arrowDownDarkGrey",
     sortKey,
     sortTypeDate,
     sortTypeText,
@@ -106,7 +115,27 @@ const useRenderColumn = () => {
 
     title &&
       (columnObject.title = () => {
-        return (
+        return renderSorterColumn ? (
+          <Typography
+            className={[styles.columnHeading].join(" ")}
+            onClick={() => {
+              setSortBy((prev) => {
+                const newSortOrder = toggleSorting(prev);
+                columnSortByHandler(newSortOrder);
+                return newSortOrder;
+              });
+            }}
+          >
+            <div className={styles.sortingArrowContainer}>
+              {title}
+              <Image
+                src={getImage(sortIcon)}
+                preview={false}
+                className={[styles.centerContent, ...customIconStyle].join(" ")}
+              />
+            </div>
+          </Typography>
+        ) : (
           <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
             {title}
             {isRequiredField && (
@@ -130,7 +159,7 @@ const useRenderColumn = () => {
             dayjs(new Date(b[sortKey])).unix();
         }
         if (sortTypeText) {
-          return (a, b) => a[sortKey].localeCompare(b[sortKey]);
+          return (a, b) => a[sortKey]?.localeCompare(b[sortKey]);
         }
         return sorter;
       })());
@@ -171,7 +200,7 @@ const useRenderColumn = () => {
                 isCapitalize ? styles.capitalize : "",
               ].join(" ")}
             >
-              {textRenderFormat({ text: text || "--" })}
+              {textRenderFormat({ text: text || "-" })}
             </p>
           ),
         };
