@@ -144,10 +144,10 @@ const ConfigureCentreContent = () => {
       }),
     });
   };
+
   const handleOnUserSearch = (str) => {
     setCurrent(1);
-
-    if (str.length > 2) {
+    if (str?.trim()?.length > 2) {
       debounceSearch({
         queryParamsObject: getRequestedParams({
           page: 1,
@@ -161,7 +161,7 @@ const ConfigureCentreContent = () => {
       });
     }
 
-    if (!str && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
+    if (!str?.trim() && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
       debounceSearch({
         queryParamsObject: getRequestedParams({
           page: 1,
@@ -368,7 +368,7 @@ const ConfigureCentreContent = () => {
               })}
               allowClear
               className={styles.searchBar}
-              value={searchedValue}
+              value={searchedValue?.trim()}
               onChange={(e) => handleOnUserSearch(e.target.value)}
             />
           </div>
