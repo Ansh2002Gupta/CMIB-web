@@ -1,14 +1,14 @@
-import dayjs from "dayjs";
 import { useContext, useState } from "react";
+import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
+import { ThemeContext } from "core/providers/theme";
 import { formatDate, toggleSorting } from "../../../constant/utils";
 import { SORT_VALUES } from "../../../constant/constant";
-import { ThemeContext } from "core/providers/theme";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 
@@ -18,9 +18,9 @@ const useRenderColumn = () => {
 
   const renderColumn = ({
     customColumnHeading,
+    customIconStyle,
     dataIndex,
     defaultSortOrder,
-    handleSorting,
     isRequiredField,
     key,
     renderDateTime = {},
@@ -31,6 +31,7 @@ const useRenderColumn = () => {
     renderText = {},
     renderSwitch = {},
     renderTwoImage = {},
+    setSortBy,
     sortDirection,
     sorter,
     sortIcon = "arrowDownDarkGrey",
@@ -101,8 +102,6 @@ const useRenderColumn = () => {
       rightPreview,
     } = renderTwoImage;
 
-    const [sortBy, setSortBy] = useState("default");
-
     const textRenderFormat = ({ text }) => {
       if (isTypeDate) {
         return formatDate({ date: text });
@@ -119,20 +118,15 @@ const useRenderColumn = () => {
           <Typography
             className={[styles.columnHeading].join(" ")}
             onClick={() => {
-              handleSorting(toggleSorting(sortBy));
               setSortBy((prev) => toggleSorting(prev));
             }}
           >
-            <div className={styles.sortintArrawContainer}>
+            <div className={styles.sortingArrowContainer}>
               {title}
               <Image
                 src={getImage(sortIcon)}
                 preview={false}
-                className={[
-                  styles[sortBy],
-                  styles.centerContent,
-                  sortBy !== SORT_VALUES.DEFAULT ? styles.active : "",
-                ].join(" ")}
+                className={[styles.centerContent, ...customIconStyle].join(" ")}
               />
             </div>
           </Typography>

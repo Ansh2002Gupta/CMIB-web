@@ -1,4 +1,5 @@
 import { Typography } from "antd";
+import { SORT_VALUES } from "../../constant/constant";
 import styles from "./ContactUsListingContent.module.scss";
 
 const getStatusStyles = (status) => {
@@ -17,7 +18,8 @@ export const getTicketOrQueryColumn = (
   getImage,
   navigate,
   renderColumn,
-  handleSorting
+  setSortBy,
+  sortBy
 ) => {
   if (type === "2") {
     return [
@@ -139,7 +141,13 @@ export const getTicketOrQueryColumn = (
       key: "created_by",
       sortKey: "created_by",
       renderSorterColumn: true,
-      handleSorting,
+      setSortBy: setSortBy,
+      customIconStyle: [
+        styles[sortBy],
+        sortBy === SORT_VALUES.ASCENDING || sortBy === SORT_VALUES.DESCENDING
+          ? styles.active
+          : "",
+      ],
       renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
