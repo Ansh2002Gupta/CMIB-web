@@ -51,10 +51,6 @@ const TicketTable = ({
     url: CORE_ROUTE + STATUS,
   });
 
-  useEffect(() => {
-    handleSorting();
-  }, [sortBy]);
-
   let errorString = error;
   if (typeof error === "object") {
     errorString = error?.data?.message;
@@ -100,19 +96,20 @@ const TicketTable = ({
     page,
     rowPerPage,
     str,
+    sortDirection,
   }) => {
     return {
       perPage: rowPerPage || pageSize,
       page: page || current,
       q: str || searchedValue,
       sortField: "created_by",
-      sortDirection: sortBy,
+      sortDirection,
       status: JSON.stringify(currentFilterStatus?.["1"]),
       queryType: JSON.stringify(currentFilterStatus?.["2"]),
     };
   };
-  const handleSorting = () => {
-    const requestedParams = getRequestedQueryParams({ page: 1 });
+  const handleSorting = (sortDirection) => {
+    const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -123,7 +120,8 @@ const TicketTable = ({
     navigate,
     renderColumn,
     setSortBy,
-    sortBy
+    sortBy,
+    handleSorting
   );
 
   const onChangePageSize = (size) => {
