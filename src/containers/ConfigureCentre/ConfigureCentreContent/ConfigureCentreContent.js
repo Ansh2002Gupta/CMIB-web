@@ -144,29 +144,36 @@ const ConfigureCentreContent = () => {
       }),
     });
   };
-
   const handleOnUserSearch = (str) => {
     setCurrent(1);
-    str &&
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
 
-    !str &&
-      setSearchParams((prev) => {
-        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
-        return prev;
-      });
-
-    (str.length > 2 || (searchedValue.length > str.length && str.length > 1)) &&
+    if (str.length > 2) {
       debounceSearch({
         queryParamsObject: getRequestedParams({
           page: 1,
           search: validateSearchTextLength(str),
         }),
       });
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+    }
+
+    if (!str && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
+      debounceSearch({
+        queryParamsObject: getRequestedParams({
+          page: 1,
+          search: "",
+        }),
+      });
+      setSearchParams((prev) => {
+        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+    }
     setSearchedValue(str);
   };
 
