@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import _ from "lodash";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 import { getItem } from "../services/encrypted-storage-service";
 import { ROOT } from "../routes/routeNames";
@@ -22,3 +22,4 @@ function withPublicAccess(Component) {
 }
 
 export default withPublicAccess;
+ 

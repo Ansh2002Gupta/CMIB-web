@@ -3,9 +3,9 @@ import { ReactComponent as LockIcon } from '../themes//base/assets/icons/lock.sv
 
 const headerActionItems = [
     {
-        id: 'label.myProfile',
+        id: 'label.viewProfile',
         icon: <UserIcon />,
-        key: 'myProfile'
+        key: 'viewProfile'
     },
     {
         id: 'label.changePassword',

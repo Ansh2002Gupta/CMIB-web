@@ -280,13 +280,6 @@ export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
 
-export const STATUS = {
-  CLOSED: "Closed",
-  PENDING: "Pending",
-  SUCCESS: "Success",
-  ANSWERED: "Answered",
-};
-
 export const MODULE_KEYS = {
   CONTROL_KEY: "control",
   NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placements",
@@ -320,7 +313,7 @@ export const MENU_KEYS = {
   ROASTER: "roster",
   FEEDBACK: "feedback",
   CONTACT_US: "contact-us",
-  ACTIVITY_LOGS: "activity-log",
+  ACTIVITY_LOGS: "activity-logs",
   ALL_JOBS: "all-job-listing",
   ROUND_1_PLACEMENT: "round-1",
   ROUND_2_PLACEMENT: "round-2",
