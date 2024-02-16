@@ -48,7 +48,10 @@ const QueryDetailsHeader = ({
           status?.toLowerCase() === STATUS.PENDING?.toLowerCase() ? (
             <CustomButton
               IconElement={CheckIconWhite}
-              customStyle={!responsive?.isSm ? styles.buttonStyles : ""}
+              customStyle={[
+                styles.btn,
+                !responsive?.isSm ? styles.buttonStyles : "",
+              ].join(" ")}
               btnText={
                 responsive?.isSm
                   ? intl.formatMessage({
@@ -63,7 +66,7 @@ const QueryDetailsHeader = ({
                   },
                   onSuccessCallback: () => fetchData({}),
                   onErrorCallback: (error) => {
-                    showNotification(error, "error");
+                    showNotification({ text: error, type: "error" });
                   },
                 })
               }
