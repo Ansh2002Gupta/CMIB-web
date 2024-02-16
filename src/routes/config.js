@@ -39,6 +39,7 @@ import {
   OUT_SOURCED,
   QUERIES,
   QUERY_DETAILS,
+  ROUND_ONE_SETUP_CENTERS,
   ROOT,
   SESSION,
   SETUP_CENTERS,
@@ -225,11 +226,11 @@ const config = [
         element: <Session />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },

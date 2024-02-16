@@ -1,5 +1,6 @@
 import {
   CONSENT_MARKING,
+  ROUND_ONE_SETUP_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
@@ -184,7 +185,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: ROUND_ONE_SETUP_CENTERS,
   },
   {
     id: 2,
@@ -200,7 +201,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
     headingIntl: "Orientation Centres",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: ROUND_ONE_SETUP_CENTERS,
   },
   {
     id: 4,
@@ -216,7 +217,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: ROUND_ONE_SETUP_CENTERS,
   },
 ];
 
