@@ -108,8 +108,13 @@ const useRenderColumn = () => {
       rightPreview,
     } = renderTwoImage;
 
-    const { titleWithCheckBoxes, isIntermidiate, isChecked, onToggleCheckBox } =
-      renderTitleWithCheckbox;
+    const {
+      titleWithCheckBoxes,
+      isIntermidiate,
+      isChecked,
+      onToggleCheckBox,
+      customCheckBoxSytles = "",
+    } = renderTitleWithCheckbox;
 
     const getStatusStyles = (status) => {
       if (
@@ -173,7 +178,11 @@ const useRenderColumn = () => {
             <Checkbox
               indeterminate={isIntermidiate}
               checked={isChecked}
-              className={[styles.chipContainer, customColumnHeading].join(" ")}
+              className={[
+                styles.chipContainer,
+                customColumnHeading,
+                customCheckBoxSytles,
+              ].join(" ")}
               onChange={onToggleCheckBox}
             >
               {titleWithCheckBoxes}

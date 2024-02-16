@@ -85,6 +85,7 @@ export const getTicketOrQueryColumn = ({
         onToggleCheckBox: toggleSelectAllItems,
         isIntermidiate: areSomeItemsSelected,
         isChecked: areAllItemsSelected,
+        customCheckBoxSytles: styles.checkBoxContainer,
       },
       customColumnHeading: [
         styles.columnHeading,
