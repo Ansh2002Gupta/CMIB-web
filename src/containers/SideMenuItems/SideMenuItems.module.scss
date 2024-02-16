@@ -1,0 +1,55 @@
+.moduleSelector {
+  font-size: var(--fontSizeXSmall, 12px);
+  color: var(--textPrimary, #fff);
+  background: var(--sideMenuBg1, #141b43);
+  padding: var(--sizeXSmall, 12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--moduleSelectorBorder, #ffffff4d);
+  overflow-x: hidden;
+}
+
+.moduleSelectorHeading {
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.searchIcon {
+  width: var(--width_30, 30px);
+  height: var(--height_30, 30px);
+  padding-right: var(--paddingExtraSmall, 8px);
+  padding-bottom: var(--paddingXXSmall, 4px);
+}
+
+.searchBar {
+  border: none;
+  min-height: var(--height_44, 44px);
+  border-radius: var(--radiusLg, 8px);
+  background-color: var(--sideMenuBg1, #141b43)  !important;
+  input {
+    background-color: var(--sideMenuBg1, #141b43) !important;
+    font-size: var(--fontSizeSmall, 14px) !important;
+    font-weight: var(--fontWeightMedium, 500) !important;
+  }
+}
+
+.imageAndSearchBarContainer {
+  margin-top: var(--marginLarge, 24px);
+  padding: var(--paddingNone, 0px) var(--paddingSmall, 16px) var(--paddingSmall, 16px) var(--paddingSmall, 16px);
+  gap: var(--gapXSmall, 8px);
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-width: var(--width_42, 42px);
+  border-radius: var(--radiusLg, 8px);
+  min-height: var(--height_44, 44px);
+  background-color: var(--sideMenuBg1, #141b43) !important;
+}
