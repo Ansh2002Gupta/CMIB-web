@@ -332,7 +332,7 @@ const ConfigureCentreContent = () => {
         }),
       });
     }
-  }, [userProfileDetails]);
+  }, [userProfileDetails?.selectedModuleItem?.key]);
 
   useEffect(() => {
     return () => {
