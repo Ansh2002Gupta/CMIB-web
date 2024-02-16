@@ -6,28 +6,19 @@ import styles from "./Chip.module.scss";
 
 const Chip = ({
   bgColor,
-  bgStyles,
   customContainerStyles,
   customLabelStyles,
   label,
   onClick,
   textColor,
-  textStyles,
 }) => {
   return (
     <div
       {...{ onClick }}
-      className={[
-        styles.container,
-        bgStyles,
-        bgColor,
-        customContainerStyles,
-      ].join(" ")}
+      className={[styles.container, bgColor, customContainerStyles].join(" ")}
     >
       <Typography
-        className={[styles.text, textStyles, textColor, customLabelStyles].join(
-          " "
-        )}
+        className={[styles.text, textColor, customLabelStyles].join(" ")}
       >
         {label}
       </Typography>

@@ -6,6 +6,9 @@
   cursor: pointer;
 }
 
-.disable{
-  cursor: not-allowed;
+.disableBox {
+  display: flex;
+  gap: var(--gapSmall);
+  justify-content: flex-start;
+  align-items: center;
 }
