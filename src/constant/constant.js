@@ -1,5 +1,6 @@
 import {
   CONSENT_MARKING,
+  ORIENTATION_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
@@ -200,7 +201,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
     headingIntl: "Orientation Centres",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: ORIENTATION_CENTERS,
   },
   {
     id: 4,
