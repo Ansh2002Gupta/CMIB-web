@@ -146,7 +146,7 @@ const SetupCenter = () => {
       title: intl.formatMessage({ id: "label.bigSmallCentre" }),
       dataIndex: "centre_size",
       key: "centre_size",
-      renderText: { visible: true },
+      renderText: { visible: true, isIntl: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.actions" }),
