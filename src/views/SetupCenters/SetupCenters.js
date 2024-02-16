@@ -134,7 +134,7 @@ const SetupCenter = () => {
       title: intl.formatMessage({ id: "label.centreName" }),
       dataIndex: "name",
       key: "name",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { isTextBold: true, visible: true, isCapitalize: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreId" }),
@@ -175,26 +175,28 @@ const SetupCenter = () => {
           />
         </div>
       );
-    } else if (isGettingSetupCentres) {
+    }
+
+    if (isGettingSetupCentres) {
       return (
         <div className={styles.loaderContainer}>
           <Spin size="large" />
         </div>
       );
-    } else {
-      return (
-        <DataTable
-          columns={columns}
-          current={current}
-          pageSize={pageSize}
-          onChangePageSize={onChangePageSize}
-          onChangeCurrentPage={onChangeCurrentPage}
-          currentDataLength={setupCentres?.meta?.total}
-          customContainerStyles={styles.tableContainer}
-          originalData={setupCentres?.records || []}
-        />
-      );
     }
+
+    return (
+      <DataTable
+        columns={columns}
+        current={current}
+        pageSize={pageSize}
+        onChangePageSize={onChangePageSize}
+        onChangeCurrentPage={onChangeCurrentPage}
+        currentDataLength={setupCentres?.meta?.total}
+        customContainerStyles={styles.tableContainer}
+        originalData={setupCentres?.records || []}
+      />
+    );
   };
 
   useLayoutEffect(() => {
