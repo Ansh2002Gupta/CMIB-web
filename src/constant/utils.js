@@ -15,9 +15,7 @@ export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
 };
 
 export const convertDateToStringDate = (date) => {
-  let tempDate = dayjs(date, "M-YYYY");
-  const formattedDate = tempDate.format("MMM YYYY");
-  return formattedDate;
+  return dayjs(date, "M-YYYY").format("MMM YYYY");
 };
 
 export const convertStringArrayToObjectOfStringAndIdArray = (

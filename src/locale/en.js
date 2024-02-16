@@ -110,22 +110,21 @@ const locale = {
   "session.lastDateRegistrationCompanies":
     "Last date of registration for companies",
   "session.saveChanges": "Save Changes",
-  "session.error.sessionName": "Please enter Session Name",
-  "session.error.natureOfGoods": "Please enter services/goods",
+  "session.error.sessionName": "Please enter valid session name",
+  "session.error.natureOfGoods": "Please enter valid  services/goods",
   "session.error.invoiceNumberFormat": "Please use prefix-*****-suffix format",
-  "session.error.examinationSessionPeriod": "Please enter Session Name",
   "session.error.examinationSessionPeriod":
-    "* Please select atleast one Examination Session Period ",
-  "session.error.mcsCompletetionDate": "* Please select GMCS Completetion Date",
+    "* Please select atleast one examination session period ",
+  "session.error.mcsCompletetionDate": "* Please select MCS completetion date",
   "session.error.membershipCompletetionDate":
-    "* Please select Membership Completetion Date",
+    "* Please select membership completetion date",
   "session.error.articleshipCompletetionFromDate":
-    "* Please select Articleship Completetion From Date",
+    "* Please select articleship completetion from date",
   "session.error.articleshipCompletetionToDate":
-    "* Please select Articleship Completetion From Date",
-  "session.error.bankACNumber": "Please enter Bank A/C number",
-  "session.error.ifsc": "Please enter IFSC Code",
-  "session.error.hsnCode": "Please enter HSN Code/ SAC",
+    "* Please select articleship completetion to date",
+  "session.error.bankACNumber": "Please enter valid bank A/C number",
+  "session.error.ifsc": "Please enter valid IFSC code",
+  "session.error.hsnCode": "Please enter valid HSN code/ SAC",
   "label.viewProfile": "View Profile",
   "label.changePassword": "Change Password",
   "label.companyProfile": "Company Profile",

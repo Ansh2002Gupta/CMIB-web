@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -50,8 +50,24 @@ const SessionDetails = ({
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [formErrors, setFormErrors] = useState({});
-  const [edit, setEdit] = useState(isEditable);
-  const [formData, setFormData] = useState(sessionData);
+  const initialFormState = {
+    name: "",
+    module: "",
+    nature_of_services: "",
+    pi_number_format: "",
+    bank_ac_no: "",
+    bank_ac_ifsc: "",
+    hsn_sac_code: "",
+    ps_examination_periods: [],
+    mcs_completion_date: "",
+    membership_completion_date: "",
+    article_completion_from_date: "",
+    article_completion_to_date: "",
+  };
+
+  const [formData, setFormData] = useState(
+    addSession ? initialFormState : sessionData
+  );
   const { addNewSession } = useAddNewSessionApi();
   const { updateSessionDetails } = useUpdateSessionApi();
   const { MonthPicker } = DatePicker;
@@ -114,25 +130,6 @@ const SessionDetails = ({
     formData?.bank_ac_no,
     formData?.bank_ac_ifsc
   );
-
-  useEffect(() => {
-    if (addSession) {
-      setFormData({
-        name: "",
-        module: "",
-        nature_of_services: "",
-        pi_number_format: "",
-        bank_ac_no: "",
-        bank_ac_ifsc: "",
-        hsn_sac_code: "",
-        ps_examination_periods: [],
-        mcs_completion_date: "",
-        membership_completion_date: "",
-        article_completion_from_date: "",
-        article_completion_to_date: "",
-      });
-    }
-  }, [addSession]);
 
   const handleInputChange = (value, name) => {
     setFormData({
@@ -256,10 +253,10 @@ const SessionDetails = ({
                     </Typography>
                   }
                   rightSection={
-                    !edit && (
+                    !isEditable && (
                       <TwoColumn
                         onClick={() => {
-                          navigate(`${EDIT_SESSION}?mode=edit`, false);
+                          navigate(EDIT_SESSION, false);
                         }}
                         className={styles.editContainer}
                         leftSection={
@@ -284,7 +281,9 @@ const SessionDetails = ({
                   {fields?.map((item) => (
                     <TwoRow
                       key={item.id}
-                      className={edit ? styles.editGridItem : styles.gridItem}
+                      className={
+                        isEditable ? styles.editGridItem : styles.gridItem
+                      }
                       topSection={
                         <Typography className={styles.grayText}>
                           {intl.formatMessage({
@@ -294,7 +293,7 @@ const SessionDetails = ({
                         </Typography>
                       }
                       bottomSection={
-                        edit ? (
+                        isEditable ? (
                           <div className={styles.formInputStyles}>
                             {item.id === 5 ||
                             item.id === 6 ||
@@ -359,7 +358,7 @@ const SessionDetails = ({
                             ) : (
                               <CustomInput
                                 value={item.value}
-                                disabled={!edit}
+                                disabled={!isEditable}
                                 customLabelStyles={styles.inputLabel}
                                 customInputStyles={styles.input}
                                 customContainerStyles={
@@ -420,7 +419,7 @@ const SessionDetails = ({
             />
           }
           bottomSection={
-            !!edit && (
+            !!isEditable && (
               <TwoColumn
                 className={styles.editContainer}
                 leftSection={

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
-import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { TwoRow } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
@@ -27,8 +27,9 @@ function EditSession() {
   } = useFetch({
     url: ADMIN_ROUTE + SESSIONS + `/${sessionId}`,
   });
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentFormState = searchParams.get("mode");
+
+  const location = useLocation();
+  const isEditSession = location.pathname.includes("/edit-session");
 
   const responsive = useResponsive();
 
@@ -47,7 +48,7 @@ function EditSession() {
           key={Date.now()}
           {...{
             isEditable: true,
-            addSession: currentFormState !== FORM_STATES.EDITABLE,
+            addSession: !isEditSession,
             isGettingSessions,
             isSessionError,
             fetchData,

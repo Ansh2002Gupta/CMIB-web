@@ -7,10 +7,10 @@ import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 import styles from "./contentHeader.module.scss";
 
 const ContentHeader = ({
+  customContainerStyle,
+  customStyles,
   headerText,
   rightSection,
-  customStyles,
-  customContainerStyle,
 }) => {
   const Header = () => {
     return (

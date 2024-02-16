@@ -1,6 +1,6 @@
 import { SESSION_PERIOD } from "../../constant/constant";
 import {
-  ALPHANUMERIC_REGEX,
+  ALPHANUMERIC_WITH_SPACE_REGEX,
   BANK_ACC_NUMBER_REGEX,
   HSN_SAC_CODE_REGEX,
   IFSC_CODE_REGEX,
@@ -28,7 +28,7 @@ export const FIELDS = (
       value: name,
       rules: [
         {
-          regex: ALPHANUMERIC_REGEX,
+          regex: ALPHANUMERIC_WITH_SPACE_REGEX,
           required: true,
           message: "sessionName",
         },
@@ -41,7 +41,7 @@ export const FIELDS = (
       value: nature_of_services,
       rules: [
         {
-          regex: ALPHANUMERIC_REGEX,
+          regex: ALPHANUMERIC_WITH_SPACE_REGEX,
           required: true,
           message: "natureOfGoods",
         },

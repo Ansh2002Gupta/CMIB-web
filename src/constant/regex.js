@@ -1,4 +1,5 @@
 export const ALPHANUMERIC_REGEX = /^[a-zA-Z0-9]+$/;
+export const ALPHANUMERIC_WITH_SPACE_REGEX = /^[A-Za-z0-9 ]+$/;
 export const AT_LEAST_ONE_CAPITAL_LETTER = /(?=.*[A-Z])/;
 export const AT_LEAST_ONE_NUMERIC_VALUE = /(?=.*\d)/;
 export const AT_LEAST_ONE_SMALL_LETTER = /(?=.*[a-z])/;
