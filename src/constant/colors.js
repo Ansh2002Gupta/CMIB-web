@@ -5,7 +5,6 @@ export const colorPallets = {
   blue3: "#8997c5",
   blue4: "#007AFF",
   blue5: "rgba(63, 81, 181, 0.16)",
-  blue6: "#E0F5EA",
   lightBlue1: "#F6F8F9",
   lightBlue2: "#f2f4fc",
   darkBlue: "#00137E",
@@ -13,8 +12,8 @@ export const colorPallets = {
   skyBlue: "#E8FCFF",
   darkBlue2: "#0099CA",
   darkBlue3: "rgba(0,21,42,255)",
-  blue6: "#E8FCFF",
   blue7: "#0099CA",
+  blue8: "#141b43",
 
   // Red color shades
   red1: "#D93400",

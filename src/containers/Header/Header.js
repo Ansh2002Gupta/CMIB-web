@@ -32,7 +32,7 @@ function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
         }
         rightSection={
           <Space size="large">
-            {/* {responsive.isMd && <Sessions />} */}
+            {responsive.isMd && <Sessions />}
             <Badge dot offset={[-6, 4]}>
               <BellOutlined className={styles.notificationIcon} />
             </Badge>
