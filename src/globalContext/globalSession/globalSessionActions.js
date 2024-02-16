@@ -6,3 +6,10 @@ export const setGlobalSessionDetails = (payload) => {
     payload,
   };
 };
+
+export const setGlobalSessionList = (payload) => {
+  return {
+    type: types.SET_GLOBAL_SESSION_LIST,
+    payload,
+  };
+};

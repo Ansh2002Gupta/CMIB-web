@@ -12,9 +12,8 @@ import SideMenuItems from "../SideMenuItems";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import useFetch from "../../core/hooks/useFetch";
+import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { CORE_ROUTE, GLOBAL_SESSION_LIST } from "../../constant/apiEndpoints";
 import { DASHBOARD } from "../../routes/routeNames";
 import { filterMenuData } from "../../constant/utils";
 import modules from "./sideMenuItems";
@@ -30,21 +29,17 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   const userData = userProfileDetails?.userDetails;
   const [selectedKey, setSelectedKey] = useState();
   const [openSessionSelector, setOpenSessionSelector] = useState(false);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
+  const [globalSessionDetails, globalSessionDispatch] = useContext(GlobalSessionContext);
+  const {getGlobalSessionList} = useGlobalSessionListApi();
+  const globalSessionList = globalSessionDetails?.globalSessionList;
 
-  const [, globalSessionDispatch] = useContext(GlobalSessionContext);
-  const { data, fetchData } = useFetch({
-    url: CORE_ROUTE + GLOBAL_SESSION_LIST,
-    otherOptions: {
-      skipApiCallOnMount: true,
-    },
-  });
   const [selectedSession, setSelectedSession] = useState(
-    data?.length > 0 ? { key: data[0].id, label: data[0].name } : {}
+    globalSessionList.length > 0 ? { key: globalSessionList?.[0].id, label: globalSessionList?.[0].name } : {}
   );
 
   const location = useLocation();
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
-  const selectedModule = userProfileDetails?.selectedModuleItem;
 
   function updateLabelsForIntl(menuItems, selectedKey) {
     return menuItems?.map((item) => {
@@ -85,15 +80,18 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }, [userProfileDetails, navigate]);
 
   useEffect(() => {
-    if (data) {
-      setSelectedSession({ key: data[0].id, label: data[0].name });
-      globalSessionDispatch(setGlobalSessionDetails(data[0].id));
+    getGlobalSessionList(selectedModule?.key);
+    if (globalSessionList?.length) {
+      setSelectedSession({ key: globalSessionList?.[0]?.id, label: globalSessionList?.[0]?.name });
+      globalSessionDispatch(setGlobalSessionDetails(globalSessionList?.[0]?.id));
     }
-  }, [data]);
+  }, [selectedKey?.key]);
 
   useEffect(() => {
-    if (!responsive.isMd && !data) {
-      fetchData({});
+    if (!responsive.isMd && !globalSessionList) {
+      fetchData({queryParamsObject:{
+        perPage: 1000,
+      }});
     }
   }, [openSessionSelector]);
 
@@ -127,7 +125,8 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
         {
           <TwoRow
             topSection={
-              !openSessionSelector && (
+              <>
+              {!openSessionSelector && (
                 <TwoRow
                   topSection={
                     !responsive?.isMd && (
@@ -157,12 +156,14 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                     />
                   }
                 />
-              )
+              )}
+              </>
             }
             bottomSection={
                 <TwoRow
                   topSection={
-                    data &&
+                    <>
+                    {!!globalSessionList?.length &&
                     !responsive.isMd && (
                       <TwoRow
                         className={styles.sessionContainer}
@@ -177,7 +178,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                           <SideMenuItems
                             openSelector={openSessionSelector}
                             setOpenSelector={setOpenSessionSelector}
-                            modules={data?.map((item) => ({
+                            modules={globalSessionList?.map((item) => ({
                               key: item.id,
                               label: item.name,
                             }))}
@@ -186,10 +187,12 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                           />
                         }
                       />
-                    )
+                    )}
+                    </>
                   }
                   bottomSection={
-                    selectedModule && !openSessionSelector && (
+                    <>
+                    {selectedModule && !openSessionSelector && (
                       <Menu
                         className={styles.sideMenuOptionsContainer}
                         theme="dark"
@@ -206,7 +209,8 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                         onSelect={handleOnClickMenuItem}
                         selectedKeys={selectedKey}
                       />
-                    )
+                    )}
+                    </>
                   }
                 />
             }

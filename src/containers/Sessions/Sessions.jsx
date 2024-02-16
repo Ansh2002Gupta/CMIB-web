@@ -4,18 +4,23 @@ import { useIntl } from "react-intl";
 import { Button, Dropdown, Menu, Typography } from "antd";
 
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
-import useFetch from "../../core/hooks/useFetch";
-import { CORE_ROUTE, GLOBAL_SESSION_LIST } from "../../constant/apiEndpoints";
+import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
+
 import styles from "./sessions.module.scss";
+
 
 function Sessions() {
   const intl = useIntl();
-  const [, globalSessionDispatch] = useContext(GlobalSessionContext);
-  const { data: globalSessionList } = useFetch({ url: CORE_ROUTE + GLOBAL_SESSION_LIST });
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const {getGlobalSessionList} = useGlobalSessionListApi();
+  const selectedModule = userProfileDetails?.selectedModuleItem;
+  const [globalSessionDetails, globalSessionDispatch] = useContext(GlobalSessionContext);
 
+  const globalSessionList = globalSessionDetails?.globalSessionList;
   const [selectedKey, setSelectedKey] = useState(
-    globalSessionList?.length ? globalSessionList[0].id : null
+    globalSessionDetails?.globalSessionList?.length ? globalSessionList[0].id : null
   );
 
   const handleMenuClick = ({ key }) => {
@@ -24,11 +29,11 @@ function Sessions() {
   };
 
   useEffect(() => {
+    getGlobalSessionList(selectedModule?.key);
     if (globalSessionList?.length) {
       setSelectedKey(globalSessionList[0].id);
-      globalSessionDispatch(setGlobalSessionDetails(globalSessionList[0].id));
     }
-  }, [globalSessionList]);
+  }, [selectedModule?.key]);
 
   const menu = (
     <Menu

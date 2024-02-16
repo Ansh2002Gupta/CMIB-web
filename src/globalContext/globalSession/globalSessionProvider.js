@@ -3,6 +3,7 @@ import * as types from "./types";
 
 const initialState = {
   globalSessionId: '',
+  globalSessionList: [],
 };
 
 const globalSessionReducer = (state, action) => {
@@ -12,7 +13,11 @@ const globalSessionReducer = (state, action) => {
         ...state,
         globalSessionId: action.payload,
       };
-
+    case types.SET_GLOBAL_SESSION_LIST: 
+    return {
+      ...state,
+      globalSessionList: action.payload,
+    }  
     default:
       return state;
   }
