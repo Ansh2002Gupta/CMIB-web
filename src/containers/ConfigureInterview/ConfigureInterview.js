@@ -11,6 +11,7 @@ import getConfigureDateCoumns from "./ConfigureInterviewConfig";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { getValidMode } from "../../Utils/validation";
 import { CONFIGURE_INTERVIEW_DATES } from "../../dummyData";
 import { SETUP_MOCK_INTERVIEW, SESSION } from "../../routes/routeNames";
 import { PAGINATION_PROPERTIES } from "../../constant/constant";
@@ -24,7 +25,7 @@ const ConfigureInterview = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const isEdit = searchParams.get("mode") === "edit";
+  const isEdit = getValidMode(searchParams.get("mode")) === "edit";
   const [tableData, setTableData] = useState(CONFIGURE_INTERVIEW_DATES);
   const [addTableData, setAddTableData] = useState({
     id: Math.random().toString(),
@@ -179,15 +180,17 @@ const ConfigureInterview = () => {
         />
       }
       bottomSection={
-        <ActionAndCancelButtons
-          actionBtnText={intl.formatMessage({
-            id: "label.saveChanges",
-          })}
-          cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-          onActionBtnClick={handleOnSubmit}
-          isActionBtnDisable={false}
-          onCancelBtnClick={handleCancel}
-        />
+        isEdit && (
+          <ActionAndCancelButtons
+            actionBtnText={intl.formatMessage({
+              id: "label.saveChanges",
+            })}
+            cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+            onActionBtnClick={handleOnSubmit}
+            isActionBtnDisable={false}
+            onCancelBtnClick={handleCancel}
+          />
+        )
       }
     />
   );
