@@ -1,0 +1,7 @@
+.ant-select-selection-item {
+    font-size: var(--fontSizeSmall); 
+}
+.ant-input-affix-wrapper >input.ant-input{
+    color: inherit;
+    font-weight: inherit;
+}

@@ -108,6 +108,8 @@ export const getAccessibleModules = (useRoles, modules) => {
 export const toggleSorting = (currentSortValue) => {
   if (SORT_VALUES.ASCENDING === currentSortValue) {
     return SORT_VALUES.DESCENDING;
+  } else if (SORT_VALUES.DESCENDING === currentSortValue) {
+    return "";
   }
   return SORT_VALUES.ASCENDING;
 };
