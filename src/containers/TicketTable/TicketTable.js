@@ -246,6 +246,9 @@ const TicketTable = ({
             onChangePageSize,
             onChangeCurrentPage,
             onFilterApply,
+            placeholder: intl.formatMessage({
+              id: "label.search_by_name_or_registration_no",
+            }),
           }}
           isLoading={isSuccess && !isLoading}
           data={data?.records}

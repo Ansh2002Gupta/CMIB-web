@@ -424,11 +424,13 @@ const locale = {
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
-  "label.show_result": "Show Result",
+  "label.show_result": "Show Results",
   "label.centreCode": "Centre Id",
   "label.path.centre-details": "Edit centre details",
   "label.big": "Big Centre",
   "label.small": "Small Centre",
+  "label.search_by_name_or_registration_no":
+    "Search by name and registration/membership number",
 };
 
 export default locale;
