@@ -106,7 +106,6 @@ const getConfigureDateCoumns = (
         },
       },
     }),
-
     renderColumn({
       title: " ",
       dataIndex: "minusCircle",

@@ -181,6 +181,7 @@ const variables = {
   height_40vh: "40vh",
   height_45vh: "45vh",
   height_50vh: "50vh",
+  height_60vh: "60vh",
   height_70vh: "70vh",
   height_85vh: "85vh",
   heightFullViewPort: "100vh",

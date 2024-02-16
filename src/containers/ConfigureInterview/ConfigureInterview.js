@@ -22,7 +22,7 @@ const ConfigureInterview = () => {
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const isEdit = getValidMode(searchParams.get("mode")) === "edit";
@@ -131,6 +131,12 @@ const ConfigureInterview = () => {
     return true;
   };
 
+  const redirectToMockInterviewListing = () => {
+    navigate(
+      `/${selectedModule?.key}/${SESSION}${SETUP_MOCK_INTERVIEW}?${PAGINATION_PROPERTIES.CURRENT_PAGE}=${location.state.current}&${PAGINATION_PROPERTIES.ROW_PER_PAGE}=${location.state.pageSize}`
+    );
+  };
+
   const columns = getConfigureDateCoumns(
     errors,
     intl,
@@ -143,14 +149,10 @@ const ConfigureInterview = () => {
   );
 
   const handleOnSubmit = () => {
-    navigate(
-      `/${selectedModule?.key}/${SESSION}${SETUP_MOCK_INTERVIEW}?${PAGINATION_PROPERTIES.CURRENT_PAGE}=${location.state.current}&${PAGINATION_PROPERTIES.ROW_PER_PAGE}=${location.state.pageSize}`
-    );
+    redirectToMockInterviewListing();
   };
   const handleCancel = () => {
-    navigate(
-      `/${selectedModule?.key}/${SESSION}${SETUP_MOCK_INTERVIEW}?${PAGINATION_PROPERTIES.CURRENT_PAGE}=${location.state.current}&${PAGINATION_PROPERTIES.ROW_PER_PAGE}=${location.state.pageSize}`
-    );
+    redirectToMockInterviewListing();
   };
 
   const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;

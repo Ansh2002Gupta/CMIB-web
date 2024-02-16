@@ -108,7 +108,7 @@ const CustomInput = React.forwardRef(
               className={[
                 styles.inputField,
                 customInputStyles,
-                isError && errorMessage && styles.errorInput,
+                isError && errorMessage ? styles.errorInput : "",
               ].join(" ")}
               {...{
                 value,
@@ -158,8 +158,8 @@ const CustomInput = React.forwardRef(
               className={[
                 styles.inputNumberStyles,
                 customInputNumberStyles,
-                isError && errorMessage && errorInput,
-              ]}
+                isError && errorMessage ? errorInput : "",
+              ].join(" ")}
               {...{
                 value,
                 placeholder,

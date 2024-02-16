@@ -59,16 +59,16 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 );
 
 const config = [
-  // {
-  //   pagePath: OUT_SOURCED,
-  //   element: <DefaultRoute />,
-  //   views: [
-  //     {
-  //       viewPath: "",
-  //       element: <DefaultRoute />,
-  //     },
-  //   ],
-  // },
+  {
+    pagePath: OUT_SOURCED,
+    element: <DefaultRoute />,
+    views: [
+      {
+        viewPath: "",
+        element: <DefaultRoute />,
+      },
+    ],
+  },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,
@@ -119,7 +119,7 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -238,7 +238,7 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -289,7 +289,7 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -340,7 +340,7 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,

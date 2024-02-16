@@ -18,6 +18,7 @@ import {
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
 import { MOCK_INTERVIEW } from "../../dummyData";
+import { SESSION, SETUP_MOCK_INTERVIEW } from "../../routes/routeNames";
 import { classes } from "./SetupMockInterview.styles";
 import styles from "./SetupMockInterview.module.scss";
 
@@ -43,7 +44,7 @@ const SetupMockInterviewContent = () => {
     navigate(
       `/${
         selectedModule?.key
-      }/session/setup-mock-interview/details/${centreId}?mode=${
+      }/${SESSION}${SETUP_MOCK_INTERVIEW}details/${centreId}?mode=${
         isEdit ? "edit" : "view"
       }`,
       false,
