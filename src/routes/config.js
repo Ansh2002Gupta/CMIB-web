@@ -203,7 +203,7 @@ const config = [
         element: <QueriesListing />,
       },
       {
-        viewPath: QUERY_DETAILS,
+        viewPath: QUERIES + QUERY_DETAILS,
         element: <QueryDetails />,
       },
       {

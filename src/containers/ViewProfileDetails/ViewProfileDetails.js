@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography, Image, Switch } from "antd";
 
@@ -21,7 +22,7 @@ import { USER_PROFILE_QUERY_PARAMS } from "../../constant/constant";
 import { classes } from "./ViewProfileDetails.styles";
 import styles from "./ViewProfileDetails.module.scss";
 
-const ViewProfileDetails = ({ showNotification }) => {
+const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
   const { getImage } = useContext(ThemeContext);
@@ -68,7 +69,8 @@ const ViewProfileDetails = ({ showNotification }) => {
         resetUserStoredInfo(!is2FactorAuthenicationOn);
         setIs2FactorAuthenicationOn((prev) => !prev);
       },
-      onErrorCallback: (errorString) => showNotification(errorString, "error"),
+      onErrorCallback: (errorString) =>
+        showNotification({ text: errorString, type: "error" }),
     });
   };
 
@@ -105,11 +107,13 @@ const ViewProfileDetails = ({ showNotification }) => {
             topSectionStyle={classes.crossStyle}
             topSection={
               <div className={styles.crossAndMenuContainer}>
-                <CustomHeaderMenu
-                  menuIcon={getImage("more")}
-                  menuPreview={false}
-                  menuItems={menuItems}
-                />
+                {includeDeleteButton && (
+                  <CustomHeaderMenu
+                    menuIcon={getImage("more")}
+                    menuPreview={false}
+                    menuItems={menuItems}
+                  />
+                )}
                 <Image
                   preview={false}
                   src={getImage("cross")}
@@ -203,6 +207,11 @@ const ViewProfileDetails = ({ showNotification }) => {
       />
     </>
   );
+};
+
+ViewProfileDetails.propTypes = {
+  includeDeleteButton: PropTypes.bool,
+  showNotification: PropTypes.func,
 };
 
 export default ViewProfileDetails;
