@@ -101,7 +101,13 @@ const SearchFilter = ({
           ref={elementNotConsideredInOutSideClick}
         >
           <Card
-            title={intl.formatMessage({ id: "label.filters" })}
+            title={
+              <div
+                className={styles.paddingLeft}
+              >
+                {intl.formatMessage({ id: "label.filters" })}
+              </div>
+            }
             className={styles.filterContainer}
             headStyle={classes.filterHeaderText}
             extra={
