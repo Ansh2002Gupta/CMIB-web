@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -6,6 +6,8 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
+import AddTicketAssignee from "../AddTicketAssignee";
+import CommonModal from "../../components/CommonModal";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import useFetch from "../../core/hooks/useFetch";
@@ -38,6 +40,8 @@ const TicketTable = ({
   const { getImage } = useContext(ThemeContext);
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentTicketData, setCurentTicketData] = useState();
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
@@ -74,10 +78,16 @@ const TicketTable = ({
     }));
   }, [status]);
 
+  const handleClickAssign = (data) => {
+    setIsModalOpen(true);
+    setCurentTicketData(data);
+  };
+
   const columns = getTicketOrQueryColumn({
     type: currentActiveTab,
     intl,
     getImage,
+    handleClickAssign,
     navigate,
     renderColumn,
     queriesColumnProperties: {},
@@ -213,6 +223,9 @@ const TicketTable = ({
 
   return (
     <>
+      <CommonModal isOpen={isModalOpen} width={400}>
+        <AddTicketAssignee {...{ currentTicketData, setIsModalOpen }} />
+      </CommonModal>
       {!isError && (
         <TableWithSearchAndFilters
           {...{

@@ -795,3 +795,148 @@ export const PERMISION_AND_ROLE = {
     },
   ],
 };
+
+export const ASSIGNEE_DUMMY = {
+  records: [
+    {
+      id: 3,
+      name: "Control Admin",
+    },
+    {
+      id: 13,
+      name: "Abhay",
+    },
+    {
+      id: 15,
+      name: "Mridul",
+    },
+    {
+      id: 27,
+      name: "dsfdsvfd",
+    },
+    {
+      id: 67,
+      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
+    },
+    {
+      id: 75,
+      name: "Benny",
+    },
+    {
+      id: 76,
+      name: "Shantanu Gupta",
+    },
+    {
+      id: 3,
+      name: "Control Admin",
+    },
+    {
+      id: 13,
+      name: "Abhay",
+    },
+    {
+      id: 15,
+      name: "Mridul",
+    },
+    {
+      id: 27,
+      name: "dsfdsvfd",
+    },
+    {
+      id: 67,
+      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
+    },
+    {
+      id: 75,
+      name: "Benny",
+    },
+    {
+      id: 76,
+      name: "Shantanu Gupta",
+    },
+    {
+      id: 3,
+      name: "Control Admin",
+    },
+    {
+      id: 13,
+      name: "Abhay",
+    },
+    {
+      id: 15,
+      name: "Mridul",
+    },
+    {
+      id: 27,
+      name: "dsfdsvfd",
+    },
+    {
+      id: 67,
+      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
+    },
+    {
+      id: 75,
+      name: "Benny",
+    },
+    {
+      id: 76,
+      name: "Shantanu Gupta",
+    },
+    {
+      id: 3,
+      name: "Control Admin",
+    },
+    {
+      id: 13,
+      name: "Abhay",
+    },
+    {
+      id: 15,
+      name: "Mridul",
+    },
+    {
+      id: 27,
+      name: "dsfdsvfd",
+    },
+    {
+      id: 67,
+      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
+    },
+    {
+      id: 75,
+      name: "Benny",
+    },
+    {
+      id: 76,
+      name: "Shantanu Gupta",
+    },
+    {
+      id: 3,
+      name: "Control Admin",
+    },
+    {
+      id: 13,
+      name: "Abhay",
+    },
+    {
+      id: 15,
+      name: "Mridul",
+    },
+    {
+      id: 27,
+      name: "dsfdsvfd",
+    },
+    {
+      id: 67,
+      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
+    },
+    {
+      id: 75,
+      name: "Benny",
+    },
+    {
+      id: 76,
+      name: "Shantanu Gupta",
+    },
+  ],
+};

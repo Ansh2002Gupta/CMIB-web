@@ -15,7 +15,12 @@ const getStatusStyles = (status) => {
   return ["statusContainer_progress", "statusText_progress"];
 };
 
-export const getTicketOrQueryColumn = ({ intl, getImage, renderColumn }) => {
+export const getTicketOrQueryColumn = ({
+  intl,
+  getImage,
+  handleClickAssign,
+  renderColumn,
+}) => {
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.ticketId" }),
@@ -114,6 +119,9 @@ export const getTicketOrQueryColumn = ({ intl, getImage, renderColumn }) => {
         preview: false,
         src: getImage("messageText"),
         visible: true,
+        onClick: (data) => {
+          handleClickAssign(data);
+        },
       },
     }),
   ];

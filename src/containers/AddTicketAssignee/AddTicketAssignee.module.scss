@@ -1,0 +1,38 @@
+.mainContainer {
+  border-radius: var(--radiusXLg);
+}
+
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: var(--fullWidth, 100%);
+  padding: var(--paddingMedium, 24px);
+}
+
+.moduleText {
+  color: var(--textBold, #000833);
+  font-size: var(--fontSizeLarge, 18px);
+  font-weight: var(--fontWeightBold, 600);
+}
+
+.crossIcon {
+  cursor: pointer;
+}
+
+.assigneeContainer {
+  padding: var(--gapMedium, 24px);
+  flex: 1;
+  max-height: var(--height_50vh, 50vh);
+  overflow-x: auto;
+}
+
+.assigneeText {
+  color: var(--textBold, #000833);
+  font-size: var(--, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  white-space: nowrap;
+  max-width: var(--widthViewPort_30, 30vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

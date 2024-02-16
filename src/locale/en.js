@@ -427,6 +427,8 @@ const locale = {
   "label.path.centre-details": "Edit centre details",
   "label.big": "Big Centre",
   "label.small": "Small Centre",
+  "label.selectassignee": "Select Assignee",
+  "label.assign": "Assign",
 };
 
 export default locale;
