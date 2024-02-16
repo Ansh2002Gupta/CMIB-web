@@ -1,6 +1,7 @@
 import addCircle from "./addCircle.svg";
 import arrowDown from "./arrow-down.svg";
 import arrowDownDarkGrey from "./arrow-down-dark-grey.svg";
+import arrowLeft from "./arrow-left.svg";
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import blackArrowDown from "./blackArrowDown.svg";
@@ -62,6 +63,7 @@ const images = {
   addCircle,
   arrowDown,
   arrowDownDarkGrey,
+  arrowLeft,
   arrowRight,
   arrowRightFilter,
   blackArrowDown,
