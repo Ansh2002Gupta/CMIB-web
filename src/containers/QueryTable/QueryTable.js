@@ -17,11 +17,7 @@ import useFetch from "../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketOrQueryColumn } from "./QueriesTableConfig";
-import {
-  convertPermissionFilter,
-  getSortQueryParamsValue,
-  getValidFilter,
-} from "../../constant/utils";
+import { convertPermissionFilter, getValidFilter } from "../../constant/utils";
 import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
@@ -48,21 +44,15 @@ const QueryTable = ({
 
   // useState hooks
   const [sortByCreatedAt, setSortByCreatedAt] = useState({
-    ...getSortQueryParamsValue({
-      direction: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_DIRECTION),
-      keyName: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_KEY),
-      stateKeyName: "created_at",
-    }),
+    direction: "asc",
+    isDisable: false,
   });
   const [sortByName, setSortByName] = useState({
-    ...getSortQueryParamsValue({
-      direction: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_DIRECTION),
-      keyName: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_KEY),
-      stateKeyName: "name",
-    }),
+    direction: "asc",
+    isDisable: true,
   });
   const [
-    selectedQueriesToBeMarkedAsAnswered,
+    selctedQueriesToBeMarkedAsAnswered,
     setSelctedQueriesToBeMarkedAsAnswered,
   ] = useState([]);
   const [filterArray, setFilterArray] = useState(
@@ -108,30 +98,23 @@ const QueryTable = ({
   let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
     (item) =>
       item?.status?.toLowerCase() === "answered" &&
-      selectedQueriesToBeMarkedAsAnswered.includes(item?.id)
+      selctedQueriesToBeMarkedAsAnswered.includes(item?.id)
   );
 
   const allQueryAreAlreadyAnswered =
     queriesSelectedAndMarkedForAnswer?.length ===
-      selectedQueriesToBeMarkedAsAnswered?.length &&
-    selectedQueriesToBeMarkedAsAnswered?.length > 0;
-
-  const getRequestedParams = ({ page, perPage, q, queryType }) => {
-    return {
-      perPage: perPage || pageSize,
-      page: page || current,
-      q: q || searchedValue,
-      queryType: queryType || filterArray,
-    };
-  };
+      selctedQueriesToBeMarkedAsAnswered?.length &&
+    selctedQueriesToBeMarkedAsAnswered?.length > 0;
 
   const onRetry = () => {
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({}),
-        ...getSortProperties(),
-      },
-    });
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      q: searchedValue,
+      queryType: filterArray,
+      ...getSortProperties(),
+    };
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleMarkQuery = () => {
@@ -141,7 +124,7 @@ const QueryTable = ({
     }
     handleMarkQueriesAsAnswered({
       payload: {
-        query_id: selectedQueriesToBeMarkedAsAnswered,
+        query_id: selctedQueriesToBeMarkedAsAnswered,
       },
       onSuccessCallback: () => {
         setIsConfirmationModalOpen(false);
@@ -157,7 +140,7 @@ const QueryTable = ({
 
   const checkAreAllQueryOfCurrentPageSelected = (checkFor) => {
     const currentPageSelectedQueries = data?.records?.filter((query) => {
-      return selectedQueriesToBeMarkedAsAnswered?.includes(query?.id);
+      return selctedQueriesToBeMarkedAsAnswered?.includes(query?.id);
     });
 
     if (checkFor === "all") {
@@ -181,7 +164,7 @@ const QueryTable = ({
   const toggleSelectAllItems = () => {
     const currentPageIdsArray = data?.records?.map((query) => query?.id);
     if (areAllItemsSelected) {
-      const updatedData = selectedQueriesToBeMarkedAsAnswered?.filter(
+      const updatedData = selctedQueriesToBeMarkedAsAnswered?.filter(
         (queryId) => !currentPageIdsArray?.includes(queryId)
       );
       setSelctedQueriesToBeMarkedAsAnswered(updatedData);
@@ -194,8 +177,8 @@ const QueryTable = ({
   };
 
   const toggleSelectedQueriesId = (queryId) => {
-    if (selectedQueriesToBeMarkedAsAnswered?.includes(queryId)) {
-      const updatedData = selectedQueriesToBeMarkedAsAnswered?.filter(
+    if (selctedQueriesToBeMarkedAsAnswered?.includes(queryId)) {
+      const updatedData = selctedQueriesToBeMarkedAsAnswered?.filter(
         (val) => val !== queryId
       );
       setSelctedQueriesToBeMarkedAsAnswered(updatedData);
@@ -211,7 +194,7 @@ const QueryTable = ({
     renderColumn,
     queriesColumnProperties: {
       setIsSingleSelect,
-      selectedItemsList: selectedQueriesToBeMarkedAsAnswered,
+      selectedItemsList: selctedQueriesToBeMarkedAsAnswered,
       setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
       toggleSelectedQueriesId,
       handleMarkMutipleQueriesAsAnswered: () =>
@@ -249,12 +232,14 @@ const QueryTable = ({
         prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
         return prev;
       });
-    debounceSearch({
-      queryParamsObject: {
-        ...getRequestedParams({ q: str }),
-        ...getSortProperties(),
-      },
-    });
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      q: str,
+      queryType: filterArray,
+      ...getSortProperties(),
+    };
+    debounceSearch({ queryParamsObject: requestedParams });
   };
 
   const onChangePageSize = (size) => {
@@ -265,12 +250,14 @@ const QueryTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({ perPage: size, page: 1 }),
-        ...getSortProperties(),
-      },
-    });
+    const requestedParams = {
+      perPage: size,
+      page: 1,
+      q: searchedValue,
+      queryType: filterArray,
+      ...getSortProperties(),
+    };
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -279,12 +266,14 @@ const QueryTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({ page: newPageNumber }),
-        ...getSortProperties(),
-      },
-    });
+    const requestedParams = {
+      perPage: pageSize,
+      page: newPageNumber,
+      q: searchedValue,
+      queryType: filterArray,
+      ...getSortProperties(),
+    };
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnFilterApply = (updatedFiltersValue) => {
@@ -293,12 +282,25 @@ const QueryTable = ({
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({ queryType: updatedFiltersValue }),
-        ...getSortProperties(),
-      },
-    });
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      q: searchedValue,
+      queryType: updatedFiltersValue,
+      ...getSortProperties(),
+    };
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
+  const handleOnReTry = () => {
+    const requestedParams = {
+      perPage: DEFAULT_PAGE_SIZE,
+      page: 1,
+      q: searchedValue,
+      queryType: filterArray,
+      ...getSortProperties(),
+    };
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   // MODAL PROPERTIES
@@ -383,12 +385,15 @@ const QueryTable = ({
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
         });
-        fetchData({
-          queryParamsObject: {
-            ...getRequestedParams({ page: 1 }),
-            ...getSortProperties(),
-          },
-        });
+
+        const requestedParams = {
+          perPage: pageSize,
+          page: 1,
+          q: searchedValue,
+          queryType: filterArray,
+          ...getSortProperties(),
+        };
+        fetchData({ queryParamsObject: requestedParams });
       }
     }
   }, [data?.meta?.total]);
@@ -409,12 +414,14 @@ const QueryTable = ({
       return prev;
     });
 
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({}),
-        ...getSortProperties(),
-      },
-    });
+    const requestedParams = {
+      perPage: pageSize,
+      page: current,
+      q: searchedValue,
+      queryType: filterArray,
+      ...getSortProperties(),
+    };
+    fetchData({ queryParamsObject: requestedParams });
     getQueriesTypes({});
   }, []);
 
@@ -451,7 +458,6 @@ const QueryTable = ({
             filterArray,
             setFilterArray,
           }}
-          arrayContainingSelectedRow={selectedQueriesToBeMarkedAsAnswered}
           isLoading={(isSuccess && !isLoading) || isMarkingQueryAsAnswered}
           data={data?.records}
           currentDataLength={data?.meta?.total}
@@ -466,7 +472,7 @@ const QueryTable = ({
       {isError && (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
-            {...{ onRetry }}
+            onRetry={handleOnReTry}
             errorText={errorString}
             errorHeading={intl.formatMessage({
               id: "label.error",

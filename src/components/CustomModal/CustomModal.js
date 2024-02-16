@@ -29,7 +29,7 @@ const CustomModal = ({
     >
       <Base className={styles.container}>
         <div className={styles.imageAndHeadingContainer}>
-          <div className={!imgElement ? styles.hide : ""}>
+          <div>
             {imgElement ? (
               <Image
                 src={imgElement}

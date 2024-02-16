@@ -6,6 +6,7 @@ import arrowRightFilter from "./arrow-right-filter.svg";
 import blackArrowDown from "./blackArrowDown.svg";
 import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
+import checkIconWhite from "./check-white.svg";
 import calendar from "./calendar.svg";
 import cancel from "./cancel.svg";
 import CircleCheck from "./CircleCheck.svg";
@@ -44,6 +45,7 @@ import addIcon from "./add.png";
 import editIcon from "./edit.png";
 import TempCompanyLogo from "./TempCompanyLogo.svg";
 import publicFooter from "./PublicFooter.svg";
+import greenTickSign from "./green tick sign.svg"
 import flagOnPedestal from "./flag on pedestal.svg";
 import global from "./global.svg";
 import scholar from "./scholar.svg";
@@ -58,13 +60,13 @@ import minusCircleBlue from "./minus-cirlce-blue.svg";
 import addCircleBlue from "./add-circle-blue.svg";
 import publicLogoWhite from "./public_logo_white_transparent.svg";
 import greenTick from "./green-tick.svg";
-import disabledArrow from "./disabled arrow.svg";
 
 const images = {
   addCircle,
   arrowDown,
   arrowDownDarkGrey,
   arrowRight,
+  arrowDownDarkGrey,
   arrowRightFilter,
   blackArrowDown,
   Building,
@@ -74,6 +76,7 @@ const images = {
   cancel,
   dummyPerson,
   CircleCheck,
+  checkIconWhite,
   disabledArrowLeft,
   DeviceMessage,
   Document,
@@ -107,6 +110,7 @@ const images = {
   editIcon,
   TempCompanyLogo,
   publicFooter,
+  greenTickSign,
   flagOnPedestal,
   global,
   scholar,
@@ -121,7 +125,6 @@ const images = {
   minusCircleBlue,
   publicLogoWhite,
   greenTick,
-  disabledArrow,
 };
 
 export default images;
