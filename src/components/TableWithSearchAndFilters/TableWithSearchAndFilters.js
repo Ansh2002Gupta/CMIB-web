@@ -8,8 +8,8 @@ import { ThemeContext } from "core/providers/theme";
 
 import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
-import { ACCESS_FILTER_DATA } from "../../dummyData";
 import { DEFAULT_PAGE_SIZE } from "../../constant/constant";
+import { ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./TableWithSearchAndFilters.module.scss";
 
 const TableWithSearchAndFilters = ({
@@ -82,6 +82,7 @@ TableWithSearchAndFilters.defaultProps = {
   columns: [],
   current: 1,
   currentDataLength: 0,
+  currentFilterStatus: [],
   data: [],
   filterOptions: [],
   handleOnUserSearch: () => {},
@@ -97,6 +98,7 @@ TableWithSearchAndFilters.propTypes = {
   columns: PropTypes.array,
   current: PropTypes.number,
   currentDataLength: PropTypes.number,
+  currentFilterStatus: PropTypes.array,
   data: PropTypes.array,
   filterOptions: PropTypes.array,
   handleOnUserSearch: PropTypes.func,

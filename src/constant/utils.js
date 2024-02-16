@@ -165,11 +165,15 @@ export const getImageSource = (uploadedImage) => {
   return "";
 };
 
-export const convertPermissionFilter = (roles) => {
+export const convertPermissionFilter = (
+  roles,
+  singleOptionsGroupName,
+  countFieldName
+) => {
   let result = [
     {
       id: 1,
-      name: "Access",
+      name: singleOptionsGroupName || "Access",
       isSelected: false,
       options: [],
     },
@@ -177,8 +181,9 @@ export const convertPermissionFilter = (roles) => {
   for (const key in roles) {
     if (roles.hasOwnProperty(key)) {
       result[0].options.push({
-        optionId: parseInt(key),
+        optionId: parseInt(roles[key]?.id || key),
         str: roles[key]?.name,
+        count: roles[key]?.[countFieldName],
       });
     }
   }
@@ -195,6 +200,13 @@ export const isObjectHasNoValues = (obj) => {
     }
   }
   return true;
+};
+
+export const getErrorMessage = (errorObjectOrMessage) => {
+  if (typeof errorObjectOrMessage === "string") {
+    return errorObjectOrMessage;
+  }
+  return errorObjectOrMessage?.data?.message;
 };
 
 export const getCurrentFormState = (
