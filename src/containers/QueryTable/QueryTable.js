@@ -111,10 +111,14 @@ const QueryTable = ({
       selectedQueriesToBeMarkedAsAnswered.includes(item?.id)
   );
 
+  const allCurrentPageSelectedQueries = data?.records?.filter((item) =>
+    selectedQueriesToBeMarkedAsAnswered.includes(item?.id)
+  );
+
   const allQueryAreAlreadyAnswered =
     queriesSelectedAndMarkedForAnswer?.length ===
-      selectedQueriesToBeMarkedAsAnswered?.length &&
-    selectedQueriesToBeMarkedAsAnswered?.length > 0;
+      allCurrentPageSelectedQueries?.length &&
+    allCurrentPageSelectedQueries?.length > 0;
 
   const getRequestedParams = ({ page, perPage, q, queryType }) => {
     return {
