@@ -1,6 +1,8 @@
 .headerContainer {
   padding: var(--paddingMedium);
   border: var(--borderLight);
+  border-right: none;
+  border-left: none;
   width: 100%;
   background-color: var(--bodyBg);
 }

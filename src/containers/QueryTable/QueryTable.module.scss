@@ -1,3 +1,9 @@
+.columnHeading {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
 .errorContainer {
   width: var(--fullWidth);
   height: var(--fullHeight);
@@ -16,6 +22,35 @@
   width: fit-content;
 }
 
+.statusContainer_success {
+  background-color: var(--greenBg);
+}
+
+.statusContainer_failed {
+  background-color: var(--orangeBg);
+}
+
+.statusContainer_progress {
+  background-color: var(--lightBlueBg2);
+}
+
+.defaultStatusStyles {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.statusText_success {
+  color: var(--greenText);
+}
+
+.statusText_failed {
+  color: var(--redText);
+}
+
+.statusText_progress {
+  color: var(--blueText);
+}
+
 .errorText {
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
@@ -32,14 +67,45 @@
   gap: var(--gapXSmall);
 }
 
-.centerText {
+.tableCell {
+  min-width: var(--width_140);
+}
+
+.arrowContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  gap: var(--gapXXSmall);
+}
+
+.upside {
+  transform: rotate(0deg);
+}
+
+.downside {
+  transform: rotate(180deg);
+}
+
+.arrowDown {
+  min-height: var(--height_20);
+  max-height: var(--height_20);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.tableCell {
-  min-width: var(--width_100);
+.columnHeader {
+  color: var(--inputPlaceHolder);
+  font-size: var(--fontSizeSmall);
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.disable {
+  cursor: not-allowed;
 }
 
 input::placeholder {
@@ -48,10 +114,8 @@ input::placeholder {
 
 .columnHeading {
   color: var(--subHeadingColor) !important;
-  font-size: var(--fontSizeExtraSmall);
-  font-weight: var(--fontWeightBold);
   display: flex;
-  gap: var(--gapSmallMedium);
+  gap: var(--gapXSmall);
   align-items: center;
   cursor: pointer;
   align-items: center;
@@ -83,12 +147,7 @@ input::placeholder {
   font-size: var(--fontSizeExtraSmall, 12px) !important;
   font-weight: var(--fontWeightBold, 600) !important;
   cursor: pointer;
-}
-
-.textAtEnd {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: var(--paddingExtraSmall, 8px);
+  min-width: 120px;
 }
 
 .extraWidth {
@@ -135,6 +194,11 @@ input::placeholder {
   min-width: var(--width_250, 250px) !important;
 }
 
+.active {
+  background-color: var(--lightGrey3Bg);
+  border-radius: 50%;
+}
+
 .asc {
   transform: rotate(180deg);
 }
@@ -143,11 +207,7 @@ input::placeholder {
   transform: rotate(0deg);
 }
 
-.iconContainer {
-  display: flex;
-  gap: var(--gapLarge);
-}
-
-.gap_12px {
-  gap: var(--paddingMediumSmall, 12px) !important;
+.defaultStatusStyles {
+  font-size: var(--fontSizeExtraSmall, 12px);
+  line-height: var(--lineHeightSmall, 18px);
 }

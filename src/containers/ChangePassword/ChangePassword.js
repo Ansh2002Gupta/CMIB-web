@@ -26,7 +26,7 @@ import { getPasswordStrengthPointsArray } from "../../constant/passwordRules";
 import { INITIAL_PASSWORD_DATA } from "../../constant/constant";
 import { classes } from "./ChangePassword.styles";
 import styles from "./ChangePassword.module.scss";
-import "./Override.css"
+import "./Override.css";
 
 const ChangePassword = () => {
   const intl = useIntl();
@@ -123,12 +123,12 @@ const ChangePassword = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     if (!passwordValidations.bothEqual) {
-      showNotification(
-        intl.formatMessage({
+      showNotification({
+        text: intl.formatMessage({
           id: "label.newPasswordAndConfirmPasswordDoNotMatched",
         }),
-        "error"
-      );
+        type: "error",
+      });
       return;
     }
     await handleChangePassword({
@@ -143,19 +143,19 @@ const ChangePassword = () => {
 
   useEffect(() => {
     if (errorWhileChangingPassword) {
-      showNotification(errorWhileChangingPassword, "error");
+      showNotification({ text: errorWhileChangingPassword, type: "error" });
     }
   }, [errorWhileChangingPassword]);
 
   useEffect(() => {
     let timer;
     if (changePasswordApiStatus === "success") {
-      showNotification(
-        intl.formatMessage({
+      showNotification({
+        text: intl.formatMessage({
           id: "label.passwordChanged",
         }),
-        "success"
-      );
+        type: "success",
+      });
       timer = setTimeout(() => {
         return onLogout(false);
       }, 3000);

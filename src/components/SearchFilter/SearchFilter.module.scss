@@ -9,14 +9,14 @@
   z-index: 100000000;
   background-color: var(--bodyBg);
   border: var(--borderLight);
-  border-radius: 16px;
+  border-radius: var(--radiusMLg);
   overflow: hidden;
 }
 
 .filterContainer {
-  min-width: 30vw;
-  min-height: 200px;
-  max-height: 600px;
+  min-width: var(--widthViewPort_30);
+  min-height: var(--height_250);
+  max-height: var(--height_600);
   border: 0;
 }
 
@@ -24,7 +24,7 @@
   padding: var(--paddingSmall);
   gap: var(--gapXSmall);
   display: flex;
-  min-height: 48px;
+  min-height: var(--height_48);
   align-items: center;
   justify-content: center;
   border: var(--borderLight);
@@ -38,17 +38,18 @@
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
+  align-self: "center";
 }
 
 .active {
-  background-color: var(--lightBlueBg);
+  background-color: var(--lightBlueBg) !important;
 }
 
 .filterOption {
   display: flex;
   justify-content: space-between;
   gap: var(--gapSmallMedium);
-  background-color: var(--lightBlueBg);
+  background-color: var(--bodyBg);
   padding: var(--fontSizeNormal);
   cursor: pointer;
 }
@@ -89,27 +90,27 @@
 .filterSecondLevelOption {
   display: flex;
   gap: var(--gapXSmall);
-  padding: var(--paddingSmall) 14px;
+  padding: var(--paddingSmall) var(--padding_14);
   align-items: center;
   cursor: pointer;
 }
 
 .footerBtnContainer {
   display: flex;
-  padding: var(--paddingExtraSmall);
+  padding: var(--paddingSmall);
   justify-content: flex-end;
   align-items: center;
   gap: var(--gapSmall);
 }
 
 .cancelBtn {
-  padding: var(--paddingExtraSmall) 12px;
+  padding: var(--paddingExtraSmall) var(--paddingMediumSmall);
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   background-color: var(--bodyBg);
-  min-height: var(--minBtnHeight);
-  border-radius: var(--radiusXLg);
+  min-height: var(--height_36);
+  border-radius: var(--radiusLg);
   border: var(--borderLight);
   &:hover {
     border: var(--borderLight) !important;
@@ -119,7 +120,7 @@
 
 .showResultBtn {
   padding: var(--paddingExtraSmall) var(--paddingSmall);
-  min-height: var(--minBtnHeight);
+  min-height: var(--height_36);
 }
 
 .clearAllBtn {
@@ -132,6 +133,24 @@
   span {
     text-decoration: underline !important;
   }
+}
+
+.optionsContainer {
+  max-height: var(--height_250);
+  overflow: auto;
+}
+
+.filterOptionContainer {
+  min-height: var(--height_250);
+}
+
+.messageBox {
+  padding: var(--paddingSmall);
+  width: var(--width_200);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--fontWeightMedium);
 }
 
 .countFilterStyle {
@@ -151,6 +170,12 @@
 
 .textInBrackets {
   color: var(--lightGreyText3);
+}
+
+.buttonTextStyle {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--bodyBg, #fff);
 }
 
 @media screen and (max-width: 900px) and (min-width: 510px) {

@@ -1,5 +1,4 @@
-import { Image, Typography } from "antd";
-
+import { Typography } from "antd";
 
 import styles from "./TicketTable.module.scss";
 
@@ -54,7 +53,7 @@ export const getTicketOrQueryColumn = ({ intl, getImage, renderColumn }) => {
       key: "query_type",
       renderText: {
         visible: true,
-        textStyles: [styles.centerText, styles.tableCell].join(" "),
+        textStyles: [styles.tableCell].join(" "),
       },
     }),
     renderColumn({
@@ -71,7 +70,12 @@ export const getTicketOrQueryColumn = ({ intl, getImage, renderColumn }) => {
               " "
             )}
           >
-            <Typography className={styles[styleClassForText]}>
+            <Typography
+              className={[
+                styles[styleClassForText],
+                styles.defaultStatusStyles,
+              ]}
+            >
               {status}
             </Typography>
           </div>
