@@ -29,14 +29,17 @@
 }
 
 .statusText_success {
+  font-size: var(--fontSizeExtraSmall);
   color: var(--greenText);
 }
 
 .statusText_failed {
+  font-size: var(--fontSizeExtraSmall);
   color: var(--redText);
 }
 
 .statusText_progress {
+  font-size: var(--fontSizeExtraSmall);
   color: var(--blueText);
 }
 
@@ -132,4 +135,17 @@ input::placeholder {
 .defaultStatusStyles {
   font-size: var(--fontSizeExtraSmall, 12px);
   line-height: var(--lineHeightSmall, 18px);
+}
+
+.asc {
+  transform: rotate(180deg);
+}
+
+.desc {
+  transform: rotate(0deg);
+}
+
+.active {
+  background-color: var(--lightGrey3Bg);
+  border-radius: 50%;
 }
