@@ -111,6 +111,7 @@ const SearchFilter = ({
                   setCurrentFilterStatus([]);
                   setFilterArray([]);
                   setShowFilters(false);
+                  onFilterApply([]);
                 }}
                 className={styles.clearAllBtn}
               >

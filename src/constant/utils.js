@@ -222,3 +222,29 @@ export const getCurrentFormState = (
   }
   return FORM_STATES.VIEW_ONLY;
 };
+
+export const getSortQueryParamsValue = ({
+  direction,
+  keyName,
+  stateKeyName,
+}) => {
+  direction = getSortingDirection(direction);
+  if (keyName === stateKeyName) {
+    return {
+      direction,
+      isDisable: false,
+    };
+  }
+  return {
+    direction: "asc",
+    isDisable: true,
+  };
+};
+
+export const getSortingDirection = (direction) => {
+  direction = direction?.toLowerCase();
+  if (direction === "asc" || direction === "desc") {
+    return direction;
+  }
+  return "asc";
+};
