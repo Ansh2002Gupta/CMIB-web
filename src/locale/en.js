@@ -77,6 +77,7 @@ const locale = {
     "Something went wrong! Please try again later",
   "label.session": "Session",
   "session.setUpNewSession": "Set Up New Session",
+  "session.editSession": "Edit Session",
   "session.sessionDetails": "Session Details",
   "session.edit": "Edit",
   "session.sessionName": "Session Name",
@@ -354,7 +355,7 @@ const locale = {
   "label.path.companies": "Companies",
   "label.path.session": "Session",
   "label.path.add-session": "Set up new session",
-  "label.path.edit-session": "Update Session",
+  "label.path.edit-session": "Edit Session",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",

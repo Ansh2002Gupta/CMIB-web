@@ -39,7 +39,11 @@ function EditSession() {
       topSection={
         <ContentHeader
           customStyles={!responsive?.isMd ? styles.customStyles : ""}
-          headerText={intl.formatMessage({ id: "session.setUpNewSession" })}
+          headerText={intl.formatMessage({
+            id: isEditSession
+              ? "session.editSession"
+              : "session.setUpNewSession",
+          })}
           customContainerStyle={styles.customContainerStyle}
         />
       }
