@@ -163,7 +163,7 @@ const SetupCenter = () => {
   ];
 
   const renderContent = () => {
-    if (errorWhileGettingCentres) {
+    if (!isGettingSetupCentres && errorWhileGettingCentres) {
       return (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
