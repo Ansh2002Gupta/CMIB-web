@@ -79,8 +79,12 @@ const SetupCenter = () => {
   };
 
   const goToEditCentrePage = (rowData, isEdit) => {
-    const centreId = rowData?.centreId;
-    navigate(`details/${centreId}?mode=${isEdit ? "edit" : "view"}`);
+    const centreCode = rowData?.centre_code;
+    const centreId = rowData?.id;
+    navigate(`details/${centreId}?mode=${isEdit ? "edit" : "view"}`, {
+      centreCode,
+      centreId,
+    });
   };
 
   const onChangePageSize = (size) => {
