@@ -19,7 +19,6 @@ const UserDetailsHeader = ({
   updateUserDetails,
   userData,
   userId,
-  viewUserData,
 }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -28,7 +27,7 @@ const UserDetailsHeader = ({
 
   const getHeaderText = () => {
     if (currentFormState === FORM_STATES.VIEW_ONLY) {
-      return viewUserData?.name;
+      return userData?.name;
     }
     if (currentFormState === FORM_STATES.EDITABLE) {
       return intl.formatMessage({ id: "label.editUserDetails" });
@@ -77,8 +76,7 @@ const UserDetailsHeader = ({
                   IconElement={Edit}
                   onClick={() =>
                     navigate(
-                      `/${selectedModule.key}/${USERS}details/${userId}?mode=edit`,
-                      true
+                      `/${selectedModule.key}/${USERS}details/${userId}?mode=edit`
                     )
                   }
                   iconStyles={styles.btnIconStyles}

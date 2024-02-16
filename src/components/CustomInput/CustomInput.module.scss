@@ -10,6 +10,10 @@
   padding-bottom: 4px;
 }
 
+.isRequiredStar {
+  color: var(--requiredStarColor);
+}
+
 .errorText {
   color: var(--error);
   font-weight: var(--fontWeightMedium);
@@ -34,7 +38,7 @@
   min-width: 100%;
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
-  font-weight: var(--fontWeightMedium, 500) !important;
+  font-weight: var(--fontWeightMedium);
 
   &::placeholder {
     color: var(--inputPlaceHolder) !important;

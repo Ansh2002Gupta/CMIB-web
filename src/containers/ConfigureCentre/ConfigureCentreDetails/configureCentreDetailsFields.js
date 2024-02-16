@@ -30,7 +30,7 @@ export const FIELDS = (centreName, bigSmallCentre, centreId) => {
     },
     {
       id: 3,
-      headingIntl: "centreCode",
+      headingIntl: "centreId",
       label: "centre_code",
       value: centreId,
       rules: [

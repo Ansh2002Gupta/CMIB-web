@@ -1,32 +1,33 @@
 .parentContainer .ant-input-disabled,
 .ant-input[disabled] {
   border: 0px;
-  background-color: var(--bodyBg, #fff);
+  background-color: #fff;
   padding-left: 0px;
 }
 
 .UserInfo_input__GyT0y.ant-picker-disabled {
-  background-color: var(--bodyBg, #fff);
-  font-weight: var(--fontWeightMedium, 500) !important;
+  background-color: #fff;
+  font-weight: 500 !important;
   color: rgba(97, 108, 130, 0.4) !important;
 }
 
 .ant-select-selector {
-  min-width: var(--fullWidth, 100%);
+  min-width: 100%;
   border: 0;
 }
 
 .ant-select-customize-input.ant-select-selector {
-  min-height: var(--height_48, 48px) !important;
+  min-height: 48px !important;
 }
 
 .ant-descriptions-item-label {
   color: var(--On-surface, #616c82) !important;
   font-size: 12px !important;
   font-weight: 500 !important;
+
 }
 
-.ant-descriptions-row > th {
+.ant-descriptions-row >th{
   padding-bottom: var(--paddingXXSmall) !important;
 }
 
@@ -34,34 +35,9 @@
   font-weight: var(--fontWeightMedium) !important;
   font-size: var(--fontSizeSmall) !important;
 }
-
 /* For preventing unnecessary scroll from modal */
 .ant-modal-root .ant-modal-wrap {
   overflow: unset !important;
-}
-
-.ant-input-number-handler-wrap {
-  pointer-events: none;
-}
-
-.ant-descriptions .ant-descriptions-row > th {
-  padding-bottom: var(--paddingExtraSmall, 8px) !important;
-}
-
-.ant-descriptions .ant-descriptions-row > td {
-  padding-bottom: var(--paddingMedium, 24px) !important;
-}
-
-.viewUserDetails .ant-descriptions-title {
-  font-size: 16px !important;
-}
-
-.ant-btn-icon {
-  margin: 0px !important;
-}
-
-.editUserDetails .ant-select-arrow .anticon > svg {
-  color: var(--textBold, #000833);
 }
 
 .ant-input-number-handler-wrap {

@@ -10,14 +10,21 @@ const useShowNotification = () => {
   const intl = useIntl();
   const [api, notificationContextHolder] = notification.useNotification();
 
-  const showNotification = ({ text, type, placement, headingText }) => {
+  const showNotification = (text, type, placement) => {
+    let headingText="";
     api[type || NOTIFICATION_TYPES.INFO]({
       message: headingText ? (
         <Typography>{headingText}</Typography>
       ) : (
         intl.formatMessage({ id: "label.notification" })
       ),
-      description: <Typography>{text}</Typography>,
+      description: Object.entries(text?.errors || {})?.length ? (
+        Object.entries(text?.errors)?.map(([item, value]) => {
+          return <Typography>{value}</Typography>;
+        })
+      ) : (
+        <Typography>{text}</Typography>
+      ),
       placement: placement || NOTIFICATION_POSITIONS.TOP_RIGHT,
     });
   };

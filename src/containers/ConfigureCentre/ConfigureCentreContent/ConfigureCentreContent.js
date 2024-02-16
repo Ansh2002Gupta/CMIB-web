@@ -69,10 +69,9 @@ const ConfigureCentreContent = () => {
         skipApiCallOnMount: true,
       },
     });
-  const debounceSearch = useMemo(
-    () => _.debounce(fetchData, DEBOUNCE_TIME),
-    []
-  );
+  const debounceSearch = useMemo(() => {
+    return _.debounce(fetchData, DEBOUNCE_TIME);
+  }, [currentlySelectedModuleKey]);
 
   const goToEditCentrePage = (rowData) => {
     navigate(`${CENTRE_DETAILS}/${rowData?.id}`);
@@ -148,25 +147,33 @@ const ConfigureCentreContent = () => {
 
   const handleOnUserSearch = (str) => {
     setCurrent(1);
-    str &&
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
-
-    !str &&
-      setSearchParams((prev) => {
-        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
-        return prev;
-      });
-    (str.length > 2 || searchedValue.length > str.length) &&
+    if (str?.trim()?.length > 2) {
       debounceSearch({
         queryParamsObject: getRequestedParams({
           page: 1,
           search: validateSearchTextLength(str),
         }),
       });
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+    }
+
+    if (!str?.trim() && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
+      debounceSearch({
+        queryParamsObject: getRequestedParams({
+          page: 1,
+          search: "",
+        }),
+      });
+      setSearchParams((prev) => {
+        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+    }
     setSearchedValue(str);
   };
 
@@ -190,7 +197,7 @@ const ConfigureCentreContent = () => {
       title: (
         <Typography
           className={[styles.columnHeading, styles.sortColumn]}
-          onClick={() =>
+          onClick={() => {
             fetchData({
               queryParamsObject: getRequestedParams({
                 search: validateSearchTextLength(searchedValue),
@@ -211,8 +218,8 @@ const ConfigureCentreContent = () => {
                   };
                 });
               },
-            })
-          }
+            });
+          }}
         >
           {intl.formatMessage({ id: "label.centreName" })}
           <div className={styles.sortArrowImageContainer}>
@@ -248,7 +255,7 @@ const ConfigureCentreContent = () => {
         renderText: {
           visible: true,
           textStyles: styles.tableCell,
-          isCapitalize: true,
+          isIntl: true,
         },
       }),
       width: "100px",
@@ -270,7 +277,7 @@ const ConfigureCentreContent = () => {
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
         checkIsSwitchEditable: (data) => {
-          return true;
+          return !isUpdatingCenterDetails;
         },
       },
     }),
@@ -361,11 +368,11 @@ const ConfigureCentreContent = () => {
               })}
               allowClear
               className={styles.searchBar}
-              value={searchedValue}
+              value={searchedValue?.trim()}
               onChange={(e) => handleOnUserSearch(e.target.value)}
             />
           </div>
-          {isSuccess && !isUpdatingCenterDetails && (
+          {isSuccess && (
             <DataTable
               {...{
                 columns,
@@ -379,7 +386,7 @@ const ConfigureCentreContent = () => {
               originalData={data?.records}
             />
           )}
-          {(isLoading || isUpdatingCenterDetails) && <CustomLoader />}
+          {isLoading && <CustomLoader />}
         </div>
       )}
     </>

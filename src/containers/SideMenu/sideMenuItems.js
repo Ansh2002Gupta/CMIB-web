@@ -146,7 +146,7 @@ const controlMenu = [
   },
   {
     label: MENU_KEYS.ACTIVITY_LOGS,
-    key: "/activity-log",
+    key: "/activity-logs",
     icon: <Activity />,
     selectedicon: <SelectedActivity />,
   },

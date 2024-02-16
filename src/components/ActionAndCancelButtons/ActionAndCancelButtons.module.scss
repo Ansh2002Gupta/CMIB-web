@@ -26,9 +26,8 @@
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
   background-color: var(--greenBtnBg, #04af55);
-  border: none !important;
   &:hover {
-    border: none !important;
+    border: var(--borderLight) !important;
   }
 }
 

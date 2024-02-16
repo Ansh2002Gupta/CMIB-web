@@ -47,9 +47,19 @@ const useAddNewCenterApi = () => {
         );
     } catch (err) {
       setAddNewCenterApiStatus(API_STATUS.ERROR);
+
       if (err.response?.data?.message) {
         setErrorWhileAddingNewCenter(err.response?.data?.message);
-        onErrorCallback && onErrorCallback(err.response?.data?.message);
+        if (
+          err.response?.data?.data &&
+          err.response?.data?.data?.errors &&
+          Object.entries(err.response?.data?.data?.errors).length
+        ) {
+          onErrorCallback && onErrorCallback(err.response?.data?.data);
+        } else {
+          onErrorCallback && onErrorCallback(err.response?.data?.message);
+        }
+
         return;
       }
       setErrorWhileAddingNewCenter(

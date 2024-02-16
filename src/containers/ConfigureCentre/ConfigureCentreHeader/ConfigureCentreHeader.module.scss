@@ -17,7 +17,7 @@
 
 @media screen and (max-width: 1535px) {
   .headerResponsiveStyle {
-    font-size: var(--fontSizeXXlarge);
+    font-size: var(--fontSizeHeading);
     max-width: 80vw;
   }
 
@@ -29,7 +29,6 @@
 @media screen and (max-width: 767px) {
   .headerResponsiveStyle {
     font-size: var(--fontSizeXlargeMedium);
-    max-width: 80vw;
   }
 
   .btnCustomStyles {

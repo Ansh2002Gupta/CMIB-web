@@ -21,7 +21,7 @@
 }
 
 .statusContainer_failed {
-  background-color: var(--orangeBg);
+  background-color: var(--lightRedBg);
 }
 
 .statusContainer_progress {
@@ -43,6 +43,12 @@
 .errorText {
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
+}
+
+.centerText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tableCell {
@@ -127,9 +133,4 @@ input::placeholder {
 
 .arrowSytles {
   margin-bottom: 6px;
-}
-
-.defaultStatusStyles {
-  font-size: var(--fontSizeExtraSmall, 12px);
-  line-height: var(--lineHeightSmall, 18px);
 }

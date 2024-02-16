@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import {
   DEFAULT_PAGE_SIZE,
-  FORM_STATES,
   GENERIC_ERROR_MESSAGE,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
@@ -200,25 +199,28 @@ export const isObjectHasNoValues = (obj) => {
   return true;
 };
 
-export const getErrorMessage = (errorObjectOrMessage) => {
-  if (typeof errorObjectOrMessage === "string") {
-    return errorObjectOrMessage;
+export const getSortingDirection = (direction) => {
+  direction = direction?.toLowerCase();
+  if (direction === "asc" || direction === "desc") {
+    return direction;
   }
-  return errorObjectOrMessage?.data?.message;
+  return "asc";
 };
 
-export const getCurrentFormState = (
-  currentQueryParamsValue,
-  isUserIdAvailable
-) => {
-  if (!currentQueryParamsValue && !isUserIdAvailable) {
-    return FORM_STATES.EMPTY;
+export const getSortQueryParamsValue = ({
+  direction,
+  keyName,
+  stateKeyName,
+}) => {
+  direction = getSortingDirection(direction);
+  if (keyName === stateKeyName) {
+    return {
+      direction,
+      isDisable: false,
+    };
   }
-  if (
-    currentQueryParamsValue?.toLowerCase() === FORM_STATES.EDITABLE ||
-    currentQueryParamsValue?.toLowerCase() === FORM_STATES.VIEW_ONLY
-  ) {
-    return currentQueryParamsValue?.toLowerCase();
-  }
-  return FORM_STATES.VIEW_ONLY;
+  return {
+    direction: "asc",
+    isDisable: true,
+  };
 };

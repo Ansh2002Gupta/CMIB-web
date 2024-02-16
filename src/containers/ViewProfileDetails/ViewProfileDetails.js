@@ -68,8 +68,7 @@ const ViewProfileDetails = ({ showNotification }) => {
         resetUserStoredInfo(!is2FactorAuthenicationOn);
         setIs2FactorAuthenicationOn((prev) => !prev);
       },
-      onErrorCallback: (errorString) =>
-        showNotification({ text: errorString, type: "error" }),
+      onErrorCallback: (errorString) => showNotification(errorString, "error"),
     });
   };
 

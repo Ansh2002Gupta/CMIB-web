@@ -42,7 +42,6 @@ const UserInfo = ({
   emailRef,
   phoneRef,
   nameRef,
-  viewUserData,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -114,7 +113,7 @@ const UserInfo = ({
         intl.formatMessage({ id: "label.twoFactorAuth" })
       ),
       children: intl.formatMessage({
-        id: `label.${is_two_factor ? "enabled" : "disabled"}`,
+        id: `label.${is_two_factor ? "active" : "inactive"}`,
       }),
     },
     {
@@ -156,7 +155,6 @@ const UserInfo = ({
       {!isEditable && (
         <div className={styles.nonEditableContainer}>
           <Descriptions
-            className="viewUserDetails"
             colon={false}
             title={intl.formatMessage({ id: "label.userDetails" })}
             layout="vertical"
@@ -239,21 +237,17 @@ const UserInfo = ({
                 onBlur={checkForMobileNumber}
               />
             </div>
-            {isNotAddable && (
-              <div className={styles.twoFactorContainer}>
-                <CustomSwitch
-                  checked={status}
-                  isRequired={true}
-                  isEditable={isNotAddable}
-                  label={intl.formatMessage({ id: "label.status" })}
-                  onChange={() => {
-                    updateUserData("status", !status);
-                  }}
-                  activeText={"active"}
-                  inActiveText={"inactive"}
-                />
-              </div>
-            )}
+            <div className={styles.twoFactorContainer}>
+              <CustomSwitch
+                checked={status}
+                isRequired={true}
+                isEditable={isNotAddable}
+                label={intl.formatMessage({ id: "label.status" })}
+                onChange={() => {
+                  updateUserData("status", !status);
+                }}
+              />
+            </div>
             <div className={styles.twoFactorContainer}>
               <CustomSwitch
                 checked={is_two_factor}
@@ -262,8 +256,6 @@ const UserInfo = ({
                 onChange={() => {
                   updateUserData("is_two_factor", !is_two_factor);
                 }}
-                activeText={"enable"}
-                inActiveText={"disable"}
               />
             </div>
             {isNotAddable && date && (
@@ -312,9 +304,11 @@ const UserInfo = ({
 };
 
 UserInfo.defaultProps = {
+  access: [],
   countryData: [],
   date: null,
   email: "",
+  isDateDisable: false,
   isEditable: false,
   isNotAddable: false,
   is_two_factor: false,
@@ -329,9 +323,11 @@ UserInfo.defaultProps = {
 };
 
 UserInfo.propTypes = {
+  access: PropTypes.array,
   countryData: PropTypes.array,
   date: PropTypes.string,
   email: PropTypes.string,
+  isDateDisable: PropTypes.bool,
   isEditable: PropTypes.bool,
   isNotAddable: PropTypes.bool,
   is_two_factor: PropTypes.bool,
