@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 export const DATA_SOURCE = [
   {
     id: 1,
@@ -213,8 +212,7 @@ export const COMPANY_DATA_SOURCE = [
 export const ACCESS_FILTER_DATA = [
   {
     id: 1,
-    name: "Access",
-    isSelected: false,
+    name: "Access 1",
     options: [
       { optionId: 1, str: "All" },
       { optionId: 2, str: "Placements" },
@@ -241,21 +239,6 @@ export const COMPANIES_FILTER_DATA = [
   },
 ];
 
-export const SESSION_ITEMS = [
-  {
-    key: "1",
-    label: "Item 1",
-  },
-  {
-    key: "2",
-    label: "Item 2",
-  },
-  {
-    key: "3",
-    label: "Item 3",
-  },
-];
-
 export const SESSION_DETAILS = {
   name: "Jadyn Bartoletti",
   session_start_date: "2023-12-19T05:11:46.000000Z",
@@ -273,149 +256,6 @@ export const SESSION_DETAILS = {
   created_at: "2023-12-19T05:11:46.000000Z",
   updated_at: "2023-12-19T05:11:46.000000Z",
 };
-
-export const TICKET_DATA_LIST = [
-  {
-    id: 1,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 2,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Progress",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 3,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Pending",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 4,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 5,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 6,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 7,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 8,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 9,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 10,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 11,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 12,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 13,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-  {
-    id: 14,
-    created_by: "Arhun jai",
-    role: "Candidate",
-    registration_no: 1023456789,
-    query_type: 1,
-    status: "Closed",
-    assigned_to: "kumar vijay",
-    created_at: "10/10/2020",
-  },
-];
 
 export const INITIAL_CENTRE_DETAILS = {
   centre_name: "",
