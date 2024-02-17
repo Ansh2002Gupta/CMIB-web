@@ -55,6 +55,7 @@ const TicketTable = ({
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
+
   const debounceSearch = useMemo(() => {
     return _.debounce((requestedParams) => {
       fetchData({ queryParamsObject: requestedParams });
@@ -87,8 +88,10 @@ const TicketTable = ({
         prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
         return prev;
       });
-    const requestedParams = getRequestedQueryParams({ str });
-    debounceSearch(requestedParams);
+    if (!str || str.length >= 3) {
+      const requestedParams = getRequestedQueryParams({ str });
+      debounceSearch(requestedParams);
+    }
   };
 
   const getRequestedQueryParams = ({
@@ -108,6 +111,7 @@ const TicketTable = ({
       queryType: JSON.stringify(currentFilterStatus?.["2"]),
     };
   };
+
   const handleSorting = (sortDirection) => {
     const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
     fetchData({ queryParamsObject: requestedParams });
@@ -159,26 +163,24 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  // TODO: Need to refactor
-  // useEffect(() => {
-  //   if (data?.meta) {
-  //     const { total } = data?.meta;
-  //     const numberOfPages = Math.ceil(total / pageSize);
-  //     if (current > numberOfPages) {
-  //       setCurrent(1);
-  //       setSearchParams((prev) => {
-  //         prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-  //       });
-
-  //       const requestedParams = {
-  //         perPage: pageSize,
-  //         page: 1,
-  //         q: searchedValue,
-  //       };
-  //       fetchData({ queryParamsObject: requestedParams });
-  //     }
-  //   }
-  // }, [data?.meta?.total]);
+  const resetTicketListingData = (ticketsResult) => {
+    if (ticketsResult?.meta?.total) {
+      const totalRecords = ticketsResult?.meta?.total;
+      const numberOfPages = Math.ceil(totalRecords / pageSize);
+      if (current > numberOfPages) {
+        fetchData({
+          queryParamsObject: getRequestedQueryParams({
+            page: 1,
+          }),
+        });
+        setSearchParams((prev) => {
+          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+          return prev;
+        });
+        setCurrent(1);
+      }
+    }
+  };
 
   useEffect(() => {
     setSearchParams((prev) => {
@@ -191,7 +193,10 @@ const TicketTable = ({
 
     const requestedParams = getRequestedQueryParams({});
 
-    fetchData({ queryParamsObject: requestedParams });
+    fetchData({
+      queryParamsObject: requestedParams,
+      onSuccessCallback: resetTicketListingData,
+    });
   }, []);
 
   const handleOnReTry = () => {
@@ -246,6 +251,9 @@ const TicketTable = ({
             onChangePageSize,
             onChangeCurrentPage,
             onFilterApply,
+            placeholder: intl.formatMessage({
+              id: "label.search_by_name_or_registration_no",
+            }),
           }}
           isLoading={isSuccess && !isLoading}
           data={data?.records}
