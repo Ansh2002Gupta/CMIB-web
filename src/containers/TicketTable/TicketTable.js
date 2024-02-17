@@ -110,7 +110,6 @@ const TicketTable = ({
         return prev;
       });
     }
-
     if (!str?.trim() && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
       debounceSearch({
         queryParamsObject: getRequestedQueryParams({
