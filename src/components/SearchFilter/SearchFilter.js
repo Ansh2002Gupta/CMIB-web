@@ -152,7 +152,6 @@ const SearchFilter = ({
                   ? classes.rightSectionStyle
                   : classes.filterRightSectionMobile
               }
-              className={styles.filterOptionContainer}
               leftSection={
                 <div>
                   {filterPropertiesArray?.map((item, index) => {
@@ -168,6 +167,7 @@ const SearchFilter = ({
                         <div className={styles.filterTextAndCheckContainer}>
                           <Image
                             className={styles.iconStyle}
+                            style={classes.iconStyle}
                             src={getCheckBoxes(item)}
                             preview={false}
                             onClick={() => selectOrRemoveAll(item)}
