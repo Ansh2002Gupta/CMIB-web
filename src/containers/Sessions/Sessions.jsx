@@ -25,7 +25,6 @@ function Sessions() {
   };
 
   useEffect(() => {
-    selectedModule?.key && getGlobalSessionList(selectedModule?.key);
     if (globalSessionList?.length) {
       globalSessionDispatch(setGlobalSessionDetails(+globalSessionList[0].id));
     }
@@ -59,19 +58,23 @@ function Sessions() {
       className={styles.sessionContainer}
       overlayClassName={styles.customDropdownMenu}
     >
-      <Button shape="round" size="middle" className={styles.sessionDropdownContainer}>
+      <Button
+        shape="round"
+        size="middle"
+        className={styles.sessionDropdownContainer}
+      >
         <div className={styles.sessionTextContainer}>
-        <Typography.Text className={styles.sessionText}>
-          {intl.formatMessage({ id: "label.sessionPrefix" })}
-        </Typography.Text>
-        &nbsp;
-        <Typography.Text className={styles.valueText}>
-          {globalSessionList?.find((item) => +item.id === +globalSessionId)
-            ?.name || intl.formatMessage({ id: "label.noSession" })}
-        </Typography.Text>
+          <Typography.Text className={styles.sessionText}>
+            {intl.formatMessage({ id: "label.sessionPrefix" })}
+          </Typography.Text>
+          &nbsp;
+          <Typography.Text className={styles.valueText}>
+            {globalSessionList?.find((item) => +item.id === +globalSessionId)
+              ?.name || intl.formatMessage({ id: "label.noSession" })}
+          </Typography.Text>
         </div>
         <div>
-        <DownOutlined />
+          <DownOutlined />
         </div>
       </Button>
     </Dropdown>

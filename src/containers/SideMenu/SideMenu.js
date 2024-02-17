@@ -10,7 +10,10 @@ import useResponsive from "../../core/hooks/useResponsive";
 import SideMenuButton from "../../components/SideMenuButton";
 import SideMenuItems from "../SideMenuItems";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
-import { setGlobalSessionDetails, setSelectedSession } from "../../globalContext/globalSession/globalSessionActions";
+import {
+  setGlobalSessionDetails,
+  setSelectedSession,
+} from "../../globalContext/globalSession/globalSessionActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -77,7 +80,6 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }, [userProfileDetails, navigate]);
 
   useEffect(() => {
-    selectedModule?.key && getGlobalSessionList(selectedModule?.key);
     globalSessionDispatch(setGlobalSessionDetails(globalSessionList?.[0]?.id));
   }, [selectedModule?.key]);
 
@@ -163,10 +165,12 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                           <SideMenuItems
                             openSelector={openSessionSelector}
                             setOpenSelector={setOpenSessionSelector}
-                            globalSessionList={globalSessionList?.map((item) => ({
-                              key: item.id,
-                              label: item.name,
-                            }))}
+                            globalSessionList={globalSessionList?.map(
+                              (item) => ({
+                                key: item.id,
+                                label: item.name,
+                              })
+                            )}
                             handleOnSelectItem={handleOnSelectSession}
                             selectedItem={selectedSession}
                             selectedModule={selectedModule}

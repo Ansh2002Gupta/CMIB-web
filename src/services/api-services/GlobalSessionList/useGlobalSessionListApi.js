@@ -21,7 +21,7 @@ const useGlobalSessionListApi = () => {
         CORE_ROUTE +
         `/${selectedModule}` +
         GLOBAL_SESSION_LIST +
-        "?perPage=1000";
+        "?perPage=9999";
       const res = await Http.get(url);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
