@@ -1,21 +1,20 @@
 import React, { useContext } from "react";
 
-import { ThreeRow, TwoRow } from "../../core/layouts";
+import { useIntl } from "react-intl";
+import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 
+import ErrorMessageBox from "../../components/ErrorMessageBox";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { formatDate, splitName } from "../../constant/utils";
-import styles from "./TicketDetails.module.scss";
-import useFetch from "../../core/hooks/useFetch";
 import { Typography } from "antd";
-import { useIntl } from "react-intl";
-import { CORE_ROUTE, TICKET_LIST } from "../../constant/apiEndpoints";
-import CustomLoader from "../../components/CustomLoader";
-import ErrorMessageBox from "../../components/ErrorMessageBox";
+import useResponsive from "../../core/hooks/useResponsive";
+import styles from "./TicketDetails.module.scss";
 
-const TicketDetails = ({ data, fetchData, isError, isLoading, error }) => {
+const TicketDetails = ({ data, fetchData, isError, error }) => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const intl = useIntl();
+  const responsive = useResponsive();
 
   const errorString = error?.data?.message || error;
 
@@ -33,8 +32,7 @@ const TicketDetails = ({ data, fetchData, isError, isLoading, error }) => {
           />
         </div>
       )}
-      {isLoading && !errorString && <CustomLoader />}
-      {!isLoading && !errorString && (
+      {responsive.isMd ? (
         <TwoRow
           className={styles.profileContainer}
           topSectionStyle={{ width: "100%" }}
@@ -74,7 +72,7 @@ const TicketDetails = ({ data, fetchData, isError, isLoading, error }) => {
                   }
                   bottomSection={
                     <Typography className={styles.contentDetailText}>
-                      {data?.assigned_to?.type}
+                      {data?.chat_partner_details?.type}
                     </Typography>
                   }
                 />
@@ -114,6 +112,77 @@ const TicketDetails = ({ data, fetchData, isError, isLoading, error }) => {
             />
           }
         />
+      ) : (
+        <div className={styles.container}>
+          <ThreeRow
+            className={styles.mainContainer}
+            topSection={
+              <TwoColumn
+                leftSection={
+                  <TwoRow
+                    className={styles.contentDetails}
+                    topSection={
+                      <Typography className={styles.contentHeadingText}>
+                        {intl.formatMessage({ id: "label.tickeNumber" })}
+                      </Typography>
+                    }
+                    bottomSection={
+                      <Typography className={styles.contentDetailText}>
+                        {data?.readable_id}
+                      </Typography>
+                    }
+                  />
+                }
+                isLeftFillSpace
+                rightSection={
+                  <TwoRow
+                    className={styles.contentDetails}
+                    topSection={
+                      <Typography className={styles.contentHeadingText}>
+                        {intl.formatMessage({ id: "label.status" })}
+                      </Typography>
+                    }
+                    bottomSection={
+                      <Typography className={styles.contentDetailText}>
+                        {data?.status}
+                      </Typography>
+                    }
+                  />
+                }
+              />
+            }
+            middleSection={
+              <TwoRow
+                className={styles.contentDetails}
+                topSection={
+                  <Typography className={styles.contentHeadingText}>
+                    {intl.formatMessage({ id: "label.queryType" })}
+                  </Typography>
+                }
+                bottomSection={
+                  <Typography className={styles.contentDetailText}>
+                    {data?.query_type}
+                  </Typography>
+                }
+              />
+            }
+            bottomSection={
+              <TwoRow
+                className={styles.contentDetails}
+                topSection={
+                  <Typography className={styles.contentHeadingText}>
+                    {intl.formatMessage({ id: "label.date_create_on" })}
+                  </Typography>
+                }
+                bottomSection={
+                  <Typography className={styles.contentDetailText}>
+                    {formatDate({ date: data?.created_at })}
+                  </Typography>
+                }
+              />
+            }
+          />
+        </div>
       )}
     </>
   );

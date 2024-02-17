@@ -59,7 +59,7 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
         setApiStatus(API_STATUS.SUCCESS);
         setData(res.data);
         onSuccessCallback && onSuccessCallback(res.data);
-        return;
+        return res.data;
       }
       setApiStatus(API_STATUS.ERROR);
       setError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);

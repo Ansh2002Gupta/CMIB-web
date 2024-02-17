@@ -387,6 +387,8 @@ const locale = {
   "label.typeHere": "Type here...",
   "label.markClosed": "Mark Closed",
   "label.ticketClosedSuccessfully": "Ticket has been closed successfully",
+  "label.tickeNumber": "Ticket Number",
+  "label.date_create_on": "Date Created On",
 };
 
 export default locale;

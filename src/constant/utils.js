@@ -221,39 +221,62 @@ export const splitName = (fullName) => {
 
 export const getMessageInfo = (chatData, userDetails) => {
   if (
-    chatData.type_id === userDetails?.id &&
-    chatData.user_type.toLowerCase() === userDetails?.user_type.toLowerCase()
+    chatData?.author?.type.toLowerCase() === "system" ||
+    !chatData?.author?.type
   ) {
-    return true;
+    return "system";
   }
-  return false;
+  if (
+    chatData?.author?.id === userDetails?.id &&
+    chatData?.author?.type.toLowerCase() ===
+      userDetails?.user_type.toLowerCase()
+  ) {
+    return "sender";
+  }
+  return "receiver";
 };
 
-let lastFlagDate = null;
+let lastFlaggedDates = {};
 
 export const getDateStatus = (record) => {
   const createdAt = new Date(record);
-
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
   if (createdAt.toDateString() === today.toDateString()) {
-    if (lastFlagDate !== today.toDateString()) {
-      lastFlagDate = today.toDateString();
+    if (!lastFlaggedDates[today.toDateString()]) {
+      lastFlaggedDates[today.toDateString()] = true;
       return "Today";
-    } else {
-      return "";
     }
   } else if (createdAt.toDateString() === yesterday.toDateString()) {
-    if (lastFlagDate !== yesterday.toDateString()) {
-      lastFlagDate = yesterday.toDateString();
+    if (!lastFlaggedDates[yesterday.toDateString()]) {
+      lastFlaggedDates[yesterday.toDateString()] = true;
       return "Yesterday";
-    } else {
-      return "";
     }
   } else {
-    lastFlagDate = null;
-    return formatDate(createdAt);
+    if (!lastFlaggedDates[createdAt.toDateString()]) {
+      lastFlaggedDates[createdAt.toDateString()] = true;
+      return record;
+    }
   }
+
+  return ""; // Return an empty string if the date doesn't match any category
+};
+
+export const getTime = (isoString) => {
+  if (!isoString) {
+    return "12:00 AM";
+  }
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) {
+    return "12:00 AM";
+  }
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const amPm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+  const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+  const formattedTime = `${hours}:${formattedMinutes} ${amPm}`;
+  return formattedTime;
 };

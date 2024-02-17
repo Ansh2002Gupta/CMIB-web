@@ -60,7 +60,8 @@ import minusCircleBlue from "./minus-cirlce-blue.svg";
 import addCircleBlue from "./add-circle-blue.svg";
 import publicLogoWhite from "./public_logo_white_transparent.svg";
 import whiteCheckIcon from "./white check icon.svg";
-import sendMessage from "./send message.svg"
+import sendMessage from "./send message.svg";
+import iconMore from "./iconMore.svg";
 
 const images = {
   activeSend,
@@ -126,6 +127,7 @@ const images = {
   publicLogoWhite,
   whiteCheckIcon,
   sendMessage,
+  iconMore,
 };
 
 export default images;

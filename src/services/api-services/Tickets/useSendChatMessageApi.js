@@ -30,7 +30,7 @@ const useSendChatMessageApi = () => {
         setSendMessageData(res?.data);
         setApiStatus(API_STATUS.SUCCESS);
         onSuccessCallback && onSuccessCallback();
-        return;
+        return res?.data;
       }
       setApiStatus(API_STATUS.ERROR);
       setErrorWhileSendingMessage(
@@ -57,7 +57,9 @@ const useSendChatMessageApi = () => {
         })
       );
       onErrorCallback &&
-        onErrorCallback( intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage"}))
+        onErrorCallback(
+          intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+        );
     }
   };
 

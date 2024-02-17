@@ -1,36 +1,32 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
-import { Upload } from "antd";
+import { Typography, Upload } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
-import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
-import ErrorMessageBox from "../../components/ErrorMessageBox";
 import MessageComponent from "../../components/MessageComponent";
-import useFetch from "../../core/hooks/useFetch";
+import MessageInfoComponent from "../../components/MessageInfoComponent/MessageInfoComponent";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useHandleInfiniteScroll from "../../services/api-services/Pagination/useInfiniteScroll";
-import useSendChatMessageApi from "../../services/api-services/Tickets/useSendChatMessageApi";
 import useUploadImageApi from "../../services/api-services/Image/useUploadImageApi";
 import { ReactComponent as Attachment } from "../../themes/base/assets/icons/attachment.svg";
-import { CORE_ROUTE, REPLIES, TICKET_LIST } from "../../constant/apiEndpoints";
+import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as ActiveIcon } from "../../themes/base/assets/images/send message.svg";
+import { getDateStatus, getTime } from "../../constant/utils";
 import { classes } from "./ChatSection.styles";
 import styles from "./ChatSection.module.scss";
 
-const ChatSection = ({ id }) => {
-  // from where we will get this id,
-
-  const { data, error, fetchData, isError, isLoading } = useFetch({
-    url: CORE_ROUTE + TICKET_LIST + `/${id}` + REPLIES,
-    otherOptions: {
-      skipApiCallOnMount: true,
-    },
-  });
-
+const ChatSection = ({
+  data,
+  handleLoadMore,
+  handleSend,
+  loadingMore,
+  isSendingMessage,
+  ticketDetails,
+}) => {
   // 3rd party hooks
   const intl = useIntl();
   const responsive = useResponsive();
@@ -38,36 +34,18 @@ const ChatSection = ({ id }) => {
 
   // useStates hooks
   const [messageValue, setMessageValue] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
+  const scrollToLatestMessageRef = useRef(null);
 
-  const isOnLastPage = currentPage === data?.meta?.lastPage;
-
-  // custom hooks
-  const getChatData = () => {
-    if (isOnLastPage) {
-      return;
+  useEffect(() => {
+    if (scrollToLatestMessageRef.current) {
+      const element = scrollToLatestMessageRef.current;
+      element.scrollIntoView({ behaviour: "smooth" });
     }
-    fetchData({
-      queryParamsObject: {
-        page: currentPage,
-      },
-      onSuccessCallback: (updatedData) => {
-        setCurrentPage((prev) => prev + 1);
-        setMessages((prev) => {
-          return [...updatedData?.records, ...prev];
-        });
-      },
-    });
-  };
-  useHandleInfiniteScroll(getChatData, messageListRef);
-  const { sendMessage, isLoading: isSendingMessage } = useSendChatMessageApi();
+  }, []);
 
-  const {
-    errorWhileUploadingImage,
-    handleUploadImage,
-    isLoading: isUploadingImage,
-  } = useUploadImageApi();
+  useHandleInfiniteScroll(handleLoadMore, messageListRef);
+
+  const { handleUploadImage } = useUploadImageApi();
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
@@ -76,45 +54,23 @@ const ChatSection = ({ id }) => {
     setMessageValue(val.target.value);
   };
 
-  const handleOnRetry = () => {
-    fetchData({
-      queryParamsObject: {
-        page: 1,
-      },
-      onSuccessCallback: (updatedData) => {
-        setMessages(updatedData?.records);
-      },
-    });
-  };
-
   const handleOnSendMessageText = () => {
     if (!messageValue?.length && !messageValue?.trim()?.length) {
       return;
     }
-    sendMessage({
-      ticketId: id,
-      payload: {
-        reply_text: messageValue,
-      },
-      onErrorCallback: (errorString) => showNotification(errorString, "error"),
-      onSuccessCallback: () => {
-        setMessageValue("");
-        handleOnRetry();
-      },
-    });
+    const payload = {
+      reply_text: messageValue,
+    };
+    handleSend(payload);
+    setMessageValue("");
   };
 
   const handleSendImage = (imageName) => {
-    sendMessage({
-      ticketId: id,
-      payload: {
-        file_name: imageName,
-      },
-      onErrorCallback: (errorString) => showNotification(errorString, "error"),
-      onSuccessCallback: () => {
-        handleOnRetry();
-      },
-    });
+    const payload = {
+      reply_text: "",
+      file_name: imageName,
+    };
+    handleSend(payload);
   };
 
   const handleOnUploadImage = (file) => {
@@ -152,57 +108,73 @@ const ChatSection = ({ id }) => {
     }
   };
 
-  const isShowLoaderOnMainScreen = currentPage === 0 && isLoading;
-  const isShowLoaderOnTopOfChat = currentPage >= 1 && isLoading;
+  const shouldShowAvatar = (currentIndex) => {
+    const comparisonIndex = currentIndex - 1;
+    if (currentIndex === 0) {
+      return true;
+    }
+    if (comparisonIndex < 0 || comparisonIndex >= data.length) {
+      return false;
+    }
+    const currentMessage = data[currentIndex];
+    const comparisonMessage = data[comparisonIndex];
+    if (currentMessage?.author?.type !== comparisonMessage?.author?.type) {
+      return true;
+    }
+    const currentTime = getTime(currentMessage?.created_at);
+    const comparisonTime = getTime(comparisonMessage?.created_at);
+    return currentTime !== comparisonTime;
+  };
 
-  useEffect(() => {
-    fetchData({
-      queryParamsObject: {
-        page: 1,
-      },
-      onSuccessCallback: (updatedData) => {
-        setCurrentPage((prev) => prev + 1);
-        setMessages((prev) => {
-          return [...updatedData?.records, ...prev];
-        });
-      },
-    });
-  }, []);
+  const renderHorizontalLine = () => {
+    return <div className={styles.horizontalLine} />;
+  };
 
   return (
     <>
       {notificationContextHolder}
-      {isError && !isOnLastPage && (
-        <ErrorMessageBox
-          errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
-          error={error?.data?.message || error}
-          onRetry={handleOnRetry}
-        />
-      )}
-      {isShowLoaderOnMainScreen && <CustomLoader />}
-      {!isShowLoaderOnMainScreen && !isError && (
-        <TwoRow
-          className={styles.mainContainer}
-          topSection={
-            <div className={styles.loaderAndChatContainer}>
-              {isShowLoaderOnTopOfChat && <CustomLoader size="medium" />}
-              <div className={styles.messagesContainer} ref={messageListRef}>
-                {messages
-                  ?.slice()
-                  ?.reverse()
-                  ?.map((item) => {
-                    return <MessageComponent messageData={item} />;
-                  })}
-              </div>
+      <TwoRow
+        className={styles.mainContainer}
+        topSection={
+          <div className={styles.loaderAndChatContainer}>
+            {loadingMore && <CustomLoader size="medium" />}
+            <div className={styles.messagesContainer} ref={messageListRef}>
+              {data?.map((item, index) => {
+                const messageFlag = getDateStatus(item?.created_at);
+                return (
+                  <>
+                    {!!messageFlag && (
+                      <div className={styles.flagContainer}>
+                        {renderHorizontalLine()}
+                        <Typography className={styles.messageFlag}>
+                          {messageFlag}
+                        </Typography>
+                        {renderHorizontalLine()}
+                      </div>
+                    )}
+                    {item?.author?.type.toLowerCase() === "system" && (
+                      <MessageInfoComponent message={item?.message} />
+                    )}
+                    <MessageComponent
+                      messageData={item}
+                      index={index}
+                      shouldShowAvatar={shouldShowAvatar}
+                    />
+                    <div ref={scrollToLatestMessageRef} />
+                  </>
+                );
+              })}
             </div>
-          }
-          topSectionStyle={{ flex: 1 }}
-          bottomSectionStyle={
-            responsive.isMd
-              ? classes.bottomSectionStyle
-              : classes.mobileBottomSectionStyle
-          }
-          bottomSection={
+          </div>
+        }
+        isTopFillSpace
+        bottomSectionStyle={
+          responsive.isMd
+            ? classes.bottomSectionStyle
+            : classes.mobileBottomSectionStyle
+        }
+        bottomSection={
+          ticketDetails?.status.toLowerCase() === "in-progress" && (
             <form className={styles.textInputFormContainer}>
               <TwoColumn
                 className={styles.textInputContainer}
@@ -222,7 +194,9 @@ const ChatSection = ({ id }) => {
                         document.querySelector("#fileUploadTrigger").click()
                       }
                       value={messageValue}
-                      placeholder={intl.formatMessage({ id: "label.typeHere" })}
+                      placeholder={intl.formatMessage({
+                        id: "label.typeHere",
+                      })}
                     />
                     <Upload
                       customRequest={handleOnUploadImage}
@@ -236,7 +210,7 @@ const ChatSection = ({ id }) => {
                 rightSection={
                   <CustomButton
                     customStyle={styles.sendImage}
-                    isBtnDisable={isSendingMessage}
+                    isBtnDisable={isSendingMessage || !messageValue}
                     IconElement={ActiveIcon}
                     onClick={() => {
                       handleOnSendMessageText();
@@ -245,9 +219,9 @@ const ChatSection = ({ id }) => {
                 }
               />
             </form>
-          }
-        />
-      )}
+          )
+        }
+      />
     </>
   );
 };

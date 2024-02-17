@@ -29,10 +29,12 @@
 
 .leftMessageContaier {
   justify-content: flex-start;
+  margin-top:  var(--margin_12);;
 }
 
 .rightMessageContaier {
   justify-content: flex-end;
+  margin-top:  var(--margin_12);;
 }
 
 .rightTimeText {
@@ -42,6 +44,7 @@
   width: var(--fullWidth);
   display: flex;
   justify-content: flex-end;
+
 }
 .leftTimeText {
   color: var(--inputPlaceHolder);
@@ -52,28 +55,39 @@
 
 .leftImageContainerStyle {
   border-width: 0px;
-  margin-top: var(--marginMedium);
-  margin-right: var(--marginSmall);
+  margin-top: var(--margin_20);
+  margin-right: var(--margin_12);
 }
 
 .rightImageContainerStyle {
   border-width: 0px;
-  margin-top: var(--marginMedium);
+  margin-top: var(--margin_20);
   margin-left: var(--marginSmall);
 }
 
 // TODO: confirm the below styles
 .textAndImageContainer{
-  gap: 20px;
+  align-items: flex-end;
+  margin-top: 4px;
 }
 
 .chatImage {
   max-width: 200px;
   max-height: 200px;
-  min-width: 200px;
-  min-height: 200px;
   border-radius: 12px;
+  margin-top: var(--marginXXSmall);;
 }
+
+
+.textAndImageContainerWithAvatar{
+  margin-top: px;
+}
+
+.noAvatarContainer{
+  justify-content: flex-end;
+  margin-right: 40px;
+}
+
 
 @media screen and (max-width: 767px) {
   .fromMessageText {
