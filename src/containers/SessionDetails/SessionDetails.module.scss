@@ -52,9 +52,9 @@
 }
 
 .editContainer {
-  align-items: center;
   gap: var(--gapXSmall);
   cursor: pointer;
+  justify-content: flex-end;
 }
 
 .gridContainer {
