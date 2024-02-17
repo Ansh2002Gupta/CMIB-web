@@ -215,10 +215,12 @@ const EditProfile = ({ showNotification }) => {
                         styles.buttonText,
                       ].join(" ")}
                       icon={
-                        <Image src={getImage("enableEdit")} preview={false} />
+                        <Image
+                          src={getImage(!isLoading && "enableEdit")}
+                          preview={false}
+                        />
                       }
                       disabled={isLoading}
-                      loading={isLoading}
                     >
                       {intl.formatMessage({
                         id: `label.${isShow2Button ? "change" : "add"}`,
