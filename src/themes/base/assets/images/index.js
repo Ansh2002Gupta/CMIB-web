@@ -61,6 +61,7 @@ import rotateIcon from "./rotate-Icon.svg";
 import minusCircleBlue from "./minus-cirlce-blue.svg";
 import addCircleBlue from "./add-circle-blue.svg";
 import publicLogoWhite from "./public_logo_white_transparent.svg";
+import iconDownload from "./iconDownload.svg";
 import changeIcon from "./change icon.svg";
 import greenTick from "./green-tick.svg";
 
@@ -129,6 +130,7 @@ const images = {
   addCircleBlue,
   minusCircleBlue,
   publicLogoWhite,
+  iconDownload,
   greenTick,
   changeIcon,
 };

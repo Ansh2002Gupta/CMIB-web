@@ -12,6 +12,7 @@ import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
 import ManageUsers from "../views/ManageUsers";
+import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
 import SetupCenter from "../views/SetupCenters";
@@ -34,6 +35,7 @@ import {
   DASHBOARD,
   EDIT_CONFIGURE_CENTRE,
   FORGOT_PASSWORD,
+  ORIENTATION_CENTERS,
   LOGIN,
   OUT_SOURCED,
   QUERIES,
@@ -233,6 +235,10 @@ const config = [
         element: <SetupCenterDetails />,
       },
       { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + ORIENTATION_CENTERS,
+        element: <OrientationCenter />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
