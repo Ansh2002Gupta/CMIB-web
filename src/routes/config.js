@@ -1,9 +1,8 @@
-import Auth from "../pages/Auth";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
-import ContactUsListing from "../views/ContactUsListing";
+import QueriesListing from "../views/QueriesListing";
 import ConfigureCentreView from "../views/ConfigureCentreView";
 import ConsentMarking from "../views/ConsentMarking";
 import DashboardView from "../views/Dashboard/Dashboard";
@@ -19,6 +18,7 @@ import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import SetupCenterDetails from "../views/SetupCenterDetails";
 import SetupMockInterview from "../views/SetupMockInterview";
+import TicketListing from "../views/TicketListing/TicketListing";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
@@ -31,14 +31,15 @@ import {
   COMPANIES_DETAILS,
   CONFIGURE_CENTRES,
   CONSENT_MARKING,
-  CONTACT_US,
   DASHBOARD,
   EDIT_CONFIGURE_CENTRE,
   FORGOT_PASSWORD,
   LOGIN,
   OUT_SOURCED,
+  QUERIES,
   QUERY_DETAILS,
   ROOT,
+  ROUND_ONE_SETUP_CENTERS,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -46,6 +47,7 @@ import {
   SUBSCRIPTIONS,
   USERS,
   USER_DETAILS,
+  TICKETS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 
@@ -196,6 +198,18 @@ const config = [
         viewPath: USERS + ADD_NEW_USER_DETAILS,
         element: <UserDetails />,
       },
+      {
+        viewPath: QUERIES,
+        element: <QueriesListing />,
+      },
+      {
+        viewPath: QUERIES + QUERY_DETAILS,
+        element: <QueryDetails />,
+      },
+      {
+        viewPath: TICKETS,
+        element: <TicketListing />,
+      },
     ],
   },
   {
@@ -211,11 +225,11 @@ const config = [
         element: <Session />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
@@ -238,14 +252,6 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
-      },
-      {
-        viewPath: CONTACT_US,
-        element: <ContactUsListing />,
-      },
-      {
-        viewPath: CONTACT_US + QUERY_DETAILS,
-        element: <QueryDetails />,
       },
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW,

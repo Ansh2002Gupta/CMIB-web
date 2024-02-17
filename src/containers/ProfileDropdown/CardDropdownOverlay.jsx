@@ -14,6 +14,7 @@ import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/log
 import headerActionItems from "../../constants/headerActionItems";
 import { USER_PROFILE_QUERY_PARAMS } from "../../constant/constant";
 import styles from "./profileDropdown.module.scss";
+import "./override.css";
 
 export default function CardDropdownOverlay({
   userName,
@@ -36,7 +37,7 @@ export default function CardDropdownOverlay({
       setDropdownVisible(false);
       userProfileDispatch(setShowChangePasswordModal(true));
     },
-    viewProfile: () => {
+    myProfile: () => {
       setSearchParams((prev) => {
         prev.set(USER_PROFILE_QUERY_PARAMS, "open");
         return prev;
@@ -59,7 +60,7 @@ export default function CardDropdownOverlay({
           size="middle"
         >
           <Avatar size={64} src={userProfile} icon={<UserOutlined />} />
-          <Space direction="vertical" size="1">
+          <Space direction="vertical" size="1" className={styles.nameAndEmailContainer}>
             <span className={`${styles.profileName} ${styles.profileMenuName}`}>
               {userName}
             </span>

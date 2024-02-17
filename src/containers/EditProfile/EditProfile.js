@@ -44,7 +44,7 @@ const EditProfile = ({ showNotification }) => {
   const { handleUploadImage, isLoading: isUploadingImage } =
     useUploadImageApi();
 
-  const { handleDeleteImage } = useDeleteImageApi();
+  const { handleDeleteImage, isLoading: isDeletingImage } = useDeleteImageApi();
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -177,6 +177,10 @@ const EditProfile = ({ showNotification }) => {
     });
   };
 
+  const isLoading =
+    isUpdatingUserProfilePicture || isUploadingImage || isDeletingImage;
+  const isShow2Button = userProfileImage?.src || isDeletingImage || isUpdatingUserProfilePicture;
+
   return (
     <>
       {currentlyOpenedUserProfileModal === 2 ? (
@@ -200,7 +204,7 @@ const EditProfile = ({ showNotification }) => {
               <TwoColumn
                 className={styles.bottomSectionStyle}
                 isLeftFillSpace
-                isRightFillSpace={!!userProfileImage?.src}
+                isRightFillSpace={isShow2Button}
                 leftSection={
                   <Upload {...{ beforeUpload }} className={styles.fullWidth}>
                     <Button
@@ -210,24 +214,27 @@ const EditProfile = ({ showNotification }) => {
                         styles.buttonText,
                       ].join(" ")}
                       icon={
-                        <Image src={getImage("editIcon")} preview={false} />
+                        <Image src={getImage("changeIcon")} preview={false} />
                       }
+                      disabled={isLoading}
                     >
                       {intl.formatMessage({
-                        id: `label.${userProfileImage?.src ? "change" : "add"}`,
+                        id: `label.${
+                          isShow2Button ? "change" : "add"
+                        }`,
                       })}
                     </Button>
                   </Upload>
                 }
                 rightSection={
-                  userProfileImage?.src ? (
+                  isShow2Button ? (
                     <Button
-                      className={[styles.buttonText, styles.cancelButton].join(
-                        " "
-                      )}
-                      disabled={
-                        isUploadingImage || isUpdatingUserProfilePicture
-                      }
+                      className={[
+                        styles.buttonText,
+                        styles.cancelButton,
+                      ].join(" ")}
+                      disabled={isLoading}
+                      loading={isLoading}
                       icon={
                         <Image src={getImage("trashBlue")} preview={false} />
                       }

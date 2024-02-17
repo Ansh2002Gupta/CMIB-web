@@ -1,19 +1,25 @@
+import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch } from "antd";
+import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
+import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
-import { formatDate } from "../../../constant/utils";
+import { ThemeContext } from "core/providers/theme";
+import { formatDate, toggleSorting } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 
 const useRenderColumn = () => {
   const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
 
   const renderColumn = ({
     customColumnHeading,
+    customIconStyle,
+    columnSortByHandler,
     dataIndex,
     defaultSortOrder,
     isRequiredField,
@@ -22,11 +28,15 @@ const useRenderColumn = () => {
     render,
     renderImage = {},
     renderMenu = {},
+    renderSorterColumn,
     renderText = {},
+    renderTextWithCheckBoxes = {},
     renderSwitch = {},
     renderTwoImage = {},
+    setSortBy,
     sortDirection,
     sorter,
+    sortIcon = "arrowDownDarkGrey",
     sortKey,
     sortTypeDate,
     sortTypeText,
@@ -63,13 +73,21 @@ const useRenderColumn = () => {
     } = renderMenu;
 
     const {
-      dateFormat = "DD/MM/YYYY",
+      onClickCheckbox = () => {},
+      customCheckBoxContainerStyles = "",
+      checkBoxList = [],
+      isCheckBoxTextBold,
+    } = renderTextWithCheckBoxes;
+
+    const {
       includeDotAfterText,
       isTextBold,
       isTypeDate,
       textStyles,
       isCapitalize,
+      isRequiredTooltip,
       mobile,
+      isIntl,
     } = renderText;
 
     const {
@@ -102,12 +120,50 @@ const useRenderColumn = () => {
       if (includeDotAfterText) {
         return `${text} .`;
       }
+      if (isIntl) {
+        return intl.formatMessage({ id: `label.${text}` });
+      }
       return text;
+    };
+
+    const getRenderText = (text) => {
+      return (
+        <p
+          className={[
+            textStyles,
+            isTextBold ? styles.boldText : "",
+            styles.textEllipsis,
+            isCapitalize ? styles.capitalize : "",
+          ].join(" ")}
+        >
+          {textRenderFormat({ text: text || "-" })}
+        </p>
+      );
     };
 
     title &&
       (columnObject.title = () => {
-        return (
+        return renderSorterColumn ? (
+          <Typography
+            className={[styles.columnHeading].join(" ")}
+            onClick={() => {
+              setSortBy((prev) => {
+                const newSortOrder = toggleSorting(prev);
+                columnSortByHandler(newSortOrder);
+                return newSortOrder;
+              });
+            }}
+          >
+            <div className={styles.sortingArrowContainer}>
+              {title}
+              <Image
+                src={getImage(sortIcon)}
+                preview={false}
+                className={[styles.centerContent, ...customIconStyle].join(" ")}
+              />
+            </div>
+          </Typography>
+        ) : (
           <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
             {title}
             {isRequiredField && (
@@ -131,7 +187,7 @@ const useRenderColumn = () => {
             dayjs(new Date(b[sortKey])).unix();
         }
         if (sortTypeText) {
-          return (a, b) => a[sortKey].localeCompare(b[sortKey]);
+          return (a, b) => a[sortKey]?.localeCompare(b[sortKey]);
         }
         return sorter;
       })());
@@ -139,8 +195,6 @@ const useRenderColumn = () => {
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
 
     sortDirection && (columnObject.sortDirection = sortDirection);
-
-    render && (columnObject.render = render);
 
     renderText?.visible &&
       (columnObject.render = (text, rowData) => {
@@ -163,17 +217,10 @@ const useRenderColumn = () => {
                   : "+91"
               }-${text}`}
             </p>
+          ) : isRequiredTooltip ? (
+            <Tooltip title={text}>{getRenderText(text)}</Tooltip>
           ) : (
-            <p
-              className={[
-                textStyles,
-                isTextBold ? styles.boldText : "",
-                styles.textEllipsis,
-                isCapitalize ? styles.capitalize : "",
-              ].join(" ")}
-            >
-              {textRenderFormat({ text })}
-            </p>
+            getRenderText(text)
           ),
         };
       });
@@ -246,7 +293,23 @@ const useRenderColumn = () => {
         };
       });
 
-    render && (columnObject.render = render); // correct this
+    render && (columnObject.render = render);
+
+    renderTextWithCheckBoxes.visible &&
+      (columnObject.render = (textToRender, rowData) => {
+        const { id } = rowData;
+        return (
+          <CustomCheckBox
+            checked={checkBoxList?.includes(id)}
+            onChange={() => onClickCheckbox(rowData)}
+            customStyles={[customCheckBoxContainerStyles].join("")}
+          >
+            <p className={isCheckBoxTextBold ? styles.boldText : ""}>
+              {textToRender || "--"}
+            </p>
+          </CustomCheckBox>
+        );
+      });
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {
