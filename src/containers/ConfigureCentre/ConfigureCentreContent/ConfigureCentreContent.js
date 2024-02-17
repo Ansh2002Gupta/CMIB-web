@@ -15,7 +15,7 @@ import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import { CENTRE_DETAILS } from "../../../routes/routeNames";
 import {
-  CENTER_END_POINT,
+  CENTRE_END_POINT,
   PLACEMENT_ROUTE,
 } from "../../../constant/apiEndpoints";
 import {
@@ -62,7 +62,7 @@ const ConfigureCentreContent = () => {
 
   const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
     useFetch({
-      url: PLACEMENT_ROUTE + CENTER_END_POINT,
+      url: PLACEMENT_ROUTE + CENTRE_END_POINT,
       otherOptions: {
         skipApiCallOnMount: true,
       },

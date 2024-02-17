@@ -18,7 +18,7 @@ import useResponsive from "../../../core/hooks/useResponsive";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import {
-  CENTER_END_POINT,
+  CENTRE_END_POINT,
   PLACEMENT_ROUTE,
 } from "../../../constant/apiEndpoints";
 import { CONFIGURE_CENTRES } from "../../../routes/routeNames";
@@ -42,7 +42,7 @@ const ConfigureCentreDetails = () => {
 
   const { centreId } = useParams();
   const { data, error, fetchData, isLoading, isError } = useFetch({
-    url: PLACEMENT_ROUTE + CENTER_END_POINT + `/${centreId}`,
+    url: PLACEMENT_ROUTE + CENTRE_END_POINT + `/${centreId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
