@@ -45,12 +45,12 @@
 }
 
 .errorContainer {
-  width: 20vw;
+  width: var(--widthViewPort_15);
 }
 
 .errorBox {
-  display: "flex";
-  justify-content: "center";
-  align-items: "center";
-  height: "100%";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--fullHeight, 100%);
 }

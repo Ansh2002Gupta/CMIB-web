@@ -2,8 +2,8 @@ import variables from "../../themes/base/styles/variables";
 
 export const classes = {
   sendIcon: {
-    height: variables.height_48,
-    width: variables.width_48,
+    minheight: variables.height_48,
+    minwidth: variables.width_48,
     cursor: "pointer",
   },
   bottomSectionStyle: {

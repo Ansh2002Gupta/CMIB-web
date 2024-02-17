@@ -3,7 +3,9 @@
   padding: 64px 40px var(--padding_20);
   gap: var(--gapMedium);
   background-color: var(--blueBg);
+  max-height: 70vh;
 }
+
 .textInputFormContainer {
   flex: 1;
   align-items: center;
@@ -16,6 +18,7 @@
   border-radius: var(--radiusXLg);
   padding: var(--paddingXXSmall);
 }
+
 .disableTextInputFormContainer {
   flex: 1;
   align-items: center;
@@ -25,6 +28,7 @@
   background-color: var(--blueBg);
   align-content: center;
 }
+
 .textInputContainer {
   gap: var(--gapXXSmall);
 }
@@ -50,9 +54,27 @@
 }
 
 .messagesContainer {
-  max-height: 45vh;
+  max-height: 100%;
+  height: 100%;
   overflow-y: auto;
   width: var(--fullWidth);
   padding: var(--paddingXXSmall);
   gap: var(--gapXXSmall);
+}
+
+.upload {
+  display: none !important;
+}
+
+.sendImage {
+  min-height: var(--width_48, 48px) !important;
+  min-width: var(--height_48, 48px) !important;
+}
+
+.loaderAndChatContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmall);
+  width: 100%;
+  height: 100%;
 }

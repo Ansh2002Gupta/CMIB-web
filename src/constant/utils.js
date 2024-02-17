@@ -212,9 +212,48 @@ export const getCurrentFormState = (
 };
 
 export const splitName = (fullName) => {
-  const parts = fullName.split(" ");
-  const firstName = parts[0];
-  const lastName = parts.slice(1).join(" ");
+  const parts = fullName?.split(" ");
+  const firstName = parts?.[0];
+  const lastName = parts?.slice(1)?.join(" ");
 
   return { firstName, lastName };
+};
+
+export const getMessageInfo = (chatData, userDetails) => {
+  if (
+    chatData.type_id === userDetails?.id &&
+    chatData.user_type.toLowerCase() === userDetails?.user_type.toLowerCase()
+  ) {
+    return true;
+  }
+  return false;
+};
+
+let lastFlagDate = null;
+
+export const getDateStatus = (record) => {
+  const createdAt = new Date(record);
+
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  if (createdAt.toDateString() === today.toDateString()) {
+    if (lastFlagDate !== today.toDateString()) {
+      lastFlagDate = today.toDateString();
+      return "Today";
+    } else {
+      return "";
+    }
+  } else if (createdAt.toDateString() === yesterday.toDateString()) {
+    if (lastFlagDate !== yesterday.toDateString()) {
+      lastFlagDate = yesterday.toDateString();
+      return "Yesterday";
+    } else {
+      return "";
+    }
+  } else {
+    lastFlagDate = null;
+    return formatDate(createdAt);
+  }
 };

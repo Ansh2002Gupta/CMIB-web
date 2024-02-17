@@ -385,6 +385,8 @@ const locale = {
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
   "label.typeHere": "Type here...",
+  "label.markClosed": "Mark Closed",
+  "label.ticketClosedSuccessfully": "Ticket has been closed successfully",
 };
 
 export default locale;

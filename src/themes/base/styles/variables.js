@@ -128,6 +128,7 @@ const variables = {
   width_363: "363px",
   width_400: "400px",
   width_500: "500px",
+  widthViewPort_15: "15vw",
   widthViewPort_35: "35vw",
   widthHalfViewPort: "50vw",
   widthViewPort_65: "65vw",

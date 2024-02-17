@@ -13,26 +13,13 @@ import { CORE_ROUTE, TICKET_LIST } from "../../constant/apiEndpoints";
 import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 
-// Need to complete implementation of the remaining API.
-const TicketDetails = () => {
+const TicketDetails = ({ data, fetchData, isError, isLoading, error }) => {
   const [userProfileDetails] = useContext(UserProfileContext);
-  const { firstName, lastName } = splitName(
-    userProfileDetails?.userDetails?.name
-  );
-  console.log({ vvv: userProfileDetails?.userDetails });
-  const ticketDetailsConfig = [{}];
-  const id = 1;
-
-  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
-    useFetch({
-      url: CORE_ROUTE + TICKET_LIST + `/${id}`,
-    });
+  const intl = useIntl();
 
   const errorString = error?.data?.message || error;
 
-  const intl = useIntl();
-
-  // const handleOnRetry = () => {};
+  const { firstName, lastName } = splitName(data?.assigned_to?.name);
 
   return (
     <>
@@ -41,7 +28,7 @@ const TicketDetails = () => {
           <ErrorMessageBox
             errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
             errorText={errorString}
-            onRetry={fetchData}
+            onRetry={() => fetchData({})}
             customContainerStyles={styles.errorContainer}
           />
         </div>
@@ -63,7 +50,7 @@ const TicketDetails = () => {
               }
               middleSection={
                 <Typography className={styles.nameText}>
-                  {userProfileDetails?.userDetails?.name}
+                  {data?.assigned_to?.name}
                 </Typography>
               }
               bottomSection={
@@ -87,7 +74,7 @@ const TicketDetails = () => {
                   }
                   bottomSection={
                     <Typography className={styles.contentDetailText}>
-                      {data?.query_type}
+                      {data?.assigned_to?.type}
                     </Typography>
                   }
                 />
@@ -102,7 +89,7 @@ const TicketDetails = () => {
                   }
                   bottomSection={
                     <Typography className={styles.contentDetailText}>
-                      {"Query Type"}
+                      {data?.query_type}
                     </Typography>
                   }
                 />

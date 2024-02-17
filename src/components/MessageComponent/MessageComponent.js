@@ -1,16 +1,22 @@
-import React from "react";
-import { Typography } from "antd";
+import React, { useContext } from "react";
+import { Image, Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import ProfileIcon from "../ProfileIcon/ProfileIcon";
-import { splitName, formatDate } from "../../constant/utils";
+import { splitName, formatDate, getMessageInfo } from "../../constant/utils";
 import styles from "./MessageComponent.module.scss";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 
 const MessageComponent = ({ messageData }) => {
-  const { firstName, lastName } = splitName(messageData?.from?.name);
+  // const { firstName, lastName } = splitName(messageData?.from?.name);
+  const firstName = "Utkarsh";
+  const lastName = "Sharma";
 
-  return messageData?.from?.id === 1 ? (
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const isSender = getMessageInfo(messageData, userProfileDetails?.userDetails);
+
+  return isSender ? (
     <TwoColumn
       className={styles.rightMessageContaier}
       leftSection={
@@ -24,9 +30,27 @@ const MessageComponent = ({ messageData }) => {
             </Typography>
           }
           bottomSection={
-            <Typography className={styles.fromMessageText}>
-              {messageData?.reply_text}
-            </Typography>
+            <TwoRow
+              className={styles.textAndImageContainer}
+              topSectionStyle={{
+                justifyContent: "flex-end",
+              }}
+              topSection={
+                <Typography className={styles.fromMessageText}>
+                  {messageData?.message}
+                </Typography>
+              }
+              bottomSection={
+                <Image
+                  className={styles.chatImage}
+                  preview={false}
+                  // src={
+                  //   "https://media.istockphoto.com/id/1454842745/photo/tourism.jpg?s=1024x1024&w=is&k=20&c=BNjHc6s8vfj2Ikp7IkCgbQxIgx129376UltSJ8gicO0="
+                  // }
+                  src={messageData?.file}
+                />
+              }
+            />
           }
         />
       }
@@ -35,7 +59,7 @@ const MessageComponent = ({ messageData }) => {
           imageContainerStyle={styles.rightImageContainerStyle}
           profileImageStyle={styles.profileImageStyle}
           {...{ firstName, lastName }}
-          profileImage={messageData?.from?.profile_photo}
+          profileImage={messageData?.author?.profile_photo}
         />
       }
     />
@@ -62,7 +86,7 @@ const MessageComponent = ({ messageData }) => {
           }
           bottomSection={
             <Typography className={styles.toMessageText}>
-              {messageData?.reply_text}
+              {messageData?.message}
             </Typography>
           }
         />
