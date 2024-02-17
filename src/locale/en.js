@@ -388,7 +388,9 @@ const locale = {
   "label.view_profile": "View Profile",
   "label.change_password": "Change Password",
   "account.logout": "Log out",
-  "account.enableTwoFactorAuthentication": "Enable Two-factor Authentication",
+  "account.enabledTwoFactorAuthentication": "Two-factor Authentication Enabled",
+  "account.disabledTwoFactorAuthentication":
+    "Two-factor Authentication Disabled",
   "label.editProfilePicture": "Edit Profile Picture",
   "label.remove": "Remove",
   "label.save": "Save",
