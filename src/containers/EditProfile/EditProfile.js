@@ -214,7 +214,7 @@ const EditProfile = ({ showNotification }) => {
                         styles.buttonText,
                       ].join(" ")}
                       icon={
-                        <Image src={getImage("editIcon")} preview={false} />
+                        <Image src={getImage("changeIcon")} preview={false} />
                       }
                       disabled={isLoading}
                     >
