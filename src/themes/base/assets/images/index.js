@@ -62,6 +62,7 @@ import minusCircleBlue from "./minus-cirlce-blue.svg";
 import addCircleBlue from "./add-circle-blue.svg";
 import publicLogoWhite from "./public_logo_white_transparent.svg";
 import greenTick from "./green-tick.svg";
+import changeIcon from "./change icon.svg";
 
 const images = {
   addCircle,
@@ -129,6 +130,7 @@ const images = {
   minusCircleBlue,
   publicLogoWhite,
   greenTick,
+  changeIcon,
 };
 
 export default images;
