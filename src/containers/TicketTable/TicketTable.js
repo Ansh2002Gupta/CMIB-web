@@ -247,7 +247,7 @@ const TicketTable = ({
             onChangeCurrentPage,
             onFilterApply,
           }}
-          isLoading={isSuccess && !isLoading}
+          isLoading={isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
         />

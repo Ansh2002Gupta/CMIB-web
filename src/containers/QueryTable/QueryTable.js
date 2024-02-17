@@ -456,7 +456,7 @@ const QueryTable = ({
             setFilterArray,
           }}
           arrayContainingSelectedRow={selectedQueriesToBeMarkedAsAnswered}
-          isLoading={(isSuccess && !isLoading) || isMarkingQueryAsAnswered}
+          isLoading={isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
           filterPropertiesArray={convertPermissionFilter(

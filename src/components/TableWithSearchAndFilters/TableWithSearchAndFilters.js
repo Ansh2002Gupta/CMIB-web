@@ -26,6 +26,8 @@ const TableWithSearchAndFilters = ({
   searchedValue,
   isLoading,
   onFilterApply,
+  filterArray,
+  setFilterArray,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -51,11 +53,6 @@ const TableWithSearchAndFilters = ({
           value={searchedValue}
           onChange={(e) => handleOnUserSearch(e.target.value)}
         />
-
-        <SearchFilter
-          filterPropertiesArray={filterOptions || ACCESS_FILTER_DATA}
-          {...{ showFilters, setShowFilters, onFilterApply }}
-        />
         <SearchFilter
           {...{
             showFilters,
@@ -67,7 +64,7 @@ const TableWithSearchAndFilters = ({
           }}
         />
       </div>
-      {isLoading ? (
+      {!isLoading ? (
         <DataTable
           columns={columns}
           pageSize={pageSize}
