@@ -12,7 +12,9 @@ import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { getTicketOrQueryColumn } from "./TicketTableConfig";
+import { validateSearchTextLength } from "../../Utils/validations";
 import {
+  DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
 } from "../../constant/constant";
@@ -36,7 +38,7 @@ const TicketTable = ({
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [sortBy, setSortBy] = useState("");
 
@@ -55,10 +57,9 @@ const TicketTable = ({
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
+
   const debounceSearch = useMemo(() => {
-    return _.debounce((requestedParams) => {
-      fetchData({ queryParamsObject: requestedParams });
-    }, 300);
+    return _.debounce(fetchData, DEBOUNCE_TIME);
   }, []);
 
   const queryTypeOptions = useMemo(() => {
@@ -75,39 +76,55 @@ const TicketTable = ({
     }));
   }, [status]);
 
-  const handleOnUserSearch = (str) => {
-    setSearchedValue(str);
-    str &&
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.SEARCH_QUERY], str);
-        return prev;
-      });
-    !str &&
-      setSearchParams((prev) => {
-        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
-        return prev;
-      });
-    const requestedParams = getRequestedQueryParams({ str });
-    debounceSearch(requestedParams);
-  };
-
   const getRequestedQueryParams = ({
     currentFilterStatus,
     page,
+    search,
     rowPerPage,
-    str,
     sortDirection,
   }) => {
     return {
       perPage: rowPerPage || pageSize,
       page: page || current,
-      q: str || searchedValue,
-      sortField: "created_by",
+      q: search?.trim() || "",
       sortDirection,
+      sortField: "created_by",
       status: JSON.stringify(currentFilterStatus?.["1"]),
       queryType: JSON.stringify(currentFilterStatus?.["2"]),
     };
   };
+
+  const handleOnUserSearch = (str) => {
+    setCurrent(1);
+    setSearchedValue(str);
+    if (str?.trim()?.length > 2) {
+      debounceSearch({
+        queryParamsObject: getRequestedQueryParams({
+          page: 1,
+          search: validateSearchTextLength(str),
+        }),
+      });
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+    }
+    if (!str?.trim() && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
+      debounceSearch({
+        queryParamsObject: getRequestedQueryParams({
+          page: 1,
+          search: "",
+        }),
+      });
+      setSearchParams((prev) => {
+        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+    }
+  };
+
   const handleSorting = (sortDirection) => {
     const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
     fetchData({ queryParamsObject: requestedParams });
@@ -159,26 +176,24 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  // TODO: Need to refactor
-  // useEffect(() => {
-  //   if (data?.meta) {
-  //     const { total } = data?.meta;
-  //     const numberOfPages = Math.ceil(total / pageSize);
-  //     if (current > numberOfPages) {
-  //       setCurrent(1);
-  //       setSearchParams((prev) => {
-  //         prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-  //       });
-
-  //       const requestedParams = {
-  //         perPage: pageSize,
-  //         page: 1,
-  //         q: searchedValue,
-  //       };
-  //       fetchData({ queryParamsObject: requestedParams });
-  //     }
-  //   }
-  // }, [data?.meta?.total]);
+  const resetTicketListingData = (ticketsResult) => {
+    if (ticketsResult?.meta?.total) {
+      const totalRecords = ticketsResult?.meta?.total;
+      const numberOfPages = Math.ceil(totalRecords / pageSize);
+      if (current > numberOfPages) {
+        fetchData({
+          queryParamsObject: getRequestedQueryParams({
+            page: 1,
+          }),
+        });
+        setSearchParams((prev) => {
+          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+          return prev;
+        });
+        setCurrent(1);
+      }
+    }
+  };
 
   useEffect(() => {
     setSearchParams((prev) => {
@@ -191,7 +206,10 @@ const TicketTable = ({
 
     const requestedParams = getRequestedQueryParams({});
 
-    fetchData({ queryParamsObject: requestedParams });
+    fetchData({
+      queryParamsObject: requestedParams,
+      onSuccessCallback: resetTicketListingData,
+    });
   }, []);
 
   const handleOnReTry = () => {
@@ -246,6 +264,9 @@ const TicketTable = ({
             onChangePageSize,
             onChangeCurrentPage,
             onFilterApply,
+            placeholder: intl.formatMessage({
+              id: "label.search_by_name_or_registration_no",
+            }),
           }}
           isLoading={isSuccess && !isLoading}
           data={data?.records}
