@@ -16,8 +16,10 @@ import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import useAddNewSessionApi from "../../services/api-services/Sessions/useAddNewSessionApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useUpdateSessionApi from "../../services/api-services/Sessions/useUpdateSessionApi";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
 import {
   formatDate,
   convertDateToStringDate,
@@ -37,17 +39,18 @@ const SessionDetails = ({
   isSessionError,
   fetchData,
   sessionData,
-  sessionId,
   sessionError,
-  setSessionId,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { getImage } = useContext(ThemeContext);
+  const [globalSessionDetails, globalSessionDispatch] =
+    useContext(GlobalSessionContext);
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const { showNotification, notificationContextHolder } = useShowNotification();
+
   const { navigateScreen: navigate } = useNavigateScreen();
   const [formErrors, setFormErrors] = useState({});
   const initialFormState = {
@@ -71,7 +74,6 @@ const SessionDetails = ({
   const { addNewSession } = useAddNewSessionApi();
   const { updateSessionDetails } = useUpdateSessionApi();
   const { MonthPicker } = DatePicker;
-
   const handleMonthChange = (date) => {
     if (date) {
       let updatedMonths = [...formData.ps_examination_periods];
@@ -190,7 +192,7 @@ const SessionDetails = ({
           payload,
           onSuccessCallback: (res) => {
             navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
-            setSessionId(res.id);
+            globalSessionDispatch(setGlobalSessionDetails(res?.id));
           },
           onErrorCallback: (errString) => {
             showNotification({
@@ -202,7 +204,7 @@ const SessionDetails = ({
       } else {
         updateSessionDetails({
           currentlySelectedModuleKey,
-          sessionId: sessionId,
+          sessionId: globalSessionDetails?.globalSessionId,
           payload,
           onSuccessCallback: (res) => {
             navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
@@ -254,7 +256,8 @@ const SessionDetails = ({
                     </Typography>
                   }
                   rightSection={
-                    !isEditable && (
+                    !isEditable &&
+                    sessionData?.is_editable && (
                       <TwoColumn
                         onClick={() => {
                           navigate(EDIT_SESSION, false);

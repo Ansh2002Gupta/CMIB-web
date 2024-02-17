@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { TwoRow } from "core/layouts";
@@ -11,8 +11,9 @@ import SessionDetails from "../../containers/SessionDetails";
 import SessionRound from "../SessionRound";
 import useFetch from "../../core/hooks/useFetch";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { ADMIN_ROUTE, CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
+import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { ADD_SESSION } from "../../routes/routeNames";
 import {
   ROUND_ONE_CARD_LIST,
@@ -28,9 +29,9 @@ function Session() {
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
 
   const [activeTab, setActiveTab] = useState("1");
-  const [sessionId, setSessionId] = useState(1); //TODO : 1 has to replace once Global Session will implement as we will take id from there using useContext
   const {
     data: sessionData,
     error: sessionError,
@@ -44,10 +45,15 @@ function Session() {
       CORE_ROUTE +
       `/${currentlySelectedModuleKey}` +
       SESSIONS +
-      `/${sessionId}`,
+      `/${globalSessionDetails?.globalSessionId}`,
+    otherOptions: { skipApiCallOnMount: true },
   });
 
   const responsive = useResponsive();
+
+  useEffect(() => {
+    fetchData({});
+  }, [globalSessionDetails]);
 
   const tabItems = [
     {
@@ -62,9 +68,7 @@ function Session() {
             isSessionError,
             fetchData,
             sessionData,
-            sessionId,
             sessionError,
-            setSessionId,
           }}
         />
       ),

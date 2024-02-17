@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
 
@@ -9,8 +9,8 @@ import ContentHeader from "../../containers/ContentHeader";
 import SessionDetails from "../../containers/SessionDetails";
 import useFetch from "../../core/hooks/useFetch";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
-import { FORM_STATES } from "../../constant/constant";
 import variables from "../../themes/base/styles/variables";
 import styles from "./EditSession.module.scss";
 
@@ -19,7 +19,7 @@ function EditSession() {
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
-  const [sessionId, setSessionId] = useState(1); //TODO : 1 has to replace once Global Session will implement as we will take id from there using useContext
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
   const {
     data: sessionData,
     error: sessionError,
@@ -33,7 +33,7 @@ function EditSession() {
       CORE_ROUTE +
       `/${currentlySelectedModuleKey}` +
       SESSIONS +
-      `/${sessionId}`,
+      `/${globalSessionDetails?.globalSessionId}`,
   });
 
   const location = useLocation();
@@ -65,9 +65,7 @@ function EditSession() {
             isSessionError,
             fetchData,
             sessionData,
-            sessionId,
             sessionError,
-            setSessionId,
           }}
         />
       }
