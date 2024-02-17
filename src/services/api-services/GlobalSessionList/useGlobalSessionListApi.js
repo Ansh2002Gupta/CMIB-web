@@ -31,7 +31,7 @@ const useGlobalSessionListApi = () => {
         globalSessionDispatch(
           setGlobalSessionDetails(res?.data?.records?.[0]?.id)
         );
-        globalSessionDispatch(setSelectedSession({ key: res?.data?.records?.[0].id, label: res?.data?.records?.[0].name }))
+        globalSessionDispatch(setSelectedSession({ key: res?.data?.records?.[0]?.id || "", label: res?.data?.records?.[0]?.name || "" }))
         return;
       }
     } catch (err) {}

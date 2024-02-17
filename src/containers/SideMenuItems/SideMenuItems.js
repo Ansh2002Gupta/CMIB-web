@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Image, Input, Typography } from "antd";
+import { capitalize } from "lodash";
 
 import TwoRow from "../../core/layouts/TwoRow";
 import TwoColumn from "../../core/layouts/TwoColumn";
@@ -41,12 +42,12 @@ const SideMenuItems = ({
             className={styles.moduleSelector}
             leftSection={
               <div className={styles.moduleSelectorHeading}>
-                {selectedItem?.label}
+                {capitalize(selectedItem?.label || intl.formatMessage({ id: "label.noSessionsAvailable" }))}
               </div>
             }
             rightSection={
               <SideMenuButton
-                onBtnClick={() => setOpenSelector((prev) => !prev)}
+                onBtnClick={() => selectedItem?.label && setOpenSelector((prev) => !prev)}
                 btnText={intl.formatMessage({ id: "label.change" })}
               />
             }
@@ -86,8 +87,8 @@ const SideMenuItems = ({
         )
       }
       bottomSection={
-        sessionList?.length ? (
           openSelector && (
+            sessionList?.length ? 
             <ModuleList
               modules={sessionList}
               onSelectItem={(val) => {
@@ -95,12 +96,10 @@ const SideMenuItems = ({
                 handleOnSelectItem(val);
               }}
             />
-          )
-        ) : (
-          <Typography className={styles.noResultText}>
+            :  <Typography className={styles.noResultText}>
             {intl.formatMessage({ id: "label.noResultsFound" })}
           </Typography>
-        )
+          )
       }
     />
   );
