@@ -13,3 +13,10 @@ export const setGlobalSessionList = (payload) => {
     payload,
   };
 };
+
+export const setSelectedSession = (payload) => {
+  return {
+    type: types.SET_SELECTED_SESSION,
+    payload,
+  };
+};

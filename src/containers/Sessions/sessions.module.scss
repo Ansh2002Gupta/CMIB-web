@@ -1,9 +1,10 @@
 .sessionContainer {
   color: var(--textDark, #000833);
-  width: var(--width_230);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  min-width: var(--width_230);
+  max-width: var(--width_363);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .customDropdownMenu {
@@ -37,4 +38,30 @@
 
 .menuItemFontWeightNormal {
   font-weight: inherit;
+}
+
+.sessionText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.valueText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: start;
+}
+
+.sessionTextContainer {
+  width: 95%;
+  display: flex;
+}
+
+.sessionDropdownContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--gapXSmall);
 }
