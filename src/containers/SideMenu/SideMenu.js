@@ -10,7 +10,10 @@ import useResponsive from "../../core/hooks/useResponsive";
 import SideMenuButton from "../../components/SideMenuButton";
 import SideMenuItems from "../SideMenuItems";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
-import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
+import {
+  setGlobalSessionDetails,
+  setSelectedSession,
+} from "../../globalContext/globalSession/globalSessionActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -33,13 +36,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   const [globalSessionDetails, globalSessionDispatch] =
     useContext(GlobalSessionContext);
   const { getGlobalSessionList } = useGlobalSessionListApi();
-  const globalSessionList = globalSessionDetails?.globalSessionList;
-
-  const [selectedSession, setSelectedSession] = useState(
-    globalSessionList.length > 0
-      ? { key: globalSessionList?.[0].id, label: globalSessionList?.[0].name }
-      : {}
-  );
+  const { globalSessionList, selectedSession } = globalSessionDetails;
 
   const location = useLocation();
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
@@ -62,7 +59,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }
 
   const handleOnSelectSession = (item) => {
-    setSelectedSession(item);
+    globalSessionDispatch(setSelectedSession(item));
     globalSessionDispatch(setGlobalSessionDetails(+item.key));
     setOpenSessionSelector(false);
   };
@@ -83,17 +80,8 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }, [userProfileDetails, navigate]);
 
   useEffect(() => {
-    if (globalSessionList?.length) {
-      selectedModule?.key && getGlobalSessionList(selectedModule?.key);
-      setSelectedSession({
-        key: globalSessionList?.[0]?.id,
-        label: globalSessionList?.[0]?.name,
-      });
-      globalSessionDispatch(
-        setGlobalSessionDetails(globalSessionList?.[0]?.id)
-      );
-    }
-  }, [selectedKey?.key]);
+    globalSessionDispatch(setGlobalSessionDetails(globalSessionList?.[0]?.id));
+  }, [selectedModule?.key]);
 
   return (
     <ConfigProvider
@@ -177,12 +165,15 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                           <SideMenuItems
                             openSelector={openSessionSelector}
                             setOpenSelector={setOpenSessionSelector}
-                            modules={globalSessionList?.map((item) => ({
-                              key: item.id,
-                              label: item.name,
-                            }))}
+                            globalSessionList={globalSessionList?.map(
+                              (item) => ({
+                                key: item.id,
+                                label: item.name,
+                              })
+                            )}
                             handleOnSelectItem={handleOnSelectSession}
                             selectedItem={selectedSession}
+                            selectedModule={selectedModule}
                           />
                         }
                       />

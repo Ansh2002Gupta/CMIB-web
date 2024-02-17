@@ -5,6 +5,7 @@ import { Checkbox, Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
+import AutoPlaceComplete from "../../../components/AutoPlaceComplete";
 import Chip from "../../../components/Chip/Chip";
 import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
@@ -19,12 +20,14 @@ const useRenderColumn = () => {
 
   const renderColumn = ({
     customColumnHeading,
+    customStyles,
     customIconStyle,
     columnSortByHandler,
     dataIndex,
     defaultSortOrder,
     isRequiredField,
     key,
+    renderAutoPlaceComplete = {},
     renderDateTime = {},
     render,
     renderChip = {},
@@ -240,11 +243,16 @@ const useRenderColumn = () => {
 
     sortDirection && (columnObject.sortDirection = sortDirection);
 
+    renderAutoPlaceComplete.visible &&
+      (columnObject.render = () => {
+        return <AutoPlaceComplete />;
+      });
+
     renderText?.visible &&
       (columnObject.render = (text, rowData) => {
         return {
           props: {
-            className: styles.tableCellStyles,
+            className: customStyles ? customStyles : styles.tableCellStyles,
           },
           children: mobile ? (
             <p
@@ -311,15 +319,20 @@ const useRenderColumn = () => {
 
     renderImage.visible &&
       (columnObject.render = (_, rowData) => {
-        return (
-          <Image
-            alt={alt}
-            src={src}
-            preview={preview}
-            className={`${customImageStyle} ${styles.editIcon}`}
-            onClick={onClick ? () => onClick(rowData) : () => {}}
-          />
-        );
+        return {
+          props: {
+            className: customStyles || "",
+          },
+          children: (
+            <Image
+              alt={alt}
+              src={src}
+              preview={preview}
+              className={`${customImageStyle} ${styles.editIcon}`}
+              onClick={onClick ? () => onClick(rowData) : () => {}}
+            />
+          ),
+        };
       });
 
     renderTwoImage.visible &&
@@ -400,24 +413,29 @@ const useRenderColumn = () => {
 
     renderDateTime.visible &&
       (columnObject.render = (value, record) => {
-        return (
-          <CustomDateTimePicker
-            {...{
-              customContainerStyles,
-              customTimeStyle,
-              defaultValue,
-              disabled,
-              isEditable,
-              isRequired,
-              type,
-              placeholder,
-              value,
-            }}
-            onChange={(val) => {
-              onChange(val, record);
-            }}
-          />
-        );
+        return {
+          props: {
+            className: customStyles,
+          },
+          children: (
+            <CustomDateTimePicker
+              {...{
+                customContainerStyles,
+                customTimeStyle,
+                defaultValue,
+                disabled,
+                isEditable,
+                isRequired,
+                type,
+                placeholder,
+                value,
+              }}
+              onChange={(val) => {
+                onChange(val, record);
+              }}
+            />
+          ),
+        };
       });
 
     return columnObject;

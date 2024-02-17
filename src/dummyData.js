@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const DATA_SOURCE = [
   {
     id: 1,
@@ -236,6 +238,75 @@ export const COMPANIES_FILTER_DATA = [
     id: 2,
     name: "More than 10 Partners",
     isSelected: false,
+  },
+];
+
+export const ORIENTATION_CENTERS = [
+  {
+    sNo: "1",
+    centreName: "Ghaziabad-I",
+    totalStudentsBooked: "1001",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "2",
+    centreName: "Ghaziabad-II",
+    totalStudentsBooked: "1002",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "3",
+    centreName: "Meerut-I",
+    totalStudentsBooked: "1003",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "4",
+    centreName: "Meerut-II",
+    totalStudentsBooked: "1004",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "5",
+    centreName: "Delhi-I",
+    totalStudentsBooked: "1005",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "6",
+    centreName: "Delhi-II",
+    totalStudentsBooked: "1006",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "7",
+    centreName: "Ahmedabad-I",
+    totalStudentsBooked: "1007",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "8",
+    centreName: "Ahmedabad-II",
+    totalStudentsBooked: "1008",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "9",
+    centreName: "Akola-I",
+    totalStudentsBooked: "1009",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "10",
+    centreName: "Akola-II",
+    totalStudentsBooked: "1010",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "11",
+    centreName: "Akola-III",
+    totalStudentsBooked: "1011",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
 ];
 

@@ -16,6 +16,7 @@ export const CONSENT_MARKING = "consent-marking";
 export const CONTACT_US = "contact-us/";
 export const DASHBOARD = "dashboard/";
 export const EDIT_CONFIGURE_CENTRE = "centre-details/:centreId";
+export const ORIENTATION_CENTERS = "orientation-centers";
 export const QUERIES = "queries/";
 export const QUERY_DETAILS = "queries-details/:queryId";
 export const SESSION = "session/";
