@@ -3,7 +3,11 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import { ADMIN_ROUTE, SESSIONS } from "../../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  CORE_ROUTE,
+  SESSIONS,
+} from "../../../constant/apiEndpoints";
 
 const useAddNewSessionApi = () => {
   const intl = useIntl();
@@ -16,6 +20,7 @@ const useAddNewSessionApi = () => {
     useState("");
 
   const addNewSession = async ({
+    currentlySelectedModuleKey,
     payload,
     onSuccessCallback,
     onErrorCallback,
@@ -24,7 +29,7 @@ const useAddNewSessionApi = () => {
       setAddNewSessionApiStatus(API_STATUS.LOADING);
       setAddNewSessionData(null);
       errorWhileAddingNewSession && setErrorWhileAddingNewSession("");
-      const url = ADMIN_ROUTE + SESSIONS;
+      const url = CORE_ROUTE + `/${currentlySelectedModuleKey}` + SESSIONS;
       const res = await Http.post(url, payload);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||

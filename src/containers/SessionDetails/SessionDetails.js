@@ -172,7 +172,6 @@ const SessionDetails = ({
         return acc;
       }, {});
 
-      payload["module"] = currentlySelectedModuleKey;
       payload["mcs_completion_date"] = dayjs(
         payload["mcs_completion_date"]
       ).format("YYYY-MM-DD");
@@ -187,6 +186,7 @@ const SessionDetails = ({
       ).format("YYYY-MM-DD");
       if (addSession) {
         addNewSession({
+          currentlySelectedModuleKey,
           payload,
           onSuccessCallback: (res) => {
             navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
@@ -201,6 +201,7 @@ const SessionDetails = ({
         });
       } else {
         updateSessionDetails({
+          currentlySelectedModuleKey,
           sessionId: sessionId,
           payload,
           onSuccessCallback: (res) => {

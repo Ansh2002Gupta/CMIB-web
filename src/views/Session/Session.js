@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { TwoRow } from "core/layouts";
@@ -10,8 +10,9 @@ import CustomTabs from "../../components/CustomTabs";
 import SessionDetails from "../../containers/SessionDetails";
 import SessionRound from "../SessionRound";
 import useFetch from "../../core/hooks/useFetch";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { ADMIN_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { ADD_SESSION } from "../../routes/routeNames";
 import {
   ROUND_ONE_CARD_LIST,
@@ -24,6 +25,9 @@ import styles from "./session.module.scss";
 function Session() {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
 
   const [activeTab, setActiveTab] = useState("1");
   const [sessionId, setSessionId] = useState(1); //TODO : 1 has to replace once Global Session will implement as we will take id from there using useContext
@@ -36,7 +40,11 @@ function Session() {
     isSuccess,
     setData,
   } = useFetch({
-    url: ADMIN_ROUTE + SESSIONS + `/${sessionId}`,
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      SESSIONS +
+      `/${sessionId}`,
   });
 
   const responsive = useResponsive();
