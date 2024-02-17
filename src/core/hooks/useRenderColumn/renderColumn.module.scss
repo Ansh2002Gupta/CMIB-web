@@ -1,7 +1,7 @@
 .columnHeading {
   color: var(--subHeadingColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightBold);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
   max-width: 200px;
 }
 
@@ -56,3 +56,16 @@
 .isRequiredStar {
   color: var(--requiredStarColor);
 }
+
+.centerContent {
+  display: flex;
+}
+
+.sortingArrowContainer {
+  min-width: var(--width_20);
+  display: flex;
+  align-items: center;
+  gap: var(--gapXXSmall);
+  cursor: pointer;
+}
+

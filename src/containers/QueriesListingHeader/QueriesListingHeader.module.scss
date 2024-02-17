@@ -1,9 +1,17 @@
-.container {
-  padding: var(--paddingMedium);
-  padding-bottom: 0px;
-  gap: var(--gapMedium);
+.parentContainer {
+  width: var(--fullWidth);
+}
+
+.headerBox {
   border-top: var(--borderLight);
   border-bottom: var(--borderLight);
+  width: var(--fullWidth);
+}
+
+.container {
+  padding: var(--paddingMedium);
+  gap: var(--gapMedium);
+  width: var(--fullWidth);
 }
 
 .heading {
@@ -36,7 +44,6 @@
   color: var(--textBold);
   font-weight: var(--fontWeightBold);
 }
-
 
 @media screen and (max-width: 767px) {
   .heading {
