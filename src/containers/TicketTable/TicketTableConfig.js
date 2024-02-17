@@ -1,130 +1,29 @@
 import { Typography } from "antd";
 import { SORT_VALUES } from "../../constant/constant";
-import styles from "./ContactUsListingContent.module.scss";
+
+import styles from "./TicketTable.module.scss";
 
 const getStatusStyles = (status) => {
-  if (status === "Closed") {
+  if (
+    status?.toLowerCase() === "closed" ||
+    status?.toLowerCase() === "answered"
+  ) {
     return ["statusContainer_success", "statusText_success"];
   }
-  if (status === "Pending") {
+  if (status?.toLowerCase() === "pending") {
     return ["statusContainer_failed", "statusText_failed"];
   }
   return ["statusContainer_progress", "statusText_progress"];
 };
 
-export const getTicketOrQueryColumn = (
-  type,
+export const getTicketOrQueryColumn = ({
   intl,
   getImage,
-  navigate,
   renderColumn,
   setSortBy,
   sortBy,
-  handleSorting
-) => {
-  if (type === "2") {
-    return [
-      renderColumn({
-        title: intl.formatMessage({ id: "label.queriesId" }),
-        dataIndex: "id", //TODO: change key name to another the one which is having alphanumeric value
-        key: "id",
-        renderText: {
-          isTextBold: true,
-          visible: true,
-          textStyles: [styles.tableCell].join(" "),
-        },
-      }),
-      renderColumn({
-        title: intl.formatMessage({ id: "label.studentOrCompany" }),
-        dataIndex: "name",
-        key: "name",
-        sortKey: "name",
-        sortTypeText: true,
-        renderText: {
-          visible: true,
-          textStyles: [styles.tableCell].join(" "),
-        },
-      }),
-      renderColumn({
-        title: intl.formatMessage({
-          id: "label.nonRegisteredStudentOrCompany",
-        }),
-        dataIndex: "type",
-        key: "type",
-        renderText: {
-          visible: true,
-          textStyles: [styles.tableCell].join(" "),
-        },
-      }),
-      {
-        title: () => (
-          <p className={styles.columnHeading}>
-            {intl.formatMessage({ id: "label.mobile" })}
-          </p>
-        ),
-        dataIndex: "mobile",
-        key: "mobile",
-        renderText: {
-          visible: true,
-          textStyles: [styles.tableCell].join(" "),
-        },
-      },
-      renderColumn({
-        title: intl.formatMessage({ id: "label.queryType" }),
-        dataIndex: "query_type",
-        key: "query_type",
-        renderText: {
-          visible: true,
-          textStyles: styles.tableCell,
-        },
-      }),
-      renderColumn({
-        title: intl.formatMessage({ id: "label.email" }),
-        dataIndex: "email",
-        key: "email",
-        renderText: {
-          visible: true,
-          textStyles: [styles.tableCell].join(" "),
-        },
-      }),
-      renderColumn({
-        title: intl.formatMessage({ id: "label.createdOn" }),
-        dataIndex: "created_at",
-        key: "created_at",
-        renderText: {
-          isTypeDate: true,
-          visible: true,
-          textStyles: [styles.tableCell].join(" "),
-        },
-        sortDirection: ["ascend"],
-        sortKey: "created_at",
-        sortTypeDate: true,
-        defaultSortOrder: "ascend",
-      }),
-      renderColumn({
-        dataIndex: "see",
-        key: "see",
-        renderImage: {
-          alt: "eye",
-          preview: false,
-          src: getImage("eye"),
-          visible: true,
-          onClick: (rowData) => navigate(`query/${rowData?.id}`),
-        },
-      }),
-      renderColumn({
-        dataIndex: "check",
-        key: "check",
-        renderImage: {
-          alt: "check",
-          preview: false,
-          src: getImage("rightIcon"),
-          visible: true,
-        },
-      }),
-    ];
-  }
-
+  handleSorting,
+}) => {
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.ticketId" }),

@@ -24,14 +24,15 @@ import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import { classes } from "./ConfigureCentreDetails.styles";
 import styles from "./ConfigureCentreDetails.module.scss";
-import "./override.css";
+import "./Override.css";
 
 const ConfigureCentreDetails = () => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
-  const currentlySelectedModuleId = userProfileDetails?.selectedModuleItem?.id;
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const [formErrors, setFormErrors] = useState({});
@@ -39,11 +40,16 @@ const ConfigureCentreDetails = () => {
 
   const { centreId } = useParams();
   const { data, error, fetchData, isLoading, isError } = useFetch({
-    url: ADMIN_ROUTE + CENTER_END_POINT + `/${centreId}`,
+    url:
+      ADMIN_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      CENTER_END_POINT +
+      `/${centreId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
+
   const { isLoading: isUpdatingCenterDetails, updateCenterDetails } =
     useUpdateCenterDetailsApi();
 
@@ -105,14 +111,14 @@ const ConfigureCentreDetails = () => {
 
   const handleSave = () => {
     const payload = {
-      center_name: formData.centre_name,
-      module_id: currentlySelectedModuleId,
-      center_code: formData.centre_code,
-      center_type: formData.centre_type,
+      name: formData.centre_name,
+      centre_code: formData.centre_code,
+      centre_size: formData.centre_type,
       status: formData.status,
     };
     if (!centreId) {
       addNewCenter(
+        currentlySelectedModuleKey,
         payload,
         () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
@@ -124,6 +130,7 @@ const ConfigureCentreDetails = () => {
     } else {
       updateCenterDetails(
         centreId,
+        currentlySelectedModuleKey,
         payload,
         () => {
           navigate(`/${selectedModule?.key}/${CONFIGURE_CENTRES}`);
@@ -142,17 +149,17 @@ const ConfigureCentreDetails = () => {
   };
 
   useEffect(() => {
-    if (centreId) {
+    if (centreId && userProfileDetails?.selectedModuleItem?.key) {
       fetchData({});
     }
-  }, [centreId]);
+  }, [centreId, userProfileDetails]);
 
   useEffect(() => {
     if (centreId) {
       setFormData({
-        centre_code: data?.center_code,
-        centre_name: data?.center_name,
-        centre_type: data?.center_type,
+        centre_code: data?.centre_code,
+        centre_name: data?.name,
+        centre_type: data?.centre_size,
         status: data?.status,
       });
     }

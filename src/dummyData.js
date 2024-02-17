@@ -212,8 +212,7 @@ export const COMPANY_DATA_SOURCE = [
 export const ACCESS_FILTER_DATA = [
   {
     id: 1,
-    name: "Access",
-    isSelected: false,
+    name: "Access 1",
     options: [
       { optionId: 1, str: "All" },
       { optionId: 2, str: "Placements" },
@@ -237,21 +236,6 @@ export const COMPANIES_FILTER_DATA = [
     id: 2,
     name: "More than 10 Partners",
     isSelected: false,
-  },
-];
-
-export const SESSION_ITEMS = [
-  {
-    key: "1",
-    label: "Item 1",
-  },
-  {
-    key: "2",
-    label: "Item 2",
-  },
-  {
-    key: "3",
-    label: "Item 3",
   },
 ];
 

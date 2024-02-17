@@ -3,10 +3,7 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import {
-  CENTER_END_POINT,
-  ADMIN_ROUTE,
-} from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CENTER_END_POINT } from "../../../constant/apiEndpoints";
 
 const useUpdateCenterDetailsApi = () => {
   const intl = useIntl();
@@ -19,6 +16,7 @@ const useUpdateCenterDetailsApi = () => {
 
   const updateCenterDetails = async (
     centerId,
+    currentlySelectedModuleKey,
     payload,
     onSuccessCallback,
     onErrorCallback
@@ -27,8 +25,12 @@ const useUpdateCenterDetailsApi = () => {
       setUpdateCenterApiStatus(API_STATUS.LOADING);
       setUpdatedCenterData(null);
       errorWhileUpdatingCenter && setErrorWhileUpdatingCenter("");
-      const url = ADMIN_ROUTE + CENTER_END_POINT + `/${centerId}`;
-      const res = await Http.post(url, payload);
+      const url =
+        ADMIN_ROUTE +
+        `/${currentlySelectedModuleKey}` +
+        CENTER_END_POINT +
+        `/${centerId}`;
+      const res = await Http.put(url, payload);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS
@@ -50,7 +52,15 @@ const useUpdateCenterDetailsApi = () => {
       setUpdateCenterApiStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileUpdatingCenter(err.response?.data?.message);
-        onErrorCallback && onErrorCallback(err.response?.data?.message);
+        if (
+          err.response?.data?.data &&
+          err.response?.data?.data?.errors &&
+          Object.entries(err.response?.data?.data?.errors).length > 0
+        ) {
+          onErrorCallback && onErrorCallback(err.response?.data?.data);
+        } else {
+          onErrorCallback && onErrorCallback(err.response?.data?.message);
+        }
         return;
       }
       setErrorWhileUpdatingCenter(

@@ -6,23 +6,23 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
-import ErrorMessageBox from "../../../components/ErrorMessageBox";
-import TableWithSearchAndFilters from "../../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
-import useFetch from "../../../core/hooks/useFetch";
-import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
-import { getTicketOrQueryColumn } from "../ContactUsListingContentConfig";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
+import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import useFetch from "../../core/hooks/useFetch";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { getTicketOrQueryColumn } from "./TicketTableConfig";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
-} from "../../../constant/constant";
+} from "../../constant/constant";
 import {
   CORE_ROUTE,
   QUERY_TYPE,
   STATUS,
   TICKET_LIST,
-} from "../../../constant/apiEndpoints";
-import styles from "../ContactUsListingContent.module.scss";
+} from "../../constant/apiEndpoints";
+import styles from "./TicketTable.module.scss";
 
 const TicketTable = ({
   current,
@@ -55,6 +55,7 @@ const TicketTable = ({
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
+
   const debounceSearch = useMemo(() => {
     return _.debounce((requestedParams) => {
       fetchData({ queryParamsObject: requestedParams });
@@ -87,8 +88,10 @@ const TicketTable = ({
         prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
         return prev;
       });
-    const requestedParams = getRequestedQueryParams({ str });
-    debounceSearch(requestedParams);
+    if (!str || str.length >= 3) {
+      const requestedParams = getRequestedQueryParams({ str });
+      debounceSearch(requestedParams);
+    }
   };
 
   const getRequestedQueryParams = ({
@@ -108,21 +111,29 @@ const TicketTable = ({
       queryType: JSON.stringify(currentFilterStatus?.["2"]),
     };
   };
+
   const handleSorting = (sortDirection) => {
     const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const columns = getTicketOrQueryColumn(
-    currentActiveTab,
+  const columns = getTicketOrQueryColumn({
+    type: currentActiveTab,
     intl,
     getImage,
     navigate,
     renderColumn,
+    queriesColumnProperties: {},
+    fetchData,
+    paginationAndSearchProperties: {
+      pageSize,
+      current,
+      searchedValue,
+    },
     setSortBy,
     sortBy,
-    handleSorting
-  );
+    handleSorting,
+  });
 
   const onChangePageSize = (size) => {
     setPageSize(size);
@@ -132,7 +143,10 @@ const TicketTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    const requestedParams = getRequestedQueryParams({ perPage: size, page: 1 });
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: size,
+      page: 1,
+    });
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -186,7 +200,7 @@ const TicketTable = ({
 
   const handleOnReTry = () => {
     const requestedParams = getRequestedQueryParams({
-      perPage: DEFAULT_PAGE_SIZE,
+      rowPerPage: DEFAULT_PAGE_SIZE,
       page: 1,
     });
     fetchData({ queryParamsObject: requestedParams });
@@ -236,6 +250,9 @@ const TicketTable = ({
             onChangePageSize,
             onChangeCurrentPage,
             onFilterApply,
+            placeholder: intl.formatMessage({
+              id: "label.search_by_name_or_registration_no",
+            }),
           }}
           isLoading={isSuccess && !isLoading}
           data={data?.records}

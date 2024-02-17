@@ -3,10 +3,7 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import {
-  CENTER_END_POINT,
-  ADMIN_ROUTE,
-} from "../../../constant/apiEndpoints";
+import { CENTER_END_POINT, ADMIN_ROUTE } from "../../../constant/apiEndpoints";
 
 const useAddNewCenterApi = () => {
   const intl = useIntl();
@@ -18,12 +15,18 @@ const useAddNewCenterApi = () => {
   const [errorWhileAddingNewCenter, setErrorWhileAddingNewCenter] =
     useState("");
 
-  const addNewCenter = async (payload, onSuccessCallback, onErrorCallback) => {
+  const addNewCenter = async (
+    currentlySelectedModuleKey,
+    payload,
+    onSuccessCallback,
+    onErrorCallback
+  ) => {
     try {
       setAddNewCenterApiStatus(API_STATUS.LOADING);
       setAddNewCenterData(null);
       errorWhileAddingNewCenter && setErrorWhileAddingNewCenter("");
-      const url = ADMIN_ROUTE + CENTER_END_POINT;
+      const url =
+        ADMIN_ROUTE + `/${currentlySelectedModuleKey}` + CENTER_END_POINT;
       const res = await Http.post(url, payload);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
@@ -44,9 +47,19 @@ const useAddNewCenterApi = () => {
         );
     } catch (err) {
       setAddNewCenterApiStatus(API_STATUS.ERROR);
+
       if (err.response?.data?.message) {
         setErrorWhileAddingNewCenter(err.response?.data?.message);
-        onErrorCallback && onErrorCallback(err.response?.data?.message);
+        if (
+          err.response?.data?.data &&
+          err.response?.data?.data?.errors &&
+          Object.entries(err.response?.data?.data?.errors).length
+        ) {
+          onErrorCallback && onErrorCallback(err.response?.data?.data);
+        } else {
+          onErrorCallback && onErrorCallback(err.response?.data?.message);
+        }
+
         return;
       }
       setErrorWhileAddingNewCenter(

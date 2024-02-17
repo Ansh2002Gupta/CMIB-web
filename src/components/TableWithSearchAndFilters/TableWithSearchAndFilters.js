@@ -8,8 +8,8 @@ import { ThemeContext } from "core/providers/theme";
 
 import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
-import { ACCESS_FILTER_DATA } from "../../dummyData";
 import { DEFAULT_PAGE_SIZE } from "../../constant/constant";
+import { ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./TableWithSearchAndFilters.module.scss";
 
 const TableWithSearchAndFilters = ({
@@ -22,6 +22,7 @@ const TableWithSearchAndFilters = ({
   onChangeCurrentPage,
   onChangePageSize,
   pageSize,
+  placeholder,
   searchedValue,
   isLoading,
   onFilterApply,
@@ -42,9 +43,12 @@ const TableWithSearchAndFilters = ({
               preview={false}
             />
           }
-          placeholder={intl.formatMessage({
-            id: "label.searchByUserNameAndEmail",
-          })}
+          placeholder={
+            placeholder ||
+            intl.formatMessage({
+              id: "label.searchByUserNameAndEmail",
+            })
+          }
           allowClear
           className={styles.searchBar}
           value={searchedValue}
@@ -82,6 +86,7 @@ TableWithSearchAndFilters.defaultProps = {
   columns: [],
   current: 1,
   currentDataLength: 0,
+  currentFilterStatus: [],
   data: [],
   filterOptions: [],
   handleOnUserSearch: () => {},
@@ -97,6 +102,7 @@ TableWithSearchAndFilters.propTypes = {
   columns: PropTypes.array,
   current: PropTypes.number,
   currentDataLength: PropTypes.number,
+  currentFilterStatus: PropTypes.array,
   data: PropTypes.array,
   filterOptions: PropTypes.array,
   handleOnUserSearch: PropTypes.func,
@@ -105,6 +111,7 @@ TableWithSearchAndFilters.propTypes = {
   onChangePageSize: PropTypes.func,
   onFilterApply: PropTypes.func,
   pageSize: PropTypes.number,
+  placeholder: PropTypes.string,
   searchedValue: PropTypes.string,
 };
 
