@@ -1,4 +1,5 @@
 import { Typography } from "antd";
+import { SORT_VALUES } from "../../constant/constant";
 
 import styles from "./TicketTable.module.scss";
 
@@ -20,6 +21,9 @@ export const getTicketOrQueryColumn = ({
   getImage,
   handleClickAssign,
   renderColumn,
+  setSortBy,
+  sortBy,
+  handleSorting,
 }) => {
   return [
     renderColumn({
@@ -37,14 +41,26 @@ export const getTicketOrQueryColumn = ({
       dataIndex: "created_by",
       key: "created_by",
       sortKey: "created_by",
-      sortTypeText: true,
+      renderSorterColumn: true,
+      setSortBy: setSortBy,
+      columnSortByHandler: handleSorting,
+      customIconStyle: [
+        styles[sortBy],
+        sortBy === SORT_VALUES.ASCENDING || sortBy === SORT_VALUES.DESCENDING
+          ? styles.active
+          : "",
+      ],
       renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.role" }),
       dataIndex: "role",
       key: "role",
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+        isCapitalize: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.registrationOrMembershipNumber" }),
@@ -58,7 +74,7 @@ export const getTicketOrQueryColumn = ({
       key: "query_type",
       renderText: {
         visible: true,
-        textStyles: [styles.tableCell].join(" "),
+        textStyles: styles.tableCell,
       },
     }),
     renderColumn({
@@ -75,12 +91,7 @@ export const getTicketOrQueryColumn = ({
               " "
             )}
           >
-            <Typography
-              className={[
-                styles[styleClassForText],
-                styles.defaultStatusStyles,
-              ]}
-            >
+            <Typography className={styles[styleClassForText]}>
               {status}
             </Typography>
           </div>
@@ -106,22 +117,28 @@ export const getTicketOrQueryColumn = ({
         visible: true,
         textStyles: [styles.tableCell].join(" "),
       },
-      sortDirection: ["ascend"],
-      sortKey: "created_at",
-      sortTypeDate: true,
-      defaultSortOrder: "ascend",
     }),
     renderColumn({
       dataIndex: "see",
       key: "see",
       renderImage: {
-        alt: "eye",
+        alt: "msg",
         preview: false,
         src: getImage("messageText"),
         visible: true,
         onClick: (data) => {
           handleClickAssign(data);
         },
+      },
+    }),
+    renderColumn({
+      dataIndex: "see",
+      key: "see",
+      renderImage: {
+        alt: "options",
+        preview: false,
+        src: getImage("more"),
+        visible: true,
       },
     }),
   ];

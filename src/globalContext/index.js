@@ -2,6 +2,7 @@
 import authProvider from "./auth/authProvider";
 import localeProviders from "./locale/localeProviders";
 import dashboardProvider from "./dashboard/dashboardProvider";
+import globalSessionProvider from "./globalSession/globalSessionProvider";
 import userProfileProvider from "./userProfile/userProfileProvider";
 import logoutProvider from "./logout/logoutProvider";
 import UserDetailProvider from "./userDetail/userDetailProvider";
@@ -10,9 +11,10 @@ import UserDetailProvider from "./userDetail/userDetailProvider";
 const providers = [
   authProvider,
   dashboardProvider,
+  globalSessionProvider,
   localeProviders,
-  userProfileProvider,
   logoutProvider,
+  userProfileProvider,
   UserDetailProvider,
 ];
 

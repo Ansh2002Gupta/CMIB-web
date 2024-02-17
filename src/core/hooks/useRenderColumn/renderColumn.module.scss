@@ -42,6 +42,7 @@
 .editIcon,
 .moreIcon {
   cursor: pointer;
+  display: flex;
 }
 
 .twoImageStyle {
@@ -56,6 +57,15 @@
   color: var(--requiredStarColor);
 }
 
-.selectedRow{
-  background-color: var(--blue6Bg);
+.centerContent {
+  display: flex;
 }
+
+.sortingArrowContainer {
+  min-width: var(--width_20);
+  display: flex;
+  align-items: center;
+  gap: var(--gapXXSmall);
+  cursor: pointer;
+}
+
