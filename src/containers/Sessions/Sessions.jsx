@@ -18,16 +18,13 @@ function Sessions() {
   const [globalSessionDetails, globalSessionDispatch] =
     useContext(GlobalSessionContext);
 
-  const { globalSessionId } = globalSessionDetails;
-
-  const globalSessionList = globalSessionDetails?.globalSessionList;
+  const { globalSessionId, globalSessionList } = globalSessionDetails;
 
   const handleMenuClick = ({ key }) => {
     globalSessionDispatch(setGlobalSessionDetails(+key));
   };
 
   useEffect(() => {
-    selectedModule?.key && getGlobalSessionList(selectedModule?.key);
     if (globalSessionList?.length) {
       globalSessionDispatch(setGlobalSessionDetails(+globalSessionList[0].id));
     }
@@ -61,18 +58,24 @@ function Sessions() {
       className={styles.sessionContainer}
       overlayClassName={styles.customDropdownMenu}
     >
-      <Button shape="round" size="middle">
-        <Typography.Text>
-          {intl.formatMessage({ id: "label.sessionPrefix" })}
-        </Typography.Text>{" "}
-        &nbsp;
-        <Typography.Text strong>
-          {
-            globalSessionList?.find((item) => +item.id === +globalSessionId)
-              ?.name
-          }
-        </Typography.Text>
-        <DownOutlined />
+      <Button
+        shape="round"
+        size="middle"
+        className={styles.sessionDropdownContainer}
+      >
+        <div className={styles.sessionTextContainer}>
+          <Typography.Text className={styles.sessionText}>
+            {intl.formatMessage({ id: "label.sessionPrefix" })}
+          </Typography.Text>
+          &nbsp;
+          <Typography.Text className={styles.valueText}>
+            {globalSessionList?.find((item) => +item.id === +globalSessionId)
+              ?.name || intl.formatMessage({ id: "label.noSession" })}
+          </Typography.Text>
+        </div>
+        <div>
+          <DownOutlined />
+        </div>
       </Button>
     </Dropdown>
   );

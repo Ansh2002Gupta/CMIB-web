@@ -6,6 +6,7 @@ import { GlobalSessionContext } from "../../../globalContext/globalSession/globa
 import {
   setGlobalSessionDetails,
   setGlobalSessionList,
+  setSelectedSession,
 } from "../../../globalContext/globalSession/globalSessionActions";
 import {
   CORE_ROUTE,
@@ -20,7 +21,7 @@ const useGlobalSessionListApi = () => {
         CORE_ROUTE +
         `/${selectedModule}` +
         GLOBAL_SESSION_LIST +
-        "?perPage=1000";
+        "?perPage=9999";
       const res = await Http.get(url);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
@@ -30,6 +31,7 @@ const useGlobalSessionListApi = () => {
         globalSessionDispatch(
           setGlobalSessionDetails(res?.data?.records?.[0]?.id)
         );
+        globalSessionDispatch(setSelectedSession({ key: res?.data?.records?.[0].id, label: res?.data?.records?.[0].name }))
         return;
       }
     } catch (err) {}
