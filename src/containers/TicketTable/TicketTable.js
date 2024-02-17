@@ -55,6 +55,7 @@ const TicketTable = ({
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
+
   const debounceSearch = useMemo(() => {
     return _.debounce((requestedParams) => {
       fetchData({ queryParamsObject: requestedParams });
@@ -87,8 +88,10 @@ const TicketTable = ({
         prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
         return prev;
       });
-    const requestedParams = getRequestedQueryParams({ str });
-    debounceSearch(requestedParams);
+    if (!str || str.length >= 3) {
+      const requestedParams = getRequestedQueryParams({ str });
+      debounceSearch(requestedParams);
+    }
   };
 
   const getRequestedQueryParams = ({
@@ -108,6 +111,7 @@ const TicketTable = ({
       queryType: JSON.stringify(currentFilterStatus?.["2"]),
     };
   };
+
   const handleSorting = (sortDirection) => {
     const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
     fetchData({ queryParamsObject: requestedParams });
