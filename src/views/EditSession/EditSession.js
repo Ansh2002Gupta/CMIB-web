@@ -20,6 +20,8 @@ function EditSession() {
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const location = useLocation();
+  const isEditSession = location.pathname.includes("/edit-session");
   const {
     data: sessionData,
     error: sessionError,
@@ -34,10 +36,8 @@ function EditSession() {
       `/${currentlySelectedModuleKey}` +
       SESSIONS +
       `/${globalSessionDetails?.globalSessionId}`,
+    otherOptions: { skipApiCallOnMount: !isEditSession },
   });
-
-  const location = useLocation();
-  const isEditSession = location.pathname.includes("/edit-session");
 
   const responsive = useResponsive();
 

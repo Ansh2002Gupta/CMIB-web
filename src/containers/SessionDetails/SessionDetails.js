@@ -256,8 +256,7 @@ const SessionDetails = ({
                     </Typography>
                   }
                   rightSection={
-                    !isEditable &&
-                    sessionData?.is_editable && (
+                    !isEditable && sessionData?.is_editable ? (
                       <TwoColumn
                         onClick={() => {
                           navigate(EDIT_SESSION, false);
@@ -276,6 +275,8 @@ const SessionDetails = ({
                           </Typography>
                         }
                       />
+                    ) : (
+                      <></>
                     )
                   }
                 />
