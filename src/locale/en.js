@@ -401,7 +401,8 @@ const locale = {
   "label.disabled": "Disabled",
   "label.path.editDetails": "Edit User Details",
   "label.logoutSuccessful": "Logged out successfully",
-  "label.passwordChanged": "Password changed successfully",
+  "label.passwordChanged":
+    "Your password has been successfully changed. Please login using your new password. Thanks!",
   "label.search": "Search",
   "label.noSessionSetup": "No session is setup currently",
   "label.sessionStatus": "Session Status",

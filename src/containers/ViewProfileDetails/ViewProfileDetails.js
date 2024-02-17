@@ -153,7 +153,6 @@ const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
                       styles.rightAlign,
                       styles.greyText,
                     ].join(" ")}
-                    title={phone}
                   >
                     {phoneWithPrefix}
                   </Typography>
