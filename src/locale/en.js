@@ -388,8 +388,9 @@ const locale = {
   "label.view_profile": "View Profile",
   "label.change_password": "Change Password",
   "account.logout": "Log out",
-  "account.enableTwoFactorAuthentication": "Enable Two-factor Authentication",
-  "account.disableTwoFactorAuthentication": "Disable Two-factor Authentication",
+  "account.enabledTwoFactorAuthentication": "Two-factor Authentication Enabled",
+  "account.disabledTwoFactorAuthentication":
+    "Two-factor Authentication Disabled",
   "label.editProfilePicture": "Edit Profile Picture",
   "label.remove": "Remove",
   "label.save": "Save",
@@ -431,6 +432,8 @@ const locale = {
   "label.path.centre-details": "Edit centre details",
   "label.big": "Big Centre",
   "label.small": "Small Centre",
+  "label.path.round1": "Round 1",
+  "label.path.setup-centers": "Setup centres",
 };
 
 export default locale;
