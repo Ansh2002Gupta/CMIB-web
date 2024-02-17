@@ -24,9 +24,10 @@
 
 .rowPerPageCount {
   width: var(--height_70);
+  height: var(--height_36);
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
+  font-weight: var(--fontWeightMedium) !important;
 }
 
 .rowPerPageText {
@@ -39,6 +40,9 @@
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
+  &:hover {
+    background-color: var(--blueBg) !important;
+  }
 }
 
 .table {
@@ -61,10 +65,12 @@
   display: flex;
   gap: var(--gapXSmall);
   justify-content: space-between;
+  align-content: center;
   align-items: baseline;
-  min-height: var(--minBtnHeight);
+  min-height: var(--height_36);
+  height: auto;
   flex-direction: row-reverse;
-  padding: var(--paddingExtraSmall) var(--paddingMedium);
+  padding: var(--paddingExtraSmall) var(--paddingMediumSmall);
   border: var(--borderLight);
   border-radius: var(--radiusXLg);
 }

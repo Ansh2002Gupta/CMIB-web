@@ -212,8 +212,7 @@ export const COMPANY_DATA_SOURCE = [
 export const ACCESS_FILTER_DATA = [
   {
     id: 1,
-    name: "Access",
-    isSelected: false,
+    name: "Access 1",
     options: [
       { optionId: 1, str: "All" },
       { optionId: 2, str: "Placements" },
@@ -237,21 +236,6 @@ export const COMPANIES_FILTER_DATA = [
     id: 2,
     name: "More than 10 Partners",
     isSelected: false,
-  },
-];
-
-export const SESSION_ITEMS = [
-  {
-    key: "1",
-    label: "Item 1",
-  },
-  {
-    key: "2",
-    label: "Item 2",
-  },
-  {
-    key: "3",
-    label: "Item 3",
   },
 ];
 
@@ -488,6 +472,23 @@ export const TICKET_DATA_LIST = [
     created_at: "10/10/2020",
   },
 ];
+export const SESSION_DETAILS = {
+  name: "Jadyn Bartoletti",
+  session_start_date: "2023-12-19T05:11:46.000000Z",
+  session_end_date: "2023-12-19T05:11:46.000000Z",
+  nature_of_service: "nature",
+  perform_invoice_no_format: "AugSept-*****-2023",
+  examination_session_period: ["May 2023", "November 2023"],
+  gmcs_completion_date: "2023-12-19T05:11:46.000000Z",
+  membership_completion_date: "2023-12-19T05:11:46.000000Z",
+  article_completion_from_date: "2023-12-19T05:11:46.000000Z",
+  bank_ac_no: "88896186",
+  hsn_sac_code: "1791686",
+  bank_ac_ifsc: "SBIN0005836",
+  status: true,
+  created_at: "2023-12-19T05:11:46.000000Z",
+  updated_at: "2023-12-19T05:11:46.000000Z",
+};
 
 export const INITIAL_CENTRE_DETAILS = {
   centre_name: "",

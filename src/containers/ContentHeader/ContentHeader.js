@@ -9,23 +9,27 @@ import styles from "./contentHeader.module.scss";
 const ContentHeader = ({
   customContainerStyle,
   customStyles,
+  headerComponent,
   headerText,
   rightSection,
+  isLeftFillSpace,
 }) => {
   const Header = () => {
     return (
-      <div>
+      <div className={headerComponent ? styles.container : ""}>
         <Typography
           className={[styles.contentHeaderText, customStyles].join(" ")}
         >
           {headerText}
         </Typography>
+        {headerComponent}
       </div>
     );
   };
 
   return (
     <TwoColumn
+      {...{ isLeftFillSpace }}
       leftSection={<Header />}
       rightSection={rightSection}
       className={[styles.twoColumnBox, customContainerStyle].join(" ")}
@@ -37,6 +41,7 @@ ContentHeader.defaultProps = {
   className: "",
   customStyles: "",
   customContainerStyle: "",
+  headerComponent: null,
   headerText: "",
   rightSection: <></>,
   style: {},
@@ -46,6 +51,7 @@ ContentHeader.propTypes = {
   className: PropTypes.string,
   customStyles: PropTypes.string,
   customContainerStyle: PropTypes.string,
+  headerComponent: PropTypes.node,
   headerText: PropTypes.string.isRequired,
   rightSection: PropTypes.node,
   style: PropTypes.object,

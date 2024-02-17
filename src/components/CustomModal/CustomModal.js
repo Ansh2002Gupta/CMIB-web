@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Image, Modal, Typography } from "antd";
+import { Button, Image, Modal, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
@@ -17,6 +17,8 @@ const CustomModal = ({
   onBtnClick,
   onCancel,
   subHeadingText,
+  cancelBtnText,
+  content,
 }) => {
   return (
     <Modal
@@ -44,14 +46,27 @@ const CustomModal = ({
               <Typography className={styles.subHeading}>
                 {subHeadingText}
               </Typography>
+              {content}
             </div>
           </div>
         </div>
-        <CustomButton
-          onClick={onBtnClick}
-          {...{ btnText }}
-          customStyle={styles.btn}
-        />
+        <div className={styles.btnContainer}>
+          {!!cancelBtnText && (
+            <CustomButton
+              customButtonContainerStyle={styles.actionBtnContainer}
+              customStyle={styles.btn}
+              onClick={onCancel}
+              {...{ btnText: cancelBtnText }}
+              withWhiteBackground
+            />
+          )}
+          <CustomButton
+            customButtonContainerStyle={styles.actionBtnContainer}
+            onClick={onBtnClick}
+            {...{ btnText }}
+            customStyle={styles.btn}
+          />
+        </div>
       </Base>
     </Modal>
   );

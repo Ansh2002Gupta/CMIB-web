@@ -3,10 +3,18 @@ import PropTypes from "prop-types";
 
 import styles from "./Slider.module.scss";
 
-const Slider = ({ maximumValue, minimumValue, onChange, step, value }) => {
+const Slider = ({
+  isDisable,
+  maximumValue,
+  minimumValue,
+  onChange,
+  step,
+  value,
+}) => {
   return (
     <div className={styles["controls"]}>
       <input
+        disabled={isDisable}
         type="range"
         value={value}
         min={minimumValue || 1}
@@ -16,13 +24,16 @@ const Slider = ({ maximumValue, minimumValue, onChange, step, value }) => {
         onChange={(e) => {
           onChange(+e.target.value);
         }}
-        className={styles["range"]}
+        className={[styles["range"], isDisable ? styles.noCursor : ""].join(
+          " "
+        )}
       />
     </div>
   );
 };
 
 Slider.defaultProps = {
+  isDisable: false,
   maximumValue: 3,
   minimumValue: 1,
   onChange: () => {},
@@ -31,6 +42,7 @@ Slider.defaultProps = {
 };
 
 Slider.propTypes = {
+  isDisable: PropTypes.bool,
   maximumValue: PropTypes.number,
   minimumValue: PropTypes.number,
   onChange: PropTypes.func,
