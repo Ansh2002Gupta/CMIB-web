@@ -153,7 +153,6 @@ const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
                       styles.rightAlign,
                       styles.greyText,
                     ].join(" ")}
-                    title={phone}
                   >
                     {phoneWithPrefix}
                   </Typography>
@@ -177,7 +176,11 @@ const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
                     {intl.formatMessage({ id: "label.dateCreatedOn" })}:
                   </Typography>
                   <Typography
-                    className={[styles.darkText, styles.fontBold].join(" ")}
+                    className={[
+                      styles.darkText,
+                      styles.fontBold,
+                      styles.date,
+                    ].join(" ")}
                   >
                     {createdDate}
                   </Typography>
@@ -195,7 +198,11 @@ const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
                 />
                 <Typography className={styles.lightText}>
                   {intl.formatMessage({
-                    id: "account.enableTwoFactorAuthentication",
+                    id: `account.${
+                      is2FactorAuthenicationOn
+                        ? "enabledTwoFactorAuthentication"
+                        : "disabledTwoFactorAuthentication"
+                    }`,
                   })}
                 </Typography>
               </div>

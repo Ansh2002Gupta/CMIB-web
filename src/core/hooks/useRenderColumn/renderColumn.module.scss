@@ -42,6 +42,7 @@
 .editIcon,
 .moreIcon {
   cursor: pointer;
+  display: flex;
 }
 
 .twoImageStyle {
@@ -90,3 +91,16 @@
     var(--paddingXXXSmall, 2px) var(--paddingExtraSmall, 8px);
   border-radius: var(--paddingSmall, 16px);
 }
+
+.centerContent {
+  display: flex;
+}
+
+.sortingArrowContainer {
+  min-width: var(--width_20);
+  display: flex;
+  align-items: center;
+  gap: var(--gapXXSmall);
+  cursor: pointer;
+}
+

@@ -15,6 +15,7 @@ import disabledArrowLeft from "./disabledArrowLeft.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
+import enableEdit from "./enableEdit.svg";
 import download from "./download.svg";
 import editDark from "./editDark.svg";
 import dummyPerson from "./dummy person image.png";
@@ -60,6 +61,7 @@ import rotateIcon from "./rotate-Icon.svg";
 import minusCircleBlue from "./minus-cirlce-blue.svg";
 import addCircleBlue from "./add-circle-blue.svg";
 import publicLogoWhite from "./public_logo_white_transparent.svg";
+import changeIcon from "./change icon.svg";
 import greenTick from "./green-tick.svg";
 import disabledArrow from "./disabled arrow.svg";
 
@@ -84,6 +86,7 @@ const images = {
   DeviceMessage,
   Document,
   edit,
+  enableEdit,
   editDark,
   errorIcon,
   eye,
@@ -129,6 +132,7 @@ const images = {
   publicLogoWhite,
   greenTick,
   disabledArrow,
+  changeIcon,
 };
 
 export default images;

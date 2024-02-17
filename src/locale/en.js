@@ -382,13 +382,16 @@ const locale = {
   "label.path.contact-us": "Queries",
   "label.path.query": "Query Details",
   "label.path.queries": "Queries",
+  "label.path.queries-details": "Query Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
   "label.view_profile": "View Profile",
   "label.change_password": "Change Password",
   "account.logout": "Log out",
-  "account.enableTwoFactorAuthentication": "Enable Two-factor Authentication",
+  "account.enabledTwoFactorAuthentication": "Two-factor Authentication Enabled",
+  "account.disabledTwoFactorAuthentication":
+    "Two-factor Authentication Disabled",
   "label.editProfilePicture": "Edit Profile Picture",
   "label.remove": "Remove",
   "label.save": "Save",
@@ -398,7 +401,8 @@ const locale = {
   "label.disabled": "Disabled",
   "label.path.editDetails": "Edit User Details",
   "label.logoutSuccessful": "Logged out successfully",
-  "label.passwordChanged": "Password changed successfully",
+  "label.passwordChanged":
+    "Your password has been successfully changed. Please login using your new password. Thanks!",
   "label.search": "Search",
   "label.noSessionSetup": "No session is setup currently",
   "label.sessionStatus": "Session Status",
@@ -429,6 +433,10 @@ const locale = {
   "label.path.centre-details": "Edit centre details",
   "label.big": "Big Centre",
   "label.small": "Small Centre",
+  "label.path.round1": "Round 1",
+  "label.path.setup-centers": "Setup centres",
+  "label.big_centres": "Big Centres",
+  "label.small_centres": "Small Centres",
 };
 
 export default locale;

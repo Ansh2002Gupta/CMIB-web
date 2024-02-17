@@ -1,4 +1,3 @@
-import Auth from "../pages/Auth";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
@@ -40,6 +39,7 @@ import {
   QUERIES,
   QUERY_DETAILS,
   ROOT,
+  ROUND_ONE_SETUP_CENTERS,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -225,11 +225,11 @@ const config = [
         element: <Session />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },

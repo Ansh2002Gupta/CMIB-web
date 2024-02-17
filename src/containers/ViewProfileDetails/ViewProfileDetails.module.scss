@@ -89,7 +89,7 @@
 .divider {
   min-height: var(--height_5, 5px);
   min-width: var(--width_1, 1px);
-  background-color: var(--borderColor, #ccd0e5);
+  background-color: var(--subHeadingColor, #616C82);
 }
 
 .accessAndDateContainer {
@@ -179,6 +179,10 @@
 .crossAndMenuContainer {
   display: flex;
   gap: var(--gapSmall, 16px);
+}
+
+.date{
+  font-size: var(--fontSizeSmall,14px);
 }
 
 @media (max-width: 511px) {

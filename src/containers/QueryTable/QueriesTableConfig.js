@@ -301,6 +301,21 @@ export const getTicketOrQueryColumn = ({
       },
     }),
     renderColumn({
+      dataIndex: "see",
+      key: "see",
+      render: (_, rowData) => {
+        return (
+          <Image
+            src={getImage("eye")}
+            alt="eye"
+            className={styles.clickable}
+            preview={false}
+            onClick={() => navigate(`queries-details/${rowData?.id}`)}
+          />
+        );
+      },
+    }),
+    renderColumn({
       title: (
         <>
           {isTableInSelectAllMode ? (

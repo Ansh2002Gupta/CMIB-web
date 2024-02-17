@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -38,6 +38,7 @@ const TicketTable = ({
   const { getImage } = useContext(ThemeContext);
   const [, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [sortBy, setSortBy] = useState("");
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
@@ -74,6 +75,44 @@ const TicketTable = ({
     }));
   }, [status]);
 
+  const handleOnUserSearch = (str) => {
+    setSearchedValue(str);
+    str &&
+      setSearchParams((prev) => {
+        prev.set([PAGINATION_PROPERTIES.SEARCH_QUERY], str);
+        return prev;
+      });
+    !str &&
+      setSearchParams((prev) => {
+        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
+        return prev;
+      });
+    const requestedParams = getRequestedQueryParams({ str });
+    debounceSearch(requestedParams);
+  };
+
+  const getRequestedQueryParams = ({
+    currentFilterStatus,
+    page,
+    rowPerPage,
+    str,
+    sortDirection,
+  }) => {
+    return {
+      perPage: rowPerPage || pageSize,
+      page: page || current,
+      q: str || searchedValue,
+      sortField: "created_by",
+      sortDirection,
+      status: JSON.stringify(currentFilterStatus?.["1"]),
+      queryType: JSON.stringify(currentFilterStatus?.["2"]),
+    };
+  };
+  const handleSorting = (sortDirection) => {
+    const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
   const columns = getTicketOrQueryColumn({
     type: currentActiveTab,
     intl,
@@ -87,27 +126,10 @@ const TicketTable = ({
       current,
       searchedValue,
     },
+    setSortBy,
+    sortBy,
+    handleSorting,
   });
-
-  const handleOnUserSearch = (str) => {
-    setSearchedValue(str);
-    str &&
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.SEARCH_QUERY], str);
-        return prev;
-      });
-    !str &&
-      setSearchParams((prev) => {
-        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
-        return prev;
-      });
-    const requestedParams = {
-      perPage: pageSize,
-      page: current,
-      q: str,
-    };
-    debounceSearch(requestedParams);
-  };
 
   const onChangePageSize = (size) => {
     setPageSize(size);
@@ -117,11 +139,10 @@ const TicketTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    const requestedParams = {
-      perPage: size,
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: size,
       page: 1,
-      q: searchedValue,
-    };
+    });
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -131,11 +152,10 @@ const TicketTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    const requestedParams = {
-      perPage: pageSize,
+    const requestedParams = getRequestedQueryParams({
       page: newPageNumber,
-      q: searchedValue,
-    };
+    });
+
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -169,20 +189,16 @@ const TicketTable = ({
       return prev;
     });
 
-    const requestedParams = {
-      perPage: pageSize,
-      page: current,
-      q: searchedValue,
-    };
+    const requestedParams = getRequestedQueryParams({});
+
     fetchData({ queryParamsObject: requestedParams });
   }, []);
 
   const handleOnReTry = () => {
-    const requestedParams = {
-      perPage: DEFAULT_PAGE_SIZE,
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: DEFAULT_PAGE_SIZE,
       page: 1,
-      q: searchedValue,
-    };
+    });
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -211,6 +227,11 @@ const TicketTable = ({
     },
   ];
 
+  const onFilterApply = (currentFilterStatus) => {
+    const requestedParams = getRequestedQueryParams({ currentFilterStatus });
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
   return (
     <>
       {!isError && (
@@ -224,6 +245,7 @@ const TicketTable = ({
             columns,
             onChangePageSize,
             onChangeCurrentPage,
+            onFilterApply,
           }}
           isLoading={isSuccess && !isLoading}
           data={data?.records}
