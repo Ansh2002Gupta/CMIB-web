@@ -98,6 +98,13 @@ const SearchFilter = ({
     return getImage("someFiltersAreSelected");
   };
 
+  const totalCount = Object.values(currentFilterStatus).reduce(
+    (total, currentArray) => {
+      return total + currentArray.length;
+    },
+    0
+  );
+
   return (
     <div className={styles.container}>
       <Button
@@ -113,9 +120,9 @@ const SearchFilter = ({
         <Typography className={styles.filterBtnText}>
           {intl.formatMessage({ id: "label.filters" })}
         </Typography>
-        {filterArray.length > 0 && (
+        {totalCount > 0 && (
           <Typography className={styles.countFilterStyle}>
-            {filterArray.length}
+            {totalCount}
           </Typography>
         )}
       </Button>
