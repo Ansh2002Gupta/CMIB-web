@@ -9,9 +9,21 @@
   min-height: var(--btnHeight, 56px);
   color: var(--btnText, #fbfcff);
   font-weight: var(--fontWeightBold, 600);
+  font-size: var(--fontSizeSmall, 14px);
   &:hover {
     background-color: var(--greenBtnBg, #04af55) !important;
     color: var(--btnText, #fbfcff) !important;
+  }
+}
+
+.whiteBgBtn {
+  background-color: var(--bodyBg, #fff);
+  color: var(--black1, #000);
+  font-weight: var(--fontWeightBold, 500);
+  &:hover {
+    background-color: var(--bodyBg, #fff) !important;
+    color: var(--black1, #000) !important;
+    border-color: var(--ltGrey5, #d9d9d9) !important;
   }
 }
 

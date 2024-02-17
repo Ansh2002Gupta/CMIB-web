@@ -1,0 +1,27 @@
+.parentContainer {
+  width: var(--fullWidth);
+}
+
+.headerBox {
+  border-top: var(--borderLight);
+  border-bottom: var(--borderLight);
+  width: var(--fullWidth);
+}
+
+.container {
+  padding: var(--paddingMedium);
+  gap: var(--gapMedium);
+  width: var(--fullWidth);
+}
+
+.heading {
+  color: var(--textBold);
+  font-size: var(--fontSizeHeading);
+  font-weight: var(--fontWeightBold);
+}
+
+@media screen and (max-width: 767px) {
+  .heading {
+    font-size: var(--fontSizeXXlarge);
+  }
+}

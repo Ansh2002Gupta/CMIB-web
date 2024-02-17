@@ -177,7 +177,11 @@ const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
                     {intl.formatMessage({ id: "label.dateCreatedOn" })}:
                   </Typography>
                   <Typography
-                    className={[styles.darkText, styles.fontBold, styles.date].join(" ")}
+                    className={[
+                      styles.darkText,
+                      styles.fontBold,
+                      styles.date,
+                    ].join(" ")}
                   >
                     {createdDate}
                   </Typography>
@@ -197,8 +201,8 @@ const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
                   {intl.formatMessage({
                     id: `account.${
                       is2FactorAuthenicationOn
-                        ? "enableTwoFactorAuthentication"
-                        : "disableTwoFactorAuthentication"
+                        ? "enabledTwoFactorAuthentication"
+                        : "disabledTwoFactorAuthentication"
                     }`,
                   })}
                 </Typography>
