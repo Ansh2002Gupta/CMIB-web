@@ -24,3 +24,8 @@
     color: var(--inputPlaceHolder) !important;
   }
  
+  .ant-input-affix-wrapper >input.ant-input{
+    color: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}

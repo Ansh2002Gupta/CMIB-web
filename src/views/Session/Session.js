@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { TwoRow } from "core/layouts";
@@ -10,7 +10,11 @@ import CustomTabs from "../../components/CustomTabs";
 import SessionDetails from "../../containers/SessionDetails";
 import SessionRound from "../SessionRound";
 import useFetch from "../../core/hooks/useFetch";
-import { ADMIN_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
+import { ADD_SESSION } from "../../routes/routeNames";
 import {
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
@@ -21,8 +25,13 @@ import styles from "./session.module.scss";
 
 function Session() {
   const intl = useIntl();
+  const { navigateScreen: navigate } = useNavigateScreen();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+
   const [activeTab, setActiveTab] = useState("1");
-  const [addSession, setAddSession] = useState(false);
   const {
     data: sessionData,
     error: sessionError,
@@ -32,10 +41,19 @@ function Session() {
     isSuccess,
     setData,
   } = useFetch({
-    url: ADMIN_ROUTE + SESSIONS + "/1", //TODO : 1 has to replace once Global Session will implement as we will take id from there
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      SESSIONS +
+      `/${globalSessionDetails?.globalSessionId}`,
+    otherOptions: { skipApiCallOnMount: true },
   });
 
   const responsive = useResponsive();
+
+  useEffect(() => {
+    fetchData({});
+  }, [globalSessionDetails]);
 
   const tabItems = [
     {
@@ -45,13 +63,12 @@ function Session() {
         <SessionDetails
           key={Date.now()}
           {...{
-            addSession,
+            isEditable: false,
             isGettingSessions,
             isSessionError,
             fetchData,
             sessionData,
             sessionError,
-            setAddSession,
           }}
         />
       ),
@@ -91,51 +108,30 @@ function Session() {
               customStyles={!responsive?.isMd ? styles.customStyles : ""}
               headerText={intl.formatMessage({ id: "label.session" })}
               rightSection={
-                !addSession && (
-                  <CustomButton
-                    btnText={intl.formatMessage({
-                      id: "session.setUpNewSession",
-                    })}
-                    customStyle={!responsive.isMd ? styles.buttonStyles : ""}
-                    IconElement={responsive.isMd ? AddIcon : null}
-                    textStyle={styles.textStyle}
-                    onClick={() => {
-                      setAddSession(true);
-                    }}
-                  />
-                )
+                <CustomButton
+                  btnText={intl.formatMessage({
+                    id: "session.setUpNewSession",
+                  })}
+                  customStyle={!responsive.isMd ? styles.buttonStyles : ""}
+                  IconElement={responsive.isMd ? AddIcon : null}
+                  textStyle={styles.textStyle}
+                  onClick={() => {
+                    navigate(ADD_SESSION, false);
+                  }}
+                />
               }
             />
           }
           bottomSection={
-            !addSession && (
-              <CustomTabs
-                tabs={tabItems}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-              />
-            )
+            <CustomTabs
+              tabs={tabItems}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
           }
         />
       }
-      bottomSection={
-        addSession ? (
-          <SessionDetails
-            key={Date.now()}
-            {...{
-              addSession,
-              isGettingSessions,
-              isSessionError,
-              fetchData,
-              sessionData,
-              sessionError,
-              setAddSession,
-            }}
-          />
-        ) : (
-          !!activeTabChildren && activeTabChildren.children
-        )
-      }
+      bottomSection={!!activeTabChildren && activeTabChildren.children}
       bottomSectionStyle={{
         padding: variables.fontSizeXlargeMedium,
       }}
