@@ -441,6 +441,8 @@ const locale = {
   "label.path.setup-centers": "Setup centres",
   "label.big_centres": "Big Centres",
   "label.small_centres": "Small Centres",
+  "label.noResultsFound": "No Results Found...",
+  "label.noSession": "No Session",
 };
 
 export default locale;

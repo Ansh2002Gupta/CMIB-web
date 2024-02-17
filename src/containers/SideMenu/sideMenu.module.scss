@@ -97,7 +97,10 @@
 }
 
 .moduleListItem {
-  padding: var(--sizeXSmall, 12px);
+  padding-top: var(--sizeXSmall, 12px);
+  padding-bottom: var(--sizeXSmall, 12px);
+  padding-right: var(--sizeXSmall, 12px);
+  padding-left: var(--sizeXSmall, 24px);
   width: var(--fullWidth, 100%);
   &.disabled {
     color: grey;
