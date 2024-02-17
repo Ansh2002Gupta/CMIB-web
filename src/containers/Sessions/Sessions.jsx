@@ -1,19 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DownOutlined } from "@ant-design/icons";
 import { useIntl } from "react-intl";
-import { Button, Dropdown, Menu, Typography } from "antd";
+import { Button, Dropdown, Menu, Tooltip, Typography } from "antd";
 import { capitalize } from "lodash";
 
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
-import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
 import styles from "./sessions.module.scss";
 
 function Sessions() {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
-  const { getGlobalSessionList } = useGlobalSessionListApi();
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [globalSessionDetails, globalSessionDispatch] =
     useContext(GlobalSessionContext);
@@ -46,7 +44,11 @@ function Sessions() {
                 : styles.menuItemFontWeightNormal
             }`}
           >
-            <span className={styles.menuItemText}>{capitalize(item.name)}</span>
+            <Tooltip title={item.name.length > 43 ? item.name : null}>
+              <span className={styles.menuItemText}>
+                {capitalize(item.name)}
+              </span>
+            </Tooltip>
           </Menu.Item>
         ))
       ) : (
