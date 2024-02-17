@@ -1,3 +1,3 @@
 export const classes = {
-  modalStyles: { maxHeight: "80vh", overflowY: "auto" },
+  modalStyles: { maxHeight: "100vh", overflowY: "auto" },
 };

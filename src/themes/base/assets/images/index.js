@@ -15,6 +15,7 @@ import disabledArrowLeft from "./disabledArrowLeft.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
+import enableEdit from "./enableEdit.svg";
 import download from "./download.svg";
 import editDark from "./editDark.svg";
 import dummyPerson from "./dummy person image.png";
@@ -84,6 +85,7 @@ const images = {
   DeviceMessage,
   Document,
   edit,
+  enableEdit,
   editDark,
   errorIcon,
   eye,
@@ -127,8 +129,8 @@ const images = {
   addCircleBlue,
   minusCircleBlue,
   publicLogoWhite,
-  changeIcon,
   greenTick,
+  changeIcon,
 };
 
 export default images;
