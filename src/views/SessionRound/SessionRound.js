@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import { capitalize } from "lodash";
 import { useIntl } from "react-intl";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
-import { capitalize } from "lodash";
 
 import CustomSwitch from "../../components/CustomSwitch";
 import RoundCard from "../../containers/RoundCard";
@@ -12,12 +12,10 @@ import SearchableDropDown from "../../components/SearchableDropDown";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { CENTRE_TYPE_ENUM } from "../../constant/constant";
 import {
   CENTRE_END_POINT,
   CORE_ROUTE,
   DROPDOWN,
-  TYPE_QUERY,
 } from "../../constant/apiEndpoints";
 import { classes } from "./SessionRound.styles";
 import styles from "./SessionRound.module.scss";
@@ -36,21 +34,19 @@ const SessionRound = ({ roundList, switchLabel }) => {
       CORE_ROUTE +
       `/${selectedModule?.key}` +
       CENTRE_END_POINT +
-      DROPDOWN +
-      TYPE_QUERY +
-      CENTRE_TYPE_ENUM.ALL,
+      DROPDOWN
   });
 
-  const handleSelectCity = (item, option) => {
+  const handleSelectCentre = (item, option) => {
     let selectedCity = option?.[0];
     if (city.some((item) => item.id === selectedCity.id)) {
-      handleDeselectCity(selectedCity);
+      handleDeselectCentre(selectedCity);
     } else {
       setCity([...city, selectedCity]);
     }
   };
 
-  const handleDeselectCity = (item) => {
+  const handleDeselectCentre = (item) => {
     const updatedCenters = city?.filter((ele) => ele.id !== item.id);
     setCity(updatedCenters);
   };
@@ -109,8 +105,8 @@ const SessionRound = ({ roundList, switchLabel }) => {
             <SearchableDropDown
               isError={isError}
               isRequiredField={true}
-              onSelectItem={handleSelectCity}
-              onUnselectItem={handleDeselectCity}
+              onSelectItem={handleSelectCentre}
+              onRemoveItem={handleDeselectCentre}
               options={getCentreListFromResponse()}
               selectedOptionsList={city}
               placeholderText="session.rounds.selectCentres"

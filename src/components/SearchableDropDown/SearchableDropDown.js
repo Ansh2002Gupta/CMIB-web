@@ -1,17 +1,19 @@
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import { Checkbox, Image, Select, Typography } from "antd";
+
 import { ThemeContext } from "core/providers/theme";
 import { TwoColumn, TwoRow } from "../../core/layouts";
-import { useIntl } from "react-intl";
-import { useContext } from "react";
+
 import { classes } from "./SearchableDropDown.styles";
 import styles from "./SearchableDropDown.module.scss";
 
 const SearchableDropDown = ({
   isError,
   isRequiredField,
+  onRemoveItem,
   onSelectItem,
-  onUnselectItem,
   options,
   placeholderText,
   selectedOptionsList,
@@ -78,7 +80,7 @@ const SearchableDropDown = ({
                     className={styles.crossIcon}
                     preview={false}
                     onClick={() => {
-                      onUnselectItem(item);
+                      onRemoveItem(item);
                     }}
                   />
                 </div>

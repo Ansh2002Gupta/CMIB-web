@@ -352,7 +352,6 @@ export const INITIAL_PASSWORD_DATA = {
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
 
 export const CENTRE_TYPE_ENUM = {
-  ALL: "all",
   BIG: "big",
   SMALL: "small",
 };
