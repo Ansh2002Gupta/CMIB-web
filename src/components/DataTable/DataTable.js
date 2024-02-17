@@ -44,7 +44,6 @@ const DataTable = ({
         pagination={false}
         rowClassName={styles.rowtext}
         scroll={responsiveStyle}
-        className={styles.table}
         rowKey="id"
       />
       <div className={styles.rowPerPageOptionsAndPaginationContainer}>

@@ -425,8 +425,8 @@ const locale = {
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
-  "label.show_result": "Show Result",
-  "label.centreCode": "Centre Code",
+  "label.show_result": "Show Results",
+  "label.centreCode": "Centre Id",
   "label.path.centre-details": "Edit centre details",
   "label.setup_orientation_centers": "Setup Orientation Centers",
   "label.orientation_centers_warning":
@@ -437,6 +437,8 @@ const locale = {
   "label.enter_location": "Enter location of venue",
   "label.big": "Big Centre",
   "label.small": "Small Centre",
+  "label.search_by_name_or_registration_no":
+    "Search by name and registration/membership number",
   "label.path.round1": "Round 1",
   "label.path.setup-centers": "Setup centres",
   "label.big_centres": "Big Centres",
