@@ -65,7 +65,7 @@ const DataTable = ({
         <Pagination
           disabled={originalData.length <= 0}
           {...rightPaginationConfig}
-          className={styles.paginationContainer}
+          className={[styles.paginationContainer].join(" ")}
           itemRender={(current, type, originalElement) => (
             <PaginationItems
               {...{ current, type, originalElement }}

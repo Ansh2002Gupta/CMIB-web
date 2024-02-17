@@ -1,6 +1,7 @@
 import {
   CONSENT_MARKING,
   ORIENTATION_CENTERS,
+  ROUND_ONE_SETUP_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
@@ -185,7 +186,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: ROUND_ONE_SETUP_CENTERS,
   },
   {
     id: 2,
@@ -217,7 +218,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: ROUND_ONE_SETUP_CENTERS,
   },
 ];
 
@@ -280,6 +281,13 @@ export const CITY_CENTERS = [
 export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
+
+export const STATUS = {
+  CLOSED: "Closed",
+  PENDING: "Pending",
+  SUCCESS: "Success",
+  ANSWERED: "Answered",
+};
 
 export const MODULE_KEYS = {
   CONTROL_KEY: "control",
@@ -348,8 +356,6 @@ export const ZOOM_CONSTANT = {
   ZOOM_STEP: 0.1,
 };
 
-export const NUMBER_OF_CHIPS_TO_BE_SHOWN = 2;
-
 export const ROTATE_IMAGE_BY = 90;
 
 export const INITIAL_PASSWORD_DATA = {
@@ -358,4 +364,13 @@ export const INITIAL_PASSWORD_DATA = {
   confirm_password: "",
 };
 
+export const SORTING_QUERY_PARAMS = {
+  SORTED_KEY: "sorted-key",
+  SORTED_DIRECTION: "sorted-direction",
+};
+
+export const NUMBER_OF_CHIPS_TO_SHOW = 15;
+
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
+
+export const MIN_SEARCH_TEXT_LENGTH = 2;
