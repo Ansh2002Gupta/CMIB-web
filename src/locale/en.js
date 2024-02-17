@@ -438,7 +438,7 @@ const locale = {
   "label.big_centres": "Big Centres",
   "label.small_centres": "Small Centres",
   "label.noResultsFound": "No Results Found...",
-  "label.noSession": "No Session",
+  "label.noSessionsAvailable": "No sessions available",
 };
 
 export default locale;

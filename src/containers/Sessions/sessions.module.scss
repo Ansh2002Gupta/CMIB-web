@@ -21,6 +21,11 @@
   background-color: var(--border, #cecece36) !important;
 }
 
+.emptySessionContainer {
+  height: 100px;
+  text-align: center;
+}
+
 .menu {
   border: var(--borderLight2, 1px solid #b1b3b5);
   max-height: var(--height_300, 300px);
