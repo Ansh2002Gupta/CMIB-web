@@ -382,6 +382,7 @@ const locale = {
   "label.path.contact-us": "Queries",
   "label.path.query": "Query Details",
   "label.path.queries": "Queries",
+  "label.path.queries-details": "Query Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
