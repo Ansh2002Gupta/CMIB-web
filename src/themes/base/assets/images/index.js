@@ -15,6 +15,7 @@ import disabledArrowLeft from "./disabledArrowLeft.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
+import enableEdit from "./enableEdit.svg";
 import download from "./download.svg";
 import editDark from "./editDark.svg";
 import dummyPerson from "./dummy person image.png";
@@ -46,7 +47,7 @@ import addIcon from "./add.png";
 import editIcon from "./edit.png";
 import TempCompanyLogo from "./TempCompanyLogo.svg";
 import publicFooter from "./PublicFooter.svg";
-import greenTickSign from "./green tick sign.svg"
+import greenTickSign from "./green tick sign.svg";
 import flagOnPedestal from "./flag on pedestal.svg";
 import global from "./global.svg";
 import scholar from "./scholar.svg";
@@ -83,6 +84,7 @@ const images = {
   DeviceMessage,
   Document,
   edit,
+  enableEdit,
   editDark,
   errorIcon,
   eye,
