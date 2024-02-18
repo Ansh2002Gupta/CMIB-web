@@ -97,17 +97,16 @@ const SessionRound = ({ roundList, switchLabel }) => {
             />
           }
           rightSection={
-            // <SearchableDropDown
-            //   isError={isError}
-            //   isRequiredField={true}
-            //   onSelectItem={handleSelectCentre}
-            //   onRemoveItem={handleDeselectCentre}
-            //   options={getCentreListFromResponse()}
-            //   selectedOptionsList={city}
-            //   placeholderText="session.rounds.selectCentres"
-            //   title="session.rounds.centres"
-            // />
-            <></>
+            <SearchableDropDown
+              isError={isError}
+              isRequiredField={true}
+              onSelectItem={handleSelectCentre}
+              onRemoveItem={handleDeselectCentre}
+              //options={getCentreListFromResponse()} //This has to correct by shahzad grtting error because of this
+              selectedOptionsList={city}
+              placeholderText="session.rounds.selectCentres"
+              title="session.rounds.centres"
+            />
           }
         />
       }
