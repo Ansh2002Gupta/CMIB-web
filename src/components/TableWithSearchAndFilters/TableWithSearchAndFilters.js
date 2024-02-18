@@ -27,8 +27,6 @@ const TableWithSearchAndFilters = ({
   searchedValue,
   isLoading,
   onFilterApply,
-  filterArray,
-  setFilterArray,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);

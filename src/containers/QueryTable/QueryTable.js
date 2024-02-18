@@ -452,8 +452,6 @@ const QueryTable = ({
             columns,
             onChangePageSize,
             onChangeCurrentPage,
-            filterArray,
-            setFilterArray,
           }}
           arrayContainingSelectedRow={selectedQueriesToBeMarkedAsAnswered}
           isLoading={isLoading}
