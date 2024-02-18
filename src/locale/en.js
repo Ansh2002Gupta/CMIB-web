@@ -452,6 +452,8 @@ const locale = {
   "label.enter_location": "Enter location of venue",
   "label.big": "Big Centre",
   "label.small": "Small Centre",
+  "label.selectassignee": "Select Assignee",
+  "label.assign": "Assign",
   "label.search_by_name_or_registration_no":
     "Search by name and registration/membership number",
   "label.path.round1": "Round 1",
@@ -460,6 +462,7 @@ const locale = {
   "label.small_centres": "Small Centres",
   "label.noResultsFound": "No Results Found...",
   "label.noSessionsAvailable": "No sessions available",
+  "label.noDataFound": "No Data found",
 };
 
 export default locale;

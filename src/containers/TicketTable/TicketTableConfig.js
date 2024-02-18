@@ -1,6 +1,6 @@
 import { Typography } from "antd";
-import { SORT_VALUES } from "../../constant/constant";
 
+import { SORT_VALUES } from "../../constant/constant";
 import styles from "./TicketTable.module.scss";
 
 const getStatusStyles = (status) => {
@@ -17,12 +17,13 @@ const getStatusStyles = (status) => {
 };
 
 export const getTicketOrQueryColumn = ({
-  intl,
   getImage,
+  handleClickAssign,
+  handleSorting,
+  intl,
   renderColumn,
   setSortBy,
   sortBy,
-  handleSorting,
 }) => {
   return [
     renderColumn({
@@ -125,6 +126,9 @@ export const getTicketOrQueryColumn = ({
         preview: false,
         src: getImage("messageText"),
         visible: true,
+        onClick: (data) => {
+          handleClickAssign(data);
+        },
       },
     }),
     renderColumn({

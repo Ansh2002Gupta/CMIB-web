@@ -6,11 +6,14 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
+import AddTicketAssignee from "../AddTicketAssignee";
+import CommonModal from "../../components/CommonModal";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketOrQueryColumn } from "./TicketTableConfig";
 import { validateSearchTextLength } from "../../Utils/validations";
 import {
@@ -40,12 +43,16 @@ const TicketTable = ({
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentTicketData, setCurrentTicketData] = useState({});
   const [sortBy, setSortBy] = useState("");
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: CORE_ROUTE + TICKET_LIST,
-    otherOptions: { skipApiCallOnMount: true },
-  });
+  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
+    useFetch({
+      url: CORE_ROUTE + TICKET_LIST,
+      otherOptions: { skipApiCallOnMount: true },
+    });
   const { data: queryTypes } = useFetch({
     url: CORE_ROUTE + QUERY_TYPE,
   });
@@ -75,6 +82,11 @@ const TicketTable = ({
       str: status.name,
     }));
   }, [status]);
+
+  const handleClickAssign = (data) => {
+    setIsModalOpen(true);
+    setCurrentTicketData(data);
+  };
 
   const getRequestedQueryParams = ({
     currentFilterStatus,
@@ -134,6 +146,7 @@ const TicketTable = ({
     type: currentActiveTab,
     intl,
     getImage,
+    handleClickAssign,
     navigate,
     renderColumn,
     queriesColumnProperties: {},
@@ -220,6 +233,21 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
+  const handleAssignee = ({ assigneeName, ticketId }) => {
+    let updatedData = data;
+    updatedData.records = data?.records?.map((ticket) => {
+      if (+ticket.id === +ticketId) {
+        ticket.assigned_to = assigneeName;
+        return ticket;
+      }
+      return {
+        ...ticket,
+      };
+    });
+    setData(updatedData);
+    setCurrentTicketData({});
+  };
+
   useEffect(() => {
     return () => {
       setSearchedValue("");
@@ -252,6 +280,17 @@ const TicketTable = ({
 
   return (
     <>
+      {notificationContextHolder}
+      <CommonModal isOpen={isModalOpen} width={450}>
+        <AddTicketAssignee
+          {...{
+            ticket_id: currentTicketData?.id,
+            handleAssignee,
+            setIsModalOpen,
+            showNotification,
+          }}
+        />
+      </CommonModal>
       {!isError && (
         <TableWithSearchAndFilters
           {...{
