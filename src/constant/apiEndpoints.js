@@ -26,7 +26,6 @@ export const LOGIN_END_POINT = "/login";
 export const LOGOUT_END_POINT = "/logout";
 export const PROFILE_END_POINT = "/profile";
 export const QUERIES_END_POINT = "/queries";
-export const QUERIES_LIST = "/queries";
 export const QUERY_TYPE = "/queries/types";
 export const RESET_ADMIN_PASSWORD = "/reset-password/confirm";
 export const ROLES_PERMISSION = "/roles-permissions";
@@ -42,4 +41,3 @@ export const VERIFY_OTP = "/otp/verify";
 // Query
 export const MARK_AS_ANSWER_END_POINT = "/answer";
 export const QUERY_TYPES_END_POINT = "/types";
-
