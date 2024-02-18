@@ -14,7 +14,7 @@ import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
-import { getTicketOrQueryColumn } from "./TicketTableConfig";
+import { getTicketColumn } from "./TicketTableConfig";
 import { validateSearchTextLength } from "../../Utils/validations";
 import {
   DEBOUNCE_TIME,
@@ -47,15 +47,17 @@ const TicketTable = ({
   const [currentTicketData, setCurrentTicketData] = useState({});
   const [sortBy, setSortBy] = useState("");
   const { showNotification, notificationContextHolder } = useShowNotification();
+  const [filterArray, setFilterArray] = useState({});
 
-  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
-    useFetch({
-      url: CORE_ROUTE + TICKET_LIST,
-      otherOptions: { skipApiCallOnMount: true },
-    });
+  const { data, error, fetchData, isError, isLoading, setData } = useFetch({
+    url: CORE_ROUTE + TICKET_LIST,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+
   const { data: queryTypes } = useFetch({
     url: CORE_ROUTE + QUERY_TYPE,
   });
+
   const { data: status } = useFetch({
     url: CORE_ROUTE + STATUS,
   });
@@ -137,12 +139,12 @@ const TicketTable = ({
     }
   };
 
-  const handleSorting = (sortDirection) => {
+  const handleSorting = ({ sortDirection }) => {
     const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const columns = getTicketOrQueryColumn({
+  const columns = getTicketColumn({
     type: currentActiveTab,
     intl,
     getImage,
@@ -306,8 +308,10 @@ const TicketTable = ({
             placeholder: intl.formatMessage({
               id: "label.search_by_name_or_registration_no",
             }),
+            filterArray,
+            setFilterArray,
           }}
-          isLoading={isSuccess && !isLoading}
+          isLoading={isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
         />
