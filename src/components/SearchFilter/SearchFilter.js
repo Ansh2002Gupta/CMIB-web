@@ -32,6 +32,7 @@ const SearchFilter = ({
   const { wrapperRef } = useOutSideClick({
     onOutSideClick: () => {
       setShowFilters(false);
+      setCurrentFilterStatus(filterArray);
     },
     elementNotToBeConsidered: elementNotConsideredInOutSideClick,
   });
