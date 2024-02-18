@@ -265,7 +265,7 @@ CustomInput.propTypes = {
   selectOptions: PropTypes.array,
   SuffixIcon: PropTypes.node,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CustomInput;
