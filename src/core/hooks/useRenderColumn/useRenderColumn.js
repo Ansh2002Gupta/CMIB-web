@@ -176,7 +176,10 @@ const useRenderColumn = () => {
             onClick={() => {
               setSortBy((prev) => {
                 const newSortOrder = toggleSorting(prev);
-                columnSortByHandler(newSortOrder);
+                columnSortByHandler({
+                  sortDirection: newSortOrder,
+                  sortField: columnObject.key,
+                });
                 return newSortOrder;
               });
             }}
@@ -186,7 +189,7 @@ const useRenderColumn = () => {
               <Image
                 src={getImage(sortIcon)}
                 preview={false}
-                className={[styles.centerContent, customIconStyle].join(" ")}
+                className={[styles.centerContent, ...customIconStyle].join(" ")}
               />
             </div>
           </Typography>

@@ -1,6 +1,5 @@
 import { Image, Typography } from "antd";
-import { toggleSorting } from "../../constant/utils";
-import { SORTING_QUERY_PARAMS } from "../../constant/constant";
+import { SORT_VALUES } from "../../constant/constant";
 
 import styles from "./QueryTable.module.scss";
 
@@ -10,17 +9,14 @@ export const getTicketOrQueryColumn = ({
   navigate,
   renderColumn,
   queriesColumnProperties = {},
-  fetchData,
-  paginationAndSearchProperties,
-  setSearchParams,
+  handleSorting,
   setIsConfirmationModalOpen,
   toggleSelectAllItems,
   areAllItemsSelected,
   areSomeItemsSelected,
-  setSortByName,
-  setSortByCreatedAt,
-  sortByCreatedAt,
-  sortByName,
+  setSortBy,
+  sortBy,
+  sortField,
 }) => {
   const {
     selectedItemsList,
@@ -29,51 +25,9 @@ export const getTicketOrQueryColumn = ({
     setSelectedItemsList,
     setIsSingleSelect,
   } = queriesColumnProperties;
-  const { pageSize, current, searchedValue, filterArray } =
-    paginationAndSearchProperties;
   const isTableInSelectAllMode = selectedItemsList?.length !== 0;
-
-  const getSortedData = ({
-    sortKeyName,
-    direction,
-    setSortByNameObj,
-    setSortByCreatedAtObj,
-  }) => {
-    fetchData({
-      queryParamsObject: {
-        perPage: pageSize,
-        page: current,
-        q: searchedValue,
-        queryType: filterArray,
-        sortDirection: toggleSorting(direction),
-        sortField: sortKeyName,
-      },
-      onSuccessCallback: () => {
-        setSearchParams((prevValue) => {
-          prevValue.set(
-            SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-            toggleSorting(direction)
-          );
-          prevValue.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortKeyName);
-          return prevValue;
-        });
-
-        setSortByName((prev) => {
-          return {
-            ...prev,
-            ...setSortByNameObj,
-          };
-        });
-
-        setSortByCreatedAt((prev) => {
-          return {
-            ...prev,
-            ...setSortByCreatedAtObj,
-          };
-        });
-      },
-    });
-  };
+  const sortByName = sortField === "name" ? sortBy : "";
+  const sortByCreatedAt = sortField === "created_at" ? sortBy : "";
 
   return [
     renderColumn({
@@ -107,51 +61,23 @@ export const getTicketOrQueryColumn = ({
       },
     }),
     renderColumn({
-      title: (
-        <>
-          {!isTableInSelectAllMode ? (
-            <Typography
-              className={[styles.columnHeading].join(" ")}
-              onClick={() =>
-                getSortedData({
-                  sortKeyName: "name",
-                  direction: sortByName?.direction,
-                  setSortByNameObj: {
-                    direction: toggleSorting(sortByName?.direction),
-                    isDisable: false,
-                  },
-                  setSortByCreatedAtObj: {
-                    isDisable: true,
-                  },
-                })
-              }
-            >
-              {intl.formatMessage({ id: "label.studentOrCompany" })}
-              <div className={styles.sortintArrawContainer}>
-                <Image
-                  src={getImage(
-                    `${
-                      sortByName?.isDisable
-                        ? "disabledArrow"
-                        : "arrowDownDarkGrey"
-                    }`
-                  )}
-                  preview={false}
-                  className={[
-                    styles[sortByName?.direction],
-                    styles.centerContent,
-                  ].join(" ")}
-                />
-              </div>
-            </Typography>
-          ) : (
-            ""
-          )}
-        </>
-      ),
+      title: isTableInSelectAllMode
+        ? ""
+        : intl.formatMessage({ id: "label.studentOrCompany" }),
       customColumnHeading: styles.extraWidth,
       dataIndex: "name",
       key: "name",
+      setSortBy: setSortBy,
+      renderSorterColumn: true,
+      isRequiredField: true,
+      columnSortByHandler: handleSorting,
+      customIconStyle: [
+        styles[sortByName],
+        sortByName === SORT_VALUES.ASCENDING ||
+        sortByName === SORT_VALUES.DESCENDING
+          ? styles.active
+          : "",
+      ],
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
@@ -159,15 +85,11 @@ export const getTicketOrQueryColumn = ({
       },
     }),
     renderColumn({
-      title: (
-        <span className={styles.extraWidth}>
-          {isTableInSelectAllMode
-            ? ""
-            : intl.formatMessage({
-                id: "label.nonRegisteredStudentOrCompany",
-              })}
-        </span>
-      ),
+      title: isTableInSelectAllMode
+        ? ""
+        : intl.formatMessage({
+            id: "label.nonRegisteredStudentOrCompany",
+          }),
       customColumnHeading: styles.extraWidth,
       dataIndex: "type",
       key: "type",
@@ -205,24 +127,20 @@ export const getTicketOrQueryColumn = ({
       ),
       dataIndex: "email",
       key: "email",
+      isRequiredField: true,
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
         isRequiredTooltip: true,
       },
     }),
-    {
-      title: () => (
-        <>
-          {isTableInSelectAllMode ? (
-            ""
-          ) : (
-            <p className={styles.columnHeading}>
-              {intl.formatMessage({ id: "label.mobileNumber" })}
-            </p>
-          )}
-        </>
-      ),
+    renderColumn({
+      title: isTableInSelectAllMode
+        ? ""
+        : intl.formatMessage({
+            id: "label.mobileNumber",
+          }),
+      isRequiredField: true,
       dataIndex: "mobile",
       key: "mobile",
       renderText: {
@@ -230,17 +148,13 @@ export const getTicketOrQueryColumn = ({
         textStyles: [styles.tableCell].join(" "),
         isRequiredTooltip: true,
       },
-    },
+    }),
     renderColumn({
-      title: (
-        <>
-          {isTableInSelectAllMode
-            ? ""
-            : intl.formatMessage({
-                id: "label.queryType",
-              })}
-        </>
-      ),
+      title: isTableInSelectAllMode
+        ? ""
+        : intl.formatMessage({
+            id: "label.queryType",
+          }),
       dataIndex: "query_type",
       key: "query_type",
       renderText: {
@@ -250,50 +164,21 @@ export const getTicketOrQueryColumn = ({
       },
     }),
     renderColumn({
-      title: (
-        <>
-          {isTableInSelectAllMode ? (
-            ""
-          ) : (
-            <Typography
-              className={styles.columnHeading}
-              onClick={() =>
-                getSortedData({
-                  sortKeyName: "created_at",
-                  direction: sortByCreatedAt?.direction,
-                  setSortByNameObj: {
-                    isDisable: true,
-                  },
-                  setSortByCreatedAtObj: {
-                    direction: toggleSorting(sortByCreatedAt?.direction),
-                    isDisable: false,
-                  },
-                })
-              }
-            >
-              {intl.formatMessage({ id: "label.createdOn" })}
-              <div className={styles.sortintArrawContainer}>
-                <Image
-                  src={getImage(
-                    `${
-                      sortByCreatedAt?.isDisable
-                        ? "disabledArrow"
-                        : "arrowDownDarkGrey"
-                    }`
-                  )}
-                  preview={false}
-                  className={[
-                    styles[sortByCreatedAt?.direction],
-                    styles.arrowSytles,
-                  ].join(" ")}
-                />
-              </div>
-            </Typography>
-          )}
-        </>
-      ),
+      title: isTableInSelectAllMode
+        ? ""
+        : intl.formatMessage({ id: "label.createdOn" }),
       dataIndex: "created_at",
       key: "created_at",
+      renderSorterColumn: true,
+      setSortBy: setSortBy,
+      columnSortByHandler: handleSorting,
+      customIconStyle: [
+        styles[sortByCreatedAt],
+        sortByCreatedAt === SORT_VALUES.ASCENDING ||
+        sortByCreatedAt === SORT_VALUES.DESCENDING
+          ? styles.active
+          : "",
+      ],
       renderText: {
         isTypeDate: true,
         visible: true,

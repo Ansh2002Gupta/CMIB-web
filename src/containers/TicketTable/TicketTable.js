@@ -126,7 +126,7 @@ const TicketTable = ({
     }
   };
 
-  const handleSorting = (sortDirection) => {
+  const handleSorting = ({ sortDirection }) => {
     const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
     fetchData({ queryParamsObject: requestedParams });
   };

@@ -17,18 +17,16 @@ import useFetch from "../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketOrQueryColumn } from "./QueriesTableConfig";
-import {
-  convertPermissionFilter,
-  getSortQueryParamsValue,
-  getValidFilter,
-} from "../../constant/utils";
 import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import {
+  DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
   NUMBER_OF_CHIPS_TO_SHOW,
   PAGINATION_PROPERTIES,
   SORTING_QUERY_PARAMS,
 } from "../../constant/constant";
+import { convertPermissionFilter, getValidFilter } from "../../constant/utils";
+import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./QueryTable.module.scss";
 
 const QueryTable = ({
@@ -39,28 +37,19 @@ const QueryTable = ({
   searchedValue,
   setSearchedValue,
 }) => {
-  // third party hooks
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  // useState hooks
-  const [sortByCreatedAt, setSortByCreatedAt] = useState({
-    ...getSortQueryParamsValue({
-      direction: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_DIRECTION),
-      keyName: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_KEY),
-      stateKeyName: "created_at",
-    }),
-  });
-  const [sortByName, setSortByName] = useState({
-    ...getSortQueryParamsValue({
-      direction: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_DIRECTION),
-      keyName: searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_KEY),
-      stateKeyName: "name",
-    }),
-  });
+  const [sortDirection, setSortDirection] = useState(
+    searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_DIRECTION)
+  );
+  const [sortBy, setSortBy] = useState(
+    searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_KEY)
+  );
+
   const [
     selectedQueriesToBeMarkedAsAnswered,
     setSelctedQueriesToBeMarkedAsAnswered,
@@ -71,7 +60,6 @@ const QueryTable = ({
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isSingleSelect, setIsSingleSelect] = useState(false);
 
-  // custom hooks
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   const { data: queryTypesData, getQueriesTypes } = useQueriesTypesApi();
@@ -87,24 +75,11 @@ const QueryTable = ({
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
-  const debounceSearch = useMemo(() => _.debounce(fetchData, 300), []);
 
-  // funtions related to sorting
-  const getSortProperties = () => {
-    if (sortByCreatedAt?.isDisable) {
-      return {
-        sortField: "name",
-        sortDirection: sortByName?.direction,
-      };
-    }
-    return {
-      sortField: "created_at",
-      sortDirection: sortByCreatedAt?.direction,
-    };
-  };
+  const debounceSearch = useMemo(() => {
+    return _.debounce(fetchData, DEBOUNCE_TIME);
+  }, []);
 
-  // functions
-  // Query selections/toggle related functions
   let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
     (item) =>
       item?.status?.toLowerCase() === "answered" &&
@@ -120,22 +95,31 @@ const QueryTable = ({
       allCurrentPageSelectedQueries?.length &&
     allCurrentPageSelectedQueries?.length > 0;
 
-  const getRequestedParams = ({ page, perPage, q, queryType }) => {
+  const getRequestedParams = ({
+    page,
+    perPage,
+    q,
+    queryType,
+    sortField,
+    sortOrder,
+  }) => {
     return {
       perPage: perPage || pageSize,
       page: page || current,
-      q: q || searchedValue,
+      q: q || "",
       queryType: queryType || filterArray["1"],
+      sortDirection: sortOrder,
+      sortField: sortField,
     };
   };
 
   const onRetry = () => {
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({}),
-        ...getSortProperties(),
-      },
+    const requestedParams = getRequestedParams({
+      sortOrder: sortDirection,
+      sortField: sortBy,
+      q: searchedValue,
     });
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleMarkQuery = () => {
@@ -208,6 +192,30 @@ const QueryTable = ({
     setSelctedQueriesToBeMarkedAsAnswered((prev) => [...prev, queryId]);
   };
 
+  const handleSorting = ({ sortField, sortDirection }) => {
+    const newSortDirection = sortField === sortBy ? sortDirection : "asc";
+
+    const requestedParams = getRequestedParams({
+      page: 1,
+      sortOrder: newSortDirection,
+      sortField: newSortDirection ? sortField : "",
+      q: searchedValue,
+    });
+
+    setSortBy(newSortDirection ? sortField : "");
+    setSortDirection(newSortDirection);
+
+    setSearchParams((prev) => {
+      newSortDirection &&
+        prev.set(SORTING_QUERY_PARAMS.SORTED_DIRECTION, newSortDirection);
+      !newSortDirection && prev.delete(SORTING_QUERY_PARAMS.SORTED_DIRECTION);
+      sortField && prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortField);
+      !newSortDirection && prev.delete(SORTING_QUERY_PARAMS.SORTED_KEY);
+      return prev;
+    });
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
   const columns = getTicketOrQueryColumn({
     intl,
     getImage,
@@ -221,18 +229,10 @@ const QueryTable = ({
       handleMarkMutipleQueriesAsAnswered: () =>
         setIsConfirmationModalOpen(true),
     },
-    fetchData,
-    paginationAndSearchProperties: {
-      pageSize,
-      current,
-      searchedValue,
-      filterArray,
-    },
-    setSortByName,
-    setSortByCreatedAt,
-    getSortProperties,
-    sortByCreatedAt,
-    sortByName,
+    handleSorting,
+    sortBy: sortDirection,
+    setSortBy: setSortDirection,
+    sortField: sortBy,
     setSearchParams,
     setIsConfirmationModalOpen,
     toggleSelectAllItems,
@@ -243,22 +243,30 @@ const QueryTable = ({
   // Pagination, search and filter related functions
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
-    str &&
+    if (str?.trim()?.length > 2) {
+      debounceSearch({
+        queryParamsObject: getRequestedParams({
+          page: 1,
+          q: validateSearchTextLength(str),
+        }),
+      });
       setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.SEARCH_QUERY], str);
+        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
         return prev;
       });
-    !str &&
+    }
+    if (!str?.trim() && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
+      debounceSearch({
+        queryParamsObject: getRequestedParams({
+          page: 1,
+          q: "",
+        }),
+      });
       setSearchParams((prev) => {
-        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
+        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
         return prev;
       });
-    debounceSearch({
-      queryParamsObject: {
-        ...getRequestedParams({ q: str }),
-        ...getSortProperties(),
-      },
-    });
+    }
   };
 
   const onChangePageSize = (size) => {
@@ -269,12 +277,14 @@ const QueryTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({ perPage: size, page: 1 }),
-        ...getSortProperties(),
-      },
+    const requestedParams = getRequestedParams({
+      perPage: size,
+      page: 1,
+      sortOrder: sortDirection,
+      sortField: sortBy,
+      q: searchedValue,
     });
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
@@ -283,12 +293,13 @@ const QueryTable = ({
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({ page: newPageNumber }),
-        ...getSortProperties(),
-      },
+    const requestedParams = getRequestedParams({
+      page: newPageNumber,
+      sortOrder: sortDirection,
+      sortField: sortBy,
+      q: searchedValue,
     });
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnFilterApply = (updatedFiltersValue) => {
@@ -300,13 +311,13 @@ const QueryTable = ({
 
     setFilterArray(() => {
       const newFilterArray = updatedFiltersValue;
-
-      fetchData({
-        queryParamsObject: {
-          ...getRequestedParams({ queryType: newFilterArray["1"] || [] }),
-          ...getSortProperties(),
-        },
+      const requestedParams = getRequestedParams({
+        queryType: newFilterArray["1"] || [],
+        sortOrder: sortDirection,
+        sortField: sortBy,
+        q: searchedValue,
       });
+      fetchData({ queryParamsObject: requestedParams });
 
       return newFilterArray;
     });
@@ -394,12 +405,13 @@ const QueryTable = ({
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
         });
-        fetchData({
-          queryParamsObject: {
-            ...getRequestedParams({ page: 1 }),
-            ...getSortProperties(),
-          },
+        const requestedParams = getRequestedParams({
+          page: 1,
+          sortOrder: sortDirection,
+          sortField: sortBy,
+          q: searchedValue,
         });
+        fetchData({ queryParamsObject: requestedParams });
       }
     }
   }, [data?.meta?.total]);
@@ -409,23 +421,20 @@ const QueryTable = ({
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
       prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
-      prev.set(
-        SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-        getSortProperties()?.sortDirection
-      );
-      prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, getSortProperties()?.sortField);
+      sortDirection &&
+        prev.set(SORTING_QUERY_PARAMS.SORTED_DIRECTION, sortDirection);
+      sortBy && prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortBy);
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       searchedValue &&
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
       return prev;
     });
-
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({}),
-        ...getSortProperties(),
-      },
+    const requestedParams = getRequestedParams({
+      sortOrder: sortDirection,
+      sortField: sortBy,
+      q: searchedValue,
     });
+    fetchData({ queryParamsObject: requestedParams });
     getQueriesTypes({});
   }, []);
 
