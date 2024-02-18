@@ -1,6 +1,6 @@
 import styles from "./ConfigureInterview.module.scss";
 
-const getConfigureDateCoumns = (
+const getConfigureDateColumns = (
   errors,
   intl,
   isEdit,
@@ -130,4 +130,4 @@ const getConfigureDateCoumns = (
   return columns;
 };
 
-export default getConfigureDateCoumns;
+export default getConfigureDateColumns;

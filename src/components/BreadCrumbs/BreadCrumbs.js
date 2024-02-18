@@ -27,7 +27,7 @@ const BreadCrumbs = () => {
         key: index,
         onClick: !isLastItem
           ? () => navigate(index - (pathSegments.length - 1))
-          : undefined,
+          : () => {},
       };
     })
     .filter((item) => pathSegments.length > 1);

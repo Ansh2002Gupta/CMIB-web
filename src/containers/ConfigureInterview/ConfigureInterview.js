@@ -7,7 +7,7 @@ import { ThemeContext } from "core/providers/theme";
 import { TwoRow } from "../../core/layouts";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
-import getConfigureDateCoumns from "./ConfigureInterviewConfig";
+import getConfigureDateColumns from "./ConfigureInterviewConfig";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -28,7 +28,7 @@ const ConfigureInterview = () => {
   const isEdit = getValidMode(searchParams.get("mode")) === "edit";
   const [tableData, setTableData] = useState(CONFIGURE_INTERVIEW_DATES);
   const [addTableData, setAddTableData] = useState({
-    id: Math.random().toString(),
+    id: Date.now().toString(),
     isAddRow: true,
     scheduleDate: null,
     startTime: null,
@@ -60,7 +60,7 @@ const ConfigureInterview = () => {
       });
 
       setAddTableData({
-        id: Math.random().toString(),
+        id: Date.now().toString(),
         isAddRow: true,
         scheduleDate: null,
         startTime: null,
@@ -137,7 +137,7 @@ const ConfigureInterview = () => {
     );
   };
 
-  const columns = getConfigureDateCoumns(
+  const columns = getConfigureDateColumns(
     errors,
     intl,
     isEdit,
