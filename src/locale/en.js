@@ -360,6 +360,18 @@ const locale = {
   "label.experiencedMember": "Experienced Member",
   "label.change": "Change",
   "label.chooseModule": "Choose a module",
+  "label.startTime": "Start Time",
+  "label.endTime": "End Time",
+  "label.facilitiesNumber": "No. of Facilities",
+  "label.slotDurationInMinutes": "Slot Duration (in Minutes)",
+  "label.placeholder.startTime": "Select start time",
+  "label.placeholder.endTime": "Select end time",
+  "label.placeholder.facilitiesNumber": "Enter no. of facilities",
+  "label.placeholder.slotDurationInMinutes": "Enter duration",
+  "label.error.startTime": "Select start time",
+  "label.error.endTime": "Select end time",
+  "label.error.facilitiesNumber": "Enter facilities",
+  "label.error.slotDurationInMinutes": "Enter duration",
   "label.sessionPrefix": "Session:",
   "label.oldPassword": "Old Password",
   "label.newPassword": "New Password",
@@ -379,6 +391,7 @@ const locale = {
   "label.path.edit-session": "Edit Session",
   "label.path.contact-us": "Queries",
   "label.path.query": "Query Details",
+  "label.path.setup-mock-interview": "Setup Mock Interview",
   "label.path.queries": "Queries",
   "label.path.queries-details": "Query Details",
   "label.logoutSuccessful": "Logged out successfully",
@@ -423,6 +436,7 @@ const locale = {
   "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
     "Some queries have already been marked as answered. Continuing marking for the remaining queries.",
   "label.path.add": "Add New User",
+  "label.error.fieldEmpty": "Field cannot be empty.",
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
@@ -438,6 +452,8 @@ const locale = {
   "label.enter_location": "Enter location of venue",
   "label.big": "Big Centre",
   "label.small": "Small Centre",
+  "label.selectassignee": "Select Assignee",
+  "label.assign": "Assign",
   "label.search_by_name_or_registration_no":
     "Search by name and registration/membership number",
   "label.path.round1": "Round 1",
@@ -448,6 +464,7 @@ const locale = {
   "label.noSessionsAvailable": "No sessions available",
   "label.query_search_placeholder":
     "Search by query ID, name, email ID or mobile number",
+  "label.noDataFound": "No Data found",
 };
 
 export default locale;

@@ -92,6 +92,13 @@
   border-radius: var(--paddingSmall, 16px);
 }
 
+.selectedRow {
+  background-color: var(--blue6Bg);
+}
+
+.errorTimeInput {
+  border: var(--borderError);
+}
 .centerContent {
   display: flex;
 }
@@ -103,4 +110,3 @@
   gap: var(--gapXXSmall);
   cursor: pointer;
 }
-

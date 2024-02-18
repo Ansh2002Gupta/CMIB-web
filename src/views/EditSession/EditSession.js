@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
 
@@ -36,10 +36,16 @@ function EditSession() {
       `/${currentlySelectedModuleKey}` +
       SESSIONS +
       `/${globalSessionDetails?.globalSessionId}`,
-    otherOptions: { skipApiCallOnMount: !isEditSession },
+    otherOptions: { skipApiCallOnMount: true },
   });
 
   const responsive = useResponsive();
+
+  useEffect(() => {
+    if (globalSessionDetails?.globalSessionId && isEditSession) {
+      fetchData({});
+    }
+  }, [globalSessionDetails?.globalSessionId]);
 
   return (
     <TwoRow
