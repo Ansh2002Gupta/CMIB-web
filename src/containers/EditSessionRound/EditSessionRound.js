@@ -9,33 +9,42 @@ import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
 
-const EditSessionRound = ({ intl, roundDetails, selectedModule, switchLabel }) => {
+const EditSessionRound = ({
+  intl,
+  roundDetails,
+  onClickCancel,
+  selectedModule,
+  switchLabel,
+}) => {
 
   const [activeStatus, setActiveStatus] = useState(roundDetails?.status === 1);
   const [selectedCentres, setSelectedCentres] = useState([]);
   const responsive = useResponsive();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
+  const [centresError, setCentresError] = useState(false);
 
   const { data, isError } = useFetch({
     url: ADMIN_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT,
   });
-  
-   useEffect(() => {
+
+  useEffect(() => {
     mapSelectedCentres();
-   }, []);
+  }, []);
 
   const mapSelectedCentres = () => {
-    let centres = roundDetails?.centres?.map((centre) => {
-      return {
-        id: centre?.id,
-        label: capitalize(centre?.name),
-        value: capitalize(centre?.name),
-      };
-     }) || [];
-     setSelectedCentres(centres);
-  }
+    let centres =
+      roundDetails?.centres?.map((centre) => {
+        return {
+          id: centre?.id,
+          label: capitalize(centre?.name),
+          value: capitalize(centre?.name),
+        };
+      }) || [];
+    setSelectedCentres(centres);
+  };
 
   const handleSelectCentre = (item, option) => {
+    setCentresError(false)
     let centre = option?.[0];
     if (selectedCentres.some((item) => item.id === centre.id)) {
       handleDeselectCentre(centre);
@@ -89,29 +98,35 @@ const EditSessionRound = ({ intl, roundDetails, selectedModule, switchLabel }) =
   };
 
   const onClickSave = () => {
-    let payload = {
-      status: +activeStatus,
-      centre_id: Array.from(selectedCentres, (centre) => centre.id),
-    };
+    if (!selectedCentres?.length) {
+      setCentresError(true);
+    } else {
+      let payload = {
+        status: +activeStatus,
+        centre_id: Array.from(selectedCentres, (centre) => centre.id),
+      };
 
-    updateSessionRoundDetails({
-      payload: payload,
-      onErrorCallback: () => {},
-      onSuccessCallback: () => {},
-      roundId: roundDetails?.id,
-      selectedModuleKey: selectedModule?.key,
-    });
+      updateSessionRoundDetails({
+        payload: payload,
+        onErrorCallback: () => {},
+        onSuccessCallback:() => onClickCancel(true),
+        roundId: roundDetails?.id,
+        selectedModuleKey: selectedModule?.key,
+      });
+    }
   };
 
   return (
     <EditSessionRoundTemplate
       activeStatus={activeStatus}
+      centresError={centresError}
       getCentreListFromResponse={getCentreListFromResponse}
       handleDeselectCentre={handleDeselectCentre}
       handleSelectCentre={handleSelectCentre}
       handleStatusToggle={handleStatusToggle}
       intl={intl}
       isError={isError}
+      onClickCancel={onClickCancel}
       onClickSave={onClickSave}
       responsive={responsive}
       selectedCentres={selectedCentres}

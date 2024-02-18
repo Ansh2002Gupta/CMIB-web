@@ -10,13 +10,14 @@
   color: var(--error);
 }
 .grayText {
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
 }
 
 .centreContainer {
   overflow: unset;
+  gap: var(--gapXXSmall);
 }
 
 .selectedItemsContainer {
@@ -39,7 +40,6 @@
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
   margin-right: var(--gapXSmall);
-  margin-top: var(--gapXXSmall);
 }
 
 .crossIcon {
@@ -61,4 +61,10 @@
     height: 2px;
     width: 100%;
     background-color: black;
+}
+
+.errorText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--error);
 }

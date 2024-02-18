@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Checkbox, Image, Select, Typography } from "antd";
@@ -10,6 +10,7 @@ import { classes } from "./SearchableDropDown.styles";
 import styles from "./SearchableDropDown.module.scss";
 
 const SearchableDropDown = ({
+  isCentreError,
   isError,
   isRequiredField,
   onRemoveItem,
@@ -69,23 +70,29 @@ const SearchableDropDown = ({
             })}
           />
           <div className={styles.selectedItemsContainer}>
-            {selectedOptionsList?.map((item, index) => {
-              return (
-                <div className={styles.chipContainer} key={index}>
-                  <Typography className={styles.chipText}>
-                    {item.label}
-                  </Typography>
-                  <Image
-                    src={getImage("cancel")}
-                    className={styles.crossIcon}
-                    preview={false}
-                    onClick={() => {
-                      onRemoveItem(item);
-                    }}
-                  />
-                </div>
-              );
-            })}
+            {isCentreError ? (
+              <Typography className={styles.errorText}>
+                {intl.formatMessage({ id: "session.centreErrorMsg" })}
+              </Typography>
+            ) : (
+              selectedOptionsList?.map((item, index) => {
+                return (
+                  <div className={styles.chipContainer} key={index}>
+                    <Typography className={styles.chipText}>
+                      {item.label}
+                    </Typography>
+                    <Image
+                      src={getImage("cancel")}
+                      className={styles.crossIcon}
+                      preview={false}
+                      onClick={() => {
+                        onRemoveItem(item);
+                      }}
+                    />
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
       }
@@ -94,19 +101,21 @@ const SearchableDropDown = ({
 };
 
 SearchableDropDown.defaultProps = {
+  isCentreError: false,
   isError: false,
   isRequiredField: false,
-  onUnselectItem: () => {},
+  onRemoveItem: () => {},
   placeholderText: "",
   selectedOptionsList: [],
   title: "",
 };
 
 SearchableDropDown.propTypes = {
+  isCentreError: PropTypes.bool,
   isError: PropTypes.bool,
   isRequiredField: PropTypes.bool,
   onSelectItem: PropTypes.func.isRequired,
-  onUnselectItem: PropTypes.func,
+  onRemoveItem: PropTypes.func,
   options: PropTypes.array.isRequired,
   placeholderText: PropTypes.string,
   selectedOptionsList: PropTypes.array,

@@ -182,6 +182,7 @@ const variables = {
   height_350: "350px",
   height_400: "400px",
   height_600: "600px",
+  height_700: "700px",
   height_25vh: "25vh",
   height_30vh: "30vh",
   height_35vh: "35vh",

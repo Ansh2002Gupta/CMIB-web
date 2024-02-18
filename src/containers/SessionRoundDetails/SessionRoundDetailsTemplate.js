@@ -56,6 +56,7 @@ const SessionRoundDetailsTemplate = ({ roundDetails, intl, onClickEdit }) => {
       bottomSectionStyle={
         !roundDetails ? classes.emptyMiddleContainer : classes.middleContainer
       }
+      isBottomFillSpace
       bottomSection={
         !roundDetails ? (
           <TwoRow
@@ -99,6 +100,7 @@ const SessionRoundDetailsTemplate = ({ roundDetails, intl, onClickEdit }) => {
                 }
               />
             }
+            rightSectionStyle={classes.centresContainer}
             rightSection={
               <>
                 {!!centreList?.length && (

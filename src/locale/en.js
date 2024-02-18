@@ -130,6 +130,7 @@ const locale = {
   "session.setUpRoundOne": "Set Up Round 1",
   "session.emptyRoundDesc": "The details for Round 1 are yet to be added",
   "session.addRoundOneDetails": "Add Round 1 Details",
+  "session.centreErrorMsg": "Please select alteast one centre.",
   "label.viewProfile": "View Profile",
   "label.myProfile": "My Profile",
   "label.changePassword": "Change Password",

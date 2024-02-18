@@ -11,12 +11,14 @@ import styles from "./EditSessionRound.module.scss";
 
 const EditSessionRoundTemplate = ({
   activeStatus,
+  centresError,
   getCentreListFromResponse,
   handleDeselectCentre,
   handleSelectCentre,
   handleStatusToggle,
   intl,
   isError,
+  onClickCancel,
   onClickSave,
   responsive,
   selectedCentres,
@@ -33,6 +35,8 @@ const EditSessionRoundTemplate = ({
           rightSectionStyle={classes.rightSectionStyle}
           leftSection={
             <CustomSwitch
+              customTextStyle={styles.grayText}
+              isRequired
               checked={activeStatus}
               label={switchLabel}
               onChange={handleStatusToggle}
@@ -42,10 +46,11 @@ const EditSessionRoundTemplate = ({
           }
           rightSection={
             <SearchableDropDown
+              isCentreError={centresError}
               isError={isError}
               isRequiredField={true}
               onSelectItem={handleSelectCentre}
-              onUnselectItem={handleDeselectCentre}
+              onRemoveItem={handleDeselectCentre}
               options={getCentreListFromResponse()}
               selectedOptionsList={selectedCentres}
               placeholderText="session.rounds.selectCentres"
@@ -68,7 +73,7 @@ const EditSessionRoundTemplate = ({
                   : styles.mobileButtonStyles
               }
               textStyle={styles.textStyle}
-              onClick={() => {}}
+              onClick={onClickCancel}
             />
           }
           rightSection={
@@ -105,6 +110,7 @@ EditSessionRoundTemplate.propTypes = {
   handleStatusToggle: PropTypes.func,
   intl: PropTypes.object.isRequired,
   isError: PropTypes.bool,
+  onClickCancel: PropTypes.func.isRequired,
   onClickSave: PropTypes.func.isRequired,
   responsive: PropTypes.object.isRequired,
   selectedCentres: PropTypes.array,
