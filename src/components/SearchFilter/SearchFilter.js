@@ -25,13 +25,14 @@ const SearchFilter = ({
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [currentFilterStatus, setCurrentFilterStatus] = useState({});
+  const [currentFilterStatus, setCurrentFilterStatus] = useState(filterArray);
 
   const elementNotConsideredInOutSideClick = useRef();
 
   const { wrapperRef } = useOutSideClick({
     onOutSideClick: () => {
       setShowFilters(false);
+      setCurrentFilterStatus(filterArray);
     },
     elementNotToBeConsidered: elementNotConsideredInOutSideClick,
   });
@@ -79,11 +80,11 @@ const SearchFilter = ({
   };
 
   const handleClearFilter = () => {
-    if (Object.keys(currentFilterStatus).length !== 0) {
-      setCurrentFilterStatus({});
-      setFilterArray([]);
+    if (Object.keys(filterArray).length !== 0) {
+      setFilterArray({});
       onFilterApply({});
     }
+    setCurrentFilterStatus({});
     setShowFilters(false);
   };
 
@@ -97,6 +98,13 @@ const SearchFilter = ({
     }
     return getImage("someFiltersAreSelected");
   };
+
+  const totalCount = Object.values(currentFilterStatus).reduce(
+    (total, currentArray) => {
+      return total + currentArray.length;
+    },
+    0
+  );
 
   return (
     <div className={styles.container}>
@@ -113,9 +121,9 @@ const SearchFilter = ({
         <Typography className={styles.filterBtnText}>
           {intl.formatMessage({ id: "label.filters" })}
         </Typography>
-        {filterArray.length > 0 && (
+        {totalCount > 0 && (
           <Typography className={styles.countFilterStyle}>
-            {filterArray.length}
+            {totalCount}
           </Typography>
         )}
       </Button>
@@ -152,7 +160,6 @@ const SearchFilter = ({
                   ? classes.rightSectionStyle
                   : classes.filterRightSectionMobile
               }
-              className={styles.filterOptionContainer}
               leftSection={
                 <div>
                   {filterPropertiesArray?.map((item, index) => {
@@ -168,6 +175,7 @@ const SearchFilter = ({
                         <div className={styles.filterTextAndCheckContainer}>
                           <Image
                             className={styles.iconStyle}
+                            style={classes.iconStyle}
                             src={getCheckBoxes(item)}
                             preview={false}
                             onClick={() => selectOrRemoveAll(item)}
@@ -257,6 +265,7 @@ SearchFilter.defaultProps = {
   setFilterArray: () => {},
   setShowFilters: () => {},
   showFilters: false,
+  onFilterApply: () => {},
 };
 
 SearchFilter.propTypes = {
@@ -266,6 +275,7 @@ SearchFilter.propTypes = {
   setFilterArray: PropTypes.func,
   setShowFilters: PropTypes.func,
   showFilters: PropTypes.bool,
+  onFilterApply: PropTypes.func,
 };
 
 export default SearchFilter;

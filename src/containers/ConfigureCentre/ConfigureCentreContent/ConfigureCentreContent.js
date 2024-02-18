@@ -15,7 +15,7 @@ import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import { CENTRE_DETAILS } from "../../../routes/routeNames";
-import { ADMIN_ROUTE, CENTER_END_POINT } from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CENTRE_END_POINT, } from "../../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   PAGINATION_PROPERTIES,
@@ -64,7 +64,7 @@ const ConfigureCentreContent = () => {
 
   const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
     useFetch({
-      url: ADMIN_ROUTE + `/${currentlySelectedModuleKey}` + CENTER_END_POINT,
+      url: ADMIN_ROUTE + `/${currentlySelectedModuleKey}` + CENTRE_END_POINT,
       otherOptions: {
         skipApiCallOnMount: true,
       },

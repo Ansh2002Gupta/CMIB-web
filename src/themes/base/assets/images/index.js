@@ -9,12 +9,14 @@ import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
 import checkIconWhite from "./check-white.svg";
 import calendar from "./calendar.svg";
+import clock from "./clock.svg";
 import cancel from "./cancel.svg";
 import CircleCheck from "./CircleCheck.svg";
 import disabledArrowLeft from "./disabledArrowLeft.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
+import enableEdit from "./enableEdit.svg";
 import download from "./download.svg";
 import editDark from "./editDark.svg";
 import dummyPerson from "./dummy person image.png";
@@ -77,6 +79,7 @@ const images = {
   checkedBox,
   download,
   calendar,
+  clock,
   cancel,
   dummyPerson,
   CircleCheck,
@@ -85,6 +88,7 @@ const images = {
   DeviceMessage,
   Document,
   edit,
+  enableEdit,
   editDark,
   errorIcon,
   eye,
@@ -129,8 +133,8 @@ const images = {
   minusCircleBlue,
   publicLogoWhite,
   iconDownload,
-  changeIcon,
   greenTick,
+  changeIcon,
 };
 
 export default images;

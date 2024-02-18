@@ -269,14 +269,6 @@ export const COMPANY_ROUND_TWO = [
   "Consent Marking And Interview Process",
 ];
 
-export const CITY_CENTERS = [
-  { id: 101, label: "Delhi", value: "Delhi" },
-  { id: 102, label: "Mumbai", value: "Mumbai" },
-  { id: 103, label: "Gurugram", value: "Gurugram" },
-  { id: 104, label: "Pune", value: "Pune" },
-  { id: 105, label: "Banglore", value: "Banglore" },
-  { id: 106, label: "Goa", value: "Goa" },
-];
 
 export const CONTROL_MODULE_ID = 1;
 
@@ -374,3 +366,8 @@ export const NUMBER_OF_CHIPS_TO_SHOW = 15;
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
 
 export const MIN_SEARCH_TEXT_LENGTH = 2;
+
+export const CENTRE_TYPE_ENUM = {
+  BIG: "big",
+  SMALL: "small",
+};
