@@ -181,10 +181,6 @@
   color: var(--bodyBg, #fff);
 }
 
-.paddingLeft {
-  padding-left: var(--paddingSmall, 16px) !important;
-}
-
 @media screen and (max-width: 900px) and (min-width: 510px) {
   .cardParentContainer {
     left: -100px;
