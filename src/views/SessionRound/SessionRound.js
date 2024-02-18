@@ -28,13 +28,9 @@ const SessionRound = ({ roundList, switchLabel }) => {
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [status, setStatus] = useState(false);
   const [city, setCity] = useState([]);
-  
+
   const { data, isError } = useFetch({
-    url:
-      CORE_ROUTE +
-      `/${selectedModule?.key}` +
-      CENTRE_END_POINT +
-      DROPDOWN
+    url: CORE_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT + DROPDOWN,
   });
 
   const handleSelectCentre = (item, option) => {
@@ -52,7 +48,6 @@ const SessionRound = ({ roundList, switchLabel }) => {
   };
 
   const getCentreListFromResponse = () => {
-    console.log(data);
     let bigCentres = data?.big_centres;
     let smallCentres = data?.small_centres;
 
