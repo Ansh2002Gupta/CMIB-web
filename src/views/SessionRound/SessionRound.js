@@ -28,13 +28,9 @@ const SessionRound = ({ roundList, switchLabel }) => {
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [status, setStatus] = useState(false);
   const [city, setCity] = useState([]);
-  
+
   const { data, isError } = useFetch({
-    url:
-      CORE_ROUTE +
-      `/${selectedModule?.key}` +
-      CENTRE_END_POINT +
-      DROPDOWN
+    url: CORE_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT + DROPDOWN,
   });
 
   const handleSelectCentre = (item, option) => {
@@ -102,16 +98,17 @@ const SessionRound = ({ roundList, switchLabel }) => {
             />
           }
           rightSection={
-            <SearchableDropDown
-              isError={isError}
-              isRequiredField={true}
-              onSelectItem={handleSelectCentre}
-              onRemoveItem={handleDeselectCentre}
-              options={getCentreListFromResponse()}
-              selectedOptionsList={city}
-              placeholderText="session.rounds.selectCentres"
-              title="session.rounds.centres"
-            />
+            // <SearchableDropDown
+            //   isError={isError}
+            //   isRequiredField={true}
+            //   onSelectItem={handleSelectCentre}
+            //   onRemoveItem={handleDeselectCentre}
+            //   options={getCentreListFromResponse()}
+            //   selectedOptionsList={city}
+            //   placeholderText="session.rounds.selectCentres"
+            //   title="session.rounds.centres"
+            // />
+            <></>
           }
         />
       }
