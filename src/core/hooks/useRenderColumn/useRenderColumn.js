@@ -141,7 +141,7 @@ const useRenderColumn = () => {
       isIntermidiate,
       isChecked,
       onToggleCheckBox,
-      customCheckBoxSytles = "",
+      customCheckBoxStyles = "",
     } = renderTitleWithCheckbox;
 
     const getStatusStyles = (status) => {
@@ -231,7 +231,7 @@ const useRenderColumn = () => {
             className={[
               styles.chipContainer,
               customColumnHeading,
-              customCheckBoxSytles,
+              customCheckBoxStyles,
             ].join(" ")}
             onChange={onToggleCheckBox}
           >

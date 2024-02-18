@@ -14,7 +14,7 @@ import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
-import { getTicketOrQueryColumn } from "./TicketTableConfig";
+import { getTicketColumn } from "./TicketTableConfig";
 import { validateSearchTextLength } from "../../Utils/validations";
 import {
   DEBOUNCE_TIME,
@@ -144,7 +144,7 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const columns = getTicketOrQueryColumn({
+  const columns = getTicketColumn({
     type: currentActiveTab,
     intl,
     getImage,

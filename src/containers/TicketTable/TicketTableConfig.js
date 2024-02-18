@@ -16,7 +16,7 @@ const getStatusStyles = (status) => {
   return ["statusContainer_progress", "statusText_progress"];
 };
 
-export const getTicketOrQueryColumn = ({
+export const getTicketColumn = ({
   getImage,
   handleClickAssign,
   handleSorting,

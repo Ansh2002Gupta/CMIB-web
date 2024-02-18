@@ -16,7 +16,7 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
-import { getTicketOrQueryColumn } from "./QueriesTableConfig";
+import { getQueryColumn } from "./QueriesTableConfig";
 import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
@@ -216,7 +216,7 @@ const QueryTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const columns = getTicketOrQueryColumn({
+  const columns = getQueryColumn({
     intl,
     getImage,
     navigate,

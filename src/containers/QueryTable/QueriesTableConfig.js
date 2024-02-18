@@ -3,7 +3,7 @@ import { Image, Typography } from "antd";
 import { SORT_VALUES } from "../../constant/constant";
 import styles from "./QueryTable.module.scss";
 
-export const getTicketOrQueryColumn = ({
+export const getQueryColumn = ({
   intl,
   getImage,
   navigate,
@@ -39,7 +39,7 @@ export const getTicketOrQueryColumn = ({
         onToggleCheckBox: toggleSelectAllItems,
         isIntermidiate: areSomeItemsSelected,
         isChecked: areAllItemsSelected,
-        customCheckBoxSytles: styles.checkBoxContainer,
+        customCheckBoxStyles: styles.checkBoxContainer,
       },
       customColumnHeading: [
         styles.columnHeading,
