@@ -17,6 +17,7 @@ const TableWithSearchAndFilters = ({
   current,
   currentDataLength,
   data,
+  filterArray,
   filterPropertiesArray,
   filterOptions,
   handleOnUserSearch,
@@ -25,12 +26,12 @@ const TableWithSearchAndFilters = ({
   pageSize,
   placeholder,
   searchedValue,
+  setFilterArray,
   isLoading,
   onFilterApply,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  const [filterArray, setFilterArray] = useState({});
   const [showFilters, setShowFilters] = useState(false);
 
   return (

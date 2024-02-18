@@ -79,7 +79,7 @@ const QueryTable = ({
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkQueriesAsAnswerApi();
 
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
+  const { data, error, fetchData, isError, isLoading } = useFetch({
     url: ADMIN_ROUTE + QUERIES_END_POINT,
     otherOptions: { skipApiCallOnMount: true },
   });
@@ -125,7 +125,7 @@ const QueryTable = ({
       perPage: perPage || pageSize,
       page: page || current,
       q: q || searchedValue,
-      queryType: queryType || filterArray,
+      queryType: queryType || filterArray["1"],
     };
   };
 
@@ -297,11 +297,18 @@ const QueryTable = ({
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-    fetchData({
-      queryParamsObject: {
-        ...getRequestedParams({ queryType: updatedFiltersValue }),
-        ...getSortProperties(),
-      },
+
+    setFilterArray(() => {
+      const newFilterArray = updatedFiltersValue;
+
+      fetchData({
+        queryParamsObject: {
+          ...getRequestedParams({ queryType: newFilterArray["1"] || [] }),
+          ...getSortProperties(),
+        },
+      });
+
+      return newFilterArray;
     });
   };
 
@@ -445,13 +452,15 @@ const QueryTable = ({
       {!isError && (
         <TableWithSearchAndFilters
           {...{
+            columns,
             current,
+            filterArray,
+            handleOnUserSearch,
             pageSize,
             searchedValue,
-            handleOnUserSearch,
-            columns,
-            onChangePageSize,
+            setFilterArray,
             onChangeCurrentPage,
+            onChangePageSize,
           }}
           arrayContainingSelectedRow={selectedQueriesToBeMarkedAsAnswered}
           isLoading={isLoading}
