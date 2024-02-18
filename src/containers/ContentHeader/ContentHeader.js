@@ -8,10 +8,10 @@ import styles from "./contentHeader.module.scss";
 
 const ContentHeader = ({
   customContainerStyle,
+  customStyles,
   headerComponent,
   headerText,
   rightSection,
-  customStyles,
   isLeftFillSpace,
 }) => {
   const Header = () => {

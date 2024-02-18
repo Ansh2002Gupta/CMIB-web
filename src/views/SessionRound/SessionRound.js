@@ -48,7 +48,6 @@ const SessionRound = ({ roundList, switchLabel }) => {
   };
 
   const getCentreListFromResponse = () => {
-    console.log(data);
     let bigCentres = data?.big_centres;
     let smallCentres = data?.small_centres;
 
