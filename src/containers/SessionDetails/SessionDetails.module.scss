@@ -45,15 +45,16 @@
 }
 
 .crossIcon {
+  display: flex;
   width: var(--xSmallWidth);
   height: var(--xSmallWidth);
   cursor: pointer;
 }
 
 .editContainer {
-  align-items: center;
   gap: var(--gapXSmall);
   cursor: pointer;
+  justify-content: flex-end;
 }
 
 .gridContainer {
@@ -71,6 +72,10 @@
 }
 
 .gridItem {
+  padding-bottom: var(--paddingMedium);
+  gap: var(--gapXSmall);
+}
+.editGridItem {
   padding-bottom: var(--paddingMedium);
   gap: var(--gapXXSmall);
 }
@@ -181,6 +186,11 @@
 }
 
 .examinationFieldContainer {
+  gap: var(--gapXSmall);
+  display: flex;
+  flex-wrap: wrap;
+}
+.editExaminationFieldContainer {
   padding-top: var(--paddingXXSmall);
   gap: var(--paddingXXSmall);
   display: flex;
@@ -192,7 +202,6 @@
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
   margin-right: var(--gapXSmall);
-  margin-top: var(--gapXXSmall);
 }
 
 .chipContainer {
@@ -201,6 +210,7 @@
   background-color: var(--lightBlueBg);
   border-radius: var(--gapSmall);
   padding: var(--gapXXSmall) var(--gapSmallMedium);
+  margin-top: var(--gapXXSmall);
 }
 
 .formInputStyles {
@@ -222,6 +232,7 @@
   border: var(--borderLight);
   justify-content: center;
   align-items: center;
+  flex: 1;
 }
 
 .noSessionText {
