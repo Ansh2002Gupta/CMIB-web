@@ -28,10 +28,9 @@ const AddTicketAssignee = ({
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const [selectedValue, setSelectedValue] = useState();
-  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
-    useFetch({
-      url: CORE_ROUTE + TICKET_LIST + ASSIGNEES,
-    });
+  const { data, error, isLoading } = useFetch({
+    url: CORE_ROUTE + TICKET_LIST + ASSIGNEES,
+  });
   const { isLoading: assigningTicket, handleAssignTicket } =
     useTicketAssignApi();
   const handleSubmit = () => {
@@ -99,7 +98,8 @@ const AddTicketAssignee = ({
           ) : (
             <div className={styles.noDataFoundContainer}>
               <Typography className={styles.noDataFound}>
-                {intl.formatMessage({ id: "label.noDataFound" })}
+                {error?.data?.message ||
+                  intl.formatMessage({ id: "label.noDataFound" })}
               </Typography>
             </div>
           )}

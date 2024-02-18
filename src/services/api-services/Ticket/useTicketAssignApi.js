@@ -46,18 +46,11 @@ const useTicketAssignApi = () => {
         );
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileAssigningTicket(err.response?.data?.message);
-        onErrorCallback && onErrorCallback(err.response?.data?.message);
-        return;
-      }
-      setErrorWhileAssigningTicket(
-        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
-      );
-      onErrorCallback &&
-        onErrorCallback(
-          intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
-        );
+      const errorMessage =
+        err.response?.data?.message ||
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" });
+      setErrorWhileAssigningTicket(errorMessage);
+      onErrorCallback && onErrorCallback(errorMessage);
     }
   };
 
