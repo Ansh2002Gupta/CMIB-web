@@ -416,7 +416,7 @@ const useRenderColumn = () => {
             customContainerStyles={customInputContainerStyles}
             onChange={onInputChange}
             errorMessage={record.isAddRow && inputErrorMessage}
-            isError={record.isAddRow && inputErrorMessage}
+            isError={record.isAddRow && inputErrorMessage ? true : false}
             errorInput={
               record.isAddRow && inputErrorMessage && styles.errotTimeInput
             }
