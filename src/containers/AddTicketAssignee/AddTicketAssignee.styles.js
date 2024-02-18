@@ -12,7 +12,7 @@ export const classes = {
     justifyContent: "center",
     backgroundColor: variables.blueBg,
     paddingTop: variables.paddingExtraSmall,
-    paddingBottom: variables.paddingExtraSmall,
+    paddingBottom: variables.paddingMedium,
     backgroundColor: variables.blueBg,
     borderRadius: variables.radiusXLg,
   },
