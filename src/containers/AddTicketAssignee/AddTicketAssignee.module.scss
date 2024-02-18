@@ -1,0 +1,59 @@
+.mainContainer {
+  border-radius: var(--radiusXLg);
+}
+
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: var(--fullWidth, 100%);
+  padding: var(--paddingMedium, 24px);
+}
+
+.moduleText {
+  color: var(--textBold, #000833);
+  font-size: var(--fontSizeLarge, 18px);
+  font-weight: var(--fontWeightBold, 600);
+}
+
+.crossIcon {
+  cursor: pointer;
+}
+
+.assigneeContainer {
+  padding: var(--gapMedium, 24px);
+  flex: 1;
+  max-height: var(--height_50vh, 50vh);
+  min-height: var(--height_40vh, 40vh);
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.assigneeText {
+  color: var(--textBold, #000833);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  white-space: nowrap;
+  max-width: var(--widthViewPort_30, 30vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.noDataFound {
+  color: var(--textBold, #000833);
+  font-size: var(--fontSizeXlarge, 20px);
+  font-weight: var(--fontWeightBold, 600);
+}
+
+.noDataFoundContainer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.customStyle {
+  padding: var(--paddingMediumSmall, 12px);
+  min-height: var(--height_20, 20px);
+}
