@@ -27,26 +27,30 @@ const AddTicketAssignee = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  const [selectedValue, setSelectedValue] = useState();
+  const [selectedValue, setSelectedValue] = useState({});
   const { data, error, isLoading } = useFetch({
     url: CORE_ROUTE + TICKET_LIST + ASSIGNEES,
   });
   const { isLoading: assigningTicket, handleAssignTicket } =
     useTicketAssignApi();
   const handleSubmit = () => {
-    setSelectedValue(null);
-    setIsModalOpen(false);
+    setSelectedValue({});
     handleAssignTicket({
-      payload: { ticket_id, user_id: selectedValue },
+      payload: { ticket_id, user_id: selectedValue?.id },
       onErrorCallback: (errMessage) => {
         showNotification({
           text: errMessage,
           type: "error",
           headingText: intl.formatMessage({ id: "label.errorMessage" }),
         });
+        setIsModalOpen(false);
       },
       onSuccessCallback: () => {
-        handleAssignee();
+        handleAssignee({
+          ticketId: ticket_id,
+          assigneeName: selectedValue?.name,
+        });
+        setIsModalOpen(false);
       },
     });
   };
@@ -63,7 +67,7 @@ const AddTicketAssignee = ({
             src={getImage("cross")}
             preview={false}
             onClick={() => {
-              setSelectedValue(null);
+              setSelectedValue({});
               setIsModalOpen(false);
             }}
             className={styles.crossIcon}
@@ -82,10 +86,10 @@ const AddTicketAssignee = ({
                 <TwoColumn
                   key={item.id}
                   onClick={() => {
-                    setSelectedValue(item.id);
+                    setSelectedValue(item);
                   }}
                   leftSection={
-                    <CustomRadioButton checked={selectedValue === item.id} />
+                    <CustomRadioButton checked={selectedValue.id === item.id} />
                   }
                   rightSection={
                     <Typography className={styles.assigneeText}>
@@ -109,7 +113,7 @@ const AddTicketAssignee = ({
       bottomSection={
         <CustomButton
           btnText={intl.formatMessage({ id: "label.assign" })}
-          isBtnDisable={!selectedValue}
+          isBtnDisable={!selectedValue?.id}
           onClick={() => {
             handleSubmit();
           }}

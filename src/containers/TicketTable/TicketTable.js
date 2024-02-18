@@ -44,14 +44,15 @@ const TicketTable = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentTicketData, setCurentTicketData] = useState();
+  const [currentTicketData, setCurrentTicketData] = useState({});
   const [sortBy, setSortBy] = useState("");
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
-    url: CORE_ROUTE + TICKET_LIST,
-    otherOptions: { skipApiCallOnMount: true },
-  });
+  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
+    useFetch({
+      url: CORE_ROUTE + TICKET_LIST,
+      otherOptions: { skipApiCallOnMount: true },
+    });
   const { data: queryTypes } = useFetch({
     url: CORE_ROUTE + QUERY_TYPE,
   });
@@ -84,7 +85,7 @@ const TicketTable = ({
 
   const handleClickAssign = (data) => {
     setIsModalOpen(true);
-    setCurentTicketData(data);
+    setCurrentTicketData(data);
   };
 
   const getRequestedQueryParams = ({
@@ -232,12 +233,19 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const handleAssignee = () => {
-    const requestedParams = getRequestedQueryParams({});
-    fetchData({
-      queryParamsObject: requestedParams,
-      onSuccessCallback: resetTicketListingData,
+  const handleAssignee = ({ assigneeName, ticketId }) => {
+    let updatedData = data;
+    updatedData.records = data?.records?.map((ticket) => {
+      if (+ticket.id === +ticketId) {
+        ticket.assigned_to = assigneeName;
+        return ticket;
+      }
+      return {
+        ...ticket,
+      };
     });
+    setData(updatedData);
+    setCurrentTicketData({});
   };
 
   useEffect(() => {
