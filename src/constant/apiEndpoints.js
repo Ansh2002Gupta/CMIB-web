@@ -30,6 +30,7 @@ export const RESET_ADMIN_PASSWORD = "/reset-password/confirm";
 export const ROLES_PERMISSION = "/roles-permissions";
 export const ROUNDS = "/rounds";
 export const SEND_OTP = "/reset-password/request";
+export const SESSIONS = "/sessions";
 export const STATUS = "/status";
 export const TICKET_LIST = "/tickets";
 export const UPDATE_CENTER_DETAILS_END_POINT = "/update";

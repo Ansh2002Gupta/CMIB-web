@@ -8,14 +8,14 @@ import {
 } from "./constant";
 
 export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
-  if (date) {
+  if (date && date !== undefined) {
     return dayjs(new Date(date)).format(dateFormat);
   }
   return dayjs(new Date()).format(dateFormat);
 };
 
 export const convertDateToStringDate = (date) => {
-  return date;
+  return dayjs(date, "M-YYYY").format("MMM YYYY");
 };
 
 export const convertStringArrayToObjectOfStringAndIdArray = (
