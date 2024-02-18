@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Checkbox, Dropdown, Image, Switch, Tooltip, Typography } from "antd";
@@ -21,7 +21,7 @@ const useRenderColumn = () => {
   const renderColumn = ({
     customColumnHeading,
     customStyles,
-    customIconStyle,
+    customIconStyle = {},
     columnSortByHandler,
     dataIndex,
     defaultSortOrder,
@@ -186,7 +186,7 @@ const useRenderColumn = () => {
               <Image
                 src={getImage(sortIcon)}
                 preview={false}
-                className={[styles.centerContent, ...customIconStyle].join(" ")}
+                className={[styles.centerContent, customIconStyle].join(" ")}
               />
             </div>
           </Typography>

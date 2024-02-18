@@ -41,8 +41,9 @@ const TicketTable = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [sortBy, setSortBy] = useState("");
+  const [filterArray, setFilterArray] = useState({});
 
-  const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
+  const { data, error, fetchData, isError, isLoading } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
   });
@@ -267,6 +268,8 @@ const TicketTable = ({
             placeholder: intl.formatMessage({
               id: "label.search_by_name_or_registration_no",
             }),
+            filterArray,
+            setFilterArray,
           }}
           isLoading={isLoading}
           data={data?.records}
