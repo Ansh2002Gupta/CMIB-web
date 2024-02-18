@@ -1,5 +1,6 @@
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
+import { capitalize } from "lodash";
 
 import { formatDate } from "../../../constant/utils";
 import styles from "../QueryDetailsContent.module.scss";
@@ -23,7 +24,7 @@ const useTableColumns = () => {
         {
           key: "1",
           label: intl.formatMessage({ id: "label.companyName" }),
-          children: data?.name || "--",
+          children: capitalize(data?.name) || "-",
         },
         {
           key: "2",
@@ -107,7 +108,7 @@ const useTableColumns = () => {
       {
         key: "1",
         label: intl.formatMessage({ id: "label.studentName" }),
-        children: data?.name || "--",
+        children: capitalize(data?.name) || "-",
       },
       {
         key: "2",

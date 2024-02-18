@@ -502,7 +502,6 @@ const QueryTable = ({
 };
 
 QueryTable.defaultProps = {
-  current: 1,
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
   setCurrent: () => {},

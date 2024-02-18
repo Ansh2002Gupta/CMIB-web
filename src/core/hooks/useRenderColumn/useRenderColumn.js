@@ -225,20 +225,18 @@ const useRenderColumn = () => {
     renderTitleWithCheckbox?.visible &&
       (columnObject.title = () => {
         return (
-          <div>
-            <Checkbox
-              indeterminate={isIntermidiate}
-              checked={isChecked}
-              className={[
-                styles.chipContainer,
-                customColumnHeading,
-                customCheckBoxSytles,
-              ].join(" ")}
-              onChange={onToggleCheckBox}
-            >
-              {titleWithCheckBoxes}
-            </Checkbox>
-          </div>
+          <Checkbox
+            indeterminate={isIntermidiate}
+            checked={isChecked}
+            className={[
+              styles.chipContainer,
+              customColumnHeading,
+              customCheckBoxSytles,
+            ].join(" ")}
+            onChange={onToggleCheckBox}
+          >
+            {titleWithCheckBoxes}
+          </Checkbox>
         );
       });
 
@@ -401,7 +399,7 @@ const useRenderColumn = () => {
             customStyles={[customCheckBoxContainerStyles].join("")}
           >
             <p className={isCheckBoxTextBold ? styles.boldText : ""}>
-              {textToRender || "--"}
+              {textToRender || "-"}
             </p>
           </CustomCheckBox>
         );
