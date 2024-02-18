@@ -29,7 +29,7 @@ const TableWithSearchAndFilters = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-
+  const [filterArray, setFilterArray] = useState({});
   const [showFilters, setShowFilters] = useState(false);
 
   return (
@@ -56,7 +56,13 @@ const TableWithSearchAndFilters = ({
         />
         <SearchFilter
           filterPropertiesArray={filterOptions || ACCESS_FILTER_DATA}
-          {...{ showFilters, setShowFilters, onFilterApply }}
+          {...{
+            filterArray,
+            onFilterApply,
+            setFilterArray,
+            setShowFilters,
+            showFilters,
+          }}
         />
       </div>
       {isLoading && (
