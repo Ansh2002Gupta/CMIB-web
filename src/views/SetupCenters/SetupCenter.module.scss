@@ -40,3 +40,19 @@
 .serialHeader {
   padding-left: var(--paddingSmall);
 }
+
+.errorContainer {
+  width: var(--fullWidth);
+  height: var(--fullHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--height_50vh);
+  width: var(--fullWidth);
+}

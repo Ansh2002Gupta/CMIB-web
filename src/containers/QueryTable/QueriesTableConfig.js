@@ -338,7 +338,7 @@ export const getTicketOrQueryColumn = ({
             alt="eye"
             className={styles.clickable}
             preview={false}
-            onClick={() => navigate(`query/${rowData?.id}`)}
+            onClick={() => navigate(`queries-details/${rowData?.id}`)}
           />
         );
       },

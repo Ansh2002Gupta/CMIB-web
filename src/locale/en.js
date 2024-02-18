@@ -13,7 +13,6 @@ const locale = {
   "label.emailId": "Enter ID",
   "label.password": "Password",
   "label.thanks": "Thanks!",
-  "label.confirmPassword": "Confirm password",
   "label.loginHeading": "Login to CMI&B",
   "label.loginSubheading": "Secure login for personalized access.",
   "label.rememberMe": "Remember Me",
@@ -76,13 +75,14 @@ const locale = {
     "Something went wrong! Please try again later",
   "label.session": "Session",
   "session.setUpNewSession": "Set Up New Session",
+  "session.editSession": "Edit Session",
   "session.sessionDetails": "Session Details",
   "session.edit": "Edit",
   "session.sessionName": "Session Name",
   "session.natureOfGoods": "Nature of services/goods",
   "session.invoiceNumberFormat": "Performa Invoice Number Format",
   "session.examinationSessionPeriod": "Examination Session Period",
-  "session.gmcsCompletetionDate": "MCS Completetion Date",
+  "session.mcsCompletetionDate": "MCS Completetion Date",
   "session.membershipCompletetionDate": "Membership Completetion Date",
   "session.articleshipCompletetionFromDate":
     "Articleship Completetion From Date",
@@ -94,7 +94,7 @@ const locale = {
   "session.placeholder.natureOfGoods": "Enter Nature of services/goods",
   "session.placeholder.invoiceNumberFormat": "e.g month-*****-year",
   "session.placeholder.examinationSessionPeriod": "Select Period",
-  "session.placeholder.gmcsCompletetionDate": "Select GMCS Completetion Date",
+  "session.placeholder.mcsCompletetionDate": "Select MCS Completetion Date",
   "session.placeholder.membershipCompletetionDate":
     "Select Membership Completetion Date",
   "session.placeholder.articleshipCompletetionFromDate":
@@ -109,23 +109,21 @@ const locale = {
   "session.lastDateRegistrationCompanies":
     "Last date of registration for companies",
   "session.saveChanges": "Save Changes",
-  "session.error.sessionName": "Please enter Session Name",
-  "session.error.natureOfGoods": "Please enter services/goods",
+  "session.error.sessionName": "Please enter valid session name",
+  "session.error.natureOfGoods": "Please enter valid  services/goods",
   "session.error.invoiceNumberFormat": "Please use prefix-*****-suffix format",
-  "session.error.examinationSessionPeriod": "Please enter Session Name",
   "session.error.examinationSessionPeriod":
-    "* Please select atleast one Examination Session Period ",
-  "session.error.gmcsCompletetionDate":
-    "* Please select GMCS Completetion Date",
+    "* Please select atleast one examination session period ",
+  "session.error.mcsCompletetionDate": "* Please select MCS completetion date",
   "session.error.membershipCompletetionDate":
-    "* Please select Membership Completetion Date",
+    "* Please select membership completetion date",
   "session.error.articleshipCompletetionFromDate":
-    "* Please select Articleship Completetion From Date",
+    "* Please select articleship completetion from date",
   "session.error.articleshipCompletetionToDate":
-    "* Please select Articleship Completetion From Date",
-  "session.error.bankACNumber": "Please enter Bank A/C number",
-  "session.error.ifsc": "Please enter IFSC Code",
-  "session.error.hsnCode": "Please enter HSN Code/ SAC",
+    "* Please select articleship completetion to date",
+  "session.error.bankACNumber": "Please enter valid bank A/C number",
+  "session.error.ifsc": "Please enter valid IFSC code",
+  "session.error.hsnCode": "Please enter valid HSN code/ SAC",
   "label.viewProfile": "View Profile",
   "label.myProfile": "My Profile",
   "label.changePassword": "Change Password",
@@ -327,9 +325,7 @@ const locale = {
   "label.noFilterIsAvailable": "No filter is available",
   "label.logoutConfirmationMessage":
     "Are you sure you want to logout of the portal?",
-  "label.menu.user-management": "Users",
   "label.menu.bulk-notifications": "Notifications",
-  "label.menu.ticket-management": "Tickets",
   "label.menu.user-management": "User Management",
   "label.menu.bulk-notifications-management": "Bulk Notifications Management",
   "label.menu.ticket-management": "Ticket Management",
@@ -379,16 +375,21 @@ const locale = {
   "label.path.subscriptions": "Subscriptions",
   "label.path.companies": "Companies",
   "label.path.session": "Session",
+  "label.path.add-session": "Set up new session",
+  "label.path.edit-session": "Edit Session",
   "label.path.contact-us": "Queries",
   "label.path.query": "Query Details",
   "label.path.queries": "Queries",
+  "label.path.queries-details": "Query Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
   "label.view_profile": "View Profile",
   "label.change_password": "Change Password",
   "account.logout": "Log out",
-  "account.enableTwoFactorAuthentication": "Enable Two-factor Authentication",
+  "account.enabledTwoFactorAuthentication": "Two-factor Authentication Enabled",
+  "account.disabledTwoFactorAuthentication":
+    "Two-factor Authentication Disabled",
   "label.editProfilePicture": "Edit Profile Picture",
   "label.remove": "Remove",
   "label.save": "Save",
@@ -398,7 +399,8 @@ const locale = {
   "label.disabled": "Disabled",
   "label.path.editDetails": "Edit User Details",
   "label.logoutSuccessful": "Logged out successfully",
-  "label.passwordChanged": "Password changed successfully",
+  "label.passwordChanged":
+    "Your password has been successfully changed. Please login using your new password. Thanks!",
   "label.search": "Search",
   "label.noSessionSetup": "No session is setup currently",
   "label.sessionStatus": "Session Status",
@@ -427,10 +429,23 @@ const locale = {
   "label.show_result": "Show Results",
   "label.centreCode": "Centre Id",
   "label.path.centre-details": "Edit centre details",
+  "label.setup_orientation_centers": "Setup Orientation Centers",
+  "label.orientation_centers_warning":
+    "*This cannot be edited once registration for the students starts. Only Venue can be edited",
+  "label.total_students_booked": "Total Students Booked",
+  "label.schedule_date": "Schedule Date",
+  "label.venue": "Venue",
+  "label.enter_location": "Enter location of venue",
   "label.big": "Big Centre",
   "label.small": "Small Centre",
   "label.search_by_name_or_registration_no":
     "Search by name and registration/membership number",
+  "label.path.round1": "Round 1",
+  "label.path.setup-centers": "Setup centres",
+  "label.big_centres": "Big Centres",
+  "label.small_centres": "Small Centres",
+  "label.noResultsFound": "No Results Found...",
+  "label.noSessionsAvailable": "No sessions available",
 };
 
 export default locale;

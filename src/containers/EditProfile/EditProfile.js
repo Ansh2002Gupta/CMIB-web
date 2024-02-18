@@ -179,7 +179,8 @@ const EditProfile = ({ showNotification }) => {
 
   const isLoading =
     isUpdatingUserProfilePicture || isUploadingImage || isDeletingImage;
-  const isShow2Button = userProfileImage?.src || isDeletingImage || isUpdatingUserProfilePicture;
+  const isShow2Button =
+    userProfileImage?.src || isDeletingImage || isUpdatingUserProfilePicture;
 
   return (
     <>
@@ -214,14 +215,15 @@ const EditProfile = ({ showNotification }) => {
                         styles.buttonText,
                       ].join(" ")}
                       icon={
-                        <Image src={getImage("editIcon")} preview={false} />
+                        <Image
+                          src={getImage(!isLoading && "enableEdit")}
+                          preview={false}
+                        />
                       }
                       disabled={isLoading}
                     >
                       {intl.formatMessage({
-                        id: `label.${
-                          isShow2Button ? "change" : "add"
-                        }`,
+                        id: `label.${isShow2Button ? "change" : "add"}`,
                       })}
                     </Button>
                   </Upload>
@@ -229,10 +231,9 @@ const EditProfile = ({ showNotification }) => {
                 rightSection={
                   isShow2Button ? (
                     <Button
-                      className={[
-                        styles.buttonText,
-                        styles.cancelButton,
-                      ].join(" ")}
+                      className={[styles.buttonText, styles.cancelButton].join(
+                        " "
+                      )}
                       disabled={isLoading}
                       loading={isLoading}
                       icon={

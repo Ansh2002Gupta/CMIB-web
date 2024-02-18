@@ -34,3 +34,8 @@
 .success_color {
   color: var(--greenText);
 }
+
+.btn {
+  min-height: var(--height_44, 44px);
+  padding: var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px);
+}
