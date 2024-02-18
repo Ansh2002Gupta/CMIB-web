@@ -102,7 +102,7 @@ const SessionRound = ({ roundList, switchLabel }) => {
               isRequiredField={true}
               onSelectItem={handleSelectCentre}
               onRemoveItem={handleDeselectCentre}
-              options={getCentreListFromResponse()}
+              //options={getCentreListFromResponse()} //Todo : Api update will be done by shahzad
               selectedOptionsList={city}
               placeholderText="session.rounds.selectCentres"
               title="session.rounds.centres"

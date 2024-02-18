@@ -25,13 +25,14 @@ const SearchFilter = ({
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [currentFilterStatus, setCurrentFilterStatus] = useState({});
+  const [currentFilterStatus, setCurrentFilterStatus] = useState(filterArray);
 
   const elementNotConsideredInOutSideClick = useRef();
 
   const { wrapperRef } = useOutSideClick({
     onOutSideClick: () => {
       setShowFilters(false);
+      setCurrentFilterStatus(filterArray);
     },
     elementNotToBeConsidered: elementNotConsideredInOutSideClick,
   });
@@ -79,11 +80,11 @@ const SearchFilter = ({
   };
 
   const handleClearFilter = () => {
-    if (Object.keys(currentFilterStatus).length !== 0) {
-      setCurrentFilterStatus({});
-      setFilterArray([]);
+    if (Object.keys(filterArray).length !== 0) {
+      setFilterArray({});
       onFilterApply({});
     }
+    setCurrentFilterStatus({});
     setShowFilters(false);
   };
 
@@ -264,6 +265,7 @@ SearchFilter.defaultProps = {
   setFilterArray: () => {},
   setShowFilters: () => {},
   showFilters: false,
+  onFilterApply: () => {},
 };
 
 SearchFilter.propTypes = {
@@ -273,6 +275,7 @@ SearchFilter.propTypes = {
   setFilterArray: PropTypes.func,
   setShowFilters: PropTypes.func,
   showFilters: PropTypes.bool,
+  onFilterApply: PropTypes.func,
 };
 
 export default SearchFilter;

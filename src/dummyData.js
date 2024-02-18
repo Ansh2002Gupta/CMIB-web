@@ -1009,147 +1009,37 @@ export const PERMISION_AND_ROLE = {
   ],
 };
 
-export const ASSIGNEE_DUMMY = {
-  records: [
-    {
-      id: 3,
-      name: "Control Admin",
-    },
-    {
-      id: 13,
-      name: "Abhay",
-    },
-    {
-      id: 15,
-      name: "Mridul",
-    },
-    {
-      id: 27,
-      name: "dsfdsvfd",
-    },
-    {
-      id: 67,
-      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
-    },
-    {
-      id: 75,
-      name: "Benny",
-    },
-    {
-      id: 76,
-      name: "Shantanu Gupta",
-    },
-    {
-      id: 3,
-      name: "Control Admin",
-    },
-    {
-      id: 13,
-      name: "Abhay",
-    },
-    {
-      id: 15,
-      name: "Mridul",
-    },
-    {
-      id: 27,
-      name: "dsfdsvfd",
-    },
-    {
-      id: 67,
-      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
-    },
-    {
-      id: 75,
-      name: "Benny",
-    },
-    {
-      id: 76,
-      name: "Shantanu Gupta",
-    },
-    {
-      id: 3,
-      name: "Control Admin",
-    },
-    {
-      id: 13,
-      name: "Abhay",
-    },
-    {
-      id: 15,
-      name: "Mridul",
-    },
-    {
-      id: 27,
-      name: "dsfdsvfd",
-    },
-    {
-      id: 67,
-      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
-    },
-    {
-      id: 75,
-      name: "Benny",
-    },
-    {
-      id: 76,
-      name: "Shantanu Gupta",
-    },
-    {
-      id: 3,
-      name: "Control Admin",
-    },
-    {
-      id: 13,
-      name: "Abhay",
-    },
-    {
-      id: 15,
-      name: "Mridul",
-    },
-    {
-      id: 27,
-      name: "dsfdsvfd",
-    },
-    {
-      id: 67,
-      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
-    },
-    {
-      id: 75,
-      name: "Benny",
-    },
-    {
-      id: 76,
-      name: "Shantanu Gupta",
-    },
-    {
-      id: 3,
-      name: "Control Admin",
-    },
-    {
-      id: 13,
-      name: "Abhay",
-    },
-    {
-      id: 15,
-      name: "Mridul",
-    },
-    {
-      id: 27,
-      name: "dsfdsvfd",
-    },
-    {
-      id: 67,
-      name: "shduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadushduwjdhadush",
-    },
-    {
-      id: 75,
-      name: "Benny",
-    },
-    {
-      id: 76,
-      name: "Shantanu Gupta",
-    },
-  ],
-};
+export const CONFIGURE_INTERVIEW_DATES = [
+  {
+    id: 1,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+  {
+    id: 2,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+  {
+    id: 3,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+  {
+    id: 4,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+];

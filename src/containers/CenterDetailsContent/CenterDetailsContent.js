@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
@@ -76,7 +75,7 @@ const CenterDetailsContent = ({ isEdit }) => {
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreStartTime",
             })}
-            value={dayjs(formData?.centreStartTime)}
+            value={formData?.centreStartTime}
             disabled={!isEdit}
           />
           <CustomDateTimePicker
@@ -91,7 +90,7 @@ const CenterDetailsContent = ({ isEdit }) => {
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreEndTime",
             })}
-            value={dayjs(formData.centreEndTime)}
+            value={formData.centreEndTime}
             disabled={!isEdit}
           />
         </div>

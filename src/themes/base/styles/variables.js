@@ -187,6 +187,7 @@ const variables = {
   height_40vh: "40vh",
   height_45vh: "45vh",
   height_50vh: "50vh",
+  height_60vh: "60vh",
   height_70vh: "70vh",
   height_85vh: "85vh",
   heightFullViewPort: "100vh",
@@ -202,6 +203,7 @@ const variables = {
   borderBlue: `2px solid ${colorPallets.darkBlue}`,
   borderBlue1: `1px solid ${colorPallets.darkBlue}`,
   borderGreen: `1px solid ${colorPallets.green1}`,
+  borderError: `1px solid ${colorPallets.red1}`,
   borderColor: colorPallets.ltGrey1,
 
   // Box shadow

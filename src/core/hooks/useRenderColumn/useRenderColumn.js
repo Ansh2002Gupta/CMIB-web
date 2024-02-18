@@ -8,6 +8,7 @@ import { TwoColumn } from "../../layouts";
 import AutoPlaceComplete from "../../../components/AutoPlaceComplete";
 import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
+import CustomInput from "../../../components/CustomInput";
 import { ThemeContext } from "core/providers/theme";
 import { formatDate, toggleSorting } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
@@ -30,6 +31,7 @@ const useRenderColumn = () => {
     renderDateTime = {},
     render,
     renderImage = {},
+    renderInput = {},
     renderMenu = {},
     renderSorterColumn,
     renderText = {},
@@ -52,6 +54,7 @@ const useRenderColumn = () => {
       customTimeStyle,
       defaultValue,
       disabled = false,
+      errorMessage,
       isEditable = true,
       isRequired = false,
       onChange = () => {},
@@ -61,11 +64,25 @@ const useRenderColumn = () => {
 
     const {
       alt = "",
+      alternateSrc = "",
+      alternateOnClick = () => {},
       customImageStyle = "",
       src = "",
       onClick = () => {},
       preview,
     } = renderImage;
+
+    const {
+      customInputContainerStyles,
+      customInputNumberStyles,
+      customInputStyles,
+      customSelectInputStyles,
+      inputDisabled,
+      inputErrorMessage,
+      inputPlaceholder = "",
+      inputType,
+      onInputChange,
+    } = renderInput;
 
     const {
       items = [],
@@ -265,10 +282,12 @@ const useRenderColumn = () => {
           children: (
             <Image
               alt={alt}
-              src={src}
+              src={rowData?.isAddRow ? alternateSrc : src}
               preview={preview}
               className={`${customImageStyle} ${styles.editIcon}`}
-              onClick={onClick ? () => onClick(rowData) : () => {}}
+              onClick={() =>
+                rowData?.isAddRow ? alternateOnClick(rowData) : onClick(rowData)
+              }
             />
           ),
         };
@@ -362,19 +381,47 @@ const useRenderColumn = () => {
                 customContainerStyles,
                 customTimeStyle,
                 defaultValue,
-                disabled,
                 isEditable,
                 isRequired,
                 type,
                 placeholder,
                 value,
               }}
+              errotTimeInput={
+                record?.isAddRow && errorMessage && styles.errotTimeInput
+              }
               onChange={(val) => {
                 onChange(val, record);
               }}
+              disabled={disabled || !record?.isAddRow}
+              errorMessage={record?.isAddRow && errorMessage}
             />
           ),
         };
+      });
+
+    renderInput.visible &&
+      (columnObject.render = (value, record) => {
+        return (
+          <CustomInput
+            {...{
+              value,
+              customInputNumberStyles,
+              customInputStyles,
+              customSelectInputStyles,
+            }}
+            disabled={inputDisabled || !record?.isAddRow}
+            placeholder={inputPlaceholder}
+            type={inputType}
+            customContainerStyles={customInputContainerStyles}
+            onChange={onInputChange}
+            errorMessage={record.isAddRow && inputErrorMessage}
+            isError={record.isAddRow && inputErrorMessage ? true : false}
+            errorInput={
+              record.isAddRow && inputErrorMessage && styles.errotTimeInput
+            }
+          />
+        );
       });
 
     return columnObject;
