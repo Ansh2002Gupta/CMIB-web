@@ -461,6 +461,9 @@ const QueryTable = ({
             setFilterArray,
             onChangeCurrentPage,
             onChangePageSize,
+            placeholder: intl.formatMessage({
+              id: "label.query_search_placeholder",
+            }),
           }}
           arrayContainingSelectedRow={selectedQueriesToBeMarkedAsAnswered}
           isLoading={isLoading}

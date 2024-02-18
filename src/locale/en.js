@@ -446,6 +446,8 @@ const locale = {
   "label.small_centres": "Small Centres",
   "label.noResultsFound": "No Results Found...",
   "label.noSessionsAvailable": "No sessions available",
+  "label.query_search_placeholder":
+    "Search by query ID, name, email ID or mobile number",
 };
 
 export default locale;
