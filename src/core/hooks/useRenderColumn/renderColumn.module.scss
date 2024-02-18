@@ -57,6 +57,13 @@
   color: var(--requiredStarColor);
 }
 
+.selectedRow {
+  background-color: var(--blue6Bg);
+}
+
+.errotTimeInput {
+  border: var(--borderError);
+}
 .centerContent {
   display: flex;
 }
@@ -68,4 +75,3 @@
   gap: var(--gapXXSmall);
   cursor: pointer;
 }
-

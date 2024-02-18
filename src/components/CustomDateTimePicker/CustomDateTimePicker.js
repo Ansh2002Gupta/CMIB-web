@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { DatePicker, Image, TimePicker, Typography } from "antd";
 
@@ -18,6 +19,7 @@ const CustomDateTimePicker = ({
   defaultValue,
   disabled,
   errorMessage,
+  errotTimeInput,
   format,
   isEditable,
   isRequired,
@@ -53,16 +55,18 @@ const CustomDateTimePicker = ({
                   onChange,
                   placeholder,
                   disabled,
-                  value,
                 }}
-                className={[styles.timeInput, customTimeStyle]}
+                className={[styles.timeInput, customTimeStyle, errotTimeInput]}
+                suffixIcon={<Image src={getImage("clock")} />}
+                value={value ? dayjs(value) : null}
               />
             ) : isEditable ? (
               <DatePicker
-                {...{ defaultValue, onChange, placeholder, disabled, value }}
+                {...{ defaultValue, onChange, placeholder, disabled }}
                 format={dateFormat}
-                className={[styles.timeInput, customTimeStyle]}
+                className={[styles.timeInput, customTimeStyle, errotTimeInput]}
                 suffixIcon={<Image src={getImage("calendar")} />}
+                value={value ? dayjs(value) : null}
               />
             ) : (
               <Typography className={styles.dateText}>
@@ -75,7 +79,7 @@ const CustomDateTimePicker = ({
               <Typography
                 className={[styles.errorText, customErrorTextStyles].join(" ")}
               >
-                * {errorMessage}
+                {errorMessage}
               </Typography>
             )
           }
@@ -94,6 +98,7 @@ CustomDateTimePicker.defaultProps = {
   defaultValue: null,
   disabled: false,
   errorMessage: "",
+  errotTimeInput: "",
   format: "h:mm a",
   isEditable: true,
   isRequired: false,
@@ -113,6 +118,7 @@ CustomDateTimePicker.propTypes = {
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
+  errotTimeInput: PropTypes.string,
   format: PropTypes.string,
   isEditable: PropTypes.bool,
   isRequired: PropTypes.bool,
@@ -120,7 +126,7 @@ CustomDateTimePicker.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default CustomDateTimePicker;

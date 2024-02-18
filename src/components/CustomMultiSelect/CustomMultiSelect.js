@@ -44,7 +44,7 @@ const CustomMultiSelect = ({
     setSelectAll(updatedStateValue);
     if (updatedStateValue) {
       let data = [];
-      optionsArray.forEach((item) => {
+      optionsArray?.forEach((item) => {
         data.push(...item.options);
       });
       setSelectedOptions(data);
@@ -56,7 +56,7 @@ const CustomMultiSelect = ({
   const doesContainsAllIds = (idsObjectArray) => {
     let isArrayOfObject = typeof idsObjectArray[0] === "object";
     let countOfValuesContains = 0;
-    selectedOptions.forEach((item) => {
+    selectedOptions?.forEach((item) => {
       if (isArrayOfObject) {
         if (doesArrayContainsValidId(idsObjectArray, item?.id))
           countOfValuesContains++;
