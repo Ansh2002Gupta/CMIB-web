@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Image, Typography } from "antd";
 
-import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
+import { ThreeRow, TwoColumn } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 
 import CustomButton from "../../components/CustomButton";
+import CustomLoader from "../../components/CustomLoader";
 import CustomRadioButton from "../../components/CustomRadioButton";
 import useFetch from "../../core/hooks/useFetch";
 import useTicketAssignApi from "../../services/api-services/Ticket/useTicketAssignApi";
@@ -14,11 +15,15 @@ import {
   CORE_ROUTE,
   TICKET_LIST,
 } from "../../constant/apiEndpoints";
-import { ASSIGNEE_DUMMY } from "../../dummyData";
 import styles from "./AddTicketAssignee.module.scss";
 import { classes } from "./AddTicketAssignee.styles";
 
-const AddTicketAssignee = ({ currentTicketData, setIsModalOpen }) => {
+const AddTicketAssignee = ({
+  currentTicketData,
+  handleAssignee,
+  setIsModalOpen,
+  showNotification,
+}) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const [selectedValue, setSelectedValue] = useState();
@@ -26,12 +31,23 @@ const AddTicketAssignee = ({ currentTicketData, setIsModalOpen }) => {
     useFetch({
       url: CORE_ROUTE + TICKET_LIST + ASSIGNEES,
     });
-  const { handleAssignTicket } = useTicketAssignApi();
+  const { isLoading: assigningTicket, handleAssignTicket } =
+    useTicketAssignApi();
   const handleSubmit = () => {
     setSelectedValue(null);
     setIsModalOpen(false);
     handleAssignTicket({
       payload: { ticket_id: currentTicketData?.id, user_id: selectedValue },
+      onErrorCallback: (errMessage) => {
+        showNotification({
+          text: errMessage,
+          type: "error",
+          headingText: intl.formatMessage({ id: "label.errorMessage" }),
+        });
+      },
+      onSuccessCallback: () => {
+        handleAssignee();
+      },
     });
   };
 
@@ -51,14 +67,16 @@ const AddTicketAssignee = ({ currentTicketData, setIsModalOpen }) => {
               setIsModalOpen(false);
             }}
             className={styles.crossIcon}
+            style={classes.crossIcon}
           />
         </div>
       }
       middleSectionStyle={classes.middleContainer}
       middleSection={
         <div className={styles.assigneeContainer}>
-          {data &&
-            data?.records &&
+          {isLoading || assigningTicket ? (
+            <CustomLoader />
+          ) : data && data?.records ? (
             data?.records?.map((item) => {
               return (
                 <TwoColumn
@@ -75,7 +93,14 @@ const AddTicketAssignee = ({ currentTicketData, setIsModalOpen }) => {
                   }
                 />
               );
-            })}
+            })
+          ) : (
+            <div className={styles.noDataFoundContainer}>
+              <Typography className={styles.noDataFound}>
+                {intl.formatMessage({ id: "label.noDataFound" })}
+              </Typography>
+            </div>
+          )}
         </div>
       }
       bottomSectionStyle={classes.buttonContainer}
@@ -86,6 +111,7 @@ const AddTicketAssignee = ({ currentTicketData, setIsModalOpen }) => {
           onClick={() => {
             handleSubmit();
           }}
+          customStyle={styles.customStyle}
         />
       }
     />

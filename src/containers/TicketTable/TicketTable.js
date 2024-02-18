@@ -13,6 +13,7 @@ import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilter
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketOrQueryColumn } from "./TicketTableConfig";
 import { validateSearchTextLength } from "../../Utils/validations";
 import {
@@ -45,6 +46,7 @@ const TicketTable = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTicketData, setCurentTicketData] = useState();
   const [sortBy, setSortBy] = useState("");
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
@@ -230,6 +232,14 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
+  const handleAssignee = () => {
+    const requestedParams = getRequestedQueryParams({});
+    fetchData({
+      queryParamsObject: requestedParams,
+      onSuccessCallback: resetTicketListingData,
+    });
+  };
+
   useEffect(() => {
     return () => {
       setSearchedValue("");
@@ -262,8 +272,16 @@ const TicketTable = ({
 
   return (
     <>
-      <CommonModal isOpen={isModalOpen} width={400}>
-        <AddTicketAssignee {...{ currentTicketData, setIsModalOpen }} />
+      {notificationContextHolder}
+      <CommonModal isOpen={isModalOpen} width={450}>
+        <AddTicketAssignee
+          {...{
+            currentTicketData,
+            handleAssignee,
+            setIsModalOpen,
+            showNotification,
+          }}
+        />
       </CommonModal>
       {!isError && (
         <TableWithSearchAndFilters

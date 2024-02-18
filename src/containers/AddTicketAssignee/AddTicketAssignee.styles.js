@@ -16,4 +16,8 @@ export const classes = {
     backgroundColor: variables.blueBg,
     borderRadius: variables.radiusXLg,
   },
+  crossIcon: {
+    height: variables.height_20,
+    width: variables.width_20,
+  },
 };

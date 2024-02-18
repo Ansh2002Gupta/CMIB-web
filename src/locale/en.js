@@ -448,6 +448,7 @@ const locale = {
   "label.small_centres": "Small Centres",
   "label.noResultsFound": "No Results Found...",
   "label.noSessionsAvailable": "No sessions available",
+  "label.noDataFound": "No Data found",
 };
 
 export default locale;
