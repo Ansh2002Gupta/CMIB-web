@@ -19,7 +19,7 @@ const CustomDateTimePicker = ({
   defaultValue,
   disabled,
   errorMessage,
-  errotTimeInput,
+  errorTimeInput,
   format,
   isEditable,
   isRequired,
@@ -56,7 +56,7 @@ const CustomDateTimePicker = ({
                   placeholder,
                   disabled,
                 }}
-                className={[styles.timeInput, customTimeStyle, errotTimeInput]}
+                className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("clock")} />}
                 value={value ? dayjs(value) : null}
               />
@@ -64,7 +64,7 @@ const CustomDateTimePicker = ({
               <DatePicker
                 {...{ defaultValue, onChange, placeholder, disabled }}
                 format={dateFormat}
-                className={[styles.timeInput, customTimeStyle, errotTimeInput]}
+                className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("calendar")} />}
                 value={value ? dayjs(value) : null}
               />
@@ -98,7 +98,7 @@ CustomDateTimePicker.defaultProps = {
   defaultValue: null,
   disabled: false,
   errorMessage: "",
-  errotTimeInput: "",
+  errorTimeInput: "",
   format: "h:mm a",
   isEditable: true,
   isRequired: false,
@@ -118,7 +118,7 @@ CustomDateTimePicker.propTypes = {
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
-  errotTimeInput: PropTypes.string,
+  errorTimeInput: PropTypes.string,
   format: PropTypes.string,
   isEditable: PropTypes.bool,
   isRequired: PropTypes.bool,

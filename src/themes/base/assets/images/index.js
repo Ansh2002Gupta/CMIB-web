@@ -65,6 +65,7 @@ import publicLogoWhite from "./public_logo_white_transparent.svg";
 import iconDownload from "./iconDownload.svg";
 import changeIcon from "./change icon.svg";
 import greenTick from "./green-tick.svg";
+import disabledArrow from "./disabled arrow.svg";
 
 const images = {
   addCircle,
@@ -134,6 +135,7 @@ const images = {
   publicLogoWhite,
   iconDownload,
   greenTick,
+  disabledArrow,
   changeIcon,
 };
 

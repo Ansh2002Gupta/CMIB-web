@@ -29,15 +29,15 @@ const CustomModal = ({
     >
       <Base className={styles.container}>
         <div className={styles.imageAndHeadingContainer}>
-          <div>
-            {imgElement ? (
+          {imgElement ? (
+            <div>
               <Image
                 src={imgElement}
                 className={styles.image}
                 preview={false}
               />
-            ) : null}
-          </div>
+            </div>
+          ) : null}
           <div className={styles.headingAndSubHeadingContainer}>
             <div>
               <Typography className={styles.heading}>{headingText}</Typography>

@@ -138,11 +138,11 @@ input::placeholder {
 }
 
 .asc {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 
 .desc {
-  transform: rotate(0deg);
+  transform: rotate(180deg);
 }
 
 .active {

@@ -5,6 +5,7 @@ export const colorPallets = {
   blue3: "#8997c5",
   blue4: "#007AFF",
   blue5: "rgba(63, 81, 181, 0.16)",
+  blue6: "#E0F5EA",
   lightBlue1: "#F6F8F9",
   lightBlue2: "#f2f4fc",
   darkBlue: "#00137E",
@@ -56,4 +57,6 @@ export const colorPallets = {
   // Orange color shades
   orange1: "#FFEFE5",
   orange2: "#D76200",
+  lightOrange: "#FFEFE5",
+  darkOrange: "#D76200",
 };

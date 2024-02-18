@@ -9,14 +9,16 @@ import { ThemeContext } from "core/providers/theme";
 import DataTable from "../../components/DataTable";
 import SearchFilter from "../../components/SearchFilter";
 import { DEFAULT_PAGE_SIZE } from "../../constant/constant";
-import { ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./TableWithSearchAndFilters.module.scss";
 
 const TableWithSearchAndFilters = ({
+  arrayContainingSelectedRow,
   columns,
   current,
   currentDataLength,
   data,
+  filterArray,
+  filterPropertiesArray,
   filterOptions,
   handleOnUserSearch,
   onChangeCurrentPage,
@@ -24,12 +26,12 @@ const TableWithSearchAndFilters = ({
   pageSize,
   placeholder,
   searchedValue,
+  setFilterArray,
   isLoading,
   onFilterApply,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  const [filterArray, setFilterArray] = useState({});
   const [showFilters, setShowFilters] = useState(false);
 
   return (
@@ -55,9 +57,9 @@ const TableWithSearchAndFilters = ({
           onChange={(e) => handleOnUserSearch(e.target.value)}
         />
         <SearchFilter
-          filterPropertiesArray={filterOptions || ACCESS_FILTER_DATA}
           {...{
             filterArray,
+            filterPropertiesArray: filterOptions || filterPropertiesArray,
             onFilterApply,
             setFilterArray,
             setShowFilters,
@@ -65,21 +67,19 @@ const TableWithSearchAndFilters = ({
           }}
         />
       </div>
-      {isLoading && (
+      {!isLoading ? (
         <DataTable
-          {...{
-            columns,
-            pageSize,
-            current,
-            onChangePageSize,
-            onChangeCurrentPage,
-          }}
+          columns={columns}
+          pageSize={pageSize}
+          current={current}
+          onChangePageSize={onChangePageSize}
+          onChangeCurrentPage={onChangeCurrentPage}
+          arrayContainingSelectedRow={arrayContainingSelectedRow}
           originalData={data || []}
           customContainerStyles={styles.tableContainer}
-          {...{ currentDataLength }}
+          currentDataLength={currentDataLength}
         />
-      )}
-      {!isLoading && (
+      ) : (
         <div className={styles.loaderContainer}>
           <Spin size="large" />
         </div>
@@ -89,12 +89,11 @@ const TableWithSearchAndFilters = ({
 };
 
 TableWithSearchAndFilters.defaultProps = {
+  arrayContainingSelectedRow: [],
   columns: [],
   current: 1,
   currentDataLength: 0,
-  currentFilterStatus: [],
   data: [],
-  filterOptions: [],
   handleOnUserSearch: () => {},
   isLoading: false,
   onChangeCurrentPage: () => {},
@@ -105,12 +104,11 @@ TableWithSearchAndFilters.defaultProps = {
 };
 
 TableWithSearchAndFilters.propTypes = {
+  arrayContainingSelectedRow: PropTypes.array,
   columns: PropTypes.array,
   current: PropTypes.number,
   currentDataLength: PropTypes.number,
-  currentFilterStatus: PropTypes.array,
   data: PropTypes.array,
-  filterOptions: PropTypes.array,
   handleOnUserSearch: PropTypes.func,
   isLoading: PropTypes.bool,
   onChangeCurrentPage: PropTypes.func,

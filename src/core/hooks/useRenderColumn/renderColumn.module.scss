@@ -1,11 +1,12 @@
 .columnHeading {
   color: var(--subHeadingColor);
-  font-size: var(--fontSizeExtraSmall);
-  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
   max-width: 200px;
 }
 
 .boldText {
+  font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightBold);
 }
 
@@ -57,11 +58,46 @@
   color: var(--requiredStarColor);
 }
 
+.statusContainer_success {
+  background-color: var(--lightGreenBg);
+}
+
+.statusContainer_failed {
+  background-color: var(--lightRedBg);
+}
+
+.statusContainer_progress {
+  background-color: var(--lightBlueBg2);
+}
+
+.defaultStatusStyles {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.statusText_success {
+  color: var(--greenText);
+}
+
+.statusText_failed {
+  color: var(--redText);
+}
+
+.statusText_progress {
+  color: var(--blueText);
+}
+
+.chipContainer {
+  padding: var(--paddingXXXSmall, 2px) var(--paddingExtraSmall, 8px)
+    var(--paddingXXXSmall, 2px) var(--paddingExtraSmall, 8px);
+  border-radius: var(--paddingSmall, 16px);
+}
+
 .selectedRow {
   background-color: var(--blue6Bg);
 }
 
-.errotTimeInput {
+.errorTimeInput {
   border: var(--borderError);
 }
 .centerContent {
