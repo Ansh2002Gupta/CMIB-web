@@ -35,7 +35,6 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [globalSessionDetails, globalSessionDispatch] =
     useContext(GlobalSessionContext);
-  const { getGlobalSessionList } = useGlobalSessionListApi();
   const { globalSessionList, selectedSession } = globalSessionDetails;
 
   const location = useLocation();
@@ -151,7 +150,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
               <TwoRow
                 topSection={
                   <>
-                    {!!globalSessionList?.length && !responsive.isMd && (
+                    {!responsive.isMd && (
                       <TwoRow
                         className={styles.sessionContainer}
                         topSection={

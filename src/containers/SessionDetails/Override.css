@@ -23,6 +23,12 @@
     font-weight: var(--fontWeightMedium) !important;
     color: var(--inputPlaceHolder) !important;
   }
+ 
+  .ant-input-affix-wrapper >input.ant-input{
+    color: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}
 
   .ant-input-affix-wrapper >input.ant-input::placeholder {color: var(--inputPlaceHolder,#616C82) !important}
  
