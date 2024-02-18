@@ -100,15 +100,11 @@ export const getTicketOrQueryColumn = ({
       },
     }),
     renderColumn({
-      title: (
-        <>
-          {isTableInSelectAllMode
-            ? ""
-            : intl.formatMessage({
-                id: "label.queryStatus",
-              })}
-        </>
-      ),
+      title: isTableInSelectAllMode
+        ? ""
+        : intl.formatMessage({
+            id: "label.queryStatus",
+          }),
       dataIndex: "status",
       key: "status",
       renderChip: {
@@ -116,15 +112,11 @@ export const getTicketOrQueryColumn = ({
       },
     }),
     renderColumn({
-      title: (
-        <>
-          {isTableInSelectAllMode
-            ? ""
-            : intl.formatMessage({
-                id: "label.email",
-              })}
-        </>
-      ),
+      title: isTableInSelectAllMode
+        ? ""
+        : intl.formatMessage({
+            id: "label.email",
+          }),
       dataIndex: "email",
       key: "email",
       isRequiredField: true,
