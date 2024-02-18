@@ -265,6 +265,7 @@ SearchFilter.defaultProps = {
   setFilterArray: () => {},
   setShowFilters: () => {},
   showFilters: false,
+  onFilterApply: () => {},
 };
 
 SearchFilter.propTypes = {
@@ -274,6 +275,7 @@ SearchFilter.propTypes = {
   setFilterArray: PropTypes.func,
   setShowFilters: PropTypes.func,
   showFilters: PropTypes.bool,
+  onFilterApply: PropTypes.func,
 };
 
 export default SearchFilter;
