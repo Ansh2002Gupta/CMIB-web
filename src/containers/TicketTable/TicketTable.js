@@ -276,7 +276,7 @@ const TicketTable = ({
       <CommonModal isOpen={isModalOpen} width={450}>
         <AddTicketAssignee
           {...{
-            currentTicketData,
+            ticket_id: currentTicketData?.id,
             handleAssignee,
             setIsModalOpen,
             showNotification,

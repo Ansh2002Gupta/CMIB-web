@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Image, Typography } from "antd";
 
@@ -19,10 +20,10 @@ import styles from "./AddTicketAssignee.module.scss";
 import { classes } from "./AddTicketAssignee.styles";
 
 const AddTicketAssignee = ({
-  currentTicketData,
   handleAssignee,
   setIsModalOpen,
   showNotification,
+  ticket_id,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -37,7 +38,7 @@ const AddTicketAssignee = ({
     setSelectedValue(null);
     setIsModalOpen(false);
     handleAssignTicket({
-      payload: { ticket_id: currentTicketData?.id, user_id: selectedValue },
+      payload: { ticket_id, user_id: selectedValue },
       onErrorCallback: (errMessage) => {
         showNotification({
           text: errMessage,
@@ -80,6 +81,7 @@ const AddTicketAssignee = ({
             data?.records?.map((item) => {
               return (
                 <TwoColumn
+                  key={item.id}
                   onClick={() => {
                     setSelectedValue(item.id);
                   }}
@@ -116,6 +118,20 @@ const AddTicketAssignee = ({
       }
     />
   );
+};
+
+AddTicketAssignee.defaultProps = {
+  handleAssignee: () => {},
+  setIsModalOpen: () => {},
+  showNotification: () => {},
+  ticket_id: null,
+};
+
+AddTicketAssignee.propTypes = {
+  handleAssignee: PropTypes.func,
+  setIsModalOpen: PropTypes.func,
+  showNotification: PropTypes.func,
+  ticket_id: PropTypes.number,
 };
 
 export default AddTicketAssignee;
