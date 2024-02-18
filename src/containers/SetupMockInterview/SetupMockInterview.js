@@ -7,7 +7,9 @@ import { TwoRow } from "../../core/layouts";
 
 import DataTable from "../../components/DataTable/DataTable";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
 import {
@@ -16,21 +18,39 @@ import {
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
 import { MOCK_INTERVIEW } from "../../dummyData";
+import { SESSION, SETUP_MOCK_INTERVIEW } from "../../routes/routeNames";
 import { classes } from "./SetupMockInterview.styles";
 import styles from "./SetupMockInterview.module.scss";
 
 const SetupMockInterviewContent = () => {
   const intl = useIntl();
+  const isEdit = true;
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const [currentTableData, setCurrentTableData] = useState(MOCK_INTERVIEW);
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
   const [pageSize, setPageSize] = useState(
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
+
+  const goToConfigureInterview = (rowData, isEdit) => {
+    const centreId = rowData?.id;
+    navigate(
+      `/${
+        selectedModule?.key
+      }/${SESSION}${SETUP_MOCK_INTERVIEW}details/${centreId}?mode=${
+        isEdit ? "edit" : "view"
+      }`,
+      false,
+      { current: current, pageSize: pageSize }
+    );
+  };
 
   const updateTableData = (currentPageNumber, currentPageSize) => {
     const startIndex = (currentPageNumber - 1) * currentPageSize;
@@ -61,13 +81,20 @@ const SetupMockInterviewContent = () => {
     updateTableData(newPageNumber, pageSize);
   };
 
-  const columns = getSetupMockColumn(intl, getImage, renderColumn);
+  const columns = getSetupMockColumn(
+    intl,
+    isEdit,
+    getImage,
+    goToConfigureInterview,
+    renderColumn
+  );
 
   useEffect(() => {
     const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
+
     let startIndex = (currentPage - 1) * currentPagePerRow;
     let endIndex = currentPage * currentPagePerRow;
     const availalblePage = Math.ceil(MOCK_INTERVIEW.length / currentPagePerRow);
@@ -85,7 +112,6 @@ const SetupMockInterviewContent = () => {
       startIndex = 0;
       endIndex = currentPagePerRow;
     }
-
     if (
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
@@ -97,7 +123,6 @@ const SetupMockInterviewContent = () => {
       startIndex = currentPage;
       endIndex = DEFAULT_PAGE_SIZE;
     }
-
     const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
   }, []);
