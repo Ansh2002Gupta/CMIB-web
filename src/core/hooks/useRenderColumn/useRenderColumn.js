@@ -451,8 +451,8 @@ const useRenderColumn = () => {
                 placeholder,
                 value,
               }}
-              errotTimeInput={
-                record?.isAddRow && errorMessage && styles.errotTimeInput
+              errorTimeInput={
+                record?.isAddRow && errorMessage && styles.errorTimeInput
               }
               onChange={(val) => {
                 onChange(val, record);
@@ -482,7 +482,7 @@ const useRenderColumn = () => {
             errorMessage={record.isAddRow && inputErrorMessage}
             isError={record.isAddRow && inputErrorMessage ? true : false}
             errorInput={
-              record.isAddRow && inputErrorMessage && styles.errotTimeInput
+              record.isAddRow && inputErrorMessage && styles.errorTimeInput
             }
           />
         );
