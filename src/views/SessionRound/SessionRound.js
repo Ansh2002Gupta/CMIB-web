@@ -102,7 +102,7 @@ const SessionRound = ({ roundList, switchLabel }) => {
               isRequiredField={true}
               onSelectItem={handleSelectCentre}
               onRemoveItem={handleDeselectCentre}
-              //options={getCentreListFromResponse()} //This has to correct by shahzad grtting error because of this
+              //options={getCentreListFromResponse()} //Todo : This has to disccus and  correct with shahzad getting error because of this
               selectedOptionsList={city}
               placeholderText="session.rounds.selectCentres"
               title="session.rounds.centres"
