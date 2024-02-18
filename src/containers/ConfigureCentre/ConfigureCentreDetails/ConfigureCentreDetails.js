@@ -17,7 +17,7 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useResponsive from "../../../core/hooks/useResponsive";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
-import { CENTER_END_POINT, ADMIN_ROUTE } from "../../../constant/apiEndpoints";
+import { CENTRE_END_POINT, ADMIN_ROUTE } from "../../../constant/apiEndpoints";
 import { CONFIGURE_CENTRES } from "../../../routes/routeNames";
 import { FIELDS } from "./configureCentreDetailsFields";
 import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
@@ -43,7 +43,7 @@ const ConfigureCentreDetails = () => {
     url:
       ADMIN_ROUTE +
       `/${currentlySelectedModuleKey}` +
-      CENTER_END_POINT +
+      CENTRE_END_POINT +
       `/${centreId}`,
     otherOptions: {
       skipApiCallOnMount: true,

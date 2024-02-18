@@ -10,6 +10,7 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import { filterMenuData } from "../../constant/utils";
 import { setSelectedModule } from "../../globalContext/userProfile/userProfileActions";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
 import { DASHBOARD } from "../../routes/routeNames";
 import modules from "../SideMenu/sideMenuItems";
 import styles from "./ModuleChange.module.scss";
@@ -24,10 +25,14 @@ const ModuleChange = ({ setIsModalOpen }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
   const intl = useIntl();
+  const { getGlobalSessionList } = useGlobalSessionListApi();
 
   const handleModuleSelect = (item) => {
     setIsModalOpen(false);
     userProfileDispatch(setSelectedModule(item));
+    if (selectedModule?.key !== item?.key) {
+      getGlobalSessionList(item?.key);
+    }
     navigate(`/${item.key}/${DASHBOARD}`);
   };
   return (

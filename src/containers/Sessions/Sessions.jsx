@@ -1,33 +1,28 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DownOutlined } from "@ant-design/icons";
 import { useIntl } from "react-intl";
-import { Button, Dropdown, Menu, Typography } from "antd";
+import { Button, Dropdown, Menu, Tooltip, Typography } from "antd";
+import { capitalize } from "lodash";
 
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
-import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
-
 import styles from "./sessions.module.scss";
 
 function Sessions() {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
-  const { getGlobalSessionList } = useGlobalSessionListApi();
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [globalSessionDetails, globalSessionDispatch] =
     useContext(GlobalSessionContext);
 
-  const { globalSessionId } = globalSessionDetails;
-
-  const globalSessionList = globalSessionDetails?.globalSessionList;
+  const { globalSessionId, globalSessionList } = globalSessionDetails;
 
   const handleMenuClick = ({ key }) => {
     globalSessionDispatch(setGlobalSessionDetails(+key));
   };
 
   useEffect(() => {
-    selectedModule?.key && getGlobalSessionList(selectedModule?.key);
     if (globalSessionList?.length) {
       globalSessionDispatch(setGlobalSessionDetails(+globalSessionList[0].id));
     }
@@ -39,18 +34,30 @@ function Sessions() {
       onClick={handleMenuClick}
       className={styles.menu}
     >
-      {globalSessionList?.map((item) => (
-        <Menu.Item
-          key={+item.id}
-          className={`${styles.customDropdownItem} ${
-            +globalSessionId === +item.id
-              ? styles.menuItemFontWeightBold
-              : styles.menuItemFontWeightNormal
-          }`}
-        >
-          <span className={styles.menuItemText}>{item.name}</span>
+      {globalSessionList?.length ? (
+        globalSessionList?.map((item) => (
+          <Menu.Item
+            key={+item.id}
+            className={`${styles.customDropdownItem} ${
+              +globalSessionId === +item.id
+                ? styles.menuItemFontWeightBold
+                : styles.menuItemFontWeightNormal
+            }`}
+          >
+            <Tooltip title={item.name.length > 43 ? item.name : null}>
+              <span className={styles.menuItemText}>
+                {capitalize(item.name)}
+              </span>
+            </Tooltip>
+          </Menu.Item>
+        ))
+      ) : (
+        <Menu.Item className={styles.emptySessionContainer}>
+          <span className={styles.menuItemText}>
+            {intl.formatMessage({ id: "label.noSessionsAvailable" })}
+          </span>
         </Menu.Item>
-      ))}
+      )}
     </Menu>
   );
 
@@ -61,18 +68,27 @@ function Sessions() {
       className={styles.sessionContainer}
       overlayClassName={styles.customDropdownMenu}
     >
-      <Button shape="round" size="middle">
-        <Typography.Text>
-          {intl.formatMessage({ id: "label.sessionPrefix" })}
-        </Typography.Text>{" "}
-        &nbsp;
-        <Typography.Text strong>
-          {
-            globalSessionList?.find((item) => +item.id === +globalSessionId)
-              ?.name
-          }
-        </Typography.Text>
-        <DownOutlined />
+      <Button
+        shape="round"
+        size="middle"
+        className={styles.sessionDropdownContainer}
+      >
+        <div className={styles.sessionTextContainer}>
+          <Typography.Text className={styles.sessionText}>
+            {intl.formatMessage({ id: "label.sessionPrefix" })}
+          </Typography.Text>
+          &nbsp;
+          <Typography.Text className={styles.valueText}>
+            {capitalize(
+              globalSessionList?.find((item) => +item.id === +globalSessionId)
+                ?.name ||
+                intl.formatMessage({ id: "label.noSessionsAvailable" })
+            )}
+          </Typography.Text>
+        </div>
+        <div>
+          <DownOutlined />
+        </div>
       </Button>
     </Dropdown>
   );

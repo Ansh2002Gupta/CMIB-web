@@ -14,7 +14,7 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   ADMIN_ROUTE,
-  CENTER_END_POINT,
+  CENTRE_END_POINT,
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import {
@@ -55,7 +55,7 @@ const SetupCenter = () => {
       `/${selectedModule?.key}` +
       ROUNDS +
       `/1` + // TODO: Need to udpate the id with round_id of session detail
-      CENTER_END_POINT,
+      CENTRE_END_POINT,
     otherOptions: { skipApiCallOnMount: true },
   });
 

@@ -29,3 +29,6 @@
     font-weight: inherit;
     font-size: inherit;
 }
+
+  .ant-input-affix-wrapper >input.ant-input::placeholder {color: var(--inputPlaceHolder,#616C82) !important}
+ 

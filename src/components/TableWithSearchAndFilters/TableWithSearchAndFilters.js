@@ -22,6 +22,7 @@ const TableWithSearchAndFilters = ({
   onChangeCurrentPage,
   onChangePageSize,
   pageSize,
+  placeholder,
   searchedValue,
   isLoading,
   onFilterApply,
@@ -42,12 +43,15 @@ const TableWithSearchAndFilters = ({
               preview={false}
             />
           }
-          placeholder={intl.formatMessage({
-            id: "label.searchByUserNameAndEmail",
-          })}
+          placeholder={
+            placeholder ||
+            intl.formatMessage({
+              id: "label.searchByUserNameAndEmail",
+            })
+          }
           allowClear
           className={styles.searchBar}
-          value={searchedValue}
+          value={searchedValue?.trim()}
           onChange={(e) => handleOnUserSearch(e.target.value)}
         />
         <SearchFilter
@@ -107,6 +111,7 @@ TableWithSearchAndFilters.propTypes = {
   onChangePageSize: PropTypes.func,
   onFilterApply: PropTypes.func,
   pageSize: PropTypes.number,
+  placeholder: PropTypes.string,
   searchedValue: PropTypes.string,
 };
 
