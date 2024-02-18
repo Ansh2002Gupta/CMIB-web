@@ -25,7 +25,7 @@ const SearchFilter = ({
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [currentFilterStatus, setCurrentFilterStatus] = useState({});
+  const [currentFilterStatus, setCurrentFilterStatus] = useState(filterArray);
 
   const elementNotConsideredInOutSideClick = useRef();
 
@@ -80,11 +80,11 @@ const SearchFilter = ({
   };
 
   const handleClearFilter = () => {
-    if (Object.keys(currentFilterStatus).length !== 0) {
-      setCurrentFilterStatus({});
-      setFilterArray([]);
+    if (Object.keys(filterArray).length !== 0) {
+      setFilterArray({});
       onFilterApply({});
     }
+    setCurrentFilterStatus({});
     setShowFilters(false);
   };
 
