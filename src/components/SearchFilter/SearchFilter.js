@@ -98,6 +98,13 @@ const SearchFilter = ({
     return getImage("someFiltersAreSelected");
   };
 
+  const totalCount = Object.values(currentFilterStatus).reduce(
+    (total, currentArray) => {
+      return total + currentArray.length;
+    },
+    0
+  );
+
   return (
     <div className={styles.container}>
       <Button
@@ -113,9 +120,9 @@ const SearchFilter = ({
         <Typography className={styles.filterBtnText}>
           {intl.formatMessage({ id: "label.filters" })}
         </Typography>
-        {filterArray.length > 0 && (
+        {totalCount > 0 && (
           <Typography className={styles.countFilterStyle}>
-            {filterArray.length}
+            {totalCount}
           </Typography>
         )}
       </Button>
@@ -152,7 +159,6 @@ const SearchFilter = ({
                   ? classes.rightSectionStyle
                   : classes.filterRightSectionMobile
               }
-              className={styles.filterOptionContainer}
               leftSection={
                 <div>
                   {filterPropertiesArray?.map((item, index) => {
@@ -168,6 +174,7 @@ const SearchFilter = ({
                         <div className={styles.filterTextAndCheckContainer}>
                           <Image
                             className={styles.iconStyle}
+                            style={classes.iconStyle}
                             src={getCheckBoxes(item)}
                             preview={false}
                             onClick={() => selectOrRemoveAll(item)}

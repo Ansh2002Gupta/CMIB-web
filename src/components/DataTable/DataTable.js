@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Image, Pagination, Select, Table, Typography } from "antd";
@@ -44,7 +44,6 @@ const DataTable = ({
         pagination={false}
         rowClassName={styles.rowtext}
         scroll={responsiveStyle}
-        className={styles.table}
         rowKey="id"
       />
       <div className={styles.rowPerPageOptionsAndPaginationContainer}>

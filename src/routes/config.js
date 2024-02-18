@@ -1,4 +1,3 @@
-import Auth from "../pages/Auth";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
@@ -13,8 +12,10 @@ import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
 import ManageUsers from "../views/ManageUsers";
+import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
+import EditSession from "../views/EditSession/EditSession";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import SetupCenterDetails from "../views/SetupCenterDetails";
@@ -27,6 +28,7 @@ import QueryDetails from "../views/QueryDetails";
 import {
   ADD,
   ADD_NEW_USER_DETAILS,
+  ADD_SESSION,
   CONFIGURATIONS,
   COMPANIES,
   COMPANIES_DETAILS,
@@ -34,12 +36,15 @@ import {
   CONSENT_MARKING,
   DASHBOARD,
   EDIT_CONFIGURE_CENTRE,
+  EDIT_SESSION,
   FORGOT_PASSWORD,
+  ORIENTATION_CENTERS,
   LOGIN,
   OUT_SOURCED,
   QUERIES,
   QUERY_DETAILS,
   ROOT,
+  ROUND_ONE_SETUP_CENTERS,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -108,6 +113,14 @@ const config = [
       {
         viewPath: SESSION,
         element: <Session />,
+      },
+      {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
       },
       {
         viewPath: SESSION + SETUP_CENTERS,
@@ -225,14 +238,26 @@ const config = [
         element: <Session />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + ORIENTATION_CENTERS,
+        element: <OrientationCenter />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -270,6 +295,14 @@ const config = [
       {
         viewPath: SESSION,
         element: <Session />,
+      },
+      {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
       },
       {
         viewPath: SESSION + SETUP_CENTERS,
@@ -317,6 +350,14 @@ const config = [
       {
         viewPath: SESSION,
         element: <Session />,
+      },
+      {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
       },
       {
         viewPath: SESSION + SETUP_CENTERS,
