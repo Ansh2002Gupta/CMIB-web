@@ -52,8 +52,10 @@ function Session() {
   const responsive = useResponsive();
 
   useEffect(() => {
-    fetchData({});
-  }, [globalSessionDetails]);
+    if (globalSessionDetails?.globalSessionId) {
+      fetchData({});
+    }
+  }, [globalSessionDetails?.globalSessionId]);
 
   const tabItems = [
     {
