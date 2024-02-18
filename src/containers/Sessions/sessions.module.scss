@@ -15,10 +15,16 @@
   padding: var(--paddingXXSmall, 3px) var(--paddingNone, 0px) !important;
   color: var(--textDark) !important;
   background-color: transparent !important;
+  max-width: var(--width_363, 363px);
 }
 
 .customDropdownItem:hover {
   background-color: var(--border, #cecece36) !important;
+}
+
+.emptySessionContainer {
+  height: 100px;
+  text-align: center;
 }
 
 .menu {
@@ -30,6 +36,11 @@
 .menuItemText {
   font-size: var(--fontSizeSmall);
   padding: var(--paddingNone, 0px) var(--paddingSmall, 16px);
+  display: block;
+  max-width: var(--width_363, 363px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: noWrap;
 }
 
 .menuItemFontWeightBold {

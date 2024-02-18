@@ -23,6 +23,7 @@ const TableWithSearchAndFilters = ({
   onChangeCurrentPage,
   onChangePageSize,
   pageSize,
+  placeholder,
   searchedValue,
   isLoading,
   onFilterApply,
@@ -31,7 +32,7 @@ const TableWithSearchAndFilters = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-
+  const [filterArray, setFilterArray] = useState({});
   const [showFilters, setShowFilters] = useState(false);
 
   return (
@@ -45,22 +46,25 @@ const TableWithSearchAndFilters = ({
               preview={false}
             />
           }
-          placeholder={intl.formatMessage({
-            id: "label.searchByUserNameAndEmail",
-          })}
+          placeholder={
+            placeholder ||
+            intl.formatMessage({
+              id: "label.searchByUserNameAndEmail",
+            })
+          }
           allowClear
           className={styles.searchBar}
-          value={searchedValue}
+          value={searchedValue?.trim()}
           onChange={(e) => handleOnUserSearch(e.target.value)}
         />
         <SearchFilter
           {...{
-            showFilters,
-            setShowFilters,
-            filterPropertiesArray: filterOptions || filterPropertiesArray,
             filterArray,
-            setFilterArray,
+            filterPropertiesArray: filterOptions || filterPropertiesArray,
             onFilterApply,
+            setFilterArray,
+            setShowFilters,
+            showFilters,
           }}
         />
       </div>
@@ -112,6 +116,7 @@ TableWithSearchAndFilters.propTypes = {
   onChangePageSize: PropTypes.func,
   onFilterApply: PropTypes.func,
   pageSize: PropTypes.number,
+  placeholder: PropTypes.string,
   searchedValue: PropTypes.string,
 };
 

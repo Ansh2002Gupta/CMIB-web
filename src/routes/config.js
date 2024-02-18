@@ -15,6 +15,7 @@ import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
+import EditSession from "../views/EditSession/EditSession";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import SetupCenterDetails from "../views/SetupCenterDetails";
@@ -27,6 +28,7 @@ import QueryDetails from "../views/QueryDetails";
 import {
   ADD,
   ADD_NEW_USER_DETAILS,
+  ADD_SESSION,
   CONFIGURATIONS,
   COMPANIES,
   COMPANIES_DETAILS,
@@ -34,6 +36,7 @@ import {
   CONSENT_MARKING,
   DASHBOARD,
   EDIT_CONFIGURE_CENTRE,
+  EDIT_SESSION,
   FORGOT_PASSWORD,
   ORIENTATION_CENTERS,
   LOGIN,
@@ -110,6 +113,14 @@ const config = [
       {
         viewPath: SESSION,
         element: <Session />,
+      },
+      {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
       },
       {
         viewPath: SESSION + SETUP_CENTERS,
@@ -227,6 +238,14 @@ const config = [
         element: <Session />,
       },
       {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
+      },
+      {
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
@@ -278,6 +297,14 @@ const config = [
         element: <Session />,
       },
       {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
+      },
+      {
         viewPath: SESSION + SETUP_CENTERS,
         element: <SetupCenter />,
       },
@@ -323,6 +350,14 @@ const config = [
       {
         viewPath: SESSION,
         element: <Session />,
+      },
+      {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
       },
       {
         viewPath: SESSION + SETUP_CENTERS,
