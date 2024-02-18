@@ -1,28 +1,97 @@
-import React from 'react';
-import { Button, Dropdown, Typography } from 'antd';
-import { DownOutlined } from '@ant-design/icons'
+import React, { useContext, useEffect, useState } from "react";
+import { DownOutlined } from "@ant-design/icons";
+import { useIntl } from "react-intl";
+import { Button, Dropdown, Menu, Tooltip, Typography } from "antd";
+import { capitalize } from "lodash";
 
-import { SESSION_ITEMS } from '../../dummyData';
-
-import styles from './sessions.module.scss';
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
+import styles from "./sessions.module.scss";
 
 function Sessions() {
-  // TODO: need to set items of the session dropdown according to api data.
+  const intl = useIntl();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
+  const [globalSessionDetails, globalSessionDispatch] =
+    useContext(GlobalSessionContext);
 
-  return <Dropdown
-    trigger={['click']}
-    menu={{
-      items: SESSION_ITEMS,
-      selectable: true,
-    }}
-    className={styles.sessionContainer}
-  >
-    <Button shape='round' size='middle'>
-      <Typography.Text> Session: </Typography.Text> &nbsp;
-      <Typography.Text strong> 2023 Aug -  Sept Campus Placement</Typography.Text>
-      <DownOutlined />
-    </Button>
-  </Dropdown>
+  const { globalSessionId, globalSessionList } = globalSessionDetails;
+
+  const handleMenuClick = ({ key }) => {
+    globalSessionDispatch(setGlobalSessionDetails(+key));
+  };
+
+  useEffect(() => {
+    if (globalSessionList?.length) {
+      globalSessionDispatch(setGlobalSessionDetails(+globalSessionList[0].id));
+    }
+  }, [selectedModule?.key]);
+
+  const menu = (
+    <Menu
+      selectedKeys={[`${+globalSessionId}`]}
+      onClick={handleMenuClick}
+      className={styles.menu}
+    >
+      {globalSessionList?.length ? (
+        globalSessionList?.map((item) => (
+          <Menu.Item
+            key={+item.id}
+            className={`${styles.customDropdownItem} ${
+              +globalSessionId === +item.id
+                ? styles.menuItemFontWeightBold
+                : styles.menuItemFontWeightNormal
+            }`}
+          >
+            <Tooltip title={item.name.length > 43 ? item.name : null}>
+              <span className={styles.menuItemText}>
+                {capitalize(item.name)}
+              </span>
+            </Tooltip>
+          </Menu.Item>
+        ))
+      ) : (
+        <Menu.Item className={styles.emptySessionContainer}>
+          <span className={styles.menuItemText}>
+            {intl.formatMessage({ id: "label.noSessionsAvailable" })}
+          </span>
+        </Menu.Item>
+      )}
+    </Menu>
+  );
+
+  return (
+    <Dropdown
+      trigger={["click"]}
+      overlay={menu}
+      className={styles.sessionContainer}
+      overlayClassName={styles.customDropdownMenu}
+    >
+      <Button
+        shape="round"
+        size="middle"
+        className={styles.sessionDropdownContainer}
+      >
+        <div className={styles.sessionTextContainer}>
+          <Typography.Text className={styles.sessionText}>
+            {intl.formatMessage({ id: "label.sessionPrefix" })}
+          </Typography.Text>
+          &nbsp;
+          <Typography.Text className={styles.valueText}>
+            {capitalize(
+              globalSessionList?.find((item) => +item.id === +globalSessionId)
+                ?.name ||
+                intl.formatMessage({ id: "label.noSessionsAvailable" })
+            )}
+          </Typography.Text>
+        </div>
+        <div>
+          <DownOutlined />
+        </div>
+      </Button>
+    </Dropdown>
+  );
 }
 
 export default Sessions;

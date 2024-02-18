@@ -27,7 +27,8 @@ const variables = {
   greyBg: colorPallets.ltGrey1,
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
-  blue6Bg: colorPallets.blue6,
+  darkBlueBg: colorPallets.darkBlue3,
+  sideMenuBg1: colorPallets.blue8,
   lightGrey3Bg: colorPallets.ltGrey3,
 
   // Text-colors
@@ -57,6 +58,7 @@ const variables = {
   lightGreyText3: colorPallets.ltGrey4,
   darkBlue3: colorPallets.darkBlue3,
   ltGrey5: colorPallets.ltGrey5,
+  whiteText: colorPallets.white,
 
   // Border-Radius
   radiusNone: "0px",
@@ -110,6 +112,7 @@ const variables = {
   width_30: "30px",
   width_32: "32px",
   width_40: "40px",
+  width_42: "42px",
   width_48: "48px",
   width_50: "50px",
   width_70: "70px",
@@ -130,6 +133,7 @@ const variables = {
   width_180: "180px",
   width_200: "200px",
   width_250: "250px",
+  width_230: "230px",
   width_300: "300px",
   width_347: "347px",
   width_350: "350px",
@@ -144,6 +148,7 @@ const variables = {
   width_30Per: "30%",
   width_45Per: "45%",
   halfWidth: "50%",
+  width90Per: "90%",
   fullWidth: "100%",
 
   // Heights
@@ -157,6 +162,7 @@ const variables = {
   height_40: "40px",
   height_44: "44px",
   minBtnHeight: "45px",
+  height_46: "46px",
   height_48: "48px",
   height_50: "50px",
   height_55: "55px",
@@ -193,6 +199,7 @@ const variables = {
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
+  borderLight2: `1px solid ${colorPallets.ltGrey2}`,
   borderBlue: `2px solid ${colorPallets.darkBlue}`,
   borderBlue1: `1px solid ${colorPallets.darkBlue}`,
   borderGreen: `1px solid ${colorPallets.green1}`,
@@ -252,6 +259,7 @@ const variables = {
 
   // margin
   marginSmall: "8px",
+  margin_12: "12px",
   marginXSmall: "6px",
   marginXXSmall: "4px",
   margin_12: "12px",

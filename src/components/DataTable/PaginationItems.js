@@ -6,7 +6,7 @@ import { Button, Image, Typography } from "antd";
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./DataTable.module.scss";
 
-const PaginationItems = ({ current, disabled, type, originalElement }) => {
+const PaginationItems = ({ disabled, originalElement, type }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
 

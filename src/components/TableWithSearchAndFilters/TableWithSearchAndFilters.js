@@ -11,26 +11,20 @@ import SearchFilter from "../../components/SearchFilter";
 import { DEFAULT_PAGE_SIZE } from "../../constant/constant";
 import { ACCESS_FILTER_DATA } from "../../dummyData";
 import styles from "./TableWithSearchAndFilters.module.scss";
-//TODO: update default props.
+
 const TableWithSearchAndFilters = ({
   columns,
   current,
-  currentFilterStatus,
   currentDataLength,
   data,
-  filterPropertiesArray,
   filterOptions,
   handleOnUserSearch,
   onChangeCurrentPage,
   onChangePageSize,
-  optionsIdKey,
-  optionsNameKey,
   pageSize,
+  placeholder,
   searchedValue,
-  setCurrentFilterStatus,
   isLoading,
-  filterArray,
-  setFilterArray,
   onFilterApply,
 }) => {
   const intl = useIntl();
@@ -49,17 +43,20 @@ const TableWithSearchAndFilters = ({
               preview={false}
             />
           }
-          placeholder={intl.formatMessage({
-            id: "label.searchByUserNameAndEmail",
-          })}
+          placeholder={
+            placeholder ||
+            intl.formatMessage({
+              id: "label.searchByUserNameAndEmail",
+            })
+          }
           allowClear
           className={styles.searchBar}
-          value={searchedValue}
+          value={searchedValue?.trim()}
           onChange={(e) => handleOnUserSearch(e.target.value)}
         />
         <SearchFilter
           filterPropertiesArray={filterOptions || ACCESS_FILTER_DATA}
-          {...{ showFilters, setShowFilters }}
+          {...{ showFilters, setShowFilters, onFilterApply }}
         />
       </div>
       {isLoading && (
@@ -93,15 +90,12 @@ TableWithSearchAndFilters.defaultProps = {
   data: [],
   filterOptions: [],
   handleOnUserSearch: () => {},
+  isLoading: false,
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
-  optionsIdKey: "",
-  optionsNameKey: "",
+  onFilterApply: () => {},
   pageSize: DEFAULT_PAGE_SIZE,
   searchedValue: "",
-  setCurrentFilterStatus: () => {},
-  isLoading: false,
-  onSearch: ()=>{},
 };
 
 TableWithSearchAndFilters.propTypes = {
@@ -112,15 +106,13 @@ TableWithSearchAndFilters.propTypes = {
   data: PropTypes.array,
   filterOptions: PropTypes.array,
   handleOnUserSearch: PropTypes.func,
+  isLoading: PropTypes.bool,
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
-  optionsIdKey: PropTypes.string,
-  optionsNameKey: PropTypes.string,
+  onFilterApply: PropTypes.func,
   pageSize: PropTypes.number,
+  placeholder: PropTypes.string,
   searchedValue: PropTypes.string,
-  setCurrentFilterStatus: PropTypes.func,
-  isLoading: PropTypes.bool,
-  onSearch: PropTypes.func,
 };
 
 export default TableWithSearchAndFilters;

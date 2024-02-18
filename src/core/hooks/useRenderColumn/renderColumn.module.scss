@@ -42,6 +42,7 @@
 .editIcon,
 .moreIcon {
   cursor: pointer;
+  display: flex;
 }
 
 .twoImageStyle {
@@ -62,4 +63,15 @@
 
 .errotTimeInput {
   border: var(--borderError);
+}
+.centerContent {
+  display: flex;
+}
+
+.sortingArrowContainer {
+  min-width: var(--width_20);
+  display: flex;
+  align-items: center;
+  gap: var(--gapXXSmall);
+  cursor: pointer;
 }

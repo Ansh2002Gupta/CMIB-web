@@ -10,6 +10,7 @@ export const classes = {
     fontSize: variables.fontSizeNormal,
     color: variables.textBold,
     fontWeight: variables.fontWeightBold,
+    padding: "0 16px",
   },
   filterLeftSectionMobile: {
     borderRight: variables.borderLight,
@@ -34,5 +35,9 @@ export const classes = {
     maxHeight: "20vw",
     overflowX: "auto",
     minWidth: "15vw",
+  },
+  iconStyle: {
+    height: "16px",
+    width: "16px",
   },
 };

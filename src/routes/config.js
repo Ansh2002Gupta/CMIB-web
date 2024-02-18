@@ -1,4 +1,3 @@
-import Auth from "../pages/Auth";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
@@ -14,6 +13,7 @@ import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
 import ManageUsers from "../views/ManageUsers";
+import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
 import SetupCenter from "../views/SetupCenters";
@@ -37,11 +37,13 @@ import {
   DETAILS,
   EDIT_CONFIGURE_CENTRE,
   FORGOT_PASSWORD,
+  ORIENTATION_CENTERS,
   LOGIN,
   OUT_SOURCED,
   QUERIES,
   QUERY_DETAILS,
   ROOT,
+  ROUND_ONE_SETUP_CENTERS,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -231,14 +233,18 @@ const config = [
         element: <Session />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + ORIENTATION_CENTERS,
+        element: <OrientationCenter />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,

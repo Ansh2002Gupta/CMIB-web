@@ -1,3 +1,78 @@
 .sessionContainer {
-    color: 'var(--textDark, #000833)';
+  color: var(--textDark, #000833);
+  min-width: var(--width_230);
+  max-width: var(--width_363);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.customDropdownMenu {
+  border-radius: var(--radiusXLg) !important;
+}
+
+.customDropdownItem {
+  padding: var(--paddingXXSmall, 3px) var(--paddingNone, 0px) !important;
+  color: var(--textDark) !important;
+  background-color: transparent !important;
+  max-width: var(--width_363, 363px);
+}
+
+.customDropdownItem:hover {
+  background-color: var(--border, #cecece36) !important;
+}
+
+.emptySessionContainer {
+  height: 100px;
+  text-align: center;
+}
+
+.menu {
+  border: var(--borderLight2, 1px solid #b1b3b5);
+  max-height: var(--height_300, 300px);
+  overflow-y: auto;
+}
+
+.menuItemText {
+  font-size: var(--fontSizeSmall);
+  padding: var(--paddingNone, 0px) var(--paddingSmall, 16px);
+  display: block;
+  max-width: var(--width_363, 363px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: noWrap;
+}
+
+.menuItemFontWeightBold {
+  font-weight: var(--fontWeightMedium, 500) !important;
+}
+
+.menuItemFontWeightNormal {
+  font-weight: inherit;
+}
+
+.sessionText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.valueText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: start;
+}
+
+.sessionTextContainer {
+  width: 95%;
+  display: flex;
+}
+
+.sessionDropdownContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--gapXSmall);
 }

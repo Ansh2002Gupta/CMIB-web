@@ -49,9 +49,16 @@
   display: flex;
   justify-content: space-between;
   gap: var(--gapSmallMedium);
-  background-color: var(--bodyBg);
   padding: var(--fontSizeNormal);
   cursor: pointer;
+  line-height: 20px;
+  &:hover {
+    background-color: var(--lightBlueBg);
+  }
+}
+
+.iconStyle {
+  display: flex;
 }
 
 .filterTextAndCheckContainer {
@@ -62,7 +69,6 @@
 }
 
 .filterRightArrow {
-  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -127,6 +133,7 @@
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
+  padding: var(--paddingNone);
   &:hover {
     color: var(--textBold) !important;
   }
@@ -138,10 +145,6 @@
 .optionsContainer {
   max-height: var(--height_250);
   overflow: auto;
-}
-
-.filterOptionContainer {
-  min-height: var(--height_250);
 }
 
 .messageBox {

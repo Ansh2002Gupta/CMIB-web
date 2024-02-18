@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const DATA_SOURCE = [
   {
     id: 1,
@@ -239,109 +241,72 @@ export const COMPANIES_FILTER_DATA = [
   },
 ];
 
-export const SESSION_ITEMS = [
-  {
-    key: "1",
-    label: "Item 1",
-  },
-  {
-    key: "2",
-    label: "Item 2",
-  },
-  {
-    key: "3",
-    label: "Item 3",
-  },
-];
-
-export const CONFIGURE_CENTRES = [
+export const ORIENTATION_CENTERS = [
   {
     sNo: "1",
     centreName: "Ghaziabad-I",
-    centreId: "1001",
-    bigSmallCentre: "Big Centre",
-    createdOn: "10/10/2010",
-    status: true,
+    totalStudentsBooked: "1001",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "2",
     centreName: "Ghaziabad-II",
-    centreId: "1002",
-    bigSmallCentre: "Small Centre",
-    createdOn: "10/10/2010",
-    status: true,
+    totalStudentsBooked: "1002",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "3",
     centreName: "Meerut-I",
-    centreId: "1003",
-    bigSmallCentre: "Big Centre",
-    createdOn: "10/10/2010",
-    status: true,
+    totalStudentsBooked: "1003",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "4",
     centreName: "Meerut-II",
-    centreId: "1004",
-    bigSmallCentre: "Big Centre",
-    createdOn: "10/10/2010",
-    status: true,
+    totalStudentsBooked: "1004",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "5",
     centreName: "Delhi-I",
-    centreId: "1005",
-    bigSmallCentre: "Big Centre",
-    createdOn: "10/10/2010",
-    status: true,
+    totalStudentsBooked: "1005",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "6",
     centreName: "Delhi-II",
-    centreId: "1006",
-    bigSmallCentre: "Small Centre",
-    createdOn: "10/10/2010",
-    status: true,
+    totalStudentsBooked: "1006",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "7",
     centreName: "Ahmedabad-I",
-    centreId: "1007",
-    bigSmallCentre: "Small Centre",
-    createdOn: "10/10/2012",
-    status: true,
+    totalStudentsBooked: "1007",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "8",
     centreName: "Ahmedabad-II",
-    centreId: "1008",
-    bigSmallCentre: "Big Centre",
-    createdOn: "10/10/2010",
-    status: true,
+    totalStudentsBooked: "1008",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "9",
     centreName: "Akola-I",
-    centreId: "1009",
-    bigSmallCentre: "Small Centre",
-    createdOn: "10/10/2013",
-    status: true,
+    totalStudentsBooked: "1009",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "10",
     centreName: "Akola-II",
-    centreId: "1010",
-    bigSmallCentre: "Small Centre",
-    createdOn: "10/10/2010",
-    status: true,
+    totalStudentsBooked: "1010",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
   {
     sNo: "11",
     centreName: "Akola-III",
-    centreId: "1011",
-    bigSmallCentre: "Small Centre",
-    createdOn: "10/10/2022",
-    status: true,
+    totalStudentsBooked: "1011",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
   },
 ];
 

@@ -33,8 +33,9 @@
   padding: var(--gapMedium, 24px);
   flex: 1;
   max-height: 60vh;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
+
 .modulesContainer > *:only-child {
   grid-column: 1 / -1;
 }
