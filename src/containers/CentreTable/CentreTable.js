@@ -178,6 +178,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
         <CustomDateTimePicker
           customContainerStyles={styles.customDateContainerStyles}
           value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
+          customTimeStyle={styles.inputStyle}
           type="date"
           disabled={!record.isAddRow}
           onChange={(val, dateString) => {
@@ -205,6 +206,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           value={text}
           disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
+          customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
             handleInputChange(val.target.value, "participationFee");
           }}
@@ -292,6 +294,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           value={text}
           disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
+          customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
             handleInputChange(val.target.value, "norm1");
           }}
@@ -318,6 +321,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           value={text}
           disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
+          customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
             handleInputChange(val.target.value, "norm2");
           }}
@@ -344,6 +348,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           value={text}
           disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
+          customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
             handleInputChange(val.target.value, "norm2MinVacancy");
           }}

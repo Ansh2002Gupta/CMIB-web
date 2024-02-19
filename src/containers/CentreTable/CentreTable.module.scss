@@ -21,13 +21,25 @@
   width: var(--width_80);
 }
 
+.inputStyle {
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
+}
+
 .joinedCustomContainerStyles {
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
   width: var(--width_100);
   border-top-right-radius: var(--radiusNone);
   border-bottom-right-radius: var(--radiusNone);
 }
 
 .inputNumberStyle {
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
   border-top-left-radius: var(--radiusNone);
   border-bottom-left-radius: var(--radiusNone);
 }
