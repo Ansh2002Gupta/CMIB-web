@@ -81,7 +81,13 @@ const AddTicketAssignee = ({
       }
       middleSectionStyle={classes.middleContainer}
       middleSection={
-        <div className={styles.assigneeContainer}>
+        <div
+          className={
+            data && data?.records
+              ? styles.assigneeContainer
+              : styles.noDataAssignee
+          }
+        >
           {isLoading || assigningTicket ? (
             <CustomLoader />
           ) : data && data?.records ? (

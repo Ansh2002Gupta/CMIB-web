@@ -60,6 +60,8 @@ const variables = {
   darkBlue3: colorPallets.darkBlue3,
   ltGrey5: colorPallets.ltGrey5,
   whiteText: colorPallets.white,
+  darkBlue2: colorPallets.darkBlue2,
+  skyBlue: colorPallets.skyBlue,
 
   // Border-Radius
   radiusNone: "0px",

@@ -25,6 +25,14 @@
   flex: 1;
   max-height: var(--height_50vh, 50vh);
   min-height: var(--height_40vh, 40vh);
+  overflow-y: auto;
+  flex-direction: column;
+}
+.noDataAssignee {
+  padding: var(--gapMedium, 24px);
+  flex: 1;
+  max-height: var(--height_50vh, 50vh);
+  min-height: var(--height_40vh, 40vh);
   overflow-x: auto;
   display: flex;
   flex-direction: column;
@@ -38,6 +46,7 @@
   max-width: var(--widthViewPort_30, 30vw);
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-bottom: var(--paddingMediumSmall, 12px);
 }
 
 .noDataFound {
