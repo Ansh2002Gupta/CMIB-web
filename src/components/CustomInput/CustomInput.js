@@ -11,7 +11,6 @@ import styles from "./CustomInput.module.scss";
 const CustomInput = React.forwardRef(
   (
     {
-      currentSelectedValue,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,

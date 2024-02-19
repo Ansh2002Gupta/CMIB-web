@@ -43,7 +43,7 @@ const SetupCenter = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
 
-  const roundID = searchParams.get(ROUND_ID);
+  const roundId = searchParams.get(ROUND_ID);
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
@@ -57,7 +57,7 @@ const SetupCenter = () => {
       ADMIN_ROUTE +
       `/${selectedModule?.key}` +
       ROUNDS +
-      `/${roundID}` +
+      `/${roundId}` +
       CENTRE_END_POINT,
     otherOptions: { skipApiCallOnMount: true },
   });
@@ -83,7 +83,9 @@ const SetupCenter = () => {
 
   const goToEditCentrePage = (rowData, isEdit) => {
     const centreId = rowData?.id;
-    navigate(`details/${centreId}?mode=${isEdit ? "edit" : "view"}`);
+    navigate(
+      `details/${centreId}?roundId=${roundId}&mode=${isEdit ? "edit" : "view"}`
+    );
   };
 
   const onChangePageSize = (size) => {

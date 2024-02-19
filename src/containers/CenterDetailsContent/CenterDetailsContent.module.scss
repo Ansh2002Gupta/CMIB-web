@@ -14,11 +14,13 @@
   flex-wrap: wrap;
   gap: var(--gapMedium);
 }
+
 .inputLabel {
   color: var(--inputPlaceHolder);
   font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
 }
+
 .input {
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
@@ -32,6 +34,7 @@
     color: var(--inputPlaceHolder) !important;
   }
 }
+
 .timeInput {
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
@@ -51,13 +54,13 @@
 
 .customContainerStyles {
   width: var(--fullWidth);
-  justify-content: space-between;
 }
 
 .bottomSectionStyle {
   gap: var(--gapMedium);
   width: var(--widthHalfViewPort);
 }
+
 .formContainer {
   border: var(--borderLight);
   padding: var(--paddingMedium);

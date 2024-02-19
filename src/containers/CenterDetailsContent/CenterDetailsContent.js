@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
@@ -11,21 +12,40 @@ import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
-import { SETUP_CENTRE_DETAILS } from "../../dummyData";
 import { SESSION, SETUP_CENTERS } from "../../routes/routeNames";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
 
-const CenterDetailsContent = ({ isEdit }) => {
+const CenterDetailsContent = ({ centreDetailData, isEdit }) => {
   const intl = useIntl();
   const responsive = useResponsive();
 
-  const [formData, setFormData] = useState({
-    PsychometricFee: "1000",
-    centreStartTime: "2023-12-19T05:11:46.000000Z",
-    centreEndTime: "2023-12-19T05:11:46.000000Z",
-  });
-  const [tableData, setTableData] = useState(SETUP_CENTRE_DETAILS);
+  const { interview_dates } = centreDetailData || {};
+  const [formData, setFormData] = useState({});
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    setFormData({
+      PsychometricFee: centreDetailData?.psychometric_test_fee,
+      centreStartTime: centreDetailData?.centre_start_time,
+      centreEndTime: centreDetailData?.centre_end_time,
+    });
+    const interviewConfiguration = (interview_dates || []).map((date) => ({
+      id: Math.random().toString(),
+      scheduleDate: date.schedule_date || null,
+      participationFee: date.participation_fee.toString(),
+      firm: {
+        firmFee: date.firm_fee.toString(),
+        uptoPartners: date.numbers_of_partners.toString(),
+      },
+      norm1: date.norm1.toString(),
+      norm2: date.norm2.toString(),
+      norm2MinVacancy: date.norm2_min_vacancy.toString(),
+    }));
+
+    setTableData(interviewConfiguration);
+  }, [centreDetailData]);
+
   const { navigateScreen: navigate } = useNavigateScreen();
 
   const handleCancel = () => {
@@ -75,7 +95,7 @@ const CenterDetailsContent = ({ isEdit }) => {
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreStartTime",
             })}
-            value={formData?.centreStartTime}
+            value={dayjs(formData?.centreStartTime, "HH:mm:ss")}
             disabled={!isEdit}
           />
           <CustomDateTimePicker
@@ -90,7 +110,7 @@ const CenterDetailsContent = ({ isEdit }) => {
             placeholder={intl.formatMessage({
               id: "label.placeholder.centreEndTime",
             })}
-            value={formData.centreEndTime}
+            value={dayjs(formData?.centreEndTime, "HH:mm:ss")}
             disabled={!isEdit}
           />
         </div>

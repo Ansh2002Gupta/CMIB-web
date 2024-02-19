@@ -20,7 +20,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
     isAddRow: true,
     scheduleDate: null,
     participationFee: "",
-    firm: { firmFee: "", uptoPartners: "1" },
+    firm: { firmFee: "", uptoPartners: "" },
     norm1: "",
     norm2: "",
     norm2MinVacancy: "",
@@ -217,7 +217,6 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
         />
       ),
     },
-
     {
       title: () => (
         <TwoColumn
