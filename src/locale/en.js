@@ -87,9 +87,10 @@ const locale = {
   "session.articleshipCompletetionFromDate":
     "Articleship Completetion From Date",
   "session.articleshipCompletetionToDate": "Articleship Completetion To Date",
+  "session.membershipAsOnDateOrPriorToThis": "Membership As On Date Or Prior To This",
   "session.hsnCode": "HSN Code/ SAC ",
   "session.bankACNumber": "Bank A/C number",
-  "session.ifsc": "IFSC",
+  "session.ifscCode": "IFSC Code",
   "session.placeholder.sessionName": "Enter Session Name",
   "session.placeholder.natureOfGoods": "Enter Nature of services/goods",
   "session.placeholder.invoiceNumberFormat": "e.g month-*****-year",
@@ -101,9 +102,11 @@ const locale = {
     "Select Articleship Completetion From Date",
   "session.placeholder.articleshipCompletetionToDate":
     "Select Articleship Completetion To Date",
+    "session.placeholder.membershipAsOnDateOrPriorToThis":
+    "Select Membership As On Date Or Prior To This",
   "session.placeholder.hsnCode": "Enter HSN Code/ SAC ",
   "session.placeholder.bankACNumber": "Enter Bank A/C number",
-  "session.placeholder.ifsc": "Enter IFSC Code",
+  "session.placeholder.ifscCode": "Enter IFSC Code",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
   "session.lastDateRegistrationCompanies":
@@ -122,7 +125,8 @@ const locale = {
   "session.error.articleshipCompletetionToDate":
     "* Please select articleship completetion to date",
   "session.error.bankACNumber": "Please enter valid bank A/C number",
-  "session.error.ifsc": "Please enter valid IFSC code",
+  "session.error.ifscCode": "Please enter valid IFSC code",
+  "session.error.membershipAsOnDateOrPriorToThis": "Please select membership as on date or prior to this date",
   "session.error.hsnCode": "Please enter valid HSN code/ SAC",
   "label.viewProfile": "View Profile",
   "label.myProfile": "My Profile",

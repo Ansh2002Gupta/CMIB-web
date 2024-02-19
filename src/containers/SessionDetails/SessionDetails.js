@@ -25,7 +25,7 @@ import {
   convertDateToStringDate,
   isObjectHasNoValues,
 } from "../../constant/utils";
-import { NOTIFICATION_TYPES } from "../../constant/constant";
+import { MODULE_KEYS, NOTIFICATION_TYPES } from "../../constant/constant";
 import { FIELDS } from "./sessionFieldDetails";
 import { EDIT_SESSION, SESSION } from "../../routes/routeNames";
 import { classes } from "./SessionDetails.styles";
@@ -53,6 +53,7 @@ const SessionDetails = ({
 
   const { navigateScreen: navigate } = useNavigateScreen();
   const [formErrors, setFormErrors] = useState({});
+
   const initialFormState = {
     name: "",
     module: "",
@@ -66,6 +67,7 @@ const SessionDetails = ({
     membership_completion_date: "",
     article_completion_from_date: "",
     article_completion_to_date: "",
+    membership_as_on_date: "",
   };
 
   const [formData, setFormData] = useState(
@@ -128,9 +130,11 @@ const SessionDetails = ({
     formData?.membership_completion_date,
     formData?.article_completion_to_date,
     formData?.article_completion_from_date,
+    formData?.membership_as_on_date,
     formData?.hsn_sac_code,
     formData?.bank_ac_no,
-    formData?.bank_ac_ifsc
+    formData?.bank_ac_ifsc,
+    currentlySelectedModuleKey
   );
 
   const handleInputChange = (value, name) => {
@@ -173,19 +177,28 @@ const SessionDetails = ({
         acc[item.label] = item.value;
         return acc;
       }, {});
+      if (
+        currentlySelectedModuleKey ===
+        MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY
+      ) {
+        payload["mcs_completion_date"] = dayjs(
+          payload["mcs_completion_date"]
+        ).format("YYYY-MM-DD");
+        payload["article_completion_from_date"] = dayjs(
+          payload["article_completion_from_date"]
+        ).format("YYYY-MM-DD");
+        payload["article_completion_to_date"] = dayjs(
+          payload["article_completion_to_date"]
+        ).format("YYYY-MM-DD");
+        payload["membership_completion_date"] = dayjs(
+          payload["membership_completion_date"]
+        ).format("YYYY-MM-DD");
+      } else {
+        payload["membership_as_on_date"] = dayjs(
+          payload["membership_as_on_date"]
+        ).format("YYYY-MM-DD");
+      }
 
-      payload["mcs_completion_date"] = dayjs(
-        payload["mcs_completion_date"]
-      ).format("YYYY-MM-DD");
-      payload["article_completion_from_date"] = dayjs(
-        payload["article_completion_from_date"]
-      ).format("YYYY-MM-DD");
-      payload["article_completion_to_date"] = dayjs(
-        payload["article_completion_to_date"]
-      ).format("YYYY-MM-DD");
-      payload["membership_completion_date"] = dayjs(
-        payload["membership_completion_date"]
-      ).format("YYYY-MM-DD");
       if (addSession) {
         addNewSession({
           currentlySelectedModuleKey,
@@ -224,7 +237,7 @@ const SessionDetails = ({
     fetchData({});
   };
 
-  return fields?.length ? (
+  return formData ? (
     <>
       {notificationContextHolder}
       {isGettingSessions && (
@@ -303,7 +316,8 @@ const SessionDetails = ({
                             {item.id === 5 ||
                             item.id === 6 ||
                             item.id === 7 ||
-                            item.id === 8 ? (
+                            item.id === 8 ||
+                            item.id === 12 ? (
                               <DatePicker
                                 format="MM/DD/YYYY"
                                 className={styles.dateInput}
@@ -314,6 +328,7 @@ const SessionDetails = ({
                                   id: `session.placeholder.${item.headingIntl}`,
                                 })}
                                 value={item.value ? dayjs(item.value) : null}
+                                suffixIcon={<Image src={getImage("calendar")} />}
                               />
                             ) : item.id === 4 ? (
                               <div>
@@ -387,7 +402,8 @@ const SessionDetails = ({
                                 item.id === 5 ||
                                 item.id === 6 ||
                                 item.id === 7 ||
-                                item.id === 8) && (
+                                item.id === 8 ||
+                                item.id === 12) && (
                                 <Typography className={styles.errorText}>
                                   {formErrors[item.label]}
                                 </Typography>
@@ -396,7 +412,8 @@ const SessionDetails = ({
                         ) : item.id === 5 ||
                           item.id === 6 ||
                           item.id === 7 ||
-                          item.id === 8 ? (
+                          item.id === 8 ||
+                          item.id === 12 ? (
                           <Typography className={styles.blackText}>
                             {formatDate({ date: item.value })}
                           </Typography>
@@ -446,13 +463,18 @@ const SessionDetails = ({
                     isBtnDisable={
                       Object.values(formErrors).some((error) => !!error) ||
                       !formData?.name ||
-                      !formData?.article_completion_to_date ||
                       !formData?.nature_of_services ||
                       !formData?.pi_number_format ||
-                      !formData?.ps_examination_periods.length > 0 ||
-                      !formData?.mcs_completion_date ||
-                      !formData?.membership_completion_date ||
-                      !formData?.article_completion_from_date ||
+                      (currentlySelectedModuleKey ===
+                        MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+                        (!formData?.ps_examination_periods.length > 0 ||
+                          !formData?.article_completion_to_date ||
+                          !formData?.mcs_completion_date ||
+                          !formData?.membership_completion_date ||
+                          !formData?.article_completion_from_date)) ||
+                      (currentlySelectedModuleKey !==
+                        MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+                        !formData?.membership_as_on_date) ||
                       !formData?.hsn_sac_code ||
                       !formData?.bank_ac_no ||
                       !formData?.bank_ac_ifsc
