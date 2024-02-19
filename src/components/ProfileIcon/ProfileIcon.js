@@ -14,6 +14,7 @@ const ProfileIcon = ({
   profileImage,
   profileImageStyle,
   showEditModal,
+  size,
 }) => {
   const [imageError, setImageError] = useState(false);
 
@@ -30,6 +31,16 @@ const ProfileIcon = ({
 
   const initials = getInitials(firstName, lastName);
 
+  const getAvatarSize = () => {
+    if (size === "xs") {
+      return styles.profileAvatarXSmall;
+    }
+    if (size === "sm") {
+      return styles.profileAvatarSmall;
+    }
+    return "";
+  };
+
   return (
     <div
       className={[
@@ -37,6 +48,7 @@ const ProfileIcon = ({
         showEditModal && iconType === "modalIcon"
           ? styles.editProfileContainer
           : "",
+        getAvatarSize(),
         imageContainerStyle,
       ].join(" ")}
     >
@@ -45,6 +57,7 @@ const ProfileIcon = ({
           className={[
             styles.initialsAvatar,
             styles.profileAvatar,
+            getAvatarSize(),
             profileImageStyle,
           ].join(" ")}
         >
@@ -81,6 +94,7 @@ ProfileIcon.propTypes = {
   profileImage: PropTypes.string,
   profileImageStyle: PropTypes.string,
   showEditModal: PropTypes.bool,
+  size: PropTypes.string,
 };
 
 export default ProfileIcon;
