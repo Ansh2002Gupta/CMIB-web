@@ -159,9 +159,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       errorCount += 1;
     }
 
-    if (errorCount > 0) return false;
-
-    return true;
+    return errorCount <= 0;
   };
 
   const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;
@@ -203,6 +201,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       key: "participationFee",
       render: (text, record) => (
         <CustomInput
+          type="inputNumber"
           value={text}
           disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
@@ -242,10 +241,11 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           <TwoColumn
             leftSection={
               <CustomInput
+                type="inputNumber"
                 value={text?.firmFee}
                 disabled={!record.isAddRow}
                 customContainerStyles={styles.customContainerStyles}
-                customInputStyles={styles.joinedCustomContainerStyles}
+                customInputNumberStyles={styles.joinedCustomContainerStyles}
                 onChange={(val) => {
                   handleInputChange(val.target.value, "firm", "firmFee");
                 }}
@@ -288,6 +288,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       key: "norm1",
       render: (text, record) => (
         <CustomInput
+          type="inputNumber"
           value={text}
           disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
@@ -313,6 +314,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       key: "norm2",
       render: (text, record) => (
         <CustomInput
+          type="inputNumber"
           value={text}
           disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
@@ -338,6 +340,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       key: "norm2MinVacancy",
       render: (text, record) => (
         <CustomInput
+          type="inputNumber"
           value={text}
           disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
