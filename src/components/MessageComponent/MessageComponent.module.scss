@@ -4,11 +4,11 @@
 }
 
 .fromMessageText {
-  background-color: var(--ltGrey4);
+  background-color: var(--ltGrey6, #e5e7f2);
   padding: var(--paddingSmall);
   border-radius: var(--radiusMLg) var(--radiusXss) var(--radiusMLg)
     var(--radiusMLg);
-  border: var(--borderLight);
+  border: var(--borderLight, #ccd0e5);
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
@@ -29,12 +29,12 @@
 
 .leftMessageContaier {
   justify-content: flex-start;
-  margin-top:  var(--margin_12);;
+  margin-top: var(--margin_12);
 }
 
 .rightMessageContaier {
   justify-content: flex-end;
-  margin-top:  var(--margin_12);;
+  margin-top: var(--margin_12);
 }
 
 .rightTimeText {
@@ -44,7 +44,6 @@
   width: var(--fullWidth);
   display: flex;
   justify-content: flex-end;
-
 }
 .leftTimeText {
   color: var(--inputPlaceHolder);
@@ -66,7 +65,7 @@
 }
 
 // TODO: confirm the below styles
-.textAndImageContainer{
+.textAndImageContainer {
   align-items: flex-end;
   margin-top: 4px;
 }
@@ -75,19 +74,17 @@
   max-width: 200px;
   max-height: 200px;
   border-radius: 12px;
-  margin-top: var(--marginXXSmall);;
+  margin-top: var(--marginXXSmall);
 }
 
-
-.textAndImageContainerWithAvatar{
+.textAndImageContainerWithAvatar {
   margin-top: px;
 }
 
-.noAvatarContainer{
+.noAvatarContainer {
   justify-content: flex-end;
   margin-right: 40px;
 }
-
 
 @media screen and (max-width: 767px) {
   .fromMessageText {

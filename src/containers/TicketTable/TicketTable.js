@@ -91,10 +91,10 @@ const TicketTable = ({
     setCurrentTicketData(data);
   };
 
-  const handleTicketIcon = () => {
-    console.log("clicked");
-
-    navigate(`/control/users`);
+  const handleTicketIcon = (ticketRow) => {
+    const { id } = ticketRow;
+    // navigate(TICKETS_VIEW_DETAILS);
+    navigate(`reply/${id}`);
   };
 
   const getRequestedQueryParams = ({
@@ -227,7 +227,7 @@ const TicketTable = ({
       return prev;
     });
 
-    const requestedParams = getRequestedQueryParams({});
+    const requestedParams = getRequestedQueryParams({ search: searchedValue });
 
     fetchData({
       queryParamsObject: requestedParams,
@@ -260,16 +260,6 @@ const TicketTable = ({
     setData(updatedData);
     setCurrentTicketData({});
   };
-
-  useEffect(() => {
-    return () => {
-      setSearchedValue("");
-      setSearchParams((prev) => {
-        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
-        return prev;
-      });
-    };
-  }, []);
 
   const filterOptions = [
     {

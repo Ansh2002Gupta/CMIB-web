@@ -129,7 +129,7 @@ export const getTicketColumn = ({
         preview: false,
         src: getImage("messageText"),
         visible: true,
-        onClick: handleTicketIcon,
+        onClick: (data) => handleTicketIcon(data),
       },
     }),
     renderColumn({

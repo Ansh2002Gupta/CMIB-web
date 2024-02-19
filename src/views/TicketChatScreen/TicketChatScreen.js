@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -29,7 +30,7 @@ const TicketChatScreen = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   //we will pass id from ticket listing api
-  const id = "91";
+  const { id } = useParams();
   const {
     data: chatData,
     error,
