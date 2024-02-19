@@ -5,7 +5,7 @@ import { AutoComplete } from "antd";
 import { loadScript } from "../../Utils/loadScript";
 import { styles } from "./AutoPlaceComplete.styles";
 
-const AutoPlaceComplete = () => {
+const AutoPlaceComplete = ({value}) => {
   const intl = useIntl();
   const [searchedLocation, setSearchedLocation] = useState("");
   const [suggestedLocations, setSuggestedLocations] = useState([]);
@@ -83,6 +83,7 @@ const AutoPlaceComplete = () => {
 
   return (
       <AutoComplete
+        value={value}
         options={suggestedLocations}
         onChange={(data) => {
           setSearchedLocation(data);

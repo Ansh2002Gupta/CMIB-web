@@ -217,8 +217,8 @@ const useRenderColumn = () => {
     sortDirection && (columnObject.sortDirection = sortDirection);
 
     renderAutoPlaceComplete.visible &&
-      (columnObject.render = () => {
-        return <AutoPlaceComplete />;
+      (columnObject.render = (value) => {
+        return <AutoPlaceComplete value={value} />;
       });
 
     renderText?.visible &&

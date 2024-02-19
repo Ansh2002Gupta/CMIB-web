@@ -38,8 +38,6 @@ function Session() {
     fetchData,
     isError: isSessionError,
     isLoading: isGettingSessions,
-    isSuccess,
-    setData,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -80,6 +78,13 @@ function Session() {
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
         <SessionRound
+          roundId={
+            (
+              sessionData?.rounds?.find(
+                (obj) => obj.round_code === "round-1"
+              ) || {}
+            ).id
+          }
           roundList={ROUND_ONE_CARD_LIST}
           switchLabel={intl.formatMessage({ id: "session.roundOneStatus" })}
         />

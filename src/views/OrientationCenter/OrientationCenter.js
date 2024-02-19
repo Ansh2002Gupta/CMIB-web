@@ -1,23 +1,32 @@
-import React, { useContext, useState, useLayoutEffect } from "react";
+import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
-import { Typography } from "antd";
+import { Spin, Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import CustomButton from "../../components/CustomButton";
 import DataTable from "../../components/DataTable";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
+import useFetch from "../../core/hooks/useFetch";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
-import { ORIENTATION_CENTERS } from "../../dummyData";
+import {
+  CORE_ROUTE,
+  ORIENTATION_CENTRES,
+  ROUNDS,
+} from "../../constant/apiEndpoints";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
+  ROUND_ID,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
 
 import { classes } from "./OrientationCenter.styles";
 import styles from "./OrientationCenter.module.scss";
+import "./Override.css";
 
 const OrientationCenter = () => {
   const intl = useIntl();
@@ -25,24 +34,75 @@ const OrientationCenter = () => {
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [currentTableData, setCurrentTableData] = useState(ORIENTATION_CENTERS);
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
   const [pageSize, setPageSize] = useState(
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
+  const roundID = searchParams.get(ROUND_ID);
 
-  // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
-  const updateTableData = (currentPageNumber, currentPageSize) => {
-    const startIndex = (currentPageNumber - 1) * currentPageSize;
-    const endIndex = currentPageNumber * currentPageSize;
-    const updatedData = ORIENTATION_CENTERS.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
+
+  const {
+    data: orientationCentres,
+    error: errorWhileGettingCentres,
+    fetchData: getOrientationCentres,
+    isLoading: isGettingOrientationCentres,
+    isSuccess: fetchCentersSuccessFlag,
+  } = useFetch({
+    url:
+      CORE_ROUTE +
+      `/${selectedModule?.key}` +
+      ROUNDS +
+      `/${roundID}` +
+      ORIENTATION_CENTRES,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+
+  const resetCentreListingData = (orientationCentres) => {
+    if (orientationCentres?.meta?.total) {
+      const totalRecords = orientationCentres?.meta?.total;
+      const numberOfPages = Math.ceil(totalRecords / pageSize);
+      if (current > numberOfPages) {
+        getOrientationCentres({
+          queryParamsObject: getRequestedQueryParams({
+            page: 1,
+          }),
+        });
+        setSearchParams((prev) => {
+          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+          return prev;
+        });
+        setCurrent(1);
+      }
+    }
+  };
+
+  useEffect(() => {
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
+      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
+      return prev;
+    });
+    if (selectedModule?.key) {
+      const requestedParams = getRequestedQueryParams({});
+      getOrientationCentres({
+        queryParamsObject: requestedParams,
+        onSuccessCallback: resetCentreListingData,
+      });
+    }
+  }, [selectedModule?.key]);
+
+  const getRequestedQueryParams = ({ page, rowPerPage }) => {
+    return {
+      perPage: rowPerPage || pageSize,
+      page: page || current,
+    };
   };
 
   const onChangePageSize = (size) => {
-    //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
     setSearchParams((prev) => {
@@ -50,17 +110,22 @@ const OrientationCenter = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    updateTableData(1, size);
+    const requestedParams = getRequestedQueryParams({ perPage: size, page: 1 });
+    getOrientationCentres({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
-    //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    updateTableData(newPageNumber, pageSize);
+    const requestedParams = getRequestedQueryParams({
+      perPage: pageSize,
+      page: newPageNumber,
+    });
+
+    getOrientationCentres({ queryParamsObject: requestedParams });
   };
 
   const columns = [
@@ -73,28 +138,34 @@ const OrientationCenter = () => {
         includeDotAfterText: true,
         textStyles: styles.textStyles,
       },
+      render: (_, __, index) => {
+        return {
+          children: <p>{index + 1}.</p>,
+        };
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreName" }),
-      dataIndex: "centreName",
-      key: "centreName",
+      dataIndex: "centre_name",
+      key: "centre_name",
       renderText: {
         isTextBold: true,
         visible: true,
+        isCapitalize: true,
       },
       customStyles: styles.customNameColumnStyles,
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.total_students_booked" }),
-      dataIndex: "totalStudentsBooked",
-      key: "totalStudentsBooked",
+      dataIndex: "total_participants_booked",
+      key: "total_participants_booked",
       renderText: { visible: true },
       customStyles: styles.customColumnStyles,
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.schedule_date" }),
-      dataIndex: "scheduleDate",
-      key: "scheduleDate",
+      dataIndex: "schedule_date",
+      key: "schedule_date",
       isRequiredField: true,
       renderText: { visible: true, isTypeDate: true },
       renderDateTime: {
@@ -109,14 +180,14 @@ const OrientationCenter = () => {
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.venue" }),
-      dataIndex: "bigSmallCentre",
-      key: "bigSmallCentre",
+      dataIndex: "venue",
+      key: "venue",
       renderAutoPlaceComplete: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.actions" }),
-      dataIndex: "edit",
-      key: "edit",
+      dataIndex: "download",
+      key: "download",
       renderImage: {
         alt: "download",
         onClick: () => {},
@@ -152,6 +223,51 @@ const OrientationCenter = () => {
     }
   }, []);
 
+  const handleTryAgain = () => {
+    const requestedParams = getRequestedQueryParams({});
+    getOrientationCentres({
+      queryParamsObject: requestedParams,
+    });
+  };
+
+  const renderContent = () => {
+    if (!isGettingOrientationCentres && errorWhileGettingCentres) {
+      return (
+        <div className={styles.errorContainer}>
+          <ErrorMessageBox
+            onRetry={handleTryAgain}
+            errorText={errorWhileGettingCentres?.data?.message}
+            errorHeading={intl.formatMessage({
+              id: "label.error",
+            })}
+          />
+        </div>
+      );
+    }
+    if (isGettingOrientationCentres) {
+      return (
+        <div className={styles.errorContainer}>
+          <Spin size="large" />
+        </div>
+      );
+    }
+    return (
+      <DataTable
+        {...{
+          columns,
+          current,
+          pageSize,
+          onChangePageSize,
+          onChangeCurrentPage,
+        }}
+        currentDataLength={orientationCentres?.meta?.total}
+        customContainerStyles={styles.tableContainer}
+        originalData={orientationCentres?.records}
+        customTableClassName={"customTableClassName"}
+      />
+    );
+  };
+
   return (
     <TwoRow
       className={styles.mainContainer}
@@ -172,44 +288,34 @@ const OrientationCenter = () => {
       }
       bottomSection={
         <TwoRow
-          topSection={
-            <DataTable
-              {...{
-                columns,
-                current,
-                pageSize,
-                onChangePageSize,
-                onChangeCurrentPage,
-              }}
-              currentDataLength={ORIENTATION_CENTERS.length}
-              customContainerStyles={styles.tableContainer}
-              originalData={currentTableData}
-            />
-          }
+          isTopFillSpace
+          topSection={renderContent()}
           bottomSection={
-            <TwoColumn
-              className={styles.buttonContainer}
-              leftSection={
-                <CustomButton
-                  btnText={intl.formatMessage({
-                    id: "label.cancel",
-                  })}
-                  customStyle={styles.mobileButtonStyles}
-                  textStyle={styles.textStyle}
-                  onClick={() => {}}
-                />
-              }
-              rightSection={
-                <CustomButton
-                  textStyle={styles.saveButtonTextStyles}
-                  customStyle={styles.saveButtonStyle}
-                  btnText={intl.formatMessage({
-                    id: "session.saveChanges",
-                  })}
-                  onClick={() => {}}
-                />
-              }
-            />
+            fetchCentersSuccessFlag && (
+              <TwoColumn
+                className={styles.buttonContainer}
+                leftSection={
+                  <CustomButton
+                    btnText={intl.formatMessage({
+                      id: "label.cancel",
+                    })}
+                    customStyle={styles.mobileButtonStyles}
+                    textStyle={styles.textStyle}
+                    onClick={() => {}}
+                  />
+                }
+                rightSection={
+                  <CustomButton
+                    textStyle={styles.saveButtonTextStyles}
+                    customStyle={styles.saveButtonStyle}
+                    btnText={intl.formatMessage({
+                      id: "session.saveChanges",
+                    })}
+                    onClick={() => {}}
+                  />
+                }
+              />
+            )
           }
         />
       }

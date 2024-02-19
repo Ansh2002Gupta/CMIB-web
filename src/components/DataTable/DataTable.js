@@ -18,6 +18,7 @@ const DataTable = ({
   current,
   currentDataLength,
   customContainerStyles,
+  customTableClassName,
   onChangeCurrentPage,
   onChangePageSize,
   originalData,
@@ -45,6 +46,7 @@ const DataTable = ({
         rowClassName={styles.rowtext}
         scroll={responsiveStyle}
         rowKey="id"
+        className={customTableClassName}
       />
       <div className={styles.rowPerPageOptionsAndPaginationContainer}>
         <div className={styles.rowPerPageContainer}>

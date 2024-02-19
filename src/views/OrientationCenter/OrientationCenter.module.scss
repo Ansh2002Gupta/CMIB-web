@@ -94,3 +94,11 @@
   font-weight: var(--fontWeightMedium);
   color: var(--bodyBg);
 }
+
+.errorContainer {
+  width: var(--fullWidth);
+  height: var(--fullHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -24,6 +24,7 @@ export const GLOBAL_SESSION_LIST = "/sessions";
 export const IMAGE_UPLOAD_END_POINT = "/save-logo";
 export const LOGIN_END_POINT = "/login";
 export const LOGOUT_END_POINT = "/logout";
+export const ORIENTATION_CENTRES = "/orientation-centres";
 export const PROFILE_END_POINT = "/profile";
 export const QUERIES_END_POINT = "/queries";
 export const QUERY_TYPE = "/queries/types";
