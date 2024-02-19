@@ -54,9 +54,7 @@ const TableWithSearchAndFilters = ({
           allowClear
           className={styles.searchBar}
           value={
-            searchedValue?.trim().length > 0
-              ? searchedValue
-              : searchedValue?.trim()
+            searchedValue?.trim().length ? searchedValue : searchedValue?.trim()
           }
           onChange={(e) => handleOnUserSearch(e.target.value)}
         />
