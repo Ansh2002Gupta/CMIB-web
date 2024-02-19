@@ -20,6 +20,7 @@ import styles from "./AddTicketAssignee.module.scss";
 import { classes } from "./AddTicketAssignee.styles";
 
 const AddTicketAssignee = ({
+  assigneeId,
   handleAssignee,
   setIsModalOpen,
   showNotification,
@@ -27,10 +28,12 @@ const AddTicketAssignee = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  const [selectedValue, setSelectedValue] = useState({});
+  const [selectedValue, setSelectedValue] = useState(assigneeId);
   const { data, error, isLoading } = useFetch({
     url: CORE_ROUTE + TICKET_LIST + ASSIGNEES,
   });
+  console.log(assigneeId, "assigneeId..");
+
   const { isLoading: assigningTicket, handleAssignTicket } =
     useTicketAssignApi();
   const handleSubmit = () => {
@@ -48,7 +51,7 @@ const AddTicketAssignee = ({
       onSuccessCallback: () => {
         handleAssignee({
           ticketId: ticket_id,
-          assigneeName: selectedValue?.name,
+          assignedTo: selectedValue,
         });
         setIsModalOpen(false);
       },
@@ -67,7 +70,7 @@ const AddTicketAssignee = ({
             src={getImage("cross")}
             preview={false}
             onClick={() => {
-              setSelectedValue({});
+              // setSelectedValue({});
               setIsModalOpen(false);
             }}
             className={styles.crossIcon}

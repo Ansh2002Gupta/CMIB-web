@@ -235,11 +235,14 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const handleAssignee = ({ assigneeName, ticketId }) => {
+  const handleAssignee = ({ assignedTo, ticketId }) => {
     let updatedData = data;
     updatedData.records = data?.records?.map((ticket) => {
       if (+ticket.id === +ticketId) {
-        ticket.assigned_to = assigneeName;
+        ticket.assigned_to = {
+          id: assignedTo?.id,
+          name: assignedTo?.name,
+        };
         return ticket;
       }
       return {
@@ -290,6 +293,7 @@ const TicketTable = ({
             handleAssignee,
             setIsModalOpen,
             showNotification,
+            assigneeId: currentTicketData?.assigned_to,
           }}
         />
       </CommonModal>

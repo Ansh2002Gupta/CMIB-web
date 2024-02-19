@@ -371,6 +371,7 @@ const locale = {
   "label.enable": "Enable",
   "label.disable": "Disable",
   "label.path.users": "Manage Users",
+  "label.path.tickets": "Tickets",
   "label.path.add": "Add new center",
   "label.path.details": "User Details",
   "label.path.dashboard": "Dashboard",

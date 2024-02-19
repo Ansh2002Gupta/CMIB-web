@@ -40,7 +40,7 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
   });
 
   const fetchData = async ({
-    queryParamsObject,
+    queryParamsObject = {},
     onSuccessCallback,
     onErrorCallback,
   }) => {

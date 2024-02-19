@@ -103,6 +103,8 @@ export const getTicketColumn = ({
       dataIndex: "assigned_to",
       key: "assigned_to",
       renderText: {
+        isDataObject: true,
+        dataKey: "name",
         visible: true,
         textStyles: [styles.tableCell].join(" "),
         isCapitalize: true,
