@@ -93,7 +93,9 @@ const AddTicketAssignee = ({
                     setSelectedValue(item);
                   }}
                   leftSection={
-                    <CustomRadioButton checked={selectedValue.id === item.id} />
+                    <CustomRadioButton
+                      checked={selectedValue?.id === item?.id}
+                    />
                   }
                   rightSection={
                     <Typography className={styles.assigneeText}>

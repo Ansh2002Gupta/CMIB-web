@@ -161,7 +161,7 @@ const useRenderColumn = () => {
 
     const textRenderFormat = ({ text }) => {
       if (isDataObject) {
-        return text[dataKey];
+        return text[dataKey] || "-";
       }
       if (isTypeDate) {
         return formatDate({ date: text });
