@@ -194,7 +194,7 @@ const useRenderColumn = () => {
       (columnObject.title = () => {
         return renderSorterColumn ? (
           <Typography
-            className={[styles.columnHeading].join(" ")}
+            className={[styles.columnHeading, customColumnHeading].join(" ")}
             onClick={() => {
               setSortBy((prev) => {
                 const newSortOrder = toggleSorting(prev);
@@ -252,18 +252,6 @@ const useRenderColumn = () => {
             }
             rightSection={titleWithCheckBoxes}
           />
-          // <Checkbox
-          //   indeterminate={isIntermidiate}
-          //   checked={isChecked}
-          //   className={[
-          //     styles.chipContainer,
-          //     customColumnHeading,
-          //     customCheckBoxStyles,
-          //   ].join(" ")}
-          //   onChange={onToggleCheckBox}
-          // >
-          //   {titleWithCheckBoxes}
-          // </Checkbox>
         );
       });
 
@@ -330,11 +318,11 @@ const useRenderColumn = () => {
         return (
           <Chip
             label={status}
-            bgColor={[
+            customContainerStyles={[
               styles.chipContainer,
               styles[styleClassForContainer],
             ].join(" ")}
-            textColor={styles[styleClassForText]}
+            textStyles={styles[styleClassForText]}
           />
         );
       });

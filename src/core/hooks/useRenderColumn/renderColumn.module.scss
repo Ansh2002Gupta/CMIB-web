@@ -119,3 +119,13 @@
   align-content: center;
   flex: 1;
 }
+
+.statusBox {
+  text-transform: capitalize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radiusXLg);
+  padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
+  width: fit-content;
+}
