@@ -94,6 +94,7 @@ const AddTicketAssignee = ({
             data?.records?.map((item) => {
               return (
                 <TwoColumn
+                  className={styles.assigneeRow}
                   key={item.id}
                   onClick={() => {
                     setSelectedValue(item);
