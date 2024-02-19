@@ -5,20 +5,43 @@ import { Typography } from "antd";
 import styles from "./Chip.module.scss";
 
 const Chip = ({
-  bgColor,
+  bgStyles,
   customContainerStyles,
   customLabelStyles,
   label,
   onClick,
-  textColor,
+  textStyles,
+  color,
 }) => {
+  const getCurrentTheme = () => {
+    if (color === "orange") {
+      return ["statusContainer_failed", "statusText_failed"];
+    }
+    if (color === "green") {
+      return ["statusContainer_success", "statusText_success"];
+    }
+    if (color === "blue") {
+      return ["statusContainer_progress", "statusText_progress"];
+    }
+  };
+
   return (
     <div
       {...{ onClick }}
-      className={[styles.container, bgColor, customContainerStyles].join(" ")}
+      className={[
+        styles.container,
+        color ? styles[getCurrentTheme()[0]] : "",
+        bgStyles,
+        customContainerStyles,
+      ].join(" ")}
     >
       <Typography
-        className={[styles.text, textColor, customLabelStyles].join(" ")}
+        className={[
+          styles.text,
+          color ? styles[getCurrentTheme()[1]] : "",
+          textStyles,
+          customLabelStyles,
+        ].join(" ")}
       >
         {label}
       </Typography>
@@ -27,21 +50,21 @@ const Chip = ({
 };
 
 Chip.defaultProps = {
-  bgColor: "",
+  bgStyles: "",
   customContainerStyles: "",
   customLabelStyles: "",
   label: "",
   onClick: () => {},
-  textColor: "",
+  textStyles: "",
 };
 
 Chip.propTypes = {
-  bgColor: PropTypes.string,
+  bgStyles: PropTypes.string,
   customContainerStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   label: PropTypes.string,
   onClick: PropTypes.func,
-  textColor: PropTypes.string,
+  textStyles: PropTypes.string,
 };
 
 export default Chip;

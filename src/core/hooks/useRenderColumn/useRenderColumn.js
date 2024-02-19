@@ -111,6 +111,8 @@ const useRenderColumn = () => {
       isRequiredTooltip,
       mobile,
       isIntl,
+      isDataObject,
+      dataKey,
     } = renderText;
 
     const {
@@ -158,6 +160,9 @@ const useRenderColumn = () => {
     };
 
     const textRenderFormat = ({ text }) => {
+      if (isDataObject) {
+        return text[dataKey];
+      }
       if (isTypeDate) {
         return formatDate({ date: text });
       }

@@ -42,7 +42,7 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
   const fetchData = async ({
     queryParamsObject = {},
     onSuccessCallback,
-    onErrorCallBack,
+    onErrorCallback,
   }) => {
     let modifiedURL = url;
     if (queryParamsObject && objectToQueryString(queryParamsObject)) {
@@ -59,16 +59,16 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
         setApiStatus(API_STATUS.SUCCESS);
         setData(res.data);
         onSuccessCallback && onSuccessCallback(res.data);
-        return;
+        return res.data;
       }
       setApiStatus(API_STATUS.ERROR);
       setError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
-      onErrorCallBack && onErrorCallBack(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      onErrorCallback && onErrorCallback(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);
       setError(err?.response || GENERIC_GET_API_FAILED_ERROR_MESSAGE);
-      onErrorCallBack &&
-        onErrorCallBack(err?.response || GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      onErrorCallback &&
+        onErrorCallback(err?.response || GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     }
   };
 

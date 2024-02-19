@@ -1,0 +1,51 @@
+
+$lg: 1200px;
+$xl: 1600px;
+$md: 992px;
+$sm: 768px;
+$xs: 576px;
+
+$lightGrey: #CCCCCC; 
+$backgroundColor: #FFFFFF; 
+
+.container {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  justify-content: center;
+}
+
+.subContainer {
+  flex-direction: row;
+  padding: 16px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-color: $lightGrey;
+  background-color: $backgroundColor;
+}
+
+.textSize {
+  font-size: 14px;
+  @media (max-width: #{$lg}) {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 40vw;
+  }
+
+  @media (max-width: #{$xl}) {
+    max-width: 45vw;
+  }
+
+  @media (max-width: #{$md}) {
+    max-width: 35vw;
+  }
+
+  @media (max-width: #{$sm}) {
+    max-width: 50vw;
+  }
+
+  @media (max-width: #{$xs}) {
+    max-width: 70vw;
+  }
+}

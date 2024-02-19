@@ -1,3 +1,4 @@
+import activeSend from "./activeSend.svg";
 import addCircle from "./addCircle.svg";
 import arrowDown from "./arrow-down.svg";
 import arrowDownDarkGrey from "./arrow-down-dark-grey.svg";
@@ -38,6 +39,7 @@ import more from "./more.svg";
 import plusIcon from "./plus icon.svg";
 import checkIcon from "./check icon.svg";
 import searchIcon from "./search icon.svg";
+import send from "./send.svg";
 import seventyFive from "./75.svg";
 import someFiltersAreSelected from "./some filters are selected.svg";
 import trash from "./trash.svg";
@@ -62,18 +64,22 @@ import rotateIcon from "./rotate-Icon.svg";
 import minusCircleBlue from "./minus-cirlce-blue.svg";
 import addCircleBlue from "./add-circle-blue.svg";
 import publicLogoWhite from "./public_logo_white_transparent.svg";
+import whiteCheckIcon from "./white check icon.svg";
+import sendMessage from "./send message.svg";
+import iconMore from "./iconMore.svg";
 import iconDownload from "./iconDownload.svg";
 import changeIcon from "./change icon.svg";
 import greenTick from "./green-tick.svg";
 import disabledArrow from "./disabled arrow.svg";
+import iconProfileAdd from "./iconProfileAdd.svg";
 
 const images = {
+  activeSend,
   addCircle,
   arrowDown,
   arrowDownDarkGrey,
   arrowLeft,
   arrowRight,
-  arrowDownDarkGrey,
   arrowRightFilter,
   blackArrowDown,
   Building,
@@ -109,6 +115,7 @@ const images = {
   plusIcon,
   checkIcon,
   searchIcon,
+  send,
   seventyFive,
   someFiltersAreSelected,
   trash,
@@ -133,10 +140,14 @@ const images = {
   addCircleBlue,
   minusCircleBlue,
   publicLogoWhite,
+  whiteCheckIcon,
+  sendMessage,
+  iconMore,
   iconDownload,
   greenTick,
   disabledArrow,
   changeIcon,
+  iconProfileAdd,
 };
 
 export default images;

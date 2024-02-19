@@ -38,8 +38,9 @@ export const TICKET_LIST = "/tickets";
 export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
 export const USERS_END_POINT = "/users";
 export const VERIFY_OTP = "/otp/verify";
+export const REPLIES = "/replies";
+export const CLOSE = "/close";
 
 // Query
 export const MARK_AS_ANSWER_END_POINT = "/answer";
 export const QUERY_TYPES_END_POINT = "/types";
-
