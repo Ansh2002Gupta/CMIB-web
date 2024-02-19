@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { DownOutlined } from "@ant-design/icons";
+import { capitalize } from "lodash";
 import { useIntl } from "react-intl";
 import { Button, Dropdown, Menu, Tooltip, Typography } from "antd";
-import { capitalize } from "lodash";
 
+import { setItem } from "../../services/encrypted-storage-service";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
@@ -19,6 +20,7 @@ function Sessions() {
   const { globalSessionId, globalSessionList } = globalSessionDetails;
 
   const handleMenuClick = ({ key }) => {
+    setItem("sessionKey", key);
     globalSessionDispatch(setGlobalSessionDetails(+key));
   };
 

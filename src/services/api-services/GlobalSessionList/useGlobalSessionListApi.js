@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import Http from "../../http-service";
+import { getItem } from "../../encrypted-storage-service";
 import { STATUS_CODES } from "../../../constant/constant";
 import { GlobalSessionContext } from "../../../globalContext/globalSession/globalSessionProvider";
 import {
@@ -15,6 +16,8 @@ import {
 
 const useGlobalSessionListApi = () => {
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
+  const selectedSessionInSearchParams = getItem("sessionKey");
+  console.log(selectedSessionInSearchParams);
   const getGlobalSessionList = async (selectedModule) => {
     try {
       const url =
@@ -28,11 +31,29 @@ const useGlobalSessionListApi = () => {
         res.status === STATUS_CODES.SUCCESS_STATUS
       ) {
         globalSessionDispatch(setGlobalSessionList(res?.data?.records));
-        globalSessionDispatch(
-          setGlobalSessionDetails(res?.data?.records?.[0]?.id)
-        );
-        globalSessionDispatch(setSelectedSession({ key: res?.data?.records?.[0]?.id || "", label: res?.data?.records?.[0]?.name || "" }))
-        return;
+        if (selectedSessionInSearchParams) {
+          let session = res?.data?.records?.filter(
+            (ele) => ele?.id == selectedSessionInSearchParams
+          )?.[0];
+          globalSessionDispatch(setGlobalSessionDetails(session?.id));
+          globalSessionDispatch(
+            setSelectedSession({
+              key: session?.id || "",
+              label: session?.name || "",
+            })
+          );
+        } else {
+          globalSessionDispatch(
+            setGlobalSessionDetails(res?.data?.records?.[0]?.id)
+          );
+          globalSessionDispatch(
+            setSelectedSession({
+              key: res?.data?.records?.[0]?.id || "",
+              label: res?.data?.records?.[0]?.name || "",
+            })
+          );
+        }
+       return;
       }
     } catch (err) {}
   };

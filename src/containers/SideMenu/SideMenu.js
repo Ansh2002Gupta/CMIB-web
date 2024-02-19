@@ -9,13 +9,13 @@ import useResponsive from "../../core/hooks/useResponsive";
 
 import SideMenuButton from "../../components/SideMenuButton";
 import SideMenuItems from "../SideMenuItems";
+import { setItem } from "../../services/encrypted-storage-service";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import {
   setGlobalSessionDetails,
   setSelectedSession,
 } from "../../globalContext/globalSession/globalSessionActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { DASHBOARD } from "../../routes/routeNames";
 import { filterMenuData } from "../../constant/utils";
@@ -58,6 +58,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }
 
   const handleOnSelectSession = (item) => {
+    setItem("sessionKey", item.key);
     globalSessionDispatch(setSelectedSession(item));
     globalSessionDispatch(setGlobalSessionDetails(+item.key));
     setOpenSessionSelector(false);

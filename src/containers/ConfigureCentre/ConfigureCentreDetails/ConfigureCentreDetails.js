@@ -24,7 +24,7 @@ import { INITIAL_CENTRE_DETAILS } from "../../../dummyData";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import { classes } from "./ConfigureCentreDetails.styles";
 import styles from "./ConfigureCentreDetails.module.scss";
-import "./Override.css";
+import "./override.css";
 
 const ConfigureCentreDetails = () => {
   const intl = useIntl();
