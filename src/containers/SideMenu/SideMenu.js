@@ -5,6 +5,7 @@ import { Button, ConfigProvider, Menu, Space, Typography } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 
 import SideMenuButton from "../../components/SideMenuButton";
@@ -16,10 +17,10 @@ import {
   setSelectedSession,
 } from "../../globalContext/globalSession/globalSessionActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { DASHBOARD } from "../../routes/routeNames";
 import { filterMenuData } from "../../constant/utils";
 import modules from "./sideMenuItems";
+import { MODULE_KEYS } from "../../constant/constant";
 import { ReactComponent as Globe } from "../../themes/base/assets/icons/globe.svg";
 import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
 import styles from "./sideMenu.module.scss";
@@ -151,33 +152,35 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
               <TwoRow
                 topSection={
                   <>
-                    {!responsive.isMd && (
-                      <TwoRow
-                        className={styles.sessionContainer}
-                        topSection={
-                          !openSessionSelector && (
-                            <Typography className={styles.sectionHeading}>
-                              {intl.formatMessage({ id: "label.session" })}
-                            </Typography>
-                          )
-                        }
-                        bottomSection={
-                          <SideMenuItems
-                            openSelector={openSessionSelector}
-                            setOpenSelector={setOpenSessionSelector}
-                            globalSessionList={globalSessionList?.map(
-                              (item) => ({
-                                key: item.id,
-                                label: item.name,
-                              })
-                            )}
-                            handleOnSelectItem={handleOnSelectSession}
-                            selectedItem={selectedSession}
-                            selectedModule={selectedModule}
-                          />
-                        }
-                      />
-                    )}
+                    {!responsive.isMd &&
+                      selectedModule?.key !== MODULE_KEYS.CA_JOBS_KEY &&
+                      selectedModule?.key !== MODULE_KEYS.CONTROL_KEY && (
+                        <TwoRow
+                          className={styles.sessionContainer}
+                          topSection={
+                            !openSessionSelector && (
+                              <Typography className={styles.sectionHeading}>
+                                {intl.formatMessage({ id: "label.session" })}
+                              </Typography>
+                            )
+                          }
+                          bottomSection={
+                            <SideMenuItems
+                              openSelector={openSessionSelector}
+                              setOpenSelector={setOpenSessionSelector}
+                              globalSessionList={globalSessionList?.map(
+                                (item) => ({
+                                  key: item.id,
+                                  label: item.name,
+                                })
+                              )}
+                              handleOnSelectItem={handleOnSelectSession}
+                              selectedItem={selectedSession}
+                              selectedModule={selectedModule}
+                            />
+                          }
+                        />
+                      )}
                   </>
                 }
                 bottomSection={

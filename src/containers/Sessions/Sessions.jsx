@@ -8,6 +8,7 @@ import { setItem } from "../../services/encrypted-storage-service";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
+import { MODULE_KEYS } from "../../constant/constant";
 import styles from "./sessions.module.scss";
 
 function Sessions() {
@@ -64,35 +65,41 @@ function Sessions() {
   );
 
   return (
-    <Dropdown
-      trigger={["click"]}
-      overlay={menu}
-      className={styles.sessionContainer}
-      overlayClassName={styles.customDropdownMenu}
-    >
-      <Button
-        shape="round"
-        size="middle"
-        className={styles.sessionDropdownContainer}
-      >
-        <div className={styles.sessionTextContainer}>
-          <Typography.Text className={styles.sessionText}>
-            {intl.formatMessage({ id: "label.sessionPrefix" })}
-          </Typography.Text>
-          &nbsp;
-          <Typography.Text className={styles.valueText}>
-            {capitalize(
-              globalSessionList?.find((item) => +item.id === +globalSessionId)
-                ?.name ||
-                intl.formatMessage({ id: "label.noSessionsAvailable" })
-            )}
-          </Typography.Text>
-        </div>
-        <div>
-          <DownOutlined />
-        </div>
-      </Button>
-    </Dropdown>
+    <>
+      {selectedModule?.key !== MODULE_KEYS.CA_JOBS_KEY &&
+        selectedModule?.key !== MODULE_KEYS.CONTROL_KEY && (
+          <Dropdown
+            trigger={["click"]}
+            overlay={menu}
+            className={styles.sessionContainer}
+            overlayClassName={styles.customDropdownMenu}
+          >
+            <Button
+              shape="round"
+              size="middle"
+              className={styles.sessionDropdownContainer}
+            >
+              <div className={styles.sessionTextContainer}>
+                <Typography.Text className={styles.sessionText}>
+                  {intl.formatMessage({ id: "label.sessionPrefix" })}
+                </Typography.Text>
+                &nbsp;
+                <Typography.Text className={styles.valueText}>
+                  {capitalize(
+                    globalSessionList?.find(
+                      (item) => +item.id === +globalSessionId
+                    )?.name ||
+                      intl.formatMessage({ id: "label.noSessionsAvailable" })
+                  )}
+                </Typography.Text>
+              </div>
+              <div>
+                <DownOutlined />
+              </div>
+            </Button>
+          </Dropdown>
+        )}
+    </>
   );
 }
 
