@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import { useSearchParams } from "react-router-dom";
 
 import { TwoRow } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
@@ -13,11 +14,13 @@ import useFetch from "../../core/hooks/useFetch";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { getCurrentActiveTab } from "../../constant/utils";
 import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { ADD_SESSION } from "../../routes/routeNames";
 import {
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
+  VALID_CONSENT_MARKING_TABS_ID,
 } from "../../constant/constant";
 import variables from "../../themes/base/styles/variables";
 import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
@@ -30,8 +33,11 @@ function Session() {
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(
+    getCurrentActiveTab(searchParams?.get("tab"), VALID_CONSENT_MARKING_TABS_ID)
+  );
 
-  const [activeTab, setActiveTab] = useState("1");
   const {
     data: sessionData,
     error: sessionError,
@@ -52,8 +58,10 @@ function Session() {
   const responsive = useResponsive();
 
   useEffect(() => {
-    fetchData({});
-  }, [globalSessionDetails]);
+    if (globalSessionDetails?.globalSessionId) {
+      fetchData({});
+    }
+  }, [globalSessionDetails?.globalSessionId]);
 
   const tabItems = [
     {
@@ -78,6 +86,8 @@ function Session() {
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
         <SessionRound
+          roundNo={1}
+          roundId={sessionData?.rounds?.[0]?.id}
           roundList={ROUND_ONE_CARD_LIST}
           switchLabel={intl.formatMessage({ id: "session.roundOneStatus" })}
         />
@@ -88,6 +98,7 @@ function Session() {
       title: intl.formatMessage({ id: "session.roundTwo" }),
       children: (
         <SessionRound
+          roundNo={2}
           roundList={ROUND_TWO_CARD_LIST}
           switchLabel={intl.formatMessage({ id: "session.roundTwoStatus" })}
         />
@@ -126,6 +137,7 @@ function Session() {
             <CustomTabs
               tabs={tabItems}
               activeTab={activeTab}
+              resetMode
               setActiveTab={setActiveTab}
             />
           }
