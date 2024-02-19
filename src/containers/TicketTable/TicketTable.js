@@ -16,6 +16,7 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketColumn } from "./TicketTableConfig";
 import { validateSearchTextLength } from "../../Utils/validations";
+import { TICKETS_VIEW_DETAILS } from "../../routes/routeNames";
 import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
@@ -90,6 +91,12 @@ const TicketTable = ({
     setCurrentTicketData(data);
   };
 
+  const handleTicketIcon = (ticketRow) => {
+    const { id } = ticketRow;
+    // navigate(TICKETS_VIEW_DETAILS);
+    navigate(`reply/${id}`);
+  };
+
   const getRequestedQueryParams = ({
     currentFilterStatus,
     page,
@@ -149,6 +156,7 @@ const TicketTable = ({
     intl,
     getImage,
     handleClickAssign,
+    handleTicketIcon,
     navigate,
     renderColumn,
     queriesColumnProperties: {},
@@ -219,7 +227,7 @@ const TicketTable = ({
       return prev;
     });
 
-    const requestedParams = getRequestedQueryParams({});
+    const requestedParams = getRequestedQueryParams({ search: searchedValue });
 
     fetchData({
       queryParamsObject: requestedParams,
@@ -235,11 +243,14 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const handleAssignee = ({ assigneeName, ticketId }) => {
+  const handleAssignee = ({ assignedTo, ticketId }) => {
     let updatedData = data;
     updatedData.records = data?.records?.map((ticket) => {
       if (+ticket.id === +ticketId) {
-        ticket.assigned_to = assigneeName;
+        ticket.assigned_to = {
+          id: assignedTo?.id,
+          name: assignedTo?.name,
+        };
         return ticket;
       }
       return {
@@ -249,16 +260,6 @@ const TicketTable = ({
     setData(updatedData);
     setCurrentTicketData({});
   };
-
-  useEffect(() => {
-    return () => {
-      setSearchedValue("");
-      setSearchParams((prev) => {
-        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
-        return prev;
-      });
-    };
-  }, []);
 
   const filterOptions = [
     {
@@ -286,6 +287,7 @@ const TicketTable = ({
       <CommonModal isOpen={isModalOpen} width={450}>
         <AddTicketAssignee
           {...{
+            assigned_to: currentTicketData?.assigned_to,
             ticket_id: currentTicketData?.id,
             handleAssignee,
             setIsModalOpen,
