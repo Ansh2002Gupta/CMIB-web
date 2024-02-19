@@ -16,6 +16,7 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketColumn } from "./TicketTableConfig";
 import { validateSearchTextLength } from "../../Utils/validations";
+import { TICKETS_VIEW_DETAILS } from "../../routes/routeNames";
 import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
@@ -90,6 +91,12 @@ const TicketTable = ({
     setCurrentTicketData(data);
   };
 
+  const handleTicketIcon = () => {
+    console.log("clicked");
+
+    navigate(`/control/users`);
+  };
+
   const getRequestedQueryParams = ({
     currentFilterStatus,
     page,
@@ -149,6 +156,7 @@ const TicketTable = ({
     intl,
     getImage,
     handleClickAssign,
+    handleTicketIcon,
     navigate,
     renderColumn,
     queriesColumnProperties: {},

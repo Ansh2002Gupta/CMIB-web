@@ -71,6 +71,7 @@ import iconDownload from "./iconDownload.svg";
 import changeIcon from "./change icon.svg";
 import greenTick from "./green-tick.svg";
 import disabledArrow from "./disabled arrow.svg";
+import iconProfileAdd from "./iconProfileAdd.svg";
 
 const images = {
   activeSend,
@@ -79,7 +80,6 @@ const images = {
   arrowDownDarkGrey,
   arrowLeft,
   arrowRight,
-  arrowDownDarkGrey,
   arrowRightFilter,
   blackArrowDown,
   Building,
@@ -147,6 +147,7 @@ const images = {
   greenTick,
   disabledArrow,
   changeIcon,
+  iconProfileAdd,
 };
 
 export default images;

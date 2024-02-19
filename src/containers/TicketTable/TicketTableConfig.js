@@ -19,6 +19,7 @@ const getStatusStyles = (status) => {
 export const getTicketColumn = ({
   getImage,
   handleClickAssign,
+  handleTicketIcon,
   handleSorting,
   intl,
   renderColumn,
@@ -128,19 +129,20 @@ export const getTicketColumn = ({
         preview: false,
         src: getImage("messageText"),
         visible: true,
-        onClick: (data) => {
-          handleClickAssign(data);
-        },
+        onClick: handleTicketIcon,
       },
     }),
     renderColumn({
       dataIndex: "see",
       key: "see",
       renderImage: {
-        alt: "options",
+        alt: "addAssignee",
         preview: false,
-        src: getImage("more"),
+        src: getImage("iconProfileAdd"),
         visible: true,
+        onClick: (data) => {
+          handleClickAssign(data);
+        },
       },
     }),
   ];

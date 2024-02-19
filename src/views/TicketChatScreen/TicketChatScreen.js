@@ -29,7 +29,7 @@ const TicketChatScreen = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   //we will pass id from ticket listing api
-  const id = 91;
+  const id = "91";
   const {
     data: chatData,
     error,

@@ -72,7 +72,6 @@ const AddTicketAssignee = ({
             src={getImage("cross")}
             preview={false}
             onClick={() => {
-              // setSelectedValue({});
               setIsModalOpen(false);
             }}
             className={styles.crossIcon}
