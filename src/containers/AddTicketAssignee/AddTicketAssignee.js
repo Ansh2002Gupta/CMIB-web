@@ -18,6 +18,7 @@ import {
 } from "../../constant/apiEndpoints";
 import styles from "./AddTicketAssignee.module.scss";
 import { classes } from "./AddTicketAssignee.styles";
+import commonStyles from "../../common/commonStyles.module.scss";
 
 const AddTicketAssignee = ({
   assigned_to,
@@ -85,7 +86,7 @@ const AddTicketAssignee = ({
           className={
             data && data?.records
               ? styles.assigneeContainer
-              : styles.noDataAssignee
+              : commonStyles.noDataAssignee
           }
         >
           {isLoading || assigningTicket ? (
@@ -113,8 +114,8 @@ const AddTicketAssignee = ({
               );
             })
           ) : (
-            <div className={styles.noDataFoundContainer}>
-              <Typography className={styles.noDataFound}>
+            <div className={commonStyles.noDataFoundContainer}>
+              <Typography className={commonStyles.noDataFound}>
                 {error?.data?.message ||
                   intl.formatMessage({ id: "label.noDataFound" })}
               </Typography>
