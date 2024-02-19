@@ -179,6 +179,9 @@ CenterDetailsContent.defaultProps = {
   isEdit: true,
 };
 
-CenterDetailsContent.propTypes = { isEdit: PropTypes.bool };
+CenterDetailsContent.propTypes = {
+  centreDetailData: PropTypes.object,
+  isEdit: PropTypes.bool,
+};
 
 export default CenterDetailsContent;
