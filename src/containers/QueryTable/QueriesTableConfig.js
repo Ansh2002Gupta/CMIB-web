@@ -64,20 +64,19 @@ export const getQueryColumn = ({
       title: isTableInSelectAllMode
         ? ""
         : intl.formatMessage({ id: "label.studentOrCompany" }),
-      customColumnHeading: styles.extraWidth,
+      customColumnHeading: [styles.extraWidth, styles.columnHeading].join(" "),
       dataIndex: "name",
       key: "name",
       setSortBy: setSortBy,
       renderSorterColumn: true,
       isRequiredField: true,
-      columnSortByHandler: handleSorting,
-      customIconStyle: [
-        styles[sortByName],
+      sortIcon:
         sortByName === SORT_VALUES.ASCENDING ||
         sortByName === SORT_VALUES.DESCENDING
-          ? styles.active
-          : "",
-      ],
+          ? "arrowDownDarkGrey"
+          : "disabledArrow",
+      columnSortByHandler: handleSorting,
+      customIconStyle: [styles[sortByName]],
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
@@ -90,7 +89,7 @@ export const getQueryColumn = ({
         : intl.formatMessage({
             id: "label.nonRegisteredStudentOrCompany",
           }),
-      customColumnHeading: styles.extraWidth,
+      customColumnHeading: [styles.extraWidth, styles.columnHeading].join(" "),
       dataIndex: "type",
       key: "type",
       renderText: {
@@ -105,6 +104,7 @@ export const getQueryColumn = ({
         : intl.formatMessage({
             id: "label.queryStatus",
           }),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "status",
       key: "status",
       renderChip: {
@@ -117,9 +117,9 @@ export const getQueryColumn = ({
         : intl.formatMessage({
             id: "label.email",
           }),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "email",
       key: "email",
-      isRequiredField: true,
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
@@ -132,7 +132,7 @@ export const getQueryColumn = ({
         : intl.formatMessage({
             id: "label.mobileNumber",
           }),
-      isRequiredField: true,
+      customColumnHeading: styles.columnHeading,
       dataIndex: "mobile",
       key: "mobile",
       renderText: {
@@ -147,6 +147,7 @@ export const getQueryColumn = ({
         : intl.formatMessage({
             id: "label.queryType",
           }),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "query_type",
       key: "query_type",
       renderText: {
@@ -159,18 +160,18 @@ export const getQueryColumn = ({
       title: isTableInSelectAllMode
         ? ""
         : intl.formatMessage({ id: "label.createdOn" }),
+      customColumnHeading: styles.columnHeading,
       dataIndex: "created_at",
       key: "created_at",
       renderSorterColumn: true,
       setSortBy: setSortBy,
       columnSortByHandler: handleSorting,
-      customIconStyle: [
-        styles[sortByCreatedAt],
+      sortIcon:
         sortByCreatedAt === SORT_VALUES.ASCENDING ||
         sortByCreatedAt === SORT_VALUES.DESCENDING
-          ? styles.active
-          : "",
-      ],
+          ? "arrowDownDarkGrey"
+          : "disabledArrow",
+      customIconStyle: [styles[sortByCreatedAt]],
       renderText: {
         isTypeDate: true,
         visible: true,
