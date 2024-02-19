@@ -1,21 +1,23 @@
 import React, { useState, useContext } from "react";
-import { Avatar, Dropdown, Space } from "antd";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import CardDropdownOverlay from "./CardDropdownOverlay";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useResponsive from "../../core/hooks/useResponsive";
+import { splitName } from "../../constant/utils";
 import styles from "./profileDropdown.module.scss";
 
 const ProfileDropdown = () => {
-  const [userProfileDetails, userProfileDispatch] =
-    useContext(UserProfileContext);
+  const [userProfileDetails] = useContext(UserProfileContext);
   const userData = userProfileDetails?.userDetails;
 
   const userName = userData?.name || "";
   const userRole = userData?.user_type || "";
   const userEmail = userData?.email || "";
   const userProfilePic = userData?.profile_photo || "";
+  const { firstName, lastName } = splitName(userName);
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const responsive = useResponsive();
@@ -33,11 +35,11 @@ const ProfileDropdown = () => {
       open={dropdownVisible}
     >
       <Space className={styles.profileDropdown}>
-        <Avatar
-          src={userProfilePic}
-          icon={<UserOutlined />}
-          size="large"
-          className="profileAvatar"
+        <ProfileIcon
+          firstName={firstName}
+          lastName={lastName}
+          profileImage={userProfilePic}
+          size="xs"
         />
         {responsive.isMd && (
           <Space size={16}>
