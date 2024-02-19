@@ -370,3 +370,5 @@ export const CENTRE_TYPE_ENUM = {
   BIG: "big",
   SMALL: "small",
 };
+
+export const SESSION_KEY = "sessionKey";

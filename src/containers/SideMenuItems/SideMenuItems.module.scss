@@ -1,3 +1,7 @@
+.module {
+  width: 100%;
+}
+
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);
   color: var(--textPrimary, #fff);
@@ -29,7 +33,7 @@
   border: none;
   min-height: var(--height_44, 44px);
   border-radius: var(--radiusLg, 8px);
-  background-color: var(--sideMenuBg1, #141b43)  !important;
+  background-color: var(--sideMenuBg1, #141b43) !important;
   input {
     background-color: var(--sideMenuBg1, #141b43) !important;
     font-size: var(--fontSizeSmall, 14px) !important;
@@ -39,7 +43,8 @@
 
 .imageAndSearchBarContainer {
   margin-top: var(--marginLarge, 24px);
-  padding: var(--paddingNone, 0px) var(--paddingSmall, 16px) var(--paddingSmall, 16px) var(--paddingSmall, 16px);
+  padding: var(--paddingNone, 0px) var(--paddingSmall, 16px)
+    var(--paddingSmall, 16px) var(--paddingSmall, 16px);
   gap: var(--gapXSmall, 8px);
 }
 
