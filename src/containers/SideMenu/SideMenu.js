@@ -20,7 +20,7 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import { DASHBOARD } from "../../routes/routeNames";
 import { filterMenuData } from "../../constant/utils";
 import modules from "./sideMenuItems";
-import { MODULE_KEYS } from "../../constant/constant";
+import { MODULE_KEYS, SESSION_KEY } from "../../constant/constant";
 import { ReactComponent as Globe } from "../../themes/base/assets/icons/globe.svg";
 import { ReactComponent as CaIndiaLogo } from "../../themes/base/assets/icons/ca-india-logo.svg";
 import styles from "./sideMenu.module.scss";
@@ -59,7 +59,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }
 
   const handleOnSelectSession = (item) => {
-    setItem("sessionKey", item.key?.toString());
+    setItem(SESSION_KEY, item.key?.toString());
     globalSessionDispatch(setSelectedSession(item));
     globalSessionDispatch(setGlobalSessionDetails(+item.key));
     setOpenSessionSelector(false);

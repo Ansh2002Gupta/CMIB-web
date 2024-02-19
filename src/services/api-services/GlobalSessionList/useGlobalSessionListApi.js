@@ -1,9 +1,8 @@
 import { useContext } from "react";
 
 import Http from "../../http-service";
-import { getItem } from "../../encrypted-storage-service";
-import { STATUS_CODES } from "../../../constant/constant";
 import { GlobalSessionContext } from "../../../globalContext/globalSession/globalSessionProvider";
+import { getItem } from "../../encrypted-storage-service";
 import {
   setGlobalSessionDetails,
   setGlobalSessionList,
@@ -13,10 +12,11 @@ import {
   CORE_ROUTE,
   GLOBAL_SESSION_LIST,
 } from "../../../constant/apiEndpoints";
+import { SESSION_KEY, STATUS_CODES } from "../../../constant/constant";
 
 const useGlobalSessionListApi = () => {
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
-  const selectedSessionInSearchParams = getItem("sessionKey");
+  const savedSessionId = getItem(SESSION_KEY);
 
   const getGlobalSessionList = async (selectedModule) => {
     try {
@@ -31,11 +31,11 @@ const useGlobalSessionListApi = () => {
         res.status === STATUS_CODES.SUCCESS_STATUS
       ) {
         globalSessionDispatch(setGlobalSessionList(res?.data?.records));
-        if (selectedSessionInSearchParams) {
+        if (savedSessionId) {
           let session = res?.data?.records?.filter(
-            (ele) => ele?.id === +selectedSessionInSearchParams
+            (ele) => ele?.id === +savedSessionId
           )?.[0];
-          globalSessionDispatch(setGlobalSessionDetails(session?.id));
+          globalSessionDispatch(setGlobalSessionDetails(session?.id || ""));
           globalSessionDispatch(
             setSelectedSession({
               key: session?.id || "",
