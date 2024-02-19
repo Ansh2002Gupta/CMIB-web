@@ -20,7 +20,7 @@ import {
 import { classes } from "./SessionRound.styles";
 import styles from "./SessionRound.module.scss";
 
-const SessionRound = ({ roundList, switchLabel }) => {
+const SessionRound = ({ roundId, roundList, switchLabel }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -120,7 +120,7 @@ const SessionRound = ({ roundList, switchLabel }) => {
                 headingIntl={item.headingIntl}
                 imageUrl={item.imageUrl}
                 onClick={() => {
-                  navigate(item.onClickNaviagtion);
+                  navigate(`${item.onClickNaviagtion}?roundId=${roundId}`);
                 }}
               />
             );

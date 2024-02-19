@@ -80,6 +80,13 @@ function Session() {
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
         <SessionRound
+          roundId={
+            (
+              sessionData?.rounds?.find(
+                (obj) => obj.round_code === "round-1"
+              ) || {}
+            ).id
+          }
           roundList={ROUND_ONE_CARD_LIST}
           switchLabel={intl.formatMessage({ id: "session.roundOneStatus" })}
         />

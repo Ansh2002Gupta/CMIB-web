@@ -20,6 +20,7 @@ import {
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
+  ROUND_ID,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
@@ -41,6 +42,8 @@ const SetupCenter = () => {
   const [pageSize, setPageSize] = useState(
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
+
+  const roundID = searchParams.get(ROUND_ID);
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
@@ -54,7 +57,7 @@ const SetupCenter = () => {
       ADMIN_ROUTE +
       `/${selectedModule?.key}` +
       ROUNDS +
-      `/1` + // TODO: Need to udpate the id with round_id of session detail
+      `/${roundID}` +
       CENTRE_END_POINT,
     otherOptions: { skipApiCallOnMount: true },
   });
