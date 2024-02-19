@@ -47,6 +47,15 @@ const SessionRound = ({ roundId, roundList, switchLabel }) => {
     }
   }, [selectedModule?.key, roundId]);
 
+  useEffect(() => {
+    if (
+      searchParams?.get("mode") &&
+      searchParams?.get("mode") !== currentMode
+    ) {
+      setCurrentMode(searchParams?.get("mode"));
+    }
+  }, [searchParams?.get("mode")]);
+
   const handleOnClickEdit = () => {
     setSearchParams((prev) => {
       prev.set("mode", FORM_STATES.EDITABLE);
@@ -56,7 +65,7 @@ const SessionRound = ({ roundId, roundList, switchLabel }) => {
   };
 
   const handelOnClickCancel = (value) => {
-    if(value){
+    if (value) {
       fetchData({});
     }
     setSearchParams((prev) => {
@@ -76,7 +85,7 @@ const SessionRound = ({ roundId, roundList, switchLabel }) => {
 
           {apiStatus === API_STATUS.SUCCESS &&
             roundDetails &&
-            currentMode == FORM_STATES.EDITABLE && (
+            currentMode === FORM_STATES.EDITABLE && (
               <EditSessionRound
                 intl={intl}
                 onClickCancel={handelOnClickCancel}
@@ -88,7 +97,7 @@ const SessionRound = ({ roundId, roundList, switchLabel }) => {
 
           {apiStatus === API_STATUS.SUCCESS &&
             roundDetails &&
-            currentMode == FORM_STATES.VIEW_ONLY && (
+            currentMode === FORM_STATES.VIEW_ONLY && (
               <SessionRoundDetails
                 intl={intl}
                 onClickEdit={handleOnClickEdit}

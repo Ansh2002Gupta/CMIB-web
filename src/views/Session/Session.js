@@ -135,6 +135,7 @@ function Session() {
             <CustomTabs
               tabs={tabItems}
               activeTab={activeTab}
+              resetMode
               setActiveTab={setActiveTab}
             />
           }

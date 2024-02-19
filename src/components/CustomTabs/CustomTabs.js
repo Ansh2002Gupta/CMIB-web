@@ -3,9 +3,16 @@ import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Typography } from "antd";
 
+import { FORM_STATES } from "../../constant/constant";
 import styles from "./CustomTabs.module.scss";
 
-const CustomTabs = ({ activeTab, setActiveTab, tabs, tabsKeyText }) => {
+const CustomTabs = ({
+  activeTab,
+  resetMode,
+  setActiveTab,
+  tabs,
+  tabsKeyText,
+}) => {
   const [, setSearchParams] = useSearchParams();
 
   const tabClass = (tabKey) => {
@@ -17,6 +24,9 @@ const CustomTabs = ({ activeTab, setActiveTab, tabs, tabsKeyText }) => {
   const handleSelectTab = (tabName) => {
     setActiveTab(tabName);
     setSearchParams((params) => {
+      if (resetMode && tabName !== params.get("tab")) {
+        params.set("mode", FORM_STATES.VIEW_ONLY);
+      }
       params.set(tabsKeyText, tabName);
       return params;
     });
@@ -41,6 +51,7 @@ const CustomTabs = ({ activeTab, setActiveTab, tabs, tabsKeyText }) => {
 
 CustomTabs.defaultProps = {
   activeTab: "",
+  resetMode: false,
   setActiveTab: () => {},
   tabs: [],
   tabsKeyText: "tab",
@@ -48,6 +59,7 @@ CustomTabs.defaultProps = {
 
 CustomTabs.propTypes = {
   activeTab: PropTypes.string,
+  resetMode: PropTypes.bool,
   setActiveTab: PropTypes.func,
   tabs: PropTypes.array,
   tabsKeyText: PropTypes.string,

@@ -40,6 +40,7 @@ const SessionRoundDetailsTemplate = ({ roundDetails, intl, onClickEdit }) => {
                     <Image
                       src={getImage("editIcon")}
                       className={styles.editIcon}
+                      preview={false}
                     />
                   }
                   rightSection={
