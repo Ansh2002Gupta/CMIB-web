@@ -43,7 +43,7 @@ const ProfileDropdown = () => {
         />
         {responsive.isMd && (
           <Space size={16}>
-            <Space direction="vertical" size="1">
+            <Space direction="vertical" size="1" className={styles.profileBox}>
               <span className={styles.profileName}>{userName}</span>
               <span className={styles.profileRole}>{userRole}</span>
             </Space>
