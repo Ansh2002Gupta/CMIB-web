@@ -18,6 +18,7 @@ import {
 } from "../../constant/apiEndpoints";
 import styles from "./AddTicketAssignee.module.scss";
 import { classes } from "./AddTicketAssignee.styles";
+import commonStyles from "../../common/commonStyles.module.scss";
 
 const AddTicketAssignee = ({
   assigned_to,
@@ -81,13 +82,20 @@ const AddTicketAssignee = ({
       }
       middleSectionStyle={classes.middleContainer}
       middleSection={
-        <div className={styles.assigneeContainer}>
+        <div
+          className={
+            data && data?.records
+              ? styles.assigneeContainer
+              : commonStyles.noDataAssignee
+          }
+        >
           {isLoading || assigningTicket ? (
             <CustomLoader />
           ) : data && data?.records ? (
             data?.records?.map((item) => {
               return (
                 <TwoColumn
+                  className={styles.assigneeRow}
                   key={item.id}
                   onClick={() => {
                     setSelectedValue(item);
@@ -106,8 +114,8 @@ const AddTicketAssignee = ({
               );
             })
           ) : (
-            <div className={styles.noDataFoundContainer}>
-              <Typography className={styles.noDataFound}>
+            <div className={commonStyles.noDataFoundContainer}>
+              <Typography className={commonStyles.noDataFound}>
                 {error?.data?.message ||
                   intl.formatMessage({ id: "label.noDataFound" })}
               </Typography>
