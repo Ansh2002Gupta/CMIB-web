@@ -21,6 +21,7 @@ import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import SetupCenterDetails from "../views/SetupCenterDetails";
 import SetupMockInterview from "../views/SetupMockInterview";
+import TicketChatScreen from "../views/TicketChatScreen";
 import TicketListing from "../views/TicketListing/TicketListing";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -55,6 +56,7 @@ import {
   USERS,
   USER_DETAILS,
   TICKETS,
+  TICKETS_VIEW_DETAILS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 
@@ -64,16 +66,16 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 );
 
 const config = [
-  {
-    pagePath: OUT_SOURCED,
-    element: <DefaultRoute />,
-    views: [
-      {
-        viewPath: "",
-        element: <DefaultRoute />,
-      },
-    ],
-  },
+  // {
+  //   pagePath: OUT_SOURCED,
+  //   element: <DefaultRoute />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <DefaultRoute />,
+  //     },
+  //   ],
+  // },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,
@@ -228,6 +230,10 @@ const config = [
       {
         viewPath: TICKETS,
         element: <TicketListing />,
+      },
+      {
+        viewPath: TICKETS + TICKETS_VIEW_DETAILS,
+        element: <TicketChatScreen />,
       },
     ],
   },

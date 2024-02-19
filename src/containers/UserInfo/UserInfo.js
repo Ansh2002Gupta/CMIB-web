@@ -55,9 +55,9 @@ const UserInfo = ({
             return (
               <Chip
                 key={key}
-                bgColor={styles.chipBg}
+                bgStyles={styles.chipBg}
                 label={value.name}
-                textColor={styles.chipText}
+                textStyles={styles.chipText}
               />
             );
           })}

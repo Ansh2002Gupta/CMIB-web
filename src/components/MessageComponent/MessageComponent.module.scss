@@ -1,0 +1,96 @@
+.profileImageStyle {
+  width: var(--width_32);
+  height: var(--height_32);
+}
+
+.fromMessageText {
+  background-color: var(--ltGrey6, #e5e7f2);
+  padding: var(--paddingSmall);
+  border-radius: var(--radiusMLg) var(--radiusXss) var(--radiusMLg)
+    var(--radiusMLg);
+  border: var(--borderLight, #ccd0e5);
+  color: var(--textBold);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  max-width: 30vw;
+}
+
+.toMessageText {
+  background-color: var(--bodyBg);
+  padding: var(--paddingSmall);
+  border-radius: var(--radiusXss) var(--radiusMLg) var(--radiusMLg)
+    var(--radiusMLg);
+  border: var(--borderLight);
+  color: var(--textBold);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeSmall);
+  max-width: 30vw;
+}
+
+.leftMessageContaier {
+  justify-content: flex-start;
+  margin-top: var(--margin_12);
+}
+
+.rightMessageContaier {
+  justify-content: flex-end;
+  margin-top: var(--margin_12);
+}
+
+.rightTimeText {
+  color: var(--inputPlaceHolder);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeExtraSmall);
+  width: var(--fullWidth);
+  display: flex;
+  justify-content: flex-end;
+}
+.leftTimeText {
+  color: var(--inputPlaceHolder);
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeExtraSmall);
+  width: var(--fullWidth);
+}
+
+.leftImageContainerStyle {
+  border-width: 0px;
+  margin-top: var(--margin_20);
+  margin-right: var(--margin_12);
+}
+
+.rightImageContainerStyle {
+  border-width: 0px;
+  margin-top: var(--margin_20);
+  margin-left: var(--marginSmall);
+}
+
+// TODO: confirm the below styles
+.textAndImageContainer {
+  align-items: flex-end;
+  margin-top: 4px;
+}
+
+.chatImage {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 12px;
+  margin-top: var(--marginXXSmall);
+}
+
+.textAndImageContainerWithAvatar {
+  margin-top: px;
+}
+
+.noAvatarContainer {
+  justify-content: flex-end;
+  margin-right: 40px;
+}
+
+@media screen and (max-width: 767px) {
+  .fromMessageText {
+    max-width: var(--widthHalfViewPort);
+  }
+  .toMessageText {
+    max-width: var(--widthHalfViewPort);
+  }
+}
