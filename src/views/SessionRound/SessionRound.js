@@ -19,7 +19,7 @@ import { API_STATUS, FORM_STATES } from "../../constant/constant";
 import { classes } from "./SessionRound.styles";
 import styles from "./SessionRound.module.scss";
 
-const SessionRound = ({ roundId, roundList, switchLabel }) => {
+const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -102,6 +102,7 @@ const SessionRound = ({ roundId, roundList, switchLabel }) => {
                 intl={intl}
                 onClickEdit={handleOnClickEdit}
                 roundDetails={roundDetails}
+                roundNo={roundNo}
               />
             )}
         </>
@@ -113,7 +114,12 @@ const SessionRound = ({ roundId, roundList, switchLabel }) => {
               topSectionStyle={classes.bottomContainer}
               topSection={
                 <Typography className={styles.blackText}>
-                  {intl.formatMessage({ id: "session.setUpRoundOne" })}
+                  {intl.formatMessage({
+                    id:
+                      roundNo === 1
+                        ? "session.setUpRoundOne"
+                        : "session.setUpRoundTwo",
+                  })}
                 </Typography>
               }
               bottomSection={

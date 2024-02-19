@@ -58,7 +58,7 @@ function Session() {
   const responsive = useResponsive();
 
   useEffect(() => {
-    if(globalSessionDetails?.globalSessionId){
+    if (globalSessionDetails?.globalSessionId) {
       fetchData({});
     }
   }, [globalSessionDetails?.globalSessionId]);
@@ -86,6 +86,7 @@ function Session() {
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
         <SessionRound
+          roundNo={1}
           roundId={sessionData?.rounds?.[0]?.id}
           roundList={ROUND_ONE_CARD_LIST}
           switchLabel={intl.formatMessage({ id: "session.roundOneStatus" })}
@@ -97,6 +98,7 @@ function Session() {
       title: intl.formatMessage({ id: "session.roundTwo" }),
       children: (
         <SessionRound
+          roundNo={2}
           roundList={ROUND_TWO_CARD_LIST}
           switchLabel={intl.formatMessage({ id: "session.roundTwoStatus" })}
         />

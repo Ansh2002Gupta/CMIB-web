@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Image, Typography } from "antd";
 import { capitalize } from "lodash";
 
@@ -11,7 +11,12 @@ import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus 
 import { classes } from "./SessionRoundDetails.styles";
 import styles from "./SessionRoundDetails.module.scss";
 
-const SessionRoundDetailsTemplate = ({ roundDetails, intl, onClickEdit }) => {
+const SessionRoundDetailsTemplate = ({
+  roundDetails,
+  roundNo,
+  intl,
+  onClickEdit,
+}) => {
   const { getImage } = useContext(ThemeContext);
   const responsive = useResponsive();
   let centreList = roundDetails?.centres;
@@ -25,7 +30,12 @@ const SessionRoundDetailsTemplate = ({ roundDetails, intl, onClickEdit }) => {
           className={styles.headerContainer}
           leftSection={
             <Typography className={styles.blackText}>
-              {intl.formatMessage({ id: "session.roundOneDetails" })}
+              {intl.formatMessage({
+                id:
+                  roundNo == 1
+                    ? "session.roundOneDetails"
+                    : "session.roundTwoDetails",
+              })}
             </Typography>
           }
           rightSection={
@@ -33,7 +43,7 @@ const SessionRoundDetailsTemplate = ({ roundDetails, intl, onClickEdit }) => {
               {roundDetails && (
                 <TwoColumn
                   onClick={() => {
-                    onClickEdit(roundDetails)
+                    onClickEdit(roundDetails);
                   }}
                   className={styles.editContainer}
                   leftSection={
@@ -70,7 +80,10 @@ const SessionRoundDetailsTemplate = ({ roundDetails, intl, onClickEdit }) => {
             bottomSection={
               <CustomButton
                 btnText={intl.formatMessage({
-                  id: "session.addRoundOneDetails",
+                  id:
+                    roundNo === 1
+                      ? "session.addRoundOneDetails"
+                      : "session.addRoundTwoDetails",
                 })}
                 customStyle={!responsive.isMd ? styles.buttonStyles : ""}
                 IconElement={responsive.isMd ? AddIcon : null}
@@ -87,7 +100,10 @@ const SessionRoundDetailsTemplate = ({ roundDetails, intl, onClickEdit }) => {
                 topSection={
                   <Typography className={styles.grayText}>
                     {intl.formatMessage({
-                      id: `session.roundOneStatus`,
+                      id:
+                        roundNo === 1
+                          ? `session.roundOneStatus`
+                          : "session.roundTwoStatus",
                     })}
                     <span className={styles.redText}> *</span>
                   </Typography>
