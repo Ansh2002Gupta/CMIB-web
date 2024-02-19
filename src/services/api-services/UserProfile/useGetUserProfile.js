@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 
 import Http from "../../http-service";
 import useHeader from "../../../core/hooks/useHeader";
+import useGlobalSessionListApi from "../GlobalSessionList/useGlobalSessionListApi";
 import { filterMenuData } from "../../../constant/utils";
 import {
   setErrorGetingUserDetails,
@@ -22,6 +23,7 @@ const useGetUserDetails = () => {
   const { onLogout } = useHeader();
   const [, userProfileDispatch] = useContext(UserProfileContext);
   const pathSegments = location.pathname.split("/");
+  const { getGlobalSessionList } = useGlobalSessionListApi();
 
   const setFirstActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
@@ -33,6 +35,7 @@ const useGetUserDetails = () => {
     const selectedModule = accessibleModules.filter((item) => {
       return item.key === pathSegments[1];
     });
+    getGlobalSessionList(selectedModule?.[0]?.key);
     if (selectedModule?.length) {
       userProfileDispatch(setSelectedModule(selectedModule[0]));
       return;

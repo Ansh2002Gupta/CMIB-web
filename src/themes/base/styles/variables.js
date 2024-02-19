@@ -19,10 +19,16 @@ const variables = {
   greyBlue: colorPallets.greyBlue,
   blackBg: colorPallets.black1,
   lightGreenBg: colorPallets.lightGreen,
-  lightBlueBg2: colorPallets.skyBlue,
+  lightBlueBg2: colorPallets.snow,
   lightRedBg: colorPallets.lightOrange,
+  orangeBg: colorPallets.orange1,
+  blueBg2: colorPallets.blue4,
+  greenBg: colorPallets.green3,
+  greyBg: colorPallets.ltGrey1,
   yellowBg: colorPallets.yellow1,
   chipBg: colorPallets.lightBlue2,
+  darkBlueBg: colorPallets.darkBlue3,
+  sideMenuBg1: colorPallets.blue8,
   lightGrey3Bg: colorPallets.ltGrey3,
   ltGrey4: colorPallets.ltGrey4,
 
@@ -46,10 +52,14 @@ const variables = {
   error: colorPallets.red1,
   requiredStarColor: colorPallets.red1,
   sideMenuMaskBg: colorPallets.maskBlack,
-  greenText: colorPallets.darkGreen,
-  blueText: colorPallets.darkBlue2,
-  redText: colorPallets.darkOrange,
+  orangeText: colorPallets.orange2,
+  blueText: colorPallets.blue5,
+  greenText: colorPallets.green4,
+  redText: colorPallets.red1,
+  lightGreyText3: colorPallets.ltGrey4,
   darkBlue3: colorPallets.darkBlue3,
+  ltGrey5: colorPallets.ltGrey5,
+  whiteText: colorPallets.white,
 
   // Border-Radius
   radiusNone: "0px",
@@ -103,6 +113,7 @@ const variables = {
   width_30: "30px",
   width_32: "32px",
   width_40: "40px",
+  width_42: "42px",
   width_48: "48px",
   width_50: "50px",
   width_70: "70px",
@@ -122,6 +133,8 @@ const variables = {
   width_176: "176px",
   width_180: "180px",
   width_200: "200px",
+  width_250: "250px",
+  width_230: "230px",
   width_300: "300px",
   width_347: "347px",
   width_350: "350px",
@@ -129,6 +142,7 @@ const variables = {
   width_400: "400px",
   width_500: "500px",
   widthViewPort_15: "15vw",
+  widthViewPort_30: "30vw",
   widthViewPort_35: "35vw",
   widthHalfViewPort: "50vw",
   widthViewPort_65: "65vw",
@@ -136,6 +150,7 @@ const variables = {
   width_30Per: "30%",
   width_45Per: "45%",
   halfWidth: "50%",
+  width90Per: "90%",
   fullWidth: "100%",
 
   // Heights
@@ -145,9 +160,11 @@ const variables = {
   height_24: "24px",
   height_30: "30px",
   height_32: "32px",
+  height_36: "36px",
   height_40: "40px",
   height_44: "44px",
   minBtnHeight: "45px",
+  height_46: "46px",
   height_48: "48px",
   height_50: "50px",
   height_55: "55px",
@@ -159,17 +176,20 @@ const variables = {
   height_104: "104px",
   height_120: "120px",
   height_150: "150px",
+  height_200: "200px",
   height_184: "184px",
   height_240: "240px",
   height_250: "250px",
   height_300: "300px",
   height_400: "400px",
+  height_600: "600px",
   height_25vh: "25vh",
   height_30vh: "30vh",
   height_35vh: "35vh",
   height_40vh: "40vh",
   height_45vh: "45vh",
   height_50vh: "50vh",
+  height_60vh: "60vh",
   height_70vh: "70vh",
   height_85vh: "85vh",
   heightFullViewPort: "100vh",
@@ -181,9 +201,11 @@ const variables = {
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
+  borderLight2: `1px solid ${colorPallets.ltGrey2}`,
   borderBlue: `2px solid ${colorPallets.darkBlue}`,
   borderBlue1: `1px solid ${colorPallets.darkBlue}`,
   borderGreen: `1px solid ${colorPallets.green1}`,
+  borderError: `1px solid ${colorPallets.red1}`,
   borderColor: colorPallets.ltGrey1,
 
   // Box shadow
@@ -240,6 +262,7 @@ const variables = {
 
   // margin
   marginSmall: "8px",
+  margin_12: "12px",
   marginXSmall: "6px",
   marginXXSmall: "4px",
   margin_12: "12px",
@@ -253,5 +276,4 @@ const variables = {
 
   profileBoxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
 };
-
 export default variables;

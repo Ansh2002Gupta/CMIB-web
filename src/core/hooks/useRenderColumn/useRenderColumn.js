@@ -1,32 +1,50 @@
+import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch } from "antd";
+import { Checkbox, Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
+import AutoPlaceComplete from "../../../components/AutoPlaceComplete";
+import Chip from "../../../components/Chip/Chip";
+import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
-import { formatDate } from "../../../constant/utils";
+import CustomInput from "../../../components/CustomInput";
+import { ThemeContext } from "core/providers/theme";
+import { formatDate, toggleSorting } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 
 const useRenderColumn = () => {
   const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
 
   const renderColumn = ({
     customColumnHeading,
+    customStyles,
+    customIconStyle = {},
+    columnSortByHandler,
     dataIndex,
     defaultSortOrder,
     isRequiredField,
     key,
+    renderAutoPlaceComplete = {},
     renderDateTime = {},
     render,
+    renderChip = {},
     renderImage = {},
+    renderInput = {},
     renderMenu = {},
+    renderSorterColumn,
     renderText = {},
+    renderTextWithCheckBoxes = {},
     renderSwitch = {},
     renderTwoImage = {},
+    renderTitleWithCheckbox = {},
+    setSortBy,
     sortDirection,
     sorter,
+    sortIcon = "arrowDownDarkGrey",
     sortKey,
     sortTypeDate,
     sortTypeText,
@@ -39,6 +57,7 @@ const useRenderColumn = () => {
       customTimeStyle,
       defaultValue,
       disabled = false,
+      errorMessage,
       isEditable = true,
       isRequired = false,
       onChange = () => {},
@@ -48,11 +67,25 @@ const useRenderColumn = () => {
 
     const {
       alt = "",
+      alternateSrc = "",
+      alternateOnClick = () => {},
       customImageStyle = "",
       src = "",
       onClick = () => {},
       preview,
     } = renderImage;
+
+    const {
+      customInputContainerStyles,
+      customInputNumberStyles,
+      customInputStyles,
+      customSelectInputStyles,
+      inputDisabled,
+      inputErrorMessage,
+      inputPlaceholder = "",
+      inputType,
+      onInputChange,
+    } = renderInput;
 
     const {
       items = [],
@@ -63,13 +96,21 @@ const useRenderColumn = () => {
     } = renderMenu;
 
     const {
-      dateFormat = "DD/MM/YYYY",
+      onClickCheckbox = () => {},
+      customCheckBoxContainerStyles = "",
+      checkBoxList = [],
+      isCheckBoxTextBold,
+    } = renderTextWithCheckBoxes;
+
+    const {
       includeDotAfterText,
       isTextBold,
       isTypeDate,
       textStyles,
       isCapitalize,
+      isRequiredTooltip,
       mobile,
+      isIntl,
     } = renderText;
 
     const {
@@ -95,6 +136,27 @@ const useRenderColumn = () => {
       rightPreview,
     } = renderTwoImage;
 
+    const {
+      titleWithCheckBoxes,
+      isIntermidiate,
+      isChecked,
+      onToggleCheckBox,
+      customCheckBoxStyles = "",
+    } = renderTitleWithCheckbox;
+
+    const getStatusStyles = (status) => {
+      if (
+        status?.toLowerCase() === "closed" ||
+        status?.toLowerCase() === "answered"
+      ) {
+        return ["statusContainer_success", "statusText_success"];
+      }
+      if (status?.toLowerCase() === "pending") {
+        return ["statusContainer_failed", "statusText_failed"];
+      }
+      return ["statusContainer_progress", "statusText_progress"];
+    };
+
     const textRenderFormat = ({ text }) => {
       if (isTypeDate) {
         return formatDate({ date: text });
@@ -102,12 +164,53 @@ const useRenderColumn = () => {
       if (includeDotAfterText) {
         return `${text} .`;
       }
+      if (isIntl) {
+        return intl.formatMessage({ id: `label.${text}` });
+      }
       return text;
+    };
+
+    const getRenderText = (text) => {
+      return (
+        <p
+          className={[
+            textStyles,
+            isTextBold ? styles.boldText : "",
+            styles.textEllipsis,
+            isCapitalize ? styles.capitalize : "",
+          ].join(" ")}
+        >
+          {textRenderFormat({ text: text || "-" })}
+        </p>
+      );
     };
 
     title &&
       (columnObject.title = () => {
-        return (
+        return renderSorterColumn ? (
+          <Typography
+            className={[styles.columnHeading].join(" ")}
+            onClick={() => {
+              setSortBy((prev) => {
+                const newSortOrder = toggleSorting(prev);
+                columnSortByHandler({
+                  sortDirection: newSortOrder,
+                  sortField: columnObject.key,
+                });
+                return newSortOrder;
+              });
+            }}
+          >
+            <div className={styles.sortingArrowContainer}>
+              {title}
+              <Image
+                src={getImage(sortIcon)}
+                preview={false}
+                className={[styles.centerContent, ...customIconStyle].join(" ")}
+              />
+            </div>
+          </Typography>
+        ) : (
           <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
             {title}
             {isRequiredField && (
@@ -116,6 +219,24 @@ const useRenderColumn = () => {
               </>
             )}
           </p>
+        );
+      });
+
+    renderTitleWithCheckbox?.visible &&
+      (columnObject.title = () => {
+        return (
+          <Checkbox
+            indeterminate={isIntermidiate}
+            checked={isChecked}
+            className={[
+              styles.chipContainer,
+              customColumnHeading,
+              customCheckBoxStyles,
+            ].join(" ")}
+            onChange={onToggleCheckBox}
+          >
+            {titleWithCheckBoxes}
+          </Checkbox>
         );
       });
 
@@ -131,7 +252,7 @@ const useRenderColumn = () => {
             dayjs(new Date(b[sortKey])).unix();
         }
         if (sortTypeText) {
-          return (a, b) => a[sortKey].localeCompare(b[sortKey]);
+          return (a, b) => a[sortKey]?.localeCompare(b[sortKey]);
         }
         return sorter;
       })());
@@ -140,13 +261,16 @@ const useRenderColumn = () => {
 
     sortDirection && (columnObject.sortDirection = sortDirection);
 
-    render && (columnObject.render = render);
+    renderAutoPlaceComplete.visible &&
+      (columnObject.render = () => {
+        return <AutoPlaceComplete />;
+      });
 
     renderText?.visible &&
       (columnObject.render = (text, rowData) => {
         return {
           props: {
-            className: styles.tableCellStyles,
+            className: customStyles ? customStyles : styles.tableCellStyles,
           },
           children: mobile ? (
             <p
@@ -163,19 +287,29 @@ const useRenderColumn = () => {
                   : "+91"
               }-${text}`}
             </p>
+          ) : isRequiredTooltip ? (
+            <Tooltip title={text}>{getRenderText(text)}</Tooltip>
           ) : (
-            <p
-              className={[
-                textStyles,
-                isTextBold ? styles.boldText : "",
-                styles.textEllipsis,
-                isCapitalize ? styles.capitalize : "",
-              ].join(" ")}
-            >
-              {textRenderFormat({ text })}
-            </p>
+            getRenderText(text)
           ),
         };
+      });
+
+    renderChip?.visible &&
+      (columnObject.render = (_, rowData) => {
+        const { status } = rowData;
+        const styleClassForContainer = getStatusStyles(status)[0];
+        const styleClassForText = getStatusStyles(status)[1];
+        return (
+          <Chip
+            label={status}
+            bgColor={[
+              styles.chipContainer,
+              styles[styleClassForContainer],
+            ].join(" ")}
+            textColor={styles[styleClassForText]}
+          />
+        );
       });
 
     renderSwitch.visible &&
@@ -203,15 +337,22 @@ const useRenderColumn = () => {
 
     renderImage.visible &&
       (columnObject.render = (_, rowData) => {
-        return (
-          <Image
-            alt={alt}
-            src={src}
-            preview={preview}
-            className={`${customImageStyle} ${styles.editIcon}`}
-            onClick={onClick ? () => onClick(rowData) : () => {}}
-          />
-        );
+        return {
+          props: {
+            className: customStyles || "",
+          },
+          children: (
+            <Image
+              alt={alt}
+              src={rowData?.isAddRow ? alternateSrc : src}
+              preview={preview}
+              className={`${customImageStyle} ${styles.editIcon}`}
+              onClick={() =>
+                rowData?.isAddRow ? alternateOnClick(rowData) : onClick(rowData)
+              }
+            />
+          ),
+        };
       });
 
     renderTwoImage.visible &&
@@ -246,7 +387,23 @@ const useRenderColumn = () => {
         };
       });
 
-    render && (columnObject.render = render); // correct this
+    render && (columnObject.render = render);
+
+    renderTextWithCheckBoxes.visible &&
+      (columnObject.render = (textToRender, rowData) => {
+        const { id } = rowData;
+        return (
+          <CustomCheckBox
+            checked={checkBoxList?.includes(id)}
+            onChange={() => onClickCheckbox(rowData)}
+            customStyles={[customCheckBoxContainerStyles].join("")}
+          >
+            <p className={isCheckBoxTextBold ? styles.boldText : ""}>
+              {textToRender || "-"}
+            </p>
+          </CustomCheckBox>
+        );
+      });
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {
@@ -276,22 +433,55 @@ const useRenderColumn = () => {
 
     renderDateTime.visible &&
       (columnObject.render = (value, record) => {
+        return {
+          props: {
+            className: customStyles,
+          },
+          children: (
+            <CustomDateTimePicker
+              {...{
+                customContainerStyles,
+                customTimeStyle,
+                defaultValue,
+                isEditable,
+                isRequired,
+                type,
+                placeholder,
+                value,
+              }}
+              errorTimeInput={
+                record?.isAddRow && errorMessage && styles.errorTimeInput
+              }
+              onChange={(val) => {
+                onChange(val, record);
+              }}
+              disabled={disabled || !record?.isAddRow}
+              errorMessage={record?.isAddRow && errorMessage}
+            />
+          ),
+        };
+      });
+
+    renderInput.visible &&
+      (columnObject.render = (value, record) => {
         return (
-          <CustomDateTimePicker
+          <CustomInput
             {...{
-              customContainerStyles,
-              customTimeStyle,
-              defaultValue,
-              disabled,
-              isEditable,
-              isRequired,
-              type,
-              placeholder,
               value,
+              customInputNumberStyles,
+              customInputStyles,
+              customSelectInputStyles,
             }}
-            onChange={(val) => {
-              onChange(val, record);
-            }}
+            disabled={inputDisabled || !record?.isAddRow}
+            placeholder={inputPlaceholder}
+            type={inputType}
+            customContainerStyles={customInputContainerStyles}
+            onChange={onInputChange}
+            errorMessage={record.isAddRow && inputErrorMessage}
+            isError={record.isAddRow && inputErrorMessage ? true : false}
+            errorInput={
+              record.isAddRow && inputErrorMessage && styles.errorTimeInput
+            }
           />
         );
       });

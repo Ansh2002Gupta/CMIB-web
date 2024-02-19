@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const DATA_SOURCE = [
   {
     id: 1,
@@ -212,8 +214,7 @@ export const COMPANY_DATA_SOURCE = [
 export const ACCESS_FILTER_DATA = [
   {
     id: 1,
-    name: "Access",
-    isSelected: false,
+    name: "Access 1",
     options: [
       { optionId: 1, str: "All" },
       { optionId: 2, str: "Placements" },
@@ -346,23 +347,74 @@ export const CONFIGURE_CENTRES = [
   },
 ];
 
-export const SESSION_DETAILS = {
-  name: "Jadyn Bartoletti",
-  session_start_date: "2023-12-19T05:11:46.000000Z",
-  session_end_date: "2023-12-19T05:11:46.000000Z",
-  nature_of_service: "nature",
-  perform_invoice_no_format: "AugSept-*****-2023",
-  examination_session_period: ["May 2023", "November 2023"],
-  gmcs_completion_date: "2023-12-19T05:11:46.000000Z",
-  membership_completion_date: "2023-12-19T05:11:46.000000Z",
-  article_completion_from_date: "2023-12-19T05:11:46.000000Z",
-  bank_ac_no: "88896186",
-  hsn_sac_code: "1791686",
-  bank_ac_ifsc: "SBIN0005836",
-  status: true,
-  created_at: "2023-12-19T05:11:46.000000Z",
-  updated_at: "2023-12-19T05:11:46.000000Z",
-};
+export const ORIENTATION_CENTERS = [
+  {
+    sNo: "1",
+    centreName: "Ghaziabad-I",
+    totalStudentsBooked: "1001",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "2",
+    centreName: "Ghaziabad-II",
+    totalStudentsBooked: "1002",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "3",
+    centreName: "Meerut-I",
+    totalStudentsBooked: "1003",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "4",
+    centreName: "Meerut-II",
+    totalStudentsBooked: "1004",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "5",
+    centreName: "Delhi-I",
+    totalStudentsBooked: "1005",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "6",
+    centreName: "Delhi-II",
+    totalStudentsBooked: "1006",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "7",
+    centreName: "Ahmedabad-I",
+    totalStudentsBooked: "1007",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "8",
+    centreName: "Ahmedabad-II",
+    totalStudentsBooked: "1008",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "9",
+    centreName: "Akola-I",
+    totalStudentsBooked: "1009",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "10",
+    centreName: "Akola-II",
+    totalStudentsBooked: "1010",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "11",
+    centreName: "Akola-III",
+    totalStudentsBooked: "1011",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+];
 
 export const TICKET_DATA_LIST = [
   {
@@ -506,6 +558,23 @@ export const TICKET_DATA_LIST = [
     created_at: "10/10/2020",
   },
 ];
+export const SESSION_DETAILS = {
+  name: "Jadyn Bartoletti",
+  session_start_date: "2023-12-19T05:11:46.000000Z",
+  session_end_date: "2023-12-19T05:11:46.000000Z",
+  nature_of_service: "nature",
+  perform_invoice_no_format: "AugSept-*****-2023",
+  examination_session_period: ["May 2023", "November 2023"],
+  gmcs_completion_date: "2023-12-19T05:11:46.000000Z",
+  membership_completion_date: "2023-12-19T05:11:46.000000Z",
+  article_completion_from_date: "2023-12-19T05:11:46.000000Z",
+  bank_ac_no: "88896186",
+  hsn_sac_code: "1791686",
+  bank_ac_ifsc: "SBIN0005836",
+  status: true,
+  created_at: "2023-12-19T05:11:46.000000Z",
+  updated_at: "2023-12-19T05:11:46.000000Z",
+};
 
 export const INITIAL_CENTRE_DETAILS = {
   centre_name: "",
@@ -940,354 +1009,37 @@ export const PERMISION_AND_ROLE = {
   ],
 };
 
-export const ticket_replies = {
-  records: [
-    {
-      id: 155,
-      reply_text:
-        " sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/aad4fa38-8707-42a4-bfcb-88169a30ab97.png",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 156,
-      reply_text:
-        "of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web ",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 1,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/4ebb29a2-c234-45ec-b0b4-eaa6aa276938.png",
-      },
-      to: {
-        id: 2,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/aad4fa38-8707-42a4-bfcb-88169a30ab97.png",
-      },
-      created_at: "2023-12-19T12:11:46.000000Z",
-    },
-    {
-      id: 155,
-      reply_text: "e of text. All the Lorem Ipsum gene",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/aad4fa38-8707-42a4-bfcb-88169a30ab97.png",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T10:11:46.000000Z",
-    },
-    {
-      id: 156,
-      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 1,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/4ebb29a2-c234-45ec-b0b4-eaa6aa276938.png",
-      },
-      to: {
-        id: 2,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/4ebb29a2-c234-45ec-b0b4-eaa6aa276938.png",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 155,
-      reply_text: " obscure Latin words, conse",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/aad4fa38-8707-42a4-bfcb-88169a30ab97.png",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 155,
-      reply_text: "dfvgdsfsdf",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/aad4fa38-8707-42a4-bfcb-88169a30ab97.png",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 156,
-      reply_text:
-        "e egestas dolor mi quis magna. Nam mollis justo sed blandit luctus. Aenean imperdiet orci id element",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 1,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 2,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 156,
-      reply_text: " Maecenas hendrerit, er",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 1,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 2,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 155,
-      reply_text: "e vel efficitur leo. Quisque a suscip",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 155,
-      reply_text: "pien, non pulvinar ex nunc nec dui. Pe",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 156,
-      reply_text: "ok",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 1,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 2,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 155,
-      reply_text: "yes",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 155,
-      reply_text:
-        "hicula malesuada. Maecenas hendrerit, eros ut elementum lobortis, lectus nibh luctus turpis, at ultricies turpis mauris vel mauris. Praesent ex nulla, interdum sit amet sagittis in, tincidunt ut leo. Nunc congue tincidunt ligula quis tincidunt. Vestibulum eu dui at velit faucibus vestibulum non ac orci. Nam id ultricies metus. Vivamus elit arcu, facilisis sit amet dolor sit amet, hendrerit dignissim ante. Nullam elementum est ex, quis ultricies diam eleifend sed.",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 156,
-      reply_text:
-        "ttis nisl, a blandit dui. Aliquam erat volutpat. Suspendisse eu nibh metus.",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 1,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 2,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 156,
-      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 1,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 2,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 156,
-      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 1,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 2,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 155,
-      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 155,
-      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 2,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 1,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-    {
-      id: 156,
-      reply_text: "xxxxxxxxxxxxxxxxxxxxxx",
-      file_path: "xxxxxxxxxxxxxxxx",
-      from: {
-        id: 1,
-        name: "xxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      to: {
-        id: 2,
-        name: "xxxxxxxxxxxxxxx",
-        profile_photo:
-          "https://cmib-portal-icai.s3.ap-south-1.amazonaws.com/cmib-job-portal/admin/b8882b3c-cd5f-414d-834b-5c0b867d70fb.",
-      },
-      created_at: "2023-12-19T05:11:46.000000Z",
-    },
-  ],
-};
+export const CONFIGURE_INTERVIEW_DATES = [
+  {
+    id: 1,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+  {
+    id: 2,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+  {
+    id: 3,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+  {
+    id: 4,
+    scheduleDate: "2023-12-19T05:11:46.000000Z",
+    startTime: "2023-12-19T05:11:46.000000Z",
+    endTime: "2023-12-19T05:11:46.000000Z",
+    facilitiesNumber: 1,
+    slotDurationInMinutes: "59",
+  },
+];

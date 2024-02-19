@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography, Image, Switch } from "antd";
 
@@ -21,7 +22,7 @@ import { USER_PROFILE_QUERY_PARAMS } from "../../constant/constant";
 import { classes } from "./ViewProfileDetails.styles";
 import styles from "./ViewProfileDetails.module.scss";
 
-const ViewProfileDetails = ({ showNotification }) => {
+const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
   const { getImage } = useContext(ThemeContext);
@@ -106,11 +107,13 @@ const ViewProfileDetails = ({ showNotification }) => {
             topSectionStyle={classes.crossStyle}
             topSection={
               <div className={styles.crossAndMenuContainer}>
-                <CustomHeaderMenu
-                  menuIcon={getImage("more")}
-                  menuPreview={false}
-                  menuItems={menuItems}
-                />
+                {includeDeleteButton && (
+                  <CustomHeaderMenu
+                    menuIcon={getImage("more")}
+                    menuPreview={false}
+                    menuItems={menuItems}
+                  />
+                )}
                 <Image
                   preview={false}
                   src={getImage("cross")}
@@ -150,7 +153,6 @@ const ViewProfileDetails = ({ showNotification }) => {
                       styles.rightAlign,
                       styles.greyText,
                     ].join(" ")}
-                    title={phone}
                   >
                     {phoneWithPrefix}
                   </Typography>
@@ -174,7 +176,11 @@ const ViewProfileDetails = ({ showNotification }) => {
                     {intl.formatMessage({ id: "label.dateCreatedOn" })}:
                   </Typography>
                   <Typography
-                    className={[styles.darkText, styles.fontBold].join(" ")}
+                    className={[
+                      styles.darkText,
+                      styles.fontBold,
+                      styles.date,
+                    ].join(" ")}
                   >
                     {createdDate}
                   </Typography>
@@ -192,7 +198,11 @@ const ViewProfileDetails = ({ showNotification }) => {
                 />
                 <Typography className={styles.lightText}>
                   {intl.formatMessage({
-                    id: "account.enableTwoFactorAuthentication",
+                    id: `account.${
+                      is2FactorAuthenicationOn
+                        ? "enabledTwoFactorAuthentication"
+                        : "disabledTwoFactorAuthentication"
+                    }`,
                   })}
                 </Typography>
               </div>
@@ -204,6 +214,11 @@ const ViewProfileDetails = ({ showNotification }) => {
       />
     </>
   );
+};
+
+ViewProfileDetails.propTypes = {
+  includeDeleteButton: PropTypes.bool,
+  showNotification: PropTypes.func,
 };
 
 export default ViewProfileDetails;

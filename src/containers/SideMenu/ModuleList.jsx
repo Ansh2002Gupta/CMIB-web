@@ -1,4 +1,5 @@
 import React from 'react';
+import { capitalize } from 'lodash';
 
 import styles from './sideMenu.module.scss';
 
@@ -11,7 +12,7 @@ const ModuleList = ({ modules, onSelectItem }) => {
                     key={module.key}
                     onClick={() => !module?.subMenu?.length && onSelectItem(module)}
                 >
-                    {module.label}
+                    {capitalize(module.label)}
                 </li>
                 <ul className={styles.moduleSubMenuList} key={'subMenu'}>
                     {module?.subMenu?.map(menu =>
