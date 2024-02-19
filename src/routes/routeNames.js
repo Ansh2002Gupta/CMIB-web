@@ -30,5 +30,6 @@ export const SETUP_CENTERS_DETAILS = "details/:centreId";
 export const SETUP_MOCK_INTERVIEW = "setup-mock-interview/";
 export const SUBSCRIPTIONS = "subscriptions/";
 export const TICKETS = "tickets/";
+export const TICKETS_VIEW_DETAILS = "tickets-view-edit/";
 export const USER_DETAILS = "details/:userId";
 export const USERS = "users/";
