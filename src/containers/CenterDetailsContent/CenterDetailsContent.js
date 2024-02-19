@@ -158,6 +158,7 @@ const CenterDetailsContent = ({ centreDetailData, isEdit }) => {
                       !formData?.centreStartTime ||
                       !formData?.centreEndTime
                     }
+                    customStyle={styles.customStyle}
                     textStyle={styles.saveButtonTextStyles}
                     btnText={intl.formatMessage({
                       id: "session.saveChanges",

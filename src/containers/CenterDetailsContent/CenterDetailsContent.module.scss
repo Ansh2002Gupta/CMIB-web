@@ -79,6 +79,7 @@
 }
 
 .buttonStyles {
+  min-height: var(--height_44);
   background-color: var(--bodyBg);
   &:hover {
     background-color: var(--bodyBg) !important;
@@ -87,6 +88,7 @@
 }
 
 .mobileButtonStyles {
+  min-height: var(--height_44);
   background-color: var(--bodyBg);
   padding: var(--paddingSmall);
   &:hover {
@@ -111,6 +113,10 @@
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
+}
+
+.customStyle {
+  min-height: var(--height_44)
 }
 
 @media (min-width: 400px) and (max-width: 600px) {
