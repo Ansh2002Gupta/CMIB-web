@@ -84,6 +84,10 @@
   align-items: center;
 }
 
+.rowBG{
+  background-color: var(--lightBlueBg) !important;
+}
+
 @media (max-width: 1023px) {
   .nextAndPrevArrowContainer {
     padding: var(--paddingXXSmall) var(--paddingExtraSmall);

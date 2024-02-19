@@ -1,0 +1,35 @@
+.mainContainer {
+  background-color: var(--bodyBg);
+  padding: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: var(--borderLight);
+  border-left: 0px;
+  border-right: 0px;
+}
+
+.box {
+  gap: var(--gapSmall);
+  align-items: center;
+}
+
+.btn {
+  min-height: var(--height_44);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+}
+
+.adminId {
+  font-size: var(--fontSizeHeading);
+  font-weight: var(--fontWeightBold);
+}
+
+.iconMoreBtn{
+  background-color: var(--bodyBg);
+  border: none;
+    &:hover{
+      background-color: var(--bodyBg);
+    }
+}

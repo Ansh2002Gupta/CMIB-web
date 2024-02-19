@@ -30,6 +30,7 @@ const variables = {
   darkBlueBg: colorPallets.darkBlue3,
   sideMenuBg1: colorPallets.blue8,
   lightGrey3Bg: colorPallets.ltGrey3,
+  ltGrey4: colorPallets.ltGrey4,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -140,6 +141,7 @@ const variables = {
   width_363: "363px",
   width_400: "400px",
   width_500: "500px",
+  widthViewPort_15: "15vw",
   widthViewPort_30: "30vw",
   widthViewPort_35: "35vw",
   widthHalfViewPort: "50vw",
@@ -232,6 +234,7 @@ const variables = {
   padding_14: "14px",
   paddingSmall: "16px",
   padding_18: "18px",
+  padding_20: "20px",
   paddingMedium: "24px",
   padding_30: "30px",
   paddingLarge: "32px",

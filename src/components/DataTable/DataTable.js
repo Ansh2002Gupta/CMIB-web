@@ -14,11 +14,13 @@ import styles from "./DataTable.module.scss";
 import "./overrides.css";
 
 const DataTable = ({
+  arrayContainingSelectedRow,
   columns,
   current,
   currentDataLength,
   customContainerStyles,
   customTableClassName,
+  keytoFindSelectedRow,
   onChangeCurrentPage,
   onChangePageSize,
   originalData,
@@ -26,6 +28,13 @@ const DataTable = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
+
+  const setRowClassName = (record, index) => {
+    if (arrayContainingSelectedRow.includes(record?.[keytoFindSelectedRow])) {
+      return [styles.rowBG, styles.rowtext].join(" ");
+    }
+    return styles.rowtext;
+  };
 
   const rightPaginationConfig = {
     current,
@@ -43,8 +52,9 @@ const DataTable = ({
         columns={columns}
         dataSource={originalData}
         pagination={false}
-        rowClassName={styles.rowtext}
         scroll={responsiveStyle}
+        className={styles.table}
+        rowClassName={setRowClassName}
         rowKey="id"
         className={customTableClassName}
       />
@@ -89,6 +99,8 @@ DataTable.defaultProps = {
   onChangePageSize: () => {},
   originalData: [],
   pageSize: DEFAULT_PAGE_SIZE,
+  keytoFindSelectedRow: "id",
+  arrayContainingSelectedRow: [],
 };
 
 DataTable.propTypes = {
@@ -100,6 +112,8 @@ DataTable.propTypes = {
   onChangePageSize: PropTypes.func,
   originalData: PropTypes.array,
   pageSize: PropTypes.number,
+  keytoFindSelectedRow: PropTypes.string,
+  arrayContainingSelectedRow: PropTypes.array,
 };
 
 export default DataTable;

@@ -14,8 +14,9 @@ import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
-import { getTicketOrQueryColumn } from "./TicketTableConfig";
+import { getTicketColumn } from "./TicketTableConfig";
 import { validateSearchTextLength } from "../../Utils/validations";
+import { TICKETS_VIEW_DETAILS } from "../../routes/routeNames";
 import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
@@ -47,15 +48,17 @@ const TicketTable = ({
   const [currentTicketData, setCurrentTicketData] = useState({});
   const [sortBy, setSortBy] = useState("");
   const { showNotification, notificationContextHolder } = useShowNotification();
+  const [filterArray, setFilterArray] = useState({});
 
-  const { data, error, fetchData, isError, isLoading, isSuccess, setData } =
-    useFetch({
-      url: CORE_ROUTE + TICKET_LIST,
-      otherOptions: { skipApiCallOnMount: true },
-    });
+  const { data, error, fetchData, isError, isLoading, setData } = useFetch({
+    url: CORE_ROUTE + TICKET_LIST,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+
   const { data: queryTypes } = useFetch({
     url: CORE_ROUTE + QUERY_TYPE,
   });
+
   const { data: status } = useFetch({
     url: CORE_ROUTE + STATUS,
   });
@@ -86,6 +89,12 @@ const TicketTable = ({
   const handleClickAssign = (data) => {
     setIsModalOpen(true);
     setCurrentTicketData(data);
+  };
+
+  const handleTicketIcon = (ticketRow) => {
+    const { id } = ticketRow;
+    // navigate(TICKETS_VIEW_DETAILS);
+    navigate(`reply/${id}`);
   };
 
   const getRequestedQueryParams = ({
@@ -137,16 +146,17 @@ const TicketTable = ({
     }
   };
 
-  const handleSorting = (sortDirection) => {
+  const handleSorting = ({ sortDirection }) => {
     const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const columns = getTicketOrQueryColumn({
+  const columns = getTicketColumn({
     type: currentActiveTab,
     intl,
     getImage,
     handleClickAssign,
+    handleTicketIcon,
     navigate,
     renderColumn,
     queriesColumnProperties: {},
@@ -217,7 +227,7 @@ const TicketTable = ({
       return prev;
     });
 
-    const requestedParams = getRequestedQueryParams({});
+    const requestedParams = getRequestedQueryParams({ search: searchedValue });
 
     fetchData({
       queryParamsObject: requestedParams,
@@ -233,11 +243,14 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const handleAssignee = ({ assigneeName, ticketId }) => {
+  const handleAssignee = ({ assignedTo, ticketId }) => {
     let updatedData = data;
     updatedData.records = data?.records?.map((ticket) => {
       if (+ticket.id === +ticketId) {
-        ticket.assigned_to = assigneeName;
+        ticket.assigned_to = {
+          id: assignedTo?.id,
+          name: assignedTo?.name,
+        };
         return ticket;
       }
       return {
@@ -247,16 +260,6 @@ const TicketTable = ({
     setData(updatedData);
     setCurrentTicketData({});
   };
-
-  useEffect(() => {
-    return () => {
-      setSearchedValue("");
-      setSearchParams((prev) => {
-        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
-        return prev;
-      });
-    };
-  }, []);
 
   const filterOptions = [
     {
@@ -284,6 +287,7 @@ const TicketTable = ({
       <CommonModal isOpen={isModalOpen} width={450}>
         <AddTicketAssignee
           {...{
+            assigned_to: currentTicketData?.assigned_to,
             ticket_id: currentTicketData?.id,
             handleAssignee,
             setIsModalOpen,
@@ -306,8 +310,10 @@ const TicketTable = ({
             placeholder: intl.formatMessage({
               id: "label.search_by_name_or_registration_no",
             }),
+            filterArray,
+            setFilterArray,
           }}
-          isLoading={isSuccess && !isLoading}
+          isLoading={isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
         />

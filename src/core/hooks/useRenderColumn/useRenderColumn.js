@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
+import { Checkbox, Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
 import AutoPlaceComplete from "../../../components/AutoPlaceComplete";
+import Chip from "../../../components/Chip/Chip";
 import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import CustomInput from "../../../components/CustomInput";
@@ -21,7 +22,7 @@ const useRenderColumn = () => {
   const renderColumn = ({
     customColumnHeading,
     customStyles,
-    customIconStyle,
+    customIconStyle = {},
     columnSortByHandler,
     dataIndex,
     defaultSortOrder,
@@ -30,6 +31,7 @@ const useRenderColumn = () => {
     renderAutoPlaceComplete = {},
     renderDateTime = {},
     render,
+    renderChip = {},
     renderImage = {},
     renderInput = {},
     renderMenu = {},
@@ -38,6 +40,7 @@ const useRenderColumn = () => {
     renderTextWithCheckBoxes = {},
     renderSwitch = {},
     renderTwoImage = {},
+    renderTitleWithCheckbox = {},
     setSortBy,
     sortDirection,
     sorter,
@@ -108,6 +111,8 @@ const useRenderColumn = () => {
       isRequiredTooltip,
       mobile,
       isIntl,
+      isDataObject,
+      dataKey,
     } = renderText;
 
     const {
@@ -133,7 +138,31 @@ const useRenderColumn = () => {
       rightPreview,
     } = renderTwoImage;
 
+    const {
+      titleWithCheckBoxes,
+      isIntermidiate,
+      isChecked,
+      onToggleCheckBox,
+      customCheckBoxStyles = "",
+    } = renderTitleWithCheckbox;
+
+    const getStatusStyles = (status) => {
+      if (
+        status?.toLowerCase() === "closed" ||
+        status?.toLowerCase() === "answered"
+      ) {
+        return ["statusContainer_success", "statusText_success"];
+      }
+      if (status?.toLowerCase() === "pending") {
+        return ["statusContainer_failed", "statusText_failed"];
+      }
+      return ["statusContainer_progress", "statusText_progress"];
+    };
+
     const textRenderFormat = ({ text }) => {
+      if (isDataObject) {
+        return text[dataKey] || "-";
+      }
       if (isTypeDate) {
         return formatDate({ date: text });
       }
@@ -169,7 +198,10 @@ const useRenderColumn = () => {
             onClick={() => {
               setSortBy((prev) => {
                 const newSortOrder = toggleSorting(prev);
-                columnSortByHandler(newSortOrder);
+                columnSortByHandler({
+                  sortDirection: newSortOrder,
+                  sortField: columnObject.key,
+                });
                 return newSortOrder;
               });
             }}
@@ -192,6 +224,24 @@ const useRenderColumn = () => {
               </>
             )}
           </p>
+        );
+      });
+
+    renderTitleWithCheckbox?.visible &&
+      (columnObject.title = () => {
+        return (
+          <Checkbox
+            indeterminate={isIntermidiate}
+            checked={isChecked}
+            className={[
+              styles.chipContainer,
+              customColumnHeading,
+              customCheckBoxStyles,
+            ].join(" ")}
+            onChange={onToggleCheckBox}
+          >
+            {titleWithCheckBoxes}
+          </Checkbox>
         );
       });
 
@@ -248,6 +298,23 @@ const useRenderColumn = () => {
             getRenderText(text)
           ),
         };
+      });
+
+    renderChip?.visible &&
+      (columnObject.render = (_, rowData) => {
+        const { status } = rowData;
+        const styleClassForContainer = getStatusStyles(status)[0];
+        const styleClassForText = getStatusStyles(status)[1];
+        return (
+          <Chip
+            label={status}
+            bgColor={[
+              styles.chipContainer,
+              styles[styleClassForContainer],
+            ].join(" ")}
+            textColor={styles[styleClassForText]}
+          />
+        );
       });
 
     renderSwitch.visible &&
@@ -337,7 +404,7 @@ const useRenderColumn = () => {
             customStyles={[customCheckBoxContainerStyles].join("")}
           >
             <p className={isCheckBoxTextBold ? styles.boldText : ""}>
-              {textToRender || "--"}
+              {textToRender || "-"}
             </p>
           </CustomCheckBox>
         );
@@ -387,8 +454,8 @@ const useRenderColumn = () => {
                 placeholder,
                 value,
               }}
-              errotTimeInput={
-                record?.isAddRow && errorMessage && styles.errotTimeInput
+              errorTimeInput={
+                record?.isAddRow && errorMessage && styles.errorTimeInput
               }
               onChange={(val) => {
                 onChange(val, record);
@@ -418,7 +485,7 @@ const useRenderColumn = () => {
             errorMessage={record.isAddRow && inputErrorMessage}
             isError={record.isAddRow && inputErrorMessage ? true : false}
             errorInput={
-              record.isAddRow && inputErrorMessage && styles.errotTimeInput
+              record.isAddRow && inputErrorMessage && styles.errorTimeInput
             }
           />
         );
