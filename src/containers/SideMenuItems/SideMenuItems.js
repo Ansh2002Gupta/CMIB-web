@@ -9,6 +9,7 @@ import { ThemeContext } from "core/providers/theme";
 
 import ModuleList from "../SideMenu/ModuleList";
 import SideMenuButton from "../../components/SideMenuButton/SideMenuButton";
+import { classes } from "./SideMenuItems.styles";
 import styles from "./SideMenuItems.module.scss";
 import "./Override.css";
 
@@ -31,23 +32,30 @@ const SideMenuItems = ({
 
   useEffect(() => {
     setSessionList(globalSessionList);
-  }, [globalSessionList])
+  }, [globalSessionList]);
 
   return (
     <TwoRow
-      style={{ overflow: "visible" }}
+      className={styles.module}
       topSection={
         !openSelector ? (
           <TwoColumn
             className={styles.moduleSelector}
+            isLeftFillSpace
+            leftSectionStyle={classes.leftSectionStyle}
             leftSection={
               <div className={styles.moduleSelectorHeading}>
-                {capitalize(selectedItem?.label || intl.formatMessage({ id: "label.noSessionsAvailable" }))}
+                {capitalize(
+                  selectedItem?.label ||
+                    intl.formatMessage({ id: "label.noSessionsAvailable" })
+                )}
               </div>
             }
             rightSection={
               <SideMenuButton
-                onBtnClick={() => selectedItem?.label && setOpenSelector((prev) => !prev)}
+                onBtnClick={() =>
+                  selectedItem?.label && setOpenSelector((prev) => !prev)
+                }
                 btnText={intl.formatMessage({ id: "label.change" })}
               />
             }
@@ -87,19 +95,20 @@ const SideMenuItems = ({
         )
       }
       bottomSection={
-          openSelector && (
-            sessionList?.length ? 
-            <ModuleList
-              modules={sessionList}
-              onSelectItem={(val) => {
-                setSessionList(globalSessionList);
-                handleOnSelectItem(val);
-              }}
-            />
-            :  <Typography className={styles.noResultText}>
+        openSelector &&
+        (sessionList?.length ? (
+          <ModuleList
+            modules={sessionList}
+            onSelectItem={(val) => {
+              setSessionList(globalSessionList);
+              handleOnSelectItem(val);
+            }}
+          />
+        ) : (
+          <Typography className={styles.noResultText}>
             {intl.formatMessage({ id: "label.noResultsFound" })}
           </Typography>
-          )
+        ))
       }
     />
   );

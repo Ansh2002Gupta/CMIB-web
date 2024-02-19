@@ -58,7 +58,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   }
 
   const handleOnSelectSession = (item) => {
-    setItem("sessionKey", item.key);
+    setItem("sessionKey", item.key?.toString());
     globalSessionDispatch(setSelectedSession(item));
     globalSessionDispatch(setGlobalSessionDetails(+item.key));
     setOpenSessionSelector(false);

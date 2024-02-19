@@ -17,7 +17,7 @@ import {
 const useGlobalSessionListApi = () => {
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
   const selectedSessionInSearchParams = getItem("sessionKey");
-  console.log(selectedSessionInSearchParams);
+
   const getGlobalSessionList = async (selectedModule) => {
     try {
       const url =
@@ -33,7 +33,7 @@ const useGlobalSessionListApi = () => {
         globalSessionDispatch(setGlobalSessionList(res?.data?.records));
         if (selectedSessionInSearchParams) {
           let session = res?.data?.records?.filter(
-            (ele) => ele?.id == selectedSessionInSearchParams
+            (ele) => ele?.id === +selectedSessionInSearchParams
           )?.[0];
           globalSessionDispatch(setGlobalSessionDetails(session?.id));
           globalSessionDispatch(
