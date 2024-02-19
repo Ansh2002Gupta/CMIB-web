@@ -52,7 +52,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
         isAddRow: true,
         scheduleDate: null,
         participationFee: "",
-        firm: { firmFee: "", uptoPartners: "1" },
+        firm: { firmFee: "", uptoPartners: "" },
         norm1: "",
         norm2: "",
         norm2MinVacancy: "",
@@ -181,7 +181,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           customContainerStyles={styles.customDateContainerStyles}
           value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
           type="date"
-          disabled={record.isAddRow ? false : true}
+          disabled={!record.isAddRow}
           onChange={(val, dateString) => {
             handleInputChange(val, "scheduleDate");
           }}
@@ -204,7 +204,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       render: (text, record) => (
         <CustomInput
           value={text}
-          disabled={record.isAddRow ? false : true}
+          disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
           onChange={(val) => {
             handleInputChange(val.target.value, "participationFee");
@@ -213,7 +213,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             id: "centre.placeholder.enterFee",
           })}
           errorMessage={record.isAddRow && errors?.participationFee}
-          isError={record.isAddRow && errors?.participationFee ? true : false}
+          isError={!!(record.isAddRow && errors?.participationFee)}
         />
       ),
     },
@@ -243,7 +243,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             leftSection={
               <CustomInput
                 value={text?.firmFee}
-                disabled={record.isAddRow ? false : true}
+                disabled={!record.isAddRow}
                 customContainerStyles={styles.customContainerStyles}
                 customInputStyles={styles.joinedCustomContainerStyles}
                 onChange={(val) => {
@@ -253,9 +253,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
                   id: "centre.placeholder.enterFee",
                 })}
                 errorMessage={record.isAddRow && errors?.firm?.firmFee}
-                isError={
-                  record.isAddRow && errors?.firm?.firmFee ? true : false
-                }
+                isError={!!(record.isAddRow && errors?.firm?.firmFee)}
               />
             }
             rightSection={
@@ -264,7 +262,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
                 customContainerStyles={styles.customContainerStyles}
                 customInputNumberStyles={styles.inputNumberStyle}
                 value={text?.uptoPartners}
-                disabled={record.isAddRow ? false : true}
+                disabled={!record.isAddRow}
                 onChange={(val) => {
                   handleInputChange(val, "firm", "uptoPartners");
                 }}
@@ -272,9 +270,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
                   id: "centre.placeholder.enterpartner",
                 })}
                 errorMessage={record.isAddRow && errors?.firm?.uptoPartners}
-                isError={
-                  record.isAddRow && errors?.firm?.uptoPartners ? true : false
-                }
+                isError={!!(record.isAddRow && errors?.firm?.uptoPartners)}
               />
             }
           />
@@ -293,7 +289,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       render: (text, record) => (
         <CustomInput
           value={text}
-          disabled={record.isAddRow ? false : true}
+          disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
           onChange={(val) => {
             handleInputChange(val.target.value, "norm1");
@@ -302,7 +298,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             id: "centre.placeholder.enterNorm1",
           })}
           errorMessage={record.isAddRow && errors?.norm1}
-          isError={record.isAddRow && errors?.norm1 ? true : false}
+          isError={!!(record.isAddRow && errors?.norm1)}
         />
       ),
     },
@@ -318,7 +314,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       render: (text, record) => (
         <CustomInput
           value={text}
-          disabled={record.isAddRow ? false : true}
+          disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
           onChange={(val) => {
             handleInputChange(val.target.value, "norm2");
@@ -327,7 +323,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             id: "centre.placeholder.enterNorm2",
           })}
           errorMessage={record.isAddRow && errors?.norm2}
-          isError={record.isAddRow && errors?.norm2 ? true : false}
+          isError={!!(record.isAddRow && errors?.norm2)}
         />
       ),
     },
@@ -343,7 +339,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       render: (text, record) => (
         <CustomInput
           value={text}
-          disabled={record.isAddRow ? false : true}
+          disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
           onChange={(val) => {
             handleInputChange(val.target.value, "norm2MinVacancy");
@@ -352,7 +348,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             id: "centre.placeholder.enterVacancy",
           })}
           errorMessage={record.isAddRow && errors?.norm2MinVacancy}
-          isError={record.isAddRow && errors?.norm2MinVacancy ? true : false}
+          isError={!!(record.isAddRow && errors?.norm2MinVacancy)}
         />
       ),
     },
