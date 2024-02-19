@@ -1,6 +1,6 @@
 .columnHeading {
   color: var(--subHeadingColor);
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeExtraSmall, 12px);
   font-weight: var(--fontWeightBold);
 }
 
@@ -52,15 +52,6 @@ input::placeholder {
   color: var(--inputPlaceHolder) !important;
 }
 
-.columnHeading {
-  color: var(--subHeadingColor) !important;
-  display: flex;
-  gap: var(--gapXSmall);
-  align-items: center;
-  cursor: pointer;
-  align-items: center;
-}
-
 .upside {
   transform: rotate(180deg);
 }
@@ -84,7 +75,7 @@ input::placeholder {
 
 .greenText {
   color: var(--greenBtnBg, #04af55) !important;
-  font-size: var(--fontSizeSmall, 14px) !important;
+  font-size: var(--fontSizeExtraSmall, 12px) !important;
   font-weight: var(--fontWeightBold, 600) !important;
   cursor: pointer;
 }
