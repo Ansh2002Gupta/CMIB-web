@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Image, Typography } from "antd";
@@ -20,7 +20,7 @@ import styles from "./AddTicketAssignee.module.scss";
 import { classes } from "./AddTicketAssignee.styles";
 
 const AddTicketAssignee = ({
-  assigneeId,
+  assigned_to,
   handleAssignee,
   setIsModalOpen,
   showNotification,
@@ -28,11 +28,13 @@ const AddTicketAssignee = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  const [selectedValue, setSelectedValue] = useState(assigneeId);
+  const [selectedValue, setSelectedValue] = useState(assigned_to);
   const { data, error, isLoading } = useFetch({
     url: CORE_ROUTE + TICKET_LIST + ASSIGNEES,
   });
-  console.log(assigneeId, "assigneeId..");
+  useEffect(() => {
+    setSelectedValue(assigned_to);
+  }, [assigned_to]);
 
   const { isLoading: assigningTicket, handleAssignTicket } =
     useTicketAssignApi();
