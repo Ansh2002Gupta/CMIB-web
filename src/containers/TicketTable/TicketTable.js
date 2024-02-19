@@ -110,8 +110,12 @@ const TicketTable = ({
       q: search?.trim() || "",
       sortDirection,
       sortField: "created_by",
-      status: JSON.stringify(currentFilterStatus?.["1"]),
-      queryType: JSON.stringify(currentFilterStatus?.["2"]),
+      status:
+        JSON.stringify(currentFilterStatus?.["1"]) ||
+        JSON.stringify(filterArray?.["1"]),
+      queryType:
+        JSON.stringify(currentFilterStatus?.["2"]) ||
+        JSON.stringify(filterArray?.["2"]),
     };
   };
 
@@ -147,7 +151,11 @@ const TicketTable = ({
   };
 
   const handleSorting = ({ sortDirection }) => {
-    const requestedParams = getRequestedQueryParams({ page: 1, sortDirection });
+    const requestedParams = getRequestedQueryParams({
+      page: 1,
+      sortDirection,
+      search: searchedValue,
+    });
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -182,6 +190,7 @@ const TicketTable = ({
     const requestedParams = getRequestedQueryParams({
       rowPerPage: size,
       page: 1,
+      search: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -194,6 +203,7 @@ const TicketTable = ({
     });
     const requestedParams = getRequestedQueryParams({
       page: newPageNumber,
+      search: searchedValue,
     });
 
     fetchData({ queryParamsObject: requestedParams });
@@ -207,6 +217,7 @@ const TicketTable = ({
         fetchData({
           queryParamsObject: getRequestedQueryParams({
             page: 1,
+            search: searchedValue,
           }),
         });
         setSearchParams((prev) => {
@@ -239,6 +250,7 @@ const TicketTable = ({
     const requestedParams = getRequestedQueryParams({
       rowPerPage: DEFAULT_PAGE_SIZE,
       page: 1,
+      search: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -277,7 +289,10 @@ const TicketTable = ({
   ];
 
   const onFilterApply = (currentFilterStatus) => {
-    const requestedParams = getRequestedQueryParams({ currentFilterStatus });
+    const requestedParams = getRequestedQueryParams({
+      currentFilterStatus,
+      search: searchedValue,
+    });
     fetchData({ queryParamsObject: requestedParams });
   };
 
