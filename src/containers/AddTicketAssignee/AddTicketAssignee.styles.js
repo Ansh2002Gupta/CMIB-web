@@ -4,6 +4,11 @@ export const classes = {
   bottonContainer: {},
   middleContainer: {
     backgroundColor: variables.blueBg,
+    maxHeight: "50vh",
+    minHeight: "40vh",
+    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
   },
   buttonContainer: {
     flex: 1,
