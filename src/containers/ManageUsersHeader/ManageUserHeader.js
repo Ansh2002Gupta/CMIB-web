@@ -9,30 +9,30 @@ import useResponsive from "../../core/hooks/useResponsive";
 import { ADD } from "../../routes/routeNames";
 import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./ManageUserHeader.module.scss";
-import { UserDetailContext } from "../../globalContext/userDetail/userDetailProvider";
-import { userDetailToast } from "../../globalContext/userDetail/userDetailActions";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
+import { userDetailToast } from "../../globalContext/notification/notificationActions";
 
 const ManageUserHeader = () => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { showNotification, notificationContextHolder } = useShowNotification();
   const responsive = useResponsive();
-  const [userDetailState, setUserDetailDispatch] =
-    useContext(UserDetailContext);
+  const [notificationState, setNotificationStateDispatch] =
+    useContext(NotificationContext);
 
   useEffect(() => {
-    if (userDetailState?.isUserSuccessfullyAdded) {
+    if (notificationState?.isUserSuccessfullyAdded) {
       showNotification({
         text: intl.formatMessage({
-          id: userDetailState?.isUserSuccessfullyAdded?.isUpdate
+          id: notificationState?.isUserSuccessfullyAdded?.isUpdate
             ? "label.userSuccessfullyEdited"
             : "label.userSuccessfullyAdded",
         }),
         type: "success",
       });
-      setUserDetailDispatch(userDetailToast(false));
+      setNotificationStateDispatch(userDetailToast(false));
     }
-  }, [userDetailState]);
+  }, [notificationState]);
 
   return (
     <>

@@ -32,6 +32,7 @@ const CustomInput = React.forwardRef(
       isSelectBoxDisable,
       label,
       max,
+      maxLength,
       messageStyles: customMessageStyles,
       messageToShow,
       min,
@@ -106,6 +107,7 @@ const CustomInput = React.forwardRef(
             <Input
               ref={isSuffixRequiredForPassword ? inputFieldRef : null}
               type={type || "text"}
+              maxLength={maxLength}
               className={[
                 styles.inputField,
                 customInputStyles,
@@ -223,6 +225,7 @@ CustomInput.defaultProps = {
   isSelectBoxDisable: false,
   label: "",
   max: 10,
+  maxLength: undefined,
   messageStyles: "",
   messageToShow: "",
   min: 0,
@@ -259,6 +262,7 @@ CustomInput.propTypes = {
   isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
   max: PropTypes.number,
+  maxLength: PropTypes.number,
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
