@@ -51,7 +51,7 @@ const QueryDetails = () => {
       navigate(`/${selectedModule?.key}/${QUERIES}`);
       setUserDetailDispatch(userDetailToast(true));
     }
-  }, [error]);
+  }, [error?.data?.code]);
 
   return (
     <>
