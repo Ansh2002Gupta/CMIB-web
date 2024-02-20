@@ -176,7 +176,8 @@ const QueryTable = ({
       );
       setSelctedQueriesToBeMarkedAsAnswered(updatedData);
       return;
-    } else if (areSomeItemsSelected) {
+    }
+    if (areSomeItemsSelected) {
       setSelctedQueriesToBeMarkedAsAnswered((prev) => [
         ...prev,
         ...currentPageIdsArray,
