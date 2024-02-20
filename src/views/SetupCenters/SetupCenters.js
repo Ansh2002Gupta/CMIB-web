@@ -190,6 +190,21 @@ const SetupCenter = () => {
       );
     }
 
+    if (setupCentres?.meta?.total === 0) {
+      return (
+        <div className={styles.errorContainer}>
+          <ErrorMessageBox
+            errorText={intl.formatMessage({
+              id: "label.select_centres_error_msg",
+            })}
+            errorHeading={intl.formatMessage({
+              id: "label.error",
+            })}
+          />
+        </div>
+      );
+    }
+
     return (
       <DataTable
         columns={columns}
