@@ -37,7 +37,6 @@
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
   white-space: nowrap;
-  max-width: 18vw;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -45,22 +44,4 @@
 .customStyle {
   padding: var(--paddingMediumSmall, 12px);
   min-height: var(--height_20, 20px);
-}
-
-@media screen and (max-width: 400px) {
-  .assigneeText {
-    max-width: var(--widthViewPort_65, 65vw);
-  }
-}
-
-@media screen and (max-width: 740px) {
-  .assigneeText {
-    max-width: var(--widthHalfViewPort, 50vw);
-  }
-}
-
-@media screen and (max-width: 1080px) {
-  .assigneeText {
-    max-width: var(--widthViewPort_35, 35vw);
-  }
 }
