@@ -19,6 +19,7 @@ const CustomDateTimePicker = ({
   defaultValue,
   disabled,
   disabledDate,
+  disabledTime,
   errorMessage,
   errorTimeInput,
   format,
@@ -56,6 +57,7 @@ const CustomDateTimePicker = ({
                   onChange,
                   placeholder,
                   disabled,
+                  disabledTime,
                 }}
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("clock")} />}
@@ -104,6 +106,7 @@ CustomDateTimePicker.defaultProps = {
   dateFormat: "DD/MM/YYYY",
   defaultValue: null,
   disabled: false,
+  disabledTime: () => {},
   errorMessage: "",
   errorTimeInput: "",
   format: "h:mm a",
@@ -124,6 +127,7 @@ CustomDateTimePicker.propTypes = {
   dateFormat: PropTypes.string,
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
+  disabledTime: PropTypes.func,
   errorMessage: PropTypes.string,
   errorTimeInput: PropTypes.string,
   format: PropTypes.string,

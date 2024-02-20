@@ -118,6 +118,31 @@ const CenterDetailsContent = ({
       );
     }
 
+    const handleDisabledEndTime = () => {
+      if (!formData.centreStartTime) {
+        return {};
+      }
+      const startTime = dayjs(formData.centreStartTime, "HH:mm:ss");
+      return {
+        disabledHours: () => {
+          const hours = [];
+          for (let i = 0; i < startTime.hour(); i++) {
+            hours.push(i);
+          }
+          return hours;
+        },
+        disabledMinutes: (selectedHour) => {
+          const minutes = [];
+          if (selectedHour === startTime.hour()) {
+            for (let i = 0; i < startTime.minute(); i++) {
+              minutes.push(i);
+            }
+          }
+          return minutes;
+        },
+      };
+    };
+
     return (
       <TwoRow
         className={styles.mainContainer}
@@ -159,9 +184,10 @@ const CenterDetailsContent = ({
               customContainerStyles={styles.customContainerStyles}
               isRequired
               label={intl.formatMessage({ id: "label.centreEndTime" })}
-              onChange={(momentValue, timeString) => {
+              onChange={(momentValue) => {
                 handleInputChange(momentValue, "centreEndTime");
               }}
+              disabledTime={handleDisabledEndTime}
               placeholder={intl.formatMessage({
                 id: "label.placeholder.centreEndTime",
               })}
