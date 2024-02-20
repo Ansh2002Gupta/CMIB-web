@@ -18,6 +18,7 @@ import {
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import {
   DEFAULT_PAGE_SIZE,
@@ -25,6 +26,7 @@ import {
   ROUND_ID,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
+import { SESSION } from "../../routes/routeNames";
 
 import { classes } from "./OrientationCenter.styles";
 import styles from "./OrientationCenter.module.scss";
@@ -35,6 +37,7 @@ const OrientationCenter = () => {
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { navigateScreen: navigate } = useNavigateScreen();
 
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
@@ -291,6 +294,10 @@ const OrientationCenter = () => {
     </div>
   );
 
+  const handleCancel = () => {
+    navigate(`/${selectedModule?.key}/${SESSION}?tab=2`);
+  };
+
   const renderContent = () => {
     const isLoading =
       isGettingOrientationCentres || isUpdatingOrientationCentre;
@@ -360,7 +367,8 @@ const OrientationCenter = () => {
           topSection={renderContent()}
           bottomSection={
             fetchCentersSuccessFlag &&
-            !isUpdatingOrientationCentre && (
+            !isUpdatingOrientationCentre &&
+            orientationCentres?.mata?.total && (
               <TwoColumn
                 className={styles.buttonContainer}
                 leftSection={
@@ -370,7 +378,7 @@ const OrientationCenter = () => {
                     })}
                     customStyle={styles.mobileButtonStyles}
                     textStyle={styles.textStyle}
-                    onClick={() => {}}
+                    onClick={handleCancel}
                   />
                 }
                 rightSection={
