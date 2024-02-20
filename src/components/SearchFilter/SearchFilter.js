@@ -81,6 +81,7 @@ const SearchFilter = ({
 
   const handleClearFilter = () => {
     if (Object.keys(filterArray).length !== 0) {
+      setFilterArray({});
       onFilterApply({});
     }
     setCurrentFilterStatus({});
@@ -245,6 +246,7 @@ const SearchFilter = ({
               btnText={intl.formatMessage({ id: "label.show_result" })}
               customStyle={styles.showResultBtn}
               onClick={() => {
+                setFilterArray(currentFilterStatus);
                 onFilterApply(currentFilterStatus);
                 setShowFilters(false);
               }}

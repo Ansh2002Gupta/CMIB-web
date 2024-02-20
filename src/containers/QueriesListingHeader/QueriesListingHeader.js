@@ -23,7 +23,7 @@ const QueriesListingHeader = () => {
       });
       setUserDetailDispatch(userDetailToast(false));
     }
-  }, [userDetailState]);
+  }, [userDetailState?.isUserSuccessfullyAdded]);
 
   return (
     <div className={styles.headerBox}>

@@ -295,26 +295,7 @@ const ManageUsersContent = () => {
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-  }, [current, pageSize]);
-
-  const handleOnFilterApply = (updatedFiltersValue) => {
-    let arrayAsString = JSON.stringify(updatedFiltersValue);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
-      return prev;
-    });
-
-    setFilterArray(() => {
-      const newFilterArray = updatedFiltersValue;
-      fetchUsers(
-        pageSize,
-        current,
-        searchedValue.length > 2 ? encodeURIComponent(searchedValue) : "",
-        newFilterArray["1"]
-      );
-      return newFilterArray;
-    });
-  };
+  }, [current, filterArray, pageSize]);
 
   useEffect(() => {
     return () => {
@@ -354,7 +335,6 @@ const ManageUsersContent = () => {
               showFilters,
               setFilterArray,
               setShowFilters,
-              onFilterApply: handleOnFilterApply,
             }}
           />
         </div>
