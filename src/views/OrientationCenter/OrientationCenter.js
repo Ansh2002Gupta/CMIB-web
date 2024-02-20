@@ -389,6 +389,9 @@ const OrientationCenter = () => {
                       id: "session.saveChanges",
                     })}
                     onClick={handleSaveChanges}
+                    isBtnDisable={
+                      !formData?.every((item) => item.schedule_date)
+                    }
                   />
                 }
               />
