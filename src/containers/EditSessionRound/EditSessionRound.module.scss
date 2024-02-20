@@ -1,0 +1,77 @@
+.blackText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.buttonStyles {
+  background-color: var(--bodyBg);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--btnText) !important;
+  }
+}
+
+.centreContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  flex: 1;
+  gap: 20%;
+}
+
+@media (max-width: 600px) {
+  .centreContainer {
+    background-color: var(--bodyBg);
+    padding: var(--paddingMedium);
+    border-radius: var(--radiusMLg);
+    border: var(--borderLight);
+    flex: 1;
+    flex-direction: column;
+    gap: var(--gapMedium, 24px);
+  }
+}
+
+.editContainer {
+  align-items: center;
+  gap: var(--gapXSmall);
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.grayText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.mainContainer {
+  gap: var(--gapMedium);
+  height: var(--height_700);
+}
+
+.mobileButtonStyles {
+  background-color: var(--bodyBg);
+  padding: var(--paddingSmall);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--btnText) !important;
+  }
+}
+
+.saveButtonTextStyles {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--bodyBg);
+}
+
+.textStyle {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
