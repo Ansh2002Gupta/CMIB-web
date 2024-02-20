@@ -190,7 +190,6 @@ const OrientationCenter = () => {
       title: intl.formatMessage({ id: "label.schedule_date" }),
       dataIndex: "schedule_date",
       key: "schedule_date",
-      isRequiredField: true,
       renderText: { visible: true, isTypeDate: true },
       renderDateTime: {
         visible: true,
