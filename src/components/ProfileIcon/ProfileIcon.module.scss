@@ -40,6 +40,20 @@
   font-size: var(--fontSizeLargeHeading, 36px);
 }
 
+.profileAvatarXSmall {
+  width: var(--width_40, 40px);
+  height: var(--height_40, 40px);
+  font-size: var(--fontSizeSmall, 14px);
+  border: none;
+}
+
+.profileAvatarSmall {
+  width: var(--width_64, 64px);
+  height: var(--height_64, 64px);
+  font-size: var(--fontSizeXlargeSmall, 22px);
+  border: none;
+}
+
 .initialsAvatar > span {
   font-weight: 500;
 }

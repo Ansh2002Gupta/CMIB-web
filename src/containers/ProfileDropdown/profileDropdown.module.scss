@@ -4,6 +4,10 @@
   width: var(--fullWidth, 100%);
 }
 
+.profileBox {
+  min-width: 2.5rem;
+}
+
 .profileName {
   display: block;
   font-weight: var(--fontWeightBold, 600);

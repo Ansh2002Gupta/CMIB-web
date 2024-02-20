@@ -99,7 +99,7 @@ const SearchFilter = ({
     return getImage("someFiltersAreSelected");
   };
 
-  const totalCount = Object.values(currentFilterStatus).reduce(
+  const totalCount = Object.values(filterArray).reduce(
     (total, currentArray) => {
       return total + currentArray.length;
     },
