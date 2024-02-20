@@ -71,7 +71,7 @@ const SetupCenterDetails = () => {
             />
           }
           bottomSection={
-            <CenterDetailsContent {...{ isEdit, centreDetailData }} />
+            <CenterDetailsContent {...{ centreDetailData, isEdit, roundId }} />
           }
         />
       )}
