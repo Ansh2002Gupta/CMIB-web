@@ -66,7 +66,11 @@ const ProfileIcon = ({
       ) : (
         <Avatar
           src={profileImage}
-          className={[styles.profileAvatar, profileImageStyle].join(" ")}
+          className={[
+            styles.profileAvatar,
+            getAvatarSize(),
+            profileImageStyle,
+          ].join(" ")}
           onError={handleImgError}
         />
       )}
