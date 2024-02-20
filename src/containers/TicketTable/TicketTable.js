@@ -49,6 +49,7 @@ const TicketTable = ({
   const [sortBy, setSortBy] = useState("");
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [filterArray, setFilterArray] = useState({});
+  const [sortFilter, setSortFilter] = useState({});
 
   const { data, error, fetchData, isError, isLoading, setData } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
@@ -93,7 +94,6 @@ const TicketTable = ({
 
   const handleTicketIcon = (ticketRow) => {
     const { id } = ticketRow;
-    // navigate(TICKETS_VIEW_DETAILS);
     navigate(`reply/${id}`);
   };
 
@@ -103,19 +103,16 @@ const TicketTable = ({
     search,
     rowPerPage,
     sortDirection,
+    sortField,
   }) => {
     return {
       perPage: rowPerPage || pageSize,
       page: page || current,
       q: search?.trim() || "",
       sortDirection,
-      sortField: "created_by",
-      status:
-        JSON.stringify(currentFilterStatus?.["1"]) ||
-        JSON.stringify(filterArray?.["1"]),
-      queryType:
-        JSON.stringify(currentFilterStatus?.["2"]) ||
-        JSON.stringify(filterArray?.["2"]),
+      sortField,
+      status: JSON.stringify(currentFilterStatus?.["1"]),
+      queryType: JSON.stringify(currentFilterStatus?.["2"]),
     };
   };
 
@@ -127,6 +124,9 @@ const TicketTable = ({
         queryParamsObject: getRequestedQueryParams({
           page: 1,
           search: validateSearchTextLength(str),
+          currentFilterStatus: filterArray,
+          sortDirection: sortFilter?.sortDirection,
+          sortField: sortFilter?.sortField,
         }),
       });
       setSearchParams((prev) => {
@@ -140,6 +140,9 @@ const TicketTable = ({
         queryParamsObject: getRequestedQueryParams({
           page: 1,
           search: "",
+          currentFilterStatus: filterArray,
+          sortDirection: sortFilter?.sortDirection,
+          sortField: sortFilter?.sortField,
         }),
       });
       setSearchParams((prev) => {
@@ -150,13 +153,25 @@ const TicketTable = ({
     }
   };
 
-  const handleSorting = ({ sortDirection }) => {
+  const handleSorting = (sortDetails) => {
+    setCurrent(1);
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+      return prev;
+    });
     const requestedParams = getRequestedQueryParams({
+      currentFilterStatus: filterArray,
       page: 1,
-      sortDirection,
       search: searchedValue,
+      sortDirection: sortDetails?.sortDirection,
+      sortField: sortDetails?.sortDirection ? sortDetails?.sortField : "",
     });
     fetchData({ queryParamsObject: requestedParams });
+    if (sortDetails.sortDirection) {
+      setSortFilter(sortDetails);
+      return;
+    }
+    setSortFilter({ sortDirection: "", sortField: "" });
   };
 
   const columns = getTicketColumn({
@@ -191,6 +206,9 @@ const TicketTable = ({
       rowPerPage: size,
       page: 1,
       search: searchedValue,
+      currentFilterStatus: filterArray,
+      sortDirection: sortFilter?.sortDirection,
+      sortField: sortFilter?.sortField,
     });
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -204,6 +222,9 @@ const TicketTable = ({
     const requestedParams = getRequestedQueryParams({
       page: newPageNumber,
       search: searchedValue,
+      currentFilterStatus: filterArray,
+      sortDirection: sortFilter?.sortDirection,
+      sortField: sortFilter?.sortField,
     });
 
     fetchData({ queryParamsObject: requestedParams });
@@ -218,6 +239,9 @@ const TicketTable = ({
           queryParamsObject: getRequestedQueryParams({
             page: 1,
             search: searchedValue,
+            currentFilterStatus: filterArray,
+            sortDirection: sortFilter?.sortDirection,
+            sortField: sortFilter?.sortField,
           }),
         });
         setSearchParams((prev) => {
@@ -238,7 +262,12 @@ const TicketTable = ({
       return prev;
     });
 
-    const requestedParams = getRequestedQueryParams({ search: searchedValue });
+    const requestedParams = getRequestedQueryParams({
+      search: searchedValue,
+      currentFilterStatus: filterArray,
+      sortDirection: sortFilter?.sortDirection,
+      sortField: sortFilter?.sortField,
+    });
 
     fetchData({
       queryParamsObject: requestedParams,
@@ -251,6 +280,14 @@ const TicketTable = ({
       rowPerPage: DEFAULT_PAGE_SIZE,
       page: 1,
       search: searchedValue,
+      currentFilterStatus: filterArray,
+      sortDirection: sortFilter?.sortDirection,
+      sortField: sortFilter?.sortField,
+    });
+    setCurrent(1);
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+      return prev;
     });
     fetchData({ queryParamsObject: requestedParams });
   };
@@ -292,6 +329,14 @@ const TicketTable = ({
     const requestedParams = getRequestedQueryParams({
       currentFilterStatus,
       search: searchedValue,
+      page: 1,
+      sortDirection: sortFilter?.sortDirection,
+      sortField: sortFilter?.sortField,
+    });
+    setCurrent(1);
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+      return prev;
     });
     fetchData({ queryParamsObject: requestedParams });
   };
