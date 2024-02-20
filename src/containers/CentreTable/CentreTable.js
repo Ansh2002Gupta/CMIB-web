@@ -208,7 +208,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           customContainerStyles={styles.customContainerStyles}
           customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
-            handleInputChange(val.target.value, "participationFee");
+            handleInputChange(val, "participationFee");
           }}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterFee",
