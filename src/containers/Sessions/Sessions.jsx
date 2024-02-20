@@ -1,12 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { DownOutlined } from "@ant-design/icons";
+import { capitalize } from "lodash";
 import { useIntl } from "react-intl";
 import { Button, Dropdown, Menu, Tooltip, Typography } from "antd";
-import { capitalize } from "lodash";
 
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { setGlobalSessionDetails } from "../../globalContext/globalSession/globalSessionActions";
+import { setItem } from "../../services/encrypted-storage-service";
+import { MODULE_KEYS, SESSION_KEY } from "../../constant/constant";
 import styles from "./sessions.module.scss";
 
 function Sessions() {
@@ -19,6 +21,7 @@ function Sessions() {
   const { globalSessionId, globalSessionList } = globalSessionDetails;
 
   const handleMenuClick = ({ key }) => {
+    setItem(SESSION_KEY, key?.toString());
     globalSessionDispatch(setGlobalSessionDetails(+key));
   };
 
@@ -62,35 +65,41 @@ function Sessions() {
   );
 
   return (
-    <Dropdown
-      trigger={["click"]}
-      overlay={menu}
-      className={styles.sessionContainer}
-      overlayClassName={styles.customDropdownMenu}
-    >
-      <Button
-        shape="round"
-        size="middle"
-        className={styles.sessionDropdownContainer}
-      >
-        <div className={styles.sessionTextContainer}>
-          <Typography.Text className={styles.sessionText}>
-            {intl.formatMessage({ id: "label.sessionPrefix" })}
-          </Typography.Text>
-          &nbsp;
-          <Typography.Text className={styles.valueText}>
-            {capitalize(
-              globalSessionList?.find((item) => +item.id === +globalSessionId)
-                ?.name ||
-                intl.formatMessage({ id: "label.noSessionsAvailable" })
-            )}
-          </Typography.Text>
-        </div>
-        <div>
-          <DownOutlined />
-        </div>
-      </Button>
-    </Dropdown>
+    <>
+      {selectedModule?.key !== MODULE_KEYS.CA_JOBS_KEY &&
+        selectedModule?.key !== MODULE_KEYS.CONTROL_KEY && (
+          <Dropdown
+            trigger={["click"]}
+            overlay={menu}
+            className={styles.sessionContainer}
+            overlayClassName={styles.customDropdownMenu}
+          >
+            <Button
+              shape="round"
+              size="middle"
+              className={styles.sessionDropdownContainer}
+            >
+              <div className={styles.sessionTextContainer}>
+                <Typography.Text className={styles.sessionText}>
+                  {intl.formatMessage({ id: "label.sessionPrefix" })}
+                </Typography.Text>
+                &nbsp;
+                <Typography.Text className={styles.valueText}>
+                  {capitalize(
+                    globalSessionList?.find(
+                      (item) => +item.id === +globalSessionId
+                    )?.name ||
+                      intl.formatMessage({ id: "label.noSessionsAvailable" })
+                  )}
+                </Typography.Text>
+              </div>
+              <div>
+                <DownOutlined />
+              </div>
+            </Button>
+          </Dropdown>
+        )}
+    </>
   );
 }
 

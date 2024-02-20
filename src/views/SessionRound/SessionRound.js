@@ -1,131 +1,149 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { capitalize } from "lodash";
 import { useIntl } from "react-intl";
+import { Typography } from "antd";
+import { useSearchParams } from "react-router-dom";
 
-import { TwoColumn, TwoRow } from "../../core/layouts";
-import useResponsive from "../../core/hooks/useResponsive";
-
-import CustomSwitch from "../../components/CustomSwitch";
-import RoundCard from "../../containers/RoundCard";
-import SearchableDropDown from "../../components/SearchableDropDown";
+import { TwoRow } from "../../core/layouts";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useResponsive from "../../core/hooks/useResponsive";
+
+import CustomLoader from "../../components/CustomLoader";
+import EditSessionRound from "../../containers/EditSessionRound";
+import RoundCard from "../../containers/RoundCard";
+import SessionRoundDetails from "../../containers/SessionRoundDetails";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import {
-  CENTRE_END_POINT,
-  CORE_ROUTE,
-  DROPDOWN,
-} from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, ROUNDS } from "../../constant/apiEndpoints";
+import { API_STATUS, FORM_STATES } from "../../constant/constant";
 import { classes } from "./SessionRound.styles";
 import styles from "./SessionRound.module.scss";
 
-const SessionRound = ({ roundId, roundList, switchLabel }) => {
+const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const [status, setStatus] = useState(false);
-  const [city, setCity] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentMode, setCurrentMode] = useState(
+    searchParams.get("mode") || FORM_STATES.VIEW_ONLY
+  );
 
-  const { data, isError } = useFetch({
-    url: CORE_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT + DROPDOWN,
+  const {
+    apiStatus,
+    data: roundDetails,
+    fetchData,
+  } = useFetch({
+    url: ADMIN_ROUTE + `/${selectedModule?.key}` + ROUNDS + `/${roundId}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
-  const handleSelectCentre = (item, option) => {
-    let selectedCity = option?.[0];
-    if (city.some((item) => item.id === selectedCity.id)) {
-      handleDeselectCentre(selectedCity);
-    } else {
-      setCity([...city, selectedCity]);
+  useEffect(() => {
+    if (selectedModule?.key && roundId) {
+      fetchData({});
     }
+  }, [selectedModule?.key, roundId]);
+
+  useEffect(() => {
+    if (
+      searchParams?.get("mode") &&
+      searchParams?.get("mode") !== currentMode
+    ) {
+      setCurrentMode(searchParams?.get("mode"));
+    }
+  }, [searchParams?.get("mode")]);
+
+  const handleOnClickEdit = () => {
+    setSearchParams((prev) => {
+      prev.set("mode", FORM_STATES.EDITABLE);
+      return prev;
+    });
+    setCurrentMode(FORM_STATES.EDITABLE);
   };
 
-  const handleDeselectCentre = (item) => {
-    const updatedCenters = city?.filter((ele) => ele.id !== item.id);
-    setCity(updatedCenters);
-  };
-
-  const getCentreListFromResponse = () => {
-    let bigCentres = data?.big_centres;
-    let smallCentres = data?.small_centres;
-
-    let mapBigCentres = {
-      id: 0,
-      label: intl.formatMessage({ id: "label.big_centres" }),
-      options: bigCentres?.map((ele) => {
-        return {
-          id: ele?.id,
-          label: capitalize(ele?.name),
-          value: capitalize(ele?.name),
-        };
-      }),
-    };
-
-    let mapSmallCentres = {
-      id: 2,
-      label: intl.formatMessage({ id: "label.small_centres" }),
-      options: smallCentres?.map((ele) => {
-        return {
-          id: ele?.id,
-          label: capitalize(ele?.name),
-          value: capitalize(ele?.name),
-        };
-      }),
-    };
-    return [mapBigCentres, mapSmallCentres];
+  const handelOnClickCancel = (value) => {
+    if (value) {
+      fetchData({});
+    }
+    setSearchParams((prev) => {
+      prev.set("mode", FORM_STATES.VIEW_ONLY);
+      return prev;
+    });
+    setCurrentMode(FORM_STATES.VIEW_ONLY);
   };
 
   return (
     <TwoRow
       className={styles.mainContainer}
       topSection={
-        <TwoColumn
-          className={styles.cityContainer}
-          leftSectionStyle={classes.leftSectionStyle}
-          rightSectionStyle={classes.rightSectionStyle}
-          leftSection={
-            <CustomSwitch
-              checked={status}
-              label={switchLabel}
-              onChange={() => {
-                setStatus(!status);
-              }}
-              activeText={"active"}
-              inActiveText={"inactive"}
-            />
-          }
-          rightSection={
-            <SearchableDropDown
-              isError={isError}
-              isRequiredField={true}
-              onSelectItem={handleSelectCentre}
-              onRemoveItem={handleDeselectCentre}
-              //options={getCentreListFromResponse()} //Todo : Api update will be done by shahzad
-              selectedOptionsList={city}
-              placeholderText="session.rounds.selectCentres"
-              title="session.rounds.centres"
-            />
-          }
-        />
+        <>
+          {apiStatus === API_STATUS.IDLE ||
+            (apiStatus === API_STATUS.LOADING && <CustomLoader />)}
+
+          {apiStatus === API_STATUS.SUCCESS &&
+            roundDetails &&
+            currentMode === FORM_STATES.EDITABLE && (
+              <EditSessionRound
+                intl={intl}
+                onClickCancel={handelOnClickCancel}
+                roundDetails={roundDetails}
+                selectedModule={selectedModule}
+                switchLabel={switchLabel}
+              />
+            )}
+
+          {apiStatus === API_STATUS.SUCCESS &&
+            roundDetails &&
+            currentMode === FORM_STATES.VIEW_ONLY && (
+              <SessionRoundDetails
+                intl={intl}
+                onClickEdit={handleOnClickEdit}
+                roundDetails={roundDetails}
+                roundNo={roundNo}
+              />
+            )}
+        </>
       }
       bottomSection={
-        <div className={styles.gridClass}>
-          {roundList.map((item) => {
-            return (
-              <RoundCard
-                key={item.id}
-                headingDescription={item.headingDescription}
-                headingIntl={item.headingIntl}
-                imageUrl={item.imageUrl}
-                onClick={() => {
-                  navigate(`${item.onClickNaviagtion}?roundId=${roundId}`);
-                }}
-              />
-            );
-          })}
-        </div>
+        <>
+          {currentMode == FORM_STATES.VIEW_ONLY && (
+            <TwoRow
+              topSectionStyle={classes.bottomContainer}
+              topSection={
+                <Typography className={styles.blackText}>
+                  {intl.formatMessage({
+                    id:
+                      roundNo === 1
+                        ? "session.setUpRoundOne"
+                        : "session.setUpRoundTwo",
+                  })}
+                </Typography>
+              }
+              bottomSection={
+                <div className={styles.gridClass}>
+                  {roundList.map((item) => {
+                    return (
+                      <RoundCard
+                        key={item.id}
+                        headingDescription={item.headingDescription}
+                        headingIntl={item.headingIntl}
+                        imageUrl={item.imageUrl}
+                        onClick={() => {
+                          navigate(
+                            `${item.onClickNaviagtion}?roundId=${roundId}`
+                          );
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              }
+            />
+          )}
+        </>
       }
       bottomSectionStyle={
         responsive?.isXl

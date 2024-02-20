@@ -227,8 +227,8 @@ export const getCurrentFormState = (
 
 export const splitName = (fullName) => {
   const parts = fullName?.split(" ");
-  const firstName = parts?.[0];
-  const lastName = parts?.slice(1)?.join(" ");
+  const firstName = parts?.[0] || "";
+  const lastName = parts?.slice(1)?.join(" ") || "";
 
   return { firstName, lastName };
 };

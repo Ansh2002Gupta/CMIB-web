@@ -237,7 +237,7 @@ const TicketChatScreen = () => {
                 leftSectionStyle={{ flex: 5 }}
                 rightSectionStyle={{ flex: 2 }}
                 leftSection={renderChatSection()}
-                rightSection={renderTicketDetails}
+                rightSection={renderTicketDetails()}
               />
             ) : isDetailsScreen ? (
               renderTicketDetails()

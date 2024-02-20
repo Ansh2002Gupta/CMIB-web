@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
-import { Avatar, Space, Card, Button } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Space, Card, Button } from "antd";
 
+import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   setShowChangePasswordModal,
@@ -13,6 +13,7 @@ import {
 import { ReactComponent as LogoutIcon } from "../../themes/base/assets/icons/logout.svg";
 import headerActionItems from "../../constants/headerActionItems";
 import { USER_PROFILE_QUERY_PARAMS } from "../../constant/constant";
+import { splitName } from "../../constant/utils";
 import styles from "./profileDropdown.module.scss";
 import "./override.css";
 
@@ -26,6 +27,7 @@ export default function CardDropdownOverlay({
   const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const [, setSearchParams] = useSearchParams();
+  const { firstName, lastName } = splitName(userName);
 
   const handleLogoutClick = () => {
     setDropdownVisible(false);
@@ -59,8 +61,17 @@ export default function CardDropdownOverlay({
           direction="vertical"
           size="middle"
         >
-          <Avatar size={64} src={userProfile} icon={<UserOutlined />} />
-          <Space direction="vertical" size="1" className={styles.nameAndEmailContainer}>
+          <ProfileIcon
+            firstName={firstName}
+            lastName={lastName}
+            profileImage={userProfile}
+            size="sm"
+          />
+          <Space
+            direction="vertical"
+            size="1"
+            className={styles.nameAndEmailContainer}
+          >
             <span className={`${styles.profileName} ${styles.profileMenuName}`}>
               {userName}
             </span>
