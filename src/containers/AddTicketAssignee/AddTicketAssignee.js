@@ -105,6 +105,7 @@ const AddTicketAssignee = ({
                       checked={selectedValue?.id === item?.id}
                     />
                   }
+                  rightSectionStyle={classes.assigneeTextContainer}
                   rightSection={
                     <Typography className={styles.assigneeText}>
                       {item.name}
