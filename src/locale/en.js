@@ -10,7 +10,7 @@ const locale = {
   "label.access": "Access",
   "label.notValidUserAccess": "Please select a valid access type!",
   "label.status": "Status",
-  "label.emailId": "Enter ID",
+  "label.emailId": "Email Id",
   "label.password": "Password",
   "label.thanks": "Thanks!",
   "label.loginHeading": "Login to CMI&B",
