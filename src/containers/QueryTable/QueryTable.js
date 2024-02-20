@@ -183,15 +183,14 @@ const QueryTable = ({
         ...currentPageIdsArray,
       ]);
       return;
-    } else {
-      const currentPendingPageIdsArray = data?.records?.map((query) => {
-        if (query.status === "Pending") return query?.id;
-      });
-      setSelctedQueriesToBeMarkedAsAnswered((prev) => [
-        ...prev,
-        ...currentPendingPageIdsArray,
-      ]);
     }
+    const currentPendingPageIdsArray = data?.records?.map((query) => {
+      if (query.status === "Pending") return query?.id;
+    });
+    setSelctedQueriesToBeMarkedAsAnswered((prev) => [
+      ...prev,
+      ...currentPendingPageIdsArray,
+    ]);
   };
 
   const toggleSelectedQueriesId = (queryId) => {
