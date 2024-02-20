@@ -175,7 +175,10 @@ const CenterDetailsContent = ({
               placeholder={intl.formatMessage({
                 id: "label.placeholder.centreStartTime",
               })}
-              value={dayjs(formData?.centreStartTime, "HH:mm:ss")}
+              value={
+                formData?.centreStartTime &&
+                dayjs(formData?.centreStartTime, "HH:mm:ss")
+              }
               disabled={!isEdit}
             />
             <CustomDateTimePicker
@@ -191,7 +194,10 @@ const CenterDetailsContent = ({
               placeholder={intl.formatMessage({
                 id: "label.placeholder.centreEndTime",
               })}
-              value={dayjs(formData?.centreEndTime, "HH:mm:ss")}
+              value={
+                formData?.centreEndTime &&
+                dayjs(formData?.centreEndTime, "HH:mm:ss")
+              }
               disabled={!isEdit}
             />
           </div>
