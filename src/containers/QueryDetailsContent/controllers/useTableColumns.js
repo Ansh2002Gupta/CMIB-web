@@ -46,42 +46,32 @@ const useTableColumns = () => {
         },
         {
           key: "5",
-          label: getTextWithStar(intl.formatMessage({ id: "label.entity" })),
+          label: intl.formatMessage({ id: "label.entity" }),
           children: data?.entity,
         },
         {
           key: "6",
-          label: getTextWithStar(
-            intl.formatMessage({ id: "label.firmRegistrationNo" })
-          ),
+          label: intl.formatMessage({ id: "label.firmRegistrationNo" }),
           children: data?.firm_registration_number,
         },
         {
           key: "7",
-          label: getTextWithStar(
-            intl.formatMessage({ id: "label.partnersNo" })
-          ),
+          label: intl.formatMessage({ id: "label.partnersNo" }),
           children: data?.partners_number || 0,
         },
         {
           key: "8",
-          label: getTextWithStar(
-            intl.formatMessage({ id: "label.currentIndustry" })
-          ),
+          label: intl.formatMessage({ id: "label.currentIndustry" }),
           children: data?.current_industry,
         },
         {
           key: "9",
-          label: getTextWithStar(
-            intl.formatMessage({ id: "label.contactPersonName" })
-          ),
+          label: intl.formatMessage({ id: "label.contactPersonName" }),
           children: data?.contact_person_name,
         },
         {
           key: "10",
-          label: getTextWithStar(
-            intl.formatMessage({ id: "label.contactPersonDesignation" })
-          ),
+          label: intl.formatMessage({ id: "label.contactPersonDesignation" }),
           children: data?.contact_person_designation,
         },
         {
