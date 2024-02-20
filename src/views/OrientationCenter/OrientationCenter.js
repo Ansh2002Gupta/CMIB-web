@@ -368,7 +368,7 @@ const OrientationCenter = () => {
           bottomSection={
             fetchCentersSuccessFlag &&
             !isUpdatingOrientationCentre &&
-            orientationCentres?.mata?.total && (
+            orientationCentres?.meta?.total && (
               <TwoColumn
                 className={styles.buttonContainer}
                 leftSection={
