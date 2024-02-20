@@ -190,22 +190,22 @@ const useRenderColumn = () => {
       );
     };
 
-    title &&
-      (columnObject.title = () => {
-        return renderSorterColumn ? (
-          <Typography
-            className={[styles.columnHeading, customColumnHeading].join(" ")}
-            onClick={() => {
-              setSortBy((prev) => {
-                const newSortOrder = toggleSorting(prev);
-                columnSortByHandler({
-                  sortDirection: newSortOrder,
-                  sortField: columnObject.key,
-                });
-                return newSortOrder;
+    columnObject.title = () => {
+      return renderSorterColumn ? (
+        <Typography
+          className={[styles.columnHeading, customColumnHeading].join(" ")}
+          onClick={() => {
+            setSortBy((prev) => {
+              const newSortOrder = toggleSorting(prev);
+              columnSortByHandler({
+                sortDirection: newSortOrder,
+                sortField: columnObject.key,
               });
-            }}
-          >
+              return newSortOrder;
+            });
+          }}
+        >
+          {!!title && (
             <div className={styles.sortingArrowContainer}>
               {title}
               <Image
@@ -214,18 +214,19 @@ const useRenderColumn = () => {
                 className={[styles.centerContent, ...customIconStyle].join(" ")}
               />
             </div>
-          </Typography>
-        ) : (
-          <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
-            {title}
-            {isRequiredField && (
-              <>
-                &nbsp;<span className={styles.isRequiredStar}>*</span>
-              </>
-            )}
-          </p>
-        );
-      });
+          )}
+        </Typography>
+      ) : (
+        <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
+          {title || ""}
+          {isRequiredField && (
+            <>
+              &nbsp;<span className={styles.isRequiredStar}>*</span>
+            </>
+          )}
+        </p>
+      );
+    };
 
     renderTitleWithCheckbox?.visible &&
       (columnObject.title = () => {
