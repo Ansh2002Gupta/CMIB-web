@@ -52,6 +52,8 @@ const useRenderColumn = () => {
   }) => {
     const columnObject = {};
 
+    const { onSelectLocation } = renderAutoPlaceComplete;
+
     const {
       customContainerStyles,
       customTimeStyle,
@@ -265,10 +267,16 @@ const useRenderColumn = () => {
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
 
     sortDirection && (columnObject.sortDirection = sortDirection);
-
     renderAutoPlaceComplete.visible &&
-      (columnObject.render = (value) => {
-        return <AutoPlaceComplete value={value} />;
+      (columnObject.render = (value, record) => {
+        return (
+          <AutoPlaceComplete
+            onSelectLocation={(value) => {
+              onSelectLocation(value, record);
+            }}
+            defaultValue={value}
+          />
+        );
       });
 
     renderText?.visible &&
@@ -448,6 +456,7 @@ const useRenderColumn = () => {
                 customContainerStyles,
                 customTimeStyle,
                 defaultValue,
+                disabled,
                 isEditable,
                 isRequired,
                 type,
@@ -460,7 +469,6 @@ const useRenderColumn = () => {
               onChange={(val) => {
                 onChange(val, record);
               }}
-              disabled={disabled || !record?.isAddRow}
               errorMessage={record?.isAddRow && errorMessage}
             />
           ),

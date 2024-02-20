@@ -459,6 +459,8 @@ const locale = {
   "label.tickeNumber": "Ticket Number",
   "label.date_create_on": "Date Created On",
   "label.path.reply": "Ticket Details",
+  "label.orientation_no_result_msg":
+    "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
 };
 
 export default locale;

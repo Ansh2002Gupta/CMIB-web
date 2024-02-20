@@ -5,11 +5,11 @@ import { AutoComplete } from "antd";
 import { loadScript } from "../../Utils/loadScript";
 import { styles } from "./AutoPlaceComplete.styles";
 
-const AutoPlaceComplete = ({value}) => {
+const AutoPlaceComplete = ({defaultValue, onSelectLocation}) => {
   const intl = useIntl();
-  const [searchedLocation, setSearchedLocation] = useState("");
+  const [searchedLocation, setSearchedLocation] = useState(defaultValue);
   const [suggestedLocations, setSuggestedLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState({});
+  const [selectedLocation, setSelectedLocation] = useState(defaultValue);
 
   useEffect(() => {
     if (!window.google) {
@@ -59,31 +59,13 @@ const AutoPlaceComplete = ({value}) => {
   };
 
   const setLatLngFromAddress = (address) => {
-    // Note -> Use the below code if the lat and lng are required, else remove
-    var geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode(
-      {
-        address,
-      },
-      function (results, status) {
-        if (
-          status !== window.google.maps.places.PlacesServiceStatus.OK ||
-          !results
-        ) {
-          return;
-        }
-        let place = results[0];
-        setSelectedLocation({
-          latitude: place.geometry.location.lat(),
-          longitude: place.geometry.location.lng(),
-        });
-      }
-    );
+    setSelectedLocation(address);
+    onSelectLocation && onSelectLocation(address);
   };
 
   return (
       <AutoComplete
-        value={value}
+        value={searchedLocation}
         options={suggestedLocations}
         onChange={(data) => {
           setSearchedLocation(data);

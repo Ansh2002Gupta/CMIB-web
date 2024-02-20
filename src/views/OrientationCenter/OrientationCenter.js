@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
+import dayjs from "dayjs";
 import { ThemeContext } from "core/providers/theme";
 import { Spin, Typography } from "antd";
 
@@ -10,6 +11,7 @@ import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useUpdateOrientationCentre from "../../services/api-services/OrientationCentre/useUpdateOrientationCentre";
 import {
   CORE_ROUTE,
   ORIENTATION_CENTRES,
@@ -40,10 +42,17 @@ const OrientationCenter = () => {
   const [pageSize, setPageSize] = useState(
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
-  const roundID = searchParams.get(ROUND_ID);
+  const roundId = searchParams.get(ROUND_ID);
 
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
+  const [formData, setFormData] = useState([]);
+
+  const {
+    handleUpdateOrientationCentre,
+    isLoading: isUpdatingOrientationCentre,
+    errorWhileUpdatingCentre,
+  } = useUpdateOrientationCentre();
 
   const {
     data: orientationCentres,
@@ -56,10 +65,14 @@ const OrientationCenter = () => {
       CORE_ROUTE +
       `/${selectedModule?.key}` +
       ROUNDS +
-      `/${roundID}` +
+      `/${roundId}` +
       ORIENTATION_CENTRES,
     otherOptions: { skipApiCallOnMount: true },
   });
+
+  useEffect(() => {
+    setFormData(orientationCentres?.records);
+  }, [orientationCentres]);
 
   const resetCentreListingData = (orientationCentres) => {
     if (orientationCentres?.meta?.total) {
@@ -128,6 +141,17 @@ const OrientationCenter = () => {
     getOrientationCentres({ queryParamsObject: requestedParams });
   };
 
+  const handleInputChange = (field, value, recordId) => {
+    setFormData((prevFormData) => {
+      return prevFormData.map((item) => {
+        if (item.id === recordId) {
+          return { ...item, [field]: value };
+        }
+        return item;
+      });
+    });
+  };
+
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.sNo" }),
@@ -171,18 +195,27 @@ const OrientationCenter = () => {
       renderDateTime: {
         visible: true,
         type: "date",
+        isEditable: (record) => record.is_editable,
+        disabled: false,
         placeholder: intl.formatMessage({
           id: "label.placeholder.consentFromDate",
         }),
+        onChange: (val, record) => {
+          handleInputChange("schedule_date", val, record.id);
+        },
       },
       customStyles: styles.customColumnStyles,
-      onChange: () => {},
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.venue" }),
       dataIndex: "venue",
       key: "venue",
-      renderAutoPlaceComplete: { visible: true },
+      renderAutoPlaceComplete: {
+        visible: true,
+        onSelectLocation: (val, record) => {
+          handleInputChange("venue", val, record.id);
+        },
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.actions" }),
@@ -223,6 +256,16 @@ const OrientationCenter = () => {
     }
   }, []);
 
+  const getApiPayload = (formData) => {
+    return {
+      data: formData.map((item) => ({
+        id: item.id,
+        venue: item.venue,
+        schedule_date: dayjs(item.schedule_date).format("YYYY-MM-DD"),
+      })),
+    };
+  };
+
   const handleTryAgain = () => {
     const requestedParams = getRequestedQueryParams({});
     getOrientationCentres({
@@ -230,40 +273,66 @@ const OrientationCenter = () => {
     });
   };
 
+  const handleSaveChanges = () => {
+    const payload = getApiPayload(formData);
+    handleUpdateOrientationCentre({
+      payload,
+      roundId,
+      module: selectedModule?.key,
+    });
+  };
+
+  const renderError = (errorText, errorHeading, onRetryHandler) => (
+    <div className={styles.errorContainer}>
+      <ErrorMessageBox
+        onRetry={onRetryHandler}
+        errorText={errorText}
+        errorHeading={errorHeading}
+      />
+    </div>
+  );
+
   const renderContent = () => {
-    if (!isGettingOrientationCentres && errorWhileGettingCentres) {
-      return (
-        <div className={styles.errorContainer}>
-          <ErrorMessageBox
-            onRetry={handleTryAgain}
-            errorText={errorWhileGettingCentres?.data?.message}
-            errorHeading={intl.formatMessage({
-              id: "label.error",
-            })}
-          />
-        </div>
-      );
-    }
-    if (isGettingOrientationCentres) {
+    const isLoading =
+      isGettingOrientationCentres || isUpdatingOrientationCentre;
+    const errorHeading = intl.formatMessage({ id: "label.error" });
+
+    if (isLoading) {
       return (
         <div className={styles.errorContainer}>
           <Spin size="large" />
         </div>
       );
     }
+
+    if (errorWhileGettingCentres) {
+      const errorText = errorWhileGettingCentres?.data?.message;
+      return renderError(errorText, errorHeading, handleTryAgain);
+    }
+
+    if (errorWhileUpdatingCentre) {
+      const errorText = errorWhileUpdatingCentre?.data?.message;
+      return renderError(errorText, errorHeading, handleSaveChanges);
+    }
+
+    if (!orientationCentres?.meta?.total) {
+      const noResultText = intl.formatMessage({
+        id: "label.orientation_no_result_msg",
+      });
+      return renderError(noResultText, errorHeading);
+    }
+
     return (
       <DataTable
-        {...{
-          columns,
-          current,
-          pageSize,
-          onChangePageSize,
-          onChangeCurrentPage,
-        }}
+        columns={columns}
+        current={current}
+        pageSize={pageSize}
+        onChangePageSize={onChangePageSize}
+        onChangeCurrentPage={onChangeCurrentPage}
         currentDataLength={orientationCentres?.meta?.total}
         customContainerStyles={styles.tableContainer}
-        originalData={orientationCentres?.records}
-        customTableClassName={"customTableClassName"}
+        originalData={formData}
+        customTableClassName="customTableClassName"
       />
     );
   };
@@ -291,7 +360,8 @@ const OrientationCenter = () => {
           isTopFillSpace
           topSection={renderContent()}
           bottomSection={
-            fetchCentersSuccessFlag && (
+            fetchCentersSuccessFlag &&
+            !isUpdatingOrientationCentre && (
               <TwoColumn
                 className={styles.buttonContainer}
                 leftSection={
@@ -311,7 +381,7 @@ const OrientationCenter = () => {
                     btnText={intl.formatMessage({
                       id: "session.saveChanges",
                     })}
-                    onClick={() => {}}
+                    onClick={handleSaveChanges}
                   />
                 }
               />
