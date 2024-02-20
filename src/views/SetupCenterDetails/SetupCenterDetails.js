@@ -71,7 +71,14 @@ const SetupCenterDetails = () => {
             />
           }
           bottomSection={
-            <CenterDetailsContent {...{ centreDetailData, isEdit, roundId }} />
+            <CenterDetailsContent
+              {...{
+                centreDetailData,
+                isEdit,
+                roundId,
+                selectedModule: selectedModule?.key,
+              }}
+            />
           }
         />
       )}

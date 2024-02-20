@@ -119,6 +119,14 @@
   min-height: var(--height_44)
 }
 
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--height_50vh);
+  width: var(--fullWidth);
+}
+
 @media (min-width: 400px) and (max-width: 600px) {
   .customContainerStyles {
     width: var(--width_45Per);
