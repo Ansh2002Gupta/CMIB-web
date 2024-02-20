@@ -18,6 +18,7 @@ import { userDetailToast } from "../../globalContext/userDetail/userDetailAction
 import { getErrorMessage } from "../../constant/utils";
 import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import { QUERIES } from "../../routes/routeNames";
+import { STATUS_CODES } from "../../constant/constant";
 import { classes } from "./QueryDetails.styles";
 import styles from "./QueryDetails.module.scss";
 
@@ -47,7 +48,7 @@ const QueryDetails = () => {
   const typeOfData = data?.type?.split(" ")[1];
 
   useEffect(() => {
-    if (error?.data?.code === 404) {
+    if (error?.data?.code === STATUS_CODES.NOT_FOUND) {
       navigate(`/${selectedModule?.key}/${QUERIES}`);
       setUserDetailDispatch(userDetailToast(true));
     }
