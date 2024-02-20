@@ -15,7 +15,7 @@ const useConfigUpdateHandler = () => {
   const [configUpdateResult, setConfigUpdateResult] = useState(null);
   const [errorWhileUpdatingConfig, setErrorWhileUpdatingConfig] = useState("");
 
-  const uodateCentreConfig = async ({
+  const updateCentreConfig = async ({
     centreId,
     module,
     onSuccessCallback,
@@ -56,7 +56,7 @@ const useConfigUpdateHandler = () => {
   return {
     errorWhileUpdatingConfig,
     configUpdateResult,
-    uodateCentreConfig,
+    updateCentreConfig,
     isError,
     isLoading,
     isSuccess,
