@@ -184,6 +184,9 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           onChange={(val) => {
             handleInputChange(val, "scheduleDate");
           }}
+          disabledDate={(current) => {
+            return current && current < dayjs().add(1, "day").startOf("day");
+          }}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.selectDate",
           })}
