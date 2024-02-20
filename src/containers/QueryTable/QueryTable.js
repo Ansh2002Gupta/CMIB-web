@@ -481,8 +481,7 @@ const QueryTable = ({
           currentDataLength={data?.meta?.total}
           filterPropertiesArray={convertPermissionFilter(
             queryTypesData || [],
-            "Query Type",
-            "queries_count"
+            "Query Type"
           )}
           onFilterApply={handleOnFilterApply}
         />
