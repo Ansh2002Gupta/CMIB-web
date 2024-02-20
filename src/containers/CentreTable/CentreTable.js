@@ -181,7 +181,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           customTimeStyle={styles.inputStyle}
           type="date"
           disabled={!record.isAddRow}
-          onChange={(val, dateString) => {
+          onChange={(val) => {
             handleInputChange(val, "scheduleDate");
           }}
           placeholder={intl.formatMessage({
@@ -249,7 +249,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
                 customContainerStyles={styles.customContainerStyles}
                 customInputNumberStyles={styles.joinedCustomContainerStyles}
                 onChange={(val) => {
-                  handleInputChange(val.target.value, "firm", "firmFee");
+                  handleInputChange(val, "firm", "firmFee");
                 }}
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterFee",
@@ -296,7 +296,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           customContainerStyles={styles.customContainerStyles}
           customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
-            handleInputChange(val.target.value, "norm1");
+            handleInputChange(val, "norm1");
           }}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterNorm1",
@@ -323,7 +323,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           customContainerStyles={styles.customContainerStyles}
           customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
-            handleInputChange(val.target.value, "norm2");
+            handleInputChange(val, "norm2");
           }}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterNorm2",
@@ -350,7 +350,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           customContainerStyles={styles.customContainerStyles}
           customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
-            handleInputChange(val.target.value, "norm2MinVacancy");
+            handleInputChange(val, "norm2MinVacancy");
           }}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterVacancy",

@@ -129,7 +129,7 @@ const SetupCenter = () => {
       title: intl.formatMessage({ id: "label.sNo" }),
       dataIndex: "id",
       key: "id",
-      render: (_, _, index) => {
+      render: (text, record, index) => {
         const pageNumber = current || 1;
         const serialNumber = (pageNumber - 1) * pageSize + (index + 1);
         return {
