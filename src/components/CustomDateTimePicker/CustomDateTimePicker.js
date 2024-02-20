@@ -31,7 +31,6 @@ const CustomDateTimePicker = ({
   type,
   value,
 }) => {
-  console.log("DISABLE", disabledDate);
   const { getImage } = useContext(ThemeContext);
 
   return (
