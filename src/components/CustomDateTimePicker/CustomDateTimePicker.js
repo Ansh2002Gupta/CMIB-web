@@ -19,6 +19,7 @@ const CustomDateTimePicker = ({
   dateFormat,
   defaultValue,
   disabled,
+  disabledDate,
   errorMessage,
   errorTimeInput,
   format,
@@ -30,6 +31,7 @@ const CustomDateTimePicker = ({
   type,
   value,
 }) => {
+  console.log("DISABLE", disabledDate);
   const { getImage } = useContext(ThemeContext);
 
   return (
@@ -63,7 +65,13 @@ const CustomDateTimePicker = ({
               />
             ) : isEditable ? (
               <DatePicker
-                {...{ defaultValue, onChange, placeholder, disabled }}
+                {...{
+                  defaultValue,
+                  disabled,
+                  disabledDate,
+                  onChange,
+                  placeholder,
+                }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("calendar")} />}

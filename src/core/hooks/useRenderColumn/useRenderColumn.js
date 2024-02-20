@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Checkbox, Dropdown, Image, Switch, Tooltip, Typography } from "antd";
+import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
@@ -65,6 +65,7 @@ const useRenderColumn = () => {
       onChange = () => {},
       placeholder = "",
       type,
+      disabledDate = () => {},
     } = renderDateTime;
 
     const {
@@ -467,6 +468,7 @@ const useRenderColumn = () => {
                 customTimeStyle,
                 defaultValue,
                 disabled,
+                disabledDate,
                 isEditable,
                 isRequired,
                 type,
