@@ -167,7 +167,9 @@ const QueryTable = ({
   const areSomeItemsSelected = checkAreAllQueryOfCurrentPageSelected("some");
 
   const toggleSelectAllItems = () => {
-    const currentPageIdsArray = data?.records?.map((query) => query?.id);
+    const currentPageIdsArray = data?.records?.map((query) => {
+      return query?.id;
+    });
     if (areAllItemsSelected) {
       const updatedData = selectedQueriesToBeMarkedAsAnswered?.filter(
         (queryId) => !currentPageIdsArray?.includes(queryId)
@@ -175,9 +177,19 @@ const QueryTable = ({
       setSelctedQueriesToBeMarkedAsAnswered(updatedData);
       return;
     }
+    if (areSomeItemsSelected) {
+      setSelctedQueriesToBeMarkedAsAnswered((prev) => [
+        ...prev,
+        ...currentPageIdsArray,
+      ]);
+      return;
+    }
+    const currentPendingPageIdsArray = data?.records?.map((query) => {
+      if (query.status === "Pending") return query?.id;
+    });
     setSelctedQueriesToBeMarkedAsAnswered((prev) => [
       ...prev,
-      ...currentPageIdsArray,
+      ...currentPendingPageIdsArray,
     ]);
   };
 
@@ -300,6 +312,7 @@ const QueryTable = ({
       q: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
+    setSelctedQueriesToBeMarkedAsAnswered([]);
   };
 
   const handleOnFilterApply = (updatedFiltersValue) => {

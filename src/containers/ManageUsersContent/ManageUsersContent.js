@@ -295,7 +295,7 @@ const ManageUsersContent = () => {
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-  }, [filterArray, current, pageSize]);
+  }, [current, filterArray, pageSize]);
 
   useEffect(() => {
     return () => {
