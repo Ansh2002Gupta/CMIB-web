@@ -368,7 +368,7 @@ const QueryTable = ({
           <Chip
             bgStyles={styles.chipBg}
             textStyles={styles.chipText}
-            label={item?.readable_id}
+            label={item?.readable_id || "-"}
             key={index}
           />
         );
