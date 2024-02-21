@@ -73,7 +73,7 @@ const EditSessionRoundTemplate = ({
             />
           }
           bottomSection={
-            currentlySelectedModuleKey ===
+            currentlySelectedModuleKey !==
               MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
               <WorkExperienceRange {...{ experience, setExperience }} />
             )
