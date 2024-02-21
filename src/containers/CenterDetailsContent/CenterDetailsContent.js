@@ -19,6 +19,7 @@ import styles from "./CenterDetailsContent.module.scss";
 
 const CenterDetailsContent = ({
   centreDetailData,
+  centreId,
   isEdit,
   roundId,
   selectedModule,
@@ -26,9 +27,22 @@ const CenterDetailsContent = ({
   const intl = useIntl();
   const responsive = useResponsive();
 
-  const { interview_dates, placement_centre_id } = centreDetailData || {};
+  const { interview_dates } = centreDetailData || {};
   const [formData, setFormData] = useState({});
   const [tableData, setTableData] = useState([]);
+
+  const addTableData = {
+    id: 0,
+    isAddRow: true,
+    scheduleDate: null,
+    participationFee: "",
+    firm: { firmFee: "", uptoPartners: "" },
+    norm1: "",
+    norm2: "",
+    norm2MinVacancy: "",
+  };
+
+  const [errors, setErrors] = useState({});
 
   const {
     updateCentreConfig,
@@ -55,8 +69,25 @@ const CenterDetailsContent = ({
       norm2MinVacancy: date.norm2_min_vacancy.toString(),
     }));
 
-    setTableData(interviewConfiguration);
-  }, [centreDetailData]);
+    setTableData(() => {
+      const newTableData = isEdit
+        ? [...interviewConfiguration, addTableData]
+        : interviewConfiguration;
+
+      setErrors(
+        newTableData.map(() => ({
+          scheduleDate: "",
+          participationFee: "",
+          firm: { firmFee: "", uptoPartners: "" },
+          norm1: "",
+          norm2: "",
+          norm2MinVacancy: "",
+        }))
+      );
+
+      return newTableData;
+    });
+  }, [centreDetailData, isEdit]);
 
   const { navigateScreen: navigate } = useNavigateScreen();
 
@@ -64,12 +95,114 @@ const CenterDetailsContent = ({
     navigate(-1);
   };
 
+  const validate = (index) => {
+    let errorCount = 0;
+    if (!tableData[index]?.scheduleDate) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.selectDate" }),
+        "scheduleDate",
+        index
+      );
+      errorCount += 1;
+    }
+    if (!tableData[index]?.participationFee) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterParticipationFee" }),
+        "participationFee",
+        index
+      );
+      errorCount += 1;
+    }
+    if (!tableData[index]?.firm?.firmFee) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterFirmFee" }),
+        "firm",
+        index,
+        "firmFee"
+      );
+      errorCount += 1;
+    }
+    if (!tableData[index]?.firm?.uptoPartners) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterpartner" }),
+        "firm",
+        index,
+        "uptoPartners"
+      );
+      errorCount += 1;
+    }
+    if (!tableData[index]?.norm1) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterNorm1" }),
+        "norm1",
+        index
+      );
+      errorCount += 1;
+    }
+    if (!tableData[index]?.norm2) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterNorm2" }),
+        "norm2",
+        index
+      );
+      errorCount += 1;
+    }
+    if (!tableData[index]?.norm2MinVacancy) {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.enterVacancy" }),
+        "norm2MinVacancy",
+        index
+      );
+      errorCount += 1;
+    }
+
+    return errorCount <= 0;
+  };
+
+  const handleSetError = (error, name, index, nestedName) => {
+    setErrors((prevErrors) => {
+      const newErrors = [...prevErrors];
+      if (nestedName) {
+        const updatedNestedData = {
+          ...newErrors[index][name],
+          [nestedName]: error,
+        };
+        newErrors[index][name] = updatedNestedData;
+      } else {
+        newErrors[index][name] = error;
+      }
+      return newErrors;
+    });
+  };
+
   const handleSave = () => {
+    const isValid = tableData.slice(0, -1).every((_, index) => validate(index));
+    if (!isValid) {
+      return;
+    }
+
+    if (errors.length > 0) {
+      setErrors((prevErrors) => {
+        const newErrors = [...prevErrors];
+        const lastErrorIndex = newErrors.length - 1;
+        newErrors[lastErrorIndex] = {
+          scheduleDate: "",
+          participationFee: "",
+          firm: { firmFee: "", uptoPartners: "" },
+          norm1: "",
+          norm2: "",
+          norm2MinVacancy: "",
+        };
+        return newErrors;
+      });
+    }
+
     const centreDetails = {
-      centre_start_time: dayjs(formData?.centreStartTime, "HH:mm:ss"),
-      centre_end_time: dayjs(formData.centreStartTime, "HH:mm:ss"),
+      centre_start_time: dayjs(formData?.centreStartTime).format("HH:mm:ss"),
+      centre_end_time: dayjs(formData.centreStartTime).format("HH:mm:ss"),
       psychometric_test_fee: parseInt(formData.PsychometricFee),
-      interview_dates: tableData.map((item) => ({
+      interview_dates: tableData.slice(0, -1).map((item) => ({
+        id: parseInt(item.id),
         firm_fee: parseInt(item.firm.firmFee),
         norm1: parseInt(item.norm1),
         norm2: parseInt(item.norm2),
@@ -83,7 +216,7 @@ const CenterDetailsContent = ({
     updateCentreConfig({
       module: selectedModule,
       payload: centreDetails,
-      centreId: placement_centre_id,
+      centreId: centreId,
       roundId: roundId,
     });
   };
@@ -217,7 +350,18 @@ const CenterDetailsContent = ({
                   </Typography>
                 }
                 bottomSection={
-                  <CentreTable {...{ isEdit, tableData, setTableData }} />
+                  <CentreTable
+                    {...{
+                      addTableData,
+                      errors,
+                      handleSetError,
+                      isEdit,
+                      setTableData,
+                      setErrors,
+                      tableData,
+                      validate,
+                    }}
+                  />
                 }
                 bottomSectionStyle={classes.bottomStyle}
               />

@@ -43,8 +43,7 @@ const SetupCenterDetails = () => {
   });
   const intl = useIntl();
 
-  const { centres } = centreDetailData || {};
-  const { centre_code, name } = centres?.[0] ?? {};
+  const { centre_code, name } = centreDetailData || {};
 
   return (
     <>
@@ -67,13 +66,17 @@ const SetupCenterDetails = () => {
           className={styles.mainContainer}
           topSection={
             <CenterDetailsHeader
-              {...{ centreCode: centre_code, centre: name }}
+              {...{
+                centreCode: centre_code,
+                centre: name,
+              }}
             />
           }
           bottomSection={
             <CenterDetailsContent
               {...{
                 centreDetailData,
+                centreId,
                 isEdit,
                 roundId,
                 selectedModule: selectedModule?.key,

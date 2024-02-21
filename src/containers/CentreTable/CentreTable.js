@@ -12,157 +12,78 @@ import CustomInput from "../../components/CustomInput/CustomInput";
 import styles from "./CentreTable.module.scss";
 import "./Override.css";
 
-const CentreTable = ({ isEdit, tableData, setTableData }) => {
+const CentreTable = ({
+  addTableData,
+  isEdit,
+  errors,
+  setErrors,
+  tableData,
+  setTableData,
+  validate,
+}) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
-  const [addTableData, setAddTableData] = useState({
-    id: Math.random().toString(),
-    isAddRow: true,
-    scheduleDate: null,
-    participationFee: "",
-    firm: { firmFee: "", uptoPartners: "" },
-    norm1: "",
-    norm2: "",
-    norm2MinVacancy: "",
-  });
-  const [errors, setErrors] = useState({
-    scheduleDate: "",
-    participationFee: "",
-    firm: { firmFee: "", uptoPartners: "" },
-    norm1: "",
-    norm2: "",
-    norm2MinVacancy: "",
-  });
 
-  const handleRemove = (record) => {
-    const filteredData = tableData.filter((item) => item.id !== record.id);
+  const handleRemove = (index) => {
+    const filteredData = tableData.filter((item, idx) => idx !== index);
     setTableData(filteredData);
+    setErrors((prevErrors) => prevErrors.filter((item, idx) => idx !== index));
   };
 
-  const handleAdd = (record) => {
-    if (validate()) {
+  const handleAdd = (record, index) => {
+    if (validate(index)) {
       setTableData((prevTableData) => {
-        const newRecord = { ...record };
-        delete newRecord.isAddRow;
-        return [...prevTableData, newRecord];
+        delete prevTableData[index].isAddRow;
+        return [...prevTableData, addTableData];
       });
 
-      setAddTableData({
-        id: Math.random().toString(),
-        isAddRow: true,
-        scheduleDate: null,
-        participationFee: "",
-        firm: { firmFee: "", uptoPartners: "" },
-        norm1: "",
-        norm2: "",
-        norm2MinVacancy: "",
-      });
-    }
-  };
-
-  const handleSetError = (error, name, nestedName) => {
-    if (nestedName) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: {
-          ...prev[name],
-          [nestedName]: error,
+      setErrors((prevErrors) => [
+        ...prevErrors,
+        {
+          scheduleDate: "",
+          participationFee: "",
+          firm: { firmFee: "", uptoPartners: "" },
+          norm1: "",
+          norm2: "",
+          norm2MinVacancy: "",
         },
-      }));
-    } else {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: error,
-      }));
+      ]);
     }
   };
 
-  const handleInputChange = (value, name, nestedName) => {
-    if (nestedName) {
-      setAddTableData((prev) => ({
-        ...prev,
-        [name]: {
-          ...prev[name],
+  const handleInputChange = (value, name, index, nestedName) => {
+    setTableData((prevTableData) => {
+      const newTableData = [...prevTableData];
+      if (nestedName) {
+        const updatedNestedData = {
+          ...newTableData[index][name],
           [nestedName]: value,
-        },
-      }));
-      setErrors((prev) => ({
-        ...prev,
-        [name]: {
-          ...prev[name],
+        };
+        newTableData[index] = {
+          ...newTableData[index],
+          [name]: updatedNestedData,
+        };
+      } else {
+        newTableData[index] = {
+          ...newTableData[index],
+          [name]: value,
+        };
+      }
+      return newTableData;
+    });
+    setErrors((prevErrors) => {
+      const newErrors = [...prevErrors];
+      if (nestedName) {
+        newErrors[index][name] = {
+          ...newErrors[index][name],
           [nestedName]: "",
-        },
-      }));
-    } else {
-      setAddTableData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-    }
+        };
+      } else {
+        newErrors[index][name] = "";
+      }
+      return newErrors;
+    });
   };
-
-  const validate = () => {
-    let errorCount = 0;
-    if (!addTableData?.scheduleDate) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.selectDate" }),
-        "scheduleDate"
-      );
-      errorCount += 1;
-    }
-    if (!addTableData?.participationFee) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterParticipationFee" }),
-        "participationFee"
-      );
-      errorCount += 1;
-    }
-    if (!addTableData?.firm?.firmFee) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterFirmFee" }),
-        "firm",
-        "firmFee"
-      );
-      errorCount += 1;
-    }
-    if (!addTableData?.firm?.uptoPartners) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterpartner" }),
-        "firm",
-        "uptoPartners"
-      );
-      errorCount += 1;
-    }
-    if (!addTableData?.norm1) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterNorm1" }),
-        "norm1"
-      );
-      errorCount += 1;
-    }
-    if (!addTableData?.norm2) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterNorm2" }),
-        "norm2"
-      );
-      errorCount += 1;
-    }
-    if (!addTableData?.norm2MinVacancy) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterVacancy" }),
-        "norm2MinVacancy"
-      );
-      errorCount += 1;
-    }
-
-    return errorCount <= 0;
-  };
-
-  const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;
 
   const columns = [
     {
@@ -174,15 +95,14 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       ),
       className: styles.tableHeader,
       key: "scheduleDate",
-      render: (text, record) => (
+      render: (text, record, index) => (
         <CustomDateTimePicker
           customContainerStyles={styles.customDateContainerStyles}
           value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
           customTimeStyle={styles.inputStyle}
           type="date"
-          disabled={!record.isAddRow}
           onChange={(val) => {
-            handleInputChange(val, "scheduleDate");
+            handleInputChange(val, "scheduleDate", index);
           }}
           disabledDate={(current) => {
             return current && current < dayjs().add(1, "day").startOf("day");
@@ -190,7 +110,8 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
           placeholder={intl.formatMessage({
             id: "centre.placeholder.selectDate",
           })}
-          errorMessage={record.isAddRow && errors?.scheduleDate}
+          errorMessage={errors[index]?.scheduleDate}
+          isError={!!errors[index]?.scheduleDate}
         />
       ),
     },
@@ -203,21 +124,20 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       ),
       dataIndex: "participationFee",
       key: "participationFee",
-      render: (text, record) => (
+      render: (text, record, index) => (
         <CustomInput
           type="inputNumber"
           value={text}
-          disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
           customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
-            handleInputChange(val, "participationFee");
+            handleInputChange(val, "participationFee", index);
           }}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterFee",
           })}
-          errorMessage={record.isAddRow && errors?.participationFee}
-          isError={!!(record.isAddRow && errors?.participationFee)}
+          errorMessage={errors[index]?.participationFee}
+          isError={!!errors[index]?.participationFee}
         />
       ),
     },
@@ -241,24 +161,23 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       ),
       dataIndex: "firm",
       key: "firm",
-      render: (text, record) => {
+      render: (text, record, index) => {
         return (
           <TwoColumn
             leftSection={
               <CustomInput
                 type="inputNumber"
                 value={text?.firmFee}
-                disabled={!record.isAddRow}
                 customContainerStyles={styles.customContainerStyles}
                 customInputNumberStyles={styles.joinedCustomContainerStyles}
                 onChange={(val) => {
-                  handleInputChange(val, "firm", "firmFee");
+                  handleInputChange(val, "firm", index, "firmFee");
                 }}
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterFee",
                 })}
-                errorMessage={record.isAddRow && errors?.firm?.firmFee}
-                isError={!!(record.isAddRow && errors?.firm?.firmFee)}
+                errorMessage={errors[index]?.firm?.firmFee}
+                isError={!!errors[index]?.firm?.firmFee}
               />
             }
             rightSection={
@@ -267,15 +186,14 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
                 customContainerStyles={styles.customContainerStyles}
                 customInputNumberStyles={styles.inputNumberStyle}
                 value={text?.uptoPartners}
-                disabled={!record.isAddRow}
                 onChange={(val) => {
-                  handleInputChange(val, "firm", "uptoPartners");
+                  handleInputChange(val, "firm", index, "uptoPartners");
                 }}
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterpartner",
                 })}
-                errorMessage={record.isAddRow && errors?.firm?.uptoPartners}
-                isError={!!(record.isAddRow && errors?.firm?.uptoPartners)}
+                errorMessage={errors[index]?.firm?.uptoPartners}
+                isError={errors[index]?.firm?.uptoPartners}
               />
             }
           />
@@ -291,21 +209,20 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       ),
       dataIndex: "norm1",
       key: "norm1",
-      render: (text, record) => (
+      render: (text, record, index) => (
         <CustomInput
           type="inputNumber"
           value={text}
-          disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
           customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
-            handleInputChange(val, "norm1");
+            handleInputChange(val, "norm1", index);
           }}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterNorm1",
           })}
-          errorMessage={record.isAddRow && errors?.norm1}
-          isError={!!(record.isAddRow && errors?.norm1)}
+          errorMessage={errors[index]?.norm1}
+          isError={errors[index]?.norm1}
         />
       ),
     },
@@ -318,21 +235,20 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       ),
       dataIndex: "norm2",
       key: "norm2",
-      render: (text, record) => (
+      render: (text, record, index) => (
         <CustomInput
           type="inputNumber"
           value={text}
-          disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
           customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
-            handleInputChange(val, "norm2");
+            handleInputChange(val, "norm2", index);
           }}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterNorm2",
           })}
-          errorMessage={record.isAddRow && errors?.norm2}
-          isError={!!(record.isAddRow && errors?.norm2)}
+          errorMessage={errors[index]?.norm2}
+          isError={!!errors[index]?.norm2}
         />
       ),
     },
@@ -345,21 +261,20 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       ),
       dataIndex: "norm2MinVacancy",
       key: "norm2MinVacancy",
-      render: (text, record) => (
+      render: (text, record, index) => (
         <CustomInput
           type="inputNumber"
           value={text}
-          disabled={!record.isAddRow}
           customContainerStyles={styles.customContainerStyles}
           customInputNumberStyles={styles.inputStyle}
           onChange={(val) => {
-            handleInputChange(val, "norm2MinVacancy");
+            handleInputChange(val, "norm2MinVacancy", index);
           }}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterVacancy",
           })}
-          errorMessage={record.isAddRow && errors?.norm2MinVacancy}
-          isError={!!(record.isAddRow && errors?.norm2MinVacancy)}
+          errorMessage={errors[index]?.norm2MinVacancy}
+          isError={!!errors[index]?.norm2MinVacancy}
         />
       ),
     },
@@ -368,7 +283,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
       title: " ",
       dataIndex: "remove",
       key: "remove",
-      render: (text, record) =>
+      render: (text, record, index) =>
         isEdit && (
           <Image
             className={styles.imageStyle}
@@ -377,9 +292,9 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
             preview={false}
             onClick={() => {
               if (record?.isAddRow) {
-                handleAdd(record);
+                handleAdd(record, index);
               } else {
-                handleRemove(record);
+                handleRemove(index);
               }
             }}
           />
@@ -390,7 +305,7 @@ const CentreTable = ({ isEdit, tableData, setTableData }) => {
   return (
     <Table
       columns={columns}
-      dataSource={extendedTableData}
+      dataSource={tableData}
       pagination={false}
       rowClassName={styles.rowtext}
       scroll={{ x: "max-content" }}
@@ -407,9 +322,13 @@ CentreTable.defaultProps = {
 };
 
 CentreTable.propTypes = {
+  addTableData: PropTypes.object,
   isEdit: PropTypes.bool,
+  errors: PropTypes.object,
+  setErrors: PropTypes.func,
   tableData: PropTypes.array,
   setTableData: PropTypes.func,
+  validate: PropTypes.func,
 };
 
 export default CentreTable;
