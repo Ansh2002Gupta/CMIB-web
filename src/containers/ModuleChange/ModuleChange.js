@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Image, Typography } from "antd";
+import { removeItem } from "../../services/encrypted-storage-service";
 
 import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
@@ -13,6 +14,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
 import { DASHBOARD } from "../../routes/routeNames";
 import modules from "../SideMenu/sideMenuItems";
+import { SESSION_KEY } from "../../constant/constant";
 import styles from "./ModuleChange.module.scss";
 import { classes } from "./Module.styles";
 
@@ -29,8 +31,9 @@ const ModuleChange = ({ setIsModalOpen }) => {
 
   const handleModuleSelect = (item) => {
     setIsModalOpen(false);
-    userProfileDispatch(setSelectedModule(item));
+    userProfileDispatch(setSelectedModule(item));   
     if (selectedModule?.key !== item?.key) {
+      removeItem(SESSION_KEY);
       getGlobalSessionList(item?.key);
     }
     navigate(`/${item.key}/${DASHBOARD}`);
