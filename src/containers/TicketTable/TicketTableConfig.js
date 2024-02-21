@@ -1,5 +1,6 @@
 import { Typography } from "antd";
 
+import { isUserAdmin } from "../../constant/utils";
 import { SORT_VALUES } from "../../constant/constant";
 import styles from "./TicketTable.module.scss";
 
@@ -25,6 +26,7 @@ export const getTicketColumn = ({
   renderColumn,
   setSortBy,
   sortBy,
+  userProfileDetails,
 }) => {
   return [
     renderColumn({
@@ -132,18 +134,22 @@ export const getTicketColumn = ({
         onClick: (data) => handleTicketIcon(data),
       },
     }),
-    renderColumn({
-      dataIndex: "see",
-      key: "see",
-      renderImage: {
-        alt: "addAssignee",
-        preview: false,
-        src: getImage("iconProfileAdd"),
-        visible: true,
-        onClick: (data) => {
-          handleClickAssign(data);
-        },
-      },
-    }),
+    ...(isUserAdmin(userProfileDetails?.userDetails)
+      ? [
+          renderColumn({
+            dataIndex: "see",
+            key: "see",
+            renderImage: {
+              alt: "addAssignee",
+              preview: false,
+              src: getImage("iconProfileAdd"),
+              visible: true,
+              onClick: (data) => {
+                handleClickAssign(data);
+              },
+            },
+          }),
+        ]
+      : []),
   ];
 };
