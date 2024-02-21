@@ -110,6 +110,7 @@ const useRenderColumn = () => {
       isCapitalize,
       isRequiredTooltip,
       isMoney,
+      isYearRange,
       mobile,
       isIntl,
       isDataObject,
@@ -190,6 +191,27 @@ const useRenderColumn = () => {
           ].join(" ")}
         >
           {textRenderFormat({ text: text || "-" })}
+        </p>
+      );
+    };
+
+    const getRenderYearRange = (data) => {
+      return (
+        <p
+          className={[
+            textStyles,
+            isTextBold ? styles.boldText : "",
+            styles.textEllipsis,
+            isCapitalize ? styles.capitalize : "",
+          ].join(" ")}
+        >
+          {data?.use_more_experience
+            ? `${data?.work_experience_start} ${intl.formatMessage({
+                id: "label.yearsAndMore",
+              })}`
+            : `${data?.work_experience_start} - ${
+                data?.work_experience_end
+              } ${intl.formatMessage({ id: "label.years" })}`}
         </p>
       );
     };
@@ -309,6 +331,8 @@ const useRenderColumn = () => {
             </p>
           ) : isRequiredTooltip ? (
             <Tooltip title={text}>{getRenderText(text)}</Tooltip>
+          ) : isYearRange ? (
+            getRenderYearRange(rowData)
           ) : (
             getRenderText(text)
           ),

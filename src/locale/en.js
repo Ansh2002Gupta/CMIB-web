@@ -472,6 +472,8 @@ const locale = {
   "session.workExperienceRanges": "Work Experience Ranges",
   "session.workExperienceRange": "Work Experience Range",
   "session.min_ctc": "Minimum CTC",
+  "label.yearsAndMore": "Years and more",
+  "label.years": "Years",
 };
 
 export default locale;

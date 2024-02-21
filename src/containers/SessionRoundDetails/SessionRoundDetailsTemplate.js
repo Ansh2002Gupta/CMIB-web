@@ -36,7 +36,7 @@ const SessionRoundDetailsTemplate = ({
       title: intl.formatMessage({ id: "session.workExperienceRange" }),
       dataIndex: "workExperience",
       key: "workExperience",
-      renderText: { visible: true },
+      renderText: { visible: true, isYearRange: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "session.min_ctc" }),

@@ -1047,18 +1047,23 @@ export const CONFIGURE_INTERVIEW_DATES = [
 export const WORK_EXP_DATA = [
   {
     id: 1,
-    workExperience: "1",
-    min_ctc: "10000",
-    use_more_experience: 1,
-    work_experience_end: 2,
-    work_experience_start: 1,
+    min_ctc: "90000",
+    use_more_experience: 0,
+    work_experience_end: 5,
+    work_experience_start: 0,
   },
   {
     id: 2,
-    workExperience: "5",
-    min_ctc: "2000",
+    min_ctc: "200000",
+    use_more_experience: 0,
+    work_experience_end: 10,
+    work_experience_start: 5,
+  },
+  {
+    id: 2,
+    min_ctc: "300000",
     use_more_experience: 1,
     work_experience_end: 2,
-    work_experience_start: 1,
+    work_experience_start: 10,
   },
 ];
