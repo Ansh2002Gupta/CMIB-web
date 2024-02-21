@@ -40,9 +40,9 @@
   overflow: unset !important;
 }
 
-.ant-input-number-handler-wrap {
+/* .ant-input-number-handler-wrap {
   pointer-events: none;
-}
+} */
 
 .ant-descriptions .ant-descriptions-row > th {
   padding-bottom: var(--paddingExtraSmall, 8px) !important;
@@ -64,6 +64,6 @@
   color: var(--textBold, #000833);
 }
 
-.ant-input-number-handler-wrap {
+/* .ant-input-number-handler-wrap {
   pointer-events: none;
-}
+} */

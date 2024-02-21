@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Checkbox, Image, Typography } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
@@ -10,6 +10,7 @@ import styles from "./WorkExperienceRange.module.scss";
 
 const WorkExperienceRangeTemplate = ({ intl }) => {
   const { getImage } = useContext(ThemeContext);
+  const [work, setWork] = useState(23);
 
   return (
     <TwoRow
@@ -42,11 +43,21 @@ const WorkExperienceRangeTemplate = ({ intl }) => {
             <>
               <CustomGrid>
                 <CustomInputNumber
-                  customInputStyles={styles.input}
+                  onChange={(val) => {
+                    setWork(val);
+                  }}
+                  value={work}
+                  customInputNumberStyles={styles.customInputNumberStyles}
                   customContainerStyles={styles.customContainerStyles}
                 />
-                <CustomInputNumber />
-                <CustomInputNumber />
+                <CustomInputNumber
+                  customInputNumberStyles={styles.customInputNumberStyles}
+                  customContainerStyles={styles.customContainerStyles}
+                />
+                <CustomInputNumber
+                  customInputNumberStyles={styles.customInputNumberStyles}
+                  customContainerStyles={styles.customContainerStyles}
+                />
               </CustomGrid>
 
               {/* <CustomInput

@@ -43,14 +43,11 @@
   justify-content: space-between;
 }
 
-.input {
+.customInputNumberStyles {
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
+  padding: 9px 5px;
   font-weight: var(--fontWeightMedium);
-  padding-left: var(--paddingSmall);
-  padding-right: var(--paddingSmall);
-  padding-top: var(--paddingExtraSmall);
-  padding-bottom: var(--paddingExtraSmall);
   border-radius: var(--radiusLg);
   border: var(--borderLight);
   background-color: var(--bodyBg);

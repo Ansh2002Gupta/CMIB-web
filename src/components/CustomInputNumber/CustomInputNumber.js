@@ -6,6 +6,7 @@ import { Base } from "../../core/layouts";
 
 import MarkRequired from "../MarkRequired";
 import styles from "./CustomInputNumber.module.scss";
+import "./override.css";
 
 const CustomInputNumber = (
   {
@@ -37,7 +38,7 @@ const CustomInputNumber = (
       )}
       <div className={styles.formContainer}>
         <InputNumber
-          controls={controls}
+          // controls={controls}
           className={[styles.inputNumberStyles, customInputNumberStyles]}
           {...{
             disabled,
@@ -66,7 +67,7 @@ const CustomInputNumber = (
 };
 
 CustomInputNumber.defaultProps = {
-  controls: true,
+  controls: false,
   customContainerStyles: "",
   customErrorTextStyles: "",
   customInputNumberStyles: "",
