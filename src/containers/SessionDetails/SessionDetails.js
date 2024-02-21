@@ -10,7 +10,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useResponsive from "core/hooks/useResponsive";
 
-import CustomButton from "../../components/CustomButton";
+import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
 import CustomLoader from "../../components/CustomLoader";
@@ -294,7 +294,6 @@ const SessionDetails = ({
       )}
       {!isGettingSessions && !isSessionError && (
         <TwoRow
-          className={styles.mainContainer}
           topSection={
             <TwoRow
               className={styles.sessionDetails}
@@ -500,45 +499,28 @@ const SessionDetails = ({
           }
           bottomSection={
             !!isEditable && (
-              <TwoColumn
-                className={styles.editContainer}
-                leftSection={
-                  <CustomButton
-                    btnText={intl.formatMessage({
-                      id: "label.cancel",
-                    })}
-                    customStyle={
-                      responsive.isMd
-                        ? styles.buttonStyles
-                        : styles.mobileButtonStyles
-                    }
-                    textStyle={styles.textStyle}
-                    onClick={handleCancel}
-                  />
-                }
-                rightSection={
-                  <CustomButton
-                    isBtnDisable={
-                      Object.values(formErrors).some((error) => !!error) ||
-                      !formData?.name ||
-                      !formData?.article_completion_to_date ||
-                      !formData?.nature_of_services ||
-                      !formData?.pi_number_format ||
-                      !formData?.ps_examination_periods.length > 0 ||
-                      !formData?.mcs_completion_date ||
-                      !formData?.membership_completion_date ||
-                      !formData?.article_completion_from_date ||
-                      !formData?.hsn_sac_code ||
-                      !formData?.bank_ac_no ||
-                      !formData?.bank_ac_ifsc
-                    }
-                    textStyle={styles.saveButtonTextStyles}
-                    btnText={intl.formatMessage({
-                      id: "session.saveChanges",
-                    })}
-                    onClick={handleSave}
-                  />
-                }
+              <ActionAndCancelButtons
+                actionBtnText={intl.formatMessage({
+                  id: "session.saveChanges",
+                })}
+                cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                customActionBtnStyles={styles.button}
+                customCancelBtnStyles={styles.button}
+                onActionBtnClick={handleSave}
+                isActionBtnDisable={ Object.values(formErrors).some((error) => !!error) ||
+                          !formData?.name ||
+                          !formData?.article_completion_to_date ||
+                          !formData?.nature_of_services ||
+                          !formData?.pi_number_format ||
+                          !formData?.ps_examination_periods.length > 0 ||
+                          !formData?.mcs_completion_date ||
+                          !formData?.membership_completion_date ||
+                          !formData?.article_completion_from_date ||
+                          !formData?.hsn_sac_code ||
+                          !formData?.bank_ac_no ||
+                          !formData?.bank_ac_ifsc
+                        }
+                onCancelBtnClick={handleCancel}
               />
             )
           }
