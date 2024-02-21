@@ -469,6 +469,9 @@ const locale = {
   "label.tickeNumber": "Ticket Number",
   "label.date_create_on": "Date Created On",
   "label.path.reply": "Ticket Details",
+  "session.workExperienceRanges": "Work Experience Ranges",
+  "session.workExperienceRange": "Work Experience Range",
+  "session.minimumCTC": "Minimum CTC",
 };
 
 export default locale;
