@@ -32,6 +32,7 @@ const CustomInput = React.forwardRef(
       isSelectBoxDisable,
       label,
       max,
+      maxLength,
       messageStyles: customMessageStyles,
       messageToShow,
       min,
@@ -115,6 +116,7 @@ const CustomInput = React.forwardRef(
                 value,
                 placeholder,
                 disabled,
+                maxLength,
                 onChange,
                 onBlur,
               }}
@@ -259,6 +261,7 @@ CustomInput.propTypes = {
   isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
   max: PropTypes.number,
+  maxLength: PropTypes.number,
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
