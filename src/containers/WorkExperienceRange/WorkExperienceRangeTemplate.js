@@ -4,7 +4,8 @@ import { Checkbox, Image, Typography } from "antd";
 import { ThemeContext } from "core/providers/theme";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import CustomInput from "../../components/CustomInput";
+import CustomInputNumber from "../../components/CustomInputNumber";
+import CustomGrid from "../../components/CustomGrid";
 import styles from "./WorkExperienceRange.module.scss";
 
 const WorkExperienceRangeTemplate = ({ intl }) => {
@@ -39,7 +40,16 @@ const WorkExperienceRangeTemplate = ({ intl }) => {
           }
           bottomSection={
             <>
-              <CustomInput
+              <CustomGrid>
+                <CustomInputNumber
+                  customInputStyles={styles.input}
+                  customContainerStyles={styles.customContainerStyles}
+                />
+                <CustomInputNumber />
+                <CustomInputNumber />
+              </CustomGrid>
+
+              {/* <CustomInput
                 controls
                 value={""}
                 customLabelStyles={styles.inputLabel}
@@ -92,7 +102,7 @@ const WorkExperienceRangeTemplate = ({ intl }) => {
                 width={24}
                 height={24}
                 onClick={() => {}}
-              />
+              /> */}
             </>
           }
         />

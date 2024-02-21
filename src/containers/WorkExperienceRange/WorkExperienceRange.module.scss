@@ -44,7 +44,6 @@
 }
 
 .input {
-  min-height: 200px;
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
@@ -54,9 +53,9 @@
   padding-bottom: var(--paddingExtraSmall);
   border-radius: var(--radiusLg);
   border: var(--borderLight);
-  background-color: aquamarine;
+  background-color: var(--bodyBg);
   &::placeholder {
-    color: red !important;
+    color: var(--textBold) !important;
   }
 }
 
