@@ -15,6 +15,9 @@ const BreadCrumbs = () => {
       ? location.pathname
       : location.pathname + "/";
   const segments = addSlashInPathName.split("/");
+  if (parseInt(segments.slice(2, -1)?.slice(-1))) {
+    segments.pop();
+  }
   const pathSegments = segments.slice(2, -1);
   const { navigateScreen: navigate } = useNavigateScreen();
 

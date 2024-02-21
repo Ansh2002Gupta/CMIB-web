@@ -83,7 +83,7 @@ const SessionDetails = ({
   const { MonthPicker } = DatePicker;
 
   useEffect(() => {
-    if (currentlySelectedModuleKey && !sessionData?.status) {
+    if (currentlySelectedModuleKey && sessionData?.status === 0) {
       navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
     }
   }, []);
