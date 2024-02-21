@@ -17,7 +17,13 @@ import useFetch from "../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getQueryColumn } from "./QueriesTableConfig";
-import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  CORE_ROUTE,
+  QUERIES_END_POINT,
+  QUERY_TYPE,
+  STATUS,
+} from "../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
@@ -75,6 +81,14 @@ const QueryTable = ({
     errorString = error?.data?.message;
   }
 
+  const { data: queryTypes } = useFetch({
+    url: CORE_ROUTE + QUERY_TYPE,
+  });
+
+  const { data: status } = useFetch({
+    url: CORE_ROUTE + STATUS,
+  });
+
   const debounceSearch = useMemo(() => {
     return _.debounce(fetchData, DEBOUNCE_TIME);
   }, []);
@@ -98,7 +112,7 @@ const QueryTable = ({
     page,
     perPage,
     q,
-    queryType,
+    updatedFiltersValue,
     sortField,
     sortOrder,
   }) => {
@@ -106,7 +120,8 @@ const QueryTable = ({
       perPage: perPage || pageSize,
       page: page || current,
       q: q || "",
-      queryType: queryType || filterArray["1"],
+      status: JSON.stringify(updatedFiltersValue?.["1"]),
+      queryType: JSON.stringify(updatedFiltersValue?.["2"]),
       sortDirection: sortOrder,
       sortField: sortField,
     };
@@ -312,7 +327,7 @@ const QueryTable = ({
     setFilterArray(() => {
       const newFilterArray = updatedFiltersValue;
       const requestedParams = getRequestedParams({
-        queryType: newFilterArray["1"] || [],
+        updatedFiltersValue,
         sortOrder: sortDirection,
         sortField: sortBy,
         q: searchedValue,
@@ -384,6 +399,35 @@ const QueryTable = ({
     setIsConfirmationModalOpen(false);
   };
 
+  const queryTypeOptions = useMemo(() => {
+    return queryTypes?.map((queryType) => ({
+      optionId: queryType.id,
+      str: queryType.name,
+    }));
+  }, [queryTypes]);
+
+  const statusOptions = useMemo(() => {
+    return status?.map((status) => ({
+      optionId: status.id,
+      str: status.name,
+    }));
+  }, [status]);
+
+  const filterOptions = [
+    {
+      id: 1,
+      name: "Status",
+      isSelected: false,
+      options: statusOptions,
+    },
+    {
+      id: 2,
+      name: "Query Type",
+      isSelected: false,
+      options: queryTypeOptions,
+    },
+  ];
+
   // useEffects hooks
   useEffect(() => {
     if (data?.meta) {
@@ -454,6 +498,7 @@ const QueryTable = ({
             columns,
             current,
             filterArray,
+            filterOptions,
             handleOnUserSearch,
             pageSize,
             searchedValue,
