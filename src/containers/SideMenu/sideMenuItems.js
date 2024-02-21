@@ -101,7 +101,7 @@ const caJobsMenu = [
   },
 ];
 
-const controlMenu = [
+export const controlMenu = [
   {
     label: MENU_KEYS.TICKET_MANAGEMENT,
     key: TICKETS,
@@ -155,18 +155,6 @@ const controlMenu = [
     key: "/email-management",
     icon: <EmailAlias />,
     selectedicon: <SelectedEmailAlias />,
-  },
-  {
-    label: MENU_KEYS.CONTACT_US,
-    key: "/contact-us",
-    icon: <Message />,
-    selectedicon: <SelectedMessage />,
-  },
-  {
-    label: MENU_KEYS.SESSIONS,
-    key: SESSION,
-    icon: <Session />,
-    selectedicon: <SelectedSession />,
   },
 ];
 
@@ -312,7 +300,7 @@ const experiencedMembersMenu = [
   },
 ];
 
-const modules = [
+export const modules = [
   {
     id: 1,
     label: "CA Jobs",

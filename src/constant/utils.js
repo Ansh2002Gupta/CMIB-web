@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+
+import { controlMenu, modules } from "../containers/SideMenu/sideMenuItems";
 import {
   DEFAULT_PAGE_SIZE,
   FORM_STATES,
@@ -324,5 +326,8 @@ export const getSortingDirection = (direction) => {
 export const isUserAdmin = (userDetails) => {
   const noOfMenuItems = Object.keys(userDetails?.menu_items || {})?.length || 0;
   const noOfControlItems = userDetails?.menu_items?.control?.items?.length || 0;
-  return noOfMenuItems === 6 && noOfControlItems === 9;
+  return (
+    noOfMenuItems === modules?.length &&
+    noOfControlItems === controlMenu?.length
+  );
 };
