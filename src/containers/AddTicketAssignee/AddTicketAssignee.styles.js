@@ -25,4 +25,5 @@ export const classes = {
     height: variables.height_20,
     width: variables.width_20,
   },
+  assigneeTextContainer: { width: "90%" },
 };
