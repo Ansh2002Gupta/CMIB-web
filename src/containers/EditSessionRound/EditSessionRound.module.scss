@@ -14,21 +14,12 @@
 }
 
 .centreContainer {
-  background-color: var(--bodyBg);
-  padding: var(--paddingMedium);
-  border-radius: var(--radiusMLg);
-  border: var(--borderLight);
   flex: 1;
   gap: 20%;
 }
 
 @media (max-width: 600px) {
   .centreContainer {
-    background-color: var(--bodyBg);
-    padding: var(--paddingMedium);
-    border-radius: var(--radiusMLg);
-    border: var(--borderLight);
-    flex: 1;
     flex-direction: column;
     gap: var(--gapMedium, 24px);
   }
@@ -74,4 +65,13 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
+}
+
+.addRoundContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  flex: 1;
+  gap: var(--gapMedium);
 }

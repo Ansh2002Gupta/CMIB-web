@@ -4,7 +4,7 @@ import { Checkbox, Image, Typography } from "antd";
 import { ThemeContext } from "core/providers/theme";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import CustomInput from "../CustomInput";
+import CustomInput from "../../components/CustomInput";
 import styles from "./WorkExperienceRange.module.scss";
 
 const WorkExperienceRangeTemplate = ({ intl }) => {
@@ -12,7 +12,6 @@ const WorkExperienceRangeTemplate = ({ intl }) => {
 
   return (
     <TwoRow
-      className={styles.mainContainer}
       topSection={
         <Typography className={styles.headingText}>
           {intl.formatMessage({ id: "session.workExperienceRanges" })}

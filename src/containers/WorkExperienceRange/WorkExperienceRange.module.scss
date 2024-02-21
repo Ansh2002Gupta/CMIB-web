@@ -55,7 +55,7 @@
   padding-bottom: var(--paddingExtraSmall);
   border-radius: var(--radiusLg);
   border: var(--borderLight);
-  background-color:aquamarine;
+  background-color: aquamarine;
   &::placeholder {
     color: red !important;
   }
@@ -65,10 +65,6 @@
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
-}
-
-.mainContainer {
-  margin-top: var(--gapMedium);
 }
 
 .redText {
