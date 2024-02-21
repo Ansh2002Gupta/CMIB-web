@@ -10,7 +10,7 @@ const locale = {
   "label.access": "Access",
   "label.notValidUserAccess": "Please select a valid access type!",
   "label.status": "Status",
-  "label.emailId": "Enter ID",
+  "label.emailId": "Email Id",
   "label.password": "Password",
   "label.thanks": "Thanks!",
   "label.loginHeading": "Login to CMI&B",
@@ -421,8 +421,8 @@ const locale = {
   "label.deleteAccount": "Delete Account",
   "label.path.global-configurations": "Configure centres",
   "label.areYouSureYouWantToMarkQueries":
-    "Are you sure you want to mark the queries as answered?",
-  "label.markQueriesAsAnswered": "Mark Queries as Answered",
+    "Are you sure you want to mark the query/query(s) as answered?",
+  "label.markQueriesAsAnswered": "Mark query/query(s) as answered",
   "label.markAsAnswered": "Mark as Answered",
   "label.areYouSureWantToMakeQueryAsAnsweredSingle":
     "Are you sure you want to mark the query as answered?",
@@ -430,11 +430,11 @@ const locale = {
   "label.okay": "Okay",
   "label.markSelectedQueriesAsAnswered": "Mark as Answered",
   "label.allSelectedQueriesAreAlreadyMarked":
-    "All selected queries have already been marked as answered.",
+    "All the selected query/query(s) have already been marked as answered.",
   "label.followingQueriesAreMarkedAnAnswered":
-    "Following queries have already been marked as answered:",
+    "Following query/query(s) have already been marked as answered:",
   "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
-    "Some queries have already been marked as answered. Continuing marking for the remaining queries.",
+    "Some query/query(s) have already been marked as answered. Continuing marking for the remaining queries.",
   "label.error.fieldEmpty": "Field cannot be empty.",
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",

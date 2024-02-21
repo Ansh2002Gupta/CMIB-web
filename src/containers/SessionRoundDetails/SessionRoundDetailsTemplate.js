@@ -179,24 +179,26 @@ const SessionRoundDetailsTemplate = ({
         />
       }
       bottomSection={
-        <TwoRow
-          className={styles.emptyMiddleContainer}
-          topSection={
-            <Typography className={styles.blackText}>
-              {intl.formatMessage({ id: "session.workExperienceRanges" })}
-            </Typography>
-          }
-          bottomSection={
-            <DataTable
-              {...{
-                columns,
-              }}
-              currentDataLength={WORK_EXP_DATA.length}
-              customContainerStyles={styles.tableContainer}
-              originalData={WORK_EXP_DATA}
-            />
-          }
-        />
+        <></>
+        // TODO: The UI changes are not looking good
+        // <TwoRow
+        //   className={styles.emptyMiddleContainer}
+        //   topSection={
+        //     <Typography className={styles.blackText}>
+        //       {intl.formatMessage({ id: "session.workExperienceRanges" })}
+        //     </Typography>
+        //   }
+        //   bottomSection={
+        //     <DataTable
+        //       {...{
+        //         columns,
+        //       }}
+        //       currentDataLength={WORK_EXP_DATA.length}
+        //       customContainerStyles={styles.tableContainer}
+        //       originalData={WORK_EXP_DATA}
+        //     />
+        //   }
+        // />
       }
     />
   );

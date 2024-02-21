@@ -40,6 +40,9 @@
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
   margin-right: var(--gapXSmall);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .crossIcon {
