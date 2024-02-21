@@ -31,11 +31,13 @@ import {
   convertDateToStringDate,
   isObjectHasNoValues,
 } from "../../constant/utils";
-import { MODULE_KEYS, NOTIFICATION_TYPES } from "../../constant/constant";
-import { FIELDS } from "./sessionFieldDetails";
 import { EDIT_SESSION, SESSION } from "../../routes/routeNames";
 import { FIELDS } from "./sessionFieldDetails";
-import { NOTIFICATION_TYPES, SESSION_KEY } from "../../constant/constant";
+import {
+  MODULE_KEYS,
+  NOTIFICATION_TYPES,
+  SESSION_KEY,
+} from "../../constant/constant";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
@@ -290,7 +292,7 @@ const SessionDetails = ({
     fetchData({});
   };
 
-  return formData ? (
+  return (
     <>
       {notificationContextHolder}
       {isGettingSessions && (
@@ -307,274 +309,282 @@ const SessionDetails = ({
           />
         </Base>
       )}
-      {!isGettingSessions && !isSessionError && (
-        <TwoRow
-          className={styles.mainContainer}
-          topSection={
-            <TwoRow
-              className={styles.sessionDetails}
-              topSection={
-                <TwoColumn
-                  className={styles.headerContainer}
-                  leftSection={
-                    <Typography className={styles.headingText}>
-                      {intl.formatMessage({ id: "session.sessionDetails" })}
-                    </Typography>
-                  }
-                  rightSection={
-                    !isEditable && sessionData?.is_editable ? (
-                      <TwoColumn
-                        onClick={() => {
-                          navigate(EDIT_SESSION, false);
-                        }}
-                        className={styles.editContainer}
-                        leftSection={
-                          <Image
-                            src={getImage("editDark")}
-                            className={styles.editIcon}
-                            preview={false}
-                          />
+      {!isGettingSessions &&
+        !isSessionError &&
+        (formData ? (
+          <TwoRow
+            className={styles.mainContainer}
+            topSection={
+              <TwoRow
+                className={styles.sessionDetails}
+                topSection={
+                  <TwoColumn
+                    className={styles.headerContainer}
+                    leftSection={
+                      <Typography className={styles.headingText}>
+                        {intl.formatMessage({ id: "session.sessionDetails" })}
+                      </Typography>
+                    }
+                    rightSection={
+                      !isEditable && sessionData?.is_editable ? (
+                        <TwoColumn
+                          onClick={() => {
+                            navigate(EDIT_SESSION, false);
+                          }}
+                          className={styles.editContainer}
+                          leftSection={
+                            <Image
+                              src={getImage("editDark")}
+                              className={styles.editIcon}
+                              preview={false}
+                            />
+                          }
+                          rightSection={
+                            <Typography className={styles.blackText}>
+                              {intl.formatMessage({ id: "session.edit" })}
+                            </Typography>
+                          }
+                        />
+                      ) : (
+                        <></>
+                      )
+                    }
+                  />
+                }
+                bottomSection={
+                  <CustomGrid>
+                    {fields?.map((item) => (
+                      <TwoRow
+                        key={item.id}
+                        className={
+                          isEditable ? styles.editGridItem : styles.gridItem
                         }
-                        rightSection={
-                          <Typography className={styles.blackText}>
-                            {intl.formatMessage({ id: "session.edit" })}
+                        topSection={
+                          <Typography className={styles.grayText}>
+                            {intl.formatMessage({
+                              id: `session.${item.headingIntl}`,
+                            })}
+                            <span className={styles.redText}> *</span>
                           </Typography>
                         }
-                      />
-                    ) : (
-                      <></>
-                    )
-                  }
-                />
-              }
-              bottomSection={
-                <CustomGrid>
-                  {fields?.map((item) => (
-                    <TwoRow
-                      key={item.id}
-                      className={
-                        isEditable ? styles.editGridItem : styles.gridItem
-                      }
-                      topSection={
-                        <Typography className={styles.grayText}>
-                          {intl.formatMessage({
-                            id: `session.${item.headingIntl}`,
-                          })}
-                          <span className={styles.redText}> *</span>
-                        </Typography>
-                      }
-                      bottomSection={
-                        isEditable ? (
-                          <div className={styles.formInputStyles}>
-                            {item.id === 5 ||
+                        bottomSection={
+                          isEditable ? (
+                            <div className={styles.formInputStyles}>
+                              {item.id === 5 ||
+                              item.id === 6 ||
+                              item.id === 7 ||
+                              item.id === 8 ||
+                              item.id === 12 ? (
+                                <DatePicker
+                                  format="DD/MM/YYYY"
+                                  disabledDate={(current) => {
+                                    if (item.id === 8 && fields?.[6]?.value) {
+                                      return current.isBefore(
+                                        dayjs(fields?.[6]?.value).add(1, "days")
+                                      );
+                                    }
+                                  }}
+                                  className={styles.dateInput}
+                                  onChange={(val, dateString) => {
+                                    handleInputChange(val, item.label);
+                                  }}
+                                  placeholder={intl.formatMessage({
+                                    id: `session.placeholder.${item.headingIntl}`,
+                                  })}
+                                  value={item.value ? dayjs(item.value) : null}
+                                  suffixIcon={
+                                    <Image src={getImage("calendar")} />
+                                  }
+                                />
+                              ) : item.id === 4 ? (
+                                <div>
+                                  <MonthPicker
+                                    disabled={item.value?.length > 3}
+                                    format="YYYY/MM"
+                                    className={styles.multilpleInput}
+                                    size={"large"}
+                                    placeholder={intl.formatMessage({
+                                      id: `session.placeholder.${item.headingIntl}`,
+                                    })}
+                                    suffixIcon={
+                                      <Image src={getImage("calendar")} />
+                                    }
+                                    onChange={handleMonthChange}
+                                    style={classes.multiSelectStyle}
+                                    disabledDate={(current) =>
+                                      item.value?.includes(
+                                        dayjs(current).format("MMM YYYY")
+                                      )
+                                    }
+                                  />
+                                  <div
+                                    className={
+                                      styles.editExaminationFieldContainer
+                                    }
+                                  >
+                                    {item.value?.map((item, index) => {
+                                      return (
+                                        <div
+                                          className={styles.chipContainer}
+                                          key={index}
+                                        >
+                                          <Typography
+                                            className={styles.chipText}
+                                          >
+                                            {convertDateToStringDate(item)}
+                                          </Typography>
+                                          <Image
+                                            src={getImage("cancel")}
+                                            className={styles.crossIcon}
+                                            preview={false}
+                                            onClick={() => {
+                                              handleDeselect(item);
+                                            }}
+                                          />
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              ) : (
+                                <CustomInput
+                                  value={item.value}
+                                  disabled={!isEditable}
+                                  customLabelStyles={styles.inputLabel}
+                                  customInputStyles={styles.input}
+                                  customContainerStyles={
+                                    styles.customContainerStyles
+                                  }
+                                  maxLength={
+                                    item.id === 9
+                                      ? 8
+                                      : item.id === 10
+                                      ? 18
+                                      : undefined
+                                  }
+                                  onChange={(val) =>
+                                    ((item.id === 9 || item.id === 10
+                                      ? NUMERIC_VALUE_REGEX.test(
+                                          val.target.value
+                                        )
+                                      : true) ||
+                                      val.target.value === "") &&
+                                    handleInputChange(
+                                      val.target.value,
+                                      item.label
+                                    )
+                                  }
+                                  placeholder={intl.formatMessage({
+                                    id: `session.placeholder.${item.headingIntl}`,
+                                  })}
+                                  isError={formErrors[item.label]}
+                                  errorMessage={formErrors[item.label]}
+                                />
+                              )}
+                              {formErrors[item.label] &&
+                                (item.id === 4 ||
+                                  item.id === 5 ||
+                                  item.id === 6 ||
+                                  item.id === 7 ||
+                                  item.id === 8 ||
+                                  item.id === 12) && (
+                                  <Typography className={styles.errorText}>
+                                    {formErrors[item.label]}
+                                  </Typography>
+                                )}
+                            </div>
+                          ) : item.id === 5 ||
                             item.id === 6 ||
                             item.id === 7 ||
                             item.id === 8 ||
                             item.id === 12 ? (
-                              <DatePicker
-                                format="DD/MM/YYYY"
-                                disabledDate={(current) => {
-                                  if (item.id === 8 && fields?.[6]?.value) {
-                                    return current.isBefore(
-                                      dayjs(fields?.[6]?.value).add(1, "days")
-                                    );
-                                  }
-                                }}
-                                className={styles.dateInput}
-                                onChange={(val, dateString) => {
-                                  handleInputChange(val, item.label);
-                                }}
-                                placeholder={intl.formatMessage({
-                                  id: `session.placeholder.${item.headingIntl}`,
-                                })}
-                                value={item.value ? dayjs(item.value) : null}
-                                suffixIcon={
-                                  <Image src={getImage("calendar")} />
-                                }
-                              />
-                            ) : item.id === 4 ? (
-                              <div>
-                                <MonthPicker
-                                  disabled={item.value?.length > 3}
-                                  format="YYYY/MM"
-                                  className={styles.multilpleInput}
-                                  size={"large"}
-                                  placeholder={intl.formatMessage({
-                                    id: `session.placeholder.${item.headingIntl}`,
-                                  })}
-                                  suffixIcon={
-                                    <Image src={getImage("calendar")} />
-                                  }
-                                  onChange={handleMonthChange}
-                                  style={classes.multiSelectStyle}
-                                  disabledDate={(current) =>
-                                    item.value?.includes(
-                                      dayjs(current).format("MMM YYYY")
-                                    )
-                                  }
-                                />
-                                <div
-                                  className={
-                                    styles.editExaminationFieldContainer
-                                  }
+                            <Typography className={styles.blackText}>
+                              {formatDate({ date: item.value })}
+                            </Typography>
+                          ) : item?.id !== 4 ? (
+                            <Typography className={styles.blackText}>
+                              {item.value}
+                            </Typography>
+                          ) : (
+                            <div className={styles.examinationFieldContainer}>
+                              {item.value?.map((val, index) => (
+                                <Typography
+                                  key={index}
+                                  className={styles.periodText}
                                 >
-                                  {item.value?.map((item, index) => {
-                                    return (
-                                      <div
-                                        className={styles.chipContainer}
-                                        key={index}
-                                      >
-                                        <Typography className={styles.chipText}>
-                                          {convertDateToStringDate(item)}
-                                        </Typography>
-                                        <Image
-                                          src={getImage("cancel")}
-                                          className={styles.crossIcon}
-                                          preview={false}
-                                          onClick={() => {
-                                            handleDeselect(item);
-                                          }}
-                                        />
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              </div>
-                            ) : (
-                              <CustomInput
-                                value={item.value}
-                                disabled={!isEditable}
-                                customLabelStyles={styles.inputLabel}
-                                customInputStyles={styles.input}
-                                customContainerStyles={
-                                  styles.customContainerStyles
-                                }
-                                maxLength={
-                                  item.id === 9
-                                    ? 8
-                                    : item.id === 10
-                                    ? 18
-                                    : undefined
-                                }
-                                onChange={(val) =>
-                                  ((item.id === 9 || item.id === 10
-                                    ? NUMERIC_VALUE_REGEX.test(val.target.value)
-                                    : true) ||
-                                    val.target.value === "") &&
-                                  handleInputChange(
-                                    val.target.value,
-                                    item.label
-                                  )
-                                }
-                                placeholder={intl.formatMessage({
-                                  id: `session.placeholder.${item.headingIntl}`,
-                                })}
-                                isError={formErrors[item.label]}
-                                errorMessage={formErrors[item.label]}
-                              />
-                            )}
-                            {formErrors[item.label] &&
-                              (item.id === 4 ||
-                                item.id === 5 ||
-                                item.id === 6 ||
-                                item.id === 7 ||
-                                item.id === 8 ||
-                                item.id === 12) && (
-                                <Typography className={styles.errorText}>
-                                  {formErrors[item.label]}
+                                  {convertDateToStringDate(val)}
                                 </Typography>
-                              )}
-                          </div>
-                        ) : item.id === 5 ||
-                          item.id === 6 ||
-                          item.id === 7 ||
-                          item.id === 8 ||
-                          item.id === 12 ? (
-                          <Typography className={styles.blackText}>
-                            {formatDate({ date: item.value })}
-                          </Typography>
-                        ) : item?.id !== 4 ? (
-                          <Typography className={styles.blackText}>
-                            {item.value}
-                          </Typography>
-                        ) : (
-                          <div className={styles.examinationFieldContainer}>
-                            {item.value?.map((val, index) => (
-                              <Typography
-                                key={index}
-                                className={styles.periodText}
-                              >
-                                {convertDateToStringDate(val)}
-                              </Typography>
-                            ))}
-                          </div>
-                        )
-                      }
-                    />
-                  ))}
-                </CustomGrid>
-              }
-            />
-          }
-          bottomSection={
-            !!isEditable && (
-              <TwoColumn
-                className={styles.editContainer}
-                leftSection={
-                  <CustomButton
-                    btnText={intl.formatMessage({
-                      id: "label.cancel",
-                    })}
-                    customStyle={
-                      responsive.isMd
-                        ? styles.buttonStyles
-                        : styles.mobileButtonStyles
-                    }
-                    textStyle={styles.textStyle}
-                    onClick={handleCancel}
-                  />
-                }
-                rightSection={
-                  <CustomButton
-                    isBtnDisable={
-                      Object.values(formErrors).some((error) => !!error) ||
-                      !formData?.name ||
-                      !formData?.nature_of_services ||
-                      !formData?.pi_number_format ||
-                      (currentlySelectedModuleKey ===
-                        MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
-                        (!formData?.ps_examination_periods.length > 0 ||
-                          !formData?.article_completion_to_date ||
-                          !formData?.mcs_completion_date ||
-                          !formData?.membership_completion_date ||
-                          !formData?.article_completion_from_date)) ||
-                      (currentlySelectedModuleKey !==
-                        MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
-                        !formData?.membership_as_on_date) ||
-                      !formData?.hsn_sac_code ||
-                      !formData?.bank_ac_no ||
-                      !formData?.bank_ac_ifsc
-                    }
-                    textStyle={styles.saveButtonTextStyles}
-                    btnText={intl.formatMessage({
-                      id: "session.saveChanges",
-                    })}
-                    onClick={handleSave}
-                  />
+                              ))}
+                            </div>
+                          )
+                        }
+                      />
+                    ))}
+                  </CustomGrid>
                 }
               />
-            )
-          }
-          bottomSectionStyle={classes.bottomSectionStyle}
-        />
-      )}
+            }
+            bottomSection={
+              !!isEditable && (
+                <TwoColumn
+                  className={styles.editContainer}
+                  leftSection={
+                    <CustomButton
+                      btnText={intl.formatMessage({
+                        id: "label.cancel",
+                      })}
+                      customStyle={
+                        responsive.isMd
+                          ? styles.buttonStyles
+                          : styles.mobileButtonStyles
+                      }
+                      textStyle={styles.textStyle}
+                      onClick={handleCancel}
+                    />
+                  }
+                  rightSection={
+                    <CustomButton
+                      isBtnDisable={
+                        Object.values(formErrors).some((error) => !!error) ||
+                        !formData?.name ||
+                        !formData?.nature_of_services ||
+                        !formData?.pi_number_format ||
+                        (currentlySelectedModuleKey ===
+                          MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+                          (!formData?.ps_examination_periods.length > 0 ||
+                            !formData?.article_completion_to_date ||
+                            !formData?.mcs_completion_date ||
+                            !formData?.membership_completion_date ||
+                            !formData?.article_completion_from_date)) ||
+                        (currentlySelectedModuleKey !==
+                          MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+                          !formData?.membership_as_on_date) ||
+                        !formData?.hsn_sac_code ||
+                        !formData?.bank_ac_no ||
+                        !formData?.bank_ac_ifsc
+                      }
+                      textStyle={styles.saveButtonTextStyles}
+                      btnText={intl.formatMessage({
+                        id: "session.saveChanges",
+                      })}
+                      onClick={handleSave}
+                    />
+                  }
+                />
+              )
+            }
+            bottomSectionStyle={classes.bottomSectionStyle}
+          />
+        ) : (
+          !formData && (
+            <Base className={styles.noSessionContainer}>
+              <Typography className={styles.noSessionText}>
+                {intl.formatMessage({ id: "label.noSessionSetup" })}
+              </Typography>
+            </Base>
+          )
+        ))}
     </>
-  ) : (
-    <Base className={styles.noSessionContainer}>
-      <Typography className={styles.noSessionText}>
-        {intl.formatMessage({ id: "label.noSessionSetup" })}
-      </Typography>
-    </Base>
   );
 };
 
