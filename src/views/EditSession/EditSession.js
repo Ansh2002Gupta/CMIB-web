@@ -75,9 +75,6 @@ function EditSession() {
           }}
         />
       }
-      bottomSectionStyle={{
-        padding: variables.fontSizeXlargeMedium,
-      }}
     />
   );
 }
