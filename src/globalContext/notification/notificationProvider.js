@@ -2,37 +2,49 @@ import React, { useReducer } from "react";
 import * as types from "./types";
 
 const initialState = {
-  isUserSuccessfullyAdded: null,
+  addUserSuccessfully: false,
   addSessionSuccessfully: false,
+  updateUserSuccessfully: false,
   updateSessionSuccesssfully: false,
+  isError: false,
 };
 
 const notificationReducer = (state, action) => {
   switch (action.type) {
-    case types.USER_DETAIL_TOAST:
+    case types.ADD_USER_NOTIFICATION:
       return {
         ...state,
-        isUserSuccessfullyAdded: action.payload,
+        addUserSuccessfully: action.payload,
       };
-
-    case types.ADD_SESSION_NOTIFICATION: 
+    case types.ADD_SESSION_NOTIFICATION:
       return {
         ...state,
         addSessionSuccessfully: action.payload,
-      }; 
-
-    case types.UPDATE_SESSION_NOTIFICATION: 
+      };
+    case types.ERROR_NOTIFICATION:
+      return {
+        ...state,
+        isError: action.payload,
+      };
+    case types.UPDATE_USER_NOTIFICATION:
+      return {
+        ...state,
+        updateUserSuccessfully: action.payload,
+      };
+    case types.UPDATE_SESSION_NOTIFICATION:
       return {
         ...state,
         updateSessionSuccessfully: action.payload,
       };
-    
     default:
       return state;
   }
 };
 
-export const NotificationContext = React.createContext([initialState, () => {}]);
+export const NotificationContext = React.createContext([
+  initialState,
+  () => {},
+]);
 
 const NotificationProvider = ({ children }) => {
   const [notificationState, setNotificationStateDispatch] = useReducer(

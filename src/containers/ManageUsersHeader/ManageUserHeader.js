@@ -7,9 +7,13 @@ import { NotificationContext } from "../../globalContext/notification/notificati
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useResponsive from "../../core/hooks/useResponsive";
-import { userDetailToast } from "../../globalContext/notification/notificationActions";
+import {
+  addUserNotification,
+  updateUserNotification,
+} from "../../globalContext/notification/notificationActions";
 import { ADD } from "../../routes/routeNames";
 import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
+import { NOTIFICATION_TYPES } from "../../constant/constant";
 import styles from "./ManageUserHeader.module.scss";
 
 const ManageUserHeader = () => {
@@ -21,18 +25,25 @@ const ManageUserHeader = () => {
     useContext(NotificationContext);
 
   useEffect(() => {
-    if (notificationState?.isUserSuccessfullyAdded) {
+    if (
+      notificationState?.addUserSuccessfully ||
+      notificationState?.updateUserSuccessfully
+    ) {
       showNotification({
         text: intl.formatMessage({
-          id: notificationState?.isUserSuccessfullyAdded?.isUpdate
-            ? "label.userSuccessfullyEdited"
-            : "label.userSuccessfullyAdded",
+          id: notificationState?.addUserSuccessfully
+            ? "label.userSuccessfullyAdded"
+            : "label.userSuccessfullyEdited",
         }),
-        type: "success",
+        type: NOTIFICATION_TYPES.SUCCESS,
       });
-      setNotificationStateDispatch(userDetailToast(false));
+      setNotificationStateDispatch(addUserNotification(false));
+      setNotificationStateDispatch(updateUserNotification(false));
     }
-  }, [notificationState?.isUserSuccessfullyAdded]);
+  }, [
+    notificationState?.addUserSuccessfully,
+    notificationState?.updateUserSuccessfully,
+  ]);
 
   return (
     <>

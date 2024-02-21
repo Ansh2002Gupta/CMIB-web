@@ -14,7 +14,7 @@ import { NotificationContext } from "../../globalContext/notification/notificati
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
-import { userDetailToast } from "../../globalContext/notification/notificationActions";
+import { errorNotification } from "../../globalContext/notification/notificationActions";
 import { getErrorMessage } from "../../constant/utils";
 import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import { QUERIES } from "../../routes/routeNames";
@@ -50,7 +50,7 @@ const QueryDetails = () => {
   useEffect(() => {
     if (error?.data?.code === STATUS_CODES.NOT_FOUND) {
       navigate(`/${selectedModule?.key}/${QUERIES}`);
-      setNotificationStateDispatch(userDetailToast(true));
+      setNotificationStateDispatch(errorNotification(true));
     }
   }, [error?.data?.code]);
 

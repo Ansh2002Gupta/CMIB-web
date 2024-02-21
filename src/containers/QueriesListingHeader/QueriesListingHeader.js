@@ -3,8 +3,9 @@ import { useIntl } from "react-intl";
 
 import ContentHeader from "../ContentHeader/ContentHeader";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
-import { userDetailToast } from "../../globalContext/notification/notificationActions";
+import { errorNotification } from "../../globalContext/notification/notificationActions";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import { NOTIFICATION_TYPES } from "../../constant/constant";
 import styles from "./QueriesListingHeader.module.scss";
 
 const QueriesListingHeader = () => {
@@ -14,16 +15,16 @@ const QueriesListingHeader = () => {
     useContext(NotificationContext);
 
   useEffect(() => {
-    if (notificationState?.isUserSuccessfullyAdded) {
+    if (notificationState?.isError) {
       showNotification({
         text: intl.formatMessage({
           id: "label.noDataFound",
         }),
-        type: "error",
+        type: NOTIFICATION_TYPES.ERROR,
       });
-      setNotificationStateDispatch(userDetailToast(false));
+      setNotificationStateDispatch(errorNotification(false));
     }
-  }, [notificationState?.isUserSuccessfullyAdded]);
+  }, [notificationState?.isError]);
 
   return (
     <div className={styles.headerBox}>
