@@ -38,7 +38,7 @@ const CustomInputNumber = (
       )}
       <div className={styles.formContainer}>
         <InputNumber
-          // controls={controls}
+          controls={controls}
           className={[styles.inputNumberStyles, customInputNumberStyles]}
           {...{
             disabled,
@@ -67,7 +67,7 @@ const CustomInputNumber = (
 };
 
 CustomInputNumber.defaultProps = {
-  controls: false,
+  controls: true,
   customContainerStyles: "",
   customErrorTextStyles: "",
   customInputNumberStyles: "",

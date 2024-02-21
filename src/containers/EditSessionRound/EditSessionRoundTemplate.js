@@ -15,6 +15,7 @@ import styles from "./EditSessionRound.module.scss";
 const EditSessionRoundTemplate = ({
   activeStatus,
   centresError,
+  experience,
   getCentreListFromResponse,
   handleDeselectCentre,
   handleSelectCentre,
@@ -25,6 +26,7 @@ const EditSessionRoundTemplate = ({
   onClickSave,
   responsive,
   selectedCentres,
+  setExperience,
   switchLabel,
 }) => {
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -73,7 +75,7 @@ const EditSessionRoundTemplate = ({
           bottomSection={
             currentlySelectedModuleKey ===
               MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
-              <WorkExperienceRange />
+              <WorkExperienceRange {...{ experience, setExperience }} />
             )
           }
         />

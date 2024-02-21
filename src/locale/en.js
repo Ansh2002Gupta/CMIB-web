@@ -479,6 +479,8 @@ const locale = {
   "label.addSessionSuccessfully": "Session has been created successfully",
   "label.updateSessionSuccessfully": "Session has been updated successfully",
   "session.useAndMore": "Use ‘and more’ ",
+  "session.use": "Use ",
+  "session.andMore": "'and more'",
 };
 
 export default locale;

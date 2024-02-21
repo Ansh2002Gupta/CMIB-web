@@ -1,5 +1,24 @@
+.mainContainer {
+  gap: var(--gapSmall);
+}
+
+.workExpContainer {
+  gap: var(--gapSmallMedium);
+}
+
+.addedExperience {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--gapSmall);
+}
+
+.alignCenter {
+  align-items: center;
+}
+
 .addMinusIcon {
-  margin-left: var(--gapSmall);
+  margin-left: var(--marginLarge);
 }
 
 .checkbox {
@@ -11,6 +30,15 @@
   width: var(--fullWidth);
 }
 
+.columnCellContainer {
+  gap: var(--gapMedium);
+}
+
+.useMoreStyles {
+  align-items: center;
+  gap: var(--gapSmall);
+}
+
 .dash {
   height: 1px;
   width: 8px;
@@ -20,10 +48,21 @@
 }
 
 .grayText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
+}
+
+.blackText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.blackBoldText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
 }
 
 .heading {
@@ -35,12 +74,6 @@
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
-}
-
-.subHeading {
-  margin-bottom: var(--gapSmallMedium);
-  margin-top: var(--gapSmall);
-  justify-content: space-between;
 }
 
 .customInputNumberStyles {
@@ -64,10 +97,4 @@
 
 .redText {
   color: var(--error);
-}
-
-.workExpContainer {
-  flex-direction: row;
-  justify-content: center;
-  width: var(--fullWidth);
 }

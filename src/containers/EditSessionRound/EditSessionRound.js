@@ -16,9 +16,9 @@ const EditSessionRound = ({
   selectedModule,
   switchLabel,
 }) => {
-
   const [activeStatus, setActiveStatus] = useState(roundDetails?.status === 1);
   const [selectedCentres, setSelectedCentres] = useState([]);
+  const [experience, setExperience] = useState([]);
   const responsive = useResponsive();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);
@@ -44,7 +44,7 @@ const EditSessionRound = ({
   };
 
   const handleSelectCentre = (item, option) => {
-    setCentresError(false)
+    setCentresError(false);
     let centre = option?.[0];
     if (selectedCentres.some((item) => item.id === centre.id)) {
       handleDeselectCentre(centre);
@@ -104,12 +104,13 @@ const EditSessionRound = ({
       let payload = {
         status: +activeStatus,
         centre_id: Array.from(selectedCentres, (centre) => centre.id),
+        experience: experience,
       };
 
       updateSessionRoundDetails({
         payload: payload,
         onErrorCallback: () => {},
-        onSuccessCallback:() => onClickCancel(true),
+        onSuccessCallback: () => onClickCancel(true),
         roundId: roundDetails?.id,
         selectedModuleKey: selectedModule?.key,
       });
@@ -118,6 +119,7 @@ const EditSessionRound = ({
 
   return (
     <EditSessionRoundTemplate
+      {...{ experience, setExperience }}
       activeStatus={activeStatus}
       centresError={centresError}
       getCentreListFromResponse={getCentreListFromResponse}
