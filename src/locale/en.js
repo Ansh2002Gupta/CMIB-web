@@ -79,7 +79,7 @@ const locale = {
   "session.sessionDetails": "Session Details",
   "session.edit": "Edit",
   "session.sessionName": "Session Name",
-  "session.natureOfGoods": "Nature of services/goods",
+  "session.natureOfGoods": "Nature of Services/Goods",
   "session.invoiceNumberFormat": "Performa Invoice Number Format",
   "session.examinationSessionPeriod": "Examination Session Period",
   "session.mcsCompletetionDate": "MCS Completetion Date",
@@ -88,10 +88,10 @@ const locale = {
     "Articleship Completetion From Date",
   "session.articleshipCompletetionToDate": "Articleship Completetion To Date",
   "session.hsnCode": "HSN Code/ SAC ",
-  "session.bankACNumber": "Bank A/C number",
-  "session.ifsc": "IFSC",
+  "session.bankACNumber": "Bank A/C Number",
+  "session.ifscCode": "IFSC Code",
   "session.placeholder.sessionName": "Enter Session Name",
-  "session.placeholder.natureOfGoods": "Enter Nature of services/goods",
+  "session.placeholder.natureOfGoods": "Enter Nature of Services/Goods",
   "session.placeholder.invoiceNumberFormat": "e.g month-*****-year",
   "session.placeholder.examinationSessionPeriod": "Select Period",
   "session.placeholder.mcsCompletetionDate": "Select MCS Completetion Date",
@@ -102,8 +102,8 @@ const locale = {
   "session.placeholder.articleshipCompletetionToDate":
     "Select Articleship Completetion To Date",
   "session.placeholder.hsnCode": "Enter HSN Code/ SAC ",
-  "session.placeholder.bankACNumber": "Enter Bank A/C number",
-  "session.placeholder.ifsc": "Enter IFSC Code",
+  "session.placeholder.bankACNumber": "Enter Bank A/C Number",
+  "session.placeholder.ifscCode": "Enter IFSC Code",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
   "session.lastDateRegistrationCompanies":
@@ -121,8 +121,10 @@ const locale = {
     "* Please select articleship completetion from date",
   "session.error.articleshipCompletetionToDate":
     "* Please select articleship completetion to date",
+  "session.error.articleshipCompletetionErrorMsg":
+    "Articleship completetion to date should be greater than from date",
   "session.error.bankACNumber": "Please enter valid bank A/C number",
-  "session.error.ifsc": "Please enter valid IFSC code",
+  "session.error.ifscCode": "Please enter valid IFSC code",
   "session.error.hsnCode": "Please enter valid HSN code/ SAC",
   "session.bigCentres": "Big Centres",
   "session.smallCentres": "Small Centres",
@@ -474,6 +476,8 @@ const locale = {
   "session.min_ctc": "Minimum CTC",
   "label.yearsAndMore": "Years and more",
   "label.years": "Years",
+  "label.addSessionSuccessfully": "Session has been created successfully",
+  "label.updateSessionSuccessfully": "Session has been updated successfully",
 };
 
 export default locale;

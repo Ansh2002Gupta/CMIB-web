@@ -57,6 +57,7 @@ const SearchableDropDown = ({
                     )}
                   />
                 }
+                rightSectionStyle={classes.rightSectionStyle}
                 rightSection={
                   <Typography className={styles.chipText}>
                     {option.label}
