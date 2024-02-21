@@ -78,4 +78,13 @@ const AutoPlaceComplete = ({defaultValue, onSelectLocation}) => {
   );
 };
 
+AutoComplete.defaultProps = {
+  defaultValue: '',
+};
+
+AutoComplete.propTypes = {
+  defaultValue: PropTypes.string,
+  onSelectLocation: PropTypes.func,
+};
+
 export default AutoPlaceComplete;
