@@ -10,11 +10,11 @@ import QueryDetailsContent from "../../containers/QueryDetailsContent";
 import QueryDetailsHeader from "../../containers/QueryDetailsHeader";
 import useFetch from "../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
-import { UserDetailContext } from "../../globalContext/userDetail/userDetailProvider";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
-import { userDetailToast } from "../../globalContext/userDetail/userDetailActions";
+import { errorNotification } from "../../globalContext/notification/notificationActions";
 import { getErrorMessage } from "../../constant/utils";
 import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import { QUERIES } from "../../routes/routeNames";
@@ -39,7 +39,7 @@ const QueryDetails = () => {
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
-  const [, setUserDetailDispatch] = useContext(UserDetailContext);
+  const [, setNotificationStateDispatch] = useContext(NotificationContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
@@ -50,7 +50,7 @@ const QueryDetails = () => {
   useEffect(() => {
     if (error?.data?.code === STATUS_CODES.NOT_FOUND) {
       navigate(`/${selectedModule?.key}/${QUERIES}`);
-      setUserDetailDispatch(userDetailToast(true));
+      setNotificationStateDispatch(errorNotification(true));
     }
   }, [error?.data?.code]);
 
