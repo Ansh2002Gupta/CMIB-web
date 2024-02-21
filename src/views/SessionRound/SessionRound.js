@@ -48,10 +48,7 @@ const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
   }, [selectedModule?.key, roundId]);
 
   useEffect(() => {
-    if (
-      searchParams?.get("mode") &&
-      searchParams?.get("mode") !== currentMode
-    ) {
+    if (searchParams?.get("mode") !== currentMode) {
       setCurrentMode(searchParams?.get("mode"));
     }
   }, [searchParams?.get("mode")]);

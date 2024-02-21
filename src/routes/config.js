@@ -41,12 +41,12 @@ import {
   EDIT_CONFIGURE_CENTRE,
   EDIT_SESSION,
   FORGOT_PASSWORD,
-  ORIENTATION_CENTERS,
   LOGIN,
   OUT_SOURCED,
   QUERIES,
   QUERY_DETAILS,
   ROOT,
+  ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   SESSION,
   SETUP_CENTERS,
@@ -66,16 +66,16 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 );
 
 const config = [
-  // {
-  //   pagePath: OUT_SOURCED,
-  //   element: <DefaultRoute />,
-  //   views: [
-  //     {
-  //       viewPath: "",
-  //       element: <DefaultRoute />,
-  //     },
-  //   ],
-  // },
+  {
+    pagePath: OUT_SOURCED,
+    element: <DefaultRoute />,
+    views: [
+      {
+        viewPath: "",
+        element: <DefaultRoute />,
+      },
+    ],
+  },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,
@@ -267,7 +267,7 @@ const config = [
       },
       { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
       {
-        viewPath: SESSION + ORIENTATION_CENTERS,
+        viewPath: SESSION + ROUND_ONE_ORIENTATION_CENTERS,
         element: <OrientationCenter />,
       },
       {

@@ -471,6 +471,7 @@ const locale = {
   "label.path.reply": "Ticket Details",
   "label.orientation_no_result_msg":
     "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
+  "label.path.orientation-centers": "Orientation Centres",
 };
 
 export default locale;

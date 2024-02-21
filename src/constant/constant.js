@@ -1,6 +1,6 @@
 import {
   CONSENT_MARKING,
-  ORIENTATION_CENTERS,
+  ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
@@ -202,7 +202,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
     headingIntl: "Orientation Centres",
-    onClickNaviagtion: ORIENTATION_CENTERS,
+    onClickNaviagtion: ROUND_ONE_ORIENTATION_CENTERS,
   },
   {
     id: 4,
