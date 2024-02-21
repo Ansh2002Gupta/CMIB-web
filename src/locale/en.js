@@ -471,7 +471,7 @@ const locale = {
   "label.path.reply": "Ticket Details",
   "session.workExperienceRanges": "Work Experience Ranges",
   "session.workExperienceRange": "Work Experience Range",
-  "session.minimumCTC": "Minimum CTC",
+  "session.min_ctc": "Minimum CTC",
 };
 
 export default locale;

@@ -109,6 +109,7 @@ const useRenderColumn = () => {
       textStyles,
       isCapitalize,
       isRequiredTooltip,
+      isMoney,
       mobile,
       isIntl,
       isDataObject,
@@ -171,6 +172,9 @@ const useRenderColumn = () => {
       }
       if (isIntl) {
         return intl.formatMessage({ id: `label.${text}` });
+      }
+      if (isMoney) {
+        return `${text} INR`;
       }
       return text;
     };

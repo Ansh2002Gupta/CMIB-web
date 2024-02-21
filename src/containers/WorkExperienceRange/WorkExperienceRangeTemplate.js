@@ -32,7 +32,7 @@ const WorkExperienceRangeTemplate = ({ intl }) => {
               }
               rightSection={
                 <Typography className={styles.grayText}>
-                  {intl.formatMessage({ id: "session.minimumCTC" })}
+                  {intl.formatMessage({ id: "session.min_ctc" })}
                   <span className={styles.redText}> *</span>
                 </Typography>
               }

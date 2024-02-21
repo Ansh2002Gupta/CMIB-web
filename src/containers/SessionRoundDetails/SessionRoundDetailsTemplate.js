@@ -36,13 +36,13 @@ const SessionRoundDetailsTemplate = ({
       title: intl.formatMessage({ id: "session.workExperienceRange" }),
       dataIndex: "workExperience",
       key: "workExperience",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { visible: true },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "session.minimumCTC" }),
-      dataIndex: "minimumCTC",
-      key: "minimumCTC",
-      renderText: { isTextBold: true, visible: true },
+      title: intl.formatMessage({ id: "session.min_ctc" }),
+      dataIndex: "min_ctc",
+      key: "min_ctc",
+      renderText: { isMoney: true, visible: true },
     }),
   ];
 

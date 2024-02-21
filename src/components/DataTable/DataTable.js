@@ -53,7 +53,7 @@ const DataTable = ({
         dataSource={originalData}
         pagination={false}
         scroll={responsiveStyle}
-        className={styles.table}
+        className={[styles.table, !pagination && "nopagination"]}
         rowClassName={setRowClassName}
         rowKey="id"
       />

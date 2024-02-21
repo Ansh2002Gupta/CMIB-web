@@ -1048,11 +1048,17 @@ export const WORK_EXP_DATA = [
   {
     id: 1,
     workExperience: "1",
-    minimumCTC: "10000",
+    min_ctc: "10000",
+    use_more_experience: 1,
+    work_experience_end: 2,
+    work_experience_start: 1,
   },
   {
     id: 2,
     workExperience: "5",
-    minimumCTC: "2000",
+    min_ctc: "2000",
+    use_more_experience: 1,
+    work_experience_end: 2,
+    work_experience_start: 1,
   },
 ];
