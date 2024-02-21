@@ -21,7 +21,7 @@
 
 .grayText {
   font-family: var(--fontFamilyRegular);
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
 }
@@ -32,7 +32,6 @@
 }
 
 .headingText {
-  font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
