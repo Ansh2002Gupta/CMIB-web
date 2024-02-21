@@ -237,7 +237,9 @@
 }
 
 .noSessionText {
-  font-size: var(--fontSizeXlargeMedium);
+  font-size: var(--fontSizeLarge);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
+  align-self: center;
+  text-align: center;
 }

@@ -419,7 +419,7 @@ const locale = {
   "label.passwordChanged":
     "Your password has been successfully changed. Please login using your new password. Thanks!",
   "label.search": "Search",
-  "label.noSessionSetup": "No session is setup currently",
+  "label.noSessionSetup": "No session is currently set up. You can create one using the ‘Set up New Session’ button above.",
   "label.sessionStatus": "Session Status",
   "label.deleteAccount": "Delete Account",
   "label.path.global-configurations": "Configure centres",
