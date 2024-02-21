@@ -56,6 +56,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
           className={styles.workExpContainer}
           topSection={
             <TwoColumn
+              className={styles.columnCellContainer}
               leftSectionStyle={classes.flex2}
               rightSectionStyle={classes.flex1}
               leftSection={
