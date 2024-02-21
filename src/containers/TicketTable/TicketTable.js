@@ -15,6 +15,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketColumn } from "./TicketTableConfig";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { validateSearchTextLength } from "../../Utils/validations";
 import { TICKETS_VIEW_DETAILS } from "../../routes/routeNames";
 import {
@@ -49,7 +50,7 @@ const TicketTable = ({
   const [sortBy, setSortBy] = useState("");
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [filterArray, setFilterArray] = useState({});
-
+  const [userProfileDetails] = useContext(UserProfileContext);
   const { data, error, fetchData, isError, isLoading, setData } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
@@ -177,6 +178,7 @@ const TicketTable = ({
     setSortBy,
     sortBy,
     handleSorting,
+    userProfileDetails,
   });
 
   const onChangePageSize = (size) => {
