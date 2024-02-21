@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Image, Typography } from "antd";
-import { removeItem } from "../../services/encrypted-storage-service";
 
 import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
@@ -12,6 +11,7 @@ import { filterMenuData } from "../../constant/utils";
 import { setSelectedModule } from "../../globalContext/userProfile/userProfileActions";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
+import { removeItem } from "../../services/encrypted-storage-service";
 import { DASHBOARD } from "../../routes/routeNames";
 import modules from "../SideMenu/sideMenuItems";
 import { SESSION_KEY } from "../../constant/constant";
