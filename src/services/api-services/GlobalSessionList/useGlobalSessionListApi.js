@@ -1,8 +1,8 @@
 import { useContext } from "react";
 
 import Http from "../../http-service";
-import { STATUS_CODES } from "../../../constant/constant";
 import { GlobalSessionContext } from "../../../globalContext/globalSession/globalSessionProvider";
+import { getItem } from "../../encrypted-storage-service";
 import {
   setGlobalSessionDetails,
   setGlobalSessionList,
@@ -12,10 +12,13 @@ import {
   CORE_ROUTE,
   GLOBAL_SESSION_LIST,
 } from "../../../constant/apiEndpoints";
+import { SESSION_KEY, STATUS_CODES } from "../../../constant/constant";
 
 const useGlobalSessionListApi = () => {
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
+
   const getGlobalSessionList = async (selectedModule) => {
+    const savedSessionId = getItem(SESSION_KEY);
     try {
       const url =
         CORE_ROUTE +
@@ -28,11 +31,29 @@ const useGlobalSessionListApi = () => {
         res.status === STATUS_CODES.SUCCESS_STATUS
       ) {
         globalSessionDispatch(setGlobalSessionList(res?.data?.records));
-        globalSessionDispatch(
-          setGlobalSessionDetails(res?.data?.records?.[0]?.id)
-        );
-        globalSessionDispatch(setSelectedSession({ key: res?.data?.records?.[0]?.id || "", label: res?.data?.records?.[0]?.name || "" }))
-        return;
+        if (savedSessionId) {
+          let session = res?.data?.records?.filter(
+            (ele) => ele?.id === +savedSessionId
+          )?.[0];
+          globalSessionDispatch(setGlobalSessionDetails(session?.id || ""));
+          globalSessionDispatch(
+            setSelectedSession({
+              key: session?.id || "",
+              label: session?.name || "",
+            })
+          );
+        } else {
+          globalSessionDispatch(
+            setGlobalSessionDetails(res?.data?.records?.[0]?.id)
+          );
+          globalSessionDispatch(
+            setSelectedSession({
+              key: res?.data?.records?.[0]?.id || "",
+              label: res?.data?.records?.[0]?.name || "",
+            })
+          );
+        }
+       return;
       }
     } catch (err) {}
   };

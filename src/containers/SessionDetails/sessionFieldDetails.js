@@ -4,6 +4,7 @@ import {
   BANK_ACC_NUMBER_REGEX,
   HSN_SAC_CODE_REGEX,
   IFSC_CODE_REGEX,
+  NO_SPACE_AT_START_AND_END,
   PERFORMA_INVOICE_REGEX,
 } from "../../constant/regex";
 
@@ -30,7 +31,6 @@ export const FIELDS = (
       value: name,
       rules: [
         {
-          regex: ALPHANUMERIC_WITH_SPACE_REGEX,
           required: true,
           message: "sessionName",
         },

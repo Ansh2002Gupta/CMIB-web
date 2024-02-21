@@ -111,6 +111,8 @@ const useRenderColumn = () => {
       isRequiredTooltip,
       mobile,
       isIntl,
+      isDataObject,
+      dataKey,
     } = renderText;
 
     const {
@@ -158,6 +160,9 @@ const useRenderColumn = () => {
     };
 
     const textRenderFormat = ({ text }) => {
+      if (isDataObject) {
+        return text[dataKey] || "-";
+      }
       if (isTypeDate) {
         return formatDate({ date: text });
       }
@@ -185,22 +190,22 @@ const useRenderColumn = () => {
       );
     };
 
-    title &&
-      (columnObject.title = () => {
-        return renderSorterColumn ? (
-          <Typography
-            className={[styles.columnHeading].join(" ")}
-            onClick={() => {
-              setSortBy((prev) => {
-                const newSortOrder = toggleSorting(prev);
-                columnSortByHandler({
-                  sortDirection: newSortOrder,
-                  sortField: columnObject.key,
-                });
-                return newSortOrder;
+    columnObject.title = () => {
+      return renderSorterColumn ? (
+        <Typography
+          className={[styles.columnHeading, customColumnHeading].join(" ")}
+          onClick={() => {
+            setSortBy((prev) => {
+              const newSortOrder = toggleSorting(prev);
+              columnSortByHandler({
+                sortDirection: newSortOrder,
+                sortField: columnObject.key,
               });
-            }}
-          >
+              return newSortOrder;
+            });
+          }}
+        >
+          {!!title && (
             <div className={styles.sortingArrowContainer}>
               {title}
               <Image
@@ -209,34 +214,45 @@ const useRenderColumn = () => {
                 className={[styles.centerContent, ...customIconStyle].join(" ")}
               />
             </div>
-          </Typography>
-        ) : (
-          <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
-            {title}
-            {isRequiredField && (
-              <>
-                &nbsp;<span className={styles.isRequiredStar}>*</span>
-              </>
-            )}
-          </p>
-        );
-      });
+          )}
+        </Typography>
+      ) : (
+        <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
+          {title || ""}
+          {isRequiredField && (
+            <>
+              &nbsp;<span className={styles.isRequiredStar}>*</span>
+            </>
+          )}
+        </p>
+      );
+    };
 
     renderTitleWithCheckbox?.visible &&
       (columnObject.title = () => {
         return (
-          <Checkbox
-            indeterminate={isIntermidiate}
-            checked={isChecked}
+          <TwoColumn
             className={[
-              styles.chipContainer,
+              styles.checkBoxStyle,
               customColumnHeading,
               customCheckBoxStyles,
             ].join(" ")}
-            onChange={onToggleCheckBox}
-          >
-            {titleWithCheckBoxes}
-          </Checkbox>
+            leftSection={
+              <Image
+                className={styles.iconStyle}
+                src={
+                  isIntermidiate
+                    ? getImage("someFiltersAreSelected")
+                    : isChecked
+                    ? getImage("checkedBox")
+                    : getImage("unCheckedBox")
+                }
+                preview={false}
+                onClick={onToggleCheckBox}
+              />
+            }
+            rightSection={titleWithCheckBoxes}
+          />
         );
       });
 
@@ -303,11 +319,11 @@ const useRenderColumn = () => {
         return (
           <Chip
             label={status}
-            bgColor={[
+            customContainerStyles={[
               styles.chipContainer,
               styles[styleClassForContainer],
             ].join(" ")}
-            textColor={styles[styleClassForText]}
+            textStyles={styles[styleClassForText]}
           />
         );
       });

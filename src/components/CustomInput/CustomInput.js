@@ -11,6 +11,7 @@ import styles from "./CustomInput.module.scss";
 const CustomInput = React.forwardRef(
   (
     {
+      currentSelectedValue,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,
@@ -31,6 +32,7 @@ const CustomInput = React.forwardRef(
       isSelectBoxDisable,
       label,
       max,
+      maxLength,
       messageStyles: customMessageStyles,
       messageToShow,
       min,
@@ -114,6 +116,7 @@ const CustomInput = React.forwardRef(
                 value,
                 placeholder,
                 disabled,
+                maxLength,
                 onChange,
                 onBlur,
               }}
@@ -141,11 +144,13 @@ const CustomInput = React.forwardRef(
                       </span>
                     ))}
                   {SuffixIcon && (
-                    <SuffixIcon
-                      onClick={() => {
-                        onSuffixElementClick && onSuffixElementClick();
-                      }}
-                    />
+                    <span className={styles.suffixElement}>
+                      <SuffixIcon
+                        onClick={() => {
+                          onSuffixElementClick && onSuffixElementClick();
+                        }}
+                      />
+                    </span>
                   )}
                 </>
               }
@@ -171,17 +176,20 @@ const CustomInput = React.forwardRef(
             />
           )}
         </div>
-        <div>
-          <Typography
-            className={[
-              styles.errorText,
-              customErrorTextStyles,
-              isError ? styles.showError : "",
-            ].join(" ")}
-          >
-            {errorMessage ? ` * ${errorMessage}` : ""}
-          </Typography>
-        </div>
+        {errorMessage && (
+          <div>
+            <Typography
+              className={[
+                styles.errorText,
+                customErrorTextStyles,
+                isError ? styles.showError : "",
+              ].join(" ")}
+            >
+              {errorMessage ? ` * ${errorMessage}` : ""}
+            </Typography>
+          </div>
+        )}
+
         {!!messageToShow && (
           <div>
             <Typography
@@ -253,6 +261,7 @@ CustomInput.propTypes = {
   isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
   max: PropTypes.number,
+  maxLength: PropTypes.number,
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,

@@ -19,6 +19,7 @@ const getStatusStyles = (status) => {
 export const getTicketColumn = ({
   getImage,
   handleClickAssign,
+  handleTicketIcon,
   handleSorting,
   intl,
   renderColumn,
@@ -103,6 +104,8 @@ export const getTicketColumn = ({
       dataIndex: "assigned_to",
       key: "assigned_to",
       renderText: {
+        isDataObject: true,
+        dataKey: "name",
         visible: true,
         textStyles: [styles.tableCell].join(" "),
         isCapitalize: true,
@@ -126,19 +129,20 @@ export const getTicketColumn = ({
         preview: false,
         src: getImage("messageText"),
         visible: true,
-        onClick: (data) => {
-          handleClickAssign(data);
-        },
+        onClick: (data) => handleTicketIcon(data),
       },
     }),
     renderColumn({
       dataIndex: "see",
       key: "see",
       renderImage: {
-        alt: "options",
+        alt: "addAssignee",
         preview: false,
-        src: getImage("more"),
+        src: getImage("iconProfileAdd"),
         visible: true,
+        onClick: (data) => {
+          handleClickAssign(data);
+        },
       },
     }),
   ];

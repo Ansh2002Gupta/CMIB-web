@@ -1,6 +1,8 @@
-.mainContainer {
-  gap: var(--gapMedium);
-  width: 50vw;
+.blackText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
 }
 
 .cityContainer {
@@ -15,4 +17,9 @@
   display: flex;
   flex: 1;
   flex-wrap: wrap;
+}
+
+.mainContainer {
+  gap: var(--gapMedium);
+  width: 50vw;
 }

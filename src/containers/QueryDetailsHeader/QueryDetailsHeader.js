@@ -28,14 +28,14 @@ const QueryDetailsHeader = ({
         headerComponent={
           <Chip
             label={status}
-            textColor={
+            textStyles={
               styles[
                 status?.toLowerCase() === STATUS.PENDING?.toLowerCase()
                   ? "pending_color"
                   : "success_color"
               ]
             }
-            bgColor={
+            customContainerStyles={
               styles[
                 status?.toLowerCase() === STATUS.PENDING?.toLowerCase()
                   ? "pending_bg"
