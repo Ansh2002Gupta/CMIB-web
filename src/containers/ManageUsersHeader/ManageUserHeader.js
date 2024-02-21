@@ -3,14 +3,14 @@ import { useIntl } from "react-intl";
 
 import CustomButton from "../../components/CustomButton";
 import ContentHeader from "../ContentHeader";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useResponsive from "../../core/hooks/useResponsive";
+import { userDetailToast } from "../../globalContext/notification/notificationActions";
 import { ADD } from "../../routes/routeNames";
 import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./ManageUserHeader.module.scss";
-import { NotificationContext } from "../../globalContext/notification/notificationProvider";
-import { userDetailToast } from "../../globalContext/notification/notificationActions";
 
 const ManageUserHeader = () => {
   const intl = useIntl();
@@ -32,7 +32,7 @@ const ManageUserHeader = () => {
       });
       setNotificationStateDispatch(userDetailToast(false));
     }
-  }, [notificationState]);
+  }, [notificationState?.isUserSuccessfullyAdded]);
 
   return (
     <>

@@ -3,16 +3,16 @@ import { useIntl } from "react-intl";
 import { useSearchParams } from "react-router-dom";
 
 import { TwoRow } from "core/layouts";
-import useFetch from "../../core/hooks/useFetch";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "core/hooks/useResponsive";
-import useShowNotification from "../../core/hooks/useShowNotification";
 
 import ContentHeader from "../../containers/ContentHeader";
 import CustomButton from "../../components/CustomButton";
 import CustomTabs from "../../components/CustomTabs";
 import SessionDetails from "../../containers/SessionDetails";
 import SessionRound from "../SessionRound";
+import useFetch from "../../core/hooks/useFetch";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -89,7 +89,10 @@ function Session() {
       setNotificationStateDispatch(addSessionNotification(false));
       setNotificationStateDispatch(updateSessionNotification(false));
     }
-  }, [notificationState]);
+  }, [
+    notificationState?.addSessionSuccessfully,
+    notificationState?.updateSessionSuccesssfully,
+  ]);
 
   const tabItems = [
     {

@@ -31,10 +31,10 @@ import {
   convertDateToStringDate,
   isObjectHasNoValues,
 } from "../../constant/utils";
+import { EDIT_SESSION, SESSION } from "../../routes/routeNames";
+import { FIELDS } from "./sessionFieldDetails";
 import { NOTIFICATION_TYPES, SESSION_KEY } from "../../constant/constant";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
-import { FIELDS } from "./sessionFieldDetails";
-import { EDIT_SESSION, SESSION } from "../../routes/routeNames";
 import { classes } from "./SessionDetails.styles";
 import styles from "./SessionDetails.module.scss";
 import "./Override.css";
@@ -83,7 +83,7 @@ const SessionDetails = ({
   const { MonthPicker } = DatePicker;
 
   useEffect(() => {
-    if (sessionData?.status === 0) {
+    if (currentlySelectedModuleKey && !sessionData?.status) {
       navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
     }
   }, []);

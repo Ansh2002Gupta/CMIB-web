@@ -10,11 +10,11 @@ const BreadCrumbs = () => {
   const location = useLocation();
   const intl = useIntl();
   const isEdit = searchParams.get("mode") === "edit";
-  const updatedPathName =
-    location.pathname[location.pathname.length - 1] === "/"
+  const addSlashInPathName =
+    location.pathname?.slice(-1) === "/"
       ? location.pathname
       : location.pathname + "/";
-  const segments = updatedPathName.split("/");
+  const segments = addSlashInPathName.split("/");
   const pathSegments = segments.slice(2, -1);
   const { navigateScreen: navigate } = useNavigateScreen();
 
