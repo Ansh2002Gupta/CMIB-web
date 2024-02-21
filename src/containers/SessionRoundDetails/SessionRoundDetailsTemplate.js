@@ -73,7 +73,7 @@ const SessionRoundDetailsTemplate = ({
                   className={styles.editContainer}
                   leftSection={
                     <Image
-                      src={getImage("editIcon")}
+                      src={getImage("enableEdit")}
                       className={styles.editIcon}
                       preview={false}
                     />
