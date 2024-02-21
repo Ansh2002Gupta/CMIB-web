@@ -13,6 +13,7 @@ import CustomLoader from "../../components/CustomLoader";
 import EditSessionRound from "../../containers/EditSessionRound";
 import RoundCard from "../../containers/RoundCard";
 import SessionRoundDetails from "../../containers/SessionRoundDetails";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { ADMIN_ROUTE, ROUNDS } from "../../constant/apiEndpoints";
 import { API_STATUS, FORM_STATES } from "../../constant/constant";
@@ -24,6 +25,10 @@ const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentMode, setCurrentMode] = useState(
@@ -75,6 +80,15 @@ const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
     setCurrentMode(FORM_STATES.VIEW_ONLY);
   };
 
+  useEffect(() => {
+    if (!currentGlobalSession?.is_editable) {
+      setSearchParams((prev) => {
+        prev.set("mode", FORM_STATES.VIEW_ONLY);
+        return prev;
+      });
+    }
+  }, [globalSessionDetails]);
+
   return (
     <TwoRow
       className={styles.mainContainer}
@@ -99,6 +113,7 @@ const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
             roundDetails &&
             currentMode === FORM_STATES.VIEW_ONLY && (
               <SessionRoundDetails
+                currentGlobalSession={currentGlobalSession}
                 intl={intl}
                 onClickEdit={handleOnClickEdit}
                 roundDetails={roundDetails}

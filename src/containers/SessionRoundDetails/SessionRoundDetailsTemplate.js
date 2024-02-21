@@ -17,6 +17,7 @@ import { classes } from "./SessionRoundDetails.styles";
 import styles from "./SessionRoundDetails.module.scss";
 
 const SessionRoundDetailsTemplate = ({
+  currentGlobalSession,
   roundDetails,
   roundNo,
   intl,
@@ -64,7 +65,7 @@ const SessionRoundDetailsTemplate = ({
           }
           rightSection={
             <>
-              {roundDetails && (
+              {roundDetails && currentGlobalSession?.is_editable ? (
                 <TwoColumn
                   onClick={() => {
                     onClickEdit(roundDetails);
@@ -83,7 +84,7 @@ const SessionRoundDetailsTemplate = ({
                     </Typography>
                   }
                 />
-              )}
+              ) : null}
             </>
           }
         />

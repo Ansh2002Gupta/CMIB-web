@@ -2,9 +2,16 @@ import React from "react";
 
 import SessionRoundDetailsTemplate from "./SessionRoundDetailsTemplate";
 
-const SessionRoundDetails = ({ intl, onClickEdit, roundDetails, roundNo }) => {
+const SessionRoundDetails = ({
+  currentGlobalSession,
+  intl,
+  onClickEdit,
+  roundDetails,
+  roundNo,
+}) => {
   return (
     <SessionRoundDetailsTemplate
+      currentGlobalSession={currentGlobalSession}
       roundDetails={roundDetails}
       roundNo={roundNo}
       intl={intl}
