@@ -118,7 +118,10 @@
 
   .imageStyle{
     height: 100px !important;
-    width:150px !important;;
+    width:150px !important;
+    object-fit: contain;
+    border:1px solid var(--snow);
+    border-radius: 12px;
   }
 
   .crossImageContainer{
@@ -130,6 +133,7 @@
     opacity: 0.5;
     height: 20px;
     width: 20px;
+ 
   }
 
 
