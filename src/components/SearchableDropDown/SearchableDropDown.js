@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Checkbox, Image, Select, Typography } from "antd";
+import { Checkbox, Image, Select, Tooltip, Typography } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -22,6 +22,8 @@ const SearchableDropDown = ({
 }) => {
   const { getImage } = useContext(ThemeContext);
   const intl = useIntl();
+
+  console.log("options", options);
 
   return (
     <TwoRow
@@ -58,7 +60,10 @@ const SearchableDropDown = ({
                 }
                 rightSectionStyle={classes.rightSectionStyle}
                 rightSection={
-                  <Typography className={styles.chipText}>
+                  <Typography
+                    className={styles.chipText}
+                    title={option?.label.length > 3 ? option?.label : ""} // adjust length accordingly
+                  >
                     {option.label}
                   </Typography>
                 }
