@@ -176,7 +176,23 @@ const CenterDetailsContent = ({
   };
 
   const handleSave = () => {
-    const isValid = tableData.slice(0, -1).every((_, index) => validate(index));
+    const isLastRowEmpty = Object.entries(
+      tableData[tableData.length - 1]
+    ).every(([key, value]) => {
+      if (typeof value === "object" && value !== null) {
+        return Object.entries(value).every(
+          ([nestedKey, nestedValue]) =>
+            nestedValue === addTableData[key][nestedKey]
+        );
+      }
+      return value === addTableData[key];
+    });
+
+    const interviewDatesData = isLastRowEmpty
+      ? tableData.slice(0, -1)
+      : tableData;
+
+    const isValid = interviewDatesData.every((_, index) => validate(index));
     if (!isValid) {
       return;
     }
@@ -201,7 +217,7 @@ const CenterDetailsContent = ({
       centre_start_time: formData?.centreStartTime,
       centre_end_time: formData.centreEndTime,
       psychometric_test_fee: parseInt(formData.PsychometricFee),
-      interview_dates: tableData.slice(0, -1).map((item) => ({
+      interview_dates: interviewDatesData.map((item) => ({
         id: parseInt(item.id),
         firm_fee: parseInt(item.firm.firmFee),
         norm1: parseInt(item.norm1),
@@ -209,7 +225,7 @@ const CenterDetailsContent = ({
         norm2_min_vacancy: parseInt(item.norm2MinVacancy),
         numbers_of_partners: parseInt(item.firm.uptoPartners),
         participation_fee: parseInt(item.participationFee),
-        interview_schedule_date: dayjs(item.scheduleDate).format("YYYY-MM-DD"),
+        interview_schedule_date: item.scheduleDate,
       })),
     };
 

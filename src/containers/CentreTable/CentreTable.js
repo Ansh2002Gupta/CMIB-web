@@ -102,7 +102,11 @@ const CentreTable = ({
           customTimeStyle={styles.inputStyle}
           type="date"
           onChange={(val) => {
-            handleInputChange(val, "scheduleDate", index);
+            handleInputChange(
+              dayjs(val).format("YYYY-MM-DD"),
+              "scheduleDate",
+              index
+            );
           }}
           disabledDate={(current) => {
             return current && current < dayjs().add(1, "day").startOf("day");
