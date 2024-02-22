@@ -481,6 +481,8 @@ const locale = {
   "session.useAndMore": "Use ‘and more’ ",
   "session.use": "Use ",
   "session.andMore": "'and more'",
+  "label.from": "From",
+  "label.to": "To",
 };
 
 export default locale;

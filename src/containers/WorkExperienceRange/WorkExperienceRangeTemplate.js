@@ -115,6 +115,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
           {intl.formatMessage({ id: "session.workExperienceRanges" })}
         </Typography>
       }
+      bottomSectionStyle={{ minWidth: "1080px" }}
       bottomSection={
         <ThreeRow
           className={styles.workExpContainer}
@@ -153,6 +154,9 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                         isRightFillSpace
                         leftSection={
                           <CustomInputNumber
+                            placeholder={intl.formatMessage({
+                              id: "label.from",
+                            })}
                             onChange={(val) => {
                               handleInputChangeExperience(
                                 val,
@@ -182,6 +186,9 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                             />
                           ) : (
                             <CustomInputNumber
+                              placeholder={intl.formatMessage({
+                                id: "label.to",
+                              })}
                               onChange={(val) => {
                                 handleInputChangeExperience(
                                   val,
@@ -207,6 +214,9 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                         isLeftFillSpace
                         leftSection={
                           <CustomInputNumber
+                            placeholder={intl.formatMessage({
+                              id: "session.min_ctc",
+                            })}
                             onChange={(val) => {
                               handleInputChangeExperience(
                                 val,
@@ -253,6 +263,9 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                     isLeftFillSpace
                     leftSection={
                       <CustomInputNumber
+                        placeholder={intl.formatMessage({
+                          id: "label.from",
+                        })}
                         errorMessage={errors.work_experience_start}
                         onChange={(val) => {
                           handleInputChange(val, "work_experience_start");
@@ -285,6 +298,9 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                             />
                           ) : (
                             <CustomInputNumber
+                              placeholder={intl.formatMessage({
+                                id: "label.to",
+                              })}
                               errorMessage={errors.work_experience_end}
                               onChange={(val) => {
                                 handleInputChange(val, "work_experience_end");
@@ -331,6 +347,9 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                     isLeftFillSpace
                     leftSection={
                       <CustomInputNumber
+                        placeholder={intl.formatMessage({
+                          id: "session.min_ctc",
+                        })}
                         errorMessage={errors.min_ctc}
                         onChange={(val) => {
                           handleInputChange(val, "min_ctc");
