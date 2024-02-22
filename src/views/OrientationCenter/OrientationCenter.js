@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useIntl } from "react-intl";
 import dayjs from "dayjs";
+import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Spin, Typography } from "antd";
 
@@ -29,6 +29,7 @@ import {
 import { SESSION } from "../../routes/routeNames";
 
 import { classes } from "./OrientationCenter.styles";
+import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./OrientationCenter.module.scss";
 import "./Override.css";
 
@@ -288,7 +289,7 @@ const OrientationCenter = () => {
   };
 
   const renderError = (errorText, errorHeading, onRetryHandler) => (
-    <div className={styles.errorContainer}>
+    <div className={commonStyles.errorContainer}>
       <ErrorMessageBox
         onRetry={onRetryHandler}
         errorText={errorText}
@@ -308,7 +309,7 @@ const OrientationCenter = () => {
 
     if (isLoading) {
       return (
-        <div className={styles.errorContainer}>
+        <div className={commonStyles.errorContainer}>
           <Spin size="large" />
         </div>
       );
