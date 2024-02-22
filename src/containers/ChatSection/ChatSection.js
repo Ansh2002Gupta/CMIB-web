@@ -167,8 +167,9 @@ const ChatSection = ({
             <div className={styles.messagesContainer} ref={messageListRef}>
               {data?.map((item, index) => {
                 const messageFlag = getDateStatus(item?.created_at);
+                const key = `message-${item?.id || index}`;
                 return (
-                  <>
+                  <React.Fragment key={key}>
                     {!!messageFlag && (
                       <div className={styles.flagContainer}>
                         {renderHorizontalLine()}
@@ -186,10 +187,10 @@ const ChatSection = ({
                       index={index}
                       shouldShowAvatar={shouldShowAvatar}
                     />
-                    <div ref={scrollToLatestMessageRef} />
-                  </>
+                  </React.Fragment>
                 );
               })}
+              <div ref={scrollToLatestMessageRef} />
             </div>
           </div>
         }
