@@ -29,6 +29,16 @@
   align-items: flex-start;
 }
 
+.companyContentDetails{
+  gap: var(--gapXSmall);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: var(--marginLarge);
+  
+}
+
 .contentHeadingText {
   font-size: var(--fontSizeExtraSmall);
   color: var(--inputPlaceHolder);
