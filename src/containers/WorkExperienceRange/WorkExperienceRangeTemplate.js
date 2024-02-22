@@ -48,7 +48,6 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
   };
 
   const handleInputChangeExperience = (value, name, id) => {
-    console.log(value, "value...", name, "name..", id, "id..");
     setExperience((prevData) =>
       prevData.map((item) => {
         if (item.id === id) {
@@ -58,8 +57,6 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
       })
     );
   };
-
-  console.log(experience, "experience..");
 
   const validate = () => {
     let errorCount = 0;
