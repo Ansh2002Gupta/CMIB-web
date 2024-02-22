@@ -252,7 +252,7 @@ const locale = {
   "centre.error.enterpartner": "Enter Partner",
   "centre.error.enterNorm1": "Enter Norm 1",
   "centre.error.enterNorm2": "Enter Norm 2",
-  "centre.error.enterVacancy": "Error",
+  "centre.error.enterVacancy": "Enter Vacancy",
   "label.none": "None",
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",

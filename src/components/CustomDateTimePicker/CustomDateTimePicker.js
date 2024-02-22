@@ -24,6 +24,7 @@ const CustomDateTimePicker = ({
   errorTimeInput,
   format,
   isEditable,
+  isError,
   isRequired,
   label,
   onChange,
@@ -88,7 +89,7 @@ const CustomDateTimePicker = ({
               <Typography
                 className={[styles.errorText, customErrorTextStyles].join(" ")}
               >
-                {errorMessage}
+                {errorMessage ? ` * ${errorMessage}` : ""}
               </Typography>
             )
           }
@@ -128,10 +129,12 @@ CustomDateTimePicker.propTypes = {
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
   disabledTime: PropTypes.func,
+  disabledDate: PropTypes.func,
   errorMessage: PropTypes.string,
   errorTimeInput: PropTypes.string,
   format: PropTypes.string,
   isEditable: PropTypes.bool,
+  isError: PropTypes.bool,
   isRequired: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
