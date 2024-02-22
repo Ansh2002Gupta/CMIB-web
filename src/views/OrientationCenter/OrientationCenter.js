@@ -19,7 +19,11 @@ import {
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import {
+  getValidPageNumber,
+  getValidPageSize,
+  resetListingData,
+} from "../../constant/utils";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
@@ -78,25 +82,6 @@ const OrientationCenter = () => {
     setFormData(orientationCentres?.records);
   }, [orientationCentres]);
 
-  const resetCentreListingData = (orientationCentres) => {
-    if (orientationCentres?.meta?.total) {
-      const totalRecords = orientationCentres?.meta?.total;
-      const numberOfPages = Math.ceil(totalRecords / pageSize);
-      if (current > numberOfPages) {
-        getOrientationCentres({
-          queryParamsObject: getRequestedQueryParams({
-            page: 1,
-          }),
-        });
-        setSearchParams((prev) => {
-          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-          return prev;
-        });
-        setCurrent(1);
-      }
-    }
-  };
-
   useEffect(() => {
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
@@ -107,7 +92,20 @@ const OrientationCenter = () => {
       const requestedParams = getRequestedQueryParams({});
       getOrientationCentres({
         queryParamsObject: requestedParams,
-        onSuccessCallback: resetCentreListingData,
+        onSuccessCallback: (centres) => {
+          resetListingData({
+            listData: centres,
+            currentPage: current,
+            fetchDataCallback: () =>
+              getOrientationCentres({
+                queryParamsObject: getRequestedQueryParams({
+                  page: 1,
+                }),
+              }),
+            setSearchParams,
+            setCurrent,
+          });
+        },
       });
     }
   }, [selectedModule?.key]);

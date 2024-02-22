@@ -29,6 +29,7 @@ import {
   TICKET_LIST,
 } from "../../constant/apiEndpoints";
 import styles from "./TicketTable.module.scss";
+import { resetListingData } from "../../constant/utils";
 
 const TicketTable = ({
   current,
@@ -209,26 +210,6 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const resetTicketListingData = (ticketsResult) => {
-    if (ticketsResult?.meta?.total) {
-      const totalRecords = ticketsResult?.meta?.total;
-      const numberOfPages = Math.ceil(totalRecords / pageSize);
-      if (current > numberOfPages) {
-        fetchData({
-          queryParamsObject: getRequestedQueryParams({
-            page: 1,
-            search: searchedValue,
-          }),
-        });
-        setSearchParams((prev) => {
-          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-          return prev;
-        });
-        setCurrent(1);
-      }
-    }
-  };
-
   useEffect(() => {
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
@@ -242,7 +223,21 @@ const TicketTable = ({
 
     fetchData({
       queryParamsObject: requestedParams,
-      onSuccessCallback: resetTicketListingData,
+      onSuccessCallback: (ticketsResult) => {
+        resetListingData({
+          listData: ticketsResult,
+          currentPage: current,
+          fetchDataCallback: () =>
+            fetchData({
+              queryParamsObject: getRequestedQueryParams({
+                page: 1,
+                search: searchedValue,
+              }),
+            }),
+          setSearchParams,
+          setCurrent,
+        });
+      },
     });
   }, []);
 
