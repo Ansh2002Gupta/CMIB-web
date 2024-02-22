@@ -5,8 +5,8 @@
   background-color: var(--blueBg);
 }
 
-.mainContainer::-webkit-scrollbar{
-   display: none;
+.mainContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .textInputFormContainer {
@@ -54,6 +54,7 @@
   padding: 0;
   align-self: center;
   align-items: center;
+  box-shadow: none !important;
 }
 
 .messagesContainer {
@@ -63,7 +64,7 @@
   width: var(--fullWidth);
   padding: var(--paddingXXSmall);
   gap: var(--gapXXSmall);
-   &::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
   }
   -ms-overflow-style: none;
@@ -88,52 +89,49 @@
   height: 100%;
 }
 
-  .messageFlag {
-    font-size:var(--fontSizeSmall); 
-    margin-left:var(--marginMedium) ;
-    margin-right:var(--marginMedium) ;
-  }
+.messageFlag {
+  font-size: var(--fontSizeSmall);
+  margin-left: var(--marginMedium);
+  margin-right: var(--marginMedium);
+}
 
-  .flagContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-top: var(--margin_20) ;
-    margin-bottom: var(--margin_20) ;
-    width: 100%;
-    }
+.flagContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--margin_20);
+  margin-bottom: var(--margin_20);
+  width: 100%;
+}
 
-  .horizontalLine{
-    width: 35%;
-    height: var(height_1);
-    background-color: var(--bulletPoint);
-  }
+.horizontalLine {
+  width: 35%;
+  height: var(height_1);
+  background-color: var(--bulletPoint);
+}
 
-  .uploadImageStyle{
-    position: relative;
-    margin-bottom: var(--margin_10) ;
-    margin-left:var(--margin_10) 
-  }
+.uploadImageStyle {
+  position: relative;
+  margin-bottom: var(--margin_10);
+  margin-left: var(--margin_10);
+}
 
-  .imageStyle{
-    height: var(--height_100) !important;
-    width: var(--width_100) !important;
-    object-fit: contain;
-    border: 1px solid var(--snow);
-    border-radius: var(--radiusXLg)
-  }
+.imageStyle {
+  height: var(--height_100) !important;
+  width: var(--width_100) !important;
+  object-fit: contain;
+  border: 1px solid var(--snow);
+  border-radius: var(--radiusXLg);
+}
 
-  .crossImageContainer{
-    position: absolute;
-    top:-5px;
-    right:-25px;
-    background-color: var(--snow);
-    border-radius: var(--radiusXLg);
-    opacity: 0.5;
-    height: var(--height_20);
-    width: var(--width_20);
- 
-  }
-
-
+.crossImageContainer {
+  position: absolute;
+  top: -5px;
+  right: -25px;
+  background-color: var(--snow);
+  border-radius: var(--radiusXLg);
+  opacity: 0.5;
+  height: var(--height_20);
+  width: var(--width_20);
+}
