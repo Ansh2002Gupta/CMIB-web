@@ -34,9 +34,6 @@ const MessageComponent = ({ messageData, index, shouldShowAvatar }) => {
                   bottomSection={
                     <TwoRow
                       className={styles.textAndImageContainer}
-                      topSectionStyle={{
-                        justifyContent: "flex-end",
-                      }}
                       topSection={
                         <Typography className={styles.fromMessageText}>
                           {messageData?.message}
@@ -113,24 +110,33 @@ const MessageComponent = ({ messageData, index, shouldShowAvatar }) => {
                       </Typography>
                     }
                     bottomSection={
-                      <Typography className={styles.toMessageText}>
-                        {messageData?.message}
-                      </Typography>
+                      <TwoRow
+                        topSection={
+                          <div className={styles.leftTextMessage}>
+                            <Typography className={styles.toMessageText}>
+                              {messageData?.message}
+                            </Typography>
+                          </div>
+                        }
+                        bottomSection={
+                          !!messageData?.file && (
+                            <Image
+                              className={styles.chatImage}
+                              preview={false}
+                              src={messageData?.file}
+                            />
+                          )
+                        }
+                      />
                     }
                   />
-                  {!!messageData?.file && (
-                    <Image
-                      className={styles.chatImage}
-                      preview={false}
-                      src={messageData?.file}
-                    />
-                  )}
                 </>
               }
             />
           ) : (
             <>
               <TwoRow
+                className={styles.leftMessageContaierWithoutAvatar}
                 topSection={
                   <Typography className={styles.toMessageText}>
                     {messageData?.message}

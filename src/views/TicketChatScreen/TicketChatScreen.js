@@ -21,7 +21,7 @@ import styles from "./TicketScreen.module.scss";
 const TicketChatScreen = () => {
   const intl = useIntl();
   const responsive = useResponsive();
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [loadingMore, setLoadingMore] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(false);
@@ -52,14 +52,13 @@ const TicketChatScreen = () => {
   });
 
   const {
-    closeTicketData,
     closeTicket,
     isError: isErrorCloseTicket,
     isLoading: isLoadingCloseTicket,
   } = useCloseTicketApi();
 
   const { sendMessage, isLoading: isSendingMessage } = useSendChatMessageApi();
-  const { showNotification, notificationContextHolder } = useShowNotification();
+  const { showNotification } = useShowNotification();
 
   const handleTicketClosed = () => {
     closeTicket({
@@ -115,6 +114,9 @@ const TicketChatScreen = () => {
   }, [ticketStatus]);
 
   const handleSend = async (payload) => {
+    if (isLoading) {
+      return;
+    }
     let newRecords = [];
     const newData = await sendMessage({
       ticketId: id,
@@ -129,6 +131,9 @@ const TicketChatScreen = () => {
   const isOnLastPage = currentPage === chatData?.meta?.lastPage;
 
   const handleLoadMore = async () => {
+    if (chatData?.meta?.currentPage === chatData?.meta?.lastPage) {
+      return;
+    }
     if (isOnLastPage || loadingMore) {
       return;
     }
@@ -153,25 +158,34 @@ const TicketChatScreen = () => {
     setIsDetailScreen(true);
   };
 
+  let reversedData = [];
+  if (currentRecords?.length > 0) {
+    reversedData = [...currentRecords].reverse();
+  }
+
   const renderChatSection = () => {
     return (
-      <ChatSection
-        data={reversedData}
-        {...{
-          fetchData,
-          isError,
-          isLoading,
-          error,
-          id,
-          handleLoadMore,
-          isOnLastPage,
-          ticketDetails,
-          handleSend,
-          isSendingMessage,
-          loadingMore,
-          ticketStatus,
-        }}
-      />
+      <>
+        {currentRecords?.length && (
+          <ChatSection
+            data={reversedData}
+            {...{
+              fetchData,
+              isError,
+              isLoading,
+              error,
+              id,
+              handleLoadMore,
+              isOnLastPage,
+              ticketDetails,
+              handleSend,
+              isSendingMessage,
+              loadingMore,
+              ticketStatus,
+            }}
+          />
+        )}
+      </>
     );
   };
 
@@ -188,11 +202,6 @@ const TicketChatScreen = () => {
       />
     );
   };
-
-  let reversedData = [];
-  if (currentRecords?.length > 0) {
-    reversedData = [...currentRecords].reverse();
-  }
 
   return (
     <>

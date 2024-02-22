@@ -18,7 +18,7 @@ const TicketDetails = ({ data, fetchData, isError, error }) => {
 
   const errorString = error?.data?.message || error;
 
-  const { firstName, lastName } = splitName(data?.assigned_to?.name);
+  const { firstName, lastName } = splitName(data?.chat_partner_details?.name);
 
   return (
     <>
@@ -35,7 +35,6 @@ const TicketDetails = ({ data, fetchData, isError, error }) => {
       {responsive.isMd ? (
         <TwoRow
           className={styles.profileContainer}
-          topSectionStyle={{ width: "100%" }}
           topSection={
             <ThreeRow
               className={styles.profileDetails}
@@ -43,37 +42,65 @@ const TicketDetails = ({ data, fetchData, isError, error }) => {
                 <ProfileIcon
                   firstName={firstName}
                   lastName={lastName}
-                  profileImage={userProfileDetails?.userDetails?.profile_photo}
+                  profileImage={data?.chat_partner_details?.profile_photo}
                 />
               }
               middleSection={
                 <Typography className={styles.nameText}>
-                  {data?.assigned_to?.name}
+                  {data?.chat_partner_details?.name}
                 </Typography>
               }
               bottomSection={
-                <Typography className={styles.ticketIdText}>
-                  {data?.readable_id}
-                </Typography>
+                <>
+                  {data?.chat_partner_details?.type.toLowerCase() ===
+                  "company" ? (
+                    <Typography className={styles.ticketIdText}>
+                      {data?.chat_partner_details?.type}
+                    </Typography>
+                  ) : (
+                    <Typography className={styles.ticketIdText}>
+                      {data?.chat_partner_details?.registeration_no}
+                    </Typography>
+                  )}
+                </>
               }
             />
           }
-          bottomSectionStyle={{ width: "100%" }}
           bottomSection={
             <ThreeRow
               className={styles.bottomContainer}
               topSection={
                 <TwoRow
-                  className={styles.contentDetails}
+                  className={styles.bottomContainer}
                   topSection={
-                    <Typography className={styles.contentHeadingText}>
-                      {intl.formatMessage({ id: "label.role" })}
-                    </Typography>
+                    <TwoRow
+                      className={styles.contentDetails}
+                      topSection={
+                        <Typography className={styles.contentHeadingText}>
+                          {intl.formatMessage({ id: "label.role" })}
+                        </Typography>
+                      }
+                      bottomSection={
+                        <Typography className={styles.contentDetailText}>
+                          {data?.chat_partner_details?.type}
+                        </Typography>
+                      }
+                    />
                   }
                   bottomSection={
-                    <Typography className={styles.contentDetailText}>
-                      {data?.chat_partner_details?.type}
-                    </Typography>
+                    <TwoRow
+                      className={styles.contentDetails}
+                      topSection={
+                        <Typography className={styles.contentHeadingText}>
+                          {intl.formatMessage({ id: "label.company_name" })}
+                        </Typography>
+                      }
+                      bottomSection={
+                        <Typography className={styles.contentDetailText}>
+                          {data?.chat_partner_details?.company_name || "-"}
+                        </Typography>
+                      }
+                    />
                   }
                 />
               }

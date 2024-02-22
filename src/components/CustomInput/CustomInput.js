@@ -11,7 +11,6 @@ import styles from "./CustomInput.module.scss";
 const CustomInput = React.forwardRef(
   (
     {
-      currentSelectedValue,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,
@@ -105,7 +104,7 @@ const CustomInput = React.forwardRef(
           )}
           {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
             <Input
-              ref={isSuffixRequiredForPassword ? inputFieldRef : null}
+              ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
               type={type || "text"}
               className={[
                 styles.inputField,
@@ -119,6 +118,7 @@ const CustomInput = React.forwardRef(
                 maxLength,
                 onChange,
                 onBlur,
+                maxLength,
               }}
               prefix={isPrefixRequired ? prefixElement : null}
               suffix={
@@ -225,6 +225,7 @@ CustomInput.defaultProps = {
   isSelectBoxDisable: false,
   label: "",
   max: 10,
+  maxLength: 100,
   messageStyles: "",
   messageToShow: "",
   min: 0,

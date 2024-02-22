@@ -53,7 +53,7 @@ const variables = {
   requiredStarColor: colorPallets.red1,
   sideMenuMaskBg: colorPallets.maskBlack,
   orangeText: colorPallets.orange2,
-  blueText: colorPallets.blue5,
+  blueText: colorPallets.blue7,
   greenText: colorPallets.green4,
   redText: colorPallets.red1,
   lightGreyText3: colorPallets.ltGrey4,

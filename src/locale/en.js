@@ -121,7 +121,8 @@ const locale = {
     "* Please select articleship completetion from date",
   "session.error.articleshipCompletetionToDate":
     "* Please select articleship completetion to date",
-  "session.error.articleshipCompletetionErrorMsg": "Articleship completetion to date should be greater than from date", 
+  "session.error.articleshipCompletetionErrorMsg":
+    "Articleship completetion to date should be greater than from date",
   "session.error.bankACNumber": "Please enter valid bank A/C number",
   "session.error.ifscCode": "Please enter valid IFSC code",
   "session.error.hsnCode": "Please enter valid HSN code/ SAC",
@@ -472,6 +473,7 @@ const locale = {
   "label.path.reply": "Ticket Details",
   "label.addSessionSuccessfully": "Session has been created successfully",
   "label.updateSessionSuccessfully": "Session has been updated successfully",
+  "label.company_name": "Company Name",
 };
 
 export default locale;
