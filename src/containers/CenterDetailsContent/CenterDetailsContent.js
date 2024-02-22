@@ -105,7 +105,7 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (!tableData[index]?.participationFee) {
+    if (tableData[index]?.participationFee === "") {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterParticipationFee" }),
         "participationFee",
@@ -113,7 +113,7 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (!tableData[index]?.firm?.firmFee) {
+    if (tableData[index]?.firm?.firmFee === "") {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterFirmFee" }),
         "firm",
@@ -122,7 +122,7 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (!tableData[index]?.firm?.uptoPartners) {
+    if (tableData[index]?.firm?.uptoPartners === "") {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterpartner" }),
         "firm",
@@ -131,7 +131,7 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (!tableData[index]?.norm1) {
+    if (tableData[index]?.norm1 === "") {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterNorm1" }),
         "norm1",
@@ -139,7 +139,7 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (!tableData[index]?.norm2) {
+    if (tableData[index]?.norm2 === "") {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterNorm2" }),
         "norm2",
@@ -147,7 +147,7 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (!tableData[index]?.norm2MinVacancy) {
+    if (tableData[index]?.norm2MinVacancy === "") {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterVacancy" }),
         "norm2MinVacancy",
