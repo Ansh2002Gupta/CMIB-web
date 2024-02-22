@@ -38,7 +38,6 @@ const SearchableDropDown = ({
         <div className={styles.selectCentreStyles}>
           <Select
             bordered={false}
-            disabled={isError}
             size={"large"}
             style={classes.multiSelectStyle}
             className={styles.multilpleInput}
