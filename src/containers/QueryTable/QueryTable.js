@@ -10,7 +10,6 @@ import Chip from "../../components/Chip/Chip";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
-import useQueriesTypesApi from "../../services/api-services/Queries/useQueriesTypesApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
@@ -30,7 +29,7 @@ import {
   PAGINATION_PROPERTIES,
   SORTING_QUERY_PARAMS,
 } from "../../constant/constant";
-import { convertPermissionFilter, getValidFilter } from "../../constant/utils";
+import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./QueryTable.module.scss";
 
@@ -66,8 +65,6 @@ const QueryTable = ({
   const [isSingleSelect, setIsSingleSelect] = useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
-
-  const { data: queryTypesData, getQueriesTypes } = useQueriesTypesApi();
 
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkQueriesAsAnswerApi();
@@ -318,24 +315,20 @@ const QueryTable = ({
   };
 
   const handleOnFilterApply = (updatedFiltersValue) => {
+    setCurrent(1);
     let arrayAsString = JSON.stringify(updatedFiltersValue);
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-
-    setFilterArray(() => {
-      const newFilterArray = updatedFiltersValue;
       const requestedParams = getRequestedParams({
         updatedFiltersValue,
         sortOrder: sortDirection,
         sortField: sortBy,
+        page: 1,
         q: searchedValue,
       });
       fetchData({ queryParamsObject: requestedParams });
-
-      return newFilterArray;
-    });
   };
 
   // MODAL PROPERTIES
@@ -469,7 +462,6 @@ const QueryTable = ({
       q: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
-    getQueriesTypes({});
   }, []);
 
   return (
@@ -513,10 +505,6 @@ const QueryTable = ({
           isLoading={isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
-          filterPropertiesArray={convertPermissionFilter(
-            queryTypesData || [],
-            "Query Type"
-          )}
           onFilterApply={handleOnFilterApply}
         />
       )}
