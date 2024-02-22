@@ -58,7 +58,7 @@ const CenterDetailsContent = ({
     });
     const interviewConfiguration = (interview_dates || []).map((date) => ({
       id: Math.random().toString(),
-      scheduleDate: date.schedule_date || null,
+      scheduleDate: date.interview_schedule_date || null,
       participationFee: date.participation_fee.toString(),
       firm: {
         firmFee: date.firm_fee.toString(),
