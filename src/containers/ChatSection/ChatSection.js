@@ -86,7 +86,6 @@ const ChatSection = ({
       await handleSend(payload);
       handleScrollToLastMessage(scrollToLatestMessageRef);
     }
-
     setMessageValue("");
     setFile("");
     inputRef.current.focus();

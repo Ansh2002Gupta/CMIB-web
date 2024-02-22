@@ -50,7 +50,10 @@ const IconHeader = ({
         }
         rightSection={
           isLoading ? (
-            <CustomLoader />
+            <CustomLoader
+              customLoaderContainerStyles={styles.loaderStyle}
+              size={"small"}
+            />
           ) : responsive.isMd ? (
             <CustomButton
               IconElement={CheckIcon}

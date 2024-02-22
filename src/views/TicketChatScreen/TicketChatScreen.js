@@ -29,7 +29,6 @@ const TicketChatScreen = () => {
   const [isDetailsScreen, setIsDetailScreen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
-  //we will pass id from ticket listing api
   const { id } = useParams();
   const {
     data: chatData,
