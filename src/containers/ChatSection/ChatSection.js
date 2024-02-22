@@ -75,12 +75,12 @@ const ChatSection = ({
         onSuccessCallback: async (fileUrl, fileName) => {
           const payload = { reply_text: messageValue, file_name: fileName };
           await handleSend(payload);
+          handleScrollToLastMessage(scrollToLatestMessageRef);
         },
         onErrorCallback: (errorString) => {
           showNotification(errorString, "error");
         },
       });
-      handleScrollToLastMessage(scrollToLatestMessageRef);
     } else {
       const payload = { reply_text: messageValue };
       await handleSend(payload);

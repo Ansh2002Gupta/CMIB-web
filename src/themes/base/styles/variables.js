@@ -158,6 +158,7 @@ const variables = {
   fullWidth: "100%",
 
   // Heights
+  height_1: "1px",
   height_5: "5px",
   xSmallHeight: "16px",
   height_20: "20px",
@@ -269,9 +270,9 @@ const variables = {
 
   // margin
   marginSmall: "8px",
-  margin_12: "12px",
   marginXSmall: "6px",
   marginXXSmall: "4px",
+  margin_10: "10px",
   margin_12: "12px",
   margin_14: "14px",
   marginMedium: "16px",

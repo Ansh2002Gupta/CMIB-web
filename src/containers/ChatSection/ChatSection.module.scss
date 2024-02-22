@@ -106,33 +106,33 @@
 
   .horizontalLine{
     width: 35%;
-    height: 1px;
-    background-color: lightgrey;
+    height: var(height_1);
+    background-color: var(--bulletPoint);
   }
 
   .uploadImageStyle{
     position: relative;
-    margin-bottom:10px;
-    margin-left: 10px;
+    margin-bottom: var(--margin_10) ;
+    margin-left:var(--margin_10) 
   }
 
   .imageStyle{
-    height: 100px !important;
-    width:150px !important;
+    height: var(--height_100) !important;
+    width: var(--width_100) !important;
     object-fit: contain;
-    border:1px solid var(--snow);
-    border-radius: 12px;
+    border: 1px solid var(--snow);
+    border-radius: var(--radiusXLg)
   }
 
   .crossImageContainer{
-     position: absolute;
+    position: absolute;
     top:-5px;
     right:-25px;
     background-color: var(--snow);
-    border-radius: 12px;
+    border-radius: var(--radiusXLg);
     opacity: 0.5;
-    height: 20px;
-    width: 20px;
+    height: var(--height_20);
+    width: var(--width_20);
  
   }
 
