@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { AutoComplete } from "antd";
 
@@ -9,7 +10,6 @@ const AutoPlaceComplete = ({defaultValue, onSelectLocation}) => {
   const intl = useIntl();
   const [searchedLocation, setSearchedLocation] = useState(defaultValue);
   const [suggestedLocations, setSuggestedLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState(defaultValue);
 
   useEffect(() => {
     if (!window.google) {
@@ -59,7 +59,6 @@ const AutoPlaceComplete = ({defaultValue, onSelectLocation}) => {
   };
 
   const setLatLngFromAddress = (address) => {
-    setSelectedLocation(address);
     onSelectLocation && onSelectLocation(address);
   };
 
