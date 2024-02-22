@@ -19,13 +19,15 @@ export const getQueryColumn = ({
   sortField,
 }) => {
   const {
+    isSelectedFromTick,
+    setIsSelectedFromTick,
     selectedItemsList,
     toggleSelectedQueriesId,
     handleMarkMutipleQueriesAsAnswered,
     setSelectedItemsList,
     setIsSingleSelect,
   } = queriesColumnProperties;
-  const isTableInSelectAllMode = selectedItemsList?.length !== 0;
+  const isTableInSelectAllMode = selectedItemsList?.length !== 0 && !isSelectedFromTick;
   const sortByName = sortField === "name" ? sortBy : "";
   const sortByCreatedAt = sortField === "created_at" ? sortBy : "";
 
@@ -226,6 +228,7 @@ export const getQueryColumn = ({
                 if (!isTableInSelectAllMode && !isAnswered) {
                   setIsConfirmationModalOpen(true);
                   setIsSingleSelect(true);
+                  setIsSelectedFromTick(true);
                   setSelectedItemsList([rowData?.id]);
                 }
               }}

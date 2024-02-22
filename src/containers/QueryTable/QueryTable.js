@@ -63,6 +63,7 @@ const QueryTable = ({
   );
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isSingleSelect, setIsSingleSelect] = useState(false);
+  const [isSelectedFromTick, setIsSelectedFromTick] = useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
@@ -144,11 +145,13 @@ const QueryTable = ({
       },
       onSuccessCallback: () => {
         setIsConfirmationModalOpen(false);
+        setIsSelectedFromTick(false);
         onRetry();
         setSelctedQueriesToBeMarkedAsAnswered([]);
       },
       onErrorCallback: (errorString) => {
         setIsConfirmationModalOpen(false);
+        setIsSelectedFromTick(false);
         showNotification(errorString, "error");
       },
     });
@@ -233,6 +236,8 @@ const QueryTable = ({
     navigate,
     renderColumn,
     queriesColumnProperties: {
+      isSelectedFromTick,
+      setIsSelectedFromTick,
       setIsSingleSelect,
       selectedItemsList: selectedQueriesToBeMarkedAsAnswered,
       setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
