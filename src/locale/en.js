@@ -171,7 +171,7 @@ const locale = {
   "label.errorWhileAddingNewUser":
     "Some error occured while creating a new user, please try again!",
   "label.selectModules": "Select Modules",
-  "session.rounds.selectCentres": "Select centres",
+  "session.rounds.selectCentres": "Select Centres",
   "session.rounds.centres": "Centres",
   "session.roundOneStatus": "Round 1 Status",
   "session.roundTwoStatus": "Round 2 Status",

@@ -83,8 +83,8 @@
 }
 
 .selectedItemsContainer {
-  padding-top: var(--paddingXXSmall);
-  gap: var(--paddingXXSmall);
+  padding-top: var(--marginXSmall);
+  gap: var(--paddingExtraSmall);
   display: flex;
   flex-wrap: wrap;
 }
