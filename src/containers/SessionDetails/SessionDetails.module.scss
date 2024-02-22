@@ -5,6 +5,7 @@
 .sessionDetails {
   background-color: var(--bodyBg);
   padding: var(--fontSizeXlargeMedium);
+  margin: var(--marginLarge);
   border-radius: var(--lineHeightExtraSmall);
   border: var(--borderLight);
   gap: var(--gapMedium);
@@ -56,6 +57,10 @@
   cursor: pointer;
   justify-content: flex-end;
   align-items: center;
+}
+
+.button {
+  border-radius: 8px;
 }
 
 .gridContainer {
@@ -234,6 +239,7 @@
   justify-content: center;
   align-items: center;
   flex: 1;
+  margin: var(--marginLarge);
 }
 
 .noSessionText {
