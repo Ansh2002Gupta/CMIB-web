@@ -58,7 +58,7 @@ const CustomInputNumber = (
               errorMessage ? styles.showError : "",
             ].join(" ")}
           >
-            {errorMessage ? { errorMessage } : ""}
+            {errorMessage ? errorMessage : ""}
           </Typography>
         </div>
       )}
@@ -95,7 +95,7 @@ CustomInputNumber.propTypes = {
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CustomInputNumber;

@@ -1060,9 +1060,9 @@ export const WORK_EXP_DATA = [
     work_experience_start: 5,
   },
   {
-    id: 2,
+    id: 3,
     min_ctc: "300000",
-    use_more_experience: 1,
+    use_more_experience: 0,
     work_experience_end: 2,
     work_experience_start: 10,
   },
