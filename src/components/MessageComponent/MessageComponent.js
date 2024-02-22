@@ -35,15 +35,17 @@ const MessageComponent = ({ messageData, index, shouldShowAvatar }) => {
                     <TwoRow
                       className={styles.textAndImageContainer}
                       topSection={
-                        <Typography className={styles.fromMessageText}>
-                          {messageData?.message}
-                        </Typography>
+                        !!messageData?.message && (
+                          <Typography className={styles.fromMessageText}>
+                            {messageData?.message}
+                          </Typography>
+                        )
                       }
                       bottomSection={
                         !!messageData?.file && (
                           <Image
                             className={styles.chatImage}
-                            preview={false}
+                            preview={true}
                             src={messageData?.file}
                           />
                         )
@@ -66,19 +68,23 @@ const MessageComponent = ({ messageData, index, shouldShowAvatar }) => {
               className={styles.textAndImageContainer}
               topSection={
                 <div className={styles.noAvatarContainer}>
-                  <Typography className={styles.fromMessageText}>
-                    {messageData?.message}
-                  </Typography>
+                  {!!messageData?.message && (
+                    <Typography className={styles.fromMessageText}>
+                      {messageData?.message}
+                    </Typography>
+                  )}
                 </div>
               }
               bottomSection={
-                !!messageData?.file && (
-                  <Image
-                    className={styles.chatImage}
-                    preview={false}
-                    src={messageData?.file}
-                  />
-                )
+                <div className={styles.noAvatarContainer}>
+                  {!!messageData?.file && (
+                    <Image
+                      className={styles.chatImage}
+                      preview={true}
+                      src={messageData?.file}
+                    />
+                  )}
+                </div>
               }
             />
           )}
@@ -113,16 +119,18 @@ const MessageComponent = ({ messageData, index, shouldShowAvatar }) => {
                       <TwoRow
                         topSection={
                           <div className={styles.leftTextMessage}>
-                            <Typography className={styles.toMessageText}>
-                              {messageData?.message}
-                            </Typography>
+                            {!!messageData?.message && (
+                              <Typography className={styles.toMessageText}>
+                                {messageData?.message}
+                              </Typography>
+                            )}
                           </div>
                         }
                         bottomSection={
                           !!messageData?.file && (
                             <Image
                               className={styles.chatImage}
-                              preview={false}
+                              preview={true}
                               src={messageData?.file}
                             />
                           )
@@ -138,15 +146,17 @@ const MessageComponent = ({ messageData, index, shouldShowAvatar }) => {
               <TwoRow
                 className={styles.leftMessageContaierWithoutAvatar}
                 topSection={
-                  <Typography className={styles.toMessageText}>
-                    {messageData?.message}
-                  </Typography>
+                  !!messageData?.message && (
+                    <Typography className={styles.toMessageText}>
+                      {messageData?.message}
+                    </Typography>
+                  )
                 }
                 bottomSection={
                   !!messageData?.file && (
                     <Image
                       className={styles.chatImage}
-                      preview={false}
+                      preview={true}
                       src={messageData?.file}
                     />
                   )
