@@ -198,8 +198,8 @@ const CenterDetailsContent = ({
     }
 
     const centreDetails = {
-      centre_start_time: dayjs(formData?.centreStartTime).format("HH:mm:ss"),
-      centre_end_time: dayjs(formData.centreStartTime).format("HH:mm:ss"),
+      centre_start_time: formData?.centreStartTime,
+      centre_end_time: formData.centreEndTime,
       psychometric_test_fee: parseInt(formData.PsychometricFee),
       interview_dates: tableData.slice(0, -1).map((item) => ({
         id: parseInt(item.id),
@@ -303,7 +303,10 @@ const CenterDetailsContent = ({
               isRequired
               label={intl.formatMessage({ id: "label.centreStartTime" })}
               onChange={(momentValue, timeString) => {
-                handleInputChange(momentValue, "centreStartTime");
+                handleInputChange(
+                  dayjs(momentValue).format("HH:mm:ss"),
+                  "centreStartTime"
+                );
               }}
               placeholder={intl.formatMessage({
                 id: "label.placeholder.centreStartTime",
@@ -321,7 +324,10 @@ const CenterDetailsContent = ({
               isRequired
               label={intl.formatMessage({ id: "label.centreEndTime" })}
               onChange={(momentValue) => {
-                handleInputChange(momentValue, "centreEndTime");
+                handleInputChange(
+                  dayjs(momentValue).format("HH:mm:ss"),
+                  "centreEndTime"
+                );
               }}
               disabledTime={handleDisabledEndTime}
               placeholder={intl.formatMessage({
