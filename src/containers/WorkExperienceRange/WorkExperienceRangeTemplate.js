@@ -115,7 +115,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
           {intl.formatMessage({ id: "session.workExperienceRanges" })}
         </Typography>
       }
-      bottomSectionStyle={{ minWidth: "1080px" }}
+      bottomSectionStyle={{ minWidth: "980px" }}
       bottomSection={
         <ThreeRow
           className={styles.workExpContainer}
