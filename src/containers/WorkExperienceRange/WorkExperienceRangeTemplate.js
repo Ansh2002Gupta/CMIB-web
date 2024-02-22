@@ -248,7 +248,6 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                 rightSectionStyle={classes.flex1}
                 leftSection={
                   <ThreeColumn
-                    className={styles.alignCenter}
                     leftSectionStyle={classes.flex1}
                     rightSectionStyle={classes.flex1}
                     isLeftFillSpace
@@ -263,7 +262,11 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                         customContainerStyles={styles.customContainerStyles}
                       />
                     }
-                    middleSection={<div className={styles.dash} />}
+                    middleSection={
+                      <div
+                        className={[styles.dash, styles.dashMargin].join(" ")}
+                      />
+                    }
                     rightSection={
                       <TwoColumn
                         className={styles.useMoreStyles}
@@ -298,6 +301,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                         }
                         rightSection={
                           <CustomCheckBox
+                            customStyles={styles.customStyles}
                             checked={
                               addExperience.use_more_experience ? true : false
                             }
@@ -324,7 +328,6 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                 }
                 rightSection={
                   <TwoColumn
-                    className={styles.alignCenter}
                     isLeftFillSpace
                     leftSection={
                       <CustomInputNumber
@@ -339,7 +342,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                     }
                     rightSection={
                       <Image
-                        className={styles.addMinusIcon}
+                        className={styles.addPlusIcon}
                         src={getImage("addCircle")}
                         style={classes.iconStyle}
                         preview={false}

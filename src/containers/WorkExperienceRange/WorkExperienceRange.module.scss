@@ -21,6 +21,11 @@
   margin-left: var(--marginLarge);
 }
 
+.addPlusIcon {
+  margin-left: var(--marginLarge);
+  margin-top: var(--marginMedium);
+}
+
 .customContainerStyles {
   flex: 1;
   width: var(--fullWidth);
@@ -31,7 +36,6 @@
 }
 
 .useMoreStyles {
-  align-items: center;
   gap: var(--gapSmall);
 }
 
@@ -41,6 +45,9 @@
   background-color: var(--borderColor);
   margin-left: var(--gapXSmall);
   margin-right: var(--gapXSmall);
+}
+.dashMargin {
+  margin-top: var(--lineHeightLarge);
 }
 
 .grayText {
@@ -83,6 +90,10 @@
   &::placeholder {
     color: var(--textBold) !important;
   }
+}
+
+.customStyles {
+  margin-top: var(--paddingMediumSmall);
 }
 
 .inputLabel {
