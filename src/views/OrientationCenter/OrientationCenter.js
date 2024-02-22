@@ -19,6 +19,7 @@ import {
   ORIENTATION_CENTRES,
   ROUNDS,
 } from "../../constant/apiEndpoints";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   getValidPageNumber,
@@ -54,6 +55,7 @@ const OrientationCenter = () => {
   const roundId = searchParams.get(ROUND_ID);
 
   const [userProfileDetails] = useContext(UserProfileContext);
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [formData, setFormData] = useState([]);
 
@@ -111,6 +113,10 @@ const OrientationCenter = () => {
     setSearchParams,
     triggerPaginationUpdate: true,
   });
+
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
 
   const getRequestedQueryParams = ({ page, rowPerPage }) => {
     return {
@@ -198,7 +204,7 @@ const OrientationCenter = () => {
       renderDateTime: {
         visible: true,
         type: "date",
-        isEditable: (record) => record.is_editable,
+        isEditable: currentGlobalSession?.is_editable,
         disabled: false,
         placeholder: intl.formatMessage({
           id: "label.placeholder.consentFromDate",
