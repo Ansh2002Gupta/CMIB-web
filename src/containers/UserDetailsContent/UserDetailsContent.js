@@ -16,7 +16,6 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
-import { USERS } from "../../routes/routeNames";
 import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 

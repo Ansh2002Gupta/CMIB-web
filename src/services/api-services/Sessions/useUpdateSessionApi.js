@@ -3,11 +3,7 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import {
-  ADMIN_ROUTE,
-  CORE_ROUTE,
-  SESSIONS,
-} from "../../../constant/apiEndpoints";
+import { CORE_ROUTE, SESSIONS } from "../../../constant/apiEndpoints";
 
 const useUpdateSessionApi = () => {
   const intl = useIntl();

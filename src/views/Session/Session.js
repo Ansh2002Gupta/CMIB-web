@@ -44,8 +44,6 @@ function Session() {
     fetchData,
     isError: isSessionError,
     isLoading: isGettingSessions,
-    isSuccess,
-    setData,
   } = useFetch({
     url:
       CORE_ROUTE +

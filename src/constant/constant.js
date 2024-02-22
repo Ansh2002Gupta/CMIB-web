@@ -1,6 +1,6 @@
 import {
   CONSENT_MARKING,
-  ORIENTATION_CENTERS,
+  ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
@@ -202,7 +202,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
     headingIntl: "Orientation Centres",
-    onClickNaviagtion: ORIENTATION_CENTERS,
+    onClickNaviagtion: ROUND_ONE_ORIENTATION_CENTERS,
   },
   {
     id: 4,
@@ -268,7 +268,6 @@ export const COMPANY_ROUND_TWO = [
   "Interview Roster",
   "Consent Marking And Interview Process",
 ];
-
 
 export const CONTROL_MODULE_ID = 1;
 
@@ -364,6 +363,7 @@ export const SORTING_QUERY_PARAMS = {
 export const NUMBER_OF_CHIPS_TO_SHOW = 15;
 
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
+export const ROUND_ID = "roundId";
 
 export const MIN_SEARCH_TEXT_LENGTH = 2;
 
