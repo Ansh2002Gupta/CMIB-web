@@ -388,11 +388,12 @@ const SessionDetails = ({
                                   suffixIcon={
                                     <Image src={getImage("calendar")} />
                                   }
+                                  value={null}
                                   onChange={handleMonthChange}
                                   style={classes.multiSelectStyle}
                                   disabledDate={(current) =>
                                     item.value?.includes(
-                                      dayjs(current).format("MMM YYYY")
+                                      dayjs(current).format("MM-YYYY")
                                     )
                                   }
                                 />
@@ -507,19 +508,20 @@ const SessionDetails = ({
                 customActionBtnStyles={styles.button}
                 customCancelBtnStyles={styles.button}
                 onActionBtnClick={handleSave}
-                isActionBtnDisable={ Object.values(formErrors).some((error) => !!error) ||
-                          !formData?.name ||
-                          !formData?.article_completion_to_date ||
-                          !formData?.nature_of_services ||
-                          !formData?.pi_number_format ||
-                          !formData?.ps_examination_periods.length > 0 ||
-                          !formData?.mcs_completion_date ||
-                          !formData?.membership_completion_date ||
-                          !formData?.article_completion_from_date ||
-                          !formData?.hsn_sac_code ||
-                          !formData?.bank_ac_no ||
-                          !formData?.bank_ac_ifsc
-                        }
+                isActionBtnDisable={
+                  Object.values(formErrors).some((error) => !!error) ||
+                  !formData?.name ||
+                  !formData?.article_completion_to_date ||
+                  !formData?.nature_of_services ||
+                  !formData?.pi_number_format ||
+                  !formData?.ps_examination_periods.length > 0 ||
+                  !formData?.mcs_completion_date ||
+                  !formData?.membership_completion_date ||
+                  !formData?.article_completion_from_date ||
+                  !formData?.hsn_sac_code ||
+                  !formData?.bank_ac_no ||
+                  !formData?.bank_ac_ifsc
+                }
                 onCancelBtnClick={handleCancel}
               />
             )
