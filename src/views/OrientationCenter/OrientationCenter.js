@@ -10,6 +10,7 @@ import CustomButton from "../../components/CustomButton";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useUpdateOrientationCentre from "../../services/api-services/OrientationCentre/useUpdateOrientationCentre";
@@ -82,13 +83,8 @@ const OrientationCenter = () => {
     setFormData(orientationCentres?.records);
   }, [orientationCentres]);
 
-  useEffect(() => {
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
-      return prev;
-    });
-    if (selectedModule?.key) {
+  useModuleWiseApiCall({
+    initialApiCall: () => {
       const requestedParams = getRequestedQueryParams({});
       getOrientationCentres({
         queryParamsObject: requestedParams,
@@ -107,8 +103,14 @@ const OrientationCenter = () => {
           });
         },
       });
-    }
-  }, [selectedModule?.key]);
+    },
+    paginationParams: {
+      current,
+      pageSize,
+    },
+    setSearchParams,
+    triggerPaginationUpdate: true,
+  });
 
   const getRequestedQueryParams = ({ page, rowPerPage }) => {
     return {
