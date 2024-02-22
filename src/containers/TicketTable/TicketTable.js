@@ -15,8 +15,8 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketColumn } from "./TicketTableConfig";
+import { resetListingData } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
-import { TICKETS_VIEW_DETAILS } from "../../routes/routeNames";
 import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
@@ -29,7 +29,6 @@ import {
   TICKET_LIST,
 } from "../../constant/apiEndpoints";
 import styles from "./TicketTable.module.scss";
-import { resetListingData } from "../../constant/utils";
 
 const TicketTable = ({
   current,

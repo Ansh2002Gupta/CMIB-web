@@ -1,15 +1,17 @@
 import { useContext, useEffect } from "react";
+
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { PAGINATION_PROPERTIES } from "../../constant/constant";
 
 const useModuleWiseApiCall = ({
-  paginationParams,
   initialApiCall,
+  paginationParams,
   setSearchParams,
   triggerPaginationUpdate,
 }) => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
+
   useEffect(() => {
     if (triggerPaginationUpdate) {
       setSearchParams((prev) => {
