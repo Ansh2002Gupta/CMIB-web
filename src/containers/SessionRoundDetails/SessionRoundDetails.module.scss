@@ -18,7 +18,7 @@
   padding: var(--paddingMedium);
   border-radius: var(--radiusMLg);
   border: var(--borderLight);
-  height: var(--height_350);
+  min-height: var(--height_350);
 }
 
 .chipContainer {
