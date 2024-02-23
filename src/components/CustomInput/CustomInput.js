@@ -120,7 +120,6 @@ const CustomInput = React.forwardRef(
                 maxLength,
                 onChange,
                 onBlur,
-                maxLength,
               }}
               prefix={isPrefixRequired ? prefixElement : null}
               suffix={
@@ -226,7 +225,6 @@ CustomInput.defaultProps = {
   isTextVisible: true,
   isSelectBoxDisable: false,
   label: "",
-  max: 10,
   maxLength: 100,
   messageStyles: "",
   messageToShow: "",
