@@ -42,7 +42,7 @@ const CenterDetailsContent = ({
     norm2MinVacancy: "",
   };
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState([]);
 
   const {
     updateCentreConfig,
@@ -441,7 +441,7 @@ CenterDetailsContent.defaultProps = {
 CenterDetailsContent.propTypes = {
   centreDetailData: PropTypes.object,
   isEdit: PropTypes.bool,
-  roundId: PropTypes.number,
+  roundId: PropTypes.string,
   selectedModule: PropTypes.string,
 };
 

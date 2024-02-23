@@ -197,7 +197,7 @@ const CentreTable = ({
                   id: "centre.placeholder.enterpartner",
                 })}
                 errorMessage={errors[index]?.firm?.uptoPartners}
-                isError={errors[index]?.firm?.uptoPartners}
+                isError={!!errors[index]?.firm?.uptoPartners}
               />
             }
           />
@@ -226,7 +226,7 @@ const CentreTable = ({
             id: "centre.placeholder.enterNorm1",
           })}
           errorMessage={errors[index]?.norm1}
-          isError={errors[index]?.norm1}
+          isError={!!errors[index]?.norm1}
         />
       ),
     },
@@ -327,7 +327,7 @@ CentreTable.defaultProps = {
 
 CentreTable.propTypes = {
   addTableData: PropTypes.object,
-  errors: PropTypes.object,
+  errors: PropTypes.array,
   isEdit: PropTypes.bool,
   setErrors: PropTypes.func,
   setTableData: PropTypes.func,
