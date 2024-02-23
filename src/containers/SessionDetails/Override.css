@@ -31,4 +31,8 @@
 }
 
   .ant-input-affix-wrapper >input.ant-input::placeholder {color: var(--inputPlaceHolder,#616C82) !important}
+
+  .ant-picker-dropdown .ant-picker-panel-container .ant-picker-panel {
+    max-height:340px
+  }
  

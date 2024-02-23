@@ -10,13 +10,15 @@ import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { userDetailToast } from "../../globalContext/userDetail/userDetailActions";
-import { UserDetailContext } from "../../globalContext/userDetail/userDetailProvider";
+import {
+  addUserNotification,
+  updateUserNotification,
+} from "../../globalContext/notification/notificationActions";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
-import { USERS } from "../../routes/routeNames";
 import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 
@@ -48,7 +50,7 @@ const UserDetailsContent = ({
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
-  const [, setUserDetailDispatch] = useContext(UserDetailContext);
+  const [, setNotificationStateDispatch] = useContext(NotificationContext);
   const { handleDeleteImage } = useDeleteImageApi();
   const [deletedImage, setDeletedImage] = useState([]);
   const isActionBtnDisable =
@@ -111,7 +113,7 @@ const UserDetailsContent = ({
 
       updateUserDetails(userId, payload, () => {
         goBackToViewDetailsPage();
-        setUserDetailDispatch(userDetailToast({ isUpdate: true }));
+        setNotificationStateDispatch(updateUserNotification(true));
         deletedImage.map((item) => {
           handleDeleteImage({
             fileName: item,
@@ -150,7 +152,7 @@ const UserDetailsContent = ({
       };
       addNewUser(payload, () => {
         goBackToViewDetailsPage();
-        setUserDetailDispatch(userDetailToast({ isUpdate: false }));
+        setNotificationStateDispatch(addUserNotification(true));
       });
     }
   };

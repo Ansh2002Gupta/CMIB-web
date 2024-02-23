@@ -188,7 +188,6 @@ const SetupCenter = () => {
         </div>
       );
     }
-
     if (isGettingSetupCentres) {
       return (
         <div className={styles.loaderContainer}>

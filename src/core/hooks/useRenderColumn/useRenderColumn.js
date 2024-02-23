@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Checkbox, Dropdown, Image, Switch, Tooltip, Typography } from "antd";
+import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
@@ -52,6 +52,8 @@ const useRenderColumn = () => {
   }) => {
     const columnObject = {};
 
+    const { onSelectLocation } = renderAutoPlaceComplete;
+
     const {
       customContainerStyles,
       customTimeStyle,
@@ -63,6 +65,7 @@ const useRenderColumn = () => {
       onChange = () => {},
       placeholder = "",
       type,
+      disabledDate = () => {},
     } = renderDateTime;
 
     const {
@@ -190,22 +193,22 @@ const useRenderColumn = () => {
       );
     };
 
-    title &&
-      (columnObject.title = () => {
-        return renderSorterColumn ? (
-          <Typography
-            className={[styles.columnHeading, customColumnHeading].join(" ")}
-            onClick={() => {
-              setSortBy((prev) => {
-                const newSortOrder = toggleSorting(prev);
-                columnSortByHandler({
-                  sortDirection: newSortOrder,
-                  sortField: columnObject.key,
-                });
-                return newSortOrder;
+    columnObject.title = () => {
+      return renderSorterColumn ? (
+        <Typography
+          className={[styles.columnHeading, customColumnHeading].join(" ")}
+          onClick={() => {
+            setSortBy((prev) => {
+              const newSortOrder = toggleSorting(prev);
+              columnSortByHandler({
+                sortDirection: newSortOrder,
+                sortField: columnObject.key,
               });
-            }}
-          >
+              return newSortOrder;
+            });
+          }}
+        >
+          {!!title && (
             <div className={styles.sortingArrowContainer}>
               {title}
               <Image
@@ -214,18 +217,19 @@ const useRenderColumn = () => {
                 className={[styles.centerContent, ...customIconStyle].join(" ")}
               />
             </div>
-          </Typography>
-        ) : (
-          <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
-            {title}
-            {isRequiredField && (
-              <>
-                &nbsp;<span className={styles.isRequiredStar}>*</span>
-              </>
-            )}
-          </p>
-        );
-      });
+          )}
+        </Typography>
+      ) : (
+        <p className={[styles.columnHeading, customColumnHeading].join(" ")}>
+          {title || ""}
+          {isRequiredField && (
+            <>
+              &nbsp;<span className={styles.isRequiredStar}>*</span>
+            </>
+          )}
+        </p>
+      );
+    };
 
     renderTitleWithCheckbox?.visible &&
       (columnObject.title = () => {
@@ -275,10 +279,16 @@ const useRenderColumn = () => {
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
 
     sortDirection && (columnObject.sortDirection = sortDirection);
-
     renderAutoPlaceComplete.visible &&
-      (columnObject.render = () => {
-        return <AutoPlaceComplete />;
+      (columnObject.render = (value, record) => {
+        return (
+          <AutoPlaceComplete
+            onSelectLocation={(value) => {
+              onSelectLocation(value, record);
+            }}
+            defaultValue={value}
+          />
+        );
       });
 
     renderText?.visible &&
@@ -458,6 +468,8 @@ const useRenderColumn = () => {
                 customContainerStyles,
                 customTimeStyle,
                 defaultValue,
+                disabled,
+                disabledDate,
                 isEditable,
                 isRequired,
                 type,
@@ -470,7 +482,6 @@ const useRenderColumn = () => {
               onChange={(val) => {
                 onChange(val, record);
               }}
-              disabled={disabled || !record?.isAddRow}
               errorMessage={record?.isAddRow && errorMessage}
             />
           ),

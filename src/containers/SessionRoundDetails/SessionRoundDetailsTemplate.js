@@ -17,6 +17,7 @@ import styles from "./SessionRoundDetails.module.scss";
 const SessionRoundDetailsTemplate = ({
   roundDetails,
   roundNo,
+  sessionData,
   intl,
   onClickEdit,
 }) => {
@@ -25,21 +26,6 @@ const SessionRoundDetailsTemplate = ({
   const { renderColumn } = useRenderColumn();
   let centreList = roundDetails?.centres;
   let status = roundDetails?.status || 0;
-
-  const columns = [
-    renderColumn({
-      title: intl.formatMessage({ id: "session.workExperienceRange" }),
-      dataIndex: "workExperience",
-      key: "workExperience",
-      renderText: { isTextBold: true, visible: true },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "session.minimumCTC" }),
-      dataIndex: "minimumCTC",
-      key: "minimumCTC",
-      renderText: { isTextBold: true, visible: true },
-    }),
-  ];
 
   return (
     <TwoRow
@@ -60,28 +46,28 @@ const SessionRoundDetailsTemplate = ({
                 </Typography>
               }
               rightSection={
-                <>
-                  {roundDetails && (
-                    <TwoColumn
-                      onClick={() => {
-                        onClickEdit(roundDetails);
-                      }}
-                      className={styles.editContainer}
-                      leftSection={
-                        <Image
-                          src={getImage("editIcon")}
-                          className={styles.editIcon}
-                          preview={false}
-                        />
-                      }
-                      rightSection={
-                        <Typography className={styles.text}>
-                          {intl.formatMessage({ id: "session.edit" })}
-                        </Typography>
-                      }
-                    />
-                  )}
-                </>
+                roundDetails && sessionData?.status ? (
+                  <TwoColumn
+                    onClick={() => {
+                      onClickEdit(roundDetails);
+                    }}
+                    className={styles.editContainer}
+                    leftSection={
+                      <Image
+                        src={getImage("editDark")}
+                        className={styles.editIcon}
+                        preview={false}
+                      />
+                    }
+                    rightSection={
+                      <Typography className={styles.text}>
+                        {intl.formatMessage({ id: "session.edit" })}
+                      </Typography>
+                    }
+                  />
+                ) : (
+                  <></>
+                )
               }
             />
           }
@@ -179,24 +165,26 @@ const SessionRoundDetailsTemplate = ({
         />
       }
       bottomSection={
-        <TwoRow
-          className={styles.emptyMiddleContainer}
-          topSection={
-            <Typography className={styles.blackText}>
-              {intl.formatMessage({ id: "session.workExperienceRanges" })}
-            </Typography>
-          }
-          bottomSection={
-            <DataTable
-              {...{
-                columns,
-              }}
-              currentDataLength={WORK_EXP_DATA.length}
-              customContainerStyles={styles.tableContainer}
-              originalData={WORK_EXP_DATA}
-            />
-          }
-        />
+        <></>
+        // TODO: The UI changes are not looking good
+        // <TwoRow
+        //   className={styles.emptyMiddleContainer}
+        //   topSection={
+        //     <Typography className={styles.blackText}>
+        //       {intl.formatMessage({ id: "session.workExperienceRanges" })}
+        //     </Typography>
+        //   }
+        //   bottomSection={
+        //     <DataTable
+        //       {...{
+        //         columns,
+        //       }}
+        //       currentDataLength={WORK_EXP_DATA.length}
+        //       customContainerStyles={styles.tableContainer}
+        //       originalData={WORK_EXP_DATA}
+        //     />
+        //   }
+        // />
       }
     />
   );

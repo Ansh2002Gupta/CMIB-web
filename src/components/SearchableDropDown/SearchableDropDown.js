@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Checkbox, Image, Select, Typography } from "antd";
+import { Checkbox, Image, Select, Tooltip, Typography } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -13,6 +13,7 @@ const SearchableDropDown = ({
   isCentreError,
   isError,
   isRequiredField,
+  minLengthToShowTooltip,
   onRemoveItem,
   onSelectItem,
   options,
@@ -38,7 +39,6 @@ const SearchableDropDown = ({
         <div className={styles.selectCentreStyles}>
           <Select
             bordered={false}
-            disabled={isError}
             size={"large"}
             style={classes.multiSelectStyle}
             className={styles.multilpleInput}
@@ -57,8 +57,16 @@ const SearchableDropDown = ({
                     )}
                   />
                 }
+                rightSectionStyle={classes.rightSectionStyle}
                 rightSection={
-                  <Typography className={styles.chipText}>
+                  <Typography
+                    className={styles.chipText}
+                    title={
+                      option?.label.length > minLengthToShowTooltip
+                        ? option?.label
+                        : ""
+                    }
+                  >
                     {option.label}
                   </Typography>
                 }
@@ -104,6 +112,7 @@ SearchableDropDown.defaultProps = {
   isCentreError: false,
   isError: false,
   isRequiredField: false,
+  minLengthToShowTooltip: 50,
   onRemoveItem: () => {},
   placeholderText: "",
   selectedOptionsList: [],
@@ -114,6 +123,7 @@ SearchableDropDown.propTypes = {
   isCentreError: PropTypes.bool,
   isError: PropTypes.bool,
   isRequiredField: PropTypes.bool,
+  minLengthToShowTooltip: PropTypes.number,
   onSelectItem: PropTypes.func.isRequired,
   onRemoveItem: PropTypes.func,
   options: PropTypes.array.isRequired,

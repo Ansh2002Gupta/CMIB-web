@@ -1,6 +1,6 @@
 import {
   CONSENT_MARKING,
-  ORIENTATION_CENTERS,
+  ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
@@ -10,6 +10,7 @@ export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
 export const SLIDE_BY = 300;
+export const MESSAGE_MAX_LENGTH = 5000;
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -202,7 +203,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
     headingIntl: "Orientation Centres",
-    onClickNaviagtion: ORIENTATION_CENTERS,
+    onClickNaviagtion: ROUND_ONE_ORIENTATION_CENTERS,
   },
   {
     id: 4,
@@ -373,3 +374,5 @@ export const CENTRE_TYPE_ENUM = {
 };
 
 export const SESSION_KEY = "sessionKey";
+export const MAX_HSN_CODE_LENGTH = 8;
+export const MAX_BANK_AC_NO_LENGTH = 18;

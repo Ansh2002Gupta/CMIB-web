@@ -16,9 +16,9 @@ import { SESSION_KEY, STATUS_CODES } from "../../../constant/constant";
 
 const useGlobalSessionListApi = () => {
   const [, globalSessionDispatch] = useContext(GlobalSessionContext);
-  const savedSessionId = getItem(SESSION_KEY);
 
   const getGlobalSessionList = async (selectedModule) => {
+    const savedSessionId = getItem(SESSION_KEY);
     try {
       const url =
         CORE_ROUTE +

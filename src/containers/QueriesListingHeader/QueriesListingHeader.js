@@ -2,28 +2,29 @@ import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import ContentHeader from "../ContentHeader/ContentHeader";
-import { UserDetailContext } from "../../globalContext/userDetail/userDetailProvider";
-import { userDetailToast } from "../../globalContext/userDetail/userDetailActions";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
+import { errorNotification } from "../../globalContext/notification/notificationActions";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import { NOTIFICATION_TYPES } from "../../constant/constant";
 import styles from "./QueriesListingHeader.module.scss";
 
 const QueriesListingHeader = () => {
   const intl = useIntl();
   const { showNotification, notificationContextHolder } = useShowNotification();
-  const [userDetailState, setUserDetailDispatch] =
-    useContext(UserDetailContext);
+  const [notificationState, setNotificationStateDispatch] =
+    useContext(NotificationContext);
 
   useEffect(() => {
-    if (userDetailState?.isUserSuccessfullyAdded) {
+    if (notificationState?.isError) {
       showNotification({
         text: intl.formatMessage({
           id: "label.noDataFound",
         }),
-        type: "error",
+        type: NOTIFICATION_TYPES.ERROR,
       });
-      setUserDetailDispatch(userDetailToast(false));
+      setNotificationStateDispatch(errorNotification(false));
     }
-  }, [userDetailState?.isUserSuccessfullyAdded]);
+  }, [notificationState?.isError]);
 
   return (
     <div className={styles.headerBox}>

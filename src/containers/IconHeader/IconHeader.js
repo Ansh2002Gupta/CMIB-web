@@ -9,13 +9,17 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomLoader from "../../components/CustomLoader";
 import { ReactComponent as CheckIcon } from "../../themes/base/assets/images/white check icon.svg";
 import { ReactComponent as IconMore } from "../../themes/base/assets/images/iconMore.svg";
+import { ReactComponent as ArrowLeft } from "../../themes/base/assets/images/black-arrow-left.svg";
+
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./IconHeader.module.scss";
 
 const IconHeader = ({
   isLoading,
+  isDetailsScreen,
   onLeftIconPress,
   onClickIconMore,
+  onIconBackPress,
   ticketData,
   ticketStatus,
 }) => {
@@ -40,31 +44,51 @@ const IconHeader = ({
       <TwoColumn
         className={styles.mainContainer}
         leftSection={
-          <TwoColumn
-            className={styles.box}
-            leftSection={
-              <Typography className={styles.adminId}>{readable_id}</Typography>
-            }
-            rightSection={<Chip color={chipStatus} label={status} />}
-          />
-        }
-        rightSection={
-          isLoading ? (
-            <CustomLoader />
-          ) : responsive.isMd ? (
-            <CustomButton
-              IconElement={CheckIcon}
-              btnText={intl.formatMessage({ id: "label.markClosed" })}
-              onClick={onLeftIconPress}
-              customStyle={styles.btn}
-              isBtnDisable={ticketStatus || status === "closed"}
+          !isDetailsScreen ? (
+            <TwoColumn
+              className={styles.box}
+              leftSection={
+                <Typography className={styles.adminId}>
+                  {readable_id}
+                </Typography>
+              }
+              rightSection={<Chip color={chipStatus} label={status} />}
             />
           ) : (
             <CustomButton
-              IconElement={IconMore}
-              onClick={onClickIconMore}
+              onClick={onIconBackPress}
+              IconElement={ArrowLeft}
               customStyle={styles.iconMoreBtn}
             />
+          )
+        }
+        rightSection={
+          isLoading ? (
+            <CustomLoader
+              customLoaderContainerStyles={styles.loaderStyle}
+              size={"small"}
+            />
+          ) : (
+            <div className={styles.closedBtnContainer}>
+              <CustomButton
+                IconElement={CheckIcon}
+                btnText={
+                  responsive.isMd &&
+                  intl.formatMessage({ id: "label.markClosed" })
+                }
+                tooltipText={intl.formatMessage({ id: "label.markClosed" })}
+                onClick={onLeftIconPress}
+                customStyle={styles.btn}
+                isBtnDisable={ticketStatus || status === "closed"}
+              />
+              {!responsive.isMd && (
+                <CustomButton
+                  IconElement={IconMore}
+                  onClick={onClickIconMore}
+                  customStyle={styles.iconMoreBtn}
+                />
+              )}
+            </div>
           )
         }
       />

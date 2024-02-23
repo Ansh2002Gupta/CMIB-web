@@ -19,7 +19,13 @@ import { API_STATUS, FORM_STATES } from "../../constant/constant";
 import { classes } from "./SessionRound.styles";
 import styles from "./SessionRound.module.scss";
 
-const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
+const SessionRound = ({
+  roundId,
+  roundList,
+  roundNo,
+  sessionData,
+  switchLabel,
+}) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -48,10 +54,7 @@ const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
   }, [selectedModule?.key, roundId]);
 
   useEffect(() => {
-    if (
-      searchParams?.get("mode") &&
-      searchParams?.get("mode") !== currentMode
-    ) {
+    if (searchParams?.get("mode") !== currentMode) {
       setCurrentMode(searchParams?.get("mode"));
     }
   }, [searchParams?.get("mode")]);
@@ -91,6 +94,7 @@ const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
                 onClickCancel={handelOnClickCancel}
                 roundDetails={roundDetails}
                 selectedModule={selectedModule}
+                sessionData={sessionData}
                 switchLabel={switchLabel}
               />
             )}
@@ -103,6 +107,7 @@ const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
                 onClickEdit={handleOnClickEdit}
                 roundDetails={roundDetails}
                 roundNo={roundNo}
+                sessionData={sessionData}
               />
             )}
         </>
