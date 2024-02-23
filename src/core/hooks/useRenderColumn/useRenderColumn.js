@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Checkbox, Dropdown, Image, Switch, Tooltip, Typography } from "antd";
+import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
@@ -52,6 +52,8 @@ const useRenderColumn = () => {
   }) => {
     const columnObject = {};
 
+    const { onSelectLocation } = renderAutoPlaceComplete;
+
     const {
       customContainerStyles,
       customTimeStyle,
@@ -63,6 +65,7 @@ const useRenderColumn = () => {
       onChange = () => {},
       placeholder = "",
       type,
+      disabledDate = () => {},
     } = renderDateTime;
 
     const {
@@ -276,10 +279,16 @@ const useRenderColumn = () => {
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
 
     sortDirection && (columnObject.sortDirection = sortDirection);
-
     renderAutoPlaceComplete.visible &&
-      (columnObject.render = () => {
-        return <AutoPlaceComplete />;
+      (columnObject.render = (value, record) => {
+        return (
+          <AutoPlaceComplete
+            onSelectLocation={(value) => {
+              onSelectLocation(value, record);
+            }}
+            defaultValue={value}
+          />
+        );
       });
 
     renderText?.visible &&
@@ -459,6 +468,8 @@ const useRenderColumn = () => {
                 customContainerStyles,
                 customTimeStyle,
                 defaultValue,
+                disabled,
+                disabledDate,
                 isEditable,
                 isRequired,
                 type,
@@ -471,7 +482,6 @@ const useRenderColumn = () => {
               onChange={(val) => {
                 onChange(val, record);
               }}
-              disabled={disabled || !record?.isAddRow}
               errorMessage={record?.isAddRow && errorMessage}
             />
           ),

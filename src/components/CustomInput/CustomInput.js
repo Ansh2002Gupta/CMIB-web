@@ -7,11 +7,11 @@ import Base from "../../core/layouts/Base/Base";
 
 import MarkRequired from "../MarkRequired";
 import styles from "./CustomInput.module.scss";
+import { classes } from "./CustomInput.styles";
 
 const CustomInput = React.forwardRef(
   (
     {
-      currentSelectedValue,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,
@@ -32,6 +32,7 @@ const CustomInput = React.forwardRef(
       isSelectBoxDisable,
       label,
       max,
+      maxLength,
       messageStyles: customMessageStyles,
       messageToShow,
       min,
@@ -104,8 +105,9 @@ const CustomInput = React.forwardRef(
           )}
           {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
             <Input
-              ref={isSuffixRequiredForPassword ? inputFieldRef : null}
+              ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
               type={type || "text"}
+              style={classes.inputStyle}
               className={[
                 styles.inputField,
                 customInputStyles,
@@ -115,8 +117,10 @@ const CustomInput = React.forwardRef(
                 value,
                 placeholder,
                 disabled,
+                maxLength,
                 onChange,
                 onBlur,
+                maxLength,
               }}
               prefix={isPrefixRequired ? prefixElement : null}
               suffix={
@@ -223,6 +227,7 @@ CustomInput.defaultProps = {
   isSelectBoxDisable: false,
   label: "",
   max: 10,
+  maxLength: 100,
   messageStyles: "",
   messageToShow: "",
   min: 0,
@@ -232,6 +237,7 @@ CustomInput.defaultProps = {
   onSuffixElementClick: () => {},
   placeholder: "",
   prefixElement: null,
+  ref: null,
   selectOptions: [],
   SuffixIcon: null,
   type: "",
@@ -259,6 +265,7 @@ CustomInput.propTypes = {
   isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
   max: PropTypes.number,
+  maxLength: PropTypes.number,
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
@@ -268,6 +275,7 @@ CustomInput.propTypes = {
   onSuffixElementClick: PropTypes.func,
   placeholder: PropTypes.string,
   prefixElement: PropTypes.node,
+  ref: PropTypes.func,
   selectOptions: PropTypes.array,
   SuffixIcon: PropTypes.node,
   type: PropTypes.string,

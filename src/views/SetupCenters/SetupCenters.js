@@ -176,7 +176,6 @@ const SetupCenter = () => {
         </div>
       );
     }
-
     if (isGettingSetupCentres) {
       return (
         <div className={styles.loaderContainer}>
@@ -184,7 +183,6 @@ const SetupCenter = () => {
         </div>
       );
     }
-
     return (
       <DataTable
         columns={columns}
