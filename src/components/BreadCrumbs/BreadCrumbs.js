@@ -29,24 +29,25 @@ const BreadCrumbs = () => {
           ? intl.formatMessage({ id: "label.path.editDetails" })
           : intl.formatMessage({ id: `label.path.${item}` });
 
-      return {
-        title: itemName,
-        key: index,
-        onClick: !isLastItem
-          ? () => navigate(index - (pathSegments.length - 1))
-          : () => {},
-      };
+      const onClick = !isLastItem
+        ? () => navigate(index - (pathSegments.length - 1))
+        : () => {};
+
+      return (
+        <Breadcrumb.Item
+          key={index}
+          className={isLastItem ? styles.nonclickable : styles.clickable}
+          onClick={onClick}
+        >
+          {itemName}
+        </Breadcrumb.Item>
+      );
     })
     .filter((item) => pathSegments.length > 1);
 
-  const items = breadcrumbItems.map((item) => ({
-    ...item,
-    className: item.onClick ? styles.clickable : styles.nonclickable,
-  }));
-
   return (
     <div className={styles.mainContainer}>
-      <Breadcrumb items={items} />
+      <Breadcrumb>{breadcrumbItems}</Breadcrumb>
     </div>
   );
 };

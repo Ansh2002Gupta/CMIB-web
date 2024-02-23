@@ -63,7 +63,11 @@ const TicketChatScreen = () => {
     closeTicket({
       ticketId: id,
       onSuccessCallback: () => {
-        setTicketStatus(true);
+        fetchData({
+          page: 1,
+        });
+        fetchTicketData({});
+        setIsFirstPageReceived(false);
       },
     });
   };
@@ -110,7 +114,7 @@ const TicketChatScreen = () => {
       setIsFirstPageReceived(true);
     };
     fetchChatData();
-  }, [ticketStatus]);
+  }, []);
 
   const handleSend = async (payload) => {
     if (isLoading) {
@@ -165,25 +169,23 @@ const TicketChatScreen = () => {
   const renderChatSection = () => {
     return (
       <>
-        {currentRecords?.length && (
-          <ChatSection
-            data={reversedData}
-            {...{
-              fetchData,
-              isError,
-              isLoading,
-              error,
-              id,
-              handleLoadMore,
-              isOnLastPage,
-              ticketDetails,
-              handleSend,
-              isSendingMessage,
-              loadingMore,
-              ticketStatus,
-            }}
-          />
-        )}
+        <ChatSection
+          data={reversedData}
+          {...{
+            fetchData,
+            isError,
+            isLoading,
+            error,
+            id,
+            handleLoadMore,
+            isOnLastPage,
+            ticketDetails,
+            handleSend,
+            isSendingMessage,
+            loadingMore,
+            ticketStatus,
+          }}
+        />
       </>
     );
   };
@@ -193,9 +195,7 @@ const TicketChatScreen = () => {
       <TicketDetails
         {...{
           data: ticketDetails,
-          error: errorWhileFetchingTicketData,
           fetchData: fetchTicketData,
-          isError: isGetErrorWhileFetchingTicket,
           isLoading: isFetchingTicketData,
         }}
       />
@@ -204,56 +204,68 @@ const TicketChatScreen = () => {
 
   return (
     <>
-      {isError && !isOnLastPage && (
-        <ErrorMessageBox
-          errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
-          error={error}
-          onRetry={fetchData}
-        />
+      {isError && isGetErrorWhileFetchingTicket && (
+        <div className={styles.erroContainerBox}>
+          <ErrorMessageBox
+            errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
+            errorText={intl.formatMessage({
+              id: "label.generalGetApiFailedErrorMessage",
+            })}
+            onRetry={fetchData}
+          />
+        </div>
       )}
       {isFetchingTicketData && isLoading && !isFirstPageReceived ? (
         <CustomLoader />
       ) : (
-        <TwoRow
-          className={styles.mainContainer}
-          isBottomFillSpace
-          topSection={
-            <>
-              <IconHeader
-                {...{ fetchData, id }}
-                ticketData={ticketDetails}
-                isError={isErrorCloseTicket}
-                isLoading={isLoadingCloseTicket}
-                onLeftIconPress={handleOnMarkTicketAsClosed}
-                ticketStatus={ticketStatus}
-                onClickIconMore={handlePopup}
-              />
+        <>
+          {!!currentRecords?.length && (
+            <TwoRow
+              className={styles.mainContainer}
+              isBottomFillSpace
+              topSection={
+                <>
+                  <IconHeader
+                    {...{ fetchData, id }}
+                    ticketData={ticketDetails}
+                    isError={isErrorCloseTicket}
+                    isLoading={isLoadingCloseTicket}
+                    onLeftIconPress={handleOnMarkTicketAsClosed}
+                    ticketStatus={ticketStatus}
+                    onClickIconMore={handlePopup}
+                    isDetailsScreen={isDetailsScreen}
+                    onIconBackPress={() => {
+                      setIsDetailScreen(false);
+                    }}
+                  />
 
-              {showPopup && (
-                <PopupMessage
-                  message={"Ticket Details Screen"}
-                  customStyle={styles.popupMessage}
-                  onPopupClick={handlePopupClick}
-                />
-              )}
-            </>
-          }
-          bottomSection={
-            responsive.isMd ? (
-              <TwoColumn
-                className={styles.bottomContainer}
-                leftSectionStyle={{ flex: 5 }}
-                rightSectionStyle={{ flex: 2 }}
-                leftSection={renderChatSection()}
-                rightSection={renderTicketDetails()}
-              />
-            ) : isDetailsScreen ? (
-              renderTicketDetails()
-            ) : (
-              renderChatSection()
-            )
-          }
-        />
+                  {showPopup && (
+                    <PopupMessage
+                      message={"Ticket Details Screen"}
+                      customStyle={styles.popupMessage}
+                      onPopupClick={handlePopupClick}
+                    />
+                  )}
+                </>
+              }
+              bottomSection={
+                responsive.isMd ? (
+                  <TwoColumn
+                    className={styles.bottomContainer}
+                    leftSectionStyle={{ flex: 5 }}
+                    rightSectionStyle={{ flex: 2 }}
+                    leftSection={renderChatSection()}
+                    rightSection={renderTicketDetails()}
+                  />
+                ) : isDetailsScreen ? (
+                  renderTicketDetails()
+                ) : (
+                  renderChatSection()
+                )
+              }
+            />
+          )}
+        </>
       )}
     </>
   );

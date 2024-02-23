@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
@@ -10,10 +10,10 @@ import CustomButton from "../../components/CustomButton";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
-import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useUpdateOrientationCentre from "../../services/api-services/OrientationCentre/useUpdateOrientationCentre";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import {
   CORE_ROUTE,
   ORIENTATION_CENTRES,
@@ -21,17 +21,8 @@ import {
 } from "../../constant/apiEndpoints";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import {
-  getValidPageNumber,
-  getValidPageSize,
-  resetListingData,
-} from "../../constant/utils";
-import {
-  DEFAULT_PAGE_SIZE,
-  PAGINATION_PROPERTIES,
-  ROUND_ID,
-  VALID_ROW_PER_OPTIONS,
-} from "../../constant/constant";
+import { resetListingData } from "../../constant/utils";
+import { ROUND_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 
 import { classes } from "./OrientationCenter.styles";
@@ -43,15 +34,9 @@ const OrientationCenter = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const [current, setCurrent] = useState(
-    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
-  );
-  const [pageSize, setPageSize] = useState(
-    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
-  );
   const roundId = searchParams.get(ROUND_ID);
 
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -82,74 +67,18 @@ const OrientationCenter = () => {
   });
 
   useEffect(() => {
-    setFormData(orientationCentres?.records);
+    setFormData(orientationCentres);
   }, [orientationCentres]);
-
-  useModuleWiseApiCall({
-    initialApiCall: () => {
-      const requestedParams = getRequestedQueryParams({});
-      getOrientationCentres({
-        queryParamsObject: requestedParams,
-        onSuccessCallback: (centres) => {
-          resetListingData({
-            listData: centres,
-            currentPage: current,
-            fetchDataCallback: () =>
-              getOrientationCentres({
-                queryParamsObject: getRequestedQueryParams({
-                  page: 1,
-                }),
-              }),
-            setSearchParams,
-            setCurrent,
-          });
-        },
-      });
-    },
-    paginationParams: {
-      current,
-      pageSize,
-    },
-    setSearchParams,
-    triggerPaginationUpdate: true,
-  });
 
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
 
-  const getRequestedQueryParams = ({ page, rowPerPage }) => {
-    return {
-      perPage: rowPerPage || pageSize,
-      page: page || current,
-    };
-  };
-
-  const onChangePageSize = (size) => {
-    setPageSize(Number(size));
-    setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      return prev;
-    });
-    const requestedParams = getRequestedQueryParams({ perPage: size, page: 1 });
-    getOrientationCentres({ queryParamsObject: requestedParams });
-  };
-
-  const onChangeCurrentPage = (newPageNumber) => {
-    setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
-      return prev;
-    });
-    const requestedParams = getRequestedQueryParams({
-      perPage: pageSize,
-      page: newPageNumber,
-    });
-
-    getOrientationCentres({ queryParamsObject: requestedParams });
-  };
+  useModuleWiseApiCall({
+    initialApiCall: () => {
+      getOrientationCentres({});
+    },
+  });
 
   const handleInputChange = (field, value, recordId) => {
     setFormData((prevFormData) => {
@@ -242,31 +171,9 @@ const OrientationCenter = () => {
         customImageStyle: styles.imageStyle,
       },
       customStyles: styles.customIconContainer,
+      customColumnHeading: styles.customHeadingStyle,
     }),
   ];
-
-  useLayoutEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
-      PAGINATION_PROPERTIES.ROW_PER_PAGE
-    );
-    if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-        return prev;
-      });
-    }
-
-    if (
-      !currentPagePerRow ||
-      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
-    ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
-        return prev;
-      });
-    }
-  }, []);
 
   const getApiPayload = (formData) => {
     return {
@@ -279,10 +186,7 @@ const OrientationCenter = () => {
   };
 
   const handleTryAgain = () => {
-    const requestedParams = getRequestedQueryParams({});
-    getOrientationCentres({
-      queryParamsObject: requestedParams,
-    });
+    getOrientationCentres();
   };
 
   const handleSaveChanges = () => {
@@ -305,7 +209,7 @@ const OrientationCenter = () => {
   );
 
   const handleCancel = () => {
-    navigate(`/${selectedModule?.key}/${SESSION}?tab=2`);
+    navigate(`/${selectedModule?.key}/${SESSION}?tab=2&mode=view`);
   };
 
   const renderContent = () => {
@@ -330,8 +234,7 @@ const OrientationCenter = () => {
       const errorText = errorWhileUpdatingCentre?.data?.message;
       return renderError(errorText, errorHeading, handleSaveChanges);
     }
-
-    if (!orientationCentres?.meta?.total) {
+    if (!orientationCentres?.length) {
       const noResultText = intl.formatMessage({
         id: "label.orientation_no_result_msg",
       });
@@ -341,11 +244,8 @@ const OrientationCenter = () => {
     return (
       <DataTable
         columns={columns}
-        current={current}
-        pageSize={pageSize}
-        onChangePageSize={onChangePageSize}
-        onChangeCurrentPage={onChangeCurrentPage}
-        currentDataLength={orientationCentres?.meta?.total}
+        hidePagination
+        currentDataLength={formData?.length}
         customContainerStyles={styles.tableContainer}
         originalData={formData}
         customTableClassName="customTableClassName"
@@ -378,7 +278,7 @@ const OrientationCenter = () => {
           bottomSection={
             fetchCentersSuccessFlag &&
             !isUpdatingOrientationCentre &&
-            orientationCentres?.meta?.total && (
+            orientationCentres?.length && (
               <TwoColumn
                 className={styles.buttonContainer}
                 leftSection={

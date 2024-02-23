@@ -3,18 +3,15 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 
-import ErrorMessageBox from "../../components/ErrorMessageBox";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import { formatDate, splitName } from "../../constant/utils";
 import { Typography } from "antd";
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./TicketDetails.module.scss";
 
-const TicketDetails = ({ data, fetchData, isError, error }) => {
+const TicketDetails = ({ data }) => {
   const intl = useIntl();
   const responsive = useResponsive();
-
-  const errorString = error?.data?.message || error;
 
   const { firstName, lastName } = splitName(data?.chat_partner_details?.name);
 
@@ -23,16 +20,6 @@ const TicketDetails = ({ data, fetchData, isError, error }) => {
 
   return (
     <>
-      {isError && (
-        <div className={styles.errorBox}>
-          <ErrorMessageBox
-            errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
-            errorText={errorString}
-            onRetry={() => fetchData({})}
-            customContainerStyles={styles.errorContainer}
-          />
-        </div>
-      )}
       {responsive.isMd ? (
         <TwoRow
           className={styles.profileContainer}

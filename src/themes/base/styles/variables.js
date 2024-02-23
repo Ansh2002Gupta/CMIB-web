@@ -132,6 +132,7 @@ const variables = {
   width_130: "130px",
   width_140: "140px",
   width_150: "150px",
+  width_160: "160px",
   width_166: "166px",
   width_170: "170px",
   width_176: "176px",
@@ -269,6 +270,7 @@ const variables = {
   gapXXLarge: "56px",
 
   // margin
+  margin_2: "2px",
   marginSmall: "8px",
   marginXSmall: "6px",
   marginXXSmall: "4px",
