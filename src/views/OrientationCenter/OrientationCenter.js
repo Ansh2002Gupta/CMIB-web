@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
@@ -13,6 +13,7 @@ import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useUpdateOrientationCentre from "../../services/api-services/OrientationCentre/useUpdateOrientationCentre";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import {
   CORE_ROUTE,
   ORIENTATION_CENTRES,
@@ -20,6 +21,7 @@ import {
 } from "../../constant/apiEndpoints";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { resetListingData } from "../../constant/utils";
 import { ROUND_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 
@@ -70,6 +72,19 @@ const OrientationCenter = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
+
+  useModuleWiseApiCall({
+    initialApiCall: () => {
+      getOrientationCentres({
+        onSuccessCallback: (centres) => {
+          resetListingData({
+            listData: centres,
+            fetchDataCallback: () => getOrientationCentres(),
+          });
+        },
+      });
+    },
+  });
 
   const handleInputChange = (field, value, recordId) => {
     setFormData((prevFormData) => {
