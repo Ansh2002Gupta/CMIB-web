@@ -11,7 +11,6 @@ import DataTable from "../../components/DataTable/DataTable";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
-import { WORK_EXP_DATA } from "../../dummyData";
 import { MODULE_KEYS } from "../../constant/constant";
 import { classes } from "./SessionRoundDetails.styles";
 import styles from "./SessionRoundDetails.module.scss";
@@ -182,7 +181,8 @@ const SessionRoundDetailsTemplate = ({
             }
             bottomSection={
               currentlySelectedModuleKey !==
-                MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && roundDetails?.experiences?.length ? (
+                MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+              roundDetails?.experiences?.length ? (
                 <TwoRow
                   className={styles.experienceContainer}
                   topSection={
@@ -204,7 +204,9 @@ const SessionRoundDetailsTemplate = ({
                     />
                   }
                 />
-              ) : <></>
+              ) : (
+                <></>
+              )
             }
           />
         )

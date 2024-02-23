@@ -8,7 +8,6 @@ import useResponsive from "../../core/hooks/useResponsive";
 import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
-import { WORK_EXP_DATA } from "../../dummyData";
 
 const EditSessionRound = ({
   intl,
