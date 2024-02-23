@@ -162,6 +162,7 @@ const OrientationCenter = () => {
         customImageStyle: styles.imageStyle,
       },
       customStyles: styles.customIconContainer,
+      customColumnHeading: styles.customHeadingStyle,
     }),
   ];
 

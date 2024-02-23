@@ -50,6 +50,7 @@
 }
 
 .customIconContainer {
+  text-align: center;
   width: 93px;
 }
 
@@ -107,4 +108,8 @@
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
+}
+
+.customHeadingStyle {
+  text-align: center;
 }
