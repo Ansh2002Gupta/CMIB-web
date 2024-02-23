@@ -34,6 +34,8 @@ import {
 import { EDIT_SESSION, SESSION } from "../../routes/routeNames";
 import { FIELDS } from "./sessionFieldDetails";
 import {
+  MAX_BANK_AC_NO_LENGTH,
+  MAX_HSN_CODE_LENGTH,
   MODULE_KEYS,
   NOTIFICATION_TYPES,
   SESSION_KEY,
@@ -458,9 +460,9 @@ const SessionDetails = ({
                                   }
                                   maxLength={
                                     item.id === 9
-                                      ? 8
+                                      ? MAX_HSN_CODE_LENGTH
                                       : item.id === 10
-                                      ? 18
+                                      ? MAX_BANK_AC_NO_LENGTH
                                       : undefined
                                   }
                                   onChange={(val) =>
