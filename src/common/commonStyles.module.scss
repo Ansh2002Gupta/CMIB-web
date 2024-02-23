@@ -21,3 +21,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.errorContainer {
+  width: var(--fullWidth);
+  height: var(--fullHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

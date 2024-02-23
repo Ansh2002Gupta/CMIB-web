@@ -5,6 +5,7 @@ import {
   DEFAULT_PAGE_SIZE,
   FORM_STATES,
   GENERIC_ERROR_MESSAGE,
+  PAGINATION_PROPERTIES,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
@@ -325,6 +326,27 @@ export const getSortingDirection = (direction) => {
     return direction;
   }
   return "asc";
+};
+
+export const resetListingData = ({
+  currentPage,
+  fetchDataCallback,
+  listData,
+  setCurrent,
+  setSearchParams,
+}) => {
+  if (listData?.meta?.total) {
+    const totalRecords = listData?.meta?.total;
+    const numberOfPages = Math.ceil(totalRecords / listData?.meta?.perPage);
+    if (currentPage > numberOfPages) {
+      fetchDataCallback();
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+      setCurrent(1);
+    }
+  }
 };
 
 export const isUserAdmin = (userDetails) => {

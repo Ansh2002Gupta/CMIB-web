@@ -7,6 +7,7 @@ import Base from "../../core/layouts/Base/Base";
 
 import MarkRequired from "../MarkRequired";
 import styles from "./CustomInput.module.scss";
+import { classes } from "./CustomInput.styles";
 
 const CustomInput = React.forwardRef(
   (
@@ -106,6 +107,7 @@ const CustomInput = React.forwardRef(
             <Input
               ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
               type={type || "text"}
+              style={classes.inputStyle}
               className={[
                 styles.inputField,
                 customInputStyles,
