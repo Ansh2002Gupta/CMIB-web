@@ -8,7 +8,8 @@ import { ThemeContext } from "core/providers/theme";
 
 import MarkRequired from "../MarkRequired";
 import { formatDate } from "../../constant/utils";
-import styles from "./CustomDateTimePicker.module.scss";
+import classes from "./CustomDateTimePicker.module.scss";
+import { styles } from "./CustomDateTimePicker.styles";
 
 const CustomDateTimePicker = ({
   customContainerStyles,
@@ -18,6 +19,7 @@ const CustomDateTimePicker = ({
   dateFormat,
   defaultValue,
   disabled,
+  disabledDate,
   errorMessage,
   errorTimeInput,
   format,
@@ -33,10 +35,10 @@ const CustomDateTimePicker = ({
 
   return (
     <TwoRow
-      className={[styles.container, customContainerStyles].join(" ")}
+      className={[classes.container, customContainerStyles].join(" ")}
       topSection={
         label && (
-          <div className={styles.inputLabelContainer}>
+          <div className={classes.inputLabelContainer}>
             <Typography className={customLabelStyles}>
               {label}
               {isRequired && <MarkRequired />}
@@ -62,14 +64,21 @@ const CustomDateTimePicker = ({
               />
             ) : isEditable ? (
               <DatePicker
-                {...{ defaultValue, onChange, placeholder, disabled }}
+                {...{
+                  defaultValue,
+                  disabled,
+                  disabledDate,
+                  onChange,
+                  placeholder,
+                }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("calendar")} />}
                 value={value ? dayjs(value) : null}
+                style={styles.inputStyle}
               />
             ) : (
-              <Typography className={styles.dateText}>
+              <Typography className={classes.dateText}>
                 {formatDate({ date: value })}
               </Typography>
             )
@@ -77,7 +86,7 @@ const CustomDateTimePicker = ({
           bottomSection={
             errorMessage && (
               <Typography
-                className={[styles.errorText, customErrorTextStyles].join(" ")}
+                className={[classes.errorText, customErrorTextStyles].join(" ")}
               >
                 {errorMessage}
               </Typography>
