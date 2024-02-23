@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+
+import { controlMenu, modules } from "../containers/SideMenu/sideMenuItems";
 import {
   DEFAULT_PAGE_SIZE,
   FORM_STATES,
@@ -250,32 +252,36 @@ export const getMessageInfo = (chatData, userDetails) => {
   return "receiver";
 };
 
-let lastFlaggedDates = {};
+let lastFlagDate = null;
 
 export const getDateStatus = (record) => {
   const createdAt = new Date(record);
+
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
-  if (createdAt.toDateString() === today.toDateString()) {
-    if (!lastFlaggedDates[today.toDateString()]) {
-      lastFlaggedDates[today.toDateString()] = true;
+  const createdAtDateString = createdAt.toDateString();
+  const todayDateString = today.toDateString();
+  const yesterdayDateString = yesterday.toDateString();
+
+  if (createdAtDateString === todayDateString) {
+    if (lastFlagDate !== todayDateString) {
+      lastFlagDate = todayDateString;
       return "Today";
     }
-  } else if (createdAt.toDateString() === yesterday.toDateString()) {
-    if (!lastFlaggedDates[yesterday.toDateString()]) {
-      lastFlaggedDates[yesterday.toDateString()] = true;
+  } else if (createdAtDateString === yesterdayDateString) {
+    if (lastFlagDate !== yesterdayDateString) {
+      lastFlagDate = yesterdayDateString;
       return "Yesterday";
     }
-  } else {
-    if (!lastFlaggedDates[createdAt.toDateString()]) {
-      lastFlaggedDates[createdAt.toDateString()] = true;
-      return record;
+  } else if (createdAtDateString < yesterdayDateString) {
+    if (lastFlagDate !== createdAtDateString) {
+      lastFlagDate = createdAtDateString;
+      return formatDate(createdAt);
     }
   }
-
-  return ""; // Return an empty string if the date doesn't match any category
+  return "";
 };
 
 export const getTime = (isoString) => {
@@ -319,4 +325,13 @@ export const getSortingDirection = (direction) => {
     return direction;
   }
   return "asc";
+};
+
+export const isUserAdmin = (userDetails) => {
+  const noOfMenuItems = Object.keys(userDetails?.menu_items || {})?.length || 0;
+  const noOfControlItems = userDetails?.menu_items?.control?.items?.length || 0;
+  return (
+    noOfMenuItems === modules?.length &&
+    noOfControlItems === controlMenu?.length
+  );
 };

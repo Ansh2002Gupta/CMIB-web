@@ -189,9 +189,6 @@ function Session() {
           />
         }
         bottomSection={!!activeTabChildren && activeTabChildren.children}
-        bottomSectionStyle={{
-          padding: variables.fontSizeXlargeMedium,
-        }}
       />
     </>
   );
