@@ -120,7 +120,8 @@ function Session() {
                 roundNo={1}
                 roundId={sessionData?.rounds?.[0]?.id}
                 roundList={ROUND_ONE_CARD_LIST}
-                switchLabel={intl.formatMessage({
+                sessionData={sessionData}
+          switchLabel={intl.formatMessage({
                   id: "session.roundOneStatus",
                 })}
               />
@@ -137,7 +138,8 @@ function Session() {
               <SessionRound
                 roundNo={2}
                 roundList={ROUND_TWO_CARD_LIST}
-                switchLabel={intl.formatMessage({
+                sessionData={sessionData}
+          switchLabel={intl.formatMessage({
                   id: "session.roundTwoStatus",
                 })}
               />
