@@ -17,7 +17,12 @@ import { MESSAGE_MAX_LENGTH } from "../../constant/constant";
 import { ReactComponent as Attachment } from "../../themes/base/assets/icons/attachment.svg";
 import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as ActiveIcon } from "../../themes/base/assets/images/send message.svg";
-import { getDateStatus, getImageSource, getTime } from "../../constant/utils";
+import {
+  formatDate,
+  getDateStatus,
+  getImageSource,
+  getTime,
+} from "../../constant/utils";
 import { classes } from "./ChatSection.styles";
 import styles from "./ChatSection.module.scss";
 
@@ -156,6 +161,9 @@ const ChatSection = ({
     return <div className={styles.horizontalLine} />;
   };
 
+  let messageLastFlag = "";
+  let isFirstMessage = true;
+
   return (
     <>
       {notificationContextHolder}
@@ -167,14 +175,33 @@ const ChatSection = ({
             <div className={styles.messagesContainer} ref={messageListRef}>
               {data?.map((item, index) => {
                 const messageFlag = getDateStatus(item?.created_at);
+
+                if (isFirstMessage || messageLastFlag !== messageFlag) {
+                  isFirstMessage = false;
+                  messageLastFlag = messageFlag;
+                } else {
+                  return (
+                    <>
+                      {item?.author?.type.toLowerCase() === "system" && (
+                        <MessageInfoComponent message={item?.message} />
+                      )}
+                      <MessageComponent
+                        messageData={item}
+                        index={index}
+                        shouldShowAvatar={shouldShowAvatar}
+                      />
+                    </>
+                  );
+                }
+
                 const key = `message-${item?.id || index}`;
                 return (
                   <React.Fragment key={key}>
-                    {!!messageFlag && (
+                    {!!messageLastFlag && (
                       <div className={styles.flagContainer}>
                         {renderHorizontalLine()}
                         <Typography className={styles.messageFlag}>
-                          {messageFlag}
+                          {messageLastFlag}
                         </Typography>
                         {renderHorizontalLine()}
                       </div>

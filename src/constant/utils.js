@@ -250,8 +250,6 @@ export const getMessageInfo = (chatData, userDetails) => {
   return "receiver";
 };
 
-let lastFlagDate = null;
-
 export const getDateStatus = (record) => {
   const createdAt = new Date(record);
 
@@ -264,22 +262,12 @@ export const getDateStatus = (record) => {
   const yesterdayDateString = yesterday.toDateString();
 
   if (createdAtDateString === todayDateString) {
-    if (lastFlagDate !== todayDateString) {
-      lastFlagDate = todayDateString;
-      return "Today";
-    }
+    return "Today";
   } else if (createdAtDateString === yesterdayDateString) {
-    if (lastFlagDate !== yesterdayDateString) {
-      lastFlagDate = yesterdayDateString;
-      return "Yesterday";
-    }
-  } else if (createdAtDateString < yesterdayDateString) {
-    if (lastFlagDate !== createdAtDateString) {
-      lastFlagDate = createdAtDateString;
-      return formatDate(createdAt);
-    }
+    return "Yesterday";
+  } else {
+    return formatDate(createdAt);
   }
-  return "";
 };
 
 export const getTime = (isoString) => {
