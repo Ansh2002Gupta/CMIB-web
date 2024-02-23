@@ -14,6 +14,7 @@ const EditSessionRound = ({
   roundDetails,
   onClickCancel,
   selectedModule,
+  sessionData,
   switchLabel,
 }) => {
 
@@ -30,6 +31,12 @@ const EditSessionRound = ({
   useEffect(() => {
     mapSelectedCentres();
   }, []);
+
+  useEffect(() => {
+    if(!sessionData?.status){
+      onClickCancel();
+    }
+  }, [sessionData?.status])
 
   const mapSelectedCentres = () => {
     let centres =
@@ -56,6 +63,9 @@ const EditSessionRound = ({
   const handleDeselectCentre = (item) => {
     const updatedCenters = selectedCentres?.filter((ele) => ele.id !== item.id);
     setSelectedCentres(updatedCenters);
+    if(!updatedCenters?.length){
+      setCentresError(true);
+    }
   };
 
   const handleStatusToggle = () => {
