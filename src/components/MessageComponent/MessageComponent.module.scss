@@ -13,9 +13,11 @@
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
   max-width: 30vw;
-   overflow-wrap: break-word;
-    word-break: break-word;
-    white-space: break-spaces;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: break-spaces;
+  margin: var(--margin_2) 0px
+
 }
 
 .toMessageText {
@@ -28,9 +30,11 @@
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
   max-width: 30vw;
-   overflow-wrap: break-word;
-    word-break: break-word;
-    white-space: break-spaces;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: break-spaces;
+  margin: var(--margin_2) 0px;
+
 }
 
 .leftMessageContaier {
@@ -78,9 +82,11 @@
 }
 
 .chatImage {
-  max-width: 200px;
-  max-height: 200px;
+  width: 200px !important;
+  height: 200px !important;
+  object-fit:cover;
   border-radius: 12px;
+  margin-top: var(--margin_2)
 }
 
 .noAvatarContainer {
@@ -94,8 +100,7 @@
 
 .leftMessageContaierWithoutAvatar{
   justify-content: flex-start;
-  margin-top: 4px;
-  margin-left:40px;
+  margin: var(--margin_2) 0px var(--margin_2) var(--margin_40);
 }
 
 .noAvatarContainerleft {
