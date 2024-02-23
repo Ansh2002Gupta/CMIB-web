@@ -99,7 +99,7 @@ const EditSessionRoundTemplate = ({
           }
           rightSection={
             <CustomButton
-              isBtnDisable={false}
+              isBtnDisable={!experience?.length || !selectedCentres?.length}
               textStyle={styles.saveButtonTextStyles}
               btnText={intl.formatMessage({
                 id: "session.saveChanges",
