@@ -11,6 +11,7 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   ADMIN_ROUTE,
@@ -34,7 +35,11 @@ const SetupCenter = () => {
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams, setSearchParams] = useSearchParams();
-  const isEditable = true;
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const isEditable = currentGlobalSession?.is_editable;
 
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
