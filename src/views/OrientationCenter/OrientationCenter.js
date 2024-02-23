@@ -133,7 +133,10 @@ const OrientationCenter = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    const requestedParams = getRequestedQueryParams({ perPage: size, page: 1 });
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: size,
+      page: 1,
+    });
     getOrientationCentres({ queryParamsObject: requestedParams });
   };
 
@@ -144,7 +147,7 @@ const OrientationCenter = () => {
       return prev;
     });
     const requestedParams = getRequestedQueryParams({
-      perPage: pageSize,
+      rowPerPage: pageSize,
       page: newPageNumber,
     });
 
