@@ -63,6 +63,7 @@ const OrientationCenter = () => {
       ROUNDS +
       `/${roundId}` +
       ORIENTATION_CENTRES,
+    otherOptions: { skipApiCallOnMount: true },
   });
 
   useEffect(() => {
@@ -75,14 +76,7 @@ const OrientationCenter = () => {
 
   useModuleWiseApiCall({
     initialApiCall: () => {
-      getOrientationCentres({
-        onSuccessCallback: (centres) => {
-          resetListingData({
-            listData: centres,
-            fetchDataCallback: () => getOrientationCentres(),
-          });
-        },
-      });
+      getOrientationCentres({});
     },
   });
 
