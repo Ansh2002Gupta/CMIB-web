@@ -24,8 +24,6 @@ const SearchableDropDown = ({
   const { getImage } = useContext(ThemeContext);
   const intl = useIntl();
 
-  console.log("options", options);
-
   return (
     <TwoRow
       className={styles.centreContainer}
@@ -63,7 +61,11 @@ const SearchableDropDown = ({
                 rightSection={
                   <Typography
                     className={styles.chipText}
-                    title={option?.label.length > minLengthToShowTooltip ? option?.label : ""} 
+                    title={
+                      option?.label.length > minLengthToShowTooltip
+                        ? option?.label
+                        : ""
+                    }
                   >
                     {option.label}
                   </Typography>
