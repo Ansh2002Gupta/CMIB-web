@@ -14,12 +14,14 @@ const CustomButton = ({
   loading,
   onClick,
   textStyle,
+  tooltipText,
   type,
   withWhiteBackground,
 }) => {
   return (
     <div className={customButtonContainerStyle}>
       <Button
+        title={tooltipText}
         icon={IconElement ? <IconElement className={iconStyles} /> : null}
         className={[
           styles.btn,
@@ -51,6 +53,7 @@ CustomButton.defaultProps = {
   loading: false,
   onClick: () => {},
   textStyle: "",
+  tooltipText: "",
   type: "",
 };
 
@@ -64,6 +67,7 @@ CustomButton.propTypes = {
   loading: PropTypes.bool,
   onClick: PropTypes.func,
   textStyle: PropTypes.string,
+  tooltipText: PropTypes.string,
   type: PropTypes.string,
 };
 

@@ -63,7 +63,11 @@ const TicketChatScreen = () => {
     closeTicket({
       ticketId: id,
       onSuccessCallback: () => {
-        setTicketStatus(true);
+        fetchData({
+          page: 1,
+        });
+        fetchTicketData({});
+        setIsFirstPageReceived(false);
       },
     });
   };
@@ -110,7 +114,7 @@ const TicketChatScreen = () => {
       setIsFirstPageReceived(true);
     };
     fetchChatData();
-  }, [ticketStatus]);
+  }, []);
 
   const handleSend = async (payload) => {
     if (isLoading) {
@@ -165,7 +169,7 @@ const TicketChatScreen = () => {
   const renderChatSection = () => {
     return (
       <>
-        {currentRecords?.length && (
+        {!!currentRecords?.length && (
           <ChatSection
             data={reversedData}
             {...{
@@ -193,23 +197,37 @@ const TicketChatScreen = () => {
       <TicketDetails
         {...{
           data: ticketDetails,
-          error: errorWhileFetchingTicketData,
           fetchData: fetchTicketData,
-          isError: isGetErrorWhileFetchingTicket,
           isLoading: isFetchingTicketData,
         }}
       />
     );
   };
 
+  const apiErrors = (
+    <>
+      {error?.data?.message && (
+        <>
+          {error.data.message}
+          <br />
+        </>
+      )}
+      {errorWhileFetchingTicketData?.data?.message && (
+        <>{errorWhileFetchingTicketData.data.message}</>
+      )}
+    </>
+  );
+
   return (
     <>
-      {isError && !isOnLastPage && (
-        <ErrorMessageBox
-          errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
-          error={error}
-          onRetry={fetchData}
-        />
+      {isError && isGetErrorWhileFetchingTicket && (
+        <div className={styles.erroContainerBox}>
+          <ErrorMessageBox
+            errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
+            errorText={apiErrors}
+            onRetry={fetchData}
+          />
+        </div>
       )}
       {isFetchingTicketData && isLoading && !isFirstPageReceived ? (
         <CustomLoader />
@@ -227,6 +245,10 @@ const TicketChatScreen = () => {
                 onLeftIconPress={handleOnMarkTicketAsClosed}
                 ticketStatus={ticketStatus}
                 onClickIconMore={handlePopup}
+                isDetailsScreen={isDetailsScreen}
+                onIconBackPress={() => {
+                  setIsDetailScreen(false);
+                }}
               />
 
               {showPopup && (
