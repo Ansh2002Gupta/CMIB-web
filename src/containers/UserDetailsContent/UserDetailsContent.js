@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Spin } from "antd";
@@ -10,10 +10,15 @@ import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import {
+  addUserNotification,
+  updateUserNotification,
+} from "../../globalContext/notification/notificationActions";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
-import { USERS } from "../../routes/routeNames";
 import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 
@@ -40,10 +45,14 @@ const UserDetailsContent = ({
   updateUserDetails,
   userId,
   userData,
+  viewUserData,
 }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
+  const [, setNotificationStateDispatch] = useContext(NotificationContext);
+  const { handleDeleteImage } = useDeleteImageApi();
+  const [deletedImage, setDeletedImage] = useState([]);
   const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
 
@@ -104,6 +113,12 @@ const UserDetailsContent = ({
 
       updateUserDetails(userId, payload, () => {
         goBackToViewDetailsPage();
+        setNotificationStateDispatch(updateUserNotification(true));
+        deletedImage.map((item) => {
+          handleDeleteImage({
+            fileName: item,
+          });
+        });
       });
     }
   };
@@ -133,12 +148,11 @@ const UserDetailsContent = ({
           : Object.values(userData.permissions).map((per) => per.id),
         is_two_factor: userData.is_two_factor ? 1 : 0,
         status: userData?.status,
+        profile_photo: userData.profile_photo,
       };
-      if (userData?.profile_photo_url) {
-        payload["profile_photo"] = userData.profile_photo_url;
-      }
       addNewUser(payload, () => {
         goBackToViewDetailsPage();
+        setNotificationStateDispatch(addUserNotification(true));
       });
     }
   };
@@ -192,16 +206,56 @@ const UserDetailsContent = ({
                 checkForUserName={() =>
                   setIsUserNameValid(userData.name?.trim()?.length)
                 }
-                name={userData?.name}
-                email={userData?.email}
-                mobileNo={userData?.mobile}
-                mobilePrefix={userData?.mobile_prefix}
-                date={userData?.date || new Date().toISOString()}
-                access={userData?.access}
-                permissions={userData?.permissions}
-                roles={userData?.roles}
-                is_two_factor={userData?.is_two_factor}
-                status={userData?.status}
+                name={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.name
+                    : userData?.name
+                }
+                email={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.email
+                    : userData?.email
+                }
+                mobileNo={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.mobile
+                    : userData?.mobile
+                }
+                mobilePrefix={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.mobile_prefix
+                    : userData?.mobile_prefix
+                }
+                date={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.date
+                    : userData?.date || new Date().toISOString()
+                }
+                access={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.access
+                    : userData?.access
+                }
+                permissions={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.permissions
+                    : userData?.permissions
+                }
+                roles={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.roles
+                    : userData?.roles
+                }
+                is_two_factor={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.is_two_factor
+                    : userData?.is_two_factor
+                }
+                status={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.status
+                    : userData?.status
+                }
                 isDateDisable
                 userNameErrorMessage={
                   !isUserNameValid
@@ -221,12 +275,27 @@ const UserDetailsContent = ({
               />
               <FileUpload
                 {...{
+                  deletedImage,
+                  setDeletedImage,
                   updateUserData,
                   isFormEditable: currentFormState !== FORM_STATES.VIEW_ONLY,
                 }}
-                name={userData?.name}
-                userProfilePic={userData?.profile_photo_url}
-                userImageName={userData?.profile_photo}
+                name={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.name
+                    : userData?.name
+                }
+                userProfilePic={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.profile_photo_url
+                    : userData?.profile_photo_url
+                }
+                userImageName={
+                  currentFormState === FORM_STATES.VIEW_ONLY
+                    ? viewUserData?.profile_photo
+                    : userData?.profile_photo
+                }
+                isNotAddable
               />
             </div>
           )}

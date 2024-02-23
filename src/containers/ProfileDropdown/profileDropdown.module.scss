@@ -1,58 +1,106 @@
 .profileDropdown {
-    cursor: pointer;
-    color: var(--textDefault, #000000);
-    width: 100%;
+  cursor: pointer;
+  color: var(--textDefault, #000833);
+  width: var(--fullWidth, 100%);
 }
+
+.profileBox {
+  min-width: 2.5rem;
+}
+
 .profileName {
-    display: block;
-    font-weight: var(--fontWeightBold, 600);
-    color: var(--profileTextColor, #0f172a);
-    font-size: var(--fontSizeSmall, 14px);
+  display: block;
+  font-weight: var(--fontWeightBold, 600);
+  color: var(--profileTextColor, #0f172a);
+  font-size: var(--fontSizeSmall, 14px);
 }
+
 .profileMenuName {
-    border: var(--fontSizeNormal, 16px); // TODO: have to use variable
+  border: var(--fontSizeNormal, 16px);
+  font-size: var(--fontSizeNormal, 16px);
+  font-weight: var(--fontWeightBold, 600);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
+
 .profileRole {
-    display: block;
-    color: var(--profileColor, #616c82);
-    font-weight: var(--fontWeightMedium, 500); // TODO: fix style not loading
-    font-size: var(--fontSizeXSmall, 12px);
+  display: block;
+  color: var(--profileColor, #616c82);
+  font-weight: var(--fontWeightMedium, 500);
+  font-size: var(--fontSizeXSmall, 12px);
+  max-width: var(--width90Per, 90%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 .profileMenuRole {
-    font-size: var(fontSizeSmall, 14px); // TODO: have to use variable
+  font-size: var(--fontSizeSmall, 14px);
 }
+
 .downIcon {
-    font-size: var(--fontSizeNormal, 16px);
-    margin-left: 2px;
+  font-size: var(--fontSizeNormal, 16px);
+  margin-left: 2px;
 }
+
 .arrowRotated {
-    transform: rotate(180deg);
-    transition: transform 0.3s ease-in-out;
+  transform: rotate(180deg);
+  transition: transform 0.3s ease-in-out;
 }
+
 .profileMenu {
-    border-radius: var(--sizeXXLarge, 22px);
-    width: 250px;
-    box-shadow: var(--profileBoxShadow, 0px 4px 8px rgba(0, 0, 0, 0.15)); // TODO: need to add box shadow using variable
-    margin-top: var(--sizeXSmall, 12px);
+  border-radius: var(--sizeXXLarge, 22px);
+  width: var(--width_250, 250px);
+  margin-top: var(--sizeXSmall, 12px);
+  border: 1px solid var(--borderColor, #ccd0e5);
+  overflow: hidden;
 }
+
 .profileMenuHeader {
-    margin: var(--sizeXSmall, 12px) 0;
+  padding: var(--paddingSmall, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmallMedium, 12px);
 }
+
 .profileList {
-    font-size: var(--fontSizeSmall, 14px);
-    width: 100%;
+  font-size: var(--fontSizeSmall, 14px);
+  width: var(--fullWidth, 100%);
 }
+
 .logoutBtn {
-    float: left;
-    margin-left: 16px; // TODO: need to add marignNormal
-    text-align: left;
-    width: 88%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    color: var(--textBold, #000803);
+  float: left;
+  text-align: left;
+  width: 88%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightBold, 500);
+  gap: var(--gapSmallMedium, 12px);
+  color: var(--textBold, #000833);
+  padding: var(--paddingSmall, 16px);
+  min-height: var(--height_46, 46px);
+  &:hover {
+    background-color: var(--bodyBg, #fff) !important;
+  }
 }
+
 .menuBtn {
-    text-align: left;
-    color: var(--textBold, #000803);
+  text-align: left;
+  color: var(--textBold, #000833);
+  display: flex;
+  align-items: center;
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  gap: var(--gapSmallMedium, 12px);
+  padding: 0px;
+  &:hover {
+    background-color: var(--bodyBg, #fff) !important;
+  }
+}
+
+.nameAndEmailContainer {
+  width: var(--fullWidth, 100%);
 }

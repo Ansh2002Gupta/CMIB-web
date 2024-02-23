@@ -1,27 +1,29 @@
-import { SESSION_PERIOD } from "../../constant/constant";
-import { formatDate } from "../../constant/utils";
+import { MODULE_KEYS, SESSION_PERIOD } from "../../constant/constant";
 import {
-  ALPHANUMERIC_REGEX,
+  ALPHANUMERIC_WITH_SPACE_REGEX,
   BANK_ACC_NUMBER_REGEX,
   HSN_SAC_CODE_REGEX,
   IFSC_CODE_REGEX,
+  NO_SPACE_AT_START_AND_END,
   PERFORMA_INVOICE_REGEX,
 } from "../../constant/regex";
 
 export const FIELDS = (
   name,
-  nature_of_service,
-  perform_invoice_no_format,
-  examination_session_period,
-  gmcs_completion_date,
+  nature_of_services,
+  pi_number_format,
+  ps_examination_periods,
+  mcs_completion_date,
   membership_completion_date,
-  session_start_date,
+  article_completion_to_date,
   article_completion_from_date,
+  membership_as_on_date,
   hsn_sac_code,
   bank_ac_no,
-  bank_ac_ifsc
+  bank_ac_ifsc,
+  selectedModuleKey,
 ) => {
-  return [
+  let fieldData = [
     {
       id: 1,
       headingIntl: "sessionName",
@@ -29,7 +31,6 @@ export const FIELDS = (
       value: name,
       rules: [
         {
-          regex: ALPHANUMERIC_REGEX,
           required: true,
           message: "sessionName",
         },
@@ -38,11 +39,11 @@ export const FIELDS = (
     {
       id: 2,
       headingIntl: "natureOfGoods",
-      label: "nature_of_service",
-      value: nature_of_service,
+      label: "nature_of_services",
+      value: nature_of_services,
       rules: [
         {
-          regex: ALPHANUMERIC_REGEX,
+          regex: ALPHANUMERIC_WITH_SPACE_REGEX,
           required: true,
           message: "natureOfGoods",
         },
@@ -51,8 +52,8 @@ export const FIELDS = (
     {
       id: 3,
       headingIntl: "invoiceNumberFormat",
-      label: "perform_invoice_no_format",
-      value: perform_invoice_no_format,
+      label: "pi_number_format",
+      value: pi_number_format,
       rules: [
         {
           regex: PERFORMA_INVOICE_REGEX,
@@ -64,8 +65,8 @@ export const FIELDS = (
     {
       id: 4,
       headingIntl: "examinationSessionPeriod",
-      label: "examination_session_period",
-      value: examination_session_period,
+      label: "ps_examination_periods",
+      value: ps_examination_periods,
       selectOptions: SESSION_PERIOD,
       rules: [
         {
@@ -76,13 +77,13 @@ export const FIELDS = (
     },
     {
       id: 5,
-      headingIntl: "gmcsCompletetionDate",
-      label: "gmcs_completion_date",
-      value: formatDate({ date: gmcs_completion_date }),
+      headingIntl: "mcsCompletetionDate",
+      label: "mcs_completion_date",
+      value: mcs_completion_date,
       rules: [
         {
           required: true,
-          message: "gmcsCompletetionDate",
+          message: "mcsCompletetionDate",
         },
       ],
     },
@@ -90,7 +91,7 @@ export const FIELDS = (
       id: 6,
       headingIntl: "membershipCompletetionDate",
       label: "membership_completion_date",
-      value: formatDate({ date: membership_completion_date }),
+      value: membership_completion_date,
       rules: [
         {
           required: true,
@@ -101,8 +102,9 @@ export const FIELDS = (
     {
       id: 7,
       headingIntl: "articleshipCompletetionFromDate",
-      label: "session_start_date",
-      value: formatDate({ date: session_start_date }),
+      label: "article_completion_from_date",
+      value: article_completion_from_date,
+
       rules: [
         {
           required: true,
@@ -113,12 +115,24 @@ export const FIELDS = (
     {
       id: 8,
       headingIntl: "articleshipCompletetionToDate",
-      label: "article_completion_from_date",
-      value: formatDate({ date: article_completion_from_date }),
+      label: "article_completion_to_date",
+      value: article_completion_to_date,
       rules: [
         {
           required: true,
           message: "articleshipCompletetionToDate",
+        },
+      ],
+    },
+    {
+      id: 12,
+      headingIntl: "membershipAsOnDateOrPriorToThis",
+      label: "membership_as_on_date",
+      value: membership_as_on_date,
+      rules: [
+        {
+          required: true,
+          message: "membershipAsOnDateOrPriorToThis",
         },
       ],
     },
@@ -150,16 +164,31 @@ export const FIELDS = (
     },
     {
       id: 11,
-      headingIntl: "ifsc",
+      headingIntl: "ifscCode",
       label: "bank_ac_ifsc",
       value: bank_ac_ifsc,
       rules: [
         {
           regex: IFSC_CODE_REGEX,
           required: true,
-          message: "ifsc",
+          message: "ifscCode",
         },
       ],
     },
   ];
+
+  let moduleWiseFields = [];
+  if (selectedModuleKey === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY) {
+    moduleWiseFields = fieldData.filter((field) => field.id !== 12);
+  } else {
+    moduleWiseFields = fieldData.filter(
+      (field) =>
+        field.id !== 4 &&
+        field.id !== 5 &&
+        field.id !== 6 &&
+        field.id !== 7 &&
+        field.id !== 8
+    );
+  }
+  return moduleWiseFields;
 };

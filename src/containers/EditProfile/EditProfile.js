@@ -44,7 +44,7 @@ const EditProfile = ({ showNotification }) => {
   const { handleUploadImage, isLoading: isUploadingImage } =
     useUploadImageApi();
 
-  const { handleDeleteImage } = useDeleteImageApi();
+  const { handleDeleteImage, isLoading: isDeletingImage } = useDeleteImageApi();
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -52,18 +52,18 @@ const EditProfile = ({ showNotification }) => {
     const isLessThan5MB = file?.size / 1024 / 1024 < 5;
 
     if (!isAllowedType) {
-      showNotification(
-        intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
-        "error"
-      );
+      showNotification({
+        text: intl.formatMessage({ id: "label.onlyJpgAndPngFile" }),
+        type: "error",
+      });
       return Upload.LIST_IGNORE;
     }
 
     if (!isLessThan5MB) {
-      showNotification(
-        intl.formatMessage({ id: "label.fileUpto5MB" }),
-        "error"
-      );
+      showNotification({
+        text: intl.formatMessage({ id: "label.fileUpto5MB" }),
+        type: "error",
+      });
       return Upload.LIST_IGNORE;
     }
 
@@ -136,7 +136,7 @@ const EditProfile = ({ showNotification }) => {
         profile_photo: uploadedImageName,
       },
       onErrorCallback: (errString) => {
-        showNotification(errString, "error");
+        showNotification({ text: errString, type: "error" });
         setUserProfileImage(null);
         userProfileDispatch(setUserProfileModalNumber(1));
       },
@@ -148,7 +148,7 @@ const EditProfile = ({ showNotification }) => {
   };
 
   const onErrorUploadingFile = (errMessage) => {
-    showNotification(errMessage, "error");
+    showNotification({ text: errMessage, type: "error" });
     userProfileDispatch(setUserProfileModalNumber(1));
   };
 
@@ -162,7 +162,7 @@ const EditProfile = ({ showNotification }) => {
         profile_photo: "",
       },
       onErrorCallback: (errorString) => {
-        showNotification(errorString, "error");
+        showNotification({ text: errorString, type: "error" });
       },
       onSuccessCallback: () => {
         handleDeleteImage({
@@ -176,6 +176,11 @@ const EditProfile = ({ showNotification }) => {
       },
     });
   };
+
+  const isLoading =
+    isUpdatingUserProfilePicture || isUploadingImage || isDeletingImage;
+  const isShow2Button =
+    userProfileImage?.src || isDeletingImage || isUpdatingUserProfilePicture;
 
   return (
     <>
@@ -200,7 +205,7 @@ const EditProfile = ({ showNotification }) => {
               <TwoColumn
                 className={styles.bottomSectionStyle}
                 isLeftFillSpace
-                isRightFillSpace={!!userProfileImage?.src}
+                isRightFillSpace={isShow2Button}
                 leftSection={
                   <Upload {...{ beforeUpload }} className={styles.fullWidth}>
                     <Button
@@ -210,24 +215,27 @@ const EditProfile = ({ showNotification }) => {
                         styles.buttonText,
                       ].join(" ")}
                       icon={
-                        <Image src={getImage("editIcon")} preview={false} />
+                        <Image
+                          src={getImage(!isLoading && "enableEdit")}
+                          preview={false}
+                        />
                       }
+                      disabled={isLoading}
                     >
                       {intl.formatMessage({
-                        id: `label.${userProfileImage?.src ? "change" : "add"}`,
+                        id: `label.${isShow2Button ? "change" : "add"}`,
                       })}
                     </Button>
                   </Upload>
                 }
                 rightSection={
-                  userProfileImage?.src ? (
+                  isShow2Button ? (
                     <Button
                       className={[styles.buttonText, styles.cancelButton].join(
                         " "
                       )}
-                      disabled={
-                        isUploadingImage || isUpdatingUserProfilePicture
-                      }
+                      disabled={isLoading}
+                      loading={isLoading}
                       icon={
                         <Image src={getImage("trashBlue")} preview={false} />
                       }

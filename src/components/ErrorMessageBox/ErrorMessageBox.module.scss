@@ -9,44 +9,36 @@
   max-width: var(--width_500);
   border: var(--borderLight);
 }
-
 .topSection {
   display: flex;
   flex-direction: column;
   gap: var(--gapMedium);
 }
-
 .errorIcon {
   width: var(--width_48);
   height: var(--height_48);
 }
-
 .headingAndSubHeadingContainer {
   display: flex;
   flex-direction: column;
   gap: var(--gapXSmall);
 }
-
 .errorHeading {
   color: var(--textBold);
   font-size: var(--fontSizeXlarge);
   font-weight: var(--fontWeightBold);
 }
-
 .errorSubHeading {
   color: var(--subHeadingColor);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }
-
 .btn {
   background-color: var(--error);
   min-height: var(--height_50);
-
   color: var(--headerBg);
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
-
   display: flex;
   padding: var(--paddingMediumSmall) var(--paddingSmall);
   justify-content: center;
@@ -54,26 +46,24 @@
   gap: var(--gapXSmall);
   flex: 1 0 0;
   border-radius: var(--radiusLg);
-
   &:hover {
-    color: var(--headerBg) !important;
+    color: var(--black1) !important;
   }
 }
-
+.btnContainer{
+  width: var(--fullWidth);
+}
 @media screen and (max-width: 767px) {
   .btn {
     min-height: var(--height_32);
     font-size: var(--fontSizeExtraSmall);
   }
-
   .errorHeading {
     font-size: var(--fontSizeNormal);
   }
-
   .errorSubHeading {
     font-size: var(--fontSizeExtraSmall);
   }
-
   .container {
     padding: var(--paddingSmall);
     width: var(--widthViewPort_65);

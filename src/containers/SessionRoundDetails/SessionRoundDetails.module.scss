@@ -1,0 +1,95 @@
+.blackText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.buttonStyles {
+  padding: 0px var(--paddingExtraSmall);
+  font-size: var(--fontSizeSmall);
+}
+
+.centreContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+}
+
+.chipContainer {
+  display: flex;
+  align-items: center;
+  background-color: var(--lightBlueBg);
+  border-radius: var(--gapSmall);
+  padding: var(--gapXXSmall) var(--gapSmallMedium);
+}
+
+.chipText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.editIcon {
+  width: var(--lineHeightNormal);
+  height: var(--lineHeightNormal);
+}
+
+.editContainer {
+  align-items: center;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+}
+
+.emptyMiddleContainer {
+  gap: var(--marginLarge);
+  align-items: center;
+  justify-content: center;
+}
+
+.grayText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.headerContainer {
+  justify-content: space-between;
+}
+
+.middleContainer {
+  gap: 25%;
+}
+
+@media (max-width: 600px) {
+  .middleContainer {
+    gap: var(--gapMedium, 24px);
+    flex-direction: column;
+  }
+}
+
+.middleContainerText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.redText {
+  color: var(--error);
+}
+
+.selectedItemsContainer {
+  padding-top: var(--marginXSmall);
+  gap: var(--paddingExtraSmall);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.text {
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}

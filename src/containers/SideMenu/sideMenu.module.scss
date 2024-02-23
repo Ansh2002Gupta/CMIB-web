@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: hidden;
-  background-color: var(--blackBg, #000833);
+  overflow: auto;
+  background-color: var(--inputLabel);
 }
 
 .sideMenuTopSection {
@@ -101,10 +101,14 @@
   align-items: flex-start;
   list-style: none;
   cursor: pointer;
+  margin-bottom: var(--marginLarge, 24px);
 }
 
 .moduleListItem {
-  padding: var(--sizeXSmall, 12px);
+  padding-top: var(--sizeXSmall, 12px);
+  padding-bottom: var(--sizeXSmall, 12px);
+  padding-right: var(--sizeXSmall, 12px);
+  padding-left: var(--sizeXSmall, 24px);
   width: var(--fullWidth, 100%);
   &.disabled {
     color: grey;
@@ -120,6 +124,12 @@
   list-style: none;
   width: var(--fullWidth, 100%);
   overflow: hidden;
+}
+.sectionHeading {
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--subHeadingColor, #616c82);
+  margin: var(--margin_12, 12px);
 }
 
 .visitText {
@@ -151,8 +161,10 @@
 .moduleText {
   font-size: var(--fontSizeSmall, 14px);
   color: var(--subHeadingColor, #616c82);
-  padding: var(--paddingMedium, 16px);
-  padding-bottom: var(--paddingExtraSmall, 8px);
+  font-weight: var(--fontWeightMedium, 500);
+}
+.sessionContainer {
+  min-height: var(--height_100, 100px);
 }
 
 .globeIcon{

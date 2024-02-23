@@ -11,19 +11,17 @@
   padding-bottom: var(--paddingXXSmall);
 }
 
-.isRequiredStar {
-  color: var(--requiredStarColor);
-}
-
 .timeInput {
   background-color: var(--bodyBg);
 }
+
 .errorText {
   color: var(--error);
   font-weight: var(--fontWeightMedium);
-  font-size: var(--fontSizeSmall);
-  margin-top: var(--marginSmall);
+  font-size: var(--fontSizeExtraSmall);
+  margin-top: var(--marginXXSmall);
 }
+
 .dateText {
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);

@@ -42,7 +42,7 @@ const ManageUsersContent = () => {
   const { getImage } = useContext(ThemeContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data, error, isLoading, isSuccess } = useFetch({
+  const { data } = useFetch({
     url: ADMIN_ROUTE + ROLES_PERMISSION,
   });
 
@@ -71,11 +71,8 @@ const ManageUsersContent = () => {
     metaData,
   } = useListingUsers();
 
-  const {
-    errorWhileUpdatingUserData,
-    updateUserDetails,
-    isLoading: isUpdatingUserData,
-  } = useUpdateUserDetailsApi();
+  const { errorWhileUpdatingUserData, isLoading: isUpdatingUserData } =
+    useUpdateUserDetailsApi();
 
   const debounceSearch = useMemo(() => _.debounce(fetchUsers, 300), []);
 
@@ -111,7 +108,7 @@ const ManageUsersContent = () => {
         event.target.value.length > 2
           ? encodeURIComponent(event.target.value)
           : "",
-        filterArray
+        filterArray["1"]
       );
     searchedValue.length > 2 && setCurrent(1);
     setSearchParams((prev) => {
@@ -291,14 +288,14 @@ const ManageUsersContent = () => {
       pageSize,
       current,
       searchedValue.length > 2 ? encodeURIComponent(searchedValue) : "",
-      filterArray
+      filterArray["1"]
     );
     let arrayAsString = JSON.stringify(filterArray);
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-  }, [filterArray, current, pageSize]);
+  }, [current, filterArray, pageSize]);
 
   useEffect(() => {
     return () => {

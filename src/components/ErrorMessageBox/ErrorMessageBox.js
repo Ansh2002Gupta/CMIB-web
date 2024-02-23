@@ -6,11 +6,17 @@ import { Button, Typography } from "antd";
 import { ReactComponent as ErrorIcon } from "../../themes/base/assets/images/error icon.svg";
 import styles from "./ErrorMessageBox.module.scss";
 
-const ErrorMessageBox = ({ btnText, errorHeading, errorText, onRetry }) => {
+const ErrorMessageBox = ({
+  btnText,
+  errorHeading,
+  errorText,
+  onRetry,
+  customContainerStyles,
+}) => {
   const intl = useIntl();
 
   return (
-    <div className={styles.container}>
+    <div className={[styles.container, customContainerStyles].join(" ")}>
       <div className={styles.topSection}>
         <div>
           <ErrorIcon className={styles.errorIcon} />

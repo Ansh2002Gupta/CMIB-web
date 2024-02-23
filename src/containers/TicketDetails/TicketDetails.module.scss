@@ -1,0 +1,84 @@
+.container{
+    background-color: var(--lightGrey3Bg);
+  flex: 1;
+}
+
+.profileContainer {
+  padding: var(--paddingMedium);
+}
+
+.profileDetails {
+  align-items: center;
+  align-content: center;
+  width: var(--fullWidth);
+  flex: 1;
+  padding-bottom: var(--paddingLarge);
+  border-bottom: var(--borderLight);
+}
+
+.bottomContainer {
+  padding-top: var(--paddingLarge);
+  gap: var(--gapMedium);
+}
+
+.contentDetails {
+  gap: var(--gapXSmall);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.companyContentDetails{
+  gap: var(--gapXSmall);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: var(--marginLarge);
+  
+}
+
+.contentHeadingText {
+  font-size: var(--fontSizeExtraSmall);
+  color: var(--inputPlaceHolder);
+  font-weight: var(--fontWeightMedium);
+}
+
+.contentDetailText {
+  font-size: var(--fontSizeSmall);
+  color: var(--textBold);
+  font-weight: var(--fontWeightMedium);
+}
+
+.nameText {
+  font-size: var(--fontSizeNormal);
+  color: var(--textBold);
+  font-weight: var(--fontWeightBold);
+}
+
+.ticketIdText {
+  font-size: var(--fontSizeSmall);
+  color: var(--inputPlaceHolder);
+  font-weight: var(--fontWeightMedium);
+}
+
+.errorContainer {
+  width: var(--widthViewPort_15);
+}
+
+.errorBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--fullHeight, 100%);
+}
+
+.mainContainer{
+  margin: var(--marginMedium);
+  padding:var(--paddingSmall);
+  background-color: white;
+  border-radius: 16px;
+  border:var(--borderLight);
+  gap: 20px;
+}
