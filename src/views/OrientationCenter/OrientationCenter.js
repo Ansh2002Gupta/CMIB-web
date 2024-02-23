@@ -177,7 +177,7 @@ const OrientationCenter = () => {
       },
       render: (_, __, index) => {
         return {
-          children: <p>{index + 1}.</p>,
+          children: <p>{(current - 1) * pageSize + index + 1}.</p>,
         };
       },
     }),
@@ -308,7 +308,7 @@ const OrientationCenter = () => {
   );
 
   const handleCancel = () => {
-    navigate(`/${selectedModule?.key}/${SESSION}?tab=2`);
+    navigate(`/${selectedModule?.key}/${SESSION}?tab=2&mode=view`);
   };
 
   const renderContent = () => {
