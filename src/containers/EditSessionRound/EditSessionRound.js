@@ -4,6 +4,7 @@ import { capitalize } from "lodash";
 
 import useFetch from "../../core/hooks/useFetch";
 import useResponsive from "../../core/hooks/useResponsive";
+import useShowNotification from "../../core/hooks/useShowNotification";
 
 import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
@@ -20,6 +21,7 @@ const EditSessionRound = ({
   const [selectedCentres, setSelectedCentres] = useState();
   const [experience, setExperience] = useState(roundDetails?.experiences || []);
   const responsive = useResponsive();
+  const { showNotification, notificationContextHolder } = useShowNotification();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);
 
@@ -109,7 +111,12 @@ const EditSessionRound = ({
 
       updateSessionRoundDetails({
         payload: payload,
-        onErrorCallback: () => {},
+        onErrorCallback: (errMessage) => {
+          showNotification({
+            text: errMessage,
+            type: "error",
+          });
+        },
         onSuccessCallback: () => onClickCancel(true),
         roundId: roundDetails?.id,
         selectedModuleKey: selectedModule?.key,
@@ -118,23 +125,26 @@ const EditSessionRound = ({
   };
 
   return (
-    <EditSessionRoundTemplate
-      {...{ experience, setExperience }}
-      activeStatus={activeStatus}
-      centresError={centresError}
-      getCentreListFromResponse={getCentreListFromResponse}
-      handleDeselectCentre={handleDeselectCentre}
-      handleSelectCentre={handleSelectCentre}
-      handleStatusToggle={handleStatusToggle}
-      intl={intl}
-      isError={isError}
-      onClickCancel={onClickCancel}
-      onClickSave={onClickSave}
-      responsive={responsive}
-      selectedCentres={selectedCentres}
-      selectedModule={selectedModule}
-      switchLabel={switchLabel}
-    />
+    <>
+      {notificationContextHolder}
+      <EditSessionRoundTemplate
+        {...{ experience, setExperience }}
+        activeStatus={activeStatus}
+        centresError={centresError}
+        getCentreListFromResponse={getCentreListFromResponse}
+        handleDeselectCentre={handleDeselectCentre}
+        handleSelectCentre={handleSelectCentre}
+        handleStatusToggle={handleStatusToggle}
+        intl={intl}
+        isError={isError}
+        onClickCancel={onClickCancel}
+        onClickSave={onClickSave}
+        responsive={responsive}
+        selectedCentres={selectedCentres}
+        selectedModule={selectedModule}
+        switchLabel={switchLabel}
+      />
+    </>
   );
 };
 
