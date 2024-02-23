@@ -7,7 +7,7 @@ import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 
 import MarkRequired from "../MarkRequired";
-import { formatDate } from "../../constant/utils";
+import { formatDate, formatTime } from "../../constant/utils";
 import styles from "./CustomDateTimePicker.module.scss";
 
 const CustomDateTimePicker = ({
@@ -48,18 +48,28 @@ const CustomDateTimePicker = ({
         <TwoRow
           topSection={
             type === "time" ? (
-              <TimePicker
-                {...{
-                  format,
-                  defaultValue,
-                  onChange,
-                  placeholder,
-                  disabled,
-                }}
-                className={[styles.timeInput, customTimeStyle, errorTimeInput]}
-                suffixIcon={<Image src={getImage("clock")} />}
-                value={value ? dayjs(value) : null}
-              />
+              isEditable ? (
+                <TimePicker
+                  {...{
+                    format,
+                    defaultValue,
+                    onChange,
+                    placeholder,
+                    disabled,
+                  }}
+                  className={[
+                    styles.timeInput,
+                    customTimeStyle,
+                    errorTimeInput,
+                  ]}
+                  suffixIcon={<Image src={getImage("clock")} />}
+                  value={value ? dayjs(value) : null}
+                />
+              ) : (
+                <Typography className={styles.dateText}>
+                  {formatTime(value)}
+                </Typography>
+              )
             ) : isEditable ? (
               <DatePicker
                 {...{ defaultValue, onChange, placeholder, disabled }}

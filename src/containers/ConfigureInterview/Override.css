@@ -1,0 +1,9 @@
+.ant-table-wrapper {
+  background: var(--greyBlue) !important;
+}
+.ant-table-tbody > tr > td {
+  padding-top: var(--paddingSmall);
+  padding-bottom: var(--paddingSmall);
+  padding-left: var(--paddingMedium);
+  padding-right: var(--paddingMedium);
+}
