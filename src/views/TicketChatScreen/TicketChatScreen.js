@@ -169,7 +169,7 @@ const TicketChatScreen = () => {
   const renderChatSection = () => {
     return (
       <>
-        {currentRecords?.length && (
+        {!!currentRecords?.length && (
           <ChatSection
             data={reversedData}
             {...{

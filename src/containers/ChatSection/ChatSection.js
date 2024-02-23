@@ -179,6 +179,29 @@ const ChatSection = ({
                 if (isFirstMessage || messageLastFlag !== messageFlag) {
                   isFirstMessage = false;
                   messageLastFlag = messageFlag;
+
+                  const key = `message-${item?.id || index}`;
+                  return (
+                    <React.Fragment key={key}>
+                      {!!messageLastFlag && (
+                        <div className={styles.flagContainer}>
+                          {renderHorizontalLine()}
+                          <Typography className={styles.messageFlag}>
+                            {messageLastFlag}
+                          </Typography>
+                          {renderHorizontalLine()}
+                        </div>
+                      )}
+                      {item?.author?.type.toLowerCase() === "system" && (
+                        <MessageInfoComponent message={item?.message} />
+                      )}
+                      <MessageComponent
+                        messageData={item}
+                        index={index}
+                        shouldShowAvatar={shouldShowAvatar}
+                      />
+                    </React.Fragment>
+                  );
                 } else {
                   return (
                     <>
@@ -193,29 +216,6 @@ const ChatSection = ({
                     </>
                   );
                 }
-
-                const key = `message-${item?.id || index}`;
-                return (
-                  <React.Fragment key={key}>
-                    {!!messageLastFlag && (
-                      <div className={styles.flagContainer}>
-                        {renderHorizontalLine()}
-                        <Typography className={styles.messageFlag}>
-                          {messageLastFlag}
-                        </Typography>
-                        {renderHorizontalLine()}
-                      </div>
-                    )}
-                    {item?.author?.type.toLowerCase() === "system" && (
-                      <MessageInfoComponent message={item?.message} />
-                    )}
-                    <MessageComponent
-                      messageData={item}
-                      index={index}
-                      shouldShowAvatar={shouldShowAvatar}
-                    />
-                  </React.Fragment>
-                );
               })}
               <div ref={scrollToLatestMessageRef} />
             </div>
