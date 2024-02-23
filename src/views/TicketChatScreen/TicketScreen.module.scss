@@ -15,7 +15,15 @@
   padding: 16px;
   width: 240px;
   height: 54px;
-  border: 1px solid var(--ltGrey4);
+  border: 1px solid var(--snow);
   border-radius: 12px;
   text-align: center;
+  box-shadow: 1px 3px 5px  var(--ltGrey5);
+}
+
+.erroContainerBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }

@@ -19,6 +19,7 @@ const SessionRoundDetailsTemplate = ({
   currentGlobalSession,
   roundDetails,
   roundNo,
+  sessionData,
   intl,
   onClickEdit,
 }) => {
@@ -50,76 +51,77 @@ const SessionRoundDetailsTemplate = ({
     <TwoRow
       className={styles.centreContainer}
       topSection={
-        <TwoColumn
-          className={styles.headerContainer}
-          leftSection={
-            <Typography className={styles.blackText}>
-              {intl.formatMessage({
-                id:
-                  roundNo == 1
-                    ? "session.roundOneDetails"
-                    : "session.roundTwoDetails",
-              })}
-            </Typography>
+        <TwoRow
+          topSection={
+            <TwoColumn
+              className={styles.headerContainer}
+              leftSection={
+                <Typography className={styles.blackText}>
+                  {intl.formatMessage({
+                    id:
+                      roundNo == 1
+                        ? "session.roundOneDetails"
+                        : "session.roundTwoDetails",
+                  })}
+                </Typography>
+              }
+              rightSection={
+                roundDetails && sessionData?.status&&currentGlobalSession?.is_editable ? (
+                  <TwoColumn
+                    onClick={() => {
+                      onClickEdit(roundDetails);
+                    }}
+                    className={styles.editContainer}
+                    leftSection={
+                      <Image
+                        src={getImage("editDark")}
+                        className={styles.editIcon}
+                        preview={false}
+                      />
+                    }
+                    rightSection={
+                      <Typography className={styles.text}>
+                        {intl.formatMessage({ id: "session.edit" })}
+                      </Typography>
+                    }
+                  />
+                ) : (
+                  <></>
+                )
+              }
+            />
           }
-          rightSection={
-            <>
-              {roundDetails && currentGlobalSession?.is_editable ? (
-                <TwoColumn
-                  onClick={() => {
-                    onClickEdit(roundDetails);
-                  }}
-                  className={styles.editContainer}
-                  leftSection={
-                    <Image
-                      src={getImage("enableEdit")}
-                      className={styles.editIcon}
-                      preview={false}
-                    />
-                  }
-                  rightSection={
-                    <Typography className={styles.text}>
-                      {intl.formatMessage({ id: "session.edit" })}
-                    </Typography>
-                  }
-                />
-              ) : null}
-            </>
+          bottomSectionStyle={
+            !roundDetails
+              ? classes.emptyMiddleContainer
+              : classes.middleContainer
           }
-        />
-      }
-      bottomSectionStyle={
-        !roundDetails ? classes.emptyMiddleContainer : classes.middleContainer
-      }
-      isBottomFillSpace
-      bottomSection={
-        !roundDetails ? (
-          <TwoRow
-            className={styles.emptyMiddleContainer}
-            topSection={
-              <Typography className={styles.middleContainerText}>
-                {intl.formatMessage({ id: "session.emptyRoundDesc" })}
-              </Typography>
-            }
-            bottomSection={
-              <CustomButton
-                btnText={intl.formatMessage({
-                  id:
-                    roundNo === 1
-                      ? "session.addRoundOneDetails"
-                      : "session.addRoundTwoDetails",
-                })}
-                customStyle={!responsive.isMd ? styles.buttonStyles : ""}
-                IconElement={responsive.isMd ? AddIcon : null}
-                textStyle={styles.textStyle}
-                onClick={onClickEdit}
+          isBottomFillSpace
+          bottomSection={
+            !roundDetails ? (
+              <TwoRow
+                className={styles.emptyMiddleContainer}
+                topSection={
+                  <Typography className={styles.middleContainerText}>
+                    {intl.formatMessage({ id: "session.emptyRoundDesc" })}
+                  </Typography>
+                }
+                bottomSection={
+                  <CustomButton
+                    btnText={intl.formatMessage({
+                      id:
+                        roundNo === 1
+                          ? "session.addRoundOneDetails"
+                          : "session.addRoundTwoDetails",
+                    })}
+                    customStyle={!responsive.isMd ? styles.buttonStyles : ""}
+                    IconElement={responsive.isMd ? AddIcon : null}
+                    textStyle={styles.textStyle}
+                    onClick={onClickEdit}
+                  />
+                }
               />
-            }
-          />
-        ) : (
-          <TwoRow
-            className={styles.addRoundContainer}
-            topSection={
+            ) : (
               <TwoColumn
                 className={styles.middleContainer}
                 leftSection={

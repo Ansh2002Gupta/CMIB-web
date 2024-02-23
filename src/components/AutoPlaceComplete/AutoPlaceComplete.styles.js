@@ -1,6 +1,7 @@
 export const styles = {
   inputStyle: {
-    maxWidth: "358px",
+    height: "40px",
+    minWidth: "358px",
     width: "100%",
   },
 };

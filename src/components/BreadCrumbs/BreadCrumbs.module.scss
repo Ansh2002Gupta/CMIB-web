@@ -3,12 +3,14 @@
   flex-grow: 1;
   overflow: auto;
 }
+
 .clickable {
   cursor: pointer;
   font-size: var(--fontSizeSmall);
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
 }
+
 .nonclickable {
   font-size: var(--fontSizeSmall);
   color: var(--subHeadingColor);

@@ -13,13 +13,16 @@ import {
   setSelectedModule,
 } from "../../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
+import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import modules from "../../../containers/SideMenu/sideMenuItems";
+import { DASHBOARD } from "../../../routes/routeNames";
 import { GET_USER_PROFILE_DETAILS } from "../../../constant/apiEndpoints";
 import { STATUS_CODES } from "../../../constant/constant";
 
 const useGetUserDetails = () => {
   const intl = useIntl();
   const location = useLocation();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const { onLogout } = useHeader();
   const [, userProfileDispatch] = useContext(UserProfileContext);
   const pathSegments = location.pathname.split("/");
@@ -27,9 +30,10 @@ const useGetUserDetails = () => {
 
   const setFirstActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
-
     userProfileDispatch(setSelectedModule(accessibleModules[0]));
+    navigate(`/${accessibleModules[0]?.key}/${DASHBOARD}`);
   };
+
   const setDefaultActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
     const selectedModule = accessibleModules.filter((item) => {
@@ -62,13 +66,13 @@ const useGetUserDetails = () => {
           intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
         )
       );
-      // onLogout();
+      onLogout();
     } catch (err) {
       const errorMessage =
         err.response?.data?.message ||
         intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" });
       userProfileDispatch(setErrorGetingUserDetails(errorMessage));
-      // onLogout();
+      onLogout();
     }
   };
 

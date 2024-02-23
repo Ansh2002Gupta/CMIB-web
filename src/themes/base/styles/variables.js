@@ -53,7 +53,7 @@ const variables = {
   requiredStarColor: colorPallets.red1,
   sideMenuMaskBg: colorPallets.maskBlack,
   orangeText: colorPallets.orange2,
-  blueText: colorPallets.blue5,
+  blueText: colorPallets.blue7,
   greenText: colorPallets.green4,
   redText: colorPallets.red1,
   lightGreyText3: colorPallets.ltGrey4,
@@ -158,6 +158,7 @@ const variables = {
   fullWidth: "100%",
 
   // Heights
+  height_1: "1px",
   height_5: "5px",
   xSmallHeight: "16px",
   height_20: "20px",
@@ -269,9 +270,9 @@ const variables = {
 
   // margin
   marginSmall: "8px",
-  margin_12: "12px",
   marginXSmall: "6px",
   marginXXSmall: "4px",
+  margin_10: "10px",
   margin_12: "12px",
   margin_14: "14px",
   marginMedium: "16px",

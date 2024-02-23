@@ -25,6 +25,7 @@ const SessionRound = ({
   roundId,
   roundList,
   roundNo,
+  sessionData,
   switchLabel,
 }) => {
   const intl = useIntl();
@@ -59,10 +60,7 @@ const SessionRound = ({
   }, [selectedModule?.key, roundId]);
 
   useEffect(() => {
-    if (
-      searchParams?.get("mode") &&
-      searchParams?.get("mode") !== currentMode
-    ) {
+    if (searchParams?.get("mode") !== currentMode) {
       setCurrentMode(searchParams?.get("mode"));
     }
   }, [searchParams?.get("mode")]);
@@ -111,6 +109,7 @@ const SessionRound = ({
                 onClickCancel={handelOnClickCancel}
                 roundDetails={roundDetails}
                 selectedModule={selectedModule}
+                sessionData={sessionData}
                 switchLabel={switchLabel}
               />
             )}
@@ -124,6 +123,7 @@ const SessionRound = ({
                 onClickEdit={handleOnClickEdit}
                 roundDetails={roundDetails}
                 roundNo={roundNo}
+                sessionData={sessionData}
               />
             )}
         </>
@@ -158,7 +158,9 @@ const SessionRound = ({
                           headingIntl={item.headingIntl}
                           imageUrl={item.imageUrl}
                           onClick={() => {
-                            navigate(item.onClickNaviagtion);
+                            navigate(
+                              `${item.onClickNaviagtion}?roundId=${roundId}`
+                            );
                           }}
                         />
                       )

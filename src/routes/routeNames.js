@@ -26,6 +26,7 @@ export const SESSION = "session/";
 export const SETUP_CENTERS = "setup-centers/";
 export const ROUND_ONE_SETUP_CENTERS = "round1/setup-centers/";
 export const ROUND_TWO_SETUP_CENTERS = "round2/setup-centers/";
+export const ROUND_ONE_ORIENTATION_CENTERS = "round1/orientation-centers/";
 export const SETUP_CENTERS_DETAILS = "details/:centreId";
 export const SETUP_MOCK_INTERVIEW = "setup-mock-interview/";
 export const SUBSCRIPTIONS = "subscriptions/";

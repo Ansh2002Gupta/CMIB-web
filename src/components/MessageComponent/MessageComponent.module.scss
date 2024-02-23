@@ -13,6 +13,9 @@
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
   max-width: 30vw;
+   overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: break-spaces;
 }
 
 .toMessageText {
@@ -25,6 +28,9 @@
   font-weight: var(--fontWeightMedium);
   font-size: var(--fontSizeSmall);
   max-width: 30vw;
+   overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: break-spaces;
 }
 
 .leftMessageContaier {
@@ -55,7 +61,7 @@
 .leftImageContainerStyle {
   border-width: 0px;
   margin-top: var(--margin_20);
-  margin-right: var(--margin_12);
+  margin-right: var(--marginSmall);
 }
 
 .rightImageContainerStyle {
@@ -68,22 +74,33 @@
 .textAndImageContainer {
   align-items: flex-end;
   margin-top: 4px;
+  white-space: pre;
 }
 
 .chatImage {
   max-width: 200px;
   max-height: 200px;
   border-radius: 12px;
-  margin-top: var(--marginXXSmall);
-}
-
-.textAndImageContainerWithAvatar {
-  margin-top: px;
 }
 
 .noAvatarContainer {
   justify-content: flex-end;
   margin-right: 40px;
+}
+
+.leftTextMessage{
+   white-space: pre;
+}
+
+.leftMessageContaierWithoutAvatar{
+  justify-content: flex-start;
+  margin-top: 4px;
+  margin-left:40px;
+}
+
+.noAvatarContainerleft {
+  justify-content: flex-start;
+  margin-left: 40px;
 }
 
 @media screen and (max-width: 767px) {

@@ -5,6 +5,7 @@ import {
   DEFAULT_PAGE_SIZE,
   FORM_STATES,
   GENERIC_ERROR_MESSAGE,
+  PAGINATION_PROPERTIES,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
@@ -252,32 +253,24 @@ export const getMessageInfo = (chatData, userDetails) => {
   return "receiver";
 };
 
-let lastFlaggedDates = {};
-
 export const getDateStatus = (record) => {
   const createdAt = new Date(record);
+
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
-  if (createdAt.toDateString() === today.toDateString()) {
-    if (!lastFlaggedDates[today.toDateString()]) {
-      lastFlaggedDates[today.toDateString()] = true;
-      return "Today";
-    }
-  } else if (createdAt.toDateString() === yesterday.toDateString()) {
-    if (!lastFlaggedDates[yesterday.toDateString()]) {
-      lastFlaggedDates[yesterday.toDateString()] = true;
-      return "Yesterday";
-    }
-  } else {
-    if (!lastFlaggedDates[createdAt.toDateString()]) {
-      lastFlaggedDates[createdAt.toDateString()] = true;
-      return record;
-    }
-  }
+  const createdAtDateString = createdAt.toDateString();
+  const todayDateString = today.toDateString();
+  const yesterdayDateString = yesterday.toDateString();
 
-  return ""; // Return an empty string if the date doesn't match any category
+  if (createdAtDateString === todayDateString) {
+    return "Today";
+  } else if (createdAtDateString === yesterdayDateString) {
+    return "Yesterday";
+  } else {
+    return formatDate(createdAt);
+  }
 };
 
 export const getTime = (isoString) => {
@@ -321,6 +314,27 @@ export const getSortingDirection = (direction) => {
     return direction;
   }
   return "asc";
+};
+
+export const resetListingData = ({
+  currentPage,
+  fetchDataCallback,
+  listData,
+  setCurrent,
+  setSearchParams,
+}) => {
+  if (listData?.meta?.total) {
+    const totalRecords = listData?.meta?.total;
+    const numberOfPages = Math.ceil(totalRecords / listData?.meta?.perPage);
+    if (currentPage > numberOfPages) {
+      fetchDataCallback();
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+      setCurrent(1);
+    }
+  }
 };
 
 export const isUserAdmin = (userDetails) => {

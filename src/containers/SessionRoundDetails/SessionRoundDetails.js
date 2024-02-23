@@ -8,12 +8,14 @@ const SessionRoundDetails = ({
   onClickEdit,
   roundDetails,
   roundNo,
+  sessionData,
 }) => {
   return (
     <SessionRoundDetailsTemplate
       currentGlobalSession={currentGlobalSession}
       roundDetails={roundDetails}
       roundNo={roundNo}
+      sessionData={sessionData}
       intl={intl}
       onClickEdit={onClickEdit}
     />

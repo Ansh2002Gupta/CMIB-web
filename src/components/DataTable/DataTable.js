@@ -19,6 +19,7 @@ const DataTable = ({
   current,
   currentDataLength,
   customContainerStyles,
+  customTableClassName,
   keytoFindSelectedRow,
   onChangeCurrentPage,
   onChangePageSize,
@@ -56,6 +57,7 @@ const DataTable = ({
         className={[styles.table, !pagination && "nopagination"]}
         rowClassName={setRowClassName}
         rowKey="id"
+        className={customTableClassName}
       />
       {pagination && (
         <div className={styles.rowPerPageOptionsAndPaginationContainer}>
