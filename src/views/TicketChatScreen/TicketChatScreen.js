@@ -192,15 +192,13 @@ const TicketChatScreen = () => {
 
   const renderTicketDetails = () => {
     return (
-      <>
-        <TicketDetails
-          {...{
-            data: ticketDetails,
-            fetchData: fetchTicketData,
-            isLoading: isFetchingTicketData,
-          }}
-        />
-      </>
+      <TicketDetails
+        {...{
+          data: ticketDetails,
+          fetchData: fetchTicketData,
+          isLoading: isFetchingTicketData,
+        }}
+      />
     );
   };
 
