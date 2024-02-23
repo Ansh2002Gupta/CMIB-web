@@ -12,14 +12,12 @@ import { classes } from "./WorkExperienceRange.styles";
 const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
   const { getImage } = useContext(ThemeContext);
   const [addExperience, setAddExperience] = useState({
-    id: Date.now(),
     min_ctc: "",
     use_more_experience: 0,
     work_experience_max: null,
     work_experience_min: null,
   });
   const [errors, setErrors] = useState({
-    id: Date.now(),
     min_ctc: "",
     work_experience_max: "",
     work_experience_min: "",
@@ -93,7 +91,6 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
     if (validate()) {
       setExperience((prevData) => [...prevData, addExperience]);
       setAddExperience({
-        id: Date.now(),
         min_ctc: "",
         use_more_experience: 0,
         work_experience_max: null,
@@ -102,8 +99,8 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
     }
   };
 
-  const handleRemove = (data) => {
-    const filteredData = experience.filter((item) => item.id !== data.id);
+  const handleRemove = (index) => {
+    const filteredData = experience.filter((item, i) => i !== index);
     setExperience(filteredData);
   };
 
@@ -140,10 +137,10 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
           }
           middleSection={
             <div className={styles.addedExperience}>
-              {experience.map((item) => {
+              {experience.map((item, index) => {
                 return (
                   <TwoColumn
-                    key={item?.id}
+                    key={index}
                     className={styles.columnCellContainer}
                     leftSectionStyle={classes.flex2}
                     rightSectionStyle={classes.flex1}
@@ -238,7 +235,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                             style={classes.iconStyle}
                             preview={false}
                             onClick={() => {
-                              handleRemove(item);
+                              handleRemove(index);
                             }}
                           />
                         }

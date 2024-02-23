@@ -19,7 +19,7 @@ const EditSessionRound = ({
 }) => {
   const [activeStatus, setActiveStatus] = useState(roundDetails?.status === 1);
   const [selectedCentres, setSelectedCentres] = useState();
-  const [experience, setExperience] = useState([]);
+  const [experience, setExperience] = useState(roundDetails?.experiences || []);
   const responsive = useResponsive();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);

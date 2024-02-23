@@ -1043,27 +1043,3 @@ export const CONFIGURE_INTERVIEW_DATES = [
     slotDurationInMinutes: "59",
   },
 ];
-
-export const WORK_EXP_DATA = [
-  {
-    id: 1,
-    min_ctc: "90000",
-    use_more_experience: 0,
-    work_experience_max: 5,
-    work_experience_min: 0,
-  },
-  {
-    id: 2,
-    min_ctc: "200000",
-    use_more_experience: 0,
-    work_experience_max: 10,
-    work_experience_min: 5,
-  },
-  {
-    id: 3,
-    min_ctc: "300000",
-    use_more_experience: 0,
-    work_experience_max: 2,
-    work_experience_min: 10,
-  },
-];
