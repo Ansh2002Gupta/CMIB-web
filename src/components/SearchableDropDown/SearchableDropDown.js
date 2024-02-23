@@ -13,6 +13,7 @@ const SearchableDropDown = ({
   isCentreError,
   isError,
   isRequiredField,
+  minLengthToShowTooltip,
   onRemoveItem,
   onSelectItem,
   options,
@@ -62,7 +63,7 @@ const SearchableDropDown = ({
                 rightSection={
                   <Typography
                     className={styles.chipText}
-                    title={option?.label.length > 3 ? option?.label : ""} // adjust length accordingly
+                    title={option?.label.length > minLengthToShowTooltip ? option?.label : ""} 
                   >
                     {option.label}
                   </Typography>
@@ -109,6 +110,7 @@ SearchableDropDown.defaultProps = {
   isCentreError: false,
   isError: false,
   isRequiredField: false,
+  minLengthToShowTooltip: 50,
   onRemoveItem: () => {},
   placeholderText: "",
   selectedOptionsList: [],
@@ -119,6 +121,7 @@ SearchableDropDown.propTypes = {
   isCentreError: PropTypes.bool,
   isError: PropTypes.bool,
   isRequiredField: PropTypes.bool,
+  minLengthToShowTooltip: PropTypes.number,
   onSelectItem: PropTypes.func.isRequired,
   onRemoveItem: PropTypes.func,
   options: PropTypes.array.isRequired,
