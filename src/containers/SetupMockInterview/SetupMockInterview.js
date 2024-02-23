@@ -10,6 +10,7 @@ import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingA
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import useFetch from "../../core/hooks/useFetch";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
 import {
@@ -19,19 +20,36 @@ import {
 } from "../../constant/constant";
 import { MOCK_INTERVIEW } from "../../dummyData";
 import { SESSION, SETUP_MOCK_INTERVIEW } from "../../routes/routeNames";
+import {
+  CORE_ROUTE,
+  MOCK_INTERVIEWS,
+  ROUNDS,
+} from "../../constant/apiEndpoints";
 import { classes } from "./SetupMockInterview.styles";
 import styles from "./SetupMockInterview.module.scss";
 
 const SetupMockInterviewContent = () => {
   const intl = useIntl();
-  const isEdit = false;
+  const isEdit = true;
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [currentTableData, setCurrentTableData] = useState(MOCK_INTERVIEW);
+
   const [userProfileDetails] = useContext(UserProfileContext);
-  const selectedModule = userProfileDetails?.selectedModuleItem;
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
+
+  const roundId = 172;
+  const { data, error, isLoading } = useFetch({
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      ROUNDS +
+      `/${roundId}` +
+      MOCK_INTERVIEWS,
+  });
+  const [currentTableData, setCurrentTableData] = useState(data?.records || []);
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
@@ -39,12 +57,12 @@ const SetupMockInterviewContent = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
 
+  console.log(data, "data..");
+
   const goToConfigureInterview = (rowData, isEdit) => {
     const centreId = rowData?.id;
     navigate(
-      `/${
-        selectedModule?.key
-      }/${SESSION}${SETUP_MOCK_INTERVIEW}details/${centreId}?mode=${
+      `/${currentlySelectedModuleKey}/${SESSION}${SETUP_MOCK_INTERVIEW}details/${centreId}?mode=${
         isEdit ? "edit" : "view"
       }`,
       false,
@@ -55,7 +73,7 @@ const SetupMockInterviewContent = () => {
   const updateTableData = (currentPageNumber, currentPageSize) => {
     const startIndex = (currentPageNumber - 1) * currentPageSize;
     const endIndex = currentPageNumber * currentPageSize;
-    const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
+    const updatedData = data?.records?.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
   };
 
@@ -97,7 +115,7 @@ const SetupMockInterviewContent = () => {
 
     let startIndex = (currentPage - 1) * currentPagePerRow;
     let endIndex = currentPage * currentPagePerRow;
-    const availalblePage = Math.ceil(MOCK_INTERVIEW.length / currentPagePerRow);
+    const availalblePage = Math.ceil(data?.records.length / currentPagePerRow);
     if (
       !currentPage ||
       isNaN(currentPage) ||
@@ -123,7 +141,7 @@ const SetupMockInterviewContent = () => {
       startIndex = currentPage;
       endIndex = DEFAULT_PAGE_SIZE;
     }
-    const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
+    const updatedData = data?.records.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
   }, []);
 
@@ -150,7 +168,7 @@ const SetupMockInterviewContent = () => {
             onChangePageSize,
             onChangeCurrentPage,
           }}
-          currentDataLength={MOCK_INTERVIEW.length}
+          currentDataLength={data?.records.length}
           customContainerStyles={styles.tableContainer}
           originalData={currentTableData}
         />

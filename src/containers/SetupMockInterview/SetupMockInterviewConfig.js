@@ -10,8 +10,8 @@ const getSetupMockColumn = (
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.sNo" }),
-      dataIndex: "sNo",
-      key: "sNo",
+      dataIndex: "id",
+      key: "id",
       renderText: {
         visible: true,
         includeDotAfterText: true,
@@ -20,14 +20,14 @@ const getSetupMockColumn = (
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreName" }),
-      dataIndex: "centreName",
-      key: "centreName",
+      dataIndex: "centre_name",
+      key: "centre_name",
       renderText: { isTextBold: true, visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.totalStudentsBooked" }),
-      dataIndex: "totalStudentBooked",
-      key: "totalStudentBooked",
+      dataIndex: "total_participants_booked",
+      key: "total_participants_booked",
       renderText: { visible: true, textStyles: styles.studentStyles },
     }),
     renderColumn({
