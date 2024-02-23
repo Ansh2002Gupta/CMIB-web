@@ -117,6 +117,7 @@ function Session() {
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
         <SessionRound
+          {...{ currentlySelectedModuleKey }}
           roundNo={1}
           roundId={sessionData?.rounds?.[0]?.id}
           roundList={ROUND_ONE_CARD_LIST}
@@ -129,6 +130,7 @@ function Session() {
       title: intl.formatMessage({ id: "session.roundTwo" }),
       children: (
         <SessionRound
+          {...{ currentlySelectedModuleKey }}
           roundNo={2}
           roundList={ROUND_TWO_CARD_LIST}
           switchLabel={intl.formatMessage({ id: "session.roundTwoStatus" })}

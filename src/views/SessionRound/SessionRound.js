@@ -16,11 +16,17 @@ import SessionRoundDetails from "../../containers/SessionRoundDetails";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { ADMIN_ROUTE, ROUNDS } from "../../constant/apiEndpoints";
-import { API_STATUS, FORM_STATES } from "../../constant/constant";
+import { API_STATUS, FORM_STATES, MODULE_KEYS } from "../../constant/constant";
 import { classes } from "./SessionRound.styles";
 import styles from "./SessionRound.module.scss";
 
-const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
+const SessionRound = ({
+  currentlySelectedModuleKey,
+  roundId,
+  roundList,
+  roundNo,
+  switchLabel,
+}) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -141,15 +147,21 @@ const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
                 <div className={styles.gridClass}>
                   {roundList.map((item) => {
                     return (
-                      <RoundCard
-                        key={item.id}
-                        headingDescription={item.headingDescription}
-                        headingIntl={item.headingIntl}
-                        imageUrl={item.imageUrl}
-                        onClick={() => {
-                          navigate(item.onClickNaviagtion);
-                        }}
-                      />
+                      !(
+                        currentlySelectedModuleKey !==
+                          MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+                        (item.id === 2 || item.id === 3)
+                      ) && (
+                        <RoundCard
+                          key={item.id}
+                          headingDescription={item.headingDescription}
+                          headingIntl={item.headingIntl}
+                          imageUrl={item.imageUrl}
+                          onClick={() => {
+                            navigate(item.onClickNaviagtion);
+                          }}
+                        />
+                      )
                     );
                   })}
                 </div>
