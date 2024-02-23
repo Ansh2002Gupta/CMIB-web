@@ -138,6 +138,7 @@ const QueryTable = ({
     const requestedParams = getRequestedParams({
       sortOrder: sortDirection,
       sortField: sortBy,
+      updatedFiltersValue: filterArray,
       q: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
@@ -305,6 +306,7 @@ const QueryTable = ({
     const requestedParams = getRequestedParams({
       perPage: size,
       page: 1,
+      updatedFiltersValue: filterArray,
       sortOrder: sortDirection,
       sortField: sortBy,
       q: searchedValue,
@@ -402,6 +404,7 @@ const QueryTable = ({
     if (isSingleSelect) {
       setSelctedQueriesToBeMarkedAsAnswered([]);
       setIsSingleSelect(false);
+      setIsSelectedFromTick(false);
     }
     setIsConfirmationModalOpen(false);
   };
