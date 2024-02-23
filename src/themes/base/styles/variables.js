@@ -269,6 +269,7 @@ const variables = {
   gapXXLarge: "56px",
 
   // margin
+  margin_2: "2px",
   marginSmall: "8px",
   marginXSmall: "6px",
   marginXXSmall: "4px",
