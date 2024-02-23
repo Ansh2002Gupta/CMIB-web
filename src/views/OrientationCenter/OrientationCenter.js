@@ -224,8 +224,7 @@ const OrientationCenter = () => {
       const errorText = errorWhileUpdatingCentre?.data?.message;
       return renderError(errorText, errorHeading, handleSaveChanges);
     }
-
-    if (!formData?.length) {
+    if (!orientationCentres?.length) {
       const noResultText = intl.formatMessage({
         id: "label.orientation_no_result_msg",
       });
@@ -236,7 +235,7 @@ const OrientationCenter = () => {
       <DataTable
         columns={columns}
         hidePagination
-        currentDataLength={orientationCentres?.meta?.total}
+        currentDataLength={formData?.length}
         customContainerStyles={styles.tableContainer}
         originalData={formData}
         customTableClassName="customTableClassName"
