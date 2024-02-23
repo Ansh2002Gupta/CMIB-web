@@ -10,21 +10,26 @@ import Chip from "../../components/Chip/Chip";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
-import useQueriesTypesApi from "../../services/api-services/Queries/useQueriesTypesApi";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getQueryColumn } from "./QueriesTableConfig";
-import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  CORE_ROUTE,
+  QUERIES_END_POINT,
+  QUERY_TYPE,
+  STATUS,
+} from "../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
   SORTING_QUERY_PARAMS,
 } from "../../constant/constant";
-import { convertPermissionFilter, getValidFilter } from "../../constant/utils";
+import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./QueryTable.module.scss";
 
@@ -57,11 +62,9 @@ const QueryTable = ({
     getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
   );
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const [isSingleSelect, setIsSingleSelect] = useState(false);
+  const [isSelectedFromTick, setIsSelectedFromTick] = useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
-
-  const { data: queryTypesData, getQueriesTypes } = useQueriesTypesApi();
 
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkQueriesAsAnswerApi();
@@ -74,6 +77,15 @@ const QueryTable = ({
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
+
+  const { data: queryTypes } = useFetch({
+    url: CORE_ROUTE + QUERY_TYPE,
+  });
+
+  const { data: status, fetchData: fetchStatusData } = useFetch({
+    url: CORE_ROUTE + STATUS,
+    otherOptions: { skipApiCallOnMount: true },
+  });
 
   const debounceSearch = useMemo(() => {
     return _.debounce(fetchData, DEBOUNCE_TIME);
@@ -98,7 +110,7 @@ const QueryTable = ({
     page,
     perPage,
     q,
-    queryType,
+    updatedFiltersValue,
     sortField,
     sortOrder,
   }) => {
@@ -106,16 +118,26 @@ const QueryTable = ({
       perPage: perPage || pageSize,
       page: page || current,
       q: q || "",
-      queryType: queryType || filterArray["1"],
+      status: JSON.stringify(updatedFiltersValue?.["1"]),
+      queryType: JSON.stringify(updatedFiltersValue?.["2"]),
       sortDirection: sortOrder,
       sortField: sortField,
     };
   };
 
+  useEffect(() => {
+    fetchStatusData({
+      queryParamsObject: {
+        type: "status",
+      },
+    });
+  }, []);
+
   const onRetry = () => {
     const requestedParams = getRequestedParams({
       sortOrder: sortDirection,
       sortField: sortBy,
+      updatedFiltersValue: filterArray,
       q: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
@@ -132,11 +154,13 @@ const QueryTable = ({
       },
       onSuccessCallback: () => {
         setIsConfirmationModalOpen(false);
+        setIsSelectedFromTick(false);
         onRetry();
         setSelctedQueriesToBeMarkedAsAnswered([]);
       },
       onErrorCallback: (errorString) => {
         setIsConfirmationModalOpen(false);
+        setIsSelectedFromTick(false);
         showNotification(errorString, "error");
       },
     });
@@ -221,7 +245,8 @@ const QueryTable = ({
     navigate,
     renderColumn,
     queriesColumnProperties: {
-      setIsSingleSelect,
+      isSelectedFromTick,
+      setIsSelectedFromTick,
       selectedItemsList: selectedQueriesToBeMarkedAsAnswered,
       setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
       toggleSelectedQueriesId,
@@ -279,6 +304,7 @@ const QueryTable = ({
     const requestedParams = getRequestedParams({
       perPage: size,
       page: 1,
+      updatedFiltersValue: filterArray,
       sortOrder: sortDirection,
       sortField: sortBy,
       q: searchedValue,
@@ -303,24 +329,20 @@ const QueryTable = ({
   };
 
   const handleOnFilterApply = (updatedFiltersValue) => {
+    setCurrent(1);
     let arrayAsString = JSON.stringify(updatedFiltersValue);
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-
-    setFilterArray(() => {
-      const newFilterArray = updatedFiltersValue;
-      const requestedParams = getRequestedParams({
-        queryType: newFilterArray["1"] || [],
-        sortOrder: sortDirection,
-        sortField: sortBy,
-        q: searchedValue,
-      });
-      fetchData({ queryParamsObject: requestedParams });
-
-      return newFilterArray;
+    const requestedParams = getRequestedParams({
+      updatedFiltersValue,
+      sortOrder: sortDirection,
+      sortField: sortBy,
+      page: 1,
+      q: searchedValue,
     });
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   // MODAL PROPERTIES
@@ -377,34 +399,64 @@ const QueryTable = ({
   );
 
   const handleOnModalCancel = () => {
-    if (isSingleSelect) {
+    if (isSelectedFromTick) {
       setSelctedQueriesToBeMarkedAsAnswered([]);
-      setIsSingleSelect(false);
+      setIsSelectedFromTick(false);
     }
     setIsConfirmationModalOpen(false);
   };
 
-  // useEffects hooks
-  useEffect(() => {
-    if (data?.meta) {
-      const { total } = data?.meta;
-      const numberOfPages = Math.ceil(total / pageSize);
+  const queryTypeOptions = useMemo(() => {
+    return queryTypes?.map((queryType) => ({
+      optionId: queryType.id,
+      str: queryType.name,
+    }));
+  }, [queryTypes]);
+
+  const statusOptions = useMemo(() => {
+    return status?.map((status) => ({
+      optionId: status.id,
+      str: status.name,
+    }));
+  }, [status]);
+
+  const filterOptions = [
+    {
+      id: 1,
+      name: "Status",
+      isSelected: false,
+      options: statusOptions,
+    },
+    {
+      id: 2,
+      name: "Query Type",
+      isSelected: false,
+      options: queryTypeOptions,
+    },
+  ];
+
+  const resetQueryListingData = (ticketsResult) => {
+    if (ticketsResult?.meta?.total) {
+      const totalRecords = ticketsResult?.meta?.total;
+      const numberOfPages = Math.ceil(totalRecords / pageSize);
       if (current > numberOfPages) {
-        setCurrent(1);
+        fetchData({
+          queryParamsObject: getRequestedParams({
+            page: 1,
+            search: searchedValue,
+            updatedFiltersValue: filterArray,
+            sortDirection: sortDirection,
+            sortField: sortBy,
+          }),
+        });
         setSearchParams((prev) => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
         });
-        const requestedParams = getRequestedParams({
-          page: 1,
-          sortOrder: sortDirection,
-          sortField: sortBy,
-          q: searchedValue,
-        });
-        fetchData({ queryParamsObject: requestedParams });
+        setCurrent(1);
       }
     }
-  }, [data?.meta?.total]);
+  };
 
   useEffect(() => {
     let arrayAsString = JSON.stringify(filterArray);
@@ -419,13 +471,17 @@ const QueryTable = ({
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
       return prev;
     });
+
     const requestedParams = getRequestedParams({
       sortOrder: sortDirection,
+      updatedFiltersValue: filterArray,
       sortField: sortBy,
       q: searchedValue,
     });
-    fetchData({ queryParamsObject: requestedParams });
-    getQueriesTypes({});
+    fetchData({
+      queryParamsObject: requestedParams,
+      onSuccessCallback: resetQueryListingData,
+    });
   }, []);
 
   return (
@@ -454,6 +510,7 @@ const QueryTable = ({
             columns,
             current,
             filterArray,
+            filterOptions,
             handleOnUserSearch,
             pageSize,
             searchedValue,
@@ -468,10 +525,6 @@ const QueryTable = ({
           isLoading={isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
-          filterPropertiesArray={convertPermissionFilter(
-            queryTypesData || [],
-            "Query Type"
-          )}
           onFilterApply={handleOnFilterApply}
         />
       )}
