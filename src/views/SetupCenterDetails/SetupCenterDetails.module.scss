@@ -1,3 +1,11 @@
 .mainContainer {
   background-color: var(--blueBg);
 }
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--height_60vh);
+  width: var(--fullWidth);
+}

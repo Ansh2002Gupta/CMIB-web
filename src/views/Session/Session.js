@@ -118,10 +118,16 @@ function Session() {
             children: (
               <SessionRound
                 roundNo={1}
-                roundId={sessionData?.rounds?.[0]?.id}
+                roundId={
+                  (
+                    sessionData?.rounds?.find(
+                      (obj) => obj.round_code === "round-1"
+                    ) || {}
+                  ).id
+                }
                 roundList={ROUND_ONE_CARD_LIST}
                 sessionData={sessionData}
-          switchLabel={intl.formatMessage({
+                switchLabel={intl.formatMessage({
                   id: "session.roundOneStatus",
                 })}
               />
@@ -139,7 +145,7 @@ function Session() {
                 roundNo={2}
                 roundList={ROUND_TWO_CARD_LIST}
                 sessionData={sessionData}
-          switchLabel={intl.formatMessage({
+                switchLabel={intl.formatMessage({
                   id: "session.roundTwoStatus",
                 })}
               />
