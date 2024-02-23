@@ -83,8 +83,9 @@ const QueryTable = ({
     url: CORE_ROUTE + QUERY_TYPE,
   });
 
-  const { data: status } = useFetch({
+  const { data: status, fetchData: fetchStatusData } = useFetch({
     url: CORE_ROUTE + STATUS,
+    otherOptions: { skipApiCallOnMount: true },
   });
 
   const debounceSearch = useMemo(() => {
@@ -124,6 +125,14 @@ const QueryTable = ({
       sortField: sortField,
     };
   };
+
+  useEffect(() => {
+    fetchStatusData({
+      queryParamsObject: {
+        type: "status",
+      },
+    });
+  }, []);
 
   const onRetry = () => {
     const requestedParams = getRequestedParams({
@@ -326,14 +335,14 @@ const QueryTable = ({
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-      const requestedParams = getRequestedParams({
-        updatedFiltersValue,
-        sortOrder: sortDirection,
-        sortField: sortBy,
-        page: 1,
-        q: searchedValue,
-      });
-      fetchData({ queryParamsObject: requestedParams });
+    const requestedParams = getRequestedParams({
+      updatedFiltersValue,
+      sortOrder: sortDirection,
+      sortField: sortBy,
+      page: 1,
+      q: searchedValue,
+    });
+    fetchData({ queryParamsObject: requestedParams });
   };
 
   // MODAL PROPERTIES
@@ -426,27 +435,28 @@ const QueryTable = ({
     },
   ];
 
-  // useEffects hooks
-  useEffect(() => {
-    if (data?.meta) {
-      const { total } = data?.meta;
-      const numberOfPages = Math.ceil(total / pageSize);
+  const resetQueryListingData = (ticketsResult) => {
+    if (ticketsResult?.meta?.total) {
+      const totalRecords = ticketsResult?.meta?.total;
+      const numberOfPages = Math.ceil(totalRecords / pageSize);
       if (current > numberOfPages) {
-        setCurrent(1);
+        fetchData({
+          queryParamsObject: getRequestedParams({
+            page: 1,
+            search: searchedValue,
+            updatedFiltersValue: filterArray,
+            sortDirection: sortDirection,
+            sortField: sortBy,
+          }),
+        });
         setSearchParams((prev) => {
           prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
           return prev;
         });
-        const requestedParams = getRequestedParams({
-          page: 1,
-          sortOrder: sortDirection,
-          sortField: sortBy,
-          q: searchedValue,
-        });
-        fetchData({ queryParamsObject: requestedParams });
+        setCurrent(1);
       }
     }
-  }, [data?.meta?.total]);
+  };
 
   useEffect(() => {
     let arrayAsString = JSON.stringify(filterArray);
@@ -461,12 +471,17 @@ const QueryTable = ({
         prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
       return prev;
     });
+
     const requestedParams = getRequestedParams({
       sortOrder: sortDirection,
+      updatedFiltersValue: filterArray,
       sortField: sortBy,
       q: searchedValue,
     });
-    fetchData({ queryParamsObject: requestedParams });
+    fetchData({
+      queryParamsObject: requestedParams,
+      onSuccessCallback: resetQueryListingData,
+    });
   }, []);
 
   return (
