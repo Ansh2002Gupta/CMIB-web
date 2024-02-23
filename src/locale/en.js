@@ -10,7 +10,7 @@ const locale = {
   "label.access": "Access",
   "label.notValidUserAccess": "Please select a valid access type!",
   "label.status": "Status",
-  "label.emailId": "Enter ID",
+  "label.emailId": "Email Id",
   "label.password": "Password",
   "label.thanks": "Thanks!",
   "label.loginHeading": "Login to CMI&B",
@@ -79,7 +79,7 @@ const locale = {
   "session.sessionDetails": "Session Details",
   "session.edit": "Edit",
   "session.sessionName": "Session Name",
-  "session.natureOfGoods": "Nature of services/goods",
+  "session.natureOfGoods": "Nature of Services/Goods",
   "session.invoiceNumberFormat": "Performa Invoice Number Format",
   "session.examinationSessionPeriod": "Examination Session Period",
   "session.mcsCompletetionDate": "MCS Completetion Date",
@@ -87,11 +87,12 @@ const locale = {
   "session.articleshipCompletetionFromDate":
     "Articleship Completetion From Date",
   "session.articleshipCompletetionToDate": "Articleship Completetion To Date",
+  "session.membershipAsOnDateOrPriorToThis": "Membership As On Date Or Prior To This",
   "session.hsnCode": "HSN Code/ SAC ",
-  "session.bankACNumber": "Bank A/C number",
-  "session.ifsc": "IFSC",
+  "session.bankACNumber": "Bank A/C Number",
+  "session.ifscCode": "IFSC Code",
   "session.placeholder.sessionName": "Enter Session Name",
-  "session.placeholder.natureOfGoods": "Enter Nature of services/goods",
+  "session.placeholder.natureOfGoods": "Enter Nature of Services/Goods",
   "session.placeholder.invoiceNumberFormat": "e.g month-*****-year",
   "session.placeholder.examinationSessionPeriod": "Select Period",
   "session.placeholder.mcsCompletetionDate": "Select MCS Completetion Date",
@@ -101,9 +102,11 @@ const locale = {
     "Select Articleship Completetion From Date",
   "session.placeholder.articleshipCompletetionToDate":
     "Select Articleship Completetion To Date",
+    "session.placeholder.membershipAsOnDateOrPriorToThis":
+    "Select Membership As On Date Or Prior To This",
   "session.placeholder.hsnCode": "Enter HSN Code/ SAC ",
-  "session.placeholder.bankACNumber": "Enter Bank A/C number",
-  "session.placeholder.ifsc": "Enter IFSC Code",
+  "session.placeholder.bankACNumber": "Enter Bank A/C Number",
+  "session.placeholder.ifscCode": "Enter IFSC Code",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
   "session.lastDateRegistrationCompanies":
@@ -121,8 +124,11 @@ const locale = {
     "* Please select articleship completetion from date",
   "session.error.articleshipCompletetionToDate":
     "* Please select articleship completetion to date",
+  "session.error.articleshipCompletetionErrorMsg":
+    "Articleship completion to date should be greater than from date",
   "session.error.bankACNumber": "Please enter valid bank A/C number",
-  "session.error.ifsc": "Please enter valid IFSC code",
+  "session.error.ifscCode": "Please enter valid IFSC code",
+  "session.error.membershipAsOnDateOrPriorToThis": "Please select membership as on date or prior to this date",
   "session.error.hsnCode": "Please enter valid HSN code/ SAC",
   "session.bigCentres": "Big Centres",
   "session.smallCentres": "Small Centres",
@@ -415,13 +421,13 @@ const locale = {
   "label.passwordChanged":
     "Your password has been successfully changed. Please login using your new password. Thanks!",
   "label.search": "Search",
-  "label.noSessionSetup": "No session is setup currently",
+  "label.noSessionSetup": "No session is currently set up. You can create one using the ‘Set up New Session’ button above.",
   "label.sessionStatus": "Session Status",
   "label.deleteAccount": "Delete Account",
   "label.path.global-configurations": "Configure centres",
   "label.areYouSureYouWantToMarkQueries":
-    "Are you sure you want to mark the queries as answered?",
-  "label.markQueriesAsAnswered": "Mark Queries as Answered",
+    "Are you sure you want to mark the query/query(s) as answered?",
+  "label.markQueriesAsAnswered": "Mark query/query(s) as answered",
   "label.markAsAnswered": "Mark as Answered",
   "label.areYouSureWantToMakeQueryAsAnsweredSingle":
     "Are you sure you want to mark the query as answered?",
@@ -429,11 +435,11 @@ const locale = {
   "label.okay": "Okay",
   "label.markSelectedQueriesAsAnswered": "Mark as Answered",
   "label.allSelectedQueriesAreAlreadyMarked":
-    "All selected queries have already been marked as answered.",
+    "All the selected query/query(s) have already been marked as answered.",
   "label.followingQueriesAreMarkedAnAnswered":
-    "Following queries have already been marked as answered:",
+    "Following query/query(s) have already been marked as answered:",
   "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
-    "Some queries have already been marked as answered. Continuing marking for the remaining queries.",
+    "Some query/query(s) have already been marked as answered. Continuing marking for the remaining queries.",
   "label.error.fieldEmpty": "Field cannot be empty.",
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
@@ -472,6 +478,9 @@ const locale = {
   "label.orientation_no_result_msg":
     "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
   "label.path.orientation-centers": "Orientation Centres",
+  "label.addSessionSuccessfully": "Session has been created successfully",
+  "label.updateSessionSuccessfully": "Session has been updated successfully",
+  "label.company_name": "Company Name",
 };
 
 export default locale;
