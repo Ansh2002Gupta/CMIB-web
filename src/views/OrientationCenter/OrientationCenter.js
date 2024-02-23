@@ -133,7 +133,10 @@ const OrientationCenter = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    const requestedParams = getRequestedQueryParams({ perPage: size, page: 1 });
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: size,
+      page: 1,
+    });
     getOrientationCentres({ queryParamsObject: requestedParams });
   };
 
@@ -144,7 +147,7 @@ const OrientationCenter = () => {
       return prev;
     });
     const requestedParams = getRequestedQueryParams({
-      perPage: pageSize,
+      rowPerPage: pageSize,
       page: newPageNumber,
     });
 
@@ -174,7 +177,7 @@ const OrientationCenter = () => {
       },
       render: (_, __, index) => {
         return {
-          children: <p>{index + 1}.</p>,
+          children: <p>{(current - 1) * pageSize + index + 1}.</p>,
         };
       },
     }),
@@ -305,7 +308,7 @@ const OrientationCenter = () => {
   );
 
   const handleCancel = () => {
-    navigate(`/${selectedModule?.key}/${SESSION}?tab=2`);
+    navigate(`/${selectedModule?.key}/${SESSION}?tab=2&mode=view`);
   };
 
   const renderContent = () => {
