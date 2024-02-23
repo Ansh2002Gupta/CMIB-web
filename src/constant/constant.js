@@ -269,7 +269,6 @@ export const COMPANY_ROUND_TWO = [
   "Consent Marking And Interview Process",
 ];
 
-
 export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
@@ -364,6 +363,7 @@ export const SORTING_QUERY_PARAMS = {
 export const NUMBER_OF_CHIPS_TO_SHOW = 15;
 
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
+export const ROUND_ID = "roundId";
 
 export const MIN_SEARCH_TEXT_LENGTH = 2;
 

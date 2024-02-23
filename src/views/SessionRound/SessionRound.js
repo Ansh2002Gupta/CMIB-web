@@ -132,7 +132,9 @@ const SessionRound = ({ roundId, roundList, roundNo, switchLabel }) => {
                         headingIntl={item.headingIntl}
                         imageUrl={item.imageUrl}
                         onClick={() => {
-                          navigate(item.onClickNaviagtion);
+                          navigate(
+                            `${item.onClickNaviagtion}?roundId=${roundId}`
+                          );
                         }}
                       />
                     );

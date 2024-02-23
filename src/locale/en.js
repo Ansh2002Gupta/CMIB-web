@@ -252,7 +252,7 @@ const locale = {
   "centre.error.enterpartner": "Enter Partner",
   "centre.error.enterNorm1": "Enter Norm 1",
   "centre.error.enterNorm2": "Enter Norm 2",
-  "centre.error.enterVacancy": "Error",
+  "centre.error.enterVacancy": "Enter Vacancy",
   "label.none": "None",
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
@@ -469,6 +469,8 @@ const locale = {
   "label.tickeNumber": "Ticket Number",
   "label.date_create_on": "Date Created On",
   "label.path.reply": "Ticket Details",
+  "label.select_centres_error_msg":
+    "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
 };
 
 export default locale;

@@ -11,7 +11,6 @@ import styles from "./CustomInput.module.scss";
 const CustomInput = React.forwardRef(
   (
     {
-      currentSelectedValue,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,
@@ -222,7 +221,6 @@ CustomInput.defaultProps = {
   isTextVisible: true,
   isSelectBoxDisable: false,
   label: "",
-  max: 10,
   messageStyles: "",
   messageToShow: "",
   min: 0,

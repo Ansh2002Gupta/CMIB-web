@@ -18,10 +18,13 @@ const CustomDateTimePicker = ({
   dateFormat,
   defaultValue,
   disabled,
+  disabledDate,
+  disabledTime,
   errorMessage,
   errorTimeInput,
   format,
   isEditable,
+  isError,
   isRequired,
   label,
   onChange,
@@ -55,6 +58,7 @@ const CustomDateTimePicker = ({
                   onChange,
                   placeholder,
                   disabled,
+                  disabledTime,
                 }}
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("clock")} />}
@@ -62,7 +66,13 @@ const CustomDateTimePicker = ({
               />
             ) : isEditable ? (
               <DatePicker
-                {...{ defaultValue, onChange, placeholder, disabled }}
+                {...{
+                  defaultValue,
+                  onChange,
+                  placeholder,
+                  disabled,
+                  disabledDate,
+                }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("calendar")} />}
@@ -79,7 +89,7 @@ const CustomDateTimePicker = ({
               <Typography
                 className={[styles.errorText, customErrorTextStyles].join(" ")}
               >
-                {errorMessage}
+                {errorMessage ? ` * ${errorMessage}` : ""}
               </Typography>
             )
           }
@@ -97,6 +107,12 @@ CustomDateTimePicker.defaultProps = {
   dateFormat: "DD/MM/YYYY",
   defaultValue: null,
   disabled: false,
+  disabledTime: () => {
+    return {
+      disabledHours: () => {},
+      disabledMinutes: () => {},
+    };
+  },
   errorMessage: "",
   errorTimeInput: "",
   format: "h:mm a",
@@ -117,10 +133,13 @@ CustomDateTimePicker.propTypes = {
   dateFormat: PropTypes.string,
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
+  disabledTime: PropTypes.func,
+  disabledDate: PropTypes.func,
   errorMessage: PropTypes.string,
   errorTimeInput: PropTypes.string,
   format: PropTypes.string,
   isEditable: PropTypes.bool,
+  isError: PropTypes.bool,
   isRequired: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
