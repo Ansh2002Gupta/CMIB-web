@@ -15,14 +15,14 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
     id: Date.now(),
     min_ctc: "",
     use_more_experience: 0,
-    work_experience_end: null,
-    work_experience_start: null,
+    work_experience_max: null,
+    work_experience_min: null,
   });
   const [errors, setErrors] = useState({
     id: Date.now(),
     min_ctc: "",
-    work_experience_end: "",
-    work_experience_start: "",
+    work_experience_max: "",
+    work_experience_min: "",
   });
 
   let isAddmoreSelected = experience.some(
@@ -67,19 +67,19 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
       );
       errorCount += 1;
     }
-    if (!addExperience?.work_experience_start) {
+    if (!addExperience?.work_experience_min) {
       handleError(
-        "work_experience_start",
+        "work_experience_min",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }
     if (
-      !addExperience?.work_experience_end &&
+      !addExperience?.work_experience_max &&
       !addExperience?.use_more_experience
     ) {
       handleError(
-        "work_experience_end",
+        "work_experience_max",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
@@ -96,8 +96,8 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
         id: Date.now(),
         min_ctc: "",
         use_more_experience: 0,
-        work_experience_end: null,
-        work_experience_start: null,
+        work_experience_max: null,
+        work_experience_min: null,
       });
     }
   };
@@ -160,11 +160,11 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                             onChange={(val) => {
                               handleInputChangeExperience(
                                 val,
-                                "work_experience_start",
+                                "work_experience_min",
                                 item?.id
                               );
                             }}
-                            value={item?.work_experience_start}
+                            value={item?.work_experience_min}
                             customInputNumberStyles={
                               styles.customInputNumberStyles
                             }
@@ -192,11 +192,11 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                               onChange={(val) => {
                                 handleInputChangeExperience(
                                   val,
-                                  "work_experience_end",
+                                  "work_experience_max",
                                   item.id
                                 );
                               }}
-                              value={item?.work_experience_end}
+                              value={item?.work_experience_max}
                               customInputNumberStyles={
                                 styles.customInputNumberStyles
                               }
@@ -266,11 +266,11 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                         placeholder={intl.formatMessage({
                           id: "label.from",
                         })}
-                        errorMessage={errors.work_experience_start}
+                        errorMessage={errors.work_experience_min}
                         onChange={(val) => {
-                          handleInputChange(val, "work_experience_start");
+                          handleInputChange(val, "work_experience_min");
                         }}
-                        value={addExperience.work_experience_start}
+                        value={addExperience.work_experience_min}
                         customInputNumberStyles={styles.customInputNumberStyles}
                         customContainerStyles={styles.customContainerStyles}
                       />
@@ -301,11 +301,11 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                               placeholder={intl.formatMessage({
                                 id: "label.to",
                               })}
-                              errorMessage={errors.work_experience_end}
+                              errorMessage={errors.work_experience_max}
                               onChange={(val) => {
-                                handleInputChange(val, "work_experience_end");
+                                handleInputChange(val, "work_experience_max");
                               }}
-                              value={addExperience.work_experience_end}
+                              value={addExperience.work_experience_max}
                               customInputNumberStyles={
                                 styles.customInputNumberStyles
                               }

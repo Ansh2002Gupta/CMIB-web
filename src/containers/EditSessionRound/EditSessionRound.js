@@ -19,7 +19,7 @@ const EditSessionRound = ({
 }) => {
   const [activeStatus, setActiveStatus] = useState(roundDetails?.status === 1);
   const [selectedCentres, setSelectedCentres] = useState();
-  const [experience, setExperience] = useState(WORK_EXP_DATA);
+  const [experience, setExperience] = useState([]);
   const responsive = useResponsive();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);
@@ -105,7 +105,7 @@ const EditSessionRound = ({
       let payload = {
         status: +activeStatus,
         centre_id: Array.from(selectedCentres, (centre) => centre.id),
-        experience: experience,
+        experiences: experience,
       };
 
       updateSessionRoundDetails({

@@ -206,11 +206,11 @@ const useRenderColumn = () => {
           ].join(" ")}
         >
           {data?.use_more_experience
-            ? `${data?.work_experience_start} ${intl.formatMessage({
+            ? `${data?.work_experience_min} ${intl.formatMessage({
                 id: "label.yearsAndMore",
               })}`
-            : `${data?.work_experience_start} - ${
-                data?.work_experience_end
+            : `${data?.work_experience_min} - ${
+                data?.work_experience_max
               } ${intl.formatMessage({ id: "label.years" })}`}
         </p>
       );

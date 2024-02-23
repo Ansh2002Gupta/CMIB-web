@@ -182,7 +182,7 @@ const SessionRoundDetailsTemplate = ({
             }
             bottomSection={
               currentlySelectedModuleKey !==
-                MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
+                MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && roundDetails?.experiences?.length ? (
                 <TwoRow
                   className={styles.experienceContainer}
                   topSection={
@@ -197,14 +197,14 @@ const SessionRoundDetailsTemplate = ({
                       {...{
                         columns,
                       }}
-                      currentDataLength={WORK_EXP_DATA.length}
+                      currentDataLength={roundDetails?.experiences?.length}
                       customContainerStyles={styles.tableContainer}
-                      originalData={WORK_EXP_DATA}
+                      originalData={roundDetails?.experiences}
                       pagination={false}
                     />
                   }
                 />
-              )
+              ) : <></>
             }
           />
         )
