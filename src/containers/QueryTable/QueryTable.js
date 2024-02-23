@@ -21,7 +21,6 @@ import { ADMIN_ROUTE, QUERIES_END_POINT } from "../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
-  NUMBER_OF_CHIPS_TO_SHOW,
   PAGINATION_PROPERTIES,
   SORTING_QUERY_PARAMS,
 } from "../../constant/constant";
@@ -167,9 +166,7 @@ const QueryTable = ({
   const areSomeItemsSelected = checkAreAllQueryOfCurrentPageSelected("some");
 
   const toggleSelectAllItems = () => {
-    const currentPageIdsArray = data?.records?.map((query) => {
-      return query?.id;
-    });
+    const currentPageIdsArray = data?.records?.map((query) => query?.id);
     if (areAllItemsSelected) {
       const updatedData = selectedQueriesToBeMarkedAsAnswered?.filter(
         (queryId) => !currentPageIdsArray?.includes(queryId)
@@ -177,19 +174,9 @@ const QueryTable = ({
       setSelctedQueriesToBeMarkedAsAnswered(updatedData);
       return;
     }
-    if (areSomeItemsSelected) {
-      setSelctedQueriesToBeMarkedAsAnswered((prev) => [
-        ...prev,
-        ...currentPageIdsArray,
-      ]);
-      return;
-    }
-    const currentPendingPageIdsArray = data?.records?.map((query) => {
-      if (query.status === "Pending") return query?.id;
-    });
     setSelctedQueriesToBeMarkedAsAnswered((prev) => [
       ...prev,
-      ...currentPendingPageIdsArray,
+      ...currentPageIdsArray,
     ]);
   };
 
@@ -377,24 +364,14 @@ const QueryTable = ({
   let currentModalChildren = (
     <div className={styles.chipContainer}>
       {queriesSelectedAndMarkedForAnswer?.map((item, index) => {
-        if (index <= NUMBER_OF_CHIPS_TO_SHOW) {
-          return (
-            <Chip
-              bgColor={styles.chipBg}
-              textColor={styles.chipText}
-              label={item?.readable_id}
-            />
-          );
-        } else if (index === NUMBER_OF_CHIPS_TO_SHOW + 1) {
-          const totalLeft = queriesSelectedAndMarkedForAnswer?.length - 15;
-          return (
-            <Chip
-              bgColor={styles.chipBg}
-              textColor={styles.chipText}
-              label={`+${totalLeft}`}
-            />
-          );
-        }
+        return (
+          <Chip
+            bgStyles={styles.chipBg}
+            textStyles={styles.chipText}
+            label={item?.readable_id || "-"}
+            key={index}
+          />
+        );
       })}
     </div>
   );
@@ -493,8 +470,7 @@ const QueryTable = ({
           currentDataLength={data?.meta?.total}
           filterPropertiesArray={convertPermissionFilter(
             queryTypesData || [],
-            "Query Type",
-            "queries_count"
+            "Query Type"
           )}
           onFilterApply={handleOnFilterApply}
         />

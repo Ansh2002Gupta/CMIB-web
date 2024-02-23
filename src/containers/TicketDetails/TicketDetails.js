@@ -1,24 +1,25 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { useIntl } from "react-intl";
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { formatDate, splitName } from "../../constant/utils";
 import { Typography } from "antd";
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./TicketDetails.module.scss";
 
 const TicketDetails = ({ data, fetchData, isError, error }) => {
-  const [userProfileDetails] = useContext(UserProfileContext);
   const intl = useIntl();
   const responsive = useResponsive();
 
   const errorString = error?.data?.message || error;
 
-  const { firstName, lastName } = splitName(data?.assigned_to?.name);
+  const { firstName, lastName } = splitName(data?.chat_partner_details?.name);
+
+  const isCompany =
+    data?.chat_partner_details?.type.toLowerCase() === "company";
 
   return (
     <>
@@ -35,7 +36,6 @@ const TicketDetails = ({ data, fetchData, isError, error }) => {
       {responsive.isMd ? (
         <TwoRow
           className={styles.profileContainer}
-          topSectionStyle={{ width: "100%" }}
           topSection={
             <ThreeRow
               className={styles.profileDetails}
@@ -43,37 +43,65 @@ const TicketDetails = ({ data, fetchData, isError, error }) => {
                 <ProfileIcon
                   firstName={firstName}
                   lastName={lastName}
-                  profileImage={userProfileDetails?.userDetails?.profile_photo}
+                  profileImage={data?.chat_partner_details?.profile_photo}
                 />
               }
               middleSection={
                 <Typography className={styles.nameText}>
-                  {data?.assigned_to?.name}
+                  {data?.chat_partner_details?.name}
                 </Typography>
               }
               bottomSection={
-                <Typography className={styles.ticketIdText}>
-                  {data?.readable_id}
-                </Typography>
+                <>
+                  {isCompany ? (
+                    <Typography className={styles.ticketIdText}>
+                      {data?.chat_partner_details?.type}
+                    </Typography>
+                  ) : (
+                    <Typography className={styles.ticketIdText}>
+                      {data?.chat_partner_details?.registeration_no}
+                    </Typography>
+                  )}
+                </>
               }
             />
           }
-          bottomSectionStyle={{ width: "100%" }}
           bottomSection={
             <ThreeRow
               className={styles.bottomContainer}
               topSection={
                 <TwoRow
-                  className={styles.contentDetails}
                   topSection={
-                    <Typography className={styles.contentHeadingText}>
-                      {intl.formatMessage({ id: "label.role" })}
-                    </Typography>
+                    <TwoRow
+                      className={styles.contentDetails}
+                      topSection={
+                        <Typography className={styles.contentHeadingText}>
+                          {intl.formatMessage({ id: "label.role" })}
+                        </Typography>
+                      }
+                      bottomSection={
+                        <Typography className={styles.contentDetailText}>
+                          {data?.chat_partner_details?.type}
+                        </Typography>
+                      }
+                    />
                   }
                   bottomSection={
-                    <Typography className={styles.contentDetailText}>
-                      {data?.chat_partner_details?.type}
-                    </Typography>
+                    isCompany && (
+                      <TwoRow
+                        className={styles.companyContentDetails}
+                        topSection={
+                          <Typography className={styles.contentHeadingText}>
+                            {intl.formatMessage({ id: "label.company_name" })}
+                          </Typography>
+                        }
+                        bottomSection={
+                          <Typography className={styles.contentDetailText}>
+                            {data?.chat_partner_details?.company_name || "-"}
+                          </Typography>
+                        }
+                      />
+                    )
                   }
                 />
               }

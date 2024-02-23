@@ -10,6 +10,7 @@ import AddTicketAssignee from "../AddTicketAssignee";
 import CommonModal from "../../components/CommonModal";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
@@ -51,6 +52,7 @@ const TicketTable = ({
   const [filterArray, setFilterArray] = useState({});
   const [sortFilter, setSortFilter] = useState({});
 
+  const [userProfileDetails] = useContext(UserProfileContext);
   const { data, error, fetchData, isError, isLoading, setData } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
@@ -192,6 +194,7 @@ const TicketTable = ({
     setSortBy,
     sortBy,
     handleSorting,
+    userProfileDetails,
   });
 
   const onChangePageSize = (size) => {

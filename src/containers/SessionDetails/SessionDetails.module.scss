@@ -5,6 +5,7 @@
 .sessionDetails {
   background-color: var(--bodyBg);
   padding: var(--fontSizeXlargeMedium);
+  margin: var(--marginLarge);
   border-radius: var(--lineHeightExtraSmall);
   border: var(--borderLight);
   gap: var(--gapMedium);
@@ -23,7 +24,7 @@
 
 .grayText {
   font-family: var(--fontFamilyRegular);
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
 }
@@ -56,6 +57,10 @@
   cursor: pointer;
   justify-content: flex-end;
   align-items: center;
+}
+
+.button {
+  border-radius: 8px;
 }
 
 .gridContainer {
@@ -234,10 +239,13 @@
   justify-content: center;
   align-items: center;
   flex: 1;
+  margin: var(--marginLarge);
 }
 
 .noSessionText {
-  font-size: var(--fontSizeXlargeMedium);
+  font-size: var(--fontSizeLarge);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
+  align-self: center;
+  text-align: center;
 }
