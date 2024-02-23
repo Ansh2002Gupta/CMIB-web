@@ -25,7 +25,6 @@ export const getQueryColumn = ({
     toggleSelectedQueriesId,
     handleMarkMutipleQueriesAsAnswered,
     setSelectedItemsList,
-    setIsSingleSelect,
   } = queriesColumnProperties;
   const isTableInSelectAllMode = selectedItemsList?.length !== 0 && !isSelectedFromTick;
   const sortByName = sortField === "name" ? sortBy : "";
@@ -227,7 +226,6 @@ export const getQueryColumn = ({
               onClick={() => {
                 if (!isTableInSelectAllMode && !isAnswered) {
                   setIsConfirmationModalOpen(true);
-                  setIsSingleSelect(true);
                   setIsSelectedFromTick(true);
                   setSelectedItemsList([rowData?.id]);
                 }

@@ -62,7 +62,6 @@ const QueryTable = ({
     getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
   );
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const [isSingleSelect, setIsSingleSelect] = useState(false);
   const [isSelectedFromTick, setIsSelectedFromTick] = useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -248,7 +247,6 @@ const QueryTable = ({
     queriesColumnProperties: {
       isSelectedFromTick,
       setIsSelectedFromTick,
-      setIsSingleSelect,
       selectedItemsList: selectedQueriesToBeMarkedAsAnswered,
       setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
       toggleSelectedQueriesId,
@@ -401,9 +399,8 @@ const QueryTable = ({
   );
 
   const handleOnModalCancel = () => {
-    if (isSingleSelect) {
+    if (isSelectedFromTick) {
       setSelctedQueriesToBeMarkedAsAnswered([]);
-      setIsSingleSelect(false);
       setIsSelectedFromTick(false);
     }
     setIsConfirmationModalOpen(false);
