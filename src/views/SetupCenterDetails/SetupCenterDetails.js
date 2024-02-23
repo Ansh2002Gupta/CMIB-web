@@ -68,7 +68,7 @@ const SetupCenterDetails = () => {
             <CenterDetailsHeader
               {...{
                 centreCode: centre_code,
-                centre: name,
+                centreName: name,
               }}
             />
           }

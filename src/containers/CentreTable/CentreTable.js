@@ -14,11 +14,11 @@ import "./Override.css";
 
 const CentreTable = ({
   addTableData,
-  isEdit,
   errors,
+  isEdit,
   setErrors,
-  tableData,
   setTableData,
+  tableData,
   validate,
 }) => {
   const intl = useIntl();
@@ -327,11 +327,11 @@ CentreTable.defaultProps = {
 
 CentreTable.propTypes = {
   addTableData: PropTypes.object,
-  isEdit: PropTypes.bool,
   errors: PropTypes.object,
+  isEdit: PropTypes.bool,
   setErrors: PropTypes.func,
-  tableData: PropTypes.array,
   setTableData: PropTypes.func,
+  tableData: PropTypes.array,
   validate: PropTypes.func,
 };
 
