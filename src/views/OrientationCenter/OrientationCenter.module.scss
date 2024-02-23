@@ -50,6 +50,7 @@
 }
 
 .customIconContainer {
+  text-align: center;
   width: 93px;
 }
 
@@ -93,4 +94,22 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--bodyBg);
+}
+
+.table {
+  flex: 1;
+  width: var(--fullWidth);
+  max-height: var(--height_60vh);
+  min-height: var(--height_45vh);
+  overflow-y: auto;
+}
+
+.rowtext {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.customHeadingStyle {
+  text-align: center;
 }
