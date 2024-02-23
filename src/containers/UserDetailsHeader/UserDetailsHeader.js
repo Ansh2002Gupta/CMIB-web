@@ -7,7 +7,7 @@ import ContentHeader from "../ContentHeader";
 import CustomButton from "../../components/CustomButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
+import { ReactComponent as Edit } from "../../themes/base/assets/images/editDark.svg";
 import { FORM_STATES } from "../../constant/constant";
 import { USERS } from "../../routes/routeNames";
 import styles from "./UserDetailsHeader.module.scss";
@@ -19,6 +19,7 @@ const UserDetailsHeader = ({
   updateUserDetails,
   userData,
   userId,
+  viewUserData,
 }) => {
   const intl = useIntl();
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -27,7 +28,7 @@ const UserDetailsHeader = ({
 
   const getHeaderText = () => {
     if (currentFormState === FORM_STATES.VIEW_ONLY) {
-      return userData?.name;
+      return viewUserData?.name;
     }
     if (currentFormState === FORM_STATES.EDITABLE) {
       return intl.formatMessage({ id: "label.editUserDetails" });
@@ -76,7 +77,8 @@ const UserDetailsHeader = ({
                   IconElement={Edit}
                   onClick={() =>
                     navigate(
-                      `/${selectedModule.key}/${USERS}details/${userId}?mode=edit`
+                      `/${selectedModule.key}/${USERS}details/${userId}?mode=edit`,
+                      true
                     )
                   }
                   iconStyles={styles.btnIconStyles}

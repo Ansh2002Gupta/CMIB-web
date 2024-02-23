@@ -5,184 +5,206 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Base from "../../core/layouts/Base/Base";
 
+import MarkRequired from "../MarkRequired";
 import styles from "./CustomInput.module.scss";
 
-const CustomInput = ({
-  currentSelectedValue,
-  customContainerStyles,
-  customErrorTextStyles,
-  customInputNumberStyles,
-  customInputStyles,
-  customLabelStyles,
-  customSelectInputStyles,
-  defaultSelectValueArray,
-  defaultSelectValueString,
-  disabled,
-  errorMessage,
-  isError,
-  isMultiSelect,
-  isRequired,
-  isPrefixRequired,
-  isSuffixRequiredForPassword,
-  isTextVisible,
-  isSelectBoxDisable,
-  label,
-  max,
-  messageStyles: customMessageStyles,
-  messageToShow,
-  min,
-  onBlur,
-  onChange,
-  onSelectItem,
-  onSuffixElementClick,
-  placeholder,
-  prefixElement,
-  selectOptions,
-  SuffixIcon,
-  type,
-  value,
-}) => {
-  const inputFieldRef = useRef();
+const CustomInput = React.forwardRef(
+  (
+    {
+      customContainerStyles,
+      customErrorTextStyles,
+      customInputNumberStyles,
+      customInputStyles,
+      customLabelStyles,
+      customSelectInputStyles,
+      defaultSelectValueArray,
+      defaultSelectValueString,
+      disabled,
+      errorInput,
+      errorMessage,
+      isError,
+      isMultiSelect,
+      isRequired,
+      isPrefixRequired,
+      isSuffixRequiredForPassword,
+      isTextVisible,
+      isSelectBoxDisable,
+      label,
+      max,
+      maxLength,
+      messageStyles: customMessageStyles,
+      messageToShow,
+      min,
+      onBlur,
+      onChange,
+      onSelectItem,
+      onSuffixElementClick,
+      placeholder,
+      prefixElement,
+      selectOptions,
+      SuffixIcon,
+      type,
+      value,
+    },
+    ref
+  ) => {
+    const inputFieldRef = useRef();
 
-  const restoreCursorPosition = () => {
-    let selectionStart = inputFieldRef?.current?.input?.selectionStart;
-    let selectionEnd = inputFieldRef?.current?.input?.selectionEnd;
+    const restoreCursorPosition = () => {
+      let selectionStart = inputFieldRef?.current?.input?.selectionStart;
+      let selectionEnd = inputFieldRef?.current?.input?.selectionEnd;
 
-    onSuffixElementClick();
+      onSuffixElementClick();
 
-    requestAnimationFrame(() => {
-      inputFieldRef?.current?.setSelectionRange(selectionStart, selectionEnd);
-    });
-  };
+      requestAnimationFrame(() => {
+        inputFieldRef?.current?.setSelectionRange(selectionStart, selectionEnd);
+      });
+    };
 
-  return (
-    <Base className={[styles.container, customContainerStyles].join(" ")}>
-      {!!label && (
-        <div className={styles.inputLabelContainer}>
-          <Typography className={customLabelStyles}>{label}</Typography>
-          {isRequired && (
-            <Typography className={styles.isRequiredStar}>*</Typography>
+    return (
+      <Base className={[styles.container, customContainerStyles].join(" ")}>
+        {!!label && (
+          <div className={styles.inputLabelContainer}>
+            <Typography className={customLabelStyles}>
+              {label}
+              {isRequired && <MarkRequired />}
+            </Typography>
+          </div>
+        )}
+        <div
+          className={[
+            styles.formContainer,
+            type === "mobile" ? styles.mobile : "",
+          ].join(" ")}
+          ref={ref}
+        >
+          {type === "select" && (
+            <>
+              <Select
+                mode={isMultiSelect ? "multiple" : ""}
+                className={[styles.selectInput, customSelectInputStyles].join(
+                  " "
+                )}
+                onChange={(changedValue) => {
+                  onSelectItem({
+                    target: {
+                      value: changedValue,
+                    },
+                  });
+                }}
+                options={selectOptions}
+                defaultValue={
+                  isMultiSelect
+                    ? defaultSelectValueArray
+                    : defaultSelectValueString
+                }
+                disabled={isSelectBoxDisable}
+              />
+            </>
+          )}
+          {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
+            <Input
+              ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
+              type={type || "text"}
+              className={[
+                styles.inputField,
+                customInputStyles,
+                isError && errorMessage ? styles.errorInput : "",
+              ].join(" ")}
+              {...{
+                value,
+                placeholder,
+                disabled,
+                maxLength,
+                onChange,
+                onBlur,
+                maxLength,
+              }}
+              prefix={isPrefixRequired ? prefixElement : null}
+              suffix={
+                <>
+                  {isSuffixRequiredForPassword &&
+                    (isTextVisible ? (
+                      <span
+                        className={styles.suffixElement}
+                        onClick={() => {
+                          onSuffixElementClick && restoreCursorPosition();
+                        }}
+                      >
+                        <EyeOutlined />
+                      </span>
+                    ) : (
+                      <span
+                        className={styles.suffixElement}
+                        onClick={() => {
+                          onSuffixElementClick && restoreCursorPosition();
+                        }}
+                      >
+                        <EyeInvisibleOutlined />
+                      </span>
+                    ))}
+                  {SuffixIcon && (
+                    <span className={styles.suffixElement}>
+                      <SuffixIcon
+                        onClick={() => {
+                          onSuffixElementClick && onSuffixElementClick();
+                        }}
+                      />
+                    </span>
+                  )}
+                </>
+              }
+            />
+          )}
+          {type === "inputNumber" && (
+            <InputNumber
+              type="number"
+              controls={false}
+              className={[
+                styles.inputNumberStyles,
+                customInputNumberStyles,
+                isError && errorMessage ? errorInput : "",
+              ].join(" ")}
+              {...{
+                value,
+                placeholder,
+                onChange,
+                disabled,
+                min,
+                max,
+              }}
+            />
           )}
         </div>
-      )}
-      <div
-        className={[
-          styles.formContainer,
-          type === "mobile" ? styles.mobile : "",
-        ].join(" ")}
-      >
-        {type === "select" && (
-          <>
-            <Select
-              mode={isMultiSelect ? "multiple" : ""}
-              className={[styles.selectInput, customSelectInputStyles].join(
-                " "
-              )}
-              onChange={(changedValue) => {
-                onSelectItem({
-                  target: {
-                    value: changedValue,
-                  },
-                });
-              }}
-              options={selectOptions}
-              defaultValue={
-                isMultiSelect
-                  ? defaultSelectValueArray
-                  : defaultSelectValueString
-              }
-              disabled={isSelectBoxDisable}
-            />
-          </>
+        {errorMessage && (
+          <div>
+            <Typography
+              className={[
+                styles.errorText,
+                customErrorTextStyles,
+                isError ? styles.showError : "",
+              ].join(" ")}
+            >
+              {errorMessage ? ` * ${errorMessage}` : ""}
+            </Typography>
+          </div>
         )}
-        {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
-          <Input
-            ref={isSuffixRequiredForPassword ? inputFieldRef : null}
-            type={type || "text"}
-            className={[styles.inputField, customInputStyles].join(" ")}
-            {...{
-              value,
-              placeholder,
-              disabled,
-              onChange,
-              onBlur,
-            }}
-            prefix={isPrefixRequired ? prefixElement : null}
-            suffix={
-              <>
-                {isSuffixRequiredForPassword &&
-                  (isTextVisible ? (
-                    <span
-                      className={styles.suffixElement}
-                      onClick={() => {
-                        onSuffixElementClick && restoreCursorPosition();
-                      }}
-                    >
-                      <EyeOutlined />
-                    </span>
-                  ) : (
-                    <span
-                      className={styles.suffixElement}
-                      onClick={() => {
-                        onSuffixElementClick && restoreCursorPosition();
-                      }}
-                    >
-                      <EyeInvisibleOutlined />
-                    </span>
-                  ))}
-                {SuffixIcon && (
-                  <SuffixIcon
-                    onClick={() => {
-                      onSuffixElementClick && onSuffixElementClick();
-                    }}
-                  />
-                )}
-              </>
-            }
-          />
+
+        {!!messageToShow && (
+          <div>
+            <Typography
+              className={[styles.messageText, customMessageStyles].join(" ")}
+            >
+              {messageToShow}
+            </Typography>
+          </div>
         )}
-        {type === "inputNumber" && (
-          <InputNumber
-            type="number"
-            controls={false}
-            className={[styles.inputNumberStyles, customInputNumberStyles]}
-            {...{
-              value,
-              placeholder,
-              onChange,
-              disabled,
-              min,
-              max,
-            }}
-          />
-        )}
-      </div>
-      <div>
-        <Typography
-          className={[
-            styles.errorText,
-            customErrorTextStyles,
-            isError ? styles.showError : "",
-          ].join(" ")}
-        >
-          {errorMessage ? ` * ${errorMessage}` : ""}
-        </Typography>
-      </div>
-      {!!messageToShow && (
-        <div>
-          <Typography
-            className={[styles.messageText, customMessageStyles].join(" ")}
-          >
-            {messageToShow}
-          </Typography>
-        </div>
-      )}
-    </Base>
-  );
-};
+      </Base>
+    );
+  }
+);
 
 CustomInput.defaultProps = {
-  currentSelectedValue: "",
   customContainerStyles: "",
   customErrorTextStyles: "",
   customInputNumberStyles: "",
@@ -192,6 +214,7 @@ CustomInput.defaultProps = {
   defaultSelectValueArray: [],
   defaultSelectValueString: "",
   disabled: false,
+  errorInput: "",
   errorMessage: "",
   isError: false,
   isMultiSelect: false,
@@ -202,6 +225,7 @@ CustomInput.defaultProps = {
   isSelectBoxDisable: false,
   label: "",
   max: 10,
+  maxLength: 100,
   messageStyles: "",
   messageToShow: "",
   min: 0,
@@ -211,6 +235,7 @@ CustomInput.defaultProps = {
   onSuffixElementClick: () => {},
   placeholder: "",
   prefixElement: null,
+  ref: null,
   selectOptions: [],
   SuffixIcon: null,
   type: "",
@@ -218,7 +243,6 @@ CustomInput.defaultProps = {
 };
 
 CustomInput.propTypes = {
-  currentSelectedValue: PropTypes.string,
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
   customInputNumberStyles: PropTypes.string,
@@ -228,6 +252,7 @@ CustomInput.propTypes = {
   defaultSelectValueArray: PropTypes.array,
   defaultSelectValueString: PropTypes.string,
   disabled: PropTypes.bool,
+  errorInput: PropTypes.string,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
   isMultiSelect: PropTypes.bool,
@@ -238,6 +263,7 @@ CustomInput.propTypes = {
   isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
   max: PropTypes.number,
+  maxLength: PropTypes.number,
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
@@ -247,10 +273,11 @@ CustomInput.propTypes = {
   onSuffixElementClick: PropTypes.func,
   placeholder: PropTypes.string,
   prefixElement: PropTypes.node,
+  ref: PropTypes.func,
   selectOptions: PropTypes.array,
   SuffixIcon: PropTypes.node,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CustomInput;

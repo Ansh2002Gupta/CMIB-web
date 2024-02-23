@@ -42,7 +42,7 @@ const ManageUsersContent = () => {
   const { getImage } = useContext(ThemeContext);
   const [messageApi, contextHolder] = message.useMessage();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data, error, isLoading, isSuccess } = useFetch({
+  const { data } = useFetch({
     url: ADMIN_ROUTE + ROLES_PERMISSION,
   });
 
@@ -71,11 +71,8 @@ const ManageUsersContent = () => {
     metaData,
   } = useListingUsers();
 
-  const {
-    errorWhileUpdatingUserData,
-    updateUserDetails,
-    isLoading: isUpdatingUserData,
-  } = useUpdateUserDetailsApi();
+  const { errorWhileUpdatingUserData, isLoading: isUpdatingUserData } =
+    useUpdateUserDetailsApi();
 
   const debounceSearch = useMemo(() => _.debounce(fetchUsers, 300), []);
 
@@ -103,14 +100,17 @@ const ManageUsersContent = () => {
 
   const handleOnUserSearch = (event) => {
     setSearchedValue(event.target.value);
-    debounceSearch(
-      pageSize,
-      current,
-      event.target.value.length > 2 ? event.target.value : "",
-      filterArray
-    );
-
-    setCurrent(1);
+    (event.target.value.length > 2 ||
+      searchedValue.length > event.target.value.length) &&
+      debounceSearch(
+        pageSize,
+        current,
+        event.target.value.length > 2
+          ? encodeURIComponent(event.target.value)
+          : "",
+        filterArray["1"]
+      );
+    searchedValue.length > 2 && setCurrent(1);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
@@ -194,7 +194,7 @@ const ManageUsersContent = () => {
       key: "status",
       renderSwitch: {
         visible: true,
-        textStyles: styles.tableCell,
+        switchStyle: styles.tableCell,
         isActionable: false,
       },
     }),
@@ -209,6 +209,7 @@ const ManageUsersContent = () => {
       },
     }),
     renderColumn({
+      title: " ",
       dataIndex: "see",
       key: "see",
       renderImage: {
@@ -220,6 +221,7 @@ const ManageUsersContent = () => {
       },
     }),
     renderColumn({
+      title: " ",
       dataIndex: "edit",
       key: "edit",
       renderImage: {
@@ -285,15 +287,15 @@ const ManageUsersContent = () => {
     fetchUsers(
       pageSize,
       current,
-      searchedValue.length > 2 ? searchedValue : "",
-      filterArray
+      searchedValue.length > 2 ? encodeURIComponent(searchedValue) : "",
+      filterArray["1"]
     );
     let arrayAsString = JSON.stringify(filterArray);
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
       return prev;
     });
-  }, [filterArray, current, pageSize]);
+  }, [current, filterArray, pageSize]);
 
   useEffect(() => {
     return () => {

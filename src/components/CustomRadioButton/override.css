@@ -1,0 +1,5 @@
+  .ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
+    background-color: var(--greenBtnBg, #04af55);
+    border-color: var(--greenBtnBg, #04af55);
+  }
+

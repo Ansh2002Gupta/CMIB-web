@@ -1,6 +1,6 @@
 import styles from "./ConfigureInterview.module.scss";
 
-const getConfigureDateCoumns = (
+const getConfigureDateColumns = (
   errors,
   intl,
   isEdit,
@@ -105,11 +105,10 @@ const getConfigureDateCoumns = (
         }),
         customInputNumberStyles: styles.customInputStyle,
         onInputChange: (val) => {
-          handleInputChange("slotDurationInMinutes", val.target.value);
+          handleInputChange("slotDurationInMinutes", val);
         },
       },
     }),
-
     renderColumn({
       title: " ",
       dataIndex: "minusCircle",
@@ -134,4 +133,4 @@ const getConfigureDateCoumns = (
   return columns;
 };
 
-export default getConfigureDateCoumns;
+export default getConfigureDateColumns;

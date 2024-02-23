@@ -15,12 +15,17 @@ const CustomButton = ({
   onClick,
   textStyle,
   type,
+  withWhiteBackground,
 }) => {
   return (
     <div className={customButtonContainerStyle}>
       <Button
         icon={IconElement ? <IconElement className={iconStyles} /> : null}
-        className={[styles.btn, customStyle].join(" ")}
+        className={[
+          styles.btn,
+          withWhiteBackground ? styles.whiteBgBtn : "",
+          customStyle,
+        ].join(" ")}
         disabled={isBtnDisable}
         {...{ onClick, loading }}
         htmlType={type}

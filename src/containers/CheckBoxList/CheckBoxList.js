@@ -25,7 +25,6 @@ const CheckBoxList = ({
     selectedControls.length === PERMISION_AND_ROLE.data[0].permissions.length;
 
   const controlModuleId = allModuleIdObject.control;
-
   const handleSelect = (selectedOptionArray, setSelectedOptionArray, id) => {
     if (selectedOptionArray.includes(id)) {
       const updatedData = selectedOptionArray.filter(
@@ -67,7 +66,7 @@ const CheckBoxList = ({
 
   return (
     <Base className={styles.parentContainer}>
-      {getTextWithStar(intl.formatMessage({ id: "label.access" }))}
+      {getTextWithStar(intl.formatMessage({ id: "label.moduleAccess" }))}
       <div className={styles.container}>
         {Object.entries(rolesData?.roles || {})?.map(([index, item]) => {
           return (

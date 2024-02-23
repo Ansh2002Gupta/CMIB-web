@@ -24,9 +24,9 @@
 .table {
   flex: 1;
   width: var(--fullWidth);
-  max-height: 60vh;
-  min-height: 45vh;
-  overflow-y: scroll;
+  max-height: var(--height_60vh);
+  min-height: var(--height_45vh);
+  overflow-y: auto;
 }
 
 .rowtext {
@@ -41,6 +41,7 @@
 
 .customInputStyle {
   max-width: var(--fullWidth);
+  min-width: var(--width_150);
 }
 
 .customColumnHeading {

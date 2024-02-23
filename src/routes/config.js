@@ -1,9 +1,8 @@
-import Auth from "../pages/Auth";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
 import ConfigureCentres from "../views/ConfigureCentres";
-import ContactUsListing from "../views/ContactUsListing";
+import QueriesListing from "../views/QueriesListing";
 import ConfigureCentreView from "../views/ConfigureCentreView";
 import ConfigureInterviewDates from "../views/ConfigureInterviewDates";
 import ConsentMarking from "../views/ConsentMarking";
@@ -14,12 +13,16 @@ import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
 import ManageUsers from "../views/ManageUsers";
+import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
+import EditSession from "../views/EditSession/EditSession";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
 import SetupCenterDetails from "../views/SetupCenterDetails";
 import SetupMockInterview from "../views/SetupMockInterview";
+import TicketChatScreen from "../views/TicketChatScreen";
+import TicketListing from "../views/TicketListing/TicketListing";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
@@ -27,20 +30,24 @@ import QueryDetails from "../views/QueryDetails";
 import {
   ADD,
   ADD_NEW_USER_DETAILS,
+  ADD_SESSION,
   CONFIGURATIONS,
   COMPANIES,
   COMPANIES_DETAILS,
   CONFIGURE_CENTRES,
   CONSENT_MARKING,
-  CONTACT_US,
   DASHBOARD,
   DETAILS,
   EDIT_CONFIGURE_CENTRE,
+  EDIT_SESSION,
   FORGOT_PASSWORD,
+  ORIENTATION_CENTERS,
   LOGIN,
   OUT_SOURCED,
+  QUERIES,
   QUERY_DETAILS,
   ROOT,
+  ROUND_ONE_SETUP_CENTERS,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -48,6 +55,8 @@ import {
   SUBSCRIPTIONS,
   USERS,
   USER_DETAILS,
+  TICKETS,
+  TICKETS_VIEW_DETAILS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 
@@ -57,16 +66,16 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 );
 
 const config = [
-  // {
-  //   pagePath: OUT_SOURCED,
-  //   element: <DefaultRoute />,
-  //   views: [
-  //     {
-  //       viewPath: "",
-  //       element: <DefaultRoute />,
-  //     },
-  //   ],
-  // },
+  {
+    pagePath: OUT_SOURCED,
+    element: <DefaultRoute />,
+    views: [
+      {
+        viewPath: "",
+        element: <DefaultRoute />,
+      },
+    ],
+  },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,
@@ -110,6 +119,14 @@ const config = [
         element: <Session />,
       },
       {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
+      },
+      {
         viewPath: SESSION + SETUP_CENTERS,
         element: <SetupCenter />,
       },
@@ -117,7 +134,7 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -202,6 +219,22 @@ const config = [
         viewPath: USERS + ADD_NEW_USER_DETAILS,
         element: <UserDetails />,
       },
+      {
+        viewPath: QUERIES,
+        element: <QueriesListing />,
+      },
+      {
+        viewPath: QUERIES + QUERY_DETAILS,
+        element: <QueryDetails />,
+      },
+      {
+        viewPath: TICKETS,
+        element: <TicketListing />,
+      },
+      {
+        viewPath: TICKETS + TICKETS_VIEW_DETAILS,
+        element: <TicketChatScreen />,
+      },
     ],
   },
   {
@@ -217,14 +250,26 @@ const config = [
         element: <Session />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + ORIENTATION_CENTERS,
+        element: <OrientationCenter />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -244,14 +289,6 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
-      },
-      {
-        viewPath: CONTACT_US,
-        element: <ContactUsListing />,
-      },
-      {
-        viewPath: CONTACT_US + QUERY_DETAILS,
-        element: <QueryDetails />,
       },
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW,
@@ -276,6 +313,14 @@ const config = [
         element: <Session />,
       },
       {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
+      },
+      {
         viewPath: SESSION + SETUP_CENTERS,
         element: <SetupCenter />,
       },
@@ -283,7 +328,7 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -327,6 +372,14 @@ const config = [
         element: <Session />,
       },
       {
+        viewPath: SESSION + ADD_SESSION,
+        element: <EditSession />,
+      },
+      {
+        viewPath: SESSION + EDIT_SESSION,
+        element: <EditSession />,
+      },
+      {
         viewPath: SESSION + SETUP_CENTERS,
         element: <SetupCenter />,
       },
@@ -334,7 +387,7 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: CONSENT_MARKING, element: <ConsentMarking /> },
+      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: COMPANIES,
         element: <Companies />,

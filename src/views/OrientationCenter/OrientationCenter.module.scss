@@ -1,0 +1,96 @@
+.mainContainer {
+  background-color: var(--blueBg);
+}
+
+.headerContainer {
+  padding: var(--gapMedium);
+  background-color: var(--bodyBg);
+  border-bottom: var(--borderLight);
+}
+
+.headingText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeHeading);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.descriptionText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+  font-style: italic;
+}
+
+.tableContainer {
+  border: var(--borderLight);
+  border-radius: var(--gapXSmall);
+  flex: 1;
+  width: var(--fullWidth);
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
+}
+
+.textStyles {
+  padding-left: var(--paddingSmall);
+}
+
+.serialHeader {
+  padding-left: var(--paddingSmall);
+}
+
+.customColumnStyles {
+  width: 190px;
+}
+
+.customNameColumnStyles {
+  width: 243px;
+}
+
+.customIconContainer {
+  width: 93px;
+}
+
+.buttonContainer {
+  align-items: center;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+  margin-top: var(--marginLarge);
+  justify-content: flex-end;
+}
+
+.buttonStyles {
+  background-color: var(--bodyBg);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--btnText) !important;
+  }
+}
+
+.mobileButtonStyles {
+  background-color: var(--bodyBg);
+  padding: var(--paddingSmall);
+  min-height: var(--height_44);
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    color: var(--btnText) !important;
+  }
+}
+
+.saveButtonStyle {
+  min-height: var(--height_44);
+}
+
+.textStyle {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.saveButtonTextStyles {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--bodyBg);
+}

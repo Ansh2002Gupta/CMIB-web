@@ -18,7 +18,7 @@ const CenterDetailsHeader = ({ centreId }) => {
       bottomSection={
         <Typography className={styles.title}>
           {intl.formatMessage({
-            id: "label.centreCode",
+            id: "label.centreCodeColon",
           })}
           <span className={styles.blackTitle}>{centreId}</span>
         </Typography>

@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const DATA_SOURCE = [
   {
     id: 1,
@@ -212,8 +214,7 @@ export const COMPANY_DATA_SOURCE = [
 export const ACCESS_FILTER_DATA = [
   {
     id: 1,
-    name: "Access",
-    isSelected: false,
+    name: "Access 1",
     options: [
       { optionId: 1, str: "All" },
       { optionId: 2, str: "Placements" },
@@ -346,23 +347,74 @@ export const CONFIGURE_CENTRES = [
   },
 ];
 
-export const SESSION_DETAILS = {
-  name: "Jadyn Bartoletti",
-  session_start_date: "2023-12-19T05:11:46.000000Z",
-  session_end_date: "2023-12-19T05:11:46.000000Z",
-  nature_of_service: "nature",
-  perform_invoice_no_format: "AugSept-*****-2023",
-  examination_session_period: ["May 2023", "November 2023"],
-  gmcs_completion_date: "2023-12-19T05:11:46.000000Z",
-  membership_completion_date: "2023-12-19T05:11:46.000000Z",
-  article_completion_from_date: "2023-12-19T05:11:46.000000Z",
-  bank_ac_no: "88896186",
-  hsn_sac_code: "1791686",
-  bank_ac_ifsc: "SBIN0005836",
-  status: true,
-  created_at: "2023-12-19T05:11:46.000000Z",
-  updated_at: "2023-12-19T05:11:46.000000Z",
-};
+export const ORIENTATION_CENTERS = [
+  {
+    sNo: "1",
+    centreName: "Ghaziabad-I",
+    totalStudentsBooked: "1001",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "2",
+    centreName: "Ghaziabad-II",
+    totalStudentsBooked: "1002",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "3",
+    centreName: "Meerut-I",
+    totalStudentsBooked: "1003",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "4",
+    centreName: "Meerut-II",
+    totalStudentsBooked: "1004",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "5",
+    centreName: "Delhi-I",
+    totalStudentsBooked: "1005",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "6",
+    centreName: "Delhi-II",
+    totalStudentsBooked: "1006",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "7",
+    centreName: "Ahmedabad-I",
+    totalStudentsBooked: "1007",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "8",
+    centreName: "Ahmedabad-II",
+    totalStudentsBooked: "1008",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "9",
+    centreName: "Akola-I",
+    totalStudentsBooked: "1009",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "10",
+    centreName: "Akola-II",
+    totalStudentsBooked: "1010",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+  {
+    sNo: "11",
+    centreName: "Akola-III",
+    totalStudentsBooked: "1011",
+    scheduleDate: dayjs("2023-12-19T05:11:46.000000Z"),
+  },
+];
 
 export const TICKET_DATA_LIST = [
   {
@@ -506,6 +558,23 @@ export const TICKET_DATA_LIST = [
     created_at: "10/10/2020",
   },
 ];
+export const SESSION_DETAILS = {
+  name: "Jadyn Bartoletti",
+  session_start_date: "2023-12-19T05:11:46.000000Z",
+  session_end_date: "2023-12-19T05:11:46.000000Z",
+  nature_of_service: "nature",
+  perform_invoice_no_format: "AugSept-*****-2023",
+  examination_session_period: ["May 2023", "November 2023"],
+  gmcs_completion_date: "2023-12-19T05:11:46.000000Z",
+  membership_completion_date: "2023-12-19T05:11:46.000000Z",
+  article_completion_from_date: "2023-12-19T05:11:46.000000Z",
+  bank_ac_no: "88896186",
+  hsn_sac_code: "1791686",
+  bank_ac_ifsc: "SBIN0005836",
+  status: true,
+  created_at: "2023-12-19T05:11:46.000000Z",
+  updated_at: "2023-12-19T05:11:46.000000Z",
+};
 
 export const INITIAL_CENTRE_DETAILS = {
   centre_name: "",
@@ -972,5 +1041,18 @@ export const CONFIGURE_INTERVIEW_DATES = [
     endTime: "2023-12-19T05:11:46.000000Z",
     facilitiesNumber: 1,
     slotDurationInMinutes: "59",
+  },
+];
+
+export const WORK_EXP_DATA = [
+  {
+    id: 1,
+    workExperience: "1",
+    minimumCTC: "10000",
+  },
+  {
+    id: 2,
+    workExperience: "5",
+    minimumCTC: "2000",
   },
 ];

@@ -1,0 +1,22 @@
+.mainContainer {
+  position: relative;
+}
+
+.bottomContainer {
+  display: flex;
+  flex: 1;
+}
+.popupMessage{
+  background-color: var(--bodyBg);
+  position: absolute;
+  right: 30px;
+  top: 75px;
+  z-index: 10;
+  padding: 16px;
+  width: 240px;
+  height: 54px;
+  border: 1px solid var(--snow);
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 1px 3px 5px  var(--ltGrey5);
+}

@@ -6,6 +6,7 @@ import { DatePicker, Image, TimePicker, Typography } from "antd";
 import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 
+import MarkRequired from "../MarkRequired";
 import { formatDate, formatTime } from "../../constant/utils";
 import styles from "./CustomDateTimePicker.module.scss";
 
@@ -18,6 +19,7 @@ const CustomDateTimePicker = ({
   defaultValue,
   disabled,
   errorMessage,
+  errorTimeInput,
   format,
   isEditable,
   isRequired,
@@ -37,7 +39,7 @@ const CustomDateTimePicker = ({
           <div className={styles.inputLabelContainer}>
             <Typography className={customLabelStyles}>
               {label}
-              {isRequired && <span className={styles.isRequiredStar}> *</span>}
+              {isRequired && <MarkRequired />}
             </Typography>
           </div>
         )
@@ -48,8 +50,18 @@ const CustomDateTimePicker = ({
             type === "time" ? (
               isEditable ? (
                 <TimePicker
-                  {...{ format, defaultValue, onChange, placeholder, disabled }}
-                  className={[styles.timeInput, customTimeStyle]}
+                  {...{
+                    format,
+                    defaultValue,
+                    onChange,
+                    placeholder,
+                    disabled,
+                  }}
+                  className={[
+                    styles.timeInput,
+                    customTimeStyle,
+                    errorTimeInput,
+                  ]}
                   suffixIcon={<Image src={getImage("clock")} />}
                   value={value ? dayjs(value) : null}
                 />
@@ -62,13 +74,13 @@ const CustomDateTimePicker = ({
               <DatePicker
                 {...{ defaultValue, onChange, placeholder, disabled }}
                 format={dateFormat}
-                className={[styles.timeInput, customTimeStyle]}
+                className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("calendar")} />}
                 value={value ? dayjs(value) : null}
               />
             ) : (
               <Typography className={styles.dateText}>
-                {formatDate(value)}
+                {formatDate({ date: value })}
               </Typography>
             )
           }
@@ -77,7 +89,7 @@ const CustomDateTimePicker = ({
               <Typography
                 className={[styles.errorText, customErrorTextStyles].join(" ")}
               >
-                * {errorMessage}
+                {errorMessage}
               </Typography>
             )
           }
@@ -96,6 +108,7 @@ CustomDateTimePicker.defaultProps = {
   defaultValue: null,
   disabled: false,
   errorMessage: "",
+  errorTimeInput: "",
   format: "h:mm a",
   isEditable: true,
   isRequired: false,
@@ -115,6 +128,7 @@ CustomDateTimePicker.propTypes = {
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
+  errorTimeInput: PropTypes.string,
   format: PropTypes.string,
   isEditable: PropTypes.bool,
   isRequired: PropTypes.bool,
@@ -122,7 +136,7 @@ CustomDateTimePicker.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default CustomDateTimePicker;

@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { Pagination, Select, Table, Typography } from "antd";
+import { Image, Pagination, Select, Table, Typography } from "antd";
+
+import { ThemeContext } from "core/providers/theme";
 
 import PaginationItems from "./PaginationItems";
 import {
@@ -12,16 +14,26 @@ import styles from "./DataTable.module.scss";
 import "./overrides.css";
 
 const DataTable = ({
+  arrayContainingSelectedRow,
   columns,
   current,
   currentDataLength,
   customContainerStyles,
+  keytoFindSelectedRow,
   onChangeCurrentPage,
   onChangePageSize,
   originalData,
   pageSize,
 }) => {
   const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
+
+  const setRowClassName = (record, index) => {
+    if (arrayContainingSelectedRow.includes(record?.[keytoFindSelectedRow])) {
+      return [styles.rowBG, styles.rowtext].join(" ");
+    }
+    return styles.rowtext;
+  };
 
   const rightPaginationConfig = {
     current,
@@ -31,10 +43,7 @@ const DataTable = ({
     showSizeChanger: false,
   };
 
-  const responsiveStyle =
-    originalData?.length !== 0
-      ? { x: "max-content", y: 600 }
-      : { x: "max-content" };
+  const responsiveStyle = { x: "max-content" };
 
   return (
     <div className={[styles.container, customContainerStyles].join(" ")}>
@@ -42,9 +51,9 @@ const DataTable = ({
         columns={columns}
         dataSource={originalData}
         pagination={false}
-        rowClassName={styles.rowtext}
         scroll={responsiveStyle}
         className={styles.table}
+        rowClassName={setRowClassName}
         rowKey="id"
       />
       <div className={styles.rowPerPageOptionsAndPaginationContainer}>
@@ -57,12 +66,15 @@ const DataTable = ({
             className={styles.rowPerPageCount}
             onChange={onChangePageSize}
             options={ROW_PER_PAGE_OPTIONS}
+            suffixIcon={
+              <Image src={getImage("blackArrowDown")} preview={false} />
+            }
           />
         </div>
         <Pagination
           disabled={originalData.length <= 0}
           {...rightPaginationConfig}
-          className={styles.paginationContainer}
+          className={[styles.paginationContainer].join(" ")}
           itemRender={(current, type, originalElement) => (
             <PaginationItems
               {...{ current, type, originalElement }}
@@ -85,6 +97,8 @@ DataTable.defaultProps = {
   onChangePageSize: () => {},
   originalData: [],
   pageSize: DEFAULT_PAGE_SIZE,
+  keytoFindSelectedRow: "id",
+  arrayContainingSelectedRow: [],
 };
 
 DataTable.propTypes = {
@@ -96,6 +110,8 @@ DataTable.propTypes = {
   onChangePageSize: PropTypes.func,
   originalData: PropTypes.array,
   pageSize: PropTypes.number,
+  keytoFindSelectedRow: PropTypes.string,
+  arrayContainingSelectedRow: PropTypes.array,
 };
 
 export default DataTable;

@@ -18,6 +18,7 @@ import {
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
 import { MOCK_INTERVIEW } from "../../dummyData";
+import { SESSION, SETUP_MOCK_INTERVIEW } from "../../routes/routeNames";
 import { classes } from "./SetupMockInterview.styles";
 import styles from "./SetupMockInterview.module.scss";
 
@@ -43,9 +44,11 @@ const SetupMockInterviewContent = () => {
     navigate(
       `/${
         selectedModule?.key
-      }/session/setup-mock-interview/details/${centreId}?mode=${
+      }/${SESSION}${SETUP_MOCK_INTERVIEW}details/${centreId}?mode=${
         isEdit ? "edit" : "view"
-      }`
+      }`,
+      false,
+      { current: current, pageSize: pageSize }
     );
   };
 
@@ -91,6 +94,7 @@ const SetupMockInterviewContent = () => {
     const currentPagePerRow = +searchParams.get(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
+
     let startIndex = (currentPage - 1) * currentPagePerRow;
     let endIndex = currentPage * currentPagePerRow;
     const availalblePage = Math.ceil(MOCK_INTERVIEW.length / currentPagePerRow);
@@ -108,7 +112,6 @@ const SetupMockInterviewContent = () => {
       startIndex = 0;
       endIndex = currentPagePerRow;
     }
-
     if (
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
@@ -120,7 +123,6 @@ const SetupMockInterviewContent = () => {
       startIndex = currentPage;
       endIndex = DEFAULT_PAGE_SIZE;
     }
-
     const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
     setCurrentTableData(updatedData);
   }, []);

@@ -1,0 +1,37 @@
+.topSectionStyle {
+  padding-top: var(--gapMedium);
+  padding-left: var(--gapMedium);
+  padding-right: var(--gapMedium);
+  border-bottom: var(--borderLight);
+  background-color: var(--bodyBg);
+  gap: var(--gapMedium);
+}
+
+.customStyles {
+  justify-content: space-between;
+  font-size: var(--fontSizeXlargeMedium);
+}
+
+.customContainerStyle {
+  border-bottom: var(--borderLight);
+  border-top: var(--borderLight);
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium) var(--gap_26);
+}
+
+.buttonStyles {
+  padding: 0px var(--paddingExtraSmall);
+  font-size: var(--fontSizeSmall);
+}
+
+.mainContainer {
+  background-color: var(--blueBg);
+  border-bottom: var(--borderLight);
+}
+
+.textStyle {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--bodyBg);
+}

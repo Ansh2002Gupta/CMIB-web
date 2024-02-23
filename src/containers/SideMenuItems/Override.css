@@ -1,0 +1,3 @@
+.ant-input.css-dev-only-do-not-override-f9lhyc::placeholder {
+    color: var(--inputPlaceHolder, #CCD0E5) !important;
+}
