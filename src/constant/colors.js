@@ -26,6 +26,7 @@ export const colorPallets = {
   ltGrey4: "#717B9E",
   ltGrey5: "#d9d9d9",
   ltGrey6: "#CCD0E5",
+  lightGrey: "#cccccc",
   mediumGrey: "#B1B3B5",
   darkGrey1: "#616C82",
   darkGrey2: "#5a5a5a",

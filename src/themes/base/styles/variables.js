@@ -31,6 +31,7 @@ const variables = {
   sideMenuBg1: colorPallets.blue8,
   lightGrey3Bg: colorPallets.ltGrey3,
   ltGrey4: colorPallets.ltGrey4,
+  lightGrey: colorPallets.lightGrey,
 
   // Text-colors
   textDefault: colorPallets.black,
