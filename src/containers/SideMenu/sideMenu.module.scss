@@ -30,12 +30,6 @@
     var(--paddingSmall, 16px);
   background-color: var(--blackBg, #000833);
   overflow-x: auto;
-  max-height: var(--height_50vh, 50vh);
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 .sideMenuOptionsContainer > li {
