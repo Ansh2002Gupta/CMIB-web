@@ -32,6 +32,7 @@ export const colorPallets = {
   darkGrey1: "#616C82",
   darkGrey2: "#5a5a5a",
   fadedGrey: "grey",
+  letGrey7: "#bfbfbf",
 
   // Black color shades
   black1: "#000833",

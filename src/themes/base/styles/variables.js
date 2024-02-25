@@ -110,6 +110,7 @@ const variables = {
 
   // Widths
   width_1: "1px",
+  width_3: "3px",
   width_8: "8px",
   width_10: "10px",
   xSmallWidth: "16px",
@@ -157,6 +158,7 @@ const variables = {
   width_30Per: "30%",
   width_45Per: "45%",
   halfWidth: "50%",
+  width70Per: "70%",
   width90Per: "90%",
   fullWidth: "100%",
 
@@ -202,6 +204,7 @@ const variables = {
   height_45vh: "45vh",
   height_50vh: "50vh",
   height_60vh: "60vh",
+  height_65vh: "65vh",
   height_70vh: "70vh",
   height_85vh: "85vh",
   heightFullViewPort: "100vh",
@@ -224,6 +227,7 @@ const variables = {
   boxShadow: `1px 1px 10px #e9ebf1`,
   boxShadowBottom: `0 3px 3px -1px #e9ebf1`,
   boxShadowColor: colorPallets.shadowBlack,
+  boxShadowOne: `inset 0 0 6px rgba(0, 0, 0, 0)`,
 
   // Font-family
   fontFamilyRegular: "General Sans",
