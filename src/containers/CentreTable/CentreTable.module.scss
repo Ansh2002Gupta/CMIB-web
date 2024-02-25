@@ -9,25 +9,37 @@
   font-weight: var(--fontWeightMedium);
 }
 
-.customContainerStyles {
-  width: var(--width_100);
-}
 
 .customDateContainerStyles {
-  width: auto;
+  width: var(--width_160);;
 }
 
 .inputNumbeCustomStyles {
-  width: var(--width_80);
+  width: var(--width_160);
+
+}
+
+.inputStyle {
+  width: var(--width_160);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
 }
 
 .joinedCustomContainerStyles {
-  width: var(--width_100);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
+  width: 91px;
   border-top-right-radius: var(--radiusNone);
   border-bottom-right-radius: var(--radiusNone);
 }
 
 .inputNumberStyle {
+  height: var(--height_44);
+  width: 91px;
+  display: flex;
+  align-items: center;
   border-top-left-radius: var(--radiusNone);
   border-bottom-left-radius: var(--radiusNone);
 }
