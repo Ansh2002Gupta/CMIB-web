@@ -16,6 +16,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
+import CustomGrid from "../../components/CustomGrid";
 
 const CenterDetailsContent = ({
   centreDetailData,
@@ -292,140 +293,172 @@ const CenterDetailsContent = ({
       };
     };
 
+    const commonTableProps = {
+      addTableData,
+      errors,
+      handleSetError,
+      isEdit,
+      setTableData,
+      setErrors,
+      tableData,
+      validate,
+    };
+
+    const interviewDatesSection = (
+      <TwoRow
+        className={styles.formContainer}
+        topSection={
+          <Typography className={styles.title}>
+            {intl.formatMessage({
+              id: "label.configureInterviewDates",
+            })}
+          </Typography>
+        }
+        bottomSection={<CentreTable {...commonTableProps} />}
+        bottomSectionStyle={classes.bottomStyle}
+      />
+    );
+
+    const bottomSectionButtons = isEdit && (
+      <TwoColumn
+        className={styles.buttonContainer}
+        leftSection={
+          <CustomButton
+            btnText={intl.formatMessage({
+              id: "label.cancel",
+            })}
+            customStyle={
+              responsive.isMd ? styles.buttonStyles : styles.mobileButtonStyles
+            }
+            textStyle={styles.textStyle}
+            onClick={handleCancel}
+          />
+        }
+        rightSection={
+          <CustomButton
+            isBtnDisable={
+              !formData?.PsychometricFee ||
+              !formData?.centreStartTime ||
+              !formData?.centreEndTime
+            }
+            customStyle={styles.customStyle}
+            textStyle={styles.saveButtonTextStyles}
+            btnText={intl.formatMessage({
+              id: "session.saveChanges",
+            })}
+            onClick={handleSave}
+          />
+        }
+      />
+    );
+
+    const centreDetails = [
+      { heading: "writtenTestFee", value: formData?.PsychometricFee },
+      { heading: "centreStartTime", value: formData?.centreStartTime },
+      { heading: "centreEndTime", value: formData?.centreEndTime },
+    ];
+
     return (
       <TwoRow
         className={styles.mainContainer}
         topSection={
-          <div className={styles.topSectionStyle}>
-            <CustomInput
-              customLabelStyles={styles.inputLabel}
-              customInputStyles={styles.input}
-              customContainerStyles={styles.customContainerStyles}
-              isRequired
-              label={intl.formatMessage({ id: "label.writtenTestFee" })}
-              onChange={(val) => {
-                handleInputChange(val.target.value, "PsychometricFee");
-              }}
-              placeholder={intl.formatMessage({
-                id: `label.placeholder.writtenTestFee`,
-              })}
-              value={formData?.PsychometricFee}
-              disabled={!isEdit}
-            />
-            <CustomDateTimePicker
-              customLabelStyles={styles.inputLabel}
-              customTimeStyle={styles.timeInput}
-              customContainerStyles={styles.customContainerStyles}
-              isRequired
-              label={intl.formatMessage({ id: "label.centreStartTime" })}
-              onChange={(momentValue, timeString) => {
-                handleInputChange(
-                  dayjs(momentValue).format("HH:mm:ss"),
-                  "centreStartTime"
-                );
-              }}
-              placeholder={intl.formatMessage({
-                id: "label.placeholder.centreStartTime",
-              })}
-              value={
-                formData?.centreStartTime &&
-                dayjs(formData?.centreStartTime, "HH:mm:ss")
-              }
-              disabled={!isEdit}
-            />
-            <CustomDateTimePicker
-              customLabelStyles={styles.inputLabel}
-              customTimeStyle={styles.timeInput}
-              customContainerStyles={styles.customContainerStyles}
-              isRequired
-              label={intl.formatMessage({ id: "label.centreEndTime" })}
-              onChange={(momentValue) => {
-                handleInputChange(
-                  dayjs(momentValue).format("HH:mm:ss"),
-                  "centreEndTime"
-                );
-              }}
-              disabledTime={handleDisabledEndTime}
-              placeholder={intl.formatMessage({
-                id: "label.placeholder.centreEndTime",
-              })}
-              value={
-                formData?.centreEndTime &&
-                dayjs(formData?.centreEndTime, "HH:mm:ss")
-              }
-              disabled={!isEdit}
-            />
-          </div>
+          isEdit ? (
+            <div className={styles.topSectionStyle}>
+              <CustomInput
+                customLabelStyles={styles.inputLabel}
+                customInputStyles={styles.input}
+                customContainerStyles={styles.customContainerStyles}
+                isRequired
+                label={intl.formatMessage({ id: "label.writtenTestFee" })}
+                onChange={(val) => {
+                  handleInputChange(val.target.value, "PsychometricFee");
+                }}
+                placeholder={intl.formatMessage({
+                  id: `label.placeholder.writtenTestFee`,
+                })}
+                value={formData?.PsychometricFee}
+                disabled={!isEdit}
+              />
+              <CustomDateTimePicker
+                customLabelStyles={styles.inputLabel}
+                customTimeStyle={styles.timeInput}
+                customContainerStyles={styles.customContainerStyles}
+                isRequired
+                label={intl.formatMessage({ id: "label.centreStartTime" })}
+                onChange={(momentValue, timeString) => {
+                  handleInputChange(
+                    dayjs(momentValue).format("HH:mm:ss"),
+                    "centreStartTime"
+                  );
+                }}
+                placeholder={intl.formatMessage({
+                  id: "label.placeholder.centreStartTime",
+                })}
+                value={
+                  formData?.centreStartTime &&
+                  dayjs(formData?.centreStartTime, "HH:mm:ss")
+                }
+                disabled={!isEdit}
+              />
+              <CustomDateTimePicker
+                customLabelStyles={styles.inputLabel}
+                customTimeStyle={styles.timeInput}
+                customContainerStyles={styles.customContainerStyles}
+                isRequired
+                label={intl.formatMessage({ id: "label.centreEndTime" })}
+                onChange={(momentValue) => {
+                  handleInputChange(
+                    dayjs(momentValue).format("HH:mm:ss"),
+                    "centreEndTime"
+                  );
+                }}
+                disabledTime={handleDisabledEndTime}
+                placeholder={intl.formatMessage({
+                  id: "label.placeholder.centreEndTime",
+                })}
+                value={
+                  formData?.centreEndTime &&
+                  dayjs(formData?.centreEndTime, "HH:mm:ss")
+                }
+                disabled={!isEdit}
+              />
+            </div>
+          ) : (
+            <div className={styles.gridStyle}>
+              <CustomGrid>
+                {centreDetails.map((item) => (
+                  <TwoRow
+                    key={item.id}
+                    className={styles.gridItem}
+                    topSection={
+                      <Typography className={styles.grayText}>
+                        {intl.formatMessage({
+                          id: `label.${item.heading}`,
+                        })}
+                        <span className={styles.redText}> *</span>
+                      </Typography>
+                    }
+                    bottomSection={
+                      <div className={styles.blackText}>{item.value}</div>
+                    }
+                  />
+                ))}
+              </CustomGrid>
+            </div>
+          )
         }
         topSectionStyle={classes.topSectionStyle}
         bottomSection={
-          <TwoRow
-            className={styles.bottomSectionStyle}
-            topSection={
-              <TwoRow
-                className={styles.formContainer}
-                topSection={
-                  <Typography className={styles.title}>
-                    {intl.formatMessage({
-                      id: "label.configureInterviewDates",
-                    })}
-                  </Typography>
-                }
-                bottomSection={
-                  <CentreTable
-                    {...{
-                      addTableData,
-                      errors,
-                      handleSetError,
-                      isEdit,
-                      setTableData,
-                      setErrors,
-                      tableData,
-                      validate,
-                    }}
-                  />
-                }
-                bottomSectionStyle={classes.bottomStyle}
-              />
-            }
-            bottomSection={
-              isEdit && (
-                <TwoColumn
-                  className={styles.buttonContainer}
-                  leftSection={
-                    <CustomButton
-                      btnText={intl.formatMessage({
-                        id: "label.cancel",
-                      })}
-                      customStyle={
-                        responsive.isMd
-                          ? styles.buttonStyles
-                          : styles.mobileButtonStyles
-                      }
-                      textStyle={styles.textStyle}
-                      onClick={handleCancel}
-                    />
-                  }
-                  rightSection={
-                    <CustomButton
-                      isBtnDisable={
-                        !formData?.PsychometricFee ||
-                        !formData?.centreStartTime ||
-                        !formData?.centreEndTime
-                      }
-                      customStyle={styles.customStyle}
-                      textStyle={styles.saveButtonTextStyles}
-                      btnText={intl.formatMessage({
-                        id: "session.saveChanges",
-                      })}
-                      onClick={handleSave}
-                    />
-                  }
-                />
-              )
-            }
-            bottomSectionStyle={classes.bottomSectionStyle}
-          />
+          !isEdit ? (
+            <CentreTable {...commonTableProps} />
+          ) : (
+            <TwoRow
+              className={styles.bottomSectionStyle}
+              topSection={interviewDatesSection}
+              bottomSection={bottomSectionButtons}
+              bottomSectionStyle={classes.bottomSectionStyle}
+            />
+          )
         }
       />
     );

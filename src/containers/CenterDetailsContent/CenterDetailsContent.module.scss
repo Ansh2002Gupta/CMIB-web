@@ -127,6 +127,46 @@
   width: var(--fullWidth);
 }
 
+.rowtext {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.gridStyle {
+  border: var(--borderLight);
+  display: flex;
+  flex: 1;
+  background-color: var(--bodyBg);
+  border-radius: var(--radiusMLg);
+}
+
+.table {
+  flex: 1;
+  width: var(--fullWidth);
+}
+
+.gridItem {
+  padding: var(--paddingMedium);
+
+}
+
+.blackText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.grayText {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.redText {
+  color: var(--error);
+}
+
 @media (min-width: 400px) and (max-width: 600px) {
   .customContainerStyles {
     width: var(--width_45Per);
