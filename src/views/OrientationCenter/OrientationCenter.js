@@ -21,7 +21,6 @@ import {
 } from "../../constant/apiEndpoints";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { resetListingData } from "../../constant/utils";
 import { ROUND_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 

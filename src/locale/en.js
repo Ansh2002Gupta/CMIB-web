@@ -450,7 +450,7 @@ const locale = {
   "label.show_result": "Show Results",
   "label.centreCode": "Centre Id",
   "label.path.centre-details": "Edit centre details",
-  "label.setup_orientation_centers": "Setup Orientation Centers",
+  "label.setup_orientation_centers": "Setup Orientation Centres",
   "label.orientation_centers_warning":
     "*This cannot be edited once registration for the students starts. Only Venue can be edited",
   "label.total_students_booked": "Total Students Booked",
