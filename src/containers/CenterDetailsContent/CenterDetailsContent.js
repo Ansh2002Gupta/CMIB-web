@@ -9,6 +9,7 @@ import { TwoRow, TwoColumn } from "../../core/layouts";
 import CentreTable from "../CentreTable";
 import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
+import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useConfigUpdateHandler from "../../services/api-services/SetupCentre/useConfigUpdateHandler";
@@ -16,7 +17,6 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
-import CustomGrid from "../../components/CustomGrid";
 
 const CenterDetailsContent = ({
   centreDetailData,
