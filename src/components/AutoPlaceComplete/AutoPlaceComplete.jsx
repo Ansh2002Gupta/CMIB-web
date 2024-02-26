@@ -14,7 +14,7 @@ const AutoPlaceComplete = ({defaultValue, onSelectLocation}) => {
   useEffect(() => {
     if (!window.google) {
       loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=${""}&libraries=places&callback=initMap`
+        `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_KEY}&libraries=places&callback=initMap`
       );
     }
   }, []);
