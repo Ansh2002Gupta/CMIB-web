@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import Typography from "antd/es/typography/Typography";
@@ -6,8 +6,7 @@ import Typography from "antd/es/typography/Typography";
 import Base from "../../core/layouts/Base/Base";
 
 import CustomCheckBox from "../../components/CustomCheckBox";
-import { MODULE_KEYS } from "../../constant/constant";
-import { PERMISION_AND_ROLE } from "../../dummyData";
+import { MODULE_KEYS, ROLES } from "../../constant/constant";
 import styles from "./CheckBoxList.module.scss";
 
 const CheckBoxList = ({
@@ -19,10 +18,6 @@ const CheckBoxList = ({
   setSelectedModules,
 }) => {
   const intl = useIntl();
-  const areAllModulesSelected =
-    selectedModules.length === PERMISION_AND_ROLE.data.length;
-  const areAllControlsSelected =
-    selectedControls.length === PERMISION_AND_ROLE.data[0].permissions.length;
 
   let controlModuleId;
   for (const [key, value] of Object.entries(rolesData?.roles || {})) {
@@ -41,17 +36,6 @@ const CheckBoxList = ({
       return;
     }
     setSelectedOptionArray([...selectedOptionArray, id]);
-  };
-
-  const handleSelectAll = (
-    areAllElementSelected,
-    setSelectedOptionArray,
-    arrayOfAllValidId
-  ) => {
-    const arrayOfAllId = arrayOfAllValidId
-      ?.filter((item) => !areAllElementSelected)
-      ?.map((item) => item.id);
-    setSelectedOptionArray(arrayOfAllId);
   };
 
   const getTextWithStar = (text) => {
@@ -77,7 +61,7 @@ const CheckBoxList = ({
       <div className={styles.container}>
         {Object.entries(rolesData?.roles || {})?.map(([index, item]) => {
           return (
-            item.key !== MODULE_KEYS.SUPER_ADMIN && (
+            item.key !== ROLES.SUPER_ADMIN && (
               <CustomCheckBox
                 disabled={item.disabled}
                 key={item.id}
