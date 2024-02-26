@@ -12,6 +12,7 @@
 }
 
 .timeInput {
+  min-height: var(--height_44);
   background-color: var(--bodyBg);
 }
 
@@ -21,6 +22,7 @@
   font-size: var(--fontSizeExtraSmall);
   margin-top: var(--marginXXSmall);
 }
+
 .dateText {
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);

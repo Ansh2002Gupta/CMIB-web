@@ -54,8 +54,6 @@ function Session() {
     fetchData,
     isError: isSessionError,
     isLoading: isGettingSessions,
-    isSuccess,
-    setData,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -112,29 +110,49 @@ function Session() {
         />
       ),
     },
-    {
-      key: "2",
-      title: intl.formatMessage({ id: "session.roundOne" }),
-      children: (
-        <SessionRound
-          roundNo={1}
-          roundId={sessionData?.rounds?.[0]?.id}
-          roundList={ROUND_ONE_CARD_LIST}
-          switchLabel={intl.formatMessage({ id: "session.roundOneStatus" })}
-        />
-      ),
-    },
-    {
-      key: "3",
-      title: intl.formatMessage({ id: "session.roundTwo" }),
-      children: (
-        <SessionRound
-          roundNo={2}
-          roundList={ROUND_TWO_CARD_LIST}
-          switchLabel={intl.formatMessage({ id: "session.roundTwoStatus" })}
-        />
-      ),
-    },
+    ...(sessionData?.rounds?.[0]
+      ? [
+          {
+            key: "2",
+            title: intl.formatMessage({ id: "session.roundOne" }),
+            children: (
+              <SessionRound
+                roundNo={1}
+                roundId={
+                  (
+                    sessionData?.rounds?.find(
+                      (obj) => obj.round_code === "round-1"
+                    ) || {}
+                  ).id
+                }
+                roundList={ROUND_ONE_CARD_LIST}
+                sessionData={sessionData}
+                switchLabel={intl.formatMessage({
+                  id: "session.roundOneStatus",
+                })}
+              />
+            ),
+          },
+        ]
+      : []),
+    ...(sessionData?.rounds?.[1]
+      ? [
+          {
+            key: "3",
+            title: intl.formatMessage({ id: "session.roundTwo" }),
+            children: (
+              <SessionRound
+                roundNo={2}
+                roundList={ROUND_TWO_CARD_LIST}
+                sessionData={sessionData}
+                switchLabel={intl.formatMessage({
+                  id: "session.roundTwoStatus",
+                })}
+              />
+            ),
+          },
+        ]
+      : []),
   ];
 
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
@@ -177,9 +195,6 @@ function Session() {
           />
         }
         bottomSection={!!activeTabChildren && activeTabChildren.children}
-        bottomSectionStyle={{
-          padding: variables.fontSizeXlargeMedium,
-        }}
       />
     </>
   );

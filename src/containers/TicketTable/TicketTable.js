@@ -10,13 +10,14 @@ import AddTicketAssignee from "../AddTicketAssignee";
 import CommonModal from "../../components/CommonModal";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getTicketColumn } from "./TicketTableConfig";
+import { resetListingData } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
-import { TICKETS_VIEW_DETAILS } from "../../routes/routeNames";
 import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
@@ -51,6 +52,7 @@ const TicketTable = ({
   const [filterArray, setFilterArray] = useState({});
   const [sortFilter, setSortFilter] = useState({});
 
+  const [userProfileDetails] = useContext(UserProfileContext);
   const { data, error, fetchData, isError, isLoading, setData } = useFetch({
     url: CORE_ROUTE + TICKET_LIST,
     otherOptions: { skipApiCallOnMount: true },
@@ -192,6 +194,7 @@ const TicketTable = ({
     setSortBy,
     sortBy,
     handleSorting,
+    userProfileDetails,
   });
 
   const onChangePageSize = (size) => {
@@ -230,29 +233,6 @@ const TicketTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const resetTicketListingData = (ticketsResult) => {
-    if (ticketsResult?.meta?.total) {
-      const totalRecords = ticketsResult?.meta?.total;
-      const numberOfPages = Math.ceil(totalRecords / pageSize);
-      if (current > numberOfPages) {
-        fetchData({
-          queryParamsObject: getRequestedQueryParams({
-            page: 1,
-            search: searchedValue,
-            currentFilterStatus: filterArray,
-            sortDirection: sortFilter?.sortDirection,
-            sortField: sortFilter?.sortField,
-          }),
-        });
-        setSearchParams((prev) => {
-          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-          return prev;
-        });
-        setCurrent(1);
-      }
-    }
-  };
-
   useEffect(() => {
     setSearchParams((prev) => {
       prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
@@ -271,7 +251,24 @@ const TicketTable = ({
 
     fetchData({
       queryParamsObject: requestedParams,
-      onSuccessCallback: resetTicketListingData,
+      onSuccessCallback: (ticketsResult) => {
+        resetListingData({
+          listData: ticketsResult,
+          currentPage: current,
+          fetchDataCallback: () =>
+            fetchData({
+              queryParamsObject: getRequestedQueryParams({
+                page: 1,
+                search: searchedValue,
+                currentFilterStatus: filterArray,
+                sortDirection: sortFilter?.sortDirection,
+                sortField: sortFilter?.sortField,
+              }),
+            }),
+          setSearchParams,
+          setCurrent,
+        });
+      },
     });
   }, []);
 

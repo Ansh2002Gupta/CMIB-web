@@ -1,4 +1,5 @@
 .multilpleInput {
+  min-height: var(--height_44);
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
@@ -39,7 +40,7 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
-  margin-right: var(--gapXSmall);
+  margin-right: var(--gapXXSmall);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -49,6 +50,7 @@
   width: var(--xSmallWidth);
   height: var(--xSmallWidth);
   cursor: pointer;
+  vertical-align:unset !important;
 }
 
 .selectCentreStyles {

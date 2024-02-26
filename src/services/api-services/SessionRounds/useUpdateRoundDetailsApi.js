@@ -12,11 +12,11 @@ import {
 const useUpdateSessionRoundDetailsApi = () => {
   const intl = useIntl();
 
-  const [updateSessionRoundApiStatus, setUpdateSessionRoundApiStatus] = useState(
-    API_STATUS.IDLE
-  );
+  const [updateSessionRoundApiStatus, setUpdateSessionRoundApiStatus] =
+    useState(API_STATUS.IDLE);
   const [sessionRoundDetails, setSessionRoundDetails] = useState(null);
-  const [errorWhileUpdatingRoundSession, setErrorWhileUpdatingRoundSession] = useState("");
+  const [errorWhileUpdatingRoundSession, setErrorWhileUpdatingRoundSession] =
+    useState("");
 
   const updateSessionRoundDetails = async ({
     onSuccessCallback,
