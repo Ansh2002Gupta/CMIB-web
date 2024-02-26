@@ -86,11 +86,9 @@ const SetupCenter = () => {
     };
   };
 
-  const goToEditCentrePage = (rowData, isEdit) => {
+  const goToEditCentrePage = (rowData) => {
     const centreId = rowData?.id;
-    navigate(
-      `details/${centreId}?roundId=${roundId}&mode=${isEdit ? "edit" : "view"}`
-    );
+    navigate(`details/${centreId}?roundId=${roundId}`);
   };
 
   const onChangePageSize = (size) => {
@@ -166,7 +164,7 @@ const SetupCenter = () => {
       key: "edit",
       renderImage: {
         alt: "edit",
-        onClick: (rowData) => goToEditCentrePage(rowData, isEditable),
+        onClick: (rowData) => goToEditCentrePage(rowData),
         preview: false,
         src: getImage(isEditable ? "edit" : "eye"),
         visible: true,

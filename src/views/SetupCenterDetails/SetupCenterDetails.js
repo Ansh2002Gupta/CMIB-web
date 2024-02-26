@@ -14,6 +14,7 @@ import {
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { getErrorMessage } from "../../constant/utils";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { ROUND_ID } from "../../constant/constant";
 import { Spin } from "antd";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -23,8 +24,12 @@ const SetupCenterDetails = () => {
   const [searchParams] = useSearchParams();
   const { centreId } = useParams();
   const [userProfileDetails] = useContext(UserProfileContext);
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const isEdit = searchParams.get("mode") === "edit";
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const isEdit = currentGlobalSession?.is_editable;
   const roundId = searchParams.get(ROUND_ID);
   const {
     data: centreDetailData,
