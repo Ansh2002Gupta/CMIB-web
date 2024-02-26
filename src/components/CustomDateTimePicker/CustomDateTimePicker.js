@@ -8,7 +8,8 @@ import { ThemeContext } from "core/providers/theme";
 
 import MarkRequired from "../MarkRequired";
 import { formatDate, formatTime } from "../../constant/utils";
-import styles from "./CustomDateTimePicker.module.scss";
+import classes from "./CustomDateTimePicker.module.scss";
+import { styles } from "./CustomDateTimePicker.styles";
 
 const CustomDateTimePicker = ({
   customContainerStyles,
@@ -18,6 +19,8 @@ const CustomDateTimePicker = ({
   dateFormat,
   defaultValue,
   disabled,
+  disabledDate,
+  disabledTime,
   errorMessage,
   errorTimeInput,
   format,
@@ -33,10 +36,10 @@ const CustomDateTimePicker = ({
 
   return (
     <TwoRow
-      className={[styles.container, customContainerStyles].join(" ")}
+      className={[classes.container, customContainerStyles].join(" ")}
       topSection={
         label && (
-          <div className={styles.inputLabelContainer}>
+          <div className={classes.inputLabelContainer}>
             <Typography className={customLabelStyles}>
               {label}
               {isRequired && <MarkRequired />}
@@ -56,6 +59,7 @@ const CustomDateTimePicker = ({
                     onChange,
                     placeholder,
                     disabled,
+                    disabledTime,
                   }}
                   className={[
                     styles.timeInput,
@@ -72,14 +76,21 @@ const CustomDateTimePicker = ({
               )
             ) : isEditable ? (
               <DatePicker
-                {...{ defaultValue, onChange, placeholder, disabled }}
+                {...{
+                  defaultValue,
+                  disabled,
+                  disabledDate,
+                  onChange,
+                  placeholder,
+                }}
                 format={dateFormat}
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("calendar")} />}
                 value={value ? dayjs(value) : null}
+                style={styles.inputStyle}
               />
             ) : (
-              <Typography className={styles.dateText}>
+              <Typography className={classes.dateText}>
                 {formatDate({ date: value })}
               </Typography>
             )
@@ -87,9 +98,9 @@ const CustomDateTimePicker = ({
           bottomSection={
             errorMessage && (
               <Typography
-                className={[styles.errorText, customErrorTextStyles].join(" ")}
+                className={[classes.errorText, customErrorTextStyles].join(" ")}
               >
-                {errorMessage}
+                {errorMessage ? ` * ${errorMessage}` : ""}
               </Typography>
             )
           }
@@ -127,6 +138,8 @@ CustomDateTimePicker.propTypes = {
   dateFormat: PropTypes.string,
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
+  disabledTime: PropTypes.func,
+  disabledDate: PropTypes.func,
   errorMessage: PropTypes.string,
   errorTimeInput: PropTypes.string,
   format: PropTypes.string,

@@ -11,6 +11,7 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   ADMIN_ROUTE,
@@ -20,6 +21,7 @@ import {
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
+  ROUND_ID,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
@@ -33,7 +35,11 @@ const SetupCenter = () => {
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams, setSearchParams] = useSearchParams();
-  const isEditable = true;
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const isEditable = currentGlobalSession?.is_editable;
 
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
@@ -41,6 +47,8 @@ const SetupCenter = () => {
   const [pageSize, setPageSize] = useState(
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
+
+  const roundId = searchParams.get(ROUND_ID);
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
@@ -54,7 +62,7 @@ const SetupCenter = () => {
       ADMIN_ROUTE +
       `/${selectedModule?.key}` +
       ROUNDS +
-      `/1` + // TODO: Need to udpate the id with round_id of session detail
+      `/${roundId}` +
       CENTRE_END_POINT,
     otherOptions: { skipApiCallOnMount: true },
   });
@@ -80,7 +88,9 @@ const SetupCenter = () => {
 
   const goToEditCentrePage = (rowData, isEdit) => {
     const centreId = rowData?.id;
-    navigate(`details/${centreId}?mode=${isEdit ? "edit" : "view"}`);
+    navigate(
+      `details/${centreId}?roundId=${roundId}&mode=${isEdit ? "edit" : "view"}`
+    );
   };
 
   const onChangePageSize = (size) => {
@@ -124,10 +134,12 @@ const SetupCenter = () => {
       title: intl.formatMessage({ id: "label.sNo" }),
       dataIndex: "id",
       key: "id",
-      renderText: {
-        visible: true,
-        includeDotAfterText: true,
-        textStyles: styles.textStyles,
+      render: (text, record, index) => {
+        const pageNumber = current || 1;
+        const serialNumber = (pageNumber - 1) * pageSize + (index + 1);
+        return {
+          children: <span>{`${serialNumber}.`}</span>,
+        };
       },
     }),
     renderColumn({
@@ -176,11 +188,25 @@ const SetupCenter = () => {
         </div>
       );
     }
-
     if (isGettingSetupCentres) {
       return (
         <div className={styles.loaderContainer}>
           <Spin size="large" />
+        </div>
+      );
+    }
+
+    if (setupCentres?.meta?.total === 0) {
+      return (
+        <div className={styles.errorContainer}>
+          <ErrorMessageBox
+            errorText={intl.formatMessage({
+              id: "label.select_centres_error_msg",
+            })}
+            errorHeading={intl.formatMessage({
+              id: "label.error",
+            })}
+          />
         </div>
       );
     }

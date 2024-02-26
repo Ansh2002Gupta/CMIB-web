@@ -5,6 +5,7 @@ import {
   DEFAULT_PAGE_SIZE,
   FORM_STATES,
   GENERIC_ERROR_MESSAGE,
+  PAGINATION_PROPERTIES,
   SORT_VALUES,
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
@@ -259,8 +260,6 @@ export const getMessageInfo = (chatData, userDetails) => {
   return "receiver";
 };
 
-let lastFlagDate = null;
-
 export const getDateStatus = (record) => {
   const createdAt = new Date(record);
 
@@ -273,22 +272,12 @@ export const getDateStatus = (record) => {
   const yesterdayDateString = yesterday.toDateString();
 
   if (createdAtDateString === todayDateString) {
-    if (lastFlagDate !== todayDateString) {
-      lastFlagDate = todayDateString;
-      return "Today";
-    }
+    return "Today";
   } else if (createdAtDateString === yesterdayDateString) {
-    if (lastFlagDate !== yesterdayDateString) {
-      lastFlagDate = yesterdayDateString;
-      return "Yesterday";
-    }
-  } else if (createdAtDateString < yesterdayDateString) {
-    if (lastFlagDate !== createdAtDateString) {
-      lastFlagDate = createdAtDateString;
-      return formatDate(createdAt);
-    }
+    return "Yesterday";
+  } else {
+    return formatDate(createdAt);
   }
-  return "";
 };
 
 export const getTime = (isoString) => {
@@ -332,6 +321,27 @@ export const getSortingDirection = (direction) => {
     return direction;
   }
   return "asc";
+};
+
+export const resetListingData = ({
+  currentPage,
+  fetchDataCallback,
+  listData,
+  setCurrent,
+  setSearchParams,
+}) => {
+  if (listData?.meta?.total) {
+    const totalRecords = listData?.meta?.total;
+    const numberOfPages = Math.ceil(totalRecords / listData?.meta?.perPage);
+    if (currentPage > numberOfPages) {
+      fetchDataCallback();
+      setSearchParams((prev) => {
+        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        return prev;
+      });
+      setCurrent(1);
+    }
+  }
 };
 
 export const isUserAdmin = (userDetails) => {

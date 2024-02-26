@@ -70,17 +70,19 @@ const CheckBoxList = ({
       <div className={styles.container}>
         {Object.entries(rolesData?.roles || {})?.map(([index, item]) => {
           return (
-            <CustomCheckBox
-              disabled={item.disabled}
-              key={item.id}
-              className={[styles.box].join(" ")}
-              onChange={() =>
-                handleSelect(selectedModules, setSelectedModules, item.id)
-              }
-              checked={selectedModules.includes(item.id)}
-            >
-              <Typography className={styles.text}>{item.name}</Typography>
-            </CustomCheckBox>
+            item.name !== "Super Admin" && (
+              <CustomCheckBox
+                disabled={item.disabled}
+                key={item.id}
+                className={[styles.box].join(" ")}
+                onChange={() =>
+                  handleSelect(selectedModules, setSelectedModules, item.id)
+                }
+                checked={selectedModules.includes(item.id)}
+              >
+                <Typography className={styles.text}>{item.name}</Typography>
+              </CustomCheckBox>
+            )
           );
         })}
       </div>
