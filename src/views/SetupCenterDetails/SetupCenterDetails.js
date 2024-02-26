@@ -61,7 +61,7 @@ const SetupCenterDetails = () => {
         <div className={styles.loaderContainer}>
           <ErrorMessageBox
             errorText={getErrorMessage(errorWhileGettingDetails)}
-            onRetry={() => getCentreDetail()}
+            onRetry={() => getCentreDetail({})}
             errorHeading={intl.formatMessage({ id: "label.errorOccured" })}
           />
         </div>
