@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
+import { Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -25,7 +26,6 @@ const TicketChatScreen = () => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [loadingMore, setLoadingMore] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(false);
-  const [ticketStatus, setTicketStatus] = useState(false);
   const [isDetailsScreen, setIsDetailScreen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -63,57 +63,28 @@ const TicketChatScreen = () => {
     closeTicket({
       ticketId: id,
       onSuccessCallback: () => {
-        fetchData({
-          page: 1,
-        });
+        fetchChatData(1);
         fetchTicketData({});
         setIsFirstPageReceived(false);
       },
     });
   };
 
-  const handleOnMarkTicketAsClosed = () => {
-    handleTicketClosed({
-      ticketId: id,
-      onSuccessCallback: () => {
-        fetchData({
-          queryParamsObject: {
-            page: 1,
-          },
-          onSuccessCallback: () => {
-            showNotification({
-              text: intl.formatMessage({
-                id: "label.ticketClosedSuccessfully",
-              }),
-              type: "success",
-            });
-          },
-          onErrorCallback: (errorString) => {
-            showNotification(errorString, "success");
-            showNotification({
-              text: errorString,
-              type: "error",
-            });
-          },
-        });
-      },
+  const fetchChatData = async (currentPage) => {
+    const requestedParams = {
+      page: currentPage,
+    };
+    const initialData = await fetchData({
+      queryParamsObject: requestedParams,
     });
+    if (initialData?.records.length) {
+      setCurrentRecords(initialData?.records);
+    }
+    setIsFirstPageReceived(true);
   };
 
   useEffect(() => {
-    const fetchChatData = async () => {
-      const requestedParams = {
-        page: currentPage,
-      };
-      const initialData = await fetchData({
-        queryParamsObject: requestedParams,
-      });
-      if (initialData && initialData?.records.length > 0) {
-        setCurrentRecords(initialData?.records);
-      }
-      setIsFirstPageReceived(true);
-    };
-    fetchChatData();
+    fetchChatData(currentPage);
   }, []);
 
   const handleSend = async (payload) => {
@@ -169,23 +140,30 @@ const TicketChatScreen = () => {
   const renderChatSection = () => {
     return (
       <>
-        <ChatSection
-          data={reversedData}
-          {...{
-            fetchData,
-            isError,
-            isLoading,
-            error,
-            id,
-            handleLoadMore,
-            isOnLastPage,
-            ticketDetails,
-            handleSend,
-            isSendingMessage,
-            loadingMore,
-            ticketStatus,
-          }}
-        />
+        {!!currentRecords?.length ? (
+          <ChatSection
+            data={reversedData}
+            {...{
+              fetchData,
+              isError,
+              isLoading,
+              error,
+              id,
+              handleLoadMore,
+              isOnLastPage,
+              ticketDetails,
+              handleSend,
+              isSendingMessage,
+              loadingMore,
+            }}
+          />
+        ) : (
+          <div className={styles.noChatDataStyle}>
+            <Typography className={styles.noChatDataTextStyle}>
+              {intl.formatMessage({ id: "label.no_prior_chats_found" })}
+            </Typography>
+          </div>
+        )}
       </>
     );
   };
@@ -202,24 +180,64 @@ const TicketChatScreen = () => {
     );
   };
 
+  const errorHandler = () => {
+    const errorMessageOne = error?.data?.message;
+    const errorMessageTwo = errorWhileFetchingTicketData?.data?.message;
+    if (errorMessageOne && errorMessageTwo) {
+      let errorMessage = "";
+      if (errorMessageOne === errorMessageTwo) {
+        errorMessage = errorMessageOne;
+      }
+      errorMessage = `${errorMessageOne}, ${errorMessageTwo}`;
+      return {
+        errorMessage,
+        onRetry: () => {
+          setIsFirstPageReceived(false);
+          fetchData({});
+          fetchTicketData({});
+        },
+      };
+    }
+    if (errorMessageOne) {
+      return {
+        errorMessage: errorMessageOne,
+        onRetry: () => {
+          setIsFirstPageReceived(false);
+          fetchData({});
+        },
+      };
+    }
+    if (errorMessageTwo) {
+      return {
+        errorMessage: errorMessageTwo,
+        onRetry: () => {
+          setIsFirstPageReceived(false);
+          fetchTicketData({});
+        },
+      };
+    }
+    return {
+      errorMessage: "",
+      onRetry: () => {},
+    };
+  };
+
   return (
     <>
-      {isError && isGetErrorWhileFetchingTicket && (
+      {!isFetchingTicketData && (isError || isGetErrorWhileFetchingTicket) && (
         <div className={styles.erroContainerBox}>
           <ErrorMessageBox
             errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
-            errorText={intl.formatMessage({
-              id: "label.generalGetApiFailedErrorMessage",
-            })}
-            onRetry={fetchData}
+            errorText={errorHandler()?.errorMessage}
+            onRetry={() => errorHandler()?.onRetry()}
           />
         </div>
       )}
-      {isFetchingTicketData && isLoading && !isFirstPageReceived ? (
+      {(isFetchingTicketData || isLoading) && !isFirstPageReceived ? (
         <CustomLoader />
       ) : (
         <>
-          {!!currentRecords?.length && (
+          {!isError && !isGetErrorWhileFetchingTicket && (
             <TwoRow
               className={styles.mainContainer}
               isBottomFillSpace
@@ -230,8 +248,7 @@ const TicketChatScreen = () => {
                     ticketData={ticketDetails}
                     isError={isErrorCloseTicket}
                     isLoading={isLoadingCloseTicket}
-                    onLeftIconPress={handleOnMarkTicketAsClosed}
-                    ticketStatus={ticketStatus}
+                    onLeftIconPress={handleTicketClosed}
                     onClickIconMore={handlePopup}
                     isDetailsScreen={isDetailsScreen}
                     onIconBackPress={() => {
