@@ -498,6 +498,7 @@ const locale = {
   "label.addSessionSuccessfully": "Session has been created successfully",
   "label.updateSessionSuccessfully": "Session has been updated successfully",
   "label.company_name": "Company Name",
+  "label.no_prior_chats_found": "No prior chats found",
 };
 
 export default locale;
