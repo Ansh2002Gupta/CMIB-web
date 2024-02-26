@@ -28,6 +28,7 @@ import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 
 const SetupCenter = () => {
   const intl = useIntl();
@@ -67,17 +68,18 @@ const SetupCenter = () => {
     otherOptions: { skipApiCallOnMount: true },
   });
 
-  useEffect(() => {
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
-      return prev;
-    });
-
-    const requestedParams = getRequestedQueryParams({});
-
-    getSetupCentres({ queryParamsObject: requestedParams });
-  }, []);
+  useModuleWiseApiCall({
+    setSearchParams,
+    paginationParams: {
+      current,
+      pageSize,
+    },
+    triggerPaginationUpdate: true,
+    initialApiCall: () => {
+      const requestedParams = getRequestedQueryParams({});
+      getSetupCentres({ queryParamsObject: requestedParams });
+    },
+  });
 
   const getRequestedQueryParams = ({ page, rowPerPage }) => {
     return {
