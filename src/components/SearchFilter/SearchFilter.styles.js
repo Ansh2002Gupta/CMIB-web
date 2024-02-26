@@ -5,6 +5,8 @@ export const classes = {
     padding: "0px",
     borderTop: variables.borderLight,
     borderBottom: variables.borderLight,
+    flex: 1,
+    display: "flex",
   },
   filterHeaderText: {
     fontSize: variables.fontSizeNormal,
