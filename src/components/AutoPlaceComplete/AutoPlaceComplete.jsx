@@ -68,6 +68,7 @@ const AutoPlaceComplete = ({defaultValue, onSelectLocation}) => {
         options={suggestedLocations}
         onChange={(data) => {
           setSearchedLocation(data);
+          onSelectLocation(data);
         }}
         style={styles.inputStyle}
         onSelect={setLatLngFromAddress}
