@@ -108,12 +108,6 @@ CustomDateTimePicker.defaultProps = {
   dateFormat: "DD/MM/YYYY",
   defaultValue: null,
   disabled: false,
-  disabledTime: () => {
-    return {
-      disabledHours: () => {},
-      disabledMinutes: () => {},
-    };
-  },
   errorMessage: "",
   errorTimeInput: "",
   format: "h:mm a",
