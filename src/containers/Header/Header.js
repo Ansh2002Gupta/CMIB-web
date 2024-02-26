@@ -20,7 +20,7 @@ function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
       <TwoColumn
         className={styles.headerContainer}
         leftSection={
-          !responsive.isMd ? (
+          !responsive.isLg ? (
             <Button
               icon={<MenuIcon />}
               type="text"
@@ -32,7 +32,7 @@ function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
         }
         rightSection={
           <Space size="large">
-            {/* {responsive.isMd && <Sessions />} */}
+            {responsive.isLg && <Sessions />}
             <Badge dot offset={[-6, 4]}>
               <BellOutlined className={styles.notificationIcon} />
             </Badge>

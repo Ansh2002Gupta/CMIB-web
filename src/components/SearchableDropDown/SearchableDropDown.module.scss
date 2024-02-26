@@ -1,0 +1,75 @@
+.multilpleInput {
+  min-height: var(--height_44);
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+}
+
+.redText {
+  color: var(--error);
+}
+.grayText {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.centreContainer {
+  overflow: unset;
+  gap: var(--gapXXSmall);
+}
+
+.selectedItemsContainer {
+  padding-top: var(--paddingXXSmall);
+  gap: var(--paddingXXSmall);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.chipContainer {
+  display: flex;
+  align-items: center;
+  background-color: var(--lightBlueBg);
+  border-radius: var(--gapSmall);
+  padding: var(--gapXXSmall) var(--gapSmallMedium);
+}
+
+.chipText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+  margin-right: var(--gapXXSmall);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.crossIcon {
+  width: var(--xSmallWidth);
+  height: var(--xSmallWidth);
+  cursor: pointer;
+  vertical-align:unset !important;
+}
+
+.selectCentreStyles {
+  flex: 1;
+}
+
+.dropDownItem {
+  display: flex;
+  gap: var(--gapSmallMedium, 12px);
+}
+
+.separator {
+    height: 2px;
+    width: 100%;
+    background-color: black;
+}
+
+.errorText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--error);
+}

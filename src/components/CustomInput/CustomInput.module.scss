@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: unset;
+  align-content: flex-start;
 }
 
 .inputLabelContainer {
@@ -13,8 +14,8 @@
 .errorText {
   color: var(--error);
   font-weight: var(--fontWeightMedium);
-  font-size: var(--fontSizeSmall);
-  margin-top: var(--marginSmall);
+  font-size: var(--fontSizeExtraSmall);
+  margin-top: var(--marginXXSmall);
   opacity: 0;
 }
 
@@ -31,6 +32,7 @@
 }
 
 .inputField {
+  min-height: var(--height_44);
   min-width: 100%;
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
@@ -64,6 +66,7 @@
 }
 
 .inputNumberStyles {
+  min-height: var(--height_44);
   min-width: 100%;
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
@@ -72,4 +75,8 @@
   &::placeholder {
     color: var(--inputPlaceHolder) !important;
   }
+}
+
+.errorInput {
+  border: var(--borderError) !important;
 }

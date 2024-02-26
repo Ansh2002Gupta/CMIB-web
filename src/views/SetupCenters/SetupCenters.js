@@ -1,20 +1,30 @@
-import React, { useContext, useState, useLayoutEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import { useSearchParams } from "react-router-dom";
 import { ThemeContext } from "core/providers/theme";
-import { Typography } from "antd";
+import { Spin, Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
+
 import DataTable from "../../components/DataTable";
-import { CONFIGURE_CENTRES } from "../../dummyData";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
+import useFetch from "../../core/hooks/useFetch";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import {
+  ADMIN_ROUTE,
+  CENTRE_END_POINT,
+  ROUNDS,
+} from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
+  ROUND_ID,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
@@ -25,9 +35,12 @@ const SetupCenter = () => {
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams, setSearchParams] = useSearchParams();
-  const isEditable = true;
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const isEditable = currentGlobalSession?.is_editable;
 
-  const [currentTableData, setCurrentTableData] = useState(CONFIGURE_CENTRES);
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
@@ -35,21 +48,52 @@ const SetupCenter = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
 
-  const goToEditCentrePage = (rowData, isEdit) => {
-    const centreId = rowData?.centreId;
-    navigate(`details/${centreId}?mode=${isEdit ? "edit" : "view"}`);
+  const roundId = searchParams.get(ROUND_ID);
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
+
+  const {
+    data: setupCentres,
+    error: errorWhileGettingCentres,
+    fetchData: getSetupCentres,
+    isLoading: isGettingSetupCentres,
+  } = useFetch({
+    url:
+      ADMIN_ROUTE +
+      `/${selectedModule?.key}` +
+      ROUNDS +
+      `/${roundId}` +
+      CENTRE_END_POINT,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+
+  useEffect(() => {
+    setSearchParams((prev) => {
+      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
+      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
+      return prev;
+    });
+
+    const requestedParams = getRequestedQueryParams({});
+
+    getSetupCentres({ queryParamsObject: requestedParams });
+  }, []);
+
+  const getRequestedQueryParams = ({ page, rowPerPage }) => {
+    return {
+      perPage: rowPerPage || pageSize,
+      page: page || current,
+    };
   };
 
-  // TODO: below code inside useEffect is only for dummy data, will remove it once API is integrated
-  const updateTableData = (currentPageNumber, currentPageSize) => {
-    const startIndex = (currentPageNumber - 1) * currentPageSize;
-    const endIndex = currentPageNumber * currentPageSize;
-    const updatedData = CONFIGURE_CENTRES.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
+  const goToEditCentrePage = (rowData, isEdit) => {
+    const centreId = rowData?.id;
+    navigate(
+      `details/${centreId}?roundId=${roundId}&mode=${isEdit ? "edit" : "view"}`
+    );
   };
 
   const onChangePageSize = (size) => {
-    //NOTE: if you want to do anything on changing of page size please consider doing it here
     setPageSize(Number(size));
     setCurrent(1);
     setSearchParams((prev) => {
@@ -57,47 +101,64 @@ const SetupCenter = () => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
       return prev;
     });
-    updateTableData(1, size);
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: size,
+      page: 1,
+    });
+    getSetupCentres({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
-    //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
     setSearchParams((prev) => {
       prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
       return prev;
     });
-    updateTableData(newPageNumber, pageSize);
+    const requestedParams = getRequestedQueryParams({
+      page: newPageNumber,
+    });
+    getSetupCentres({ queryParamsObject: requestedParams });
+  };
+
+  const handleOnReTry = () => {
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: DEFAULT_PAGE_SIZE,
+      page: 1,
+    });
+
+    getSetupCentres({ queryParamsObject: requestedParams });
   };
 
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.sNo" }),
-      dataIndex: "sNo",
-      key: "sNo",
-      renderText: {
-        visible: true,
-        includeDotAfterText: true,
-        textStyles: styles.textStyles,
+      dataIndex: "id",
+      key: "id",
+      render: (text, record, index) => {
+        const pageNumber = current || 1;
+        const serialNumber = (pageNumber - 1) * pageSize + (index + 1);
+        return {
+          children: <span>{`${serialNumber}.`}</span>,
+        };
       },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreName" }),
-      dataIndex: "centreName",
-      key: "centreName",
-      renderText: { isTextBold: true, visible: true },
+      dataIndex: "name",
+      key: "name",
+      renderText: { isTextBold: true, visible: true, isCapitalize: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreId" }),
-      dataIndex: "centreId",
-      key: "centreId",
+      dataIndex: "centre_code",
+      key: "centre_code",
       renderText: { visible: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.bigSmallCentre" }),
-      dataIndex: "bigSmallCentre",
-      key: "bigSmallCentre",
-      renderText: { visible: true },
+      dataIndex: "centre_size",
+      key: "centre_size",
+      renderText: { visible: true, isIntl: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.actions" }),
@@ -112,6 +173,57 @@ const SetupCenter = () => {
       },
     }),
   ];
+
+  const renderContent = () => {
+    if (!isGettingSetupCentres && errorWhileGettingCentres) {
+      return (
+        <div className={styles.errorContainer}>
+          <ErrorMessageBox
+            onRetry={handleOnReTry}
+            errorText={errorWhileGettingCentres?.data?.message}
+            errorHeading={intl.formatMessage({
+              id: "label.error",
+            })}
+          />
+        </div>
+      );
+    }
+    if (isGettingSetupCentres) {
+      return (
+        <div className={styles.loaderContainer}>
+          <Spin size="large" />
+        </div>
+      );
+    }
+
+    if (setupCentres?.meta?.total === 0) {
+      return (
+        <div className={styles.errorContainer}>
+          <ErrorMessageBox
+            errorText={intl.formatMessage({
+              id: "label.select_centres_error_msg",
+            })}
+            errorHeading={intl.formatMessage({
+              id: "label.error",
+            })}
+          />
+        </div>
+      );
+    }
+
+    return (
+      <DataTable
+        columns={columns}
+        current={current}
+        pageSize={pageSize}
+        onChangePageSize={onChangePageSize}
+        onChangeCurrentPage={onChangeCurrentPage}
+        currentDataLength={setupCentres?.meta?.total}
+        customContainerStyles={styles.tableContainer}
+        originalData={setupCentres?.records || []}
+      />
+    );
+  };
 
   useLayoutEffect(() => {
     const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
@@ -154,20 +266,7 @@ const SetupCenter = () => {
           }
         />
       }
-      bottomSection={
-        <DataTable
-          {...{
-            columns,
-            current,
-            pageSize,
-            onChangePageSize,
-            onChangeCurrentPage,
-          }}
-          currentDataLength={CONFIGURE_CENTRES.length}
-          customContainerStyles={styles.tableContainer}
-          originalData={currentTableData}
-        />
-      }
+      bottomSection={renderContent()}
       bottomSectionStyle={classes.bottomSectionStyle}
       isBottomFillSpace
     />

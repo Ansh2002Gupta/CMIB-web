@@ -7,6 +7,7 @@ import Base from "../../core/layouts/Base/Base";
 
 import MarkRequired from "../MarkRequired";
 import styles from "./CustomInput.module.scss";
+import { classes } from "./CustomInput.styles";
 
 const CustomInput = React.forwardRef(
   (
@@ -20,6 +21,7 @@ const CustomInput = React.forwardRef(
       defaultSelectValueArray,
       defaultSelectValueString,
       disabled,
+      errorInput,
       errorMessage,
       isError,
       isMultiSelect,
@@ -30,6 +32,7 @@ const CustomInput = React.forwardRef(
       isSelectBoxDisable,
       label,
       max,
+      maxLength,
       messageStyles: customMessageStyles,
       messageToShow,
       min,
@@ -102,13 +105,19 @@ const CustomInput = React.forwardRef(
           )}
           {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
             <Input
-              ref={isSuffixRequiredForPassword ? inputFieldRef : null}
+              ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
               type={type || "text"}
-              className={[styles.inputField, customInputStyles].join(" ")}
+              style={classes.inputStyle}
+              className={[
+                styles.inputField,
+                customInputStyles,
+                isError && errorMessage ? styles.errorInput : "",
+              ].join(" ")}
               {...{
                 value,
                 placeholder,
                 disabled,
+                maxLength,
                 onChange,
                 onBlur,
               }}
@@ -136,11 +145,13 @@ const CustomInput = React.forwardRef(
                       </span>
                     ))}
                   {SuffixIcon && (
-                    <SuffixIcon
-                      onClick={() => {
-                        onSuffixElementClick && onSuffixElementClick();
-                      }}
-                    />
+                    <span className={styles.suffixElement}>
+                      <SuffixIcon
+                        onClick={() => {
+                          onSuffixElementClick && onSuffixElementClick();
+                        }}
+                      />
+                    </span>
                   )}
                 </>
               }
@@ -150,7 +161,11 @@ const CustomInput = React.forwardRef(
             <InputNumber
               type="number"
               controls={false}
-              className={[styles.inputNumberStyles, customInputNumberStyles]}
+              className={[
+                styles.inputNumberStyles,
+                customInputNumberStyles,
+                isError && errorMessage ? errorInput : "",
+              ].join(" ")}
               {...{
                 value,
                 placeholder,
@@ -162,17 +177,20 @@ const CustomInput = React.forwardRef(
             />
           )}
         </div>
-        <div>
-          <Typography
-            className={[
-              styles.errorText,
-              customErrorTextStyles,
-              isError ? styles.showError : "",
-            ].join(" ")}
-          >
-            {errorMessage ? ` * ${errorMessage}` : ""}
-          </Typography>
-        </div>
+        {errorMessage && (
+          <div>
+            <Typography
+              className={[
+                styles.errorText,
+                customErrorTextStyles,
+                isError ? styles.showError : "",
+              ].join(" ")}
+            >
+              {errorMessage ? ` * ${errorMessage}` : ""}
+            </Typography>
+          </div>
+        )}
+
         {!!messageToShow && (
           <div>
             <Typography
@@ -197,6 +215,7 @@ CustomInput.defaultProps = {
   defaultSelectValueArray: [],
   defaultSelectValueString: "",
   disabled: false,
+  errorInput: "",
   errorMessage: "",
   isError: false,
   isMultiSelect: false,
@@ -206,7 +225,7 @@ CustomInput.defaultProps = {
   isTextVisible: true,
   isSelectBoxDisable: false,
   label: "",
-  max: 10,
+  maxLength: 100,
   messageStyles: "",
   messageToShow: "",
   min: 0,
@@ -216,6 +235,7 @@ CustomInput.defaultProps = {
   onSuffixElementClick: () => {},
   placeholder: "",
   prefixElement: null,
+  ref: null,
   selectOptions: [],
   SuffixIcon: null,
   type: "",
@@ -232,6 +252,7 @@ CustomInput.propTypes = {
   defaultSelectValueArray: PropTypes.array,
   defaultSelectValueString: PropTypes.string,
   disabled: PropTypes.bool,
+  errorInput: PropTypes.string,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
   isMultiSelect: PropTypes.bool,
@@ -242,6 +263,7 @@ CustomInput.propTypes = {
   isSelectBoxDisable: PropTypes.bool,
   label: PropTypes.string,
   max: PropTypes.number,
+  maxLength: PropTypes.number,
   messageStyles: PropTypes.string,
   messageToShow: PropTypes.string,
   min: PropTypes.number,
@@ -251,10 +273,11 @@ CustomInput.propTypes = {
   onSuffixElementClick: PropTypes.func,
   placeholder: PropTypes.string,
   prefixElement: PropTypes.node,
+  ref: PropTypes.func,
   selectOptions: PropTypes.array,
   SuffixIcon: PropTypes.node,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CustomInput;

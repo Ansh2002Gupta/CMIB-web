@@ -1,0 +1,46 @@
+.mainContainer {
+  background-color: var(--bodyBg);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: var(--borderLight);
+  border-left: 0px;
+  border-right: 0px;
+}
+
+.box {
+  gap: var(--gapSmall);
+  align-items: center;
+}
+
+.btn {
+  min-height: var(--height_44);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+  min-width:44px
+}
+
+.loaderStyle{
+  padding: var(--paddingExtraSmall);
+  min-height: var(--height_44);
+}
+
+.adminId {
+  font-size: var(--fontSizeXXlarge);
+  font-weight: var(--fontWeightBold);
+}
+
+.iconMoreBtn{
+  background-color: var(--bodyBg) !important;
+  border: none;
+    &:hover{
+      background-color: var(--bodyBg) !important;
+    }
+}
+
+.closedBtnContainer{
+  display: flex;
+  align-items: center;
+}

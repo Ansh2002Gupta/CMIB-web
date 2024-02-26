@@ -5,6 +5,8 @@ import {
   SESSION,
   USERS,
   SUBSCRIPTIONS,
+  QUERIES,
+  TICKETS,
 } from "../../routes/routeNames";
 import { MODULE_KEYS, MENU_KEYS } from "../../constant/constant";
 import { ReactComponent as Activity } from "../../themes/base/assets/icons/activity.svg";
@@ -99,16 +101,16 @@ const caJobsMenu = [
   },
 ];
 
-const controlMenu = [
+export const controlMenu = [
   {
     label: MENU_KEYS.TICKET_MANAGEMENT,
-    key: "/ticket-management",
+    key: TICKETS,
     icon: <Ticket />,
     selectedicon: <SelectedTicket />,
   },
   {
     label: MENU_KEYS.QUERY_MANAGEMENT,
-    key: "/query-management",
+    key: QUERIES,
     icon: <SMS />,
     selectedicon: <SelectedSMS />,
   },
@@ -153,18 +155,6 @@ const controlMenu = [
     key: "/email-management",
     icon: <EmailAlias />,
     selectedicon: <SelectedEmailAlias />,
-  },
-  {
-    label: MENU_KEYS.CONTACT_US,
-    key: "/contact-us",
-    icon: <Message />,
-    selectedicon: <SelectedMessage />,
-  },
-  {
-    label: MENU_KEYS.SESSIONS,
-    key: SESSION,
-    icon: <Session />,
-    selectedicon: <SelectedSession />,
   },
 ];
 
@@ -310,7 +300,7 @@ const experiencedMembersMenu = [
   },
 ];
 
-const modules = [
+export const modules = [
   {
     id: 1,
     label: "CA Jobs",

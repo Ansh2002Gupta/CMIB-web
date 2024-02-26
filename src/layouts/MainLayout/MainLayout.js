@@ -11,7 +11,7 @@ function MainLayout({ className, style, header, menu, content }) {
   const responsive = useResponsive();
   return (
     // applies to sm screen and above
-    responsive.isMd ? (
+    responsive.isLg ? (
       <TwoColumn
         className={`${styles.mainLayout} ${className}`}
         style={style}

@@ -14,11 +14,7 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
 import { getCurrentFormState } from "../../constant/utils";
-import {
-  CONTROL_MODULE_ID,
-  FORM_STATES,
-  NOTIFICATION_TYPES,
-} from "../../constant/constant";
+import { FORM_STATES, NOTIFICATION_TYPES } from "../../constant/constant";
 import {
   ADMIN_ROUTE,
   CORE_COUNTRIES,

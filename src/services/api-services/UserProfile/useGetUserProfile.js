@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 
 import Http from "../../http-service";
 import useHeader from "../../../core/hooks/useHeader";
+import useGlobalSessionListApi from "../GlobalSessionList/useGlobalSessionListApi";
 import { filterMenuData } from "../../../constant/utils";
 import {
   setErrorGetingUserDetails,
@@ -12,27 +13,33 @@ import {
   setSelectedModule,
 } from "../../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
+import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import modules from "../../../containers/SideMenu/sideMenuItems";
+import { DASHBOARD } from "../../../routes/routeNames";
 import { GET_USER_PROFILE_DETAILS } from "../../../constant/apiEndpoints";
 import { STATUS_CODES } from "../../../constant/constant";
 
 const useGetUserDetails = () => {
   const intl = useIntl();
   const location = useLocation();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const { onLogout } = useHeader();
   const [, userProfileDispatch] = useContext(UserProfileContext);
   const pathSegments = location.pathname.split("/");
+  const { getGlobalSessionList } = useGlobalSessionListApi();
 
   const setFirstActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
-
     userProfileDispatch(setSelectedModule(accessibleModules[0]));
+    navigate(`/${accessibleModules[0]?.key}/${DASHBOARD}`);
   };
+
   const setDefaultActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
     const selectedModule = accessibleModules.filter((item) => {
       return item.key === pathSegments[1];
     });
+    getGlobalSessionList(selectedModule?.[0]?.key);
     if (selectedModule?.length) {
       userProfileDispatch(setSelectedModule(selectedModule[0]));
       return;

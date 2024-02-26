@@ -5,6 +5,7 @@
 .sessionDetails {
   background-color: var(--bodyBg);
   padding: var(--fontSizeXlargeMedium);
+  margin: var(--marginLarge);
   border-radius: var(--lineHeightExtraSmall);
   border: var(--borderLight);
   gap: var(--gapMedium);
@@ -23,7 +24,7 @@
 
 .grayText {
   font-family: var(--fontFamilyRegular);
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
 }
@@ -45,15 +46,21 @@
 }
 
 .crossIcon {
+  display: flex;
   width: var(--xSmallWidth);
   height: var(--xSmallWidth);
   cursor: pointer;
 }
 
 .editContainer {
-  align-items: center;
   gap: var(--gapXSmall);
   cursor: pointer;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.button {
+  border-radius: 8px;
 }
 
 .gridContainer {
@@ -71,6 +78,10 @@
 }
 
 .gridItem {
+  padding-bottom: var(--paddingMedium);
+  gap: var(--gapXSmall);
+}
+.editGridItem {
   padding-bottom: var(--paddingMedium);
   gap: var(--gapXXSmall);
 }
@@ -102,11 +113,12 @@
   border: var(--borderLight);
   background-color: var(--bodyBg);
   &::placeholder {
-    color: red !important;
+    color: var(--textBold) !important;
   }
 }
 
 .dateInput {
+  min-height: var(--height_44);
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
@@ -122,6 +134,7 @@
 }
 
 .multilpleInput {
+  min-height: var(--height_44);
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
@@ -181,6 +194,11 @@
 }
 
 .examinationFieldContainer {
+  gap: var(--gapXSmall);
+  display: flex;
+  flex-wrap: wrap;
+}
+.editExaminationFieldContainer {
   padding-top: var(--paddingXXSmall);
   gap: var(--paddingXXSmall);
   display: flex;
@@ -192,7 +210,6 @@
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
   margin-right: var(--gapXSmall);
-  margin-top: var(--gapXXSmall);
 }
 
 .chipContainer {
@@ -201,6 +218,7 @@
   background-color: var(--lightBlueBg);
   border-radius: var(--gapSmall);
   padding: var(--gapXXSmall) var(--gapSmallMedium);
+  margin-top: var(--gapXXSmall);
 }
 
 .formInputStyles {
@@ -222,10 +240,14 @@
   border: var(--borderLight);
   justify-content: center;
   align-items: center;
+  flex: 1;
+  margin: var(--marginLarge);
 }
 
 .noSessionText {
-  font-size: var(--fontSizeXlargeMedium);
+  font-size: var(--fontSizeLarge);
   font-weight: var(--fontWeightBold);
   color: var(--textBold);
+  align-self: center;
+  text-align: center;
 }

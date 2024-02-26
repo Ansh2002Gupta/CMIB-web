@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { capitalize } from "lodash";
 import { Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
 import styles from "./CenterDetailsHeader.module.scss";
 
-const CenterDetailsHeader = ({ centreId }) => {
+const CenterDetailsHeader = ({ centreCode, centreName }) => {
   const intl = useIntl();
-  const header = "Centre Setup for AHMEDABAD - I";
+  const header = `Centre Setup for ${capitalize(centreName)}`;
 
   return (
     <TwoRow
@@ -18,9 +19,9 @@ const CenterDetailsHeader = ({ centreId }) => {
       bottomSection={
         <Typography className={styles.title}>
           {intl.formatMessage({
-            id: "label.centreCode",
+            id: "label.centreCodeColon",
           })}
-          <span className={styles.blackTitle}>{centreId}</span>
+          <span className={styles.blackTitle}>{centreCode}</span>
         </Typography>
       }
     />
@@ -28,11 +29,13 @@ const CenterDetailsHeader = ({ centreId }) => {
 };
 
 CenterDetailsHeader.defaultProps = {
-  centreId: "",
+  centreCode: "",
+  centreName: "",
 };
 
 CenterDetailsHeader.propTypes = {
-  centreId: PropTypes.string,
+  centreCode: PropTypes.string,
+  centreName: PropTypes.string,
 };
 
 export default CenterDetailsHeader;

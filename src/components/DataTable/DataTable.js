@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Image, Pagination, Select, Table, Typography } from "antd";
@@ -14,10 +14,14 @@ import styles from "./DataTable.module.scss";
 import "./overrides.css";
 
 const DataTable = ({
+  arrayContainingSelectedRow,
   columns,
   current,
   currentDataLength,
   customContainerStyles,
+  customTableClassName,
+  hidePagination,
+  keytoFindSelectedRow,
   onChangeCurrentPage,
   onChangePageSize,
   originalData,
@@ -25,6 +29,13 @@ const DataTable = ({
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
+
+  const setRowClassName = (record, index) => {
+    if (arrayContainingSelectedRow.includes(record?.[keytoFindSelectedRow])) {
+      return [styles.rowBG, styles.rowtext].join(" ");
+    }
+    return styles.rowtext;
+  };
 
   const rightPaginationConfig = {
     current,
@@ -40,65 +51,73 @@ const DataTable = ({
     <div className={[styles.container, customContainerStyles].join(" ")}>
       <Table
         columns={columns}
+        className={customTableClassName}
         dataSource={originalData}
         pagination={false}
-        rowClassName={styles.rowtext}
-        scroll={responsiveStyle}
-        className={styles.table}
+        rowClassName={setRowClassName}
         rowKey="id"
+        scroll={responsiveStyle}
       />
-      <div className={styles.rowPerPageOptionsAndPaginationContainer}>
-        <div className={styles.rowPerPageContainer}>
-          <Typography className={styles.rowPerPageText}>
-            {intl.formatMessage({ id: "label.rowPerPage" })}
-          </Typography>
-          <Select
-            defaultValue={pageSize}
-            className={styles.rowPerPageCount}
-            onChange={onChangePageSize}
-            options={ROW_PER_PAGE_OPTIONS}
-            suffixIcon={
-              <Image src={getImage("blackArrowDown")} preview={false} />
-            }
+      {!hidePagination && (
+        <div className={styles.rowPerPageOptionsAndPaginationContainer}>
+          <div className={styles.rowPerPageContainer}>
+            <Typography className={styles.rowPerPageText}>
+              {intl.formatMessage({ id: "label.rowPerPage" })}
+            </Typography>
+            <Select
+              defaultValue={pageSize}
+              className={styles.rowPerPageCount}
+              onChange={onChangePageSize}
+              options={ROW_PER_PAGE_OPTIONS}
+              suffixIcon={
+                <Image src={getImage("blackArrowDown")} preview={false} />
+              }
+            />
+          </div>
+          <Pagination
+            disabled={originalData.length <= 0}
+            {...rightPaginationConfig}
+            className={[styles.paginationContainer].join(" ")}
+            itemRender={(current, type, originalElement) => (
+              <PaginationItems
+                {...{ current, type, originalElement }}
+                disabled={originalData.length <= 0}
+              />
+            )}
+            showLessItems
           />
         </div>
-        <Pagination
-          disabled={originalData.length <= 0}
-          {...rightPaginationConfig}
-          className={styles.paginationContainer}
-          itemRender={(current, type, originalElement) => (
-            <PaginationItems
-              {...{ current, type, originalElement }}
-              disabled={originalData.length <= 0}
-            />
-          )}
-          showLessItems
-        />
-      </div>
+      )}
     </div>
   );
 };
 
 DataTable.defaultProps = {
+  arrayContainingSelectedRow: [],
   columns: [],
   current: 1,
   currentDataLength: 0,
   customContainerStyles: "",
+  hidePagination: false,
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
   originalData: [],
   pageSize: DEFAULT_PAGE_SIZE,
+  keytoFindSelectedRow: "id",
 };
 
 DataTable.propTypes = {
+  arrayContainingSelectedRow: PropTypes.array,
   columns: PropTypes.array,
   current: PropTypes.number,
   currentDataLength: PropTypes.number,
   customContainerStyles: PropTypes.string,
+  hidePagination: PropTypes.bool,
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
   originalData: PropTypes.array,
   pageSize: PropTypes.number,
+  keytoFindSelectedRow: PropTypes.string,
 };
 
 export default DataTable;

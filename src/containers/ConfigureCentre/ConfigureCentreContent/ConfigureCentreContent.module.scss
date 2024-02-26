@@ -34,7 +34,7 @@ input::placeholder {
 
 .searchBarContainer {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   gap: var(--gapSmall);
   position: relative;
 }
@@ -49,6 +49,12 @@ input::placeholder {
 
 .columnHeading {
   color: var(--subHeadingColor) !important;
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightBold);
+  min-width: 150px;
+}
+
+.sortColumn {
   display: flex;
   gap: var(--gapXSmall);
   cursor: pointer;
@@ -56,10 +62,12 @@ input::placeholder {
 
 .upside {
   transform: rotate(180deg);
+  display: flex;
 }
 
 .downside {
   transform: rotate(0deg);
+  display: flex;
 }
 
 .tableCell {

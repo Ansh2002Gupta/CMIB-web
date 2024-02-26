@@ -11,6 +11,10 @@
   width: 100%;
 }
 
+.noCursor {
+  cursor: not-allowed;
+}
+
 /* Removes default focus */
 .range:focus {
   outline: none;

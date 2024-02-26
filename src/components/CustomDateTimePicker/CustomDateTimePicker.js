@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { DatePicker, Image, TimePicker, Typography } from "antd";
 
@@ -7,7 +8,8 @@ import { ThemeContext } from "core/providers/theme";
 
 import MarkRequired from "../MarkRequired";
 import { formatDate } from "../../constant/utils";
-import styles from "./CustomDateTimePicker.module.scss";
+import classes from "./CustomDateTimePicker.module.scss";
+import { styles } from "./CustomDateTimePicker.styles";
 
 const CustomDateTimePicker = ({
   customContainerStyles,
@@ -17,7 +19,10 @@ const CustomDateTimePicker = ({
   dateFormat,
   defaultValue,
   disabled,
+  disabledDate,
+  disabledTime,
   errorMessage,
+  errorTimeInput,
   format,
   isEditable,
   isRequired,
@@ -31,10 +36,10 @@ const CustomDateTimePicker = ({
 
   return (
     <TwoRow
-      className={[styles.container, customContainerStyles].join(" ")}
+      className={[classes.container, customContainerStyles].join(" ")}
       topSection={
         label && (
-          <div className={styles.inputLabelContainer}>
+          <div className={classes.inputLabelContainer}>
             <Typography className={customLabelStyles}>
               {label}
               {isRequired && <MarkRequired />}
@@ -53,19 +58,29 @@ const CustomDateTimePicker = ({
                   onChange,
                   placeholder,
                   disabled,
-                  value,
+                  disabledTime,
                 }}
-                className={[styles.timeInput, customTimeStyle]}
+                className={[styles.timeInput, customTimeStyle, errorTimeInput]}
+                suffixIcon={<Image src={getImage("clock")} />}
+                value={value ? dayjs(value) : null}
               />
             ) : isEditable ? (
               <DatePicker
-                {...{ defaultValue, onChange, placeholder, disabled, value }}
+                {...{
+                  defaultValue,
+                  disabled,
+                  disabledDate,
+                  onChange,
+                  placeholder,
+                }}
                 format={dateFormat}
-                className={[styles.timeInput, customTimeStyle]}
+                className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("calendar")} />}
+                value={value ? dayjs(value) : null}
+                style={styles.inputStyle}
               />
             ) : (
-              <Typography className={styles.dateText}>
+              <Typography className={classes.dateText}>
                 {formatDate({ date: value })}
               </Typography>
             )
@@ -73,9 +88,9 @@ const CustomDateTimePicker = ({
           bottomSection={
             errorMessage && (
               <Typography
-                className={[styles.errorText, customErrorTextStyles].join(" ")}
+                className={[classes.errorText, customErrorTextStyles].join(" ")}
               >
-                * {errorMessage}
+                {errorMessage ? ` * ${errorMessage}` : ""}
               </Typography>
             )
           }
@@ -94,6 +109,7 @@ CustomDateTimePicker.defaultProps = {
   defaultValue: null,
   disabled: false,
   errorMessage: "",
+  errorTimeInput: "",
   format: "h:mm a",
   isEditable: true,
   isRequired: false,
@@ -112,7 +128,10 @@ CustomDateTimePicker.propTypes = {
   dateFormat: PropTypes.string,
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
+  disabledTime: PropTypes.func,
+  disabledDate: PropTypes.func,
   errorMessage: PropTypes.string,
+  errorTimeInput: PropTypes.string,
   format: PropTypes.string,
   isEditable: PropTypes.bool,
   isRequired: PropTypes.bool,
@@ -120,7 +139,7 @@ CustomDateTimePicker.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default CustomDateTimePicker;
