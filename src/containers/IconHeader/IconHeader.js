@@ -21,7 +21,6 @@ const IconHeader = ({
   onClickIconMore,
   onIconBackPress,
   ticketData,
-  ticketStatus,
 }) => {
   const intl = useIntl();
   const readable_id = ticketData?.readable_id || "--";
@@ -79,7 +78,7 @@ const IconHeader = ({
                 tooltipText={intl.formatMessage({ id: "label.markClosed" })}
                 onClick={onLeftIconPress}
                 customStyle={styles.btn}
-                isBtnDisable={ticketStatus || status === "closed"}
+                isBtnDisable={status === "closed"}
               />
               {!responsive.isMd && (
                 <CustomButton

@@ -26,7 +26,6 @@ const TicketChatScreen = () => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [loadingMore, setLoadingMore] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(false);
-  const [ticketStatus, setTicketStatus] = useState(false);
   const [isDetailsScreen, setIsDetailScreen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -156,13 +155,13 @@ const TicketChatScreen = () => {
               handleSend,
               isSendingMessage,
               loadingMore,
-              ticketStatus,
             }}
           />
         ) : (
-          /* TODO: Please handle the no chats screen*/
-          <div>
-            <Typography>No prior chats found</Typography>
+          <div className={styles.noChatDataStyle}>
+            <Typography className={styles.noChatDataTextStyle}>
+              {intl.formatMessage({ id: "label.no_prior_chats_found" })}
+            </Typography>
           </div>
         )}
       </>
@@ -234,7 +233,7 @@ const TicketChatScreen = () => {
           />
         </div>
       )}
-      {isFetchingTicketData && isLoading && !isFirstPageReceived ? (
+      {(isFetchingTicketData || isLoading) && !isFirstPageReceived ? (
         <CustomLoader />
       ) : (
         <>
@@ -250,7 +249,6 @@ const TicketChatScreen = () => {
                     isError={isErrorCloseTicket}
                     isLoading={isLoadingCloseTicket}
                     onLeftIconPress={handleTicketClosed}
-                    ticketStatus={ticketStatus}
                     onClickIconMore={handlePopup}
                     isDetailsScreen={isDetailsScreen}
                     onIconBackPress={() => {
