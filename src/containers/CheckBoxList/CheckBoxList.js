@@ -6,7 +6,7 @@ import Typography from "antd/es/typography/Typography";
 import Base from "../../core/layouts/Base/Base";
 
 import CustomCheckBox from "../../components/CustomCheckBox";
-import { MODULE_KEYS } from "../../constant/constant";
+import { MODULE_KEYS, ROLES } from "../../constant/constant";
 import { PERMISION_AND_ROLE } from "../../dummyData";
 import styles from "./CheckBoxList.module.scss";
 
@@ -77,7 +77,7 @@ const CheckBoxList = ({
       <div className={styles.container}>
         {Object.entries(rolesData?.roles || {})?.map(([index, item]) => {
           return (
-            item.key !== MODULE_KEYS.SUPER_ADMIN && (
+            item.key !== ROLES.SUPER_ADMIN && (
               <CustomCheckBox
                 disabled={item.disabled}
                 key={item.id}
