@@ -60,6 +60,45 @@ const UserDetailsContent = ({
   const phoneRef = useRef();
   const nameRef = useRef();
 
+  const formatRoles = (roles, permissions) => {
+    let roleArray = Array.isArray(roles)
+      ? roles
+      : Object.values(roles).map((per) => per.id);
+    let pemissionArray = Array.isArray(permissions)
+      ? permissions
+      : Object.values(permissions).map((per) => per.id);
+    let superAdminKey;
+    for (const [key, value] of Object.entries(rolesData?.roles)) {
+      if (value.key === "super-admin") {
+        superAdminKey = key;
+        break;
+      }
+    }
+    const rolesExceptSuperAdmin = Object.fromEntries(
+      Object.entries(rolesData?.roles).filter(
+        ([key, value]) => value.key !== "super-admin"
+      )
+    );
+    let allRolesPresent = true;
+    let allPermissionPresent = true;
+    for (const key in rolesExceptSuperAdmin) {
+      if (!roleArray.includes(parseInt(key))) {
+        allRolesPresent = false;
+      }
+    }
+
+    for (const key in rolesData?.permissions) {
+      if (!pemissionArray.includes(parseInt(key))) {
+        allPermissionPresent = false;
+      }
+    }
+    if (allRolesPresent && allPermissionPresent) {
+      return [...roleArray, parseInt(superAdminKey)];
+    } else {
+      return roleArray;
+    }
+  };
+
   const checkForIncorrectFields = () => {
     setIsEmailValid(EMAIL_REGEX.test(userData?.email));
     setIsMobileNumberValid(MOBILE_NO_REGEX.test(`${userData?.mobile}`));
@@ -99,9 +138,7 @@ const UserDetailsContent = ({
         name: userData?.name,
         email: userData?.email,
         mobile_number: userData?.mobile,
-        roles: Array.isArray(userData.roles)
-          ? userData.roles
-          : Object.values(userData.roles).map((per) => per.id),
+        roles: formatRoles(userData.roles, userData.permissions),
         permissions: Array.isArray(userData.permissions)
           ? userData.permissions
           : Object.values(userData.permissions).map((per) => per.id),
@@ -140,9 +177,7 @@ const UserDetailsContent = ({
         mobile_number: userData.mobile,
         mobile_country_code: userData?.mobile_prefix,
         created_by: userProfileDetails?.userDetails?.id,
-        roles: Array.isArray(userData.roles)
-          ? userData.roles
-          : Object.values(userData.roles).map((per) => per.id),
+        roles: formatRoles(userData.roles, userData.permissions),
         permissions: Array.isArray(userData.permissions)
           ? userData.permissions
           : Object.values(userData.permissions).map((per) => per.id),
