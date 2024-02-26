@@ -61,7 +61,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
       );
       errorCount += 1;
     }
-    if (!addExperience?.work_experience_min) {
+    if (addExperience?.work_experience_min === null) {
       handleError(
         "work_experience_min",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
