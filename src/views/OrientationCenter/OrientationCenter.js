@@ -284,7 +284,8 @@ const OrientationCenter = () => {
           bottomSection={
             fetchCentersSuccessFlag &&
             !isUpdatingOrientationCentre &&
-            !!orientationCentres?.length && (
+            !!orientationCentres?.length &&
+            !!currentGlobalSession?.status && (
               <TwoColumn
                 className={styles.buttonContainer}
                 leftSection={
