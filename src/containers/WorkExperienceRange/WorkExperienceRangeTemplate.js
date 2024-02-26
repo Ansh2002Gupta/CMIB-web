@@ -45,10 +45,10 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
     }));
   };
 
-  const handleInputChangeExperience = (value, name, id) => {
+  const handleInputChangeExperience = (value, name, index) => {
     setExperience((prevData) =>
-      prevData.map((item) => {
-        if (item.id === id) {
+      prevData.map((item, i) => {
+        if (index === i) {
           return { ...item, [name]: value };
         }
         return item;
@@ -158,7 +158,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                               handleInputChangeExperience(
                                 val,
                                 "work_experience_min",
-                                item?.id
+                                index
                               );
                             }}
                             value={item?.work_experience_min}
@@ -190,7 +190,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                                 handleInputChangeExperience(
                                   val,
                                   "work_experience_max",
-                                  item.id
+                                  index
                                 );
                               }}
                               value={item?.work_experience_max}
@@ -218,7 +218,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                               handleInputChangeExperience(
                                 val,
                                 "min_ctc",
-                                item.id
+                                index
                               );
                             }}
                             value={item?.min_ctc}

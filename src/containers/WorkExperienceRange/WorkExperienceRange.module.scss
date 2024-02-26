@@ -1,5 +1,6 @@
 .mainContainer {
   gap: var(--gapSmall);
+  padding-bottom: var(--paddingMedium);
 }
 
 .workExpContainer {
@@ -19,11 +20,13 @@
 
 .addMinusIcon {
   margin-left: var(--marginLarge);
+  cursor: pointer;
 }
 
 .addPlusIcon {
   margin-left: var(--marginLarge);
   margin-top: var(--marginMedium);
+  cursor: pointer;
 }
 
 .customContainerStyles {

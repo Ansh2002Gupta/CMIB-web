@@ -23,7 +23,8 @@ const EditSessionRound = ({
   const [experience, setExperience] = useState(roundDetails?.experiences || []);
   const responsive = useResponsive();
   const { showNotification, notificationContextHolder } = useShowNotification();
-  const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
+  const { isLoading, updateSessionRoundDetails } =
+    useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);
 
   const { data, isError } = useFetch({
@@ -35,10 +36,10 @@ const EditSessionRound = ({
   }, []);
 
   useEffect(() => {
-    if(!sessionData?.status){
+    if (!sessionData?.status) {
       onClickCancel();
     }
-  }, [sessionData?.status])
+  }, [sessionData?.status]);
 
   const mapSelectedCentres = () => {
     let centres =
@@ -65,7 +66,7 @@ const EditSessionRound = ({
   const handleDeselectCentre = (item) => {
     const updatedCenters = selectedCentres?.filter((ele) => ele.id !== item.id);
     setSelectedCentres(updatedCenters);
-    if(!updatedCenters?.length){
+    if (!updatedCenters?.length) {
       setCentresError(true);
     }
   };
@@ -138,7 +139,7 @@ const EditSessionRound = ({
     <>
       {notificationContextHolder}
       <EditSessionRoundTemplate
-        {...{ experience, setExperience }}
+        {...{ experience, setExperience, isLoading }}
         activeStatus={activeStatus}
         centresError={centresError}
         getCentreListFromResponse={getCentreListFromResponse}

@@ -54,10 +54,13 @@ const DataTable = ({
         dataSource={originalData}
         pagination={false}
         scroll={responsiveStyle}
-        className={[styles.table, !pagination && "nopagination"]}
+        className={[
+          styles.table,
+          customTableClassName,
+          !pagination && "nopagination",
+        ]}
         rowClassName={setRowClassName}
         rowKey="id"
-        className={customTableClassName}
       />
       {pagination && (
         <div className={styles.rowPerPageOptionsAndPaginationContainer}>

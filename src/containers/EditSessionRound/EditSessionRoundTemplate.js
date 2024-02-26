@@ -22,6 +22,7 @@ const EditSessionRoundTemplate = ({
   handleStatusToggle,
   intl,
   isError,
+  isLoading,
   onClickCancel,
   onClickSave,
   responsive,
@@ -100,6 +101,7 @@ const EditSessionRoundTemplate = ({
           rightSection={
             <CustomButton
               isBtnDisable={!experience?.length || !selectedCentres?.length}
+              loading={isLoading}
               textStyle={styles.saveButtonTextStyles}
               btnText={intl.formatMessage({
                 id: "session.saveChanges",
