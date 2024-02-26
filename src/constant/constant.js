@@ -287,6 +287,7 @@ export const MODULE_KEYS = {
   CA_JOBS_KEY: "ca-jobs",
   EXPERIENCED_MEMBERS_KEY: "experienced-members",
   CARRER_ASCENT_KEY: "career-ascents",
+  SUPER_ADMIN: "super-admin",
   WOMEN_PARTTIME_KEY: "women-placements",
   OVERSEAS_CHAPTERS_KEY: "overseas-chapters",
 };
