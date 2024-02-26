@@ -77,7 +77,7 @@ const TicketChatScreen = () => {
     const initialData = await fetchData({
       queryParamsObject: requestedParams,
     });
-    if (initialData && initialData?.records.length > 0) {
+    if (initialData?.records.length) {
       setCurrentRecords(initialData?.records);
     }
     setIsFirstPageReceived(true);
