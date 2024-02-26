@@ -203,7 +203,7 @@ const SessionRoundDetailsTemplate = ({
                       currentDataLength={roundDetails?.experiences?.length}
                       customContainerStyles={styles.tableContainer}
                       originalData={roundDetails?.experiences}
-                      pagination={false}
+                      hidePagination={true}
                       hover={false}
                     />
                   }
