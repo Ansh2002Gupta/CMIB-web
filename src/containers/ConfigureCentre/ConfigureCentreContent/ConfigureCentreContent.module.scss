@@ -34,7 +34,7 @@ input::placeholder {
 
 .searchBarContainer {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   gap: var(--gapSmall);
   position: relative;
 }

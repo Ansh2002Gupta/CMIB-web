@@ -178,7 +178,7 @@ const locale = {
   "label.errorWhileAddingNewUser":
     "Some error occured while creating a new user, please try again!",
   "label.selectModules": "Select Modules",
-  "session.rounds.selectCentres": "Select centres",
+  "session.rounds.selectCentres": "Select Centres",
   "session.rounds.centres": "Centres",
   "session.roundOneStatus": "Round 1 Status",
   "session.roundTwoStatus": "Round 2 Status",
@@ -260,7 +260,7 @@ const locale = {
   "centre.error.enterpartner": "Enter Partner",
   "centre.error.enterNorm1": "Enter Norm 1",
   "centre.error.enterNorm2": "Enter Norm 2",
-  "centre.error.enterVacancy": "Error",
+  "centre.error.enterVacancy": "Enter Vacancy",
   "label.none": "None",
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
@@ -478,6 +478,8 @@ const locale = {
   "label.tickeNumber": "Ticket Number",
   "label.date_create_on": "Date Created On",
   "label.path.reply": "Ticket Details",
+  "label.select_centres_error_msg":
+    "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
   "label.orientation_no_result_msg":
     "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
   "label.path.orientation-centers": "Orientation Centres",

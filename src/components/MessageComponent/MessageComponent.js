@@ -10,7 +10,6 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 
 const MessageComponent = ({ messageData, index, shouldShowAvatar }) => {
   const { firstName, lastName } = splitName(messageData?.author?.name);
-
   const [userProfileDetails] = useContext(UserProfileContext);
   const isSender = getMessageInfo(messageData, userProfileDetails?.userDetails);
 

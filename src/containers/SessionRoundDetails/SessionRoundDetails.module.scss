@@ -15,7 +15,6 @@
   padding: var(--paddingMedium);
   border-radius: var(--radiusMLg);
   border: var(--borderLight);
-  height: var(--height_350);
 }
 
 .chipContainer {
@@ -83,8 +82,8 @@
 }
 
 .selectedItemsContainer {
-  padding-top: var(--paddingXXSmall);
-  gap: var(--paddingXXSmall);
+  padding-top: var(--marginXSmall);
+  gap: var(--paddingExtraSmall);
   display: flex;
   flex-wrap: wrap;
 }

@@ -29,3 +29,21 @@
   justify-content: center;
   align-items: center;
 }
+
+.customSrollBar-blue-bg::-webkit-scrollbar {
+  display: block;
+  width: var(--width_10, 10px);
+}
+
+.customSrollBar-blue-bg::-webkit-scrollbar-track {
+  box-shadow: var(--boxShadowOne);
+  --webkit-box-shadow: var(--boxShadowOne);
+  width: var(--width_3, 3px);
+  border-radius: var(--radiusXLg, 12px);
+  background-color: var(--blackBg, #000833);
+}
+
+.customSrollBar-blue-bg::-webkit-scrollbar-thumb {
+  border-radius: var(--radiusXLg, 12px);
+  background-color: var(--letGrey7, #bfbfbf);
+}

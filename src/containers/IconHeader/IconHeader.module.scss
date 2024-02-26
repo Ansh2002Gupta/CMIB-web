@@ -1,6 +1,6 @@
 .mainContainer {
   background-color: var(--bodyBg);
-  padding: 26px;
+  padding: 16px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,6 +19,7 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   border-radius: var(--radiusLg);
+  min-width:44px
 }
 
 .loaderStyle{
@@ -27,7 +28,7 @@
 }
 
 .adminId {
-  font-size: var(--fontSizeHeading);
+  font-size: var(--fontSizeXXlarge);
   font-weight: var(--fontWeightBold);
 }
 
@@ -37,4 +38,9 @@
     &:hover{
       background-color: var(--bodyBg) !important;
     }
+}
+
+.closedBtnContainer{
+  display: flex;
+  align-items: center;
 }

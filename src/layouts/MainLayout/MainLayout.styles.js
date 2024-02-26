@@ -4,6 +4,7 @@ export const classes = {
   leftSectionStyle: {
     width: "25%",
     maxHeight: variables.heightFullViewPort,
+    maxWidth: "280px",
   },
   rightSectionStyle: {
     width: "75%",
