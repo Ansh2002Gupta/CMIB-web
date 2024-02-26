@@ -52,7 +52,7 @@ const useRenderColumn = () => {
   }) => {
     const columnObject = {};
 
-    const { onSelectLocation } = renderAutoPlaceComplete;
+    const { allowManualText, onSelectLocation } = renderAutoPlaceComplete;
 
     const {
       customContainerStyles,
@@ -283,6 +283,7 @@ const useRenderColumn = () => {
       (columnObject.render = (value, record) => {
         return (
           <AutoPlaceComplete
+            {...{ allowManualText }}
             onSelectLocation={(value) => {
               onSelectLocation(value, record);
             }}
