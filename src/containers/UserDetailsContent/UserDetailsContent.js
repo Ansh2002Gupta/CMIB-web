@@ -18,7 +18,7 @@ import { NotificationContext } from "../../globalContext/notification/notificati
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
-import { FORM_STATES } from "../../constant/constant";
+import { FORM_STATES, MODULE_KEYS } from "../../constant/constant";
 import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 
@@ -69,14 +69,14 @@ const UserDetailsContent = ({
       : Object.values(permissions).map((per) => per.id);
     let superAdminKey;
     for (const [key, value] of Object.entries(rolesData?.roles)) {
-      if (value.key === "super-admin") {
+      if (value.key === MODULE_KEYS.SUPER_ADMIN) {
         superAdminKey = key;
         break;
       }
     }
     const rolesExceptSuperAdmin = Object.fromEntries(
       Object.entries(rolesData?.roles).filter(
-        ([key, value]) => value.key !== "super-admin"
+        ([key, value]) => value.key !== MODULE_KEYS.SUPER_ADMIN
       )
     );
     let allRolesPresent = true;
@@ -88,15 +88,14 @@ const UserDetailsContent = ({
     }
 
     for (const key in rolesData?.permissions) {
-      if (!pemissionArray.includes(parseInt(key))) {
+      if (!pemissionArray.includes(+key)) {
         allPermissionPresent = false;
       }
     }
     if (allRolesPresent && allPermissionPresent) {
-      return [...roleArray, parseInt(superAdminKey)];
-    } else {
-      return roleArray;
+      return [...roleArray, +superAdminKey];
     }
+    return roleArray;
   };
 
   const checkForIncorrectFields = () => {
