@@ -260,7 +260,7 @@ const locale = {
   "centre.error.enterpartner": "Enter Partner",
   "centre.error.enterNorm1": "Enter Norm 1",
   "centre.error.enterNorm2": "Enter Norm 2",
-  "centre.error.enterVacancy": "Error",
+  "centre.error.enterVacancy": "Enter Vacancy",
   "label.none": "None",
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
@@ -450,7 +450,7 @@ const locale = {
   "label.show_result": "Show Results",
   "label.centreCode": "Centre Id",
   "label.path.centre-details": "Edit centre details",
-  "label.setup_orientation_centers": "Setup Orientation Centers",
+  "label.setup_orientation_centers": "Setup Orientation Centres",
   "label.orientation_centers_warning":
     "*This cannot be edited once registration for the students starts. Only Venue can be edited",
   "label.total_students_booked": "Total Students Booked",
@@ -490,6 +490,8 @@ const locale = {
   "session.andMore": "'and more'",
   "label.from": "From",
   "label.to": "To",
+  "label.select_centres_error_msg":
+    "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
   "label.orientation_no_result_msg":
     "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
   "label.path.orientation-centers": "Orientation Centres",

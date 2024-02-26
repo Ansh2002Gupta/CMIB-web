@@ -121,7 +121,13 @@ function Session() {
               <SessionRound
                 {...{ currentlySelectedModuleKey }}
                 roundNo={1}
-                roundId={sessionData?.rounds?.[0]?.id}
+                roundId={
+                  (
+                    sessionData?.rounds?.find(
+                      (obj) => obj.round_code === "round-1"
+                    ) || {}
+                  ).id
+                }
                 roundList={ROUND_ONE_CARD_LIST}
                 sessionData={sessionData}
                 switchLabel={intl.formatMessage({

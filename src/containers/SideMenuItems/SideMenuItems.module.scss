@@ -6,12 +6,13 @@
   font-size: var(--fontSizeXSmall, 12px);
   color: var(--textPrimary, #fff);
   background: var(--sideMenuBg1, #141b43);
-  padding: var(--sizeXSmall, 12px);
+  padding: var(--sizeXSmall, 16px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--moduleSelectorBorder, #ffffff4d);
   overflow-x: hidden;
+  gap: var(--gapXSmall, 8px);
 }
 
 .moduleSelectorHeading {
@@ -46,6 +47,7 @@
   padding: var(--paddingNone, 0px) var(--paddingSmall, 16px)
     var(--paddingSmall, 16px) var(--paddingSmall, 16px);
   gap: var(--gapXSmall, 8px);
+  overflow-x: hidden;
 }
 
 .imageContainer {

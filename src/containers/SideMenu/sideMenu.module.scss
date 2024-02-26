@@ -5,6 +5,7 @@
   justify-content: space-between;
   overflow: auto;
   background-color: var(--inputLabel);
+  max-height: var(--fullHeight, 100%);
 }
 
 .sideMenuTopSection {
@@ -13,7 +14,8 @@
 
 .sideMenuBottomSection {
   width: var(--fullWidth, 100%);
-  background: var(--sideMenuColor, #141b43);
+  min-height: var(--height_68, 68px);
+  background-color: var(--darkBlueBg, #141b43);
   color: var(--textPrimary, #fff);
   justify-content: space-between;
   padding: var(--sizeXXSmall, 12px) var(--sizeXSmall, 12px);
@@ -21,21 +23,27 @@
 }
 
 .sideMenuOptionsContainer {
-  margin-top: var(--sizeXSmall, 12px);
   font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500);
-  background-color: var(--inputLabel);
+  overflow-y: auto;
+  padding: var(--paddingMedium, 24px) var(--paddingMediumSmall, 12px)
+    var(--paddingSmall, 16px);
+  background-color: var(--blackBg, #000833);
   overflow-x: auto;
-  max-height: var(--height_50vh, 50vh);
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+}
+
+.sideMenuOptionsContainer > li {
+  min-height: var(--height_50, 50px);
+}
+
+.menuItemsContainer ul li {
+  padding: var(--paddingNone, 0px) var(--paddingSmall, 16px);
+  min-height: var(--height_50, 50px);
 }
 
 .appLogoContainer {
-  padding: var(--padding_18);
+  padding: var(--paddingLarge) var(--paddingSmall) var(--paddingMedium)
+    var(--paddingSmall);
   cursor: default;
 }
 
@@ -59,13 +67,19 @@
 .moduleSelector {
   font-size: var(--fontSizeXSmall, 12px);
   color: var(--textPrimary, #fff);
-  background: #141b43;
-  padding: var(--sizeXSmall, 12px);
+  background-color: var(--darkBlueBg, #141b43);
+  padding: var(--sizeXSmall, 16px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--moduleSelectorBorder, #ffffff4d);
   overflow-x: hidden;
+  min-height: var(--btnHeight, 56px);
+  gap: var(--gapXSmall, 8px);
+}
+
+.selectedModuleBox {
+  max-width: var(--width70Per, 70%);
 }
 
 .menuItemContainer {
@@ -78,8 +92,8 @@
   color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 10vw;
   white-space: nowrap;
+  width: 100%;
 }
 
 .moduleList {
@@ -87,13 +101,8 @@
   width: var(--fullWidth, 100%);
   color: var(--textPrimary, #fff);
   font-weight: var(--fontWeightMedium, 500);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
   list-style: none;
   cursor: pointer;
-  margin-bottom: var(--marginLarge, 24px);
 }
 
 .moduleListItem {
@@ -108,7 +117,7 @@
   }
   &:not(.disabled):hover {
     border-left: 2px solid #fff;
-    background-color: #141b43;
+    background-color: var(--darkBlueBg, #141b43);
   }
 }
 
@@ -117,18 +126,20 @@
   width: var(--fullWidth, 100%);
   overflow: hidden;
 }
+
 .sectionHeading {
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
   color: var(--subHeadingColor, #616c82);
-  margin: var(--margin_12, 12px);
+  margin: var(--marginMedium, 16px);
+  line-height: var(--lineHeightNormal, 20px);
 }
 
 .visitText {
   max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--borderColor);
+  color: var(--greyText);
 }
 
 .moduleListContainer {
@@ -150,13 +161,16 @@
   padding: var(--paddingMedium, 16px) var(--paddingMedium, 16px);
 }
 
-.moduleText {
-  font-size: var(--fontSizeSmall, 14px);
-  color: var(--subHeadingColor, #616c82);
-  font-weight: var(--fontWeightMedium, 500);
-}
 .sessionContainer {
   min-height: var(--height_100, 100px);
+}
+
+.globeIcon {
+  color: var(--greyText);
+}
+
+.arrowIcon {
+  color: var(--greyText, #ccd0e5);
 }
 
 @media (max-width: 1523px) {
@@ -171,11 +185,13 @@
   }
 }
 
-@media (max-width: 767px) {
-  .moduleSelectorHeading {
-    max-width: var(--widthHalfViewPort, 50vw);
+@media (max-width: 1279px) {
+  .menuItemsContainer {
+    overflow-y: auto;
   }
+}
 
+@media (max-width: 767px) {
   .visitText {
     max-width: var(--widthHalfViewPort, 50vw);
   }
@@ -189,8 +205,7 @@
     padding-left: var(--paddingMedium, 24px);
   }
 
-  .moduleText {
-    padding: var(--paddingExtraSmall, 8px);
-    padding-left: var(--paddingMediumSmall, 12px);
+  .menuItemsContainer {
+    overflow-y: auto;
   }
 }

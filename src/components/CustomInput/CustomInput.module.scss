@@ -32,6 +32,7 @@
 }
 
 .inputField {
+  min-height: var(--height_44);
   min-width: 100%;
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
@@ -65,6 +66,7 @@
 }
 
 .inputNumberStyles {
+  min-height: var(--height_44);
   min-width: 100%;
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
