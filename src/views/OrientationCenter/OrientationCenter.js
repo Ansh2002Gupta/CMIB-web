@@ -75,7 +75,11 @@ const OrientationCenter = () => {
 
   useModuleWiseApiCall({
     initialApiCall: () => {
-      getOrientationCentres({});
+      if (roundId) {
+        getOrientationCentres({});
+      } else {
+        navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
+      }
     },
   });
 
@@ -132,7 +136,9 @@ const OrientationCenter = () => {
       renderDateTime: {
         visible: true,
         type: "date",
-        isEditable: currentGlobalSession?.is_editable,
+        isEditable:
+          currentGlobalSession?.status !== 0 &&
+          currentGlobalSession?.is_editable,
         disabled: false,
         placeholder: intl.formatMessage({
           id: "label.placeholder.consentFromDate",
@@ -151,6 +157,7 @@ const OrientationCenter = () => {
       dataIndex: "venue",
       key: "venue",
       renderAutoPlaceComplete: {
+        isEditable: currentGlobalSession?.status === 1,
         visible: true,
         onSelectLocation: (val, record) => {
           handleInputChange("venue", val, record.id);
