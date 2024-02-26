@@ -20,6 +20,7 @@ const DataTable = ({
   currentDataLength,
   customContainerStyles,
   customTableClassName,
+  hover,
   keytoFindSelectedRow,
   onChangeCurrentPage,
   onChangePageSize,
@@ -58,6 +59,7 @@ const DataTable = ({
           styles.table,
           customTableClassName,
           !pagination && "nopagination",
+          hover ? "customTableHover" : "customTableNoHover",
         ]}
         rowClassName={setRowClassName}
         rowKey="id"
@@ -102,6 +104,7 @@ DataTable.defaultProps = {
   current: 1,
   currentDataLength: 0,
   customContainerStyles: "",
+  hover: true,
   keytoFindSelectedRow: "id",
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
@@ -116,6 +119,7 @@ DataTable.propTypes = {
   current: PropTypes.number,
   currentDataLength: PropTypes.number,
   customContainerStyles: PropTypes.string,
+  hover: PropTypes.bool,
   keytoFindSelectedRow: PropTypes.string,
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,

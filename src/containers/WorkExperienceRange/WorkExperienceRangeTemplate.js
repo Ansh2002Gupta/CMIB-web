@@ -23,10 +23,6 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
     work_experience_min: "",
   });
 
-  let isAddmoreSelected = experience.some(
-    (item) => item.use_more_experience === 1
-  );
-
   const handleInputChange = (value, name) => {
     setAddExperience((prevData) => ({
       ...prevData,
@@ -248,127 +244,121 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
           }
           bottomSectionStyle={classes.bottomSectionStyle}
           bottomSection={
-            !isAddmoreSelected && (
-              <TwoColumn
-                className={styles.columnCellContainer}
-                leftSectionStyle={classes.flex2}
-                rightSectionStyle={classes.flex1}
-                leftSection={
-                  <ThreeColumn
-                    leftSectionStyle={classes.flex1}
-                    rightSectionStyle={classes.flex1}
-                    isLeftFillSpace
-                    leftSection={
-                      <CustomInputNumber
-                        placeholder={intl.formatMessage({
-                          id: "label.from",
-                        })}
-                        errorMessage={errors.work_experience_min}
-                        onChange={(val) => {
-                          handleInputChange(val, "work_experience_min");
-                        }}
-                        value={addExperience.work_experience_min}
-                        customInputNumberStyles={styles.customInputNumberStyles}
-                        customContainerStyles={styles.customContainerStyles}
-                      />
-                    }
-                    middleSection={
-                      <div
-                        className={[styles.dash, styles.dashMargin].join(" ")}
-                      />
-                    }
-                    rightSection={
-                      <TwoColumn
-                        className={styles.useMoreStyles}
-                        isLeftFillSpace
-                        leftSection={
-                          addExperience.use_more_experience ? (
-                            <CustomInputNumber
-                              disabled={true}
-                              value={"and more"}
-                              customInputNumberStyles={
-                                styles.customInputNumberStyles
-                              }
-                              customContainerStyles={
-                                styles.customContainerStyles
-                              }
-                            />
-                          ) : (
-                            <CustomInputNumber
-                              placeholder={intl.formatMessage({
-                                id: "label.to",
-                              })}
-                              errorMessage={errors.work_experience_max}
-                              onChange={(val) => {
-                                handleInputChange(val, "work_experience_max");
-                              }}
-                              value={addExperience.work_experience_max}
-                              customInputNumberStyles={
-                                styles.customInputNumberStyles
-                              }
-                              customContainerStyles={
-                                styles.customContainerStyles
-                              }
-                            />
-                          )
-                        }
-                        rightSection={
-                          <CustomCheckBox
-                            customStyles={styles.customStyles}
-                            checked={
-                              addExperience.use_more_experience ? true : false
+            <TwoColumn
+              className={styles.columnCellContainer}
+              leftSectionStyle={classes.flex2}
+              rightSectionStyle={classes.flex1}
+              leftSection={
+                <ThreeColumn
+                  leftSectionStyle={classes.flex1}
+                  rightSectionStyle={classes.flex1}
+                  isLeftFillSpace
+                  leftSection={
+                    <CustomInputNumber
+                      placeholder={intl.formatMessage({
+                        id: "label.from",
+                      })}
+                      errorMessage={errors.work_experience_min}
+                      onChange={(val) => {
+                        handleInputChange(val, "work_experience_min");
+                      }}
+                      value={addExperience.work_experience_min}
+                      customInputNumberStyles={styles.customInputNumberStyles}
+                      customContainerStyles={styles.customContainerStyles}
+                    />
+                  }
+                  middleSection={
+                    <div
+                      className={[styles.dash, styles.dashMargin].join(" ")}
+                    />
+                  }
+                  rightSection={
+                    <TwoColumn
+                      className={styles.useMoreStyles}
+                      isLeftFillSpace
+                      leftSection={
+                        addExperience.use_more_experience ? (
+                          <CustomInputNumber
+                            disabled={true}
+                            value={"and more"}
+                            customInputNumberStyles={
+                              styles.customInputNumberStyles
                             }
-                            onChange={() => {
-                              handleInputChange(
-                                addExperience.use_more_experience ? 0 : 1,
-                                "use_more_experience"
-                              );
+                            customContainerStyles={styles.customContainerStyles}
+                          />
+                        ) : (
+                          <CustomInputNumber
+                            placeholder={intl.formatMessage({
+                              id: "label.to",
+                            })}
+                            errorMessage={errors.work_experience_max}
+                            onChange={(val) => {
+                              handleInputChange(val, "work_experience_max");
                             }}
-                          >
-                            <Typography className={styles.blackText}>
-                              {intl.formatMessage({ id: "session.use" })}
-                              <span className={styles.blackBoldText}>
-                                {intl.formatMessage({
-                                  id: "session.andMore",
-                                })}
-                              </span>
-                            </Typography>
-                          </CustomCheckBox>
-                        }
-                      />
-                    }
-                  />
-                }
-                rightSection={
-                  <TwoColumn
-                    isLeftFillSpace
-                    leftSection={
-                      <CustomInputNumber
-                        placeholder={intl.formatMessage({
-                          id: "session.min_ctc",
-                        })}
-                        errorMessage={errors.min_ctc}
-                        onChange={(val) => {
-                          handleInputChange(val, "min_ctc");
-                        }}
-                        value={addExperience.min_ctc}
-                        customInputNumberStyles={styles.customInputNumberStyles}
-                        customContainerStyles={styles.customContainerStyles}
-                      />
-                    }
-                    rightSection={
-                      <Image
-                        className={styles.addPlusIcon}
-                        src={getImage("addCircle")}
-                        style={classes.iconStyle}
-                        preview={false}
-                        onClick={handleAdd}
-                      />
-                    }
-                  />
-                }
-              />
-            )
+                            value={addExperience.work_experience_max}
+                            customInputNumberStyles={
+                              styles.customInputNumberStyles
+                            }
+                            customContainerStyles={styles.customContainerStyles}
+                          />
+                        )
+                      }
+                      rightSection={
+                        <CustomCheckBox
+                          customStyles={styles.customStyles}
+                          checked={
+                            addExperience.use_more_experience ? true : false
+                          }
+                          onChange={() => {
+                            handleInputChange(
+                              addExperience.use_more_experience ? 0 : 1,
+                              "use_more_experience"
+                            );
+                          }}
+                        >
+                          <Typography className={styles.blackText}>
+                            {intl.formatMessage({ id: "session.use" })}
+                            <span className={styles.blackBoldText}>
+                              {intl.formatMessage({
+                                id: "session.andMore",
+                              })}
+                            </span>
+                          </Typography>
+                        </CustomCheckBox>
+                      }
+                    />
+                  }
+                />
+              }
+              rightSection={
+                <TwoColumn
+                  isLeftFillSpace
+                  leftSection={
+                    <CustomInputNumber
+                      placeholder={intl.formatMessage({
+                        id: "session.min_ctc",
+                      })}
+                      errorMessage={errors.min_ctc}
+                      onChange={(val) => {
+                        handleInputChange(val, "min_ctc");
+                      }}
+                      value={addExperience.min_ctc}
+                      customInputNumberStyles={styles.customInputNumberStyles}
+                      customContainerStyles={styles.customContainerStyles}
+                    />
+                  }
+                  rightSection={
+                    <Image
+                      className={styles.addPlusIcon}
+                      src={getImage("addCircle")}
+                      style={classes.iconStyle}
+                      preview={false}
+                      onClick={handleAdd}
+                    />
+                  }
+                />
+              }
+            />
           }
         />
       }

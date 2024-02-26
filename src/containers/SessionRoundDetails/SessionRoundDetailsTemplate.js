@@ -204,6 +204,7 @@ const SessionRoundDetailsTemplate = ({
                       customContainerStyles={styles.tableContainer}
                       originalData={roundDetails?.experiences}
                       pagination={false}
+                      hover={false}
                     />
                   }
                 />
