@@ -367,7 +367,7 @@ const CentreTable = ({
         pagination={false}
         rowClassName={!isEdit ? styles.rowtext : ""}
         scroll={{ x: "max-content" }}
-        className={isEdit ? [styles.table, "customTable"] : styles.table}
+        className={`${isEdit ? "customTable" : ""} ${styles.table}`}
         rowKey="id"
       />
     </div>
