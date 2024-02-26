@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
+import { Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -140,23 +141,30 @@ const TicketChatScreen = () => {
   const renderChatSection = () => {
     return (
       <>
-        <ChatSection
-          data={reversedData}
-          {...{
-            fetchData,
-            isError,
-            isLoading,
-            error,
-            id,
-            handleLoadMore,
-            isOnLastPage,
-            ticketDetails,
-            handleSend,
-            isSendingMessage,
-            loadingMore,
-            ticketStatus,
-          }}
-        />
+        {!!currentRecords?.length ? (
+          <ChatSection
+            data={reversedData}
+            {...{
+              fetchData,
+              isError,
+              isLoading,
+              error,
+              id,
+              handleLoadMore,
+              isOnLastPage,
+              ticketDetails,
+              handleSend,
+              isSendingMessage,
+              loadingMore,
+              ticketStatus,
+            }}
+          />
+        ) : (
+          /* TODO: Please handle the no chats screen*/
+          <div>
+            <Typography>No prior chats found</Typography>
+          </div>
+        )}
       </>
     );
   };
@@ -173,16 +181,56 @@ const TicketChatScreen = () => {
     );
   };
 
+  const errorHandler = () => {
+    const errorMessageOne = error?.data?.message;
+    const errorMessageTwo = errorWhileFetchingTicketData?.data?.message;
+    if (errorMessageOne && errorMessageTwo) {
+      let errorMessage = "";
+      if (errorMessageOne === errorMessageTwo) {
+        errorMessage = errorMessageOne;
+      }
+      errorMessage = `${errorMessageOne}, ${errorMessageTwo}`;
+      return {
+        errorMessage,
+        onRetry: () => {
+          setIsFirstPageReceived(false);
+          fetchData({});
+          fetchTicketData({});
+        },
+      };
+    }
+    if (errorMessageOne) {
+      return {
+        errorMessage: errorMessageOne,
+        onRetry: () => {
+          setIsFirstPageReceived(false);
+          fetchData({});
+        },
+      };
+    }
+    if (errorMessageTwo) {
+      return {
+        errorMessage: errorMessageTwo,
+        onRetry: () => {
+          setIsFirstPageReceived(false);
+          fetchTicketData({});
+        },
+      };
+    }
+    return {
+      errorMessage: "",
+      onRetry: () => {},
+    };
+  };
+
   return (
     <>
-      {isError && isGetErrorWhileFetchingTicket && (
+      {!isFetchingTicketData && (isError || isGetErrorWhileFetchingTicket) && (
         <div className={styles.erroContainerBox}>
           <ErrorMessageBox
             errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
-            errorText={intl.formatMessage({
-              id: "label.generalGetApiFailedErrorMessage",
-            })}
-            onRetry={fetchData}
+            errorText={errorHandler()?.errorMessage}
+            onRetry={() => errorHandler()?.onRetry()}
           />
         </div>
       )}
@@ -190,7 +238,7 @@ const TicketChatScreen = () => {
         <CustomLoader />
       ) : (
         <>
-          {!!currentRecords?.length && (
+          {!isError && !isGetErrorWhileFetchingTicket && (
             <TwoRow
               className={styles.mainContainer}
               isBottomFillSpace
