@@ -18,7 +18,7 @@ import { NotificationContext } from "../../globalContext/notification/notificati
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
-import { FORM_STATES, MODULE_KEYS, ROLES } from "../../constant/constant";
+import { FORM_STATES, ROLES } from "../../constant/constant";
 import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 
