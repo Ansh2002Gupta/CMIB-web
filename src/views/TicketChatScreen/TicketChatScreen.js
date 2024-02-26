@@ -63,57 +63,28 @@ const TicketChatScreen = () => {
     closeTicket({
       ticketId: id,
       onSuccessCallback: () => {
-        fetchData({
-          page: 1,
-        });
+        fetchChatData(1);
         fetchTicketData({});
         setIsFirstPageReceived(false);
       },
     });
   };
 
-  const handleOnMarkTicketAsClosed = () => {
-    handleTicketClosed({
-      ticketId: id,
-      onSuccessCallback: () => {
-        fetchData({
-          queryParamsObject: {
-            page: 1,
-          },
-          onSuccessCallback: () => {
-            showNotification({
-              text: intl.formatMessage({
-                id: "label.ticketClosedSuccessfully",
-              }),
-              type: "success",
-            });
-          },
-          onErrorCallback: (errorString) => {
-            showNotification(errorString, "success");
-            showNotification({
-              text: errorString,
-              type: "error",
-            });
-          },
-        });
-      },
+  const fetchChatData = async (currentPage) => {
+    const requestedParams = {
+      page: currentPage,
+    };
+    const initialData = await fetchData({
+      queryParamsObject: requestedParams,
     });
+    if (initialData && initialData?.records.length > 0) {
+      setCurrentRecords(initialData?.records);
+    }
+    setIsFirstPageReceived(true);
   };
 
   useEffect(() => {
-    const fetchChatData = async () => {
-      const requestedParams = {
-        page: currentPage,
-      };
-      const initialData = await fetchData({
-        queryParamsObject: requestedParams,
-      });
-      if (initialData && initialData?.records.length > 0) {
-        setCurrentRecords(initialData?.records);
-      }
-      setIsFirstPageReceived(true);
-    };
-    fetchChatData();
+    fetchChatData(currentPage);
   }, []);
 
   const handleSend = async (payload) => {
@@ -230,7 +201,7 @@ const TicketChatScreen = () => {
                     ticketData={ticketDetails}
                     isError={isErrorCloseTicket}
                     isLoading={isLoadingCloseTicket}
-                    onLeftIconPress={handleOnMarkTicketAsClosed}
+                    onLeftIconPress={handleTicketClosed}
                     ticketStatus={ticketStatus}
                     onClickIconMore={handlePopup}
                     isDetailsScreen={isDetailsScreen}
