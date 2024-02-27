@@ -16,6 +16,7 @@ const EditSessionRoundTemplate = ({
   activeStatus,
   centresError,
   experience,
+  experienceErrors,
   getCentreListFromResponse,
   handleDeselectCentre,
   handleSelectCentre,
@@ -28,6 +29,7 @@ const EditSessionRoundTemplate = ({
   responsive,
   selectedCentres,
   setExperience,
+  setExperienceErrors,
   switchLabel,
 }) => {
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -76,7 +78,14 @@ const EditSessionRoundTemplate = ({
           bottomSection={
             currentlySelectedModuleKey !==
               MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
-              <WorkExperienceRange {...{ experience, setExperience }} />
+              <WorkExperienceRange
+                {...{
+                  experience,
+                  experienceErrors,
+                  setExperience,
+                  setExperienceErrors,
+                }}
+              />
             )
           }
         />

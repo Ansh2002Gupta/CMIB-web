@@ -21,6 +21,13 @@ const EditSessionRound = ({
   const [activeStatus, setActiveStatus] = useState(roundDetails?.status === 1);
   const [selectedCentres, setSelectedCentres] = useState();
   const [experience, setExperience] = useState(roundDetails?.experiences || []);
+  const [experienceErrors, setExperienceErrors] = useState(
+    experience.map(() => ({
+      min_ctc: "",
+      work_experience_max: "",
+      work_experience_min: "",
+    }))
+  );
   const responsive = useResponsive();
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { isLoading, updateSessionRoundDetails } =
@@ -139,7 +146,13 @@ const EditSessionRound = ({
     <>
       {notificationContextHolder}
       <EditSessionRoundTemplate
-        {...{ experience, setExperience, isLoading }}
+        {...{
+          experience,
+          experienceErrors,
+          setExperience,
+          setExperienceErrors,
+          isLoading,
+        }}
         activeStatus={activeStatus}
         centresError={centresError}
         getCentreListFromResponse={getCentreListFromResponse}

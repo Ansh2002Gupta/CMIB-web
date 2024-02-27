@@ -3,11 +3,24 @@ import { useIntl } from "react-intl";
 
 import WorkExperienceRangeTemplate from "./WorkExperienceRangeTemplate";
 
-const WorkExperienceRange = ({ experience, setExperience }) => {
+const WorkExperienceRange = ({
+  experience,
+  experienceErrors,
+  setExperience,
+  setExperienceErrors,
+}) => {
   const intl = useIntl();
 
   return (
-    <WorkExperienceRangeTemplate {...{ experience, intl, setExperience }} />
+    <WorkExperienceRangeTemplate
+      {...{
+        experience,
+        experienceErrors,
+        intl,
+        setExperience,
+        setExperienceErrors,
+      }}
+    />
   );
 };
 
