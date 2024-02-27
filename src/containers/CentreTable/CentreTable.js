@@ -105,7 +105,7 @@ const CentreTable = ({
           type="date"
           onChange={(val) => {
             handleInputChange(
-              dayjs(val).format("YYYY-MM-DD"),
+              val ? dayjs(val).format("YYYY-MM-DD") : "",
               "scheduleDate",
               index
             );
