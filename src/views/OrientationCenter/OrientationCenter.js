@@ -89,15 +89,15 @@ const OrientationCenter = () => {
         if (item.id === recordId) {
           if (
             typeof value === "object" &&
-            value.venue &&
-            value.latitude &&
-            value.longitude
+            value?.venue &&
+            value?.latitude &&
+            value?.longitude
           ) {
             return {
               ...item,
-              [field]: value.venue,
-              latitude: value.latitude,
-              longitude: value.longitude,
+              [field]: value?.venue,
+              latitude: value?.latitude,
+              longitude: value?.longitude,
             };
           } else {
             return { ...item, [field]: value };
