@@ -14,7 +14,6 @@ const AutoPlaceComplete = ({
   const intl = useIntl();
   const [searchedLocation, setSearchedLocation] = useState(defaultValue);
   const [suggestedLocations, setSuggestedLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState({});
 
   useEffect(() => {
     if (!window.google) {
