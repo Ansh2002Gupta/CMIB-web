@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { ThemeContext } from "../../core/providers/theme";
 import { Typography } from "antd";
 import { useSearchParams } from "react-router-dom";
 
@@ -10,6 +11,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomLoader from "../../components/CustomLoader";
+import CustomModal from "../../components/CustomModal/CustomModal";
 import EditSessionRound from "../../containers/EditSessionRound";
 import RoundCard from "../../containers/RoundCard";
 import SessionRoundDetails from "../../containers/SessionRoundDetails";
@@ -30,11 +32,14 @@ const SessionRound = ({
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
+  const { getImage } = useContext(ThemeContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentMode, setCurrentMode] = useState(
     searchParams.get("mode") || FORM_STATES.VIEW_ONLY
   );
+  const [showNoCentreSelectedAlert, setShowNoCentreSelectedAlert] =
+    useState(false);
 
   const {
     apiStatus,
@@ -78,6 +83,10 @@ const SessionRound = ({
     setCurrentMode(FORM_STATES.VIEW_ONLY);
   };
 
+  const toggleShowErrorMsg = () => {
+    setShowNoCentreSelectedAlert((prev) => !prev);
+  };
+
   return (
     <TwoRow
       className={styles.mainContainer}
@@ -114,6 +123,21 @@ const SessionRound = ({
       }
       bottomSection={
         <>
+          <CustomModal
+            btnText={intl.formatMessage({
+              id: "label.okay",
+            })}
+            headingText={intl.formatMessage({
+              id: "label.no_centres_selected",
+            })}
+            isOpen={showNoCentreSelectedAlert}
+            onBtnClick={toggleShowErrorMsg}
+            subHeadingText={intl.formatMessage({
+              id: "label.no_centres_selected_msg",
+            })}
+            imgElement={getImage("errorIcon")}
+            customButtonStyle={styles.customButtonStyle}
+          />
           {currentMode == FORM_STATES.VIEW_ONLY && (
             <TwoRow
               topSectionStyle={classes.bottomContainer}
@@ -137,9 +161,13 @@ const SessionRound = ({
                         headingIntl={item.headingIntl}
                         imageUrl={item.imageUrl}
                         onClick={() => {
-                          navigate(
-                            `${item.onClickNaviagtion}?roundId=${roundId}`
-                          );
+                          if (roundDetails?.centres?.length) {
+                            navigate(
+                              `${item.onClickNaviagtion}?roundId=${roundId}`
+                            );
+                          } else {
+                            toggleShowErrorMsg();
+                          }
                         }}
                       />
                     );
@@ -165,7 +193,10 @@ SessionRound.defaultProps = {
 };
 
 SessionRound.propTypes = {
+  roundId: PropTypes.string,
+  roundNo: PropTypes.number,
   roundList: PropTypes.array,
+  sessionData: PropTypes.object,
   switchLabel: PropTypes.string,
 };
 

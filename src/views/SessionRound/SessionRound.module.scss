@@ -24,3 +24,10 @@
   width: 50vw;
   padding: var(--paddingMedium);
 }
+
+.customButtonStyle {
+  background-color: var(--error, #D93400);
+  &:hover {
+    background-color: var(--error, #D93400) !important;
+  }
+}
