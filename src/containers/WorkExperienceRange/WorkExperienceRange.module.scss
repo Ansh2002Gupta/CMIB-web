@@ -43,8 +43,8 @@
 }
 
 .dash {
-  height: 1px;
-  width: 8px;
+  height: var(--height_1);
+  width: var(--width_8);
   background-color: var(--borderColor);
   margin-left: var(--gapXSmall);
   margin-right: var(--gapXSmall);
