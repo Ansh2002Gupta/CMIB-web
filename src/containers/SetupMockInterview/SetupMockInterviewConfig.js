@@ -17,6 +17,11 @@ const getSetupMockColumn = (
         includeDotAfterText: true,
         textStyles: styles.textStyles,
       },
+      render: (_, __, index) => {
+        return {
+          children: <p>{index + 1}.</p>,
+        };
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.centreName" }),

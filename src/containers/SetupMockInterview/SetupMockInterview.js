@@ -6,6 +6,7 @@ import { ThemeContext } from "core/providers/theme";
 import { TwoRow } from "../../core/layouts";
 
 import DataTable from "../../components/DataTable/DataTable";
+import CustomLoader from "../../components/CustomLoader";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
@@ -13,12 +14,7 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import useFetch from "../../core/hooks/useFetch";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
-import {
-  DEFAULT_PAGE_SIZE,
-  PAGINATION_PROPERTIES,
-  VALID_ROW_PER_OPTIONS,
-} from "../../constant/constant";
-import { MOCK_INTERVIEW } from "../../dummyData";
+import { PAGINATION_PROPERTIES, ROUND_ID } from "../../constant/constant";
 import { SESSION, SETUP_MOCK_INTERVIEW } from "../../routes/routeNames";
 import {
   CORE_ROUTE,
@@ -26,7 +22,9 @@ import {
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { classes } from "./SetupMockInterview.styles";
+import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./SetupMockInterview.module.scss";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
 
 const SetupMockInterviewContent = () => {
   const intl = useIntl();
@@ -35,21 +33,6 @@ const SetupMockInterviewContent = () => {
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-
-  const [userProfileDetails] = useContext(UserProfileContext);
-  const currentlySelectedModuleKey =
-    userProfileDetails?.selectedModuleItem?.key;
-
-  const roundId = 172;
-  const { data, error, isLoading } = useFetch({
-    url:
-      CORE_ROUTE +
-      `/${currentlySelectedModuleKey}` +
-      ROUNDS +
-      `/${roundId}` +
-      MOCK_INTERVIEWS,
-  });
-  const [currentTableData, setCurrentTableData] = useState(data?.records || []);
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
@@ -57,7 +40,27 @@ const SetupMockInterviewContent = () => {
     getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
   );
 
-  console.log(data, "data..");
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
+
+  const roundId = searchParams.get(ROUND_ID);
+  const {
+    data,
+    error: errorWhileFetchingInterview,
+    isLoading: isGettingInterview,
+    fetchData,
+  } = useFetch({
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      ROUNDS +
+      `/${roundId}` +
+      MOCK_INTERVIEWS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
 
   const goToConfigureInterview = (rowData, isEdit) => {
     const centreId = rowData?.id;
@@ -70,35 +73,6 @@ const SetupMockInterviewContent = () => {
     );
   };
 
-  const updateTableData = (currentPageNumber, currentPageSize) => {
-    const startIndex = (currentPageNumber - 1) * currentPageSize;
-    const endIndex = currentPageNumber * currentPageSize;
-    const updatedData = data?.records?.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
-  };
-
-  const onChangePageSize = (size) => {
-    //TODO : Replace this code with API Pagination
-    setPageSize(Number(size));
-    setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      return prev;
-    });
-    updateTableData(1, size);
-  };
-
-  const onChangeCurrentPage = (newPageNumber) => {
-    //TODO : Replace this code with API Pagination
-    setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
-      return prev;
-    });
-    updateTableData(newPageNumber, pageSize);
-  };
-
   const columns = getSetupMockColumn(
     intl,
     isEdit,
@@ -108,42 +82,10 @@ const SetupMockInterviewContent = () => {
   );
 
   useEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
-      PAGINATION_PROPERTIES.ROW_PER_PAGE
-    );
-
-    let startIndex = (currentPage - 1) * currentPagePerRow;
-    let endIndex = currentPage * currentPagePerRow;
-    const availalblePage = Math.ceil(data?.records.length / currentPagePerRow);
-    if (
-      !currentPage ||
-      isNaN(currentPage) ||
-      currentPage <= 0 ||
-      currentPage > availalblePage
-    ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-        return prev;
-      });
-      setCurrent(1);
-      startIndex = 0;
-      endIndex = currentPagePerRow;
+    if (userProfileDetails?.selectedModuleItem?.key) {
+      fetchData({});
     }
-    if (
-      !currentPagePerRow ||
-      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
-    ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
-        return prev;
-      });
-      startIndex = currentPage;
-      endIndex = DEFAULT_PAGE_SIZE;
-    }
-    const updatedData = data?.records.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
-  }, []);
+  }, [userProfileDetails?.selectedModuleItem?.key]);
 
   return (
     <TwoRow
@@ -160,18 +102,29 @@ const SetupMockInterviewContent = () => {
         />
       }
       bottomSection={
-        <DataTable
-          {...{
-            columns,
-            current,
-            pageSize,
-            onChangePageSize,
-            onChangeCurrentPage,
-          }}
-          currentDataLength={data?.records.length}
-          customContainerStyles={styles.tableContainer}
-          originalData={currentTableData}
-        />
+        isGettingInterview ? (
+          <div className={commonStyles.errorContainer}>
+            <CustomLoader />
+          </div>
+        ) : errorWhileFetchingInterview ? (
+          <div className={commonStyles.errorContainer}>
+            <ErrorMessageBox
+              onRetry={() => fetchData({})}
+              errorText={errorWhileFetchingInterview?.data?.message}
+              errorHeading={intl.formatMessage({ id: "label.error" })}
+            />
+          </div>
+        ) : (
+          <DataTable
+            {...{
+              columns,
+            }}
+            hidePagination={true}
+            currentDataLength={data?.meta?.total}
+            customContainerStyles={styles.tableContainer}
+            originalData={data?.records}
+          />
+        )
       }
       bottomSectionStyle={classes.bottomSectionStyle}
     />
