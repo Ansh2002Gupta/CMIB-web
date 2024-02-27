@@ -26,15 +26,19 @@ function Sessions() {
   const { globalSessionId, globalSessionList } = globalSessionDetails;
 
   const handleMenuClick = ({ key }) => {
-    const pathSegments = location?.pathname.split('/').filter(part => part.length > 0);
-    const activeSession = pathSegments[pathSegments.length - 1];
-    if (SESSION_PATHS.includes(activeSession)) {
-      navigate(`/${selectedModule?.key}/${SESSION}?tab=2&mode=view`);
+    if (+key !== +globalSessionId) {
+      const pathSegments = location?.pathname
+        .split("/")
+        .filter((part) => part.length > 0);
+      const activeSession = pathSegments[pathSegments.length - 1];
+      if (SESSION_PATHS.includes(activeSession)) {
+        navigate(`/${selectedModule?.key}/${SESSION}?tab=2&mode=view`);
+      }
+      setItem(SESSION_KEY, key?.toString());
+      globalSessionDispatch(setGlobalSessionDetails(+key));
     }
-    setItem(SESSION_KEY, key?.toString());
-    globalSessionDispatch(setGlobalSessionDetails(+key));
   };
-
+  
   useEffect(() => {
     if (globalSessionList?.length) {
       globalSessionDispatch(setGlobalSessionDetails(+globalSessionList[0].id));
