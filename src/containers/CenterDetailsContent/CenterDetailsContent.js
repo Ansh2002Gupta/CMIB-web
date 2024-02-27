@@ -277,6 +277,24 @@ const CenterDetailsContent = ({
       validate,
     };
 
+    const isFirstTableRowFilled = () => {
+      if (tableData.length === 0) return false;
+
+      const firstRow = tableData[0];
+      const isValueFilled = (value) =>
+        value !== "" && value !== null && value !== undefined;
+
+      return (
+        isValueFilled(firstRow.scheduleDate) &&
+        isValueFilled(firstRow.participationFee) &&
+        isValueFilled(firstRow.firm.firmFee) &&
+        isValueFilled(firstRow.firm.uptoPartners) &&
+        isValueFilled(firstRow.norm1) &&
+        isValueFilled(firstRow.norm2) &&
+        isValueFilled(firstRow.norm2MinVacancy)
+      );
+    };
+
     const interviewDatesSection = (
       <TwoRow
         className={styles.formContainer}
@@ -312,7 +330,8 @@ const CenterDetailsContent = ({
             isBtnDisable={
               !formData?.PsychometricFee ||
               !formData?.centreStartTime ||
-              !formData?.centreEndTime
+              !formData?.centreEndTime ||
+              !isFirstTableRowFilled()
             }
             customStyle={styles.customStyle}
             textStyle={styles.saveButtonTextStyles}
