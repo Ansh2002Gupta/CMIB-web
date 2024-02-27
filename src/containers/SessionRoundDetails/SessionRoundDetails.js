@@ -3,6 +3,7 @@ import React from "react";
 import SessionRoundDetailsTemplate from "./SessionRoundDetailsTemplate";
 
 const SessionRoundDetails = ({
+  currentGlobalSession,
   intl,
   onClickEdit,
   roundDetails,
@@ -11,6 +12,7 @@ const SessionRoundDetails = ({
 }) => {
   return (
     <SessionRoundDetailsTemplate
+      currentGlobalSession={currentGlobalSession}
       roundDetails={roundDetails}
       roundNo={roundNo}
       sessionData={sessionData}

@@ -103,3 +103,7 @@ iframe#webpack-dev-server-client-overlay {
 .ant-select .ant-select-selection-item {
   font-weight: var(--fontWeightMedium, 500) !important;
 }
+
+.nopagination .ant-table-tbody > tr:last-child > td {
+  border-bottom: none !important;
+}
