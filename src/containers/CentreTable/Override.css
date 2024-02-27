@@ -27,7 +27,6 @@
 .customTable .ant-table-tbody .ant-table-cell {
   padding-left: var(--paddingNone) !important;
   padding-right: var(--paddingMedium) !important;
-  vertical-align: top !important;
 }
 
 .ant-input-number-disabled {
