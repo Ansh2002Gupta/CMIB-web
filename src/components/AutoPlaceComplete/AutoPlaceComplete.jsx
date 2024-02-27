@@ -64,7 +64,7 @@ const AutoPlaceComplete = ({
   };
 
   const setLatLngFromAddress = (address) => {
-    let geocoder = new window.google.maps.Geocoder();
+    const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode(
       {
         address,
