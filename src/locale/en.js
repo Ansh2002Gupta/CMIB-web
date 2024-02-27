@@ -483,6 +483,7 @@ const locale = {
   "session.min_ctc": "Minimum CTC",
   "label.yearsAndMore": "Years and more",
   "label.years": "Years",
+  "label.year": "Year",
   "label.addSessionSuccessfully": "Session has been created successfully",
   "label.updateSessionSuccessfully": "Session has been updated successfully",
   "session.useAndMore": "Use ‘and more’ ",
