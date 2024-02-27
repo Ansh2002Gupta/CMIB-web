@@ -25,6 +25,14 @@ export const STATUS_CODES = {
   UNAUTHORIZED_USER: 401,
 };
 
+export const SESSION_PATHS = [
+  "setup-centers",
+  "orientation-centers",
+  "setup-mock-interview",
+  "consent-marking",
+  "mock-interviews",
+];
+
 export const ROW_PER_PAGE_OPTIONS = [
   {
     value: 10,
