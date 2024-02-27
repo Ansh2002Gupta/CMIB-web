@@ -376,3 +376,7 @@ export const CENTRE_TYPE_ENUM = {
 export const SESSION_KEY = "sessionKey";
 export const MAX_HSN_CODE_LENGTH = 8;
 export const MAX_BANK_AC_NO_LENGTH = 18;
+
+export const ROLES = {
+  SUPER_ADMIN: "super-admin",
+};

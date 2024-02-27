@@ -27,3 +27,15 @@
   align-items: center;
   width: 100%;
 }
+
+.noChatDataStyle{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noChatDataTextStyle{
+  font-weight: var(--fontWeightBold);
+  opacity: 0.5;
+}
