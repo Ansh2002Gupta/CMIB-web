@@ -9,6 +9,7 @@ import { TwoRow } from "../../core/layouts";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
@@ -28,7 +29,6 @@ import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
-import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 
 const SetupCenter = () => {
   const intl = useIntl();

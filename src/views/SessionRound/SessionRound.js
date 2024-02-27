@@ -38,7 +38,8 @@ const SessionRound = ({
   const [currentMode, setCurrentMode] = useState(
     searchParams.get("mode") || FORM_STATES.VIEW_ONLY
   );
-  const [showErrorMsg, setShowErrorMsg] = useState(false);
+  const [showNoCentreSelectedAlert, setShowNoCentreSelectedAlert] =
+    useState(false);
 
   const {
     apiStatus,
@@ -83,7 +84,7 @@ const SessionRound = ({
   };
 
   const toggleShowErrorMsg = () => {
-    setShowErrorMsg((prev) => !prev);
+    setShowNoCentreSelectedAlert((prev) => !prev);
   };
 
   return (
@@ -129,7 +130,7 @@ const SessionRound = ({
             headingText={intl.formatMessage({
               id: "label.no_centres_selected",
             })}
-            isOpen={showErrorMsg}
+            isOpen={showNoCentreSelectedAlert}
             onBtnClick={toggleShowErrorMsg}
             subHeadingText={intl.formatMessage({
               id: "label.no_centres_selected_msg",

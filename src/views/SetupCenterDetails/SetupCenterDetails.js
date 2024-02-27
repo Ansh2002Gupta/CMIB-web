@@ -7,6 +7,7 @@ import { TwoRow } from "../../core/layouts";
 import CenterDetailsContent from "../../containers/CenterDetailsContent";
 import CenterDetailsHeader from "../../containers/CenterDetailsHeader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import useFetch from "../../core/hooks/useFetch";
 import {
   ADMIN_ROUTE,
@@ -14,10 +15,9 @@ import {
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { getErrorMessage } from "../../constant/utils";
-import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { ROUND_ID } from "../../constant/constant";
 import { Spin } from "antd";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import styles from "./SetupCenterDetails.module.scss";
 
 const SetupCenterDetails = () => {
