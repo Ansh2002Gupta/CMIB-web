@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { Image, Input, Typography } from "antd";
 import { capitalize } from "lodash";
+import { Image, Input, Typography } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow";
 import TwoColumn from "../../core/layouts/TwoColumn";
@@ -41,7 +41,6 @@ const SideMenuItems = ({
         !openSelector ? (
           <TwoColumn
             className={styles.moduleSelector}
-            isLeftFillSpace
             leftSectionStyle={classes.leftSectionStyle}
             leftSection={
               <div className={styles.moduleSelectorHeading}>

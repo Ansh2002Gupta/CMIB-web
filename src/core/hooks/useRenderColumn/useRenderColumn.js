@@ -52,7 +52,11 @@ const useRenderColumn = () => {
   }) => {
     const columnObject = {};
 
-    const { onSelectLocation } = renderAutoPlaceComplete;
+    const {
+      allowManualText,
+      isEditable: isAutoPlaceEditable,
+      onSelectLocation,
+    } = renderAutoPlaceComplete;
 
     const {
       customContainerStyles,
@@ -281,13 +285,16 @@ const useRenderColumn = () => {
     sortDirection && (columnObject.sortDirection = sortDirection);
     renderAutoPlaceComplete.visible &&
       (columnObject.render = (value, record) => {
-        return (
+        return isAutoPlaceEditable ? (
           <AutoPlaceComplete
+            {...{ allowManualText }}
+            defaultValue={value}
             onSelectLocation={(value) => {
               onSelectLocation(value, record);
             }}
-            defaultValue={value}
           />
+        ) : (
+          getRenderText(value)
         );
       });
 

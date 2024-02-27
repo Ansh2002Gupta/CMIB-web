@@ -489,6 +489,7 @@ const locale = {
   "label.no_centres_selected": "No Centres Selected",
   "label.no_centres_selected_msg":
     "To proceed with the setup, please choose the centres for this round.",
+  "label.no_prior_chats_found": "No prior chats found",
 };
 
 export default locale;
