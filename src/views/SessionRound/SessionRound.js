@@ -15,13 +15,15 @@ import CustomModal from "../../components/CustomModal/CustomModal";
 import EditSessionRound from "../../containers/EditSessionRound";
 import RoundCard from "../../containers/RoundCard";
 import SessionRoundDetails from "../../containers/SessionRoundDetails";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { ADMIN_ROUTE, ROUNDS } from "../../constant/apiEndpoints";
-import { API_STATUS, FORM_STATES } from "../../constant/constant";
+import { API_STATUS, FORM_STATES, MODULE_KEYS } from "../../constant/constant";
 import { classes } from "./SessionRound.styles";
 import styles from "./SessionRound.module.scss";
 
 const SessionRound = ({
+  currentlySelectedModuleKey,
   roundId,
   roundList,
   roundNo,
@@ -32,6 +34,10 @@ const SessionRound = ({
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
   const { getImage } = useContext(ThemeContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -83,6 +89,15 @@ const SessionRound = ({
     setCurrentMode(FORM_STATES.VIEW_ONLY);
   };
 
+  useEffect(() => {
+    if (!currentGlobalSession?.is_editable) {
+      setSearchParams((prev) => {
+        prev.set("mode", FORM_STATES.VIEW_ONLY);
+        return prev;
+      });
+    }
+  }, [globalSessionDetails]);
+
   const toggleShowErrorMsg = () => {
     setShowNoCentreSelectedAlert((prev) => !prev);
   };
@@ -112,6 +127,7 @@ const SessionRound = ({
             roundDetails &&
             currentMode === FORM_STATES.VIEW_ONLY && (
               <SessionRoundDetails
+                currentGlobalSession={currentGlobalSession}
                 intl={intl}
                 onClickEdit={handleOnClickEdit}
                 roundDetails={roundDetails}
@@ -155,21 +171,27 @@ const SessionRound = ({
                 <div className={styles.gridClass}>
                   {roundList.map((item) => {
                     return (
-                      <RoundCard
-                        key={item.id}
-                        headingDescription={item.headingDescription}
-                        headingIntl={item.headingIntl}
-                        imageUrl={item.imageUrl}
-                        onClick={() => {
-                          if (roundDetails?.centres?.length) {
-                            navigate(
-                              `${item.onClickNaviagtion}?roundId=${roundId}`
-                            );
-                          } else {
-                            toggleShowErrorMsg();
-                          }
-                        }}
-                      />
+                      !(
+                        currentlySelectedModuleKey !==
+                          MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+                        (item.id === 2 || item.id === 3)
+                      ) && (
+                        <RoundCard
+                          key={item.id}
+                          headingDescription={item.headingDescription}
+                          headingIntl={item.headingIntl}
+                          imageUrl={item.imageUrl}
+                          onClick={() => {
+                            if (roundDetails?.centres?.length) {
+                              navigate(
+                                `${item.onClickNaviagtion}?roundId=${roundId}`
+                              );
+                            } else {
+                              toggleShowErrorMsg();
+                            }
+                          }}
+                        />
+                      )
                     );
                   })}
                 </div>

@@ -2,9 +2,10 @@ import React, { useReducer } from "react";
 import * as types from "./types";
 
 const initialState = {
-  globalSessionId: '',
+  globalSessionId: "",
   globalSessionList: [],
   selectedSession: {},
+  isGettingGlobalSessions: false,
 };
 
 const globalSessionReducer = (state, action) => {
@@ -14,22 +15,30 @@ const globalSessionReducer = (state, action) => {
         ...state,
         globalSessionId: action.payload,
       };
-    case types.SET_GLOBAL_SESSION_LIST: 
-    return {
-      ...state,
-      globalSessionList: action.payload,
-    }  
+    case types.SET_GLOBAL_SESSION_LIST:
+      return {
+        ...state,
+        globalSessionList: action.payload,
+      };
     case types.SET_SELECTED_SESSION:
       return {
         ...state,
         selectedSession: action.payload,
-      }
+      };
+    case types.SET_IS_GETTING_GLOBAL_SESSION_LIST:
+      return {
+        ...state,
+        isGettingGlobalSessions: action.payload,
+      };
     default:
       return state;
   }
 };
 
-export const GlobalSessionContext = React.createContext([initialState, () => {}]);
+export const GlobalSessionContext = React.createContext([
+  initialState,
+  () => {},
+]);
 
 const GlobalSessionProvider = ({ children }) => {
   const [globalSessionDetails, globalSessionDispatch] = useReducer(

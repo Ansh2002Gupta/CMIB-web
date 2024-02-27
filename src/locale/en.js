@@ -478,6 +478,18 @@ const locale = {
   "label.tickeNumber": "Ticket Number",
   "label.date_create_on": "Date Created On",
   "label.path.reply": "Ticket Details",
+  "session.workExperienceRanges": "Work Experience Ranges",
+  "session.workExperienceRange": "Work Experience Range",
+  "session.min_ctc": "Minimum CTC",
+  "label.yearsAndMore": "Years and more",
+  "label.years": "Years",
+  "label.addSessionSuccessfully": "Session has been created successfully",
+  "label.updateSessionSuccessfully": "Session has been updated successfully",
+  "session.useAndMore": "Use ‘and more’ ",
+  "session.use": "Use ",
+  "session.andMore": "'and more'",
+  "label.from": "From",
+  "label.to": "To",
   "label.select_centres_error_msg":
     "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
   "label.orientation_no_result_msg":
