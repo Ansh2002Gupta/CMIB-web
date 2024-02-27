@@ -100,7 +100,9 @@ function Session() {
           key={Date.now()}
           {...{
             isEditable: false,
-            isGettingSessions,
+            isGettingSessions:
+              globalSessionDetails?.isGettingGlobalSessions ||
+              isGettingSessions,
             isSessionError,
             fetchData,
             sessionData,
@@ -116,6 +118,7 @@ function Session() {
             title: intl.formatMessage({ id: "session.roundOne" }),
             children: (
               <SessionRound
+                {...{ currentlySelectedModuleKey }}
                 roundNo={1}
                 roundId={
                   (
@@ -141,6 +144,7 @@ function Session() {
             title: intl.formatMessage({ id: "session.roundTwo" }),
             children: (
               <SessionRound
+                {...{ currentlySelectedModuleKey }}
                 roundNo={2}
                 roundList={ROUND_TWO_CARD_LIST}
                 sessionData={sessionData}

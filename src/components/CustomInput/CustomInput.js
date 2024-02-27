@@ -8,10 +8,12 @@ import Base from "../../core/layouts/Base/Base";
 import MarkRequired from "../MarkRequired";
 import styles from "./CustomInput.module.scss";
 import { classes } from "./CustomInput.styles";
+import "./override.css";
 
 const CustomInput = React.forwardRef(
   (
     {
+      controls,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,
@@ -159,8 +161,7 @@ const CustomInput = React.forwardRef(
           )}
           {type === "inputNumber" && (
             <InputNumber
-              type="number"
-              controls={false}
+              controls={controls}
               className={[
                 styles.inputNumberStyles,
                 customInputNumberStyles,
@@ -206,6 +207,7 @@ const CustomInput = React.forwardRef(
 );
 
 CustomInput.defaultProps = {
+  controls: false,
   customContainerStyles: "",
   customErrorTextStyles: "",
   customInputNumberStyles: "",
@@ -243,6 +245,7 @@ CustomInput.defaultProps = {
 };
 
 CustomInput.propTypes = {
+  controls: PropTypes.PropTypes.bool,
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
   customInputNumberStyles: PropTypes.string,

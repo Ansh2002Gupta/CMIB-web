@@ -194,7 +194,7 @@ export const ROUND_ONE_CARD_LIST = [
     imageUrl: "DeviceMessage",
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
-    headingIntl: "Mock Interviews",
+    headingIntl: "Setup Mock Interviews",
     onClickNaviagtion: SETUP_MOCK_INTERVIEW,
   },
   {
@@ -202,7 +202,7 @@ export const ROUND_ONE_CARD_LIST = [
     imageUrl: "Key",
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
-    headingIntl: "Orientation Centres",
+    headingIntl: "Setup Orientation Centres",
     onClickNaviagtion: ROUND_ONE_ORIENTATION_CENTERS,
   },
   {
