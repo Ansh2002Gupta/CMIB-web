@@ -44,9 +44,10 @@ const CenterDetailsContent = ({
   const [errors, setErrors] = useState([]);
 
   const {
-    updateCentreConfig,
+    errorWhileUpdatingConfig,
     isLoading: isUpdatingConfig,
-    error: errorWhileUpdatingConfig,
+    setErrorWhileUpdatingConfig,
+    updateCentreConfig,
   } = useConfigUpdateHandler();
 
   useEffect(() => {
@@ -254,8 +255,8 @@ const CenterDetailsContent = ({
       return (
         <div className={styles.loaderContainer}>
           <ErrorMessageBox
-            onRetry={handleSave}
-            errorText={errorWhileUpdatingConfig?.data?.message}
+            onRetry={() => setErrorWhileUpdatingConfig("")}
+            errorText={errorWhileUpdatingConfig}
             errorHeading={intl.formatMessage({
               id: "label.error",
             })}
