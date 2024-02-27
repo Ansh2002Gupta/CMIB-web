@@ -109,7 +109,12 @@ const EditSessionRoundTemplate = ({
           }
           rightSection={
             <CustomButton
-              isBtnDisable={!experience?.length || !selectedCentres?.length}
+              isBtnDisable={
+                (currentlySelectedModuleKey !==
+                  MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+                  !experience?.length) ||
+                !selectedCentres?.length
+              }
               loading={isLoading}
               textStyle={styles.saveButtonTextStyles}
               btnText={intl.formatMessage({
