@@ -141,20 +141,20 @@ export const getTicketColumn = ({
             key: "see",
             render: (data, rowData) => {
               const { status } = rowData;
-              const closed = status.toLowerCase() === "closed";
+              const isClosed = status.toLowerCase() === "closed";
               return (
                 <Image
                   src={
-                    closed
+                    isClosed
                       ? getImage("iconProfileAddDisabled")
                       : getImage("iconProfileAdd")
                   }
                   preview={false}
                   alt="addAssignee"
                   visible
-                  onClick={() => !closed && handleClickAssign(rowData)}
+                  onClick={() => !isClosed && handleClickAssign(rowData)}
                   className={
-                    closed ? styles.assignIconDisabled : styles.assignIcon
+                    isClosed ? styles.assignIconDisabled : styles.assignIcon
                   }
                 />
               );
