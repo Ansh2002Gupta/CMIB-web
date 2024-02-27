@@ -241,6 +241,12 @@ const CenterDetailsContent = ({
       ...prevFormData,
       [name]: value,
     }));
+    if (name === "centreStartTime") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        centreEndTime: "",
+      }));
+    }
   };
 
   const renderContent = () => {
