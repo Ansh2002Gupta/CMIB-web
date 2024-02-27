@@ -6,15 +6,20 @@ import { AutoComplete } from "antd";
 import { loadScript } from "../../Utils/loadScript";
 import { styles } from "./AutoPlaceComplete.styles";
 
-const AutoPlaceComplete = ({defaultValue, onSelectLocation}) => {
+const AutoPlaceComplete = ({
+  allowManualText,
+  defaultValue,
+  onSelectLocation,
+}) => {
   const intl = useIntl();
   const [searchedLocation, setSearchedLocation] = useState(defaultValue);
   const [suggestedLocations, setSuggestedLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState({});
 
   useEffect(() => {
     if (!window.google) {
       loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=${""}&libraries=places&callback=initMap`
+        `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_KEY}&libraries=places&callback=initMap`
       );
     }
   }, []);
@@ -54,34 +59,69 @@ const AutoPlaceComplete = ({defaultValue, onSelectLocation}) => {
     }
   }, [searchedLocation]);
 
-  const getPanelValue = (searchText) => {
-    return !searchText ? [] : [{ value: searchText }];
+  const getPanelValue = () => {
+    return [];
   };
 
   const setLatLngFromAddress = (address) => {
-    onSelectLocation && onSelectLocation(address);
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode(
+      {
+        address,
+      },
+      function (results, status) {
+        if (
+          status !== window.google.maps.places.PlacesServiceStatus.OK ||
+          !results
+        ) {
+          return;
+        }
+        let place = results[0];
+        const location = {
+          venue: address,
+          latitude: place.geometry.location.lat(),
+          longitude: place.geometry.location.lng(),
+        };
+        onSelectLocation &&
+          onSelectLocation(
+            location,
+            place.geometry.location.lat(),
+            place.geometry.location.lng()
+          );
+      }
+    );
+  };
+
+  const handleOnBlur = (e) => {
+    if (allowManualText) {
+      onSelectLocation && onSelectLocation(e.target.value);
+      return;
+    }
+    setSearchedLocation(defaultValue);
   };
 
   return (
-      <AutoComplete
-        value={searchedLocation}
-        options={suggestedLocations}
-        onChange={(data) => {
-          setSearchedLocation(data);
-        }}
-        style={styles.inputStyle}
-        onSelect={setLatLngFromAddress}
-        onSearch={(item) => setSuggestedLocations(getPanelValue(item))}
-        placeholder={intl.formatMessage({ id: "label.enter_location" })}
-      />
+    <AutoComplete
+      value={searchedLocation}
+      options={suggestedLocations}
+      onChange={(data) => {
+        setSearchedLocation(data);
+      }}
+      style={styles.inputStyle}
+      onSelect={setLatLngFromAddress}
+      onSearch={() => setSuggestedLocations(getPanelValue())}
+      placeholder={intl.formatMessage({ id: "label.enter_location" })}
+      onBlur={handleOnBlur}
+    />
   );
 };
 
-AutoComplete.defaultProps = {
-  defaultValue: '',
+AutoPlaceComplete.defaultProps = {
+  defaultValue: "",
 };
 
-AutoComplete.propTypes = {
+AutoPlaceComplete.propTypes = {
+  allowManualText: PropTypes.bool,
   defaultValue: PropTypes.string,
   onSelectLocation: PropTypes.func,
 };

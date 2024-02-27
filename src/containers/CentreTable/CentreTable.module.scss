@@ -9,9 +9,15 @@
   font-weight: var(--fontWeightMedium);
 }
 
+.container {
+  width: var(--fullWidth);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  overflow: hidden;
+}
 
 .customDateContainerStyles {
-  width: var(--width_160);;
+  width: var(--width_160);
 }
 
 .inputNumbeCustomStyles {

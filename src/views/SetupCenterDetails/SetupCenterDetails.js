@@ -7,6 +7,7 @@ import { TwoRow } from "../../core/layouts";
 import CenterDetailsContent from "../../containers/CenterDetailsContent";
 import CenterDetailsHeader from "../../containers/CenterDetailsHeader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import useFetch from "../../core/hooks/useFetch";
 import {
   ADMIN_ROUTE,
@@ -14,17 +15,21 @@ import {
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { getErrorMessage } from "../../constant/utils";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { ROUND_ID } from "../../constant/constant";
 import { Spin } from "antd";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import styles from "./SetupCenterDetails.module.scss";
 
 const SetupCenterDetails = () => {
   const [searchParams] = useSearchParams();
   const { centreId } = useParams();
   const [userProfileDetails] = useContext(UserProfileContext);
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const isEdit = searchParams.get("mode") === "edit";
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const isEdit = currentGlobalSession?.is_editable;
   const roundId = searchParams.get(ROUND_ID);
   const {
     data: centreDetailData,
@@ -56,7 +61,7 @@ const SetupCenterDetails = () => {
         <div className={styles.loaderContainer}>
           <ErrorMessageBox
             errorText={getErrorMessage(errorWhileGettingDetails)}
-            onRetry={() => getCentreDetail()}
+            onRetry={() => getCentreDetail({})}
             errorHeading={intl.formatMessage({ id: "label.errorOccured" })}
           />
         </div>
