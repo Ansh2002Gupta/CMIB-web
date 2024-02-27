@@ -6,7 +6,7 @@ import Typography from "antd/es/typography/Typography";
 import Base from "../../core/layouts/Base/Base";
 
 import CustomCheckBox from "../../components/CustomCheckBox";
-import { MODULE_KEYS, ROLES } from "../../constant/constant";
+import { MODULE_KEYS } from "../../constant/constant";
 import styles from "./CheckBoxList.module.scss";
 
 const CheckBoxList = ({
@@ -47,13 +47,15 @@ const CheckBoxList = ({
   };
 
   useEffect(() => {
-    if (selectedModules.includes(controlModuleId)) {
-      setIsAccessValid(!!selectedControls?.length);
-    } else {
-      setSelectedControls([]);
-      setIsAccessValid(!!selectedModules?.length);
+    if (rolesData) {
+      if (selectedModules.includes(controlModuleId)) {
+        setIsAccessValid(!!selectedControls?.length);
+      } else {
+        setSelectedControls([]);
+        setIsAccessValid(!!selectedModules?.length);
+      }
     }
-  }, [selectedModules?.length, selectedControls?.length]);
+  }, [selectedModules?.length, selectedControls?.length, rolesData]);
 
   return (
     <Base className={styles.parentContainer}>
@@ -61,19 +63,17 @@ const CheckBoxList = ({
       <div className={styles.container}>
         {Object.entries(rolesData?.roles || {})?.map(([index, item]) => {
           return (
-            item.key !== ROLES.SUPER_ADMIN && (
-              <CustomCheckBox
-                disabled={item.disabled}
-                key={item.id}
-                className={[styles.box].join(" ")}
-                onChange={() =>
-                  handleSelect(selectedModules, setSelectedModules, item.id)
-                }
-                checked={selectedModules.includes(item.id)}
-              >
-                <Typography className={styles.text}>{item.name}</Typography>
-              </CustomCheckBox>
-            )
+            <CustomCheckBox
+              disabled={item.disabled}
+              key={item.id}
+              className={[styles.box].join(" ")}
+              onChange={() =>
+                handleSelect(selectedModules, setSelectedModules, item.id)
+              }
+              checked={selectedModules.includes(item.id)}
+            >
+              <Typography className={styles.text}>{item.name}</Typography>
+            </CustomCheckBox>
           );
         })}
       </div>
