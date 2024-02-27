@@ -87,7 +87,21 @@ const OrientationCenter = () => {
     setFormData((prevFormData) => {
       return prevFormData.map((item) => {
         if (item.id === recordId) {
-          return { ...item, [field]: value };
+          if (
+            typeof value === "object" &&
+            value.venue &&
+            value.latitude &&
+            value.longitude
+          ) {
+            return {
+              ...item,
+              [field]: value.venue,
+              latitude: value.latitude,
+              longitude: value.longitude,
+            };
+          } else {
+            return { ...item, [field]: value };
+          }
         }
         return item;
       });
@@ -285,6 +299,7 @@ const OrientationCenter = () => {
             fetchCentersSuccessFlag &&
             !isUpdatingOrientationCentre &&
             !!orientationCentres?.length &&
+            !errorWhileUpdatingCentre &&
             !!currentGlobalSession?.status && (
               <TwoColumn
                 className={styles.buttonContainer}
