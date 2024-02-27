@@ -9,6 +9,7 @@ import CenterDetailsHeader from "../../containers/CenterDetailsHeader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import useFetch from "../../core/hooks/useFetch";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
@@ -45,10 +46,17 @@ const SetupCenterDetails = () => {
       `/${roundId}` +
       CENTRE_END_POINT +
       `/${centreId}`,
+    otherOptions: { skipApiCallOnMount: true },
   });
   const intl = useIntl();
 
   const { centre_code, name } = centreDetailData || {};
+
+  useModuleWiseApiCall({
+    initialApiCall: () => {
+      getCentreDetail({});
+    },
+  });
 
   return (
     <>
