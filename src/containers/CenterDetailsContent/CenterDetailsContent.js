@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Spin, Typography } from "antd";
@@ -9,9 +10,9 @@ import CentreTable from "../CentreTable";
 import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import EditCentreSetupFeeAndTime from "../../components/EditCentreSetupFeeAndTime/EditCentreSetupFeeAndTime";
-import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useConfigUpdateHandler from "../../services/api-services/SetupCentre/useConfigUpdateHandler";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import useResponsive from "../../core/hooks/useResponsive";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
@@ -29,6 +30,7 @@ const CenterDetailsContent = ({
   const { interview_dates } = centreDetailData || {};
   const [formData, setFormData] = useState({});
   const [tableData, setTableData] = useState([]);
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const addTableData = {
     id: 0,
@@ -43,11 +45,8 @@ const CenterDetailsContent = ({
 
   const [errors, setErrors] = useState([]);
 
-  const {
-    updateCentreConfig,
-    isLoading: isUpdatingConfig,
-    error: errorWhileUpdatingConfig,
-  } = useConfigUpdateHandler();
+  const { isLoading: isUpdatingConfig, updateCentreConfig } =
+    useConfigUpdateHandler();
 
   useEffect(() => {
     setFormData({
@@ -233,31 +232,31 @@ const CenterDetailsContent = ({
       payload: centreDetails,
       centreId: centreId,
       roundId: roundId,
+      onErrorCallback: (error) => {
+        showNotification({ text: error, type: "error" });
+      },
     });
   };
 
   const handleInputChange = (value, name) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    setFormData((prevFormData) => {
+      const updatedFormData = { ...prevFormData, [name]: value };
+      if (name === "centreStartTime" && prevFormData.centreEndTime) {
+        const startTime = value;
+        const endTime = prevFormData.centreEndTime;
+        const timeDifference = dayjs(startTime, "HH:mm:ss").diff(
+          dayjs(endTime, "HH:mm:ss"),
+          "minutes"
+        );
+        if (timeDifference > 0) {
+          updatedFormData.centreEndTime = "";
+        }
+      }
+      return updatedFormData;
+    });
   };
 
   const renderContent = () => {
-    if (!isUpdatingConfig && errorWhileUpdatingConfig) {
-      return (
-        <div className={styles.loaderContainer}>
-          <ErrorMessageBox
-            onRetry={handleSave}
-            errorText={errorWhileUpdatingConfig?.data?.message}
-            errorHeading={intl.formatMessage({
-              id: "label.error",
-            })}
-          />
-        </div>
-      );
-    }
-
     if (isUpdatingConfig) {
       return (
         <div className={styles.loaderContainer}>
@@ -275,6 +274,23 @@ const CenterDetailsContent = ({
       setErrors,
       tableData,
       validate,
+    };
+
+    const isFirstTableRowFilled = () => {
+      if (!tableData.length) return false;
+
+      const firstRow = tableData[0];
+      const isValueFilled = (value) => !!value || value === 0;
+
+      return (
+        isValueFilled(firstRow.scheduleDate) &&
+        isValueFilled(firstRow.participationFee) &&
+        isValueFilled(firstRow.firm.firmFee) &&
+        isValueFilled(firstRow.firm.uptoPartners) &&
+        isValueFilled(firstRow.norm1) &&
+        isValueFilled(firstRow.norm2) &&
+        isValueFilled(firstRow.norm2MinVacancy)
+      );
     };
 
     const interviewDatesSection = (
@@ -312,7 +328,8 @@ const CenterDetailsContent = ({
             isBtnDisable={
               !formData?.PsychometricFee ||
               !formData?.centreStartTime ||
-              !formData?.centreEndTime
+              !formData?.centreEndTime ||
+              !isFirstTableRowFilled()
             }
             customStyle={styles.customStyle}
             textStyle={styles.saveButtonTextStyles}
@@ -332,53 +349,56 @@ const CenterDetailsContent = ({
     ];
 
     return (
-      <TwoRow
-        className={styles.mainContainer}
-        topSection={
-          isEdit ? (
-            <EditCentreSetupFeeAndTime
-              isEdit={isEdit}
-              handleInputChange={handleInputChange}
-              formData={formData}
-            />
-          ) : (
-            <div className={styles.gridStyle}>
-              <CustomGrid>
-                {centreDetails.map((item) => (
-                  <TwoRow
-                    key={item.id}
-                    className={styles.gridItem}
-                    topSection={
-                      <Typography className={styles.grayText}>
-                        {intl.formatMessage({
-                          id: `label.${item.heading}`,
-                        })}
-                        <span className={styles.redText}> *</span>
-                      </Typography>
-                    }
-                    bottomSection={
-                      <div className={styles.blackText}>{item.value}</div>
-                    }
-                  />
-                ))}
-              </CustomGrid>
-            </div>
-          )
-        }
-        topSectionStyle={classes.topSectionStyle}
-        bottomSection={
-          !isEdit ? (
-            <CentreTable {...commonTableProps} />
-          ) : (
-            <TwoRow
-              className={styles.bottomSectionStyle}
-              topSection={interviewDatesSection}
-              bottomSection={bottomSectionButtons}
-              bottomSectionStyle={classes.bottomSectionStyle}
-            />
-          )
-        }
-      />
+      <>
+        {notificationContextHolder}
+        <TwoRow
+          className={styles.mainContainer}
+          topSection={
+            isEdit ? (
+              <EditCentreSetupFeeAndTime
+                isEdit={isEdit}
+                handleInputChange={handleInputChange}
+                formData={formData}
+              />
+            ) : (
+              <div className={styles.gridStyle}>
+                <CustomGrid>
+                  {centreDetails.map((item) => (
+                    <TwoRow
+                      key={item.id}
+                      className={styles.gridItem}
+                      topSection={
+                        <Typography className={styles.grayText}>
+                          {intl.formatMessage({
+                            id: `label.${item.heading}`,
+                          })}
+                          <span className={styles.redText}> *</span>
+                        </Typography>
+                      }
+                      bottomSection={
+                        <div className={styles.blackText}>{item.value}</div>
+                      }
+                    />
+                  ))}
+                </CustomGrid>
+              </div>
+            )
+          }
+          topSectionStyle={classes.topSectionStyle}
+          bottomSection={
+            !isEdit ? (
+              <CentreTable {...commonTableProps} />
+            ) : (
+              <TwoRow
+                className={styles.bottomSectionStyle}
+                topSection={interviewDatesSection}
+                bottomSection={bottomSectionButtons}
+                bottomSectionStyle={classes.bottomSectionStyle}
+              />
+            )
+          }
+        />
+      </>
     );
   };
 
