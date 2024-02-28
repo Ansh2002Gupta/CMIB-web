@@ -20,3 +20,22 @@
   text-align: center;
   box-shadow: 1px 3px 5px  var(--ltGrey5);
 }
+
+.erroContainerBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.noChatDataStyle{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noChatDataTextStyle{
+  font-weight: var(--fontWeightBold);
+  opacity: 0.5;
+}

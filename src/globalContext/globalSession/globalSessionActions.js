@@ -20,3 +20,10 @@ export const setSelectedSession = (payload) => {
     payload,
   };
 };
+
+export const setIsGettingGlobalSessionList = (payload) => {
+  return {
+    type: types.SET_IS_GETTING_GLOBAL_SESSION_LIST,
+    payload,
+  };
+};

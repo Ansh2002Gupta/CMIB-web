@@ -1,5 +1,5 @@
-.container{
-    background-color: var(--lightGrey3Bg);
+.container {
+  background-color: var(--lightGrey3Bg);
   flex: 1;
 }
 
@@ -29,14 +29,13 @@
   align-items: flex-start;
 }
 
-.companyContentDetails{
+.companyContentDetails {
   gap: var(--gapXSmall);
   text-align: left;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-top: var(--marginLarge);
-  
 }
 
 .contentHeadingText {
@@ -49,6 +48,7 @@
   font-size: var(--fontSizeSmall);
   color: var(--textBold);
   font-weight: var(--fontWeightMedium);
+  text-transform: capitalize;
 }
 
 .nameText {
@@ -74,11 +74,11 @@
   height: var(--fullHeight, 100%);
 }
 
-.mainContainer{
+.mainContainer {
   margin: var(--marginMedium);
-  padding:var(--paddingSmall);
+  padding: var(--paddingSmall);
   background-color: white;
   border-radius: 16px;
-  border:var(--borderLight);
+  border: var(--borderLight);
   gap: 20px;
 }

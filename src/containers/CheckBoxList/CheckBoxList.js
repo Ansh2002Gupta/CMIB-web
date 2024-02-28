@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import Typography from "antd/es/typography/Typography";
@@ -6,8 +6,7 @@ import Typography from "antd/es/typography/Typography";
 import Base from "../../core/layouts/Base/Base";
 
 import CustomCheckBox from "../../components/CustomCheckBox";
-import { allModuleIdObject } from "../../constant/constant";
-import { PERMISION_AND_ROLE } from "../../dummyData";
+import { MODULE_KEYS } from "../../constant/constant";
 import styles from "./CheckBoxList.module.scss";
 
 const CheckBoxList = ({
@@ -19,12 +18,15 @@ const CheckBoxList = ({
   setSelectedModules,
 }) => {
   const intl = useIntl();
-  const areAllModulesSelected =
-    selectedModules.length === PERMISION_AND_ROLE.data.length;
-  const areAllControlsSelected =
-    selectedControls.length === PERMISION_AND_ROLE.data[0].permissions.length;
 
-  const controlModuleId = allModuleIdObject.control;
+  let controlModuleId;
+  for (const [key, value] of Object.entries(rolesData?.roles || {})) {
+    if (value.key === MODULE_KEYS.CONTROL_KEY) {
+      controlModuleId = +key;
+      break;
+    }
+  }
+
   const handleSelect = (selectedOptionArray, setSelectedOptionArray, id) => {
     if (selectedOptionArray.includes(id)) {
       const updatedData = selectedOptionArray.filter(
@@ -36,17 +38,6 @@ const CheckBoxList = ({
     setSelectedOptionArray([...selectedOptionArray, id]);
   };
 
-  const handleSelectAll = (
-    areAllElementSelected,
-    setSelectedOptionArray,
-    arrayOfAllValidId
-  ) => {
-    const arrayOfAllId = arrayOfAllValidId
-      ?.filter((item) => !areAllElementSelected)
-      ?.map((item) => item.id);
-    setSelectedOptionArray(arrayOfAllId);
-  };
-
   const getTextWithStar = (text) => {
     return (
       <Typography className={styles.label}>
@@ -56,13 +47,15 @@ const CheckBoxList = ({
   };
 
   useEffect(() => {
-    if (selectedModules.includes(controlModuleId)) {
-      setIsAccessValid(!!selectedControls?.length);
-    } else {
-      setSelectedControls([]);
-      setIsAccessValid(!!selectedModules?.length);
+    if (rolesData) {
+      if (selectedModules.includes(controlModuleId)) {
+        setIsAccessValid(!!selectedControls?.length);
+      } else {
+        setSelectedControls([]);
+        setIsAccessValid(!!selectedModules?.length);
+      }
     }
-  }, [selectedModules?.length, selectedControls?.length]);
+  }, [selectedModules?.length, selectedControls?.length, rolesData]);
 
   return (
     <Base className={styles.parentContainer}>

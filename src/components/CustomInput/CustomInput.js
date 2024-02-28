@@ -7,10 +7,13 @@ import Base from "../../core/layouts/Base/Base";
 
 import MarkRequired from "../MarkRequired";
 import styles from "./CustomInput.module.scss";
+import { classes } from "./CustomInput.styles";
+import "./override.css";
 
 const CustomInput = React.forwardRef(
   (
     {
+      controls,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,
@@ -106,6 +109,7 @@ const CustomInput = React.forwardRef(
             <Input
               ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
               type={type || "text"}
+              style={classes.inputStyle}
               className={[
                 styles.inputField,
                 customInputStyles,
@@ -118,7 +122,6 @@ const CustomInput = React.forwardRef(
                 maxLength,
                 onChange,
                 onBlur,
-                maxLength,
               }}
               prefix={isPrefixRequired ? prefixElement : null}
               suffix={
@@ -158,8 +161,7 @@ const CustomInput = React.forwardRef(
           )}
           {type === "inputNumber" && (
             <InputNumber
-              type="number"
-              controls={false}
+              controls={controls}
               className={[
                 styles.inputNumberStyles,
                 customInputNumberStyles,
@@ -205,6 +207,7 @@ const CustomInput = React.forwardRef(
 );
 
 CustomInput.defaultProps = {
+  controls: false,
   customContainerStyles: "",
   customErrorTextStyles: "",
   customInputNumberStyles: "",
@@ -224,7 +227,6 @@ CustomInput.defaultProps = {
   isTextVisible: true,
   isSelectBoxDisable: false,
   label: "",
-  max: 10,
   maxLength: 100,
   messageStyles: "",
   messageToShow: "",
@@ -243,6 +245,7 @@ CustomInput.defaultProps = {
 };
 
 CustomInput.propTypes = {
+  controls: PropTypes.PropTypes.bool,
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
   customInputNumberStyles: PropTypes.string,

@@ -29,7 +29,6 @@ import {
   ROUND_TWO_CARD_LIST,
   VALID_CONSENT_MARKING_TABS_ID,
 } from "../../constant/constant";
-import variables from "../../themes/base/styles/variables";
 import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./session.module.scss";
 
@@ -54,8 +53,6 @@ function Session() {
     fetchData,
     isError: isSessionError,
     isLoading: isGettingSessions,
-    isSuccess,
-    setData,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -103,7 +100,9 @@ function Session() {
           key={Date.now()}
           {...{
             isEditable: false,
-            isGettingSessions,
+            isGettingSessions:
+              globalSessionDetails?.isGettingGlobalSessions ||
+              isGettingSessions,
             isSessionError,
             fetchData,
             sessionData,
@@ -112,31 +111,51 @@ function Session() {
         />
       ),
     },
-    {
-      key: "2",
-      title: intl.formatMessage({ id: "session.roundOne" }),
-      children: (
-        <SessionRound
-          roundNo={1}
-          roundId={sessionData?.rounds?.[0]?.id}
-          roundList={ROUND_ONE_CARD_LIST}
-          sessionData={sessionData}
-          switchLabel={intl.formatMessage({ id: "session.roundOneStatus" })}
-        />
-      ),
-    },
-    {
-      key: "3",
-      title: intl.formatMessage({ id: "session.roundTwo" }),
-      children: (
-        <SessionRound
-          roundNo={2}
-          roundList={ROUND_TWO_CARD_LIST}
-          sessionData={sessionData}
-          switchLabel={intl.formatMessage({ id: "session.roundTwoStatus" })}
-        />
-      ),
-    },
+    ...(sessionData?.rounds?.[0]
+      ? [
+          {
+            key: "2",
+            title: intl.formatMessage({ id: "session.roundOne" }),
+            children: (
+              <SessionRound
+                {...{ currentlySelectedModuleKey }}
+                roundNo={1}
+                roundId={
+                  (
+                    sessionData?.rounds?.find(
+                      (obj) => obj.round_code === "round-1"
+                    ) || {}
+                  ).id
+                }
+                roundList={ROUND_ONE_CARD_LIST}
+                sessionData={sessionData}
+                switchLabel={intl.formatMessage({
+                  id: "session.roundOneStatus",
+                })}
+              />
+            ),
+          },
+        ]
+      : []),
+    ...(sessionData?.rounds?.[1]
+      ? [
+          {
+            key: "3",
+            title: intl.formatMessage({ id: "session.roundTwo" }),
+            children: (
+              <SessionRound
+                {...{ currentlySelectedModuleKey }}
+                roundNo={2}
+                roundList={ROUND_TWO_CARD_LIST}
+                sessionData={sessionData}
+                switchLabel={intl.formatMessage({
+                  id: "session.roundTwoStatus",
+                })}
+              />
+            ),
+          },
+        ]
+      : []),
   ];
 
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);

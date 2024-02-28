@@ -1,6 +1,6 @@
 import {
   CONSENT_MARKING,
-  ORIENTATION_CENTERS,
+  ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
@@ -24,6 +24,14 @@ export const STATUS_CODES = {
   NOT_FOUND: 404,
   UNAUTHORIZED_USER: 401,
 };
+
+export const SESSION_PATHS = [
+  "setup-centers",
+  "orientation-centers",
+  "setup-mock-interview",
+  "consent-marking",
+  "mock-interviews",
+];
 
 export const ROW_PER_PAGE_OPTIONS = [
   {
@@ -194,7 +202,7 @@ export const ROUND_ONE_CARD_LIST = [
     imageUrl: "DeviceMessage",
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
-    headingIntl: "Mock Interviews",
+    headingIntl: "Setup Mock Interviews",
     onClickNaviagtion: SETUP_MOCK_INTERVIEW,
   },
   {
@@ -202,8 +210,8 @@ export const ROUND_ONE_CARD_LIST = [
     imageUrl: "Key",
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
-    headingIntl: "Orientation Centres",
-    onClickNaviagtion: ORIENTATION_CENTERS,
+    headingIntl: "Setup Orientation Centres",
+    onClickNaviagtion: ROUND_ONE_ORIENTATION_CENTERS,
   },
   {
     id: 4,
@@ -364,6 +372,7 @@ export const SORTING_QUERY_PARAMS = {
 export const NUMBER_OF_CHIPS_TO_SHOW = 15;
 
 export const USER_PROFILE_QUERY_PARAMS = "user-profile";
+export const ROUND_ID = "roundId";
 
 export const MIN_SEARCH_TEXT_LENGTH = 2;
 
@@ -373,3 +382,9 @@ export const CENTRE_TYPE_ENUM = {
 };
 
 export const SESSION_KEY = "sessionKey";
+export const MAX_HSN_CODE_LENGTH = 8;
+export const MAX_BANK_AC_NO_LENGTH = 18;
+
+export const ROLES = {
+  SUPER_ADMIN: "super-admin",
+};

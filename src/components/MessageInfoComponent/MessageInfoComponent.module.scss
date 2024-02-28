@@ -1,31 +1,29 @@
-
 $lg: 1200px;
 $xl: 1600px;
 $md: 992px;
 $sm: 768px;
 $xs: 576px;
 
-$lightGrey: #CCCCCC; 
-$backgroundColor: #FFFFFF; 
-
 .container {
   display: flex;
   align-items: center;
-  margin: 10px;
+  margin: 16px;
   justify-content: center;
 }
 
 .subContainer {
-  flex-direction: row;
   padding: 16px;
   border-radius: 8px;
-  border-width: 1px;
-  border-color: $lightGrey;
-  background-color: $backgroundColor;
+  background-color: var(--bodyBg);
+  border: 1px solid var(--lightGrey);
 }
 
 .textSize {
   font-size: 14px;
+  color: var(--blackBg);
+  font-weight: 500;
+  line-height: 17.5px;
+  text-align: center;
   @media (max-width: #{$lg}) {
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -87,6 +87,8 @@ const locale = {
   "session.articleshipCompletetionFromDate":
     "Articleship Completetion From Date",
   "session.articleshipCompletetionToDate": "Articleship Completetion To Date",
+  "session.membershipAsOnDateOrPriorToThis":
+    "Membership As On Date Or Prior To This",
   "session.hsnCode": "HSN Code/ SAC ",
   "session.bankACNumber": "Bank A/C Number",
   "session.ifscCode": "IFSC Code",
@@ -101,6 +103,8 @@ const locale = {
     "Select Articleship Completetion From Date",
   "session.placeholder.articleshipCompletetionToDate":
     "Select Articleship Completetion To Date",
+  "session.placeholder.membershipAsOnDateOrPriorToThis":
+    "Select Membership As On Date Or Prior To This",
   "session.placeholder.hsnCode": "Enter HSN Code/ SAC ",
   "session.placeholder.bankACNumber": "Enter Bank A/C Number",
   "session.placeholder.ifscCode": "Enter IFSC Code",
@@ -125,6 +129,8 @@ const locale = {
     "Articleship completion to date should be greater than from date",
   "session.error.bankACNumber": "Please enter valid bank A/C number",
   "session.error.ifscCode": "Please enter valid IFSC code",
+  "session.error.membershipAsOnDateOrPriorToThis":
+    "Please select membership as on date or prior to this date",
   "session.error.hsnCode": "Please enter valid HSN code/ SAC",
   "session.bigCentres": "Big Centres",
   "session.smallCentres": "Small Centres",
@@ -254,7 +260,7 @@ const locale = {
   "centre.error.enterpartner": "Enter Partner",
   "centre.error.enterNorm1": "Enter Norm 1",
   "centre.error.enterNorm2": "Enter Norm 2",
-  "centre.error.enterVacancy": "Error",
+  "centre.error.enterVacancy": "Enter Vacancy",
   "label.none": "None",
   "label.userNamePlaceholder": "Please enter your username",
   "label.mobilePlaceholder": "Please enter your mobile number",
@@ -417,7 +423,8 @@ const locale = {
   "label.passwordChanged":
     "Your password has been successfully changed. Please login using your new password. Thanks!",
   "label.search": "Search",
-  "label.noSessionSetup": "No session is setup currently",
+  "label.noSessionSetup":
+    "No session is currently set up. You can create one using the ‘Set up New Session’ button above.",
   "label.sessionStatus": "Session Status",
   "label.deleteAccount": "Delete Account",
   "label.path.global-configurations": "Configure centres",
@@ -443,7 +450,7 @@ const locale = {
   "label.show_result": "Show Results",
   "label.centreCode": "Centre Id",
   "label.path.centre-details": "Edit centre details",
-  "label.setup_orientation_centers": "Setup Orientation Centers",
+  "label.setup_orientation_centers": "Setup Orientation Centres",
   "label.orientation_centers_warning":
     "*This cannot be edited once registration for the students starts. Only Venue can be edited",
   "label.total_students_booked": "Total Students Booked",
@@ -471,9 +478,30 @@ const locale = {
   "label.tickeNumber": "Ticket Number",
   "label.date_create_on": "Date Created On",
   "label.path.reply": "Ticket Details",
+  "session.workExperienceRanges": "Work Experience Ranges",
+  "session.workExperienceRange": "Work Experience Range",
+  "session.min_ctc": "Minimum CTC",
+  "label.yearsAndMore": "Years and more",
+  "label.years": "Years",
+  "label.addSessionSuccessfully": "Session has been created successfully",
+  "label.updateSessionSuccessfully": "Session has been updated successfully",
+  "session.useAndMore": "Use ‘and more’ ",
+  "session.use": "Use ",
+  "session.andMore": "'and more'",
+  "label.from": "From",
+  "label.to": "To",
+  "label.select_centres_error_msg":
+    "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
+  "label.orientation_no_result_msg":
+    "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
+  "label.path.orientation-centers": "Orientation Centres",
   "label.addSessionSuccessfully": "Session has been created successfully",
   "label.updateSessionSuccessfully": "Session has been updated successfully",
   "label.company_name": "Company Name",
+  "label.no_centres_selected": "No Centres Selected",
+  "label.no_centres_selected_msg":
+    "To proceed with the setup, please choose the centres for this round.",
+  "label.no_prior_chats_found": "No prior chats found",
 };
 
 export default locale;

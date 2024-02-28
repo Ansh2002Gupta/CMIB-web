@@ -19,7 +19,7 @@ function MenuContainer({ openSideMenu, setIsModalOpen, setOpenSideMenu }) {
     setOpenSideMenu(false);
   };
 
-  return responsive.isMd ? (
+  return responsive.isLg ? (
     <Layout
       style={{
         minHeight: "100vh",
@@ -43,7 +43,7 @@ function MenuContainer({ openSideMenu, setIsModalOpen, setOpenSideMenu }) {
       placement="left"
       open={openSideMenu}
       onClose={() => setOpenSideMenu(false)}
-      width="90%"
+      width="320px"
       closeIcon={<CloseOutlined className={styles.crossIcon} />}
       styles={{
         body: {

@@ -18,6 +18,8 @@
   min-height: var(--height_250);
   max-height: var(--height_600);
   border: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .filterBtn {

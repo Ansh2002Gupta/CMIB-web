@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Checkbox, Dropdown, Image, Switch, Tooltip, Typography } from "antd";
+import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
 import { TwoColumn } from "../../layouts";
 
@@ -53,6 +53,12 @@ const useRenderColumn = () => {
     const columnObject = {};
 
     const {
+      allowManualText,
+      isEditable: isAutoPlaceEditable,
+      onSelectLocation,
+    } = renderAutoPlaceComplete;
+
+    const {
       customContainerStyles,
       customTimeStyle,
       defaultValue,
@@ -63,6 +69,7 @@ const useRenderColumn = () => {
       onChange = () => {},
       placeholder = "",
       type,
+      disabledDate = () => {},
     } = renderDateTime;
 
     const {
@@ -109,6 +116,8 @@ const useRenderColumn = () => {
       textStyles,
       isCapitalize,
       isRequiredTooltip,
+      isMoney,
+      isYearRange,
       mobile,
       isIntl,
       isDataObject,
@@ -172,6 +181,9 @@ const useRenderColumn = () => {
       if (isIntl) {
         return intl.formatMessage({ id: `label.${text}` });
       }
+      if (isMoney) {
+        return `${text} INR`;
+      }
       return text;
     };
 
@@ -186,6 +198,27 @@ const useRenderColumn = () => {
           ].join(" ")}
         >
           {textRenderFormat({ text: text || "-" })}
+        </p>
+      );
+    };
+
+    const getRenderYearRange = (data) => {
+      return (
+        <p
+          className={[
+            textStyles,
+            isTextBold ? styles.boldText : "",
+            styles.textEllipsis,
+            isCapitalize ? styles.capitalize : "",
+          ].join(" ")}
+        >
+          {data?.use_more_experience
+            ? `${data?.work_experience_min} ${intl.formatMessage({
+                id: "label.yearsAndMore",
+              })}`
+            : `${data?.work_experience_min} - ${
+                data?.work_experience_max
+              } ${intl.formatMessage({ id: "label.years" })}`}
         </p>
       );
     };
@@ -276,10 +309,19 @@ const useRenderColumn = () => {
     defaultSortOrder && (columnObject.defaultSortOrder = defaultSortOrder);
 
     sortDirection && (columnObject.sortDirection = sortDirection);
-
     renderAutoPlaceComplete.visible &&
-      (columnObject.render = () => {
-        return <AutoPlaceComplete />;
+      (columnObject.render = (value, record) => {
+        return isAutoPlaceEditable ? (
+          <AutoPlaceComplete
+            {...{ allowManualText }}
+            defaultValue={value}
+            onSelectLocation={(value) => {
+              onSelectLocation(value, record);
+            }}
+          />
+        ) : (
+          getRenderText(value)
+        );
       });
 
     renderText?.visible &&
@@ -305,6 +347,8 @@ const useRenderColumn = () => {
             </p>
           ) : isRequiredTooltip ? (
             <Tooltip title={text}>{getRenderText(text)}</Tooltip>
+          ) : isYearRange ? (
+            getRenderYearRange(rowData)
           ) : (
             getRenderText(text)
           ),
@@ -459,6 +503,8 @@ const useRenderColumn = () => {
                 customContainerStyles,
                 customTimeStyle,
                 defaultValue,
+                disabled,
+                disabledDate,
                 isEditable,
                 isRequired,
                 type,
@@ -471,7 +517,6 @@ const useRenderColumn = () => {
               onChange={(val) => {
                 onChange(val, record);
               }}
-              disabled={disabled || !record?.isAddRow}
               errorMessage={record?.isAddRow && errorMessage}
             />
           ),

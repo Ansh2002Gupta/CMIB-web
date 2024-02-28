@@ -50,6 +50,7 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }
+
 .disabledNextAndPrevText {
   color: var(--On-background, var(--inputPlaceHolder));
   font-size: var(--fontSizeSmall);
@@ -83,7 +84,7 @@
   align-items: center;
 }
 
-.rowBG{
+.rowBG {
   background-color: var(--lightBlueBg) !important;
 }
 

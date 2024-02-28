@@ -9,7 +9,6 @@ import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/Acti
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import {
   addUserNotification,
   updateUserNotification,
@@ -19,7 +18,6 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
-import { USERS } from "../../routes/routeNames";
 import { classes } from "./UserDetailsContent.styles";
 import styles from "./UserDetailsContent.module.scss";
 
@@ -49,7 +47,6 @@ const UserDetailsContent = ({
   viewUserData,
 }) => {
   const intl = useIntl();
-  const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [, setNotificationStateDispatch] = useContext(NotificationContext);
   const { handleDeleteImage } = useDeleteImageApi();

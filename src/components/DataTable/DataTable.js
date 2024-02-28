@@ -19,6 +19,9 @@ const DataTable = ({
   current,
   currentDataLength,
   customContainerStyles,
+  customTableClassName,
+  isHoverEffectRequired,
+  hidePagination,
   keytoFindSelectedRow,
   onChangeCurrentPage,
   onChangePageSize,
@@ -52,66 +55,79 @@ const DataTable = ({
         dataSource={originalData}
         pagination={false}
         scroll={responsiveStyle}
-        className={styles.table}
+        className={[
+          styles.table,
+          customTableClassName,
+          hidePagination && "nopagination",
+          isHoverEffectRequired ? "customTableHover" : "customTableNoHover",
+        ]}
         rowClassName={setRowClassName}
         rowKey="id"
       />
-      <div className={styles.rowPerPageOptionsAndPaginationContainer}>
-        <div className={styles.rowPerPageContainer}>
-          <Typography className={styles.rowPerPageText}>
-            {intl.formatMessage({ id: "label.rowPerPage" })}
-          </Typography>
-          <Select
-            defaultValue={pageSize}
-            className={styles.rowPerPageCount}
-            onChange={onChangePageSize}
-            options={ROW_PER_PAGE_OPTIONS}
-            suffixIcon={
-              <Image src={getImage("blackArrowDown")} preview={false} />
-            }
+      {!hidePagination && (
+        <div className={styles.rowPerPageOptionsAndPaginationContainer}>
+          <div className={styles.rowPerPageContainer}>
+            <Typography className={styles.rowPerPageText}>
+              {intl.formatMessage({ id: "label.rowPerPage" })}
+            </Typography>
+            <Select
+              defaultValue={pageSize}
+              className={styles.rowPerPageCount}
+              onChange={onChangePageSize}
+              options={ROW_PER_PAGE_OPTIONS}
+              suffixIcon={
+                <Image src={getImage("blackArrowDown")} preview={false} />
+              }
+            />
+          </div>
+          <Pagination
+            disabled={originalData.length <= 0}
+            {...rightPaginationConfig}
+            className={[styles.paginationContainer].join(" ")}
+            itemRender={(current, type, originalElement) => (
+              <PaginationItems
+                {...{ current, type, originalElement }}
+                disabled={originalData.length <= 0}
+              />
+            )}
+            showLessItems
           />
         </div>
-        <Pagination
-          disabled={originalData.length <= 0}
-          {...rightPaginationConfig}
-          className={[styles.paginationContainer].join(" ")}
-          itemRender={(current, type, originalElement) => (
-            <PaginationItems
-              {...{ current, type, originalElement }}
-              disabled={originalData.length <= 0}
-            />
-          )}
-          showLessItems
-        />
-      </div>
+      )}
     </div>
   );
 };
 
 DataTable.defaultProps = {
+  arrayContainingSelectedRow: [],
   columns: [],
   current: 1,
   currentDataLength: 0,
   customContainerStyles: "",
+  isHoverEffectRequired: true,
+  keytoFindSelectedRow: "id",
+  hidePagination: false,
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
   originalData: [],
   pageSize: DEFAULT_PAGE_SIZE,
   keytoFindSelectedRow: "id",
-  arrayContainingSelectedRow: [],
 };
 
 DataTable.propTypes = {
+  arrayContainingSelectedRow: PropTypes.array,
   columns: PropTypes.array,
   current: PropTypes.number,
   currentDataLength: PropTypes.number,
   customContainerStyles: PropTypes.string,
+  isHoverEffectRequired: PropTypes.bool,
+  keytoFindSelectedRow: PropTypes.string,
+  hidePagination: PropTypes.bool,
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
   originalData: PropTypes.array,
   pageSize: PropTypes.number,
   keytoFindSelectedRow: PropTypes.string,
-  arrayContainingSelectedRow: PropTypes.array,
 };
 
 export default DataTable;
