@@ -13,8 +13,8 @@ const getConfigureDateColumns = (
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "centre.scheduleDate" }),
-      dataIndex: "scheduleDate",
-      key: "scheduleDate",
+      dataIndex: "schedule_date",
+      key: "schedule_date",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
@@ -33,8 +33,8 @@ const getConfigureDateColumns = (
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.startTime" }),
-      dataIndex: "startTime",
-      key: "startTime",
+      dataIndex: "start_time",
+      key: "start_time",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
@@ -53,8 +53,8 @@ const getConfigureDateColumns = (
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.endTime" }),
-      dataIndex: "endTime",
-      key: "endTime",
+      dataIndex: "end_time",
+      key: "end_time",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
@@ -73,8 +73,8 @@ const getConfigureDateColumns = (
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.facilitiesNumber" }),
-      dataIndex: "facilitiesNumber",
-      key: "facilitiesNumber",
+      dataIndex: "no_of_facilities",
+      key: "facilitiesno_of_facilitiesNumber",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
@@ -92,8 +92,8 @@ const getConfigureDateColumns = (
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.slotDurationInMinutes" }),
-      dataIndex: "slotDurationInMinutes",
-      key: "slotDurationInMinutes",
+      dataIndex: "slot_duration",
+      key: "slot_duration",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {

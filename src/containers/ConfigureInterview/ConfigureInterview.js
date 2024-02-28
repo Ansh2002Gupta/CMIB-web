@@ -57,6 +57,7 @@ const ConfigureInterview = () => {
   useEffect(() => {
     setTableData(data);
   }, [data]);
+
   const [tableData, setTableData] = useState(data || []);
   const [addTableData, setAddTableData] = useState({
     id: Date.now().toString(),
@@ -186,7 +187,13 @@ const ConfigureInterview = () => {
     redirectToMockInterviewListing();
   };
 
-  const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;
+  const extendedTableData = isEdit
+    ? tableData
+      ? [...tableData, addTableData]
+      : [addTableData]
+    : tableData;
+  console.log(tableData, "tableData..");
+  console.log(extendedTableData, "extendedTableData..");
 
   useEffect(() => {
     if (userProfileDetails?.selectedModuleItem?.key) {
@@ -236,7 +243,11 @@ const ConfigureInterview = () => {
                   columns,
                 }}
                 hidePagination={true}
-                customContainerStyles={[styles.table].join(" ")}
+                customContainerStyles={[
+                  styles.table,
+                  isEdit && "customTable",
+                  isEdit && styles.editableTableContainer,
+                ].join(" ")}
                 originalData={extendedTableData}
                 isHoverEffectRequired={isEdit}
               />

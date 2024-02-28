@@ -30,6 +30,11 @@
   display: flex;
 }
 
+.editableTableContainer {
+  border-radius: 0px;
+  border: none;
+}
+
 .rowtext {
   color: var(--textBold);
   font-size: var(--fontSizeSmall);
