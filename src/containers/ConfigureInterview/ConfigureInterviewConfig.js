@@ -12,13 +12,13 @@ const getConfigureDateColumns = (
 ) => {
   const columns = [
     renderColumn({
-      title: intl.formatMessage({ id: "centre.scheduleDate" }),
+      title: intl.formatMessage({ id: "centre.schedule_date" }),
       dataIndex: "schedule_date",
       key: "schedule_date",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
-        errorMessage: errors.scheduleDate,
+        errorMessage: errors.schedule_date,
         visible: true,
         type: "date",
         placeholder: intl.formatMessage({
@@ -26,86 +26,86 @@ const getConfigureDateColumns = (
         }),
         customTimeStyle: styles.customTimeStyle,
         onChange: (val, record) => {
-          handleInputChange("scheduleDate", val);
+          handleInputChange("schedule_date", val);
         },
         isEditable: isEdit,
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.startTime" }),
+      title: intl.formatMessage({ id: "label.start_time" }),
       dataIndex: "start_time",
       key: "start_time",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
-        errorMessage: errors.startTime,
+        errorMessage: errors.start_time,
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
-          id: "label.placeholder.startTime",
+          id: "label.placeholder.start_time",
         }),
         customTimeStyle: styles.customTimeStyle,
         onChange: (val, record) => {
-          handleInputChange("startTime", val);
+          handleInputChange("start_time", val);
         },
         isEditable: isEdit,
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.endTime" }),
+      title: intl.formatMessage({ id: "label.end_time" }),
       dataIndex: "end_time",
       key: "end_time",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
-        errorMessage: errors.endTime,
+        errorMessage: errors.end_time,
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
-          id: "label.placeholder.endTime",
+          id: "label.placeholder.end_time",
         }),
         customTimeStyle: styles.customTimeStyle,
         onChange: (val, record) => {
-          handleInputChange("endTime", val);
+          handleInputChange("end_time", val);
         },
         isEditable: isEdit,
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.facilitiesNumber" }),
+      title: intl.formatMessage({ id: "label.no_of_facilities" }),
       dataIndex: "no_of_facilities",
       key: "facilitiesno_of_facilitiesNumber",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
-        inputErrorMessage: errors.facilitiesNumber,
+        inputErrorMessage: errors.no_of_facilities,
         visible: isEdit,
         inputType: "inputNumber",
         inputPlaceholder: intl.formatMessage({
-          id: "label.placeholder.facilitiesNumber",
+          id: "label.placeholder.no_of_facilities",
         }),
         customInputNumberStyles: styles.customInputStyle,
         onInputChange: (val) => {
-          handleInputChange("facilitiesNumber", val);
+          handleInputChange("no_of_facilities", val);
         },
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.slotDurationInMinutes" }),
+      title: intl.formatMessage({ id: "label.slot_duration" }),
       dataIndex: "slot_duration",
       key: "slot_duration",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
-        inputErrorMessage: errors.slotDurationInMinutes,
+        inputErrorMessage: errors.slot_duration,
         visible: isEdit,
         inputType: "inputNumber",
         inputPlaceholder: intl.formatMessage({
-          id: "label.placeholder.slotDurationInMinutes",
+          id: "label.placeholder.slot_duration",
         }),
         customInputNumberStyles: styles.customInputStyle,
         onInputChange: (val) => {
-          handleInputChange("slotDurationInMinutes", val);
+          handleInputChange("slot_duration", val);
         },
       },
     }),
@@ -133,7 +133,7 @@ const getConfigureDateColumns = (
 
   const viewColumns = [
     renderColumn({
-      title: intl.formatMessage({ id: "centre.scheduleDate" }),
+      title: intl.formatMessage({ id: "centre.schedule_date" }),
       dataIndex: "schedule_date",
       key: "schedule_date",
       isRequiredField: true,
@@ -145,7 +145,7 @@ const getConfigureDateColumns = (
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.startTime" }),
+      title: intl.formatMessage({ id: "label.start_time" }),
       dataIndex: "start_time",
       key: "start_time",
       isRequiredField: true,
@@ -157,7 +157,7 @@ const getConfigureDateColumns = (
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.endTime" }),
+      title: intl.formatMessage({ id: "label.end_time" }),
       dataIndex: "end_time",
       key: "end_time",
       isRequiredField: true,
@@ -169,7 +169,7 @@ const getConfigureDateColumns = (
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.facilitiesNumber" }),
+      title: intl.formatMessage({ id: "label.no_of_facilities" }),
       dataIndex: "no_of_facilities",
       key: "no_of_facilities",
       isRequiredField: true,
@@ -180,13 +180,13 @@ const getConfigureDateColumns = (
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.slotDurationInMinutes" }),
+      title: intl.formatMessage({ id: "label.slot_duration" }),
       dataIndex: "slot_duration",
       key: "slot_duration",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
-        inputErrorMessage: errors.slotDurationInMinutes,
+        inputErrorMessage: errors.slot_duration,
         visible: isEdit,
       },
     }),

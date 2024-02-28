@@ -14,6 +14,7 @@ import getConfigureDateColumns from "./ConfigureInterviewConfig";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import updateConfigureInterview from "../../services/api-services/ConfigureInterview/updateConfigureInterview";
 import useFetch from "../../core/hooks/useFetch";
 import { getValidMode } from "../../Utils/validation";
 import {
@@ -22,7 +23,7 @@ import {
   MOCK_INTERVIEWS,
 } from "../../constant/apiEndpoints";
 import { SETUP_MOCK_INTERVIEW, SESSION } from "../../routes/routeNames";
-import { PAGINATION_PROPERTIES } from "../../constant/constant";
+import { ROUND_ID } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./ConfigureInterview.module.scss";
 
@@ -32,12 +33,15 @@ const ConfigureInterview = () => {
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [searchParams] = useSearchParams();
+  const { handleUpdateConfigureInterview } = updateConfigureInterview();
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const { centreId } = useParams();
+
   const isEdit = getValidMode(searchParams.get("mode")) === "edit";
+  const roundId = searchParams.get(ROUND_ID);
   const {
     data,
     error: errorWhileFetchingInterview,
@@ -62,21 +66,19 @@ const ConfigureInterview = () => {
   const [addTableData, setAddTableData] = useState({
     id: Date.now().toString(),
     isAddRow: true,
-    scheduleDate: null,
-    startTime: null,
-    endTime: null,
-    facilitiesNumber: null,
-    slotDurationInMinutes: "",
+    schedule_date: null,
+    start_time: null,
+    end_time: null,
+    no_of_facilities: null,
+    slot_duration: "",
   });
   const [errors, setErrors] = useState({
-    scheduleDate: "",
-    startTime: "",
-    endTime: "",
-    facilitiesNumber: "",
-    slotDurationInMinutes: "",
+    schedule_date: "",
+    start_time: "",
+    end_time: "",
+    no_of_facilities: "",
+    slot_duration: "",
   });
-
-  const location = useLocation();
 
   const handleRemove = (record) => {
     const filteredData = tableData.filter((item) => item.id !== record.id);
@@ -94,11 +96,11 @@ const ConfigureInterview = () => {
       setAddTableData({
         id: Date.now().toString(),
         isAddRow: true,
-        scheduleDate: null,
-        startTime: null,
-        endTime: null,
-        facilitiesNumber: null,
-        slotDurationInMinutes: "",
+        schedule_date: null,
+        start_time: null,
+        end_time: null,
+        no_of_facilities: null,
+        slot_duration: "",
       });
     }
   };
@@ -123,37 +125,37 @@ const ConfigureInterview = () => {
 
   const validate = () => {
     let errorCount = 0;
-    if (!addTableData?.scheduleDate) {
+    if (!addTableData?.schedule_date) {
       handleError(
-        "scheduleDate",
+        "schedule_date",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }
-    if (!addTableData?.startTime) {
+    if (!addTableData?.start_time) {
       handleError(
-        "startTime",
+        "start_time",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }
-    if (!addTableData?.endTime) {
+    if (!addTableData?.end_time) {
       handleError(
-        "endTime",
+        "end_time",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }
-    if (!addTableData?.facilitiesNumber) {
+    if (!addTableData?.no_of_facilities) {
       handleError(
-        "facilitiesNumber",
+        "no_of_facilities",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }
-    if (!addTableData?.slotDurationInMinutes) {
+    if (!addTableData?.slot_duration) {
       handleError(
-        "slotDurationInMinutes",
+        "slot_duration",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
@@ -165,7 +167,7 @@ const ConfigureInterview = () => {
 
   const redirectToMockInterviewListing = () => {
     navigate(
-      `/${selectedModule?.key}/${SESSION}${SETUP_MOCK_INTERVIEW}?${PAGINATION_PROPERTIES.CURRENT_PAGE}=${location.state.current}&${PAGINATION_PROPERTIES.ROW_PER_PAGE}=${location.state.pageSize}`
+      `/${selectedModule?.key}/${SESSION}${SETUP_MOCK_INTERVIEW}?${ROUND_ID}=${roundId}`
     );
   };
 
@@ -181,6 +183,12 @@ const ConfigureInterview = () => {
   );
 
   const handleOnSubmit = () => {
+    console.log(extendedTableData, "extendedTableData..");
+    handleUpdateConfigureInterview({
+      module: currentlySelectedModuleKey,
+      centreId: centreId,
+      payload: { data: extendedTableData },
+    });
     redirectToMockInterviewListing();
   };
   const handleCancel = () => {
