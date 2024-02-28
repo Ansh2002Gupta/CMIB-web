@@ -483,6 +483,7 @@ const locale = {
   "session.min_ctc": "Minimum CTC",
   "label.yearsAndMore": "Years and more",
   "label.years": "Years",
+  "label.year": "Year",
   "label.addSessionSuccessfully": "Session has been created successfully",
   "label.updateSessionSuccessfully": "Session has been updated successfully",
   "session.useAndMore": "Use ‘and more’ ",
@@ -502,6 +503,8 @@ const locale = {
   "label.no_centres_selected_msg":
     "To proceed with the setup, please choose the centres for this round.",
   "label.no_prior_chats_found": "No prior chats found",
+  "label.yearBracket": " (year(s))",
+  "label.inrBracket": " (INR)",
 };
 
 export default locale;

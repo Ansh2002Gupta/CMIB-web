@@ -99,13 +99,12 @@ const CentreTable = ({
       key: "scheduleDate",
       render: (text, record, index) => (
         <CustomDateTimePicker
-          customContainerStyles={styles.customDateContainerStyles}
           value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
           customTimeStyle={styles.inputStyle}
           type="date"
           onChange={(val) => {
             handleInputChange(
-              dayjs(val).format("YYYY-MM-DD"),
+              val ? dayjs(val).format("YYYY-MM-DD") : "",
               "scheduleDate",
               index
             );
@@ -170,6 +169,9 @@ const CentreTable = ({
       render: (text, record, index) => {
         return (
           <TwoColumn
+            leftSectionClassName={styles.sectionStyle}
+            rightSectionClassName={styles.sectionStyle}
+            className={styles.customColumnStyle}
             leftSection={
               <CustomInput
                 type="inputNumber"
@@ -360,7 +362,7 @@ const CentreTable = ({
   ];
 
   return (
-    <div className={isEdit ? "" : styles.container}>
+    <div className={isEdit ? styles.editContainer : styles.container}>
       <Table
         columns={isEdit ? columns : viewConfigurationDetails}
         dataSource={tableData}
