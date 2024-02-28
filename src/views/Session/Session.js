@@ -29,7 +29,6 @@ import {
   ROUND_TWO_CARD_LIST,
   VALID_CONSENT_MARKING_TABS_ID,
 } from "../../constant/constant";
-import variables from "../../themes/base/styles/variables";
 import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./session.module.scss";
 
@@ -101,7 +100,9 @@ function Session() {
           key={Date.now()}
           {...{
             isEditable: false,
-            isGettingSessions,
+            isGettingSessions:
+              globalSessionDetails?.isGettingGlobalSessions ||
+              isGettingSessions,
             isSessionError,
             fetchData,
             sessionData,
@@ -117,6 +118,7 @@ function Session() {
             title: intl.formatMessage({ id: "session.roundOne" }),
             children: (
               <SessionRound
+                {...{ currentlySelectedModuleKey }}
                 roundNo={1}
                 roundId={
                   (
@@ -142,6 +144,7 @@ function Session() {
             title: intl.formatMessage({ id: "session.roundTwo" }),
             children: (
               <SessionRound
+                {...{ currentlySelectedModuleKey }}
                 roundNo={2}
                 roundList={ROUND_TWO_CARD_LIST}
                 sessionData={sessionData}
