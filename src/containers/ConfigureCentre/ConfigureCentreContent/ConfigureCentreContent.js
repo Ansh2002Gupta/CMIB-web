@@ -15,7 +15,7 @@ import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import { CENTRE_DETAILS } from "../../../routes/routeNames";
-import { ADMIN_ROUTE, CENTRE_END_POINT, } from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   PAGINATION_PROPERTIES,
@@ -93,7 +93,7 @@ const ConfigureCentreContent = () => {
       centre_size: centerData.centre_size,
       centre_code: centerData.centre_code,
       name: centerData.name,
-      status: !centerData?.status,
+      status: centerData?.status ? 0 : 1,
     };
 
     updateCenterDetails(
@@ -126,6 +126,7 @@ const ConfigureCentreContent = () => {
       queryParamsObject: getRequestedParams({
         page: 1,
         search: validateSearchTextLength(searchedValue),
+        size: +size,
       }),
     });
   };
@@ -277,19 +278,27 @@ const ConfigureCentreContent = () => {
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
         checkIsSwitchEditable: (data) => {
-          return !isUpdatingCenterDetails;
+          return !data?.is_editable && !isUpdatingCenterDetails;
         },
       },
     }),
     renderColumn({
       dataIndex: "edit",
       key: "edit",
-      renderImage: {
-        alt: "edit",
-        onClick: (rowData) => goToEditCentrePage(rowData),
-        preview: false,
-        src: getImage("edit"),
-        visible: true,
+      render: (data, rowData) => {
+        const isEditable = rowData?.is_editable;
+        return (
+          <Image
+            src={isEditable ? getImage("edit") : getImage("disableEdit")}
+            preview={false}
+            alt="edit"
+            visible
+            onClick={() =>
+              isEditable ? goToEditCentrePage(rowData) : () => {}
+            }
+            className={isEditable ? styles.editIcon : {}}
+          />
+        );
       },
     }),
   ];

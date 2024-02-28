@@ -218,7 +218,12 @@ const useRenderColumn = () => {
               })}`
             : `${data?.work_experience_min} - ${
                 data?.work_experience_max
-              } ${intl.formatMessage({ id: "label.years" })}`}
+              } ${intl.formatMessage({
+                id:
+                  data?.work_experience_max === 1
+                    ? "label.year"
+                    : "label.years",
+              })}`}
         </p>
       );
     };

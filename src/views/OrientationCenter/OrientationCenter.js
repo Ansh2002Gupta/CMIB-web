@@ -89,15 +89,15 @@ const OrientationCenter = () => {
         if (item.id === recordId) {
           if (
             typeof value === "object" &&
-            value.venue &&
-            value.latitude &&
-            value.longitude
+            value?.venue &&
+            value?.latitude &&
+            value?.longitude
           ) {
             return {
               ...item,
-              [field]: value.venue,
-              latitude: value.latitude,
-              longitude: value.longitude,
+              [field]: value?.venue,
+              latitude: value?.latitude,
+              longitude: value?.longitude,
             };
           } else {
             return { ...item, [field]: value };
@@ -198,6 +198,8 @@ const OrientationCenter = () => {
   const getApiPayload = (formData) => {
     return {
       data: formData.map((item) => ({
+        latitude: item.latitude,
+        longitude: item.longitude,
         id: item.id,
         venue: item.venue,
         schedule_date: dayjs(item.schedule_date).format("YYYY-MM-DD"),
