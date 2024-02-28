@@ -108,9 +108,8 @@ const SetupMockInterviewContent = () => {
               columns,
             }}
             hidePagination={true}
-            currentDataLength={data?.meta?.total}
             customContainerStyles={styles.tableContainer}
-            originalData={data?.records}
+            originalData={data}
           />
         )
       }
