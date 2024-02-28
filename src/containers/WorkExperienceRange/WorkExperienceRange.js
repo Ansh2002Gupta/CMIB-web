@@ -1,12 +1,38 @@
 import React from "react";
-import WorkExperienceRangeTemplate from "./WorkExperienceRangeTemplate";
 import { useIntl } from "react-intl";
 
-const WorkExperienceRange = ({ experience, setExperience }) => {
+import WorkExperienceRangeTemplate from "./WorkExperienceRangeTemplate";
+
+const WorkExperienceRange = ({
+  addExperience,
+  errors,
+  experience,
+  experienceErrors,
+  handleError,
+  setAddExperience,
+  setErrors,
+  setExperience,
+  setExperienceErrors,
+  validate,
+}) => {
   const intl = useIntl();
 
   return (
-    <WorkExperienceRangeTemplate {...{ experience, intl, setExperience }} />
+    <WorkExperienceRangeTemplate
+      {...{
+        addExperience,
+        errors,
+        experience,
+        experienceErrors,
+        handleError,
+        intl,
+        setAddExperience,
+        setErrors,
+        setExperience,
+        setExperienceErrors,
+        validate,
+      }}
+    />
   );
 };
 

@@ -9,6 +9,7 @@ import { TwoRow } from "../../core/layouts";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
@@ -67,17 +68,18 @@ const SetupCenter = () => {
     otherOptions: { skipApiCallOnMount: true },
   });
 
-  useEffect(() => {
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
-      return prev;
-    });
-
-    const requestedParams = getRequestedQueryParams({});
-
-    getSetupCentres({ queryParamsObject: requestedParams });
-  }, []);
+  useModuleWiseApiCall({
+    setSearchParams,
+    paginationParams: {
+      current,
+      pageSize,
+    },
+    triggerPaginationUpdate: true,
+    initialApiCall: () => {
+      const requestedParams = getRequestedQueryParams({});
+      getSetupCentres({ queryParamsObject: requestedParams });
+    },
+  });
 
   const getRequestedQueryParams = ({ page, rowPerPage }) => {
     return {
@@ -86,11 +88,9 @@ const SetupCenter = () => {
     };
   };
 
-  const goToEditCentrePage = (rowData, isEdit) => {
+  const goToEditCentrePage = (rowData) => {
     const centreId = rowData?.id;
-    navigate(
-      `details/${centreId}?roundId=${roundId}&mode=${isEdit ? "edit" : "view"}`
-    );
+    navigate(`details/${centreId}?roundId=${roundId}`);
   };
 
   const onChangePageSize = (size) => {
@@ -166,7 +166,7 @@ const SetupCenter = () => {
       key: "edit",
       renderImage: {
         alt: "edit",
-        onClick: (rowData) => goToEditCentrePage(rowData, isEditable),
+        onClick: (rowData) => goToEditCentrePage(rowData),
         preview: false,
         src: getImage(isEditable ? "edit" : "eye"),
         visible: true,

@@ -5,23 +5,24 @@ import { ThemeContext } from "core/providers/theme";
 import { TwoColumn, ThreeColumn, TwoRow, ThreeRow } from "../../core/layouts";
 
 import CustomCheckBox from "../../components/CustomCheckBox/CustomCheckBox";
-import CustomInputNumber from "../../components/CustomInputNumber";
+import CustomInput from "../../components/CustomInput/CustomInput";
 import styles from "./WorkExperienceRange.module.scss";
 import { classes } from "./WorkExperienceRange.styles";
 
-const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
+const WorkExperienceRangeTemplate = ({
+  addExperience,
+  errors,
+  experience,
+  experienceErrors,
+  handleError,
+  intl,
+  setAddExperience,
+  setErrors,
+  setExperience,
+  setExperienceErrors,
+  validate,
+}) => {
   const { getImage } = useContext(ThemeContext);
-  const [addExperience, setAddExperience] = useState({
-    min_ctc: "",
-    use_more_experience: 0,
-    work_experience_max: null,
-    work_experience_min: null,
-  });
-  const [errors, setErrors] = useState({
-    min_ctc: "",
-    work_experience_max: "",
-    work_experience_min: "",
-  });
 
   const handleInputChange = (value, name) => {
     setAddExperience((prevData) => ({
@@ -32,16 +33,16 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
       ...prev,
       [name]: "",
     }));
+    if (name === "work_experience_min" && value === null) {
+      handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
+    } else {
+      if (name !== "work_experience_min" && !value) {
+        handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
+      }
+    }
   };
-
-  const handleError = (key, error) => {
-    setErrors((prev) => ({
-      ...prev,
-      [key]: error,
-    }));
-  };
-
   const handleInputChangeExperience = (value, name, index) => {
+    experienceValidate(value, name, index);
     setExperience((prevData) =>
       prevData.map((item, i) => {
         if (index === i) {
@@ -52,40 +53,52 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
     );
   };
 
-  const validate = () => {
-    let errorCount = 0;
-    if (!addExperience?.min_ctc) {
-      handleError(
-        "min_ctc",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
-      );
-      errorCount += 1;
-    }
-    if (addExperience?.work_experience_min === null) {
-      handleError(
-        "work_experience_min",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
-      );
-      errorCount += 1;
-    }
-    if (
-      !addExperience?.work_experience_max &&
-      !addExperience?.use_more_experience
-    ) {
-      handleError(
-        "work_experience_max",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
-      );
-      errorCount += 1;
-    }
-    if (errorCount > 0) return false;
+  const experienceValidate = (value, name, index) => {
+    setExperienceErrors((prevData) =>
+      prevData.map((item, i) => {
+        if (index === i) {
+          return {
+            ...item,
+            [name]: "",
+          };
+        }
+        return item;
+      })
+    );
 
-    return true;
+    if (value === null && name === "work_experience_min") {
+      setExperienceErrors((prevData) =>
+        prevData.map((item, i) => {
+          if (index === i) {
+            return {
+              ...item,
+              [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            };
+          }
+          return item;
+        })
+      );
+    } else {
+      if (name !== "work_experience_min" && !value) {
+        setExperienceErrors((prevData) =>
+          prevData.map((item, i) => {
+            if (index === i) {
+              return {
+                ...item,
+                [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
+              };
+            }
+            return item;
+          })
+        );
+      }
+    }
   };
 
   const handleAdd = () => {
     if (validate()) {
       setExperience((prevData) => [...prevData, addExperience]);
+      setExperienceErrors((prevData) => [...prevData, errors]);
       setAddExperience({
         min_ctc: "",
         use_more_experience: 0,
@@ -97,6 +110,8 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
 
   const handleRemove = (index) => {
     const filteredData = experience.filter((item, i) => i !== index);
+    const filterErrors = experienceErrors.filter((item, i) => i !== index);
+    setExperienceErrors(filterErrors);
     setExperience(filteredData);
   };
 
@@ -108,10 +123,10 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
           {intl.formatMessage({ id: "session.workExperienceRanges" })}
         </Typography>
       }
-      bottomSectionStyle={{ minWidth: "980px" }}
+      bottomSectionStyle={{ minWidth: "840px" }}
       bottomSection={
         <ThreeRow
-          className={styles.workExpContainer}
+          className={experience.length && styles.workExpContainer}
           topSection={
             <TwoColumn
               className={styles.columnCellContainer}
@@ -119,13 +134,17 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
               rightSectionStyle={classes.flex1}
               leftSection={
                 <Typography className={styles.grayText}>
-                  {intl.formatMessage({ id: "session.workExperienceRange" })}
+                  {`${intl.formatMessage({
+                    id: "session.workExperienceRange",
+                  })}${intl.formatMessage({ id: "label.yearBracket" })}`}
                   <span className={styles.redText}> *</span>
                 </Typography>
               }
               rightSection={
                 <Typography className={styles.grayText}>
-                  {intl.formatMessage({ id: "session.min_ctc" })}
+                  {`${intl.formatMessage({
+                    id: "session.min_ctc",
+                  })}${intl.formatMessage({ id: "label.inrBracket" })}`}
                   <span className={styles.redText}> *</span>
                 </Typography>
               }
@@ -142,11 +161,14 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                     rightSectionStyle={classes.flex1}
                     leftSection={
                       <ThreeColumn
-                        className={styles.alignCenter}
+                        leftSectionStyle={classes.flex1}
+                        rightSectionStyle={classes.flex1}
                         isLeftFillSpace
-                        isRightFillSpace
                         leftSection={
-                          <CustomInputNumber
+                          <CustomInput
+                            controls={true}
+                            maxLength={20}
+                            type="inputNumber"
                             placeholder={intl.formatMessage({
                               id: "label.from",
                             })}
@@ -157,6 +179,14 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                                 index
                               );
                             }}
+                            isError={
+                              experienceErrors[index]?.work_experience_min
+                                ? true
+                                : false
+                            }
+                            errorMessage={
+                              experienceErrors[index]?.work_experience_min
+                            }
                             value={item?.work_experience_min}
                             customInputNumberStyles={
                               styles.customInputNumberStyles
@@ -164,11 +194,18 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                             customContainerStyles={styles.customContainerStyles}
                           />
                         }
-                        middleSection={<div className={styles.dash} />}
+                        middleSection={
+                          <div
+                            className={[styles.dash, styles.dashMargin].join(
+                              " "
+                            )}
+                          />
+                        }
                         rightSection={
                           item?.use_more_experience ? (
-                            <CustomInputNumber
-                              disabled={true}
+                            <CustomInput
+                              controls={true}
+                              maxLength={20}
                               value={"and more"}
                               customInputNumberStyles={
                                 styles.customInputNumberStyles
@@ -178,10 +215,21 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                               }
                             />
                           ) : (
-                            <CustomInputNumber
+                            <CustomInput
+                              controls={true}
+                              maxLength={20}
+                              isError={
+                                experienceErrors[index]?.work_experience_max
+                                  ? true
+                                  : false
+                              }
+                              type="inputNumber"
                               placeholder={intl.formatMessage({
                                 id: "label.to",
                               })}
+                              errorMessage={
+                                experienceErrors[index]?.work_experience_max
+                              }
                               onChange={(val) => {
                                 handleInputChangeExperience(
                                   val,
@@ -203,10 +251,16 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                     }
                     rightSection={
                       <TwoColumn
-                        className={styles.alignCenter}
                         isLeftFillSpace
                         leftSection={
-                          <CustomInputNumber
+                          <CustomInput
+                            controls={true}
+                            maxLength={20}
+                            type="inputNumber"
+                            isError={
+                              experienceErrors[index]?.min_ctc ? true : false
+                            }
+                            errorMessage={experienceErrors[index]?.min_ctc}
                             placeholder={intl.formatMessage({
                               id: "session.min_ctc",
                             })}
@@ -242,7 +296,9 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
               })}
             </div>
           }
-          bottomSectionStyle={classes.bottomSectionStyle}
+          bottomSectionStyle={
+            experience.length ? classes.bottomSectionStyle : classes.bottomStyle
+          }
           bottomSection={
             <TwoColumn
               className={styles.columnCellContainer}
@@ -254,7 +310,11 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                   rightSectionStyle={classes.flex1}
                   isLeftFillSpace
                   leftSection={
-                    <CustomInputNumber
+                    <CustomInput
+                      controls={true}
+                      maxLength={20}
+                      isError={errors.work_experience_min ? true : false}
+                      type="inputNumber"
                       placeholder={intl.formatMessage({
                         id: "label.from",
                       })}
@@ -278,7 +338,9 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                       isLeftFillSpace
                       leftSection={
                         addExperience.use_more_experience ? (
-                          <CustomInputNumber
+                          <CustomInput
+                            controls={true}
+                            type="inputNumber"
                             disabled={true}
                             value={"and more"}
                             customInputNumberStyles={
@@ -287,7 +349,11 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                             customContainerStyles={styles.customContainerStyles}
                           />
                         ) : (
-                          <CustomInputNumber
+                          <CustomInput
+                            maxLength={20}
+                            controls={true}
+                            isError={errors.work_experience_max ? true : false}
+                            type="inputNumber"
                             placeholder={intl.formatMessage({
                               id: "label.to",
                             })}
@@ -314,6 +380,7 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                               addExperience.use_more_experience ? 0 : 1,
                               "use_more_experience"
                             );
+                            handleInputChange(null, "work_experience_max");
                           }}
                         >
                           <Typography className={styles.blackText}>
@@ -334,7 +401,11 @@ const WorkExperienceRangeTemplate = ({ experience, intl, setExperience }) => {
                 <TwoColumn
                   isLeftFillSpace
                   leftSection={
-                    <CustomInputNumber
+                    <CustomInput
+                      controls={true}
+                      maxLength={20}
+                      isError={errors.min_ctc ? true : false}
+                      type="inputNumber"
                       placeholder={intl.formatMessage({
                         id: "session.min_ctc",
                       })}

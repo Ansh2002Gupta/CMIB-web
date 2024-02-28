@@ -19,6 +19,7 @@
 }
 
 .addMinusIcon {
+  margin-top: var(--marginMedium);
   margin-left: var(--marginLarge);
   cursor: pointer;
 }
@@ -40,11 +41,12 @@
 
 .useMoreStyles {
   gap: var(--gapSmall);
+  overflow-x: hidden;
 }
 
 .dash {
-  height: 1px;
-  width: 8px;
+  height: var(--height_1);
+  width: var(--width_8);
   background-color: var(--borderColor);
   margin-left: var(--gapXSmall);
   margin-right: var(--gapXSmall);

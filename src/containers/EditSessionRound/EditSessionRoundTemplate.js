@@ -14,9 +14,13 @@ import styles from "./EditSessionRound.module.scss";
 
 const EditSessionRoundTemplate = ({
   activeStatus,
+  addExperience,
   centresError,
+  errors,
   experience,
+  experienceErrors,
   getCentreListFromResponse,
+  handleError,
   handleDeselectCentre,
   handleSelectCentre,
   handleStatusToggle,
@@ -27,8 +31,12 @@ const EditSessionRoundTemplate = ({
   onClickSave,
   responsive,
   selectedCentres,
+  setAddExperience,
+  setErrors,
   setExperience,
+  setExperienceErrors,
   switchLabel,
+  validate,
 }) => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
@@ -76,7 +84,20 @@ const EditSessionRoundTemplate = ({
           bottomSection={
             currentlySelectedModuleKey !==
               MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
-              <WorkExperienceRange {...{ experience, setExperience }} />
+              <WorkExperienceRange
+                {...{
+                  addExperience,
+                  errors,
+                  experience,
+                  experienceErrors,
+                  handleError,
+                  setAddExperience,
+                  setErrors,
+                  setExperience,
+                  setExperienceErrors,
+                  validate,
+                }}
+              />
             )
           }
         />
@@ -100,7 +121,12 @@ const EditSessionRoundTemplate = ({
           }
           rightSection={
             <CustomButton
-              isBtnDisable={!experience?.length || !selectedCentres?.length}
+              isBtnDisable={
+                (currentlySelectedModuleKey !==
+                  MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+                  !experience?.length) ||
+                !selectedCentres?.length
+              }
               loading={isLoading}
               textStyle={styles.saveButtonTextStyles}
               btnText={intl.formatMessage({
