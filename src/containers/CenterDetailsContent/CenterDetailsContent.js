@@ -285,7 +285,7 @@ const CenterDetailsContent = ({
     };
 
     const isFirstTableRowFilled = () => {
-      if (tableData.length === 0) return false;
+      if (!tableData.length) return false;
 
       const firstRow = tableData[0];
       const isValueFilled = (value) =>
