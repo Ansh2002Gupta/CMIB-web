@@ -126,6 +126,7 @@ const ConfigureCentreContent = () => {
       queryParamsObject: getRequestedParams({
         page: 1,
         search: validateSearchTextLength(searchedValue),
+        size: +size,
       }),
     });
   };
@@ -284,12 +285,20 @@ const ConfigureCentreContent = () => {
     renderColumn({
       dataIndex: "edit",
       key: "edit",
-      renderImage: {
-        alt: "edit",
-        onClick: (rowData) => goToEditCentrePage(rowData),
-        preview: false,
-        src: getImage("edit"),
-        visible: true,
+      render: (data, rowData) => {
+        const isEditable = rowData?.is_editable;
+        return (
+          <Image
+            src={isEditable ? getImage("edit") : getImage("disableEdit")}
+            preview={false}
+            alt="edit"
+            visible
+            onClick={() =>
+              isEditable ? goToEditCentrePage(rowData) : () => {}
+            }
+            className={isEditable ? styles.editIcon : {}}
+          />
+        );
       },
     }),
   ];
