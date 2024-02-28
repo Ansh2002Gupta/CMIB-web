@@ -286,14 +286,16 @@ const ConfigureCentreContent = () => {
       dataIndex: "edit",
       key: "edit",
       render: (data, rowData) => {
-        const isEditable = rowData.is_editable;
+        const isEditable = rowData?.is_editable;
         return (
           <Image
             src={isEditable ? getImage("edit") : getImage("disableEdit")}
             preview={false}
             alt="edit"
             visible
-            onClick={() => isEditable && goToEditCentrePage(rowData)}
+            onClick={() =>
+              isEditable ? goToEditCentrePage(rowData) : () => {}
+            }
             className={isEditable ? styles.editIcon : {}}
           />
         );
