@@ -22,6 +22,7 @@ export const FORGOT_PASSWORD_END_POINT = "/forget-password-otp";
 export const GET_USER_PROFILE_DETAILS = "core/users/permission";
 export const GLOBAL_SESSION_LIST = "/sessions";
 export const IMAGE_UPLOAD_END_POINT = "/save-logo";
+export const INTERVIEW_DATES = "/interview-dates";
 export const LOGIN_END_POINT = "/login";
 export const LOGOUT_END_POINT = "/logout";
 export const MOCK_INTERVIEWS = "/mock-interviews";

@@ -12,10 +12,8 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
-import { PAGINATION_PROPERTIES, ROUND_ID } from "../../constant/constant";
-import { SESSION, SETUP_MOCK_INTERVIEW } from "../../routes/routeNames";
+import { ROUND_ID } from "../../constant/constant";
 import {
   CORE_ROUTE,
   MOCK_INTERVIEWS,
@@ -28,18 +26,11 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 
 const SetupMockInterviewContent = () => {
   const intl = useIntl();
-  const isEdit = true;
+  const isEdit = false;
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [current, setCurrent] = useState(
-    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
-  );
-  const [pageSize, setPageSize] = useState(
-    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
-  );
-
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
@@ -65,11 +56,8 @@ const SetupMockInterviewContent = () => {
   const goToConfigureInterview = (rowData, isEdit) => {
     const centreId = rowData?.id;
     navigate(
-      `/${currentlySelectedModuleKey}/${SESSION}${SETUP_MOCK_INTERVIEW}details/${centreId}?mode=${
-        isEdit ? "edit" : "view"
-      }`,
-      false,
-      { current: current, pageSize: pageSize }
+      `details/${centreId}?roundId=${roundId}&mode=${isEdit ? "edit" : "view"}`,
+      false
     );
   };
 

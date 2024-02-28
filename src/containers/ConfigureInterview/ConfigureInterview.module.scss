@@ -11,7 +11,6 @@
 
 .viewTopContainer {
   background-color: var(--bodyBg);
-  border: var(--borderLight);
   border-radius: var(--radiusMLg);
 }
 
@@ -22,11 +21,13 @@
 }
 
 .table {
+  border-radius: var(--radiusMLg);
+  overflow: hidden;
   flex: 1;
   width: var(--fullWidth);
-  max-height: var(--height_60vh);
-  min-height: var(--height_45vh);
-  overflow-y: auto;
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
 }
 
 .rowtext {
