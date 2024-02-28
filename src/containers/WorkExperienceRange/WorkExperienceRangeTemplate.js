@@ -134,13 +134,17 @@ const WorkExperienceRangeTemplate = ({
               rightSectionStyle={classes.flex1}
               leftSection={
                 <Typography className={styles.grayText}>
-                  {intl.formatMessage({ id: "session.workExperienceRange" })}
+                  {`${intl.formatMessage({
+                    id: "session.workExperienceRange",
+                  })}${intl.formatMessage({ id: "label.yearBracket" })}`}
                   <span className={styles.redText}> *</span>
                 </Typography>
               }
               rightSection={
                 <Typography className={styles.grayText}>
-                  {intl.formatMessage({ id: "session.min_ctc" })}
+                  {`${intl.formatMessage({
+                    id: "session.min_ctc",
+                  })}${intl.formatMessage({ id: "label.inrBracket" })}`}
                   <span className={styles.redText}> *</span>
                 </Typography>
               }

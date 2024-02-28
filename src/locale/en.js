@@ -503,6 +503,8 @@ const locale = {
   "label.no_centres_selected_msg":
     "To proceed with the setup, please choose the centres for this round.",
   "label.no_prior_chats_found": "No prior chats found",
+  "label.yearBracket": " (year(s))",
+  "label.inrBracket": " (INR)",
 };
 
 export default locale;
