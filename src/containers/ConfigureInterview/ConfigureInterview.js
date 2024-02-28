@@ -188,8 +188,6 @@ const ConfigureInterview = () => {
 
   const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;
 
-  console.log(extendedTableData, "extendedTableData..");
-
   useEffect(() => {
     if (userProfileDetails?.selectedModuleItem?.key) {
       fetchData({});
