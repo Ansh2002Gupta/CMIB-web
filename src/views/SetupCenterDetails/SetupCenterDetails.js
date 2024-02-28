@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { useIntl } from "react-intl";
 import { useParams, useSearchParams } from "react-router-dom";
+import { useIntl } from "react-intl";
+import { Spin } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -17,8 +18,9 @@ import {
 } from "../../constant/apiEndpoints";
 import { getErrorMessage } from "../../constant/utils";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { ROUND_ID } from "../../constant/constant";
-import { Spin } from "antd";
+import { SESSION } from "../../routes/routeNames";
 import styles from "./SetupCenterDetails.module.scss";
 
 const SetupCenterDetails = () => {
@@ -30,6 +32,7 @@ const SetupCenterDetails = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
+  const { navigateScreen: navigate } = useNavigateScreen();
   const isEdit = currentGlobalSession?.is_editable;
   const roundId = searchParams.get(ROUND_ID);
   const {
@@ -54,7 +57,11 @@ const SetupCenterDetails = () => {
 
   useModuleWiseApiCall({
     initialApiCall: () => {
-      getCentreDetail({});
+      if (roundId) {
+        getCentreDetail({});
+      } else {
+        navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
+      }
     },
   });
 
