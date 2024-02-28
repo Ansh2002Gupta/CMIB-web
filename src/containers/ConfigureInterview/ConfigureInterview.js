@@ -54,7 +54,10 @@ const ConfigureInterview = () => {
       skipApiCallOnMount: true,
     },
   });
-  const [tableData, setTableData] = useState(data?.records);
+  useEffect(() => {
+    setTableData(data);
+  }, [data]);
+  const [tableData, setTableData] = useState(data || []);
   const [addTableData, setAddTableData] = useState({
     id: Date.now().toString(),
     isAddRow: true,
@@ -185,6 +188,8 @@ const ConfigureInterview = () => {
 
   const extendedTableData = isEdit ? [...tableData, addTableData] : tableData;
 
+  console.log(extendedTableData, "extendedTableData..");
+
   useEffect(() => {
     if (userProfileDetails?.selectedModuleItem?.key) {
       fetchData({});
@@ -206,11 +211,21 @@ const ConfigureInterview = () => {
           }
           bottomSection={
             isGettingInterview ? (
-              <div className={commonStyles.errorContainer}>
+              <div
+                className={[
+                  commonStyles.errorContainer,
+                  styles.erroredContainer,
+                ].join(" ")}
+              >
                 <CustomLoader />
               </div>
             ) : errorWhileFetchingInterview ? (
-              <div className={commonStyles.errorContainer}>
+              <div
+                className={[
+                  commonStyles.errorContainer,
+                  styles.erroredContainer,
+                ].join(" ")}
+              >
                 <ErrorMessageBox
                   onRetry={() => fetchData({})}
                   errorText={errorWhileFetchingInterview?.data?.message}
@@ -225,10 +240,10 @@ const ConfigureInterview = () => {
                 hidePagination={true}
                 customContainerStyles={[styles.table].join(" ")}
                 originalData={extendedTableData}
+                isHoverEffectRequired={isEdit}
               />
             )
           }
-          bottomSectionStyle={{ minHeight: "30vh" }}
         />
       }
       bottomSection={

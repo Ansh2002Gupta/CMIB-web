@@ -70,7 +70,7 @@ const CustomDateTimePicker = ({
                   value={value ? dayjs(value) : null}
                 />
               ) : (
-                <Typography className={styles.dateText}>
+                <Typography className={classes.dateText}>
                   {formatTime(value)}
                 </Typography>
               )
