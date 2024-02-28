@@ -126,6 +126,7 @@ const ConfigureCentreContent = () => {
       queryParamsObject: getRequestedParams({
         page: 1,
         search: validateSearchTextLength(searchedValue),
+        size: +size,
       }),
     });
   };
