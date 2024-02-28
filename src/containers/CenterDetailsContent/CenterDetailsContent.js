@@ -15,6 +15,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
+import dayjs from "dayjs";
 
 const CenterDetailsContent = ({
   centreDetailData,
@@ -238,16 +239,21 @@ const CenterDetailsContent = ({
   };
 
   const handleInputChange = (value, name) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-    if (name === "centreStartTime") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        centreEndTime: "",
-      }));
-    }
+    setFormData((prevFormData) => {
+      const updatedFormData = { ...prevFormData, [name]: value };
+      if (name === "centreStartTime" && prevFormData.centreEndTime) {
+        const startTime = value;
+        const endTime = prevFormData.centreEndTime;
+        const timeDifference = dayjs(startTime, "HH:mm:ss").diff(
+          dayjs(endTime, "HH:mm:ss"),
+          "minutes"
+        );
+        if (timeDifference > 0) {
+          updatedFormData.centreEndTime = "";
+        }
+      }
+      return updatedFormData;
+    });
   };
 
   const renderContent = () => {
