@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Spin, Typography } from "antd";
@@ -15,7 +16,6 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 import useResponsive from "../../core/hooks/useResponsive";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
-import dayjs from "dayjs";
 
 const CenterDetailsContent = ({
   centreDetailData,
@@ -280,8 +280,7 @@ const CenterDetailsContent = ({
       if (!tableData.length) return false;
 
       const firstRow = tableData[0];
-      const isValueFilled = (value) =>
-        value !== "" && value !== null && value !== undefined;
+      const isValueFilled = (value) => !!value || value === 0;
 
       return (
         isValueFilled(firstRow.scheduleDate) &&
