@@ -1,8 +1,6 @@
-import { useIntl } from "react-intl";
 import { SESSION_PATHS } from "../../constant/constant";
 
 export const getLabelForPath = ({ isEdit, path, pathSegments }) => {
-  const intl = useIntl();
   const detailPageBreadCrumbLabelId = {
     "setup-centers": "label.session.setupCenters.details",
     "orientation-centers": "label.session.orientationCenters.details",
@@ -13,17 +11,17 @@ export const getLabelForPath = ({ isEdit, path, pathSegments }) => {
   };
 
   if (SESSION_PATHS.includes(path)) {
-    return intl.formatMessage({ id: `label.session.${path}` });
+    return `label.session.${path}`;
   }
   if (path === "details" && isEdit) {
-    return intl.formatMessage({ id: "label.path.editDetails" });
+    return "label.path.editDetails";
   }
   if (path === "details") {
     const relevantSegment = pathSegments.find(
       (segment) => segment === "users" || SESSION_PATHS.includes(segment)
     );
     const labelId = detailPageBreadCrumbLabelId[relevantSegment] || "";
-    return intl.formatMessage({ id: labelId });
+    return labelId;
   }
-  return intl.formatMessage({ id: `label.path.${path}` });
+  return `label.path.${path}`;
 };

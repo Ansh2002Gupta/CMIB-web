@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Breadcrumb } from "antd";
 
@@ -9,6 +10,7 @@ import styles from "./BreadCrumbs.module.scss";
 const BreadCrumbs = () => {
   const [searchParams] = useSearchParams();
   const location = useLocation();
+  const intl = useIntl();
   const isEdit = searchParams.get("mode") === "edit";
   const addSlashInPathName = location.pathname?.endsWith("/")
     ? location.pathname
@@ -23,7 +25,9 @@ const BreadCrumbs = () => {
   const breadcrumbItems = pathSegments
     .map((item, index) => {
       const isLastItem = index === pathSegments.length - 1;
-      const itemName = getLabelForPath({ isEdit, path: item, pathSegments });
+      const itemName = intl.formatMessage({
+        id: getLabelForPath({ isEdit, path: item, pathSegments }),
+      });
 
       const onClick = !isLastItem
         ? () => navigate(index - (pathSegments.length - 1))
