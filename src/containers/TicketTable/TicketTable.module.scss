@@ -149,3 +149,13 @@ input::placeholder {
   background-color: var(--lightGrey3Bg);
   border-radius: 50%;
 }
+
+.assignIcon{
+  cursor: pointer;
+  vertical-align: unset !important;
+}
+
+.assignIconDisabled{
+  cursor: not-allowed;
+  vertical-align: unset !important;
+}

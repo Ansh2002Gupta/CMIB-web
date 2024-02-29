@@ -9,19 +9,20 @@
   font-weight: var(--fontWeightMedium);
 }
 
-
-.customDateContainerStyles {
-  width: var(--width_160);;
+.container {
+  width: var(--fullWidth);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  overflow: hidden;
 }
 
-.inputNumbeCustomStyles {
-  width: var(--width_160);
-
+.sectionStyle {
+  width: 50%;
 }
 
 .inputStyle {
-  width: var(--width_160);
   height: var(--height_44);
+  width: var(--fullWidth);
   display: flex;
   align-items: center;
 }
@@ -30,14 +31,12 @@
   height: var(--height_44);
   display: flex;
   align-items: center;
-  width: 91px;
   border-top-right-radius: var(--radiusNone);
   border-bottom-right-radius: var(--radiusNone);
 }
 
 .inputNumberStyle {
   height: var(--height_44);
-  width: 91px;
   display: flex;
   align-items: center;
   border-top-left-radius: var(--radiusNone);
@@ -64,4 +63,14 @@
   cursor: pointer;
   height: var(--height_24);
   width: var(--width_24);
+}
+
+.editContainer {
+  width: var(--fullWidth);
+  display: flex;
+  flex: 1;
+}
+
+.customColumnStyle {
+  width: var(--fullWidth);
 }

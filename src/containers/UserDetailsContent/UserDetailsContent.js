@@ -9,7 +9,6 @@ import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/Acti
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import FileUpload from "../../components/FileUpload";
 import UserInfo from "../UserInfo";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import {
   addUserNotification,
   updateUserNotification,
@@ -48,7 +47,6 @@ const UserDetailsContent = ({
   viewUserData,
 }) => {
   const intl = useIntl();
-  const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [, setNotificationStateDispatch] = useContext(NotificationContext);
   const { handleDeleteImage } = useDeleteImageApi();
