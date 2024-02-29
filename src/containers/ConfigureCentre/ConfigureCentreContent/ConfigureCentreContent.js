@@ -15,7 +15,7 @@ import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import { CENTRE_DETAILS } from "../../../routes/routeNames";
-import { ADMIN_ROUTE, CENTRE_END_POINT, } from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   PAGINATION_PROPERTIES,
@@ -277,7 +277,7 @@ const ConfigureCentreContent = () => {
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
         checkIsSwitchEditable: (data) => {
-          return !isUpdatingCenterDetails;
+          return data.is_editable && !isUpdatingCenterDetails;
         },
       },
     }),
