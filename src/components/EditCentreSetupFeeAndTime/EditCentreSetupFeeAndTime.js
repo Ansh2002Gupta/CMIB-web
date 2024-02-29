@@ -33,6 +33,7 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
       },
     };
   };
+
   return (
     <div className={styles.topSectionStyle}>
       <CustomInput
@@ -79,10 +80,18 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
         isRequired
         label={intl.formatMessage({ id: "label.centreEndTime" })}
         onChange={(momentValue) => {
-          handleInputChange(
-            momentValue ? dayjs(momentValue).format("HH:mm:ss") : "",
-            "centreEndTime"
-          );
+          const endTime = momentValue
+            ? dayjs(formData?.centreEndTime).format("HH:mm:ss")
+            : "";
+          const startTime = formData?.centreStartTime;
+          if (
+            !startTime ||
+            dayjs(endTime, "HH:mm:ss").isAfter(dayjs(startTime, "HH:mm:ss"))
+          ) {
+            handleInputChange(endTime, "centreEndTime");
+          } else {
+            handleInputChange("", "centreEndTime");
+          }
         }}
         disabledTime={handleDisabledEndTime}
         placeholder={intl.formatMessage({
