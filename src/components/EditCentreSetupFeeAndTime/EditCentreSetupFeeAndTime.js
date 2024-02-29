@@ -5,9 +5,15 @@ import PropTypes from "prop-types";
 
 import CustomInput from "../CustomInput/CustomInput";
 import CustomDateTimePicker from "../CustomDateTimePicker/CustomDateTimePicker";
+import { MODULE_KEYS } from "../../constant/constant";
 import styles from "./EditCentreSetupFeeAndTime.module.scss";
 
-const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
+const EditCentreSetupFeeAndTime = ({
+  formData,
+  handleInputChange,
+  isEdit,
+  selectedModule,
+}) => {
   const intl = useIntl();
   const handleDisabledEndTime = () => {
     if (!formData.centreStartTime) {
@@ -35,21 +41,23 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
   };
   return (
     <div className={styles.topSectionStyle}>
-      <CustomInput
-        customLabelStyles={styles.inputLabel}
-        customInputStyles={styles.input}
-        customContainerStyles={styles.customContainerStyles}
-        isRequired
-        label={intl.formatMessage({ id: "label.writtenTestFee" })}
-        onChange={(val) => {
-          handleInputChange(val.target.value, "PsychometricFee");
-        }}
-        placeholder={intl.formatMessage({
-          id: `label.placeholder.writtenTestFee`,
-        })}
-        value={formData?.PsychometricFee}
-        disabled={!isEdit}
-      />
+      {selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
+        <CustomInput
+          customLabelStyles={styles.inputLabel}
+          customInputStyles={styles.input}
+          customContainerStyles={styles.customContainerStyles}
+          isRequired
+          label={intl.formatMessage({ id: "label.writtenTestFee" })}
+          onChange={(val) => {
+            handleInputChange(val.target.value, "PsychometricFee");
+          }}
+          placeholder={intl.formatMessage({
+            id: `label.placeholder.writtenTestFee`,
+          })}
+          value={formData?.PsychometricFee}
+          disabled={!isEdit}
+        />
+      )}
       <CustomDateTimePicker
         customLabelStyles={styles.inputLabel}
         customTimeStyle={styles.timeInput}

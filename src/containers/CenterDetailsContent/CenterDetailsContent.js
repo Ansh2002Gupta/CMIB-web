@@ -13,6 +13,7 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useConfigUpdateHandler from "../../services/api-services/SetupCentre/useConfigUpdateHandler";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
+import { INTERVIEW_TYPE, MODULE_KEYS } from "../../constant/constant";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
 
@@ -25,7 +26,8 @@ const CenterDetailsContent = ({
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
-
+  const isNqcaModule =
+    selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY;
   const { interview_dates } = centreDetailData || {};
   const [formData, setFormData] = useState({});
   const [tableData, setTableData] = useState([]);
@@ -36,9 +38,12 @@ const CenterDetailsContent = ({
     scheduleDate: null,
     participationFee: "",
     firm: { firmFee: "", uptoPartners: "" },
-    norm1: "",
-    norm2: "",
-    norm2MinVacancy: "",
+    ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+      interviewType: "",
+    }),
+    ...(isNqcaModule && { norm1: "" }),
+    ...(isNqcaModule && { norm2: "" }),
+    ...(isNqcaModule && { norm2MinVacancy: "" }),
   };
 
   const [errors, setErrors] = useState([]);
@@ -51,7 +56,9 @@ const CenterDetailsContent = ({
 
   useEffect(() => {
     setFormData({
-      PsychometricFee: centreDetailData?.psychometric_test_fee,
+      ...(isNqcaModule && {
+        PsychometricFee: centreDetailData?.psychometric_test_fee,
+      }),
       centreStartTime: centreDetailData?.centre_start_time,
       centreEndTime: centreDetailData?.centre_end_time,
     });
@@ -63,9 +70,16 @@ const CenterDetailsContent = ({
         firmFee: date.firm_fee.toString(),
         uptoPartners: date.numbers_of_partners.toString(),
       },
-      norm1: date.norm1.toString(),
-      norm2: date.norm2.toString(),
-      norm2MinVacancy: date.norm2_min_vacancy.toString(),
+      ...(isNqcaModule && { norm1: date.norm1.toString() }),
+      ...(isNqcaModule && { norm2: date.norm2.toString() }),
+      ...(isNqcaModule && {
+        norm2MinVacancy: date.norm2_min_vacancy.toString(),
+      }),
+      ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+        interviewType: INTERVIEW_TYPE.filter(
+          (item) => item.value === date.interview_type
+        )?.[0],
+      }),
     }));
 
     setTableData(() => {
@@ -78,9 +92,12 @@ const CenterDetailsContent = ({
           scheduleDate: "",
           participationFee: "",
           firm: { firmFee: "", uptoPartners: "" },
-          norm1: "",
-          norm2: "",
-          norm2MinVacancy: "",
+          ...(isNqcaModule && { norm1: "" }),
+          ...(isNqcaModule && { norm2: "" }),
+          ...(isNqcaModule && { norm2MinVacancy: "" }),
+          ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+            interviewType: "",
+          }),
         }))
       );
 
@@ -154,7 +171,14 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-
+    if (tableData[index]?.interviewType === "") {
+      handleSetError(
+        intl.formatMessage({ id: "centre.error.interviewType" }),
+        "interviewType",
+        index
+      );
+      errorCount += 1;
+    }
     return errorCount <= 0;
   };
 
@@ -204,9 +228,12 @@ const CenterDetailsContent = ({
           scheduleDate: "",
           participationFee: "",
           firm: { firmFee: "", uptoPartners: "" },
-          norm1: "",
-          norm2: "",
-          norm2MinVacancy: "",
+          ...(isNqcaModule && { norm1: "" }),
+          ...(isNqcaModule && { norm2: "" }),
+          ...(isNqcaModule && { norm2MinVacancy: "" }),
+          ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+            interviewType: "",
+          }),
         };
         return newErrors;
       });
@@ -215,13 +242,20 @@ const CenterDetailsContent = ({
     const centreDetails = {
       centre_start_time: formData?.centreStartTime,
       centre_end_time: formData.centreEndTime,
-      psychometric_test_fee: parseInt(formData.PsychometricFee),
+      ...(isNqcaModule && {
+        psychometric_test_fee: parseInt(formData.PsychometricFee),
+      }),
       interview_dates: interviewDatesData.map((item) => ({
         id: parseInt(item.id),
         firm_fee: parseInt(item.firm.firmFee),
-        norm1: parseInt(item.norm1),
-        norm2: parseInt(item.norm2),
-        norm2_min_vacancy: parseInt(item.norm2MinVacancy),
+        ...(isNqcaModule && { norm1: parseInt(item.norm1) }),
+        ...(isNqcaModule && { norm2: parseInt(item.norm2) }),
+        ...(isNqcaModule && {
+          norm2_min_vacancy: parseInt(item.norm2MinVacancy),
+        }),
+        ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+          interview_type: item.interviewType,
+        }),
         numbers_of_partners: parseInt(item.firm.uptoPartners),
         participation_fee: parseInt(item.participationFee),
         interview_schedule_date: item.scheduleDate,
@@ -270,7 +304,9 @@ const CenterDetailsContent = ({
       addTableData,
       errors,
       handleSetError,
+      isNqcaModule,
       isEdit,
+      selectedModule,
       setTableData,
       setErrors,
       tableData,
@@ -310,7 +346,7 @@ const CenterDetailsContent = ({
         rightSection={
           <CustomButton
             isBtnDisable={
-              !formData?.PsychometricFee ||
+              (isNqcaModule && !formData?.PsychometricFee) ||
               !formData?.centreStartTime ||
               !formData?.centreEndTime
             }
@@ -340,6 +376,7 @@ const CenterDetailsContent = ({
               isEdit={isEdit}
               handleInputChange={handleInputChange}
               formData={formData}
+              selectedModule={selectedModule}
             />
           ) : (
             <div className={styles.gridStyle}>

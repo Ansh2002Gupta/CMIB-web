@@ -71,3 +71,10 @@
   height: var(--height_24);
   width: var(--width_24);
 }
+
+.selectInput {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+}

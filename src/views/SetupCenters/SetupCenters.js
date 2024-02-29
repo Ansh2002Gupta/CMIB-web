@@ -1,11 +1,14 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useLayoutEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useSearchParams } from "react-router-dom";
 import { ThemeContext } from "core/providers/theme";
-import { Spin, Typography } from "antd";
+import { Image, Spin, Typography } from "antd";
 
-import { TwoRow } from "../../core/layouts";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import CustomInput from "../../components/CustomInput";
+import CustomModal from "../../components/CustomModal";
+import CustomRadioButton from "../../components/CustomRadioButton";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
@@ -21,12 +24,14 @@ import {
 } from "../../constant/apiEndpoints";
 import {
   DEFAULT_PAGE_SIZE,
+  MODULE_KEYS,
   PAGINATION_PROPERTIES,
+  PAYMENT_TYPE,
   ROUND_ID,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
-
+import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
 
@@ -41,7 +46,13 @@ const SetupCenter = () => {
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
   const isEditable = currentGlobalSession?.is_editable;
-
+  const [paymentType, setPaymentType] = useState(PAYMENT_TYPE.CENTRE_WISE);
+  const [paymentModalType, setPaymentModalType] = useState(paymentType);
+  const [isPaymentTypeModalOpen, setIsPaymentTypeModalOpen] = useState(false);
+  const [participationFees, setParticipationFees] = useState("");
+  const [isFeesError, setIsFeesError] = useState(false);
+  const [participationModalFees, setParticipationModalFees] =
+    useState(participationFees);
   const [current, setCurrent] = useState(
     getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
   );
@@ -220,7 +231,7 @@ const SetupCenter = () => {
         onChangeCurrentPage={onChangeCurrentPage}
         currentDataLength={setupCentres?.meta?.total}
         customContainerStyles={styles.tableContainer}
-        originalData={setupCentres?.records || []}
+        originalData={setupCentres || []}
       />
     );
   };
@@ -249,27 +260,257 @@ const SetupCenter = () => {
   }, []);
 
   return (
-    <TwoRow
-      className={styles.mainContainer}
-      topSection={
-        <TwoRow
-          className={styles.headerContainer}
-          topSection={
-            <Typography className={styles.headingText}>
-              {intl.formatMessage({ id: "setupCentres.heading" })}
-            </Typography>
-          }
-          bottomSection={
-            <Typography className={styles.descriptionText}>
-              {intl.formatMessage({ id: "setupCentres.warning" })}
-            </Typography>
+    <>
+      {
+        <CustomModal
+          btnText={intl.formatMessage({ id: "label.save" })}
+          isOpen={isPaymentTypeModalOpen}
+          headingText={intl.formatMessage({
+            id: "setupCentres.editPaymentType",
+          })}
+          onBtnClick={() => {
+            const isError = !participationModalFees?.length;
+            if (!isError) {
+              setParticipationFees(participationModalFees);
+              setPaymentType(paymentModalType);
+              setIsPaymentTypeModalOpen(false);
+            } else {
+              setIsFeesError(true);
+            }
+          }}
+          cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+          onCancel={() => {
+            setIsFeesError(false);
+            setIsPaymentTypeModalOpen(false);
+          }}
+          content={
+            <TwoRow
+              className={styles.modalGap}
+              topSection={
+                <TwoRow
+                  className={styles.radioButtonGap}
+                  topSection={
+                    <Typography className={styles.grayText}>
+                      {intl.formatMessage({
+                        id: "setupCentres.paymentType",
+                      })}
+                      <span className={styles.redText}> *</span>
+                    </Typography>
+                  }
+                  bottomSection={
+                    <TwoColumn
+                      className={styles.radioButtonGap}
+                      leftSection={
+                        <TwoColumn
+                          className={styles.assigneeRow}
+                          onClick={() =>
+                            setPaymentModalType(PAYMENT_TYPE.CENTRE_WISE)
+                          }
+                          leftSection={
+                            <CustomRadioButton
+                              checked={
+                                paymentModalType === PAYMENT_TYPE.CENTRE_WISE
+                              }
+                            />
+                          }
+                          rightSection={
+                            <Typography className={styles.text}>
+                              {intl.formatMessage({
+                                id: "setupCentres.perCentre",
+                              })}
+                            </Typography>
+                          }
+                        />
+                      }
+                      rightSection={
+                        <TwoColumn
+                          onClick={() =>
+                            setPaymentModalType(PAYMENT_TYPE.WHOLE)
+                          }
+                          leftSection={
+                            <CustomRadioButton
+                              checked={paymentModalType === PAYMENT_TYPE.WHOLE}
+                            />
+                          }
+                          rightSection={
+                            <Typography className={styles.text}>
+                              {intl.formatMessage({
+                                id: "setupCentres.wholePlacementDrive",
+                              })}
+                            </Typography>
+                          }
+                        />
+                      }
+                    />
+                  }
+                />
+              }
+              bottomSection={
+                paymentModalType === PAYMENT_TYPE.WHOLE ? (
+                  <TwoRow
+                    topSection={
+                      <Typography className={styles.grayText}>
+                        {intl.formatMessage({
+                          id: "setupCentres.participationFees",
+                        })}
+                        <span className={styles.redText}> *</span>
+                      </Typography>
+                    }
+                    bottomSection={
+                      <TwoRow
+                        topSection={
+                          <CustomInput
+                            customLabelStyles={styles.inputLabel}
+                            customInputStyles={styles.input}
+                            customContainerStyles={styles.customContainerStyles}
+                            onChange={(val) => {
+                              if (val.target.value === "") {
+                                setIsFeesError(true);
+                              } else {
+                                setIsFeesError(false);
+                              }
+                              (NUMERIC_VALUE_REGEX.test(val.target.value) ||
+                                val.target.value === "") &&
+                                setParticipationModalFees(val.target.value);
+                            }}
+                            placeholder={intl.formatMessage({
+                              id: "setupCentres.enterParticipationFees",
+                            })}
+                            value={participationModalFees}
+                            onBlur={(val) => {
+                              setIsFeesError(!val.target.value.length);
+                            }}
+                          />
+                        }
+                        bottomSection={
+                          isFeesError ? (
+                            <Typography className={styles.errorText}>
+                              {intl.formatMessage({
+                                id: "setupCentres.feesError",
+                              })}
+                            </Typography>
+                          ) : (
+                            <></>
+                          )
+                        }
+                      />
+                    }
+                  />
+                ) : (
+                  <></>
+                )
+              }
+            />
           }
         />
       }
-      bottomSection={renderContent()}
-      bottomSectionStyle={classes.bottomSectionStyle}
-      isBottomFillSpace
-    />
+      <TwoRow
+        className={styles.mainContainer}
+        topSection={
+          <TwoRow
+            className={styles.headerContainer}
+            topSection={
+              <Typography className={styles.headingText}>
+                {intl.formatMessage({ id: "setupCentres.heading" })}
+              </Typography>
+            }
+            bottomSection={
+              <Typography className={styles.descriptionText}>
+                {intl.formatMessage({ id: "setupCentres.warning" })}
+              </Typography>
+            }
+          />
+        }
+        bottomSection={
+          <TwoRow
+            topSection={
+              selectedModule?.key !==
+              MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY ? (
+                <TwoColumn
+                  className={styles.paymentTypeContainer}
+                  leftSection={
+                    <TwoColumn
+                      className={styles.participationFeesGap}
+                      leftSection={
+                        <TwoRow
+                          className={styles.paymentTypeGap}
+                          topSection={
+                            <Typography className={styles.grayText}>
+                              {intl.formatMessage({
+                                id: "setupCentres.paymentType",
+                              })}
+                            </Typography>
+                          }
+                          bottomSection={
+                            <Typography className={styles.blackText}>
+                              {intl.formatMessage({
+                                id:
+                                  paymentType === PAYMENT_TYPE.CENTRE_WISE
+                                    ? "setupCentres.perCentre"
+                                    : "setupCentres.wholePlacementDrive",
+                              })}
+                            </Typography>
+                          }
+                        />
+                      }
+                      rightSection={
+                        paymentType === PAYMENT_TYPE.WHOLE ? (
+                          <TwoRow
+                            className={styles.paymentTypeGap}
+                            topSection={
+                              <Typography className={styles.grayText}>
+                                {intl.formatMessage({
+                                  id: "setupCentres.participationFees",
+                                })}
+                              </Typography>
+                            }
+                            bottomSection={
+                              <Typography className={styles.blackText}>
+                                {participationFees || "-"}
+                              </Typography>
+                            }
+                          />
+                        ) : (
+                          <></>
+                        )
+                      }
+                    />
+                  }
+                  isLeftFillSpace
+                  rightSection={
+                    <TwoColumn
+                      onClick={() => {
+                        setParticipationModalFees(participationFees);
+                        setPaymentModalType(paymentType);
+                        setIsPaymentTypeModalOpen(true);
+                      }}
+                      className={styles.editContainer}
+                      leftSection={
+                        <Image
+                          src={getImage("editDark")}
+                          className={styles.editIcon}
+                          preview={false}
+                        />
+                      }
+                      rightSection={
+                        <Typography className={styles.text}>
+                          {intl.formatMessage({ id: "session.edit" })}
+                        </Typography>
+                      }
+                    />
+                  }
+                />
+              ) : (
+                <></>
+              )
+            }
+            bottomSection={renderContent()}
+          />
+        }
+        bottomSectionStyle={classes.bottomSectionStyle}
+        isBottomFillSpace
+      />
+    </>
   );
 };
 

@@ -3,13 +3,15 @@ import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
-import { Image, Table, Typography } from "antd";
+import { Image, Select, Table, Typography } from "antd";
 
 import { TwoColumn } from "../../core/layouts";
 
 import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { INTERVIEW_TYPE, MODULE_KEYS } from "../../constant/constant";
+import { classes } from "./CentreTable.styles";
 import styles from "./CentreTable.module.scss";
 import "./Override.css";
 
@@ -17,6 +19,8 @@ const CentreTable = ({
   addTableData,
   errors,
   isEdit,
+  isNqcaModule,
+  selectedModule,
   setErrors,
   setTableData,
   tableData,
@@ -45,9 +49,12 @@ const CentreTable = ({
           scheduleDate: "",
           participationFee: "",
           firm: { firmFee: "", uptoPartners: "" },
-          norm1: "",
-          norm2: "",
-          norm2MinVacancy: "",
+          ...(isNqcaModule && { norm1: "" }),
+          ...(isNqcaModule && { norm2: "" }),
+          ...(isNqcaModule && { norm2MinVacancy: "" }),
+          ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+            interviewType: "",
+          }),
         },
       ]);
     }
@@ -121,6 +128,36 @@ const CentreTable = ({
         />
       ),
     },
+    ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY
+      ? [
+          {
+            title: () => (
+              <Typography className={styles.tableHeader}>
+                {intl.formatMessage({ id: "centre.onlineOffline" })}
+                <span className={styles.redText}> *</span>
+              </Typography>
+            ),
+            dataIndex: "interviewType",
+            key: "interviewType",
+            render: (text, record, index) => (
+              <Select
+                bordered={false}
+                size={"large"}
+                style={classes.interviewTypeDropDown}
+                className={styles.selectInput}
+                onChange={(val) =>
+                  handleInputChange(val, "interviewType", index)
+                }
+                options={INTERVIEW_TYPE}
+                placeholder={intl.formatMessage({
+                  id: `centre.placeholder.selectOnlineOffline`,
+                })}
+                value={!text?.length ? null : text}
+              />
+            ),
+          },
+        ]
+      : []),
     {
       title: () => (
         <Typography className={styles.tableHeader}>
@@ -206,84 +243,96 @@ const CentreTable = ({
         );
       },
     },
-    {
-      title: () => (
-        <Typography className={styles.tableHeader}>
-          {intl.formatMessage({ id: "centre.norm1" })}
-          <span className={styles.redText}> *</span>
-        </Typography>
-      ),
-      dataIndex: "norm1",
-      key: "norm1",
-      render: (text, record, index) => (
-        <CustomInput
-          type="inputNumber"
-          value={text}
-          customContainerStyles={styles.customContainerStyles}
-          customInputNumberStyles={styles.inputStyle}
-          onChange={(val) => {
-            handleInputChange(val, "norm1", index);
-          }}
-          placeholder={intl.formatMessage({
-            id: "centre.placeholder.enterNorm1",
-          })}
-          errorMessage={errors[index]?.norm1}
-          isError={!!errors[index]?.norm1}
-        />
-      ),
-    },
-    {
-      title: () => (
-        <Typography className={styles.tableHeader}>
-          {intl.formatMessage({ id: "centre.norm2" })}
-          <span className={styles.redText}> *</span>
-        </Typography>
-      ),
-      dataIndex: "norm2",
-      key: "norm2",
-      render: (text, record, index) => (
-        <CustomInput
-          type="inputNumber"
-          value={text}
-          customContainerStyles={styles.customContainerStyles}
-          customInputNumberStyles={styles.inputStyle}
-          onChange={(val) => {
-            handleInputChange(val, "norm2", index);
-          }}
-          placeholder={intl.formatMessage({
-            id: "centre.placeholder.enterNorm2",
-          })}
-          errorMessage={errors[index]?.norm2}
-          isError={!!errors[index]?.norm2}
-        />
-      ),
-    },
-    {
-      title: () => (
-        <Typography className={styles.tableHeader}>
-          {intl.formatMessage({ id: "centre.norm2MinVacancy" })}
-          <span className={styles.redText}> *</span>
-        </Typography>
-      ),
-      dataIndex: "norm2MinVacancy",
-      key: "norm2MinVacancy",
-      render: (text, record, index) => (
-        <CustomInput
-          type="inputNumber"
-          value={text}
-          customContainerStyles={styles.customContainerStyles}
-          customInputNumberStyles={styles.inputStyle}
-          onChange={(val) => {
-            handleInputChange(val, "norm2MinVacancy", index);
-          }}
-          placeholder={intl.formatMessage({
-            id: "centre.placeholder.enterVacancy",
-          })}
-          errorMessage={errors[index]?.norm2MinVacancy}
-          isError={!!errors[index]?.norm2MinVacancy}
-        />
-      ),
-    },
+    ...(isNqcaModule
+      ? [
+          {
+            title: () => (
+              <Typography className={styles.tableHeader}>
+                {intl.formatMessage({ id: "centre.norm1" })}
+                <span className={styles.redText}> *</span>
+              </Typography>
+            ),
+            dataIndex: "norm1",
+            key: "norm1",
+            render: (text, record, index) => (
+              <CustomInput
+                type="inputNumber"
+                value={text}
+                customContainerStyles={styles.customContainerStyles}
+                customInputNumberStyles={styles.inputStyle}
+                onChange={(val) => {
+                  handleInputChange(val, "norm1", index);
+                }}
+                placeholder={intl.formatMessage({
+                  id: "centre.placeholder.enterNorm1",
+                })}
+                errorMessage={errors[index]?.norm1}
+                isError={!!errors[index]?.norm1}
+              />
+            ),
+          },
+        ]
+      : []),
+    ...(isNqcaModule
+      ? [
+          {
+            title: () => (
+              <Typography className={styles.tableHeader}>
+                {intl.formatMessage({ id: "centre.norm2" })}
+                <span className={styles.redText}> *</span>
+              </Typography>
+            ),
+            dataIndex: "norm2",
+            key: "norm2",
+            render: (text, record, index) => (
+              <CustomInput
+                type="inputNumber"
+                value={text}
+                customContainerStyles={styles.customContainerStyles}
+                customInputNumberStyles={styles.inputStyle}
+                onChange={(val) => {
+                  handleInputChange(val, "norm2", index);
+                }}
+                placeholder={intl.formatMessage({
+                  id: "centre.placeholder.enterNorm2",
+                })}
+                errorMessage={errors[index]?.norm2}
+                isError={!!errors[index]?.norm2}
+              />
+            ),
+          },
+        ]
+      : []),
+    ...(isNqcaModule
+      ? [
+          {
+            title: () => (
+              <Typography className={styles.tableHeader}>
+                {intl.formatMessage({ id: "centre.norm2MinVacancy" })}
+                <span className={styles.redText}> *</span>
+              </Typography>
+            ),
+            dataIndex: "norm2MinVacancy",
+            key: "norm2MinVacancy",
+            render: (text, record, index) => (
+              <CustomInput
+                type="inputNumber"
+                value={text}
+                customContainerStyles={styles.customContainerStyles}
+                customInputNumberStyles={styles.inputStyle}
+                onChange={(val) => {
+                  handleInputChange(val, "norm2MinVacancy", index);
+                }}
+                placeholder={intl.formatMessage({
+                  id: "centre.placeholder.enterVacancy",
+                })}
+                errorMessage={errors[index]?.norm2MinVacancy}
+                isError={!!errors[index]?.norm2MinVacancy}
+              />
+            ),
+          },
+        ]
+      : []),
 
     {
       title: " ",
@@ -339,24 +388,36 @@ const CentreTable = ({
         dataKey: "uptoPartners",
       },
     }),
-    renderColumn({
-      title: intl.formatMessage({ id: "centre.norm1" }),
-      dataIndex: "norm1",
-      key: "norm1",
-      renderText: { visible: true },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "centre.norm2" }),
-      dataIndex: "norm2",
-      key: "norm2",
-      renderText: { visible: true },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "centre.norm2MinVacancy" }),
-      dataIndex: "norm2MinVacancy",
-      key: "norm2MinVacancy",
-      renderText: { visible: true },
-    }),
+    ...(isNqcaModule
+      ? [
+          renderColumn({
+            title: intl.formatMessage({ id: "centre.norm1" }),
+            dataIndex: "norm1",
+            key: "norm1",
+            renderText: { visible: true },
+          }),
+        ]
+      : []),
+    ...(isNqcaModule
+      ? [
+          renderColumn({
+            title: intl.formatMessage({ id: "centre.norm2" }),
+            dataIndex: "norm2",
+            key: "norm2",
+            renderText: { visible: true },
+          }),
+        ]
+      : []),
+    ...(isNqcaModule
+      ? [
+          renderColumn({
+            title: intl.formatMessage({ id: "centre.norm2MinVacancy" }),
+            dataIndex: "norm2MinVacancy",
+            key: "norm2MinVacancy",
+            renderText: { visible: true },
+          }),
+        ]
+      : []),
   ];
 
   return (
@@ -376,6 +437,8 @@ const CentreTable = ({
 
 CentreTable.defaultProps = {
   isEdit: true,
+  isNqcaModule: false,
+  selectedModule: "",
   tableData: [],
   setTableData: () => {},
 };
@@ -384,6 +447,8 @@ CentreTable.propTypes = {
   addTableData: PropTypes.object,
   errors: PropTypes.array,
   isEdit: PropTypes.bool,
+  isNqcaModule: PropTypes.bool,
+  selectedModule: PropTypes.any,
   setErrors: PropTypes.func,
   setTableData: PropTypes.func,
   tableData: PropTypes.array,

@@ -388,3 +388,13 @@ export const MAX_BANK_AC_NO_LENGTH = 18;
 export const ROLES = {
   SUPER_ADMIN: "super-admin",
 };
+
+export const PAYMENT_TYPE = {
+  WHOLE: "whole",
+  CENTRE_WISE: "centrewise",
+};
+
+export const INTERVIEW_TYPE = [
+  { id: 1, label: "Online", value: "online" },
+  { id: 2, label: "Offline", value: "offline" },
+];
