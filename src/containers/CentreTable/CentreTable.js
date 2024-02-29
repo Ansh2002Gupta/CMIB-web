@@ -190,6 +190,7 @@ const CentreTable = ({
             }
             rightSection={
               <CustomInput
+                controls
                 type="inputNumber"
                 customContainerStyles={styles.customContainerStyles}
                 customInputNumberStyles={styles.inputNumberStyle}
@@ -197,6 +198,7 @@ const CentreTable = ({
                 onChange={(val) => {
                   handleInputChange(val, "firm", index, "uptoPartners");
                 }}
+                maxLength={3}
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterpartner",
                 })}
