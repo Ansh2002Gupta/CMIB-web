@@ -94,6 +94,7 @@ const CenterDetailsContent = ({
   };
 
   const validate = (index) => {
+    console.log("TABLE", tableData);
     let errorCount = 0;
     if (!tableData[index]?.scheduleDate) {
       handleSetError(
@@ -103,7 +104,12 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (tableData[index]?.participationFee === "") {
+    if (
+      !(
+        !!tableData[index]?.participationFee ||
+        tableData[index]?.participationFee === 0
+      )
+    ) {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterParticipationFee" }),
         "participationFee",
@@ -111,7 +117,12 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (tableData[index]?.firm?.firmFee === "") {
+    if (
+      !(
+        !!tableData[index]?.firm?.firmFee ||
+        tableData[index]?.firm?.firmFee === 0
+      )
+    ) {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterFirmFee" }),
         "firm",
@@ -120,7 +131,12 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (tableData[index]?.firm?.uptoPartners === "") {
+    if (
+      !(
+        !!tableData[index]?.firm?.uptoPartners ||
+        tableData[index]?.firm?.uptoPartners === 0
+      )
+    ) {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterpartner" }),
         "firm",
@@ -129,7 +145,7 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (tableData[index]?.norm1 === "") {
+    if (!(!!tableData[index]?.norm1 || tableData[index]?.norm1 === 0)) {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterNorm1" }),
         "norm1",
@@ -137,7 +153,7 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (tableData[index]?.norm2 === "") {
+    if (!(!!tableData[index]?.norm2 || tableData[index]?.norm2 === 0)) {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterNorm2" }),
         "norm2",
@@ -145,7 +161,12 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (tableData[index]?.norm2MinVacancy === "") {
+    if (
+      !(
+        !!tableData[index]?.norm2MinVacancy ||
+        tableData[index]?.norm2MinVacancy === 0
+      )
+    ) {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterVacancy" }),
         "norm2MinVacancy",
