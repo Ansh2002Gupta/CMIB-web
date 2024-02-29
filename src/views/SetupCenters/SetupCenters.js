@@ -157,6 +157,7 @@ const SetupCenter = () => {
         currentDataLength={setupCentres?.length}
         customContainerStyles={styles.tableContainer}
         hidePagination
+        showTableBorderBottom
         originalData={setupCentres || []}
       />
     );
