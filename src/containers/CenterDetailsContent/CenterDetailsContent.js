@@ -232,7 +232,7 @@ const CenterDetailsContent = ({
       });
     }
 
-    const centreDetails = {
+    const centreDetailsPayload = {
       centre_start_time: formData?.centreStartTime,
       centre_end_time: formData.centreEndTime,
       psychometric_test_fee: parseInt(formData.PsychometricFee),
@@ -255,7 +255,7 @@ const CenterDetailsContent = ({
 
     updateCentreConfig({
       module: selectedModule,
-      payload: centreDetails,
+      payload: centreDetailsPayload,
       centreId: centreId,
       roundId: roundId,
       onErrorCallback: (error) => {
