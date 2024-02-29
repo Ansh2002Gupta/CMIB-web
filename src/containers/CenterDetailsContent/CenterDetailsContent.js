@@ -365,8 +365,14 @@ const CenterDetailsContent = ({
 
     const centreDetails = [
       { heading: "writtenTestFee", value: formData?.PsychometricFee },
-      { heading: "centreStartTime", value: formData?.centreStartTime },
-      { heading: "centreEndTime", value: formData?.centreEndTime },
+      {
+        heading: "centreStartTime",
+        value: dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A"),
+      },
+      {
+        heading: "centreEndTime",
+        value: dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A"),
+      },
     ];
 
     return (
