@@ -94,7 +94,6 @@ const CenterDetailsContent = ({
   };
 
   const validate = (index) => {
-    console.log("TABLE", tableData);
     let errorCount = 0;
     if (!tableData[index]?.scheduleDate) {
       handleSetError(
