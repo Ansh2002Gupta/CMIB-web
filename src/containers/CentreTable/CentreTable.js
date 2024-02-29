@@ -198,6 +198,7 @@ const CentreTable = ({
                 onChange={(val) => {
                   handleInputChange(val, "firm", index, "uptoPartners");
                 }}
+                maxLength={3}
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterpartner",
                 })}
