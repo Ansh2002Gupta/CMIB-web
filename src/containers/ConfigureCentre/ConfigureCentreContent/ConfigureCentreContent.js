@@ -278,7 +278,7 @@ const ConfigureCentreContent = () => {
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
         checkIsSwitchEditable: (data) => {
-          return !data?.is_editable && !isUpdatingCenterDetails;
+          return data.is_editable && !isUpdatingCenterDetails;
         },
       },
     }),
