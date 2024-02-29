@@ -53,18 +53,20 @@ const CenterDetailsContent = ({
       centreStartTime: centreDetailData?.centre_start_time,
       centreEndTime: centreDetailData?.centre_end_time,
     });
-    const interviewConfiguration = (interview_dates || []).map((date) => ({
-      id: date.id,
-      scheduleDate: date.interview_schedule_date || null,
-      participationFee: date.participation_fee.toString(),
-      firm: {
-        firmFee: date.firm_fee.toString(),
-        uptoPartners: date.numbers_of_partners.toString(),
-      },
-      norm1: date.norm1.toString(),
-      norm2: date.norm2.toString(),
-      norm2MinVacancy: date.norm2_min_vacancy.toString(),
-    }));
+    const interviewConfiguration = (interview_dates || []).map(
+      (interviewRow) => ({
+        id: interviewRow.id,
+        scheduleDate: interviewRow.interview_schedule_date || null,
+        participationFee: interviewRow.participation_fee.toString(),
+        firm: {
+          firmFee: interviewRow.firm_fee.toString(),
+          uptoPartners: interviewRow.numbers_of_partners.toString(),
+        },
+        norm1: interviewRow.norm1.toString(),
+        norm2: interviewRow.norm2.toString(),
+        norm2MinVacancy: interviewRow.norm2_min_vacancy.toString(),
+      })
+    );
 
     setTableData(() => {
       const newTableData = isEdit
