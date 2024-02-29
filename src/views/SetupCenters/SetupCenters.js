@@ -136,7 +136,7 @@ const SetupCenter = () => {
       );
     }
 
-    if (setupCentres?.meta?.total === 0) {
+    if (setupCentres?.length === 0) {
       return (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
@@ -154,10 +154,10 @@ const SetupCenter = () => {
     return (
       <DataTable
         columns={columns}
-        currentDataLength={setupCentres?.meta?.total}
+        currentDataLength={setupCentres?.length}
         customContainerStyles={styles.tableContainer}
         hidePagination
-        originalData={setupCentres?.records || []}
+        originalData={setupCentres || []}
       />
     );
   };
