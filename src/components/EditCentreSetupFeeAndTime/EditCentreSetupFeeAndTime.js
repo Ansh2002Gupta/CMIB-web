@@ -81,7 +81,7 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
         label={intl.formatMessage({ id: "label.centreEndTime" })}
         onChange={(momentValue) => {
           const endTime = momentValue
-            ? dayjs(formData?.centreEndTime).format("HH:mm:ss")
+            ? dayjs(momentValue).format("HH:mm:ss")
             : "";
           const startTime = formData?.centreStartTime;
           if (
