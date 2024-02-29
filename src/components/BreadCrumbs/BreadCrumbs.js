@@ -2,7 +2,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Breadcrumb } from "antd";
+
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { getLabelForPath } from "../../routes/helpers/breadCrumbHelpers";
 import styles from "./BreadCrumbs.module.scss";
 
 const BreadCrumbs = () => {
@@ -23,10 +25,9 @@ const BreadCrumbs = () => {
   const breadcrumbItems = pathSegments
     .map((item, index) => {
       const isLastItem = index === pathSegments.length - 1;
-      const itemName =
-        item === "details" && isEdit
-          ? intl.formatMessage({ id: "label.path.editDetails" })
-          : intl.formatMessage({ id: `label.path.${item}` });
+      const itemName = intl.formatMessage({
+        id: getLabelForPath({ isEdit, path: item, pathSegments }),
+      });
 
       const onClick = !isLastItem
         ? () => navigate(index - (pathSegments.length - 1))
@@ -42,7 +43,7 @@ const BreadCrumbs = () => {
         </Breadcrumb.Item>
       );
     })
-    .filter((item) => pathSegments.length > 1);
+    .filter(() => pathSegments.length > 1);
 
   return (
     <div className={styles.mainContainer}>
