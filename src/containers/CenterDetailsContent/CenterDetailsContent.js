@@ -33,7 +33,6 @@ const CenterDetailsContent = ({
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   const addTableData = {
-    id: 0,
     isAddRow: true,
     scheduleDate: null,
     participationFee: "",
@@ -55,7 +54,7 @@ const CenterDetailsContent = ({
       centreEndTime: centreDetailData?.centre_end_time,
     });
     const interviewConfiguration = (interview_dates || []).map((date) => ({
-      id: Math.random().toString(),
+      id: date.id,
       scheduleDate: date.interview_schedule_date || null,
       participationFee: date.participation_fee.toString(),
       firm: {
@@ -235,16 +234,21 @@ const CenterDetailsContent = ({
       centre_start_time: formData?.centreStartTime,
       centre_end_time: formData.centreEndTime,
       psychometric_test_fee: parseInt(formData.PsychometricFee),
-      interview_dates: interviewDatesData.map((item) => ({
-        id: parseInt(item.id),
-        firm_fee: parseInt(item.firm.firmFee),
-        norm1: parseInt(item.norm1),
-        norm2: parseInt(item.norm2),
-        norm2_min_vacancy: parseInt(item.norm2MinVacancy),
-        numbers_of_partners: parseInt(item.firm.uptoPartners),
-        participation_fee: parseInt(item.participationFee),
-        interview_schedule_date: item.scheduleDate,
-      })),
+      interview_dates: interviewDatesData.map((item) => {
+        const interviewDateDetails = {
+          firm_fee: parseInt(item.firm.firmFee),
+          norm1: parseInt(item.norm1),
+          norm2: parseInt(item.norm2),
+          norm2_min_vacancy: parseInt(item.norm2MinVacancy),
+          numbers_of_partners: parseInt(item.firm.uptoPartners),
+          participation_fee: parseInt(item.participationFee),
+          interview_schedule_date: item.scheduleDate,
+        };
+        if (item.id) {
+          interviewDateDetails.id = parseInt(item.id);
+        }
+        return interviewDateDetails;
+      }),
     };
 
     updateCentreConfig({
