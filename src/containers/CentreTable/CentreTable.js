@@ -190,6 +190,7 @@ const CentreTable = ({
             }
             rightSection={
               <CustomInput
+                controls
                 type="inputNumber"
                 customContainerStyles={styles.customContainerStyles}
                 customInputNumberStyles={styles.inputNumberStyle}
