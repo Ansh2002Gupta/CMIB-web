@@ -23,7 +23,7 @@ const BreadCrumbs = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
 
   const getLabelForPath = (path, isEdit) => {
-    const sessionPathToLabelId = {
+    const detailPageBreadCrumbLabelId = {
       "setup-centers": "label.session.setupCenters.details",
       "orientation-centers": "label.session.orientationCenters.details",
       "setup-mock-interview": "label.session.setupMockInterview.details",
@@ -42,7 +42,7 @@ const BreadCrumbs = () => {
       const relevantSegment = pathSegments.find(
         (segment) => segment === "users" || SESSION_PATHS.includes(segment)
       );
-      const labelId = sessionPathToLabelId[relevantSegment] || "";
+      const labelId = detailPageBreadCrumbLabelId[relevantSegment] || "";
       return intl.formatMessage({ id: labelId });
     }
     return intl.formatMessage({ id: `label.path.${path}` });
