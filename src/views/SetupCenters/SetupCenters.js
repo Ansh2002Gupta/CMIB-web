@@ -30,7 +30,6 @@ import {
   ROUND_ID,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
@@ -53,12 +52,6 @@ const SetupCenter = () => {
   const [isFeesError, setIsFeesError] = useState(false);
   const [participationModalFees, setParticipationModalFees] =
     useState(participationFees);
-  const [current, setCurrent] = useState(
-    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
-  );
-  const [pageSize, setPageSize] = useState(
-    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
-  );
 
   const roundId = searchParams.get(ROUND_ID);
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -80,64 +73,14 @@ const SetupCenter = () => {
   });
 
   useModuleWiseApiCall({
-    setSearchParams,
-    paginationParams: {
-      current,
-      pageSize,
-    },
-    triggerPaginationUpdate: true,
     initialApiCall: () => {
-      const requestedParams = getRequestedQueryParams({});
-      getSetupCentres({ queryParamsObject: requestedParams });
+      getSetupCentres({});
     },
   });
-
-  const getRequestedQueryParams = ({ page, rowPerPage }) => {
-    return {
-      perPage: rowPerPage || pageSize,
-      page: page || current,
-    };
-  };
 
   const goToEditCentrePage = (rowData) => {
     const centreId = rowData?.id;
     navigate(`details/${centreId}?roundId=${roundId}`);
-  };
-
-  const onChangePageSize = (size) => {
-    setPageSize(Number(size));
-    setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      return prev;
-    });
-    const requestedParams = getRequestedQueryParams({
-      rowPerPage: size,
-      page: 1,
-    });
-    getSetupCentres({ queryParamsObject: requestedParams });
-  };
-
-  const onChangeCurrentPage = (newPageNumber) => {
-    setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
-      return prev;
-    });
-    const requestedParams = getRequestedQueryParams({
-      page: newPageNumber,
-    });
-    getSetupCentres({ queryParamsObject: requestedParams });
-  };
-
-  const handleOnReTry = () => {
-    const requestedParams = getRequestedQueryParams({
-      rowPerPage: DEFAULT_PAGE_SIZE,
-      page: 1,
-    });
-
-    getSetupCentres({ queryParamsObject: requestedParams });
   };
 
   const columns = [
@@ -146,10 +89,8 @@ const SetupCenter = () => {
       dataIndex: "id",
       key: "id",
       render: (text, record, index) => {
-        const pageNumber = current || 1;
-        const serialNumber = (pageNumber - 1) * pageSize + (index + 1);
         return {
-          children: <span>{`${serialNumber}.`}</span>,
+          children: <span>{`${index + 1}.`}</span>,
         };
       },
     }),
@@ -207,7 +148,7 @@ const SetupCenter = () => {
       );
     }
 
-    if (setupCentres?.meta?.total === 0) {
+    if (setupCentres?.length === 0) {
       return (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
@@ -225,12 +166,10 @@ const SetupCenter = () => {
     return (
       <DataTable
         columns={columns}
-        current={current}
-        pageSize={pageSize}
-        onChangePageSize={onChangePageSize}
-        onChangeCurrentPage={onChangeCurrentPage}
-        currentDataLength={setupCentres?.meta?.total}
+        currentDataLength={setupCentres?.length}
         customContainerStyles={styles.tableContainer}
+        hidePagination
+        showTableBorderBottom
         originalData={setupCentres || []}
       />
     );
@@ -258,6 +197,10 @@ const SetupCenter = () => {
       });
     }
   }, []);
+
+  const handleOnReTry = () => {
+    getSetupCentres({});
+  };
 
   return (
     <>

@@ -39,12 +39,14 @@ const EditCentreSetupFeeAndTime = ({
       },
     };
   };
+
   return (
     <div className={styles.topSectionStyle}>
       {selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
         <CustomInput
-          customLabelStyles={styles.inputLabel}
-          customInputStyles={styles.input}
+        type="inputNumber"
+        customInputNumberStyles={styles.input}
+        customLabelStyles={styles.inputLabel}
           customContainerStyles={styles.customContainerStyles}
           isRequired
           label={intl.formatMessage({ id: "label.writtenTestFee" })}
@@ -66,7 +68,7 @@ const EditCentreSetupFeeAndTime = ({
         label={intl.formatMessage({ id: "label.centreStartTime" })}
         onChange={(momentValue, timeString) => {
           handleInputChange(
-            dayjs(momentValue).format("HH:mm:ss"),
+            momentValue ? dayjs(momentValue).format("HH:mm:ss") : "",
             "centreStartTime"
           );
         }}
@@ -86,10 +88,18 @@ const EditCentreSetupFeeAndTime = ({
         isRequired
         label={intl.formatMessage({ id: "label.centreEndTime" })}
         onChange={(momentValue) => {
-          handleInputChange(
-            dayjs(momentValue).format("HH:mm:ss"),
-            "centreEndTime"
-          );
+          const endTime = momentValue
+            ? dayjs(formData?.centreEndTime).format("HH:mm:ss")
+            : "";
+          const startTime = formData?.centreStartTime;
+          if (
+            !startTime ||
+            dayjs(endTime, "HH:mm:ss").isAfter(dayjs(startTime, "HH:mm:ss"))
+          ) {
+            handleInputChange(endTime, "centreEndTime");
+          } else {
+            handleInputChange("", "centreEndTime");
+          }
         }}
         disabledTime={handleDisabledEndTime}
         placeholder={intl.formatMessage({

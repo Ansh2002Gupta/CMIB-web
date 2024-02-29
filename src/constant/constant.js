@@ -30,7 +30,7 @@ export const SESSION_PATHS = [
   "orientation-centers",
   "setup-mock-interview",
   "consent-marking",
-  "mock-interviews",
+  "campus-interview",
 ];
 
 export const ROW_PER_PAGE_OPTIONS = [
