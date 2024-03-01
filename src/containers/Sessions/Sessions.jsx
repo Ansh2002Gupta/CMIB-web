@@ -30,8 +30,8 @@ function Sessions() {
       const pathSegments = location?.pathname
         .split("/")
         .filter((part) => part.length > 0);
-      const activeSession = pathSegments[pathSegments.length - 1];
-      if (SESSION_PATHS.includes(activeSession)) {
+        const isAnySegmentInSessionPath = pathSegments.some(segment => SESSION_PATHS.includes(segment));
+      if (isAnySegmentInSessionPath) {
         navigate(`/${selectedModule?.key}/${SESSION}?tab=2&mode=view`);
       }
       setItem(SESSION_KEY, key?.toString());
