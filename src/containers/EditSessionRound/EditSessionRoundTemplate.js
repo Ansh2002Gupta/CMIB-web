@@ -14,10 +14,13 @@ import styles from "./EditSessionRound.module.scss";
 
 const EditSessionRoundTemplate = ({
   activeStatus,
+  addExperience,
   centresError,
+  errors,
   experience,
   experienceErrors,
   getCentreListFromResponse,
+  handleError,
   handleDeselectCentre,
   handleSelectCentre,
   handleStatusToggle,
@@ -28,9 +31,12 @@ const EditSessionRoundTemplate = ({
   onClickSave,
   responsive,
   selectedCentres,
+  setAddExperience,
+  setErrors,
   setExperience,
   setExperienceErrors,
   switchLabel,
+  validate,
 }) => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
@@ -80,10 +86,16 @@ const EditSessionRoundTemplate = ({
               MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
               <WorkExperienceRange
                 {...{
+                  addExperience,
+                  errors,
                   experience,
                   experienceErrors,
+                  handleError,
+                  setAddExperience,
+                  setErrors,
                   setExperience,
                   setExperienceErrors,
+                  validate,
                 }}
               />
             )
@@ -107,12 +119,16 @@ const EditSessionRoundTemplate = ({
               onClick={onClickCancel}
             />
           }
+          rightSectionClassName={styles.savebtnContainer}
           rightSection={
             <CustomButton
               isBtnDisable={
                 (currentlySelectedModuleKey !==
                   MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
-                  !experience?.length) ||
+                  !experience?.length &&
+                  !addExperience?.min_ctc &&
+                  !addExperience?.work_experience_max &&
+                  !addExperience?.work_experience_min) ||
                 !selectedCentres?.length
               }
               loading={isLoading}

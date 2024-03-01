@@ -10,24 +10,19 @@ import styles from "./WorkExperienceRange.module.scss";
 import { classes } from "./WorkExperienceRange.styles";
 
 const WorkExperienceRangeTemplate = ({
+  addExperience,
+  errors,
   experience,
   experienceErrors,
+  handleError,
   intl,
+  setAddExperience,
+  setErrors,
   setExperience,
   setExperienceErrors,
+  validate,
 }) => {
   const { getImage } = useContext(ThemeContext);
-  const [addExperience, setAddExperience] = useState({
-    min_ctc: "",
-    use_more_experience: 0,
-    work_experience_max: null,
-    work_experience_min: null,
-  });
-  const [errors, setErrors] = useState({
-    min_ctc: "",
-    work_experience_max: "",
-    work_experience_min: "",
-  });
 
   const handleInputChange = (value, name) => {
     setAddExperience((prevData) => ({
@@ -38,18 +33,14 @@ const WorkExperienceRangeTemplate = ({
       ...prev,
       [name]: "",
     }));
-    if (!value) {
+    if (name === "work_experience_min" && value === null) {
       handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
+    } else {
+      if (name !== "work_experience_min" && !value) {
+        handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
+      }
     }
   };
-
-  const handleError = (key, error) => {
-    setErrors((prev) => ({
-      ...prev,
-      [key]: error,
-    }));
-  };
-
   const handleInputChangeExperience = (value, name, index) => {
     experienceValidate(value, name, index);
     setExperience((prevData) =>
@@ -63,7 +54,19 @@ const WorkExperienceRangeTemplate = ({
   };
 
   const experienceValidate = (value, name, index) => {
-    if (!value) {
+    setExperienceErrors((prevData) =>
+      prevData.map((item, i) => {
+        if (index === i) {
+          return {
+            ...item,
+            [name]: "",
+          };
+        }
+        return item;
+      })
+    );
+
+    if (value === null && name === "work_experience_min") {
       setExperienceErrors((prevData) =>
         prevData.map((item, i) => {
           if (index === i) {
@@ -76,49 +79,20 @@ const WorkExperienceRangeTemplate = ({
         })
       );
     } else {
-      setExperienceErrors((prevData) =>
-        prevData.map((item, i) => {
-          if (index === i) {
-            return {
-              ...item,
-              [name]: "",
-            };
-          }
-          return item;
-        })
-      );
+      if (name !== "work_experience_min" && !value) {
+        setExperienceErrors((prevData) =>
+          prevData.map((item, i) => {
+            if (index === i) {
+              return {
+                ...item,
+                [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
+              };
+            }
+            return item;
+          })
+        );
+      }
     }
-  };
-
-  const validate = () => {
-    let errorCount = 0;
-    if (!addExperience?.min_ctc) {
-      handleError(
-        "min_ctc",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
-      );
-      errorCount += 1;
-    }
-    if (addExperience?.work_experience_min === null) {
-      handleError(
-        "work_experience_min",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
-      );
-      errorCount += 1;
-    }
-    if (
-      !addExperience?.work_experience_max &&
-      !addExperience?.use_more_experience
-    ) {
-      handleError(
-        "work_experience_max",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
-      );
-      errorCount += 1;
-    }
-    if (errorCount > 0) return false;
-
-    return true;
   };
 
   const handleAdd = () => {
@@ -149,7 +123,7 @@ const WorkExperienceRangeTemplate = ({
           {intl.formatMessage({ id: "session.workExperienceRanges" })}
         </Typography>
       }
-      bottomSectionStyle={{ minWidth: "980px" }}
+      bottomSectionStyle={{ minWidth: "840px" }}
       bottomSection={
         <ThreeRow
           className={experience.length && styles.workExpContainer}
@@ -160,13 +134,17 @@ const WorkExperienceRangeTemplate = ({
               rightSectionStyle={classes.flex1}
               leftSection={
                 <Typography className={styles.grayText}>
-                  {intl.formatMessage({ id: "session.workExperienceRange" })}
+                  {`${intl.formatMessage({
+                    id: "session.workExperienceRange",
+                  })}${intl.formatMessage({ id: "label.yearBracket" })}`}
                   <span className={styles.redText}> *</span>
                 </Typography>
               }
               rightSection={
                 <Typography className={styles.grayText}>
-                  {intl.formatMessage({ id: "session.min_ctc" })}
+                  {`${intl.formatMessage({
+                    id: "session.min_ctc",
+                  })}${intl.formatMessage({ id: "label.inrBracket" })}`}
                   <span className={styles.redText}> *</span>
                 </Typography>
               }
@@ -188,6 +166,8 @@ const WorkExperienceRangeTemplate = ({
                         isLeftFillSpace
                         leftSection={
                           <CustomInput
+                            controls={true}
+                            maxLength={20}
                             type="inputNumber"
                             placeholder={intl.formatMessage({
                               id: "label.from",
@@ -225,7 +205,7 @@ const WorkExperienceRangeTemplate = ({
                           item?.use_more_experience ? (
                             <CustomInput
                               controls={true}
-                              disabled={true}
+                              maxLength={20}
                               value={"and more"}
                               customInputNumberStyles={
                                 styles.customInputNumberStyles
@@ -237,6 +217,7 @@ const WorkExperienceRangeTemplate = ({
                           ) : (
                             <CustomInput
                               controls={true}
+                              maxLength={20}
                               isError={
                                 experienceErrors[index]?.work_experience_max
                                   ? true
@@ -274,6 +255,7 @@ const WorkExperienceRangeTemplate = ({
                         leftSection={
                           <CustomInput
                             controls={true}
+                            maxLength={20}
                             type="inputNumber"
                             isError={
                               experienceErrors[index]?.min_ctc ? true : false
@@ -330,6 +312,7 @@ const WorkExperienceRangeTemplate = ({
                   leftSection={
                     <CustomInput
                       controls={true}
+                      maxLength={20}
                       isError={errors.work_experience_min ? true : false}
                       type="inputNumber"
                       placeholder={intl.formatMessage({
@@ -367,6 +350,7 @@ const WorkExperienceRangeTemplate = ({
                           />
                         ) : (
                           <CustomInput
+                            maxLength={20}
                             controls={true}
                             isError={errors.work_experience_max ? true : false}
                             type="inputNumber"
@@ -396,6 +380,7 @@ const WorkExperienceRangeTemplate = ({
                               addExperience.use_more_experience ? 0 : 1,
                               "use_more_experience"
                             );
+                            handleInputChange(null, "work_experience_max");
                           }}
                         >
                           <Typography className={styles.blackText}>
@@ -418,6 +403,7 @@ const WorkExperienceRangeTemplate = ({
                   leftSection={
                     <CustomInput
                       controls={true}
+                      maxLength={20}
                       isError={errors.min_ctc ? true : false}
                       type="inputNumber"
                       placeholder={intl.formatMessage({

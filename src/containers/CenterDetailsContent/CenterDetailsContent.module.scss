@@ -73,7 +73,8 @@
 }
 
 .customStyle {
-  min-height: var(--height_44)
+  min-height: var(--height_44);
+  max-width: var(--width_125);
 }
 
 .loaderContainer {

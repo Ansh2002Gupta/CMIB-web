@@ -27,6 +27,7 @@ const DataTable = ({
   onChangePageSize,
   originalData,
   pageSize,
+  showTableBorderBottom,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -58,7 +59,7 @@ const DataTable = ({
         className={[
           styles.table,
           customTableClassName,
-          hidePagination && "nopagination",
+          hidePagination && !showTableBorderBottom && "nopagination",
           isHoverEffectRequired ? "customTableHover" : "customTableNoHover",
         ]}
         rowClassName={setRowClassName}
@@ -126,8 +127,9 @@ DataTable.propTypes = {
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
   originalData: PropTypes.array,
-  pageSize: PropTypes.number,
   keytoFindSelectedRow: PropTypes.string,
+  pageSize: PropTypes.number,
+  showTableBorderBottom: PropTypes.bool,
 };
 
 export default DataTable;

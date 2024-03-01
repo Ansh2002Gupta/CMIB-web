@@ -33,16 +33,18 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
       },
     };
   };
+
   return (
     <div className={styles.topSectionStyle}>
       <CustomInput
-        customLabelStyles={styles.inputLabel}
-        customInputStyles={styles.input}
+        type="inputNumber"
         customContainerStyles={styles.customContainerStyles}
+        customInputNumberStyles={styles.input}
+        customLabelStyles={styles.inputLabel}
         isRequired
         label={intl.formatMessage({ id: "label.writtenTestFee" })}
         onChange={(val) => {
-          handleInputChange(val.target.value, "PsychometricFee");
+          handleInputChange(val, "PsychometricFee");
         }}
         placeholder={intl.formatMessage({
           id: `label.placeholder.writtenTestFee`,
@@ -58,7 +60,7 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
         label={intl.formatMessage({ id: "label.centreStartTime" })}
         onChange={(momentValue, timeString) => {
           handleInputChange(
-            dayjs(momentValue).format("HH:mm:ss"),
+            momentValue ? dayjs(momentValue).format("HH:mm:ss") : "",
             "centreStartTime"
           );
         }}
@@ -78,10 +80,18 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
         isRequired
         label={intl.formatMessage({ id: "label.centreEndTime" })}
         onChange={(momentValue) => {
-          handleInputChange(
-            dayjs(momentValue).format("HH:mm:ss"),
-            "centreEndTime"
-          );
+          const endTime = momentValue
+            ? dayjs(momentValue).format("HH:mm:ss")
+            : "";
+          const startTime = formData?.centreStartTime;
+          if (
+            !startTime ||
+            dayjs(endTime, "HH:mm:ss").isAfter(dayjs(startTime, "HH:mm:ss"))
+          ) {
+            handleInputChange(endTime, "centreEndTime");
+          } else {
+            handleInputChange("", "centreEndTime");
+          }
         }}
         disabledTime={handleDisabledEndTime}
         placeholder={intl.formatMessage({

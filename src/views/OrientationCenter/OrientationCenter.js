@@ -267,6 +267,7 @@ const OrientationCenter = () => {
       <DataTable
         columns={columns}
         hidePagination
+        showTableBorderBottom
         currentDataLength={formData?.length}
         customContainerStyles={styles.tableContainer}
         originalData={formData}
