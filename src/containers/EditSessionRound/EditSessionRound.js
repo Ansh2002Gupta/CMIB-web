@@ -4,10 +4,12 @@ import { capitalize } from "lodash";
 
 import useFetch from "../../core/hooks/useFetch";
 import useResponsive from "../../core/hooks/useResponsive";
+import useShowNotification from "../../core/hooks/useShowNotification";
 
 import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
+import { MENU_KEYS, NOTIFICATION_TYPES } from "../../constant/constant";
 
 const EditSessionRound = ({
   intl,
@@ -17,13 +19,32 @@ const EditSessionRound = ({
   sessionData,
   switchLabel,
 }) => {
-
   const [activeStatus, setActiveStatus] = useState(roundDetails?.status === 1);
-  const [selectedCentres, setSelectedCentres] = useState([]);
+  const [selectedCentres, setSelectedCentres] = useState();
+  const [experience, setExperience] = useState(roundDetails?.experiences || []);
+  const [experienceErrors, setExperienceErrors] = useState(
+    experience.map(() => ({
+      min_ctc: "",
+      work_experience_max: "",
+      work_experience_min: "",
+    }))
+  );
+  const [addExperience, setAddExperience] = useState({
+    min_ctc: "",
+    use_more_experience: 0,
+    work_experience_max: null,
+    work_experience_min: null,
+  });
+  const [errors, setErrors] = useState({
+    min_ctc: "",
+    work_experience_max: "",
+    work_experience_min: "",
+  });
   const responsive = useResponsive();
-  const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
+  const { showNotification, notificationContextHolder } = useShowNotification();
+  const { isLoading, updateSessionRoundDetails } =
+    useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);
-
   const { data, isError } = useFetch({
     url: ADMIN_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT,
   });
@@ -33,10 +54,10 @@ const EditSessionRound = ({
   }, []);
 
   useEffect(() => {
-    if(!sessionData?.status){
+    if (!sessionData?.status) {
       onClickCancel();
     }
-  }, [sessionData?.status])
+  }, [sessionData?.status]);
 
   const mapSelectedCentres = () => {
     let centres =
@@ -51,7 +72,7 @@ const EditSessionRound = ({
   };
 
   const handleSelectCentre = (item, option) => {
-    setCentresError(false)
+    setCentresError(false);
     let centre = option?.[0];
     if (selectedCentres.some((item) => item.id === centre.id)) {
       handleDeselectCentre(centre);
@@ -63,7 +84,7 @@ const EditSessionRound = ({
   const handleDeselectCentre = (item) => {
     const updatedCenters = selectedCentres?.filter((ele) => ele.id !== item.id);
     setSelectedCentres(updatedCenters);
-    if(!updatedCenters?.length){
+    if (!updatedCenters?.length) {
       setCentresError(true);
     }
   };
@@ -103,46 +124,128 @@ const EditSessionRound = ({
     };
     return [
       ...(!!bigCentres?.length ? [mapBigCentres] : []),
-      ...(!!smallCentres?.length ? [mapSmallCentres] : []),
+      ...(!!smallCentres?.length &&
+      roundDetails?.round_code !== MENU_KEYS.ROUND_2_PLACEMENT
+        ? [mapSmallCentres]
+        : []),
     ];
+  };
+
+  const handleError = (key, error) => {
+    setErrors((prev) => ({
+      ...prev,
+      [key]: error,
+    }));
+  };
+
+  const validate = () => {
+    let errorCount = 0;
+    if (!addExperience?.min_ctc) {
+      handleError(
+        "min_ctc",
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
+      );
+      errorCount += 1;
+    }
+    if (addExperience?.work_experience_min === null) {
+      handleError(
+        "work_experience_min",
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
+      );
+      errorCount += 1;
+    }
+    if (
+      !addExperience?.work_experience_max &&
+      !addExperience?.use_more_experience
+    ) {
+      handleError(
+        "work_experience_max",
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
+      );
+      errorCount += 1;
+    }
+    if (errorCount > 0) return false;
+
+    return true;
   };
 
   const onClickSave = () => {
     if (!selectedCentres?.length) {
       setCentresError(true);
     } else {
-      let payload = {
-        status: +activeStatus,
-        centre_id: Array.from(selectedCentres, (centre) => centre.id),
-      };
-
-      updateSessionRoundDetails({
-        payload: payload,
-        onErrorCallback: () => {},
-        onSuccessCallback:() => onClickCancel(true),
-        roundId: roundDetails?.id,
-        selectedModuleKey: selectedModule?.key,
-      });
+      if (
+        addExperience?.work_experience_min ||
+        addExperience?.work_experience_max ||
+        addExperience?.min_ctc
+      ) {
+        if (validate()) {
+          let payload = {
+            status: +activeStatus,
+            centre_id: Array.from(selectedCentres, (centre) => centre.id),
+            experiences: [...experience, addExperience],
+          };
+          updateSessionRoundDetails({
+            payload: payload,
+            onErrorCallback: (error) => {
+              showNotification({ text: error, type: NOTIFICATION_TYPES.ERROR });
+            },
+            onSuccessCallback: () => onClickCancel(true),
+            roundId: roundDetails?.id,
+            selectedModuleKey: selectedModule?.key,
+          });
+        }
+      } else {
+        let payload = {
+          status: +activeStatus,
+          centre_id: Array.from(selectedCentres, (centre) => centre.id),
+          experiences: experience,
+        };
+        updateSessionRoundDetails({
+          payload: payload,
+          onErrorCallback: (error) => {
+            showNotification({ text: error, type: NOTIFICATION_TYPES.ERROR });
+          },
+          onSuccessCallback: () => onClickCancel(true),
+          roundId: roundDetails?.id,
+          selectedModuleKey: selectedModule?.key,
+        });
+      }
     }
   };
 
   return (
-    <EditSessionRoundTemplate
-      activeStatus={activeStatus}
-      centresError={centresError}
-      getCentreListFromResponse={getCentreListFromResponse}
-      handleDeselectCentre={handleDeselectCentre}
-      handleSelectCentre={handleSelectCentre}
-      handleStatusToggle={handleStatusToggle}
-      intl={intl}
-      isError={isError}
-      onClickCancel={onClickCancel}
-      onClickSave={onClickSave}
-      responsive={responsive}
-      selectedCentres={selectedCentres}
-      selectedModule={selectedModule}
-      switchLabel={switchLabel}
-    />
+    <>
+      {notificationContextHolder}
+      <EditSessionRoundTemplate
+        {...{
+          addExperience,
+          errors,
+          experience,
+          experienceErrors,
+          handleError,
+          setAddExperience,
+          setErrors,
+          setExperience,
+          setExperienceErrors,
+          isLoading,
+          validate,
+        }}
+        activeStatus={activeStatus}
+        centresError={centresError}
+        getCentreListFromResponse={getCentreListFromResponse}
+        handleDeselectCentre={handleDeselectCentre}
+        handleSelectCentre={handleSelectCentre}
+        handleStatusToggle={handleStatusToggle}
+        intl={intl}
+        isError={isError}
+        onClickCancel={onClickCancel}
+        onClickSave={onClickSave}
+        responsive={responsive}
+        selectedCentres={selectedCentres}
+        selectedModule={selectedModule}
+        switchLabel={switchLabel}
+      />
+    </>
   );
 };
 
