@@ -114,7 +114,7 @@ const ConfigureCentreDetails = () => {
       name: formData.centre_name,
       centre_code: formData.centre_code,
       centre_size: formData.centre_type,
-      status: formData.status,
+      status: +formData.status,
     };
     if (!centreId) {
       addNewCenter(
@@ -165,8 +165,6 @@ const ConfigureCentreDetails = () => {
     }
   }, [data]);
 
-  const areFieldsEditable = true;
-
   return (
     <>
       {isError && (
@@ -195,6 +193,7 @@ const ConfigureCentreDetails = () => {
                 topSection={
                   <TwoRow
                     className={styles.centreDetails}
+                    isBottomFillSpace
                     topSection={
                       <Base className={styles.headerContainer}>
                         <Typography className={styles.headingText}>
@@ -203,86 +202,108 @@ const ConfigureCentreDetails = () => {
                       </Base>
                     }
                     bottomSection={
-                      <CustomGrid>
-                        {fields.map((item) => (
-                          <TwoRow
-                            key={item.id}
-                            className={styles.gridItem}
-                            topSection={
-                              <Typography className={styles.grayText}>
-                                {intl.formatMessage({
-                                  id: `label.${item.headingIntl}`,
-                                })}
-                                <span className={styles.redText}> *</span>
-                              </Typography>
-                            }
-                            bottomSection={
-                              item.id === 2 ? (
-                                <Select
-                                  bordered={false}
-                                  disabled={!areFieldsEditable}
-                                  size={"large"}
-                                  style={classes.selectStyle}
-                                  className={styles.selectInput}
-                                  onChange={(val) =>
-                                    handleInputChange(val, item.label)
-                                  }
-                                  options={item.selectOptions}
-                                  placeholder={intl.formatMessage({
-                                    id: `centre.placeholder.${item.headingIntl}`,
-                                  })}
-                                  value={item.value}
-                                />
-                              ) : (
-                                <div className={styles.formInputStyles}>
-                                  <CustomInput
-                                    disabled={
-                                      item?.id === 3
-                                        ? false
-                                        : !areFieldsEditable
-                                    }
-                                    value={item.value}
-                                    customLabelStyles={styles.inputLabel}
-                                    customInputStyles={styles.input}
-                                    customContainerStyles={
-                                      styles.customContainerStyles
-                                    }
-                                    onChange={(val) =>
-                                      handleInputChange(
-                                        val.target.value,
-                                        item.label
-                                      )
-                                    }
-                                    placeholder={intl.formatMessage({
-                                      id: `centre.placeholder.${item.headingIntl}`,
+                      <TwoRow
+                        isTopFillSpace
+                        topSection={
+                          <CustomGrid>
+                            {fields.map((item) => (
+                              <TwoRow
+                                key={item.id}
+                                className={styles.gridItem}
+                                topSection={
+                                  <Typography className={styles.grayText}>
+                                    {intl.formatMessage({
+                                      id: `label.${item.headingIntl}`,
                                     })}
-                                  />
-                                  {formErrors[item.label] && (
-                                    <Typography className={styles.errorText}>
-                                      {formErrors[item.label]}
-                                    </Typography>
-                                  )}
-                                </div>
-                              )
-                            }
-                          />
-                        ))}
-                        <CustomSwitch
-                          checked={Boolean(formData?.status)}
-                          disabled={!areFieldsEditable}
-                          label={intl.formatMessage({ id: "label.status" })}
-                          onChange={() => {
-                            setFormData((prev) => {
-                              return {
-                                ...prev,
-                                status: !prev.status,
-                              };
-                            });
-                          }}
-                          activeText={"active"}
-                          inActiveText={"inactive"}
-                        />
-                      </CustomGrid>
+                                    <span className={styles.redText}> *</span>
+                                  </Typography>
+                                }
+                                bottomSection={
+                                  item.id === 2 ? (
+                                    <Select
+                                      bordered={false}
+                                      disabled={!data?.is_editable}
+                                      size={"large"}
+                                      style={
+                                        !!data?.is_editable
+                                          ? classes.selectStyle
+                                          : classes.inactiveSelectStyle
+                                      }
+                                      className={styles.selectInput}
+                                      onChange={(val) =>
+                                        handleInputChange(val, item.label)
+                                      }
+                                      options={item.selectOptions}
+                                      placeholder={intl.formatMessage({
+                                        id: `centre.placeholder.${item.headingIntl}`,
+                                      })}
+                                      value={item.value}
+                                    />
+                                  ) : (
+                                    <div className={styles.formInputStyles}>
+                                      <CustomInput
+                                        disabled={
+                                          item?.id === 3
+                                            ? false
+                                            : !data?.is_editable
+                                        }
+                                        value={item.value}
+                                        customLabelStyles={styles.inputLabel}
+                                        customInputStyles={styles.input}
+                                        customContainerStyles={
+                                          styles.customContainerStyles
+                                        }
+                                        onChange={(val) =>
+                                          handleInputChange(
+                                            val.target.value,
+                                            item.label
+                                          )
+                                        }
+                                        placeholder={intl.formatMessage({
+                                          id: `centre.placeholder.${item.headingIntl}`,
+                                        })}
+                                      />
+                                      {formErrors[item.label] && (
+                                        <Typography
+                                          className={styles.errorText}
+                                        >
+                                          {formErrors[item.label]}
+                                        </Typography>
+                                      )}
+                                    </div>
+                                  )
+                                }
+                              />
+                            ))}
+                            <CustomSwitch
+                              checked={Boolean(formData?.status)}
+                              disabled={!data?.is_editable}
+                              label={intl.formatMessage({ id: "label.status" })}
+                              onChange={() => {
+                                setFormData((prev) => {
+                                  return {
+                                    ...prev,
+                                    status: !prev.status,
+                                  };
+                                });
+                              }}
+                              activeText={"active"}
+                              inActiveText={"inactive"}
+                            />
+                          </CustomGrid>
+                        }
+                        bottomSection={
+                          !data?.is_editable ? (
+                            <Typography className={styles.noteText}>
+                              {intl.formatMessage({
+                                id: "centre.editCentreNote",
+                              })}
+                            </Typography>
+                          ) : (
+                            <></>
+                          )
+                        }
+                      />
                     }
                   />
                 }

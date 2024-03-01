@@ -64,4 +64,7 @@ export const colorPallets = {
   orange2: "#D76200",
   lightOrange: "#FFEFE5",
   darkOrange: "#D76200",
+
+  //disable color
+  disableColor: "rgba(0, 0, 0, 0.04)",
 };

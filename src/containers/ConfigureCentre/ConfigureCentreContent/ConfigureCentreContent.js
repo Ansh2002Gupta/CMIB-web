@@ -278,7 +278,7 @@ const ConfigureCentreContent = () => {
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
         checkIsSwitchEditable: (data) => {
-          return !data?.is_editable && !isUpdatingCenterDetails;
+          return !!data?.is_editable && !isUpdatingCenterDetails;
         },
       },
     }),
@@ -286,17 +286,14 @@ const ConfigureCentreContent = () => {
       dataIndex: "edit",
       key: "edit",
       render: (data, rowData) => {
-        const isEditable = rowData?.is_editable;
         return (
           <Image
-            src={isEditable ? getImage("edit") : getImage("disableEdit")}
+            src={getImage("edit")}
             preview={false}
             alt="edit"
             visible
-            onClick={() =>
-              isEditable ? goToEditCentrePage(rowData) : () => {}
-            }
-            className={isEditable ? styles.editIcon : {}}
+            onClick={() => goToEditCentrePage(rowData)}
+            className={styles.editIcon}
           />
         );
       },
