@@ -103,7 +103,7 @@ const EditSessionRound = ({
     };
     return [
       ...(!!bigCentres?.length ? [mapBigCentres] : []),
-      ...(!!smallCentres?.length ? [mapSmallCentres] : []),
+      ...(!!smallCentres?.length && roundDetails?.round_code !== "round-2" ? [mapSmallCentres] : []),
     ];
   };
 

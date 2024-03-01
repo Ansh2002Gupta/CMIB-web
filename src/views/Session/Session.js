@@ -142,6 +142,13 @@ function Session() {
             title: intl.formatMessage({ id: "session.roundTwo" }),
             children: (
               <SessionRound
+              roundId={
+                (
+                  sessionData?.rounds?.find(
+                    (obj) => obj.round_code === "round-2"
+                  ) || {}
+                ).id
+              }
                 roundNo={2}
                 roundList={ROUND_TWO_CARD_LIST}
                 sessionData={sessionData}
