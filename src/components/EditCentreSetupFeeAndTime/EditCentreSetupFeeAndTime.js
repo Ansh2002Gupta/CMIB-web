@@ -44,7 +44,7 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
         isRequired
         label={intl.formatMessage({ id: "label.writtenTestFee" })}
         onChange={(val) => {
-          handleInputChange(val.target.value, "PsychometricFee");
+          handleInputChange(val, "PsychometricFee");
         }}
         placeholder={intl.formatMessage({
           id: `label.placeholder.writtenTestFee`,
