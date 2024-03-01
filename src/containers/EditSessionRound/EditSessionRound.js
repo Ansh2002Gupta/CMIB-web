@@ -9,6 +9,7 @@ import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
+import { NOTIFICATION_TYPES } from "../../constant/constant";
 
 const EditSessionRound = ({
   intl,
@@ -122,7 +123,7 @@ const EditSessionRound = ({
       updateSessionRoundDetails({
         payload: payload,
         onErrorCallback: (error) => {
-          showNotification({ text: error, type: "error" });
+          showNotification({ text: error, type: NOTIFICATION_TYPES.ERROR });
         },
         onSuccessCallback: () => onClickCancel(true),
         roundId: roundDetails?.id,
