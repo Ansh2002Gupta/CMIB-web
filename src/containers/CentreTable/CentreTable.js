@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -9,6 +9,7 @@ import { TwoColumn } from "../../core/layouts";
 
 import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
 import CustomInput from "../../components/CustomInput/CustomInput";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import styles from "./CentreTable.module.scss";
 import "./Override.css";
 
@@ -22,6 +23,7 @@ const CentreTable = ({
   validate,
 }) => {
   const intl = useIntl();
+  const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
 
   const handleRemove = (index) => {
@@ -97,13 +99,12 @@ const CentreTable = ({
       key: "scheduleDate",
       render: (text, record, index) => (
         <CustomDateTimePicker
-          customContainerStyles={styles.customDateContainerStyles}
           value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
           customTimeStyle={styles.inputStyle}
           type="date"
           onChange={(val) => {
             handleInputChange(
-              dayjs(val).format("YYYY-MM-DD"),
+              val ? dayjs(val).format("YYYY-MM-DD") : "",
               "scheduleDate",
               index
             );
@@ -168,6 +169,9 @@ const CentreTable = ({
       render: (text, record, index) => {
         return (
           <TwoColumn
+            leftSectionClassName={styles.sectionStyle}
+            rightSectionClassName={styles.sectionStyle}
+            className={styles.customColumnStyle}
             leftSection={
               <CustomInput
                 type="inputNumber"
@@ -186,6 +190,7 @@ const CentreTable = ({
             }
             rightSection={
               <CustomInput
+                controls
                 type="inputNumber"
                 customContainerStyles={styles.customContainerStyles}
                 customInputNumberStyles={styles.inputNumberStyle}
@@ -193,6 +198,7 @@ const CentreTable = ({
                 onChange={(val) => {
                   handleInputChange(val, "firm", index, "uptoPartners");
                 }}
+                maxLength={3}
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterpartner",
                 })}
@@ -306,16 +312,69 @@ const CentreTable = ({
     },
   ];
 
+  const viewConfigurationDetails = [
+    renderColumn({
+      title: intl.formatMessage({ id: "centre.scheduleDate" }),
+      dataIndex: "scheduleDate",
+      key: "scheduleDate",
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "centre.participationFee" }),
+      dataIndex: "participationFee",
+      key: "participationFee",
+      renderText: {
+        visible: true,
+      },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "centre.firmFee" }),
+      dataIndex: "firm",
+      key: "firm",
+      renderText: { visible: true, isDataObject: true, dataKey: "firmFee" },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "centre.uptoPartners" }),
+      dataIndex: "firm",
+      key: "firm",
+      renderText: {
+        visible: true,
+        isDataObject: true,
+        dataKey: "uptoPartners",
+      },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "centre.norm1" }),
+      dataIndex: "norm1",
+      key: "norm1",
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "centre.norm2" }),
+      dataIndex: "norm2",
+      key: "norm2",
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "centre.norm2MinVacancy" }),
+      dataIndex: "norm2MinVacancy",
+      key: "norm2MinVacancy",
+      renderText: { visible: true },
+    }),
+  ];
+
   return (
-    <Table
-      columns={columns}
-      dataSource={tableData}
-      pagination={false}
-      rowClassName={styles.rowtext}
-      scroll={{ x: "max-content" }}
-      className={[styles.table, "customTable"]}
-      rowKey="id"
-    />
+    <div className={isEdit ? styles.editContainer : styles.container}>
+      <Table
+        columns={isEdit ? columns : viewConfigurationDetails}
+        dataSource={tableData}
+        pagination={false}
+        rowClassName={!isEdit ? styles.rowtext : ""}
+        scroll={{ x: "max-content" }}
+        className={`${isEdit ? "customTable" : ""} ${styles.table}`}
+        rowKey="id"
+      />
+    </div>
   );
 };
 
