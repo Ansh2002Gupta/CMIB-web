@@ -9,4 +9,5 @@ export const classes = {
   },
   middleContainer: { marginTop: variables.marginLarge },
   centresContainer: { flex: 1 },
+  statusGap: { marginTop: variables.marginSmall },
 };
