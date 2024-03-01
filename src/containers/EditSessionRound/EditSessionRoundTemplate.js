@@ -119,6 +119,7 @@ const EditSessionRoundTemplate = ({
               onClick={onClickCancel}
             />
           }
+          rightSectionClassName={styles.savebtnContainer}
           rightSection={
             <CustomButton
               isBtnDisable={
