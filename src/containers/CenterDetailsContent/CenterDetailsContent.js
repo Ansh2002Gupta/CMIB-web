@@ -311,13 +311,13 @@ const CenterDetailsContent = ({
       const isValueFilled = (value) => !!value || value === 0;
 
       return (
-        isValueFilled(firstRow.scheduleDate) &&
-        isValueFilled(firstRow.participationFee) &&
-        isValueFilled(firstRow.firm.firmFee) &&
-        isValueFilled(firstRow.firm.uptoPartners) &&
-        isValueFilled(firstRow.norm1) &&
-        isValueFilled(firstRow.norm2) &&
-        isValueFilled(firstRow.norm2MinVacancy)
+        isValueFilled(firstRow?.scheduleDate) &&
+        isValueFilled(firstRow?.participationFee) &&
+        isValueFilled(firstRow?.firm?.firmFee) &&
+        isValueFilled(firstRow?.firm?.uptoPartners) &&
+        isValueFilled(firstRow?.norm1) &&
+        isValueFilled(firstRow?.norm2) &&
+        isValueFilled(firstRow?.norm2MinVacancy)
       );
     };
 
