@@ -522,7 +522,8 @@ const useRenderColumn = () => {
                 value,
               }}
               errorTimeInput={
-                record?.isAddRow && errorMessage && styles.errorTimeInput
+                ((record?.isAddRow && errorMessage) || getError(index)) &&
+                styles.errorTimeInput
               }
               onChange={(val) => {
                 onChange(val, record, index);
@@ -562,7 +563,9 @@ const useRenderColumn = () => {
                 : false
             }
             errorInput={
-              record.isAddRow && inputErrorMessage && styles.errorTimeInput
+              ((record.isAddRow && inputErrorMessage) ||
+                getInputError(index)) &&
+              styles.errorTimeInput
             }
           />
         );
