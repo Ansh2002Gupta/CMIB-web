@@ -84,6 +84,7 @@ const useRenderColumn = () => {
     } = renderImage;
 
     const {
+      controls,
       customInputContainerStyles,
       customInputNumberStyles,
       customInputStyles,
@@ -539,6 +540,7 @@ const useRenderColumn = () => {
         return (
           <CustomInput
             {...{
+              controls,
               value,
               customInputNumberStyles,
               customInputStyles,

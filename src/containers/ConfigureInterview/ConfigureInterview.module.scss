@@ -43,11 +43,17 @@
 
 .customTimeStyle {
   width: var(--fullWidth);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
 }
 
 .customInputStyle {
   max-width: var(--fullWidth);
   min-width: var(--width_150);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
 }
 
 .customColumnHeading {

@@ -510,6 +510,7 @@ const locale = {
   "label.users.details": "User Details",
   "label.session.orientation-centers": "Setup orientation centres",
   "label.session.setup-mock-interview": "Setup Mock Interview",
+  "label.session.setupMockInterview.details": "Configure Interview Dates",
 };
 
 export default locale;

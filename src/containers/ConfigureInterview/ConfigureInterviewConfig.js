@@ -91,6 +91,7 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
+        controls: true,
         getInputError: (index) => errors[index].no_of_facilities,
         inputErrorMessage: errors.no_of_facilities,
         visible: true,
@@ -111,6 +112,7 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
+        controls: true,
         getInputError: (index) => errors[index].slot_duration,
         visible: true,
         inputType: "inputNumber",
