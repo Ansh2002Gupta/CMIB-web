@@ -68,7 +68,7 @@ const CustomDateTimePicker = ({
                     errorTimeInput,
                   ]}
                   suffixIcon={<Image src={getImage("clock")} />}
-                  value={value ? dayjs(value) : null}
+                  value={value ? dayjs(value, "HH:mm:ss") : null}
                 />
               ) : (
                 <Typography className={classes.dateText}>

@@ -25,10 +25,14 @@ const getConfigureDateColumns = (
           id: "centre.placeholder.selectDate",
         }),
         customTimeStyle: styles.customTimeStyle,
-        onChange: (val, record) => {
-          handleInputChange("schedule_date", val);
+        onChange: (val, record, index) => {
+          handleInputChange(
+            "schedule_date",
+            val ? dayjs(val).format("YYYY-MM-DD") : "",
+            index
+          );
         },
-        isEditable: isEdit,
+        isEditable: true,
       },
     }),
     renderColumn({
@@ -45,10 +49,14 @@ const getConfigureDateColumns = (
           id: "label.placeholder.start_time",
         }),
         customTimeStyle: styles.customTimeStyle,
-        onChange: (val, record) => {
-          handleInputChange("start_time", val);
+        onChange: (val, record, index) => {
+          handleInputChange(
+            "start_time",
+            val ? dayjs(val).format("hh:mm:ss") : "",
+            index
+          );
         },
-        isEditable: isEdit,
+        isEditable: true,
       },
     }),
     renderColumn({
@@ -65,10 +73,14 @@ const getConfigureDateColumns = (
           id: "label.placeholder.end_time",
         }),
         customTimeStyle: styles.customTimeStyle,
-        onChange: (val, record) => {
-          handleInputChange("end_time", val);
+        onChange: (val, record, index) => {
+          handleInputChange(
+            "end_time",
+            val ? dayjs(val).format("hh:mm:ss") : "",
+            index
+          );
         },
-        isEditable: isEdit,
+        isEditable: true,
       },
     }),
     renderColumn({
@@ -79,14 +91,14 @@ const getConfigureDateColumns = (
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
         inputErrorMessage: errors.no_of_facilities,
-        visible: isEdit,
+        visible: true,
         inputType: "inputNumber",
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.no_of_facilities",
         }),
         customInputNumberStyles: styles.customInputStyle,
-        onInputChange: (val) => {
-          handleInputChange("no_of_facilities", val);
+        onInputChange: (val, record, index) => {
+          handleInputChange("no_of_facilities", val, index);
         },
       },
     }),
@@ -98,14 +110,14 @@ const getConfigureDateColumns = (
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
         inputErrorMessage: errors.slot_duration,
-        visible: isEdit,
+        visible: true,
         inputType: "inputNumber",
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.slot_duration",
         }),
         customInputNumberStyles: styles.customInputStyle,
-        onInputChange: (val) => {
-          handleInputChange("slot_duration", val);
+        onInputChange: (val, record, index) => {
+          handleInputChange("slot_duration", val, index);
         },
       },
     }),
@@ -126,7 +138,7 @@ const getConfigureDateColumns = (
         preview: false,
         src: getImage("minusCircle"),
         alternateSrc: getImage("addCircle"),
-        visible: isEdit,
+        visible: true,
       },
     }),
   ];
@@ -141,7 +153,7 @@ const getConfigureDateColumns = (
       renderDateTime: {
         visible: true,
         type: "date",
-        isEditable: isEdit,
+        isEditable: false,
       },
     }),
     renderColumn({
@@ -153,7 +165,7 @@ const getConfigureDateColumns = (
       renderDateTime: {
         visible: true,
         type: "time",
-        isEditable: isEdit,
+        isEditable: false,
       },
     }),
     renderColumn({
@@ -165,7 +177,7 @@ const getConfigureDateColumns = (
       renderDateTime: {
         visible: true,
         type: "time",
-        isEditable: isEdit,
+        isEditable: false,
       },
     }),
     renderColumn({
@@ -175,7 +187,7 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
-        visible: isEdit,
+        visible: false,
         inputType: "inputNumber",
       },
     }),
@@ -187,7 +199,7 @@ const getConfigureDateColumns = (
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
         inputErrorMessage: errors.slot_duration,
-        visible: isEdit,
+        visible: false,
       },
     }),
   ];

@@ -497,7 +497,7 @@ const useRenderColumn = () => {
       });
 
     renderDateTime.visible &&
-      (columnObject.render = (value, record) => {
+      (columnObject.render = (value, record, index) => {
         return {
           props: {
             className: customStyles,
@@ -520,7 +520,7 @@ const useRenderColumn = () => {
                 record?.isAddRow && errorMessage && styles.errorTimeInput
               }
               onChange={(val) => {
-                onChange(val, record);
+                onChange(val, record, index);
               }}
               errorMessage={record?.isAddRow && errorMessage}
             />
@@ -529,7 +529,7 @@ const useRenderColumn = () => {
       });
 
     renderInput.visible &&
-      (columnObject.render = (value, record) => {
+      (columnObject.render = (value, record, index) => {
         return (
           <CustomInput
             {...{
@@ -538,11 +538,13 @@ const useRenderColumn = () => {
               customInputStyles,
               customSelectInputStyles,
             }}
-            disabled={inputDisabled || !record?.isAddRow}
+            disabled={inputDisabled}
             placeholder={inputPlaceholder}
             type={inputType}
             customContainerStyles={customInputContainerStyles}
-            onChange={onInputChange}
+            onChange={(val, record) => {
+              onInputChange(val, record, index);
+            }}
             errorMessage={record.isAddRow && inputErrorMessage}
             isError={record.isAddRow && inputErrorMessage ? true : false}
             errorInput={

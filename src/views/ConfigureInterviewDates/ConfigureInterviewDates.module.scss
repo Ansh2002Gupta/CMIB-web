@@ -5,3 +5,9 @@
 .parentContainer {
   border-bottom: var(--borderLight);
 }
+
+.erroredContainer {
+  display: flex;
+  justify-content: center;
+  min-height: var(--height_50vh);
+}
