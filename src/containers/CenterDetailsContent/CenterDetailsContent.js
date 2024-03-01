@@ -195,41 +195,43 @@ const CenterDetailsContent = ({
   };
 
   const handleSave = () => {
-    const isLastRowEmpty = Object.entries(
-      tableData[tableData.length - 1]
-    ).every(([key, value]) => {
-      if (typeof value === "object" && value !== null) {
-        return Object.entries(value).every(
-          ([nestedKey, nestedValue]) =>
-            nestedValue === addTableData[key][nestedKey]
-        );
-      }
-      return value === addTableData[key];
-    });
+    const isLastRowEmpty =
+      tableData.length > 0 &&
+      Object.entries(tableData[tableData.length - 1]).every(([key, value]) => {
+        if (typeof value === "object" && value !== null) {
+          return Object.entries(value).every(
+            ([nestedKey, nestedValue]) =>
+              nestedValue === addTableData[key][nestedKey]
+          );
+        }
+        return value === addTableData[key];
+      });
 
     const interviewDatesData = isLastRowEmpty
       ? tableData.slice(0, -1)
       : tableData;
 
-    const isValid = interviewDatesData.every((_, index) => validate(index));
-    if (!isValid) {
-      return;
-    }
+    let allRowsValid = true;
 
-    if (errors.length > 0) {
-      setErrors((prevErrors) => {
-        const newErrors = [...prevErrors];
-        const lastErrorIndex = newErrors.length - 1;
-        newErrors[lastErrorIndex] = {
-          scheduleDate: "",
-          participationFee: "",
-          firm: { firmFee: "", uptoPartners: "" },
-          norm1: "",
-          norm2: "",
-          norm2MinVacancy: "",
-        };
-        return newErrors;
-      });
+    const newErrors = interviewDatesData.map((_, index) => {
+      if (!validate(index)) {
+        allRowsValid = false;
+        return errors[index];
+      }
+      return {
+        scheduleDate: "",
+        participationFee: "",
+        firm: { firmFee: "", uptoPartners: "" },
+        norm1: "",
+        norm2: "",
+        norm2MinVacancy: "",
+      };
+    });
+
+    setErrors(newErrors);
+
+    if (!allRowsValid) {
+      return;
     }
 
     const centreDetailsPayload = {
