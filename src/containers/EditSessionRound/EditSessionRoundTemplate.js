@@ -119,12 +119,16 @@ const EditSessionRoundTemplate = ({
               onClick={onClickCancel}
             />
           }
+          rightSectionClassName={styles.savebtnContainer}
           rightSection={
             <CustomButton
               isBtnDisable={
                 (currentlySelectedModuleKey !==
                   MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
-                  !experience?.length) ||
+                  !experience?.length &&
+                  !addExperience?.min_ctc &&
+                  !addExperience?.work_experience_max &&
+                  !addExperience?.work_experience_min) ||
                 !selectedCentres?.length
               }
               loading={isLoading}
