@@ -285,17 +285,15 @@ const ConfigureCentreContent = () => {
     renderColumn({
       dataIndex: "edit",
       key: "edit",
-      render: (data, rowData) => {
-        return (
-          <Image
-            src={getImage("edit")}
-            preview={false}
-            alt="edit"
-            visible
-            onClick={() => goToEditCentrePage(rowData)}
-            className={styles.editIcon}
-          />
-        );
+      renderImage: {
+        alt: "edit",
+        onClick: (rowData) => {
+          goToEditCentrePage(rowData);
+        },
+        preview: false,
+        src: getImage("edit"),
+        visible: true,
+        customImageStyle: styles.editIcon,
       },
     }),
   ];

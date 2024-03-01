@@ -203,7 +203,7 @@ const ConfigureCentreDetails = () => {
                     }
                     bottomSection={
                       <TwoRow
-                        isTopFillSpace
+                        className={styles.centreFormBox}
                         topSection={
                           <CustomGrid>
                             {fields.map((item) => (
