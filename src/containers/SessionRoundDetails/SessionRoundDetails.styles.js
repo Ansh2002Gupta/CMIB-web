@@ -3,7 +3,7 @@ import variables from "../../themes/base/styles/variables";
 export const classes = {
   emptyMiddleContainer: {
     justifyContent: "center",
-    alignItem: "center",
+    alignItems: "center",
     flex: 1,
     width: "100%",
   },
