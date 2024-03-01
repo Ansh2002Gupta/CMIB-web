@@ -44,6 +44,7 @@ const CustomInput = React.forwardRef(
       onSuffixElementClick,
       placeholder,
       prefixElement,
+      precision,
       selectOptions,
       SuffixIcon,
       type,
@@ -163,6 +164,7 @@ const CustomInput = React.forwardRef(
             <InputNumber
               maxLength={maxLength}
               controls={controls}
+              precision={precision}
               className={[
                 styles.inputNumberStyles,
                 customInputNumberStyles,
@@ -238,6 +240,7 @@ CustomInput.defaultProps = {
   onSuffixElementClick: () => {},
   placeholder: "",
   prefixElement: null,
+  precision: 5,
   ref: null,
   selectOptions: [],
   SuffixIcon: null,
@@ -277,6 +280,7 @@ CustomInput.propTypes = {
   onSuffixElementClick: PropTypes.func,
   placeholder: PropTypes.string,
   prefixElement: PropTypes.node,
+  precision: PropTypes.number,
   ref: PropTypes.func,
   selectOptions: PropTypes.array,
   SuffixIcon: PropTypes.node,
