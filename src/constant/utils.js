@@ -245,8 +245,8 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   if (
     chatData?.author?.id === userDetails?.id &&
-    chatData?.author?.type.toLowerCase() ===
-      userDetails?.user_type.toLowerCase()
+    (chatData?.author?.type.toLowerCase() === "admin" ||
+      chatData?.author?.type.toLowerCase() === "super admin")
   ) {
     return "sender";
   }
