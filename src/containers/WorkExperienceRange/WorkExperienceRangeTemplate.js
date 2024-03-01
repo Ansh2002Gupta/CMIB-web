@@ -36,7 +36,7 @@ const WorkExperienceRangeTemplate = ({
     if (name === "work_experience_min" && value === null) {
       handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
     } else {
-      if (name !== "work_experience_min" && !value) {
+      if (name !== "work_experience_max" && !value) {
         handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
       }
     }
