@@ -207,9 +207,7 @@ const WorkExperienceRangeTemplate = ({
                               controls={true}
                               maxLength={20}
                               value={"and more"}
-                              customInputNumberStyles={
-                                styles.customInputNumberStyles
-                              }
+                              customInputStyles={styles.customInputStyles}
                               customContainerStyles={
                                 styles.customContainerStyles
                               }
