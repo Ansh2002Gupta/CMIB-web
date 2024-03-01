@@ -64,6 +64,7 @@ const useRenderColumn = () => {
       defaultValue,
       disabled = false,
       errorMessage,
+      getError = () => {},
       isEditable = true,
       isRequired = false,
       onChange = () => {},
@@ -87,6 +88,7 @@ const useRenderColumn = () => {
       customInputNumberStyles,
       customInputStyles,
       customSelectInputStyles,
+      getInputError = () => {},
       inputDisabled,
       inputErrorMessage,
       inputPlaceholder = "",
@@ -401,7 +403,7 @@ const useRenderColumn = () => {
       });
 
     renderImage.visible &&
-      (columnObject.render = (_, rowData) => {
+      (columnObject.render = (_, rowData, index) => {
         return {
           props: {
             className: customStyles || "",
@@ -413,7 +415,9 @@ const useRenderColumn = () => {
               preview={preview}
               className={`${customImageStyle} ${styles.editIcon}`}
               onClick={() =>
-                rowData?.isAddRow ? alternateOnClick(rowData) : onClick(rowData)
+                rowData?.isAddRow
+                  ? alternateOnClick(rowData, index)
+                  : onClick(rowData, index)
               }
             />
           ),
@@ -522,7 +526,9 @@ const useRenderColumn = () => {
               onChange={(val) => {
                 onChange(val, record, index);
               }}
-              errorMessage={record?.isAddRow && errorMessage}
+              errorMessage={
+                (record.isAddRow && errorMessage) || getError(index)
+              }
             />
           ),
         };
@@ -545,8 +551,14 @@ const useRenderColumn = () => {
             onChange={(val, record) => {
               onInputChange(val, record, index);
             }}
-            errorMessage={record.isAddRow && inputErrorMessage}
-            isError={record.isAddRow && inputErrorMessage ? true : false}
+            errorMessage={
+              (record.isAddRow && inputErrorMessage) || getInputError(index)
+            }
+            isError={
+              (record.isAddRow && inputErrorMessage) || getInputError(index)
+                ? true
+                : false
+            }
             errorInput={
               record.isAddRow && inputErrorMessage && styles.errorTimeInput
             }

@@ -60,28 +60,45 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
     }))
   );
 
-  const handleRemove = (record) => {
-    // const filteredData = tableData.filter((item) => item.id !== record.id);
-    // setTableData(filteredData);
+  const handleRemove = (record, index) => {
+    const filteredData = interviewTable.filter((item, i) => i !== index);
+    const filterErrors = errors.filter((item, i) => i !== index);
+    setErrors(filterErrors);
+    setInterviewTable(filteredData);
   };
 
-  const handleAdd = (record) => {
-    // if (validate()) {
-    //   setTableData((prevTableData) => {
-    //     const newRecord = { ...record };
-    //     delete newRecord.isAddRow;
-    //     return [...prevTableData, newRecord];
-    //   });
-    //   setAddTableData({
-    //     id: Date.now().toString(),
-    //     isAddRow: true,
-    //     schedule_date: null,
-    //     start_time: null,
-    //     end_time: null,
-    //     no_of_facilities: null,
-    //     slot_duration: "",
-    //   });
-    // }
+  const handleAdd = (record, index) => {
+    if (validate()) {
+      setInterviewTable((prevTableData) => {
+        const newData = [...prevTableData];
+        if (newData?.at(-1) && newData?.at(-1).hasOwnProperty("isAddRow")) {
+          delete newData?.at(-1).isAddRow;
+        }
+        return [
+          ...newData,
+          {
+            isAddRow: true,
+            schedule_date: null,
+            start_time: null,
+            end_time: null,
+            no_of_facilities: null,
+            slot_duration: "",
+          },
+        ];
+      });
+      setErrors((prevData) => {
+        return [
+          ...prevData,
+          {
+            schedule_date: "",
+            start_time: "",
+            end_time: "",
+            no_of_facilities: "",
+            slot_duration: "",
+          },
+        ];
+      });
+    }
   };
 
   const handleInputChange = (key, value, index) => {
@@ -93,49 +110,67 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
       };
       return newTableData;
     });
+    if (!value) {
+      handleError(
+        key,
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        index
+      );
+    } else {
+      handleError(key, "", index);
+    }
   };
 
-  const handleError = (key, error) => {
-    setErrors((prev) => ({
-      ...prev,
-      [key]: error,
-    }));
+  const handleError = (key, error, index) => {
+    setErrors((prevTableError) => {
+      const newTableError = [...prevTableError];
+      newTableError[index] = {
+        ...newTableError[index],
+        [key]: error,
+      };
+      return newTableError;
+    });
   };
 
   const validate = () => {
     let errorCount = 0;
-    if (!addTableData?.schedule_date) {
+    if (!interviewTable.at(-1)?.schedule_date) {
       handleError(
         "schedule_date",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        interviewTable.length - 1
       );
       errorCount += 1;
     }
-    if (!addTableData?.start_time) {
+    if (!interviewTable.at(-1).start_time) {
       handleError(
         "start_time",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        interviewTable.length - 1
       );
       errorCount += 1;
     }
-    if (!addTableData?.end_time) {
+    if (!interviewTable.at(-1)?.end_time) {
       handleError(
         "end_time",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        interviewTable.length - 1
       );
       errorCount += 1;
     }
-    if (!addTableData?.no_of_facilities) {
+    if (!interviewTable.at(-1)?.no_of_facilities) {
       handleError(
         "no_of_facilities",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        interviewTable.length - 1
       );
       errorCount += 1;
     }
-    if (!addTableData?.slot_duration) {
+    if (!interviewTable.at(-1)?.slot_duration) {
       handleError(
         "slot_duration",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        interviewTable.length - 1
       );
       errorCount += 1;
     }
@@ -162,17 +197,40 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
   );
 
   const handleOnSubmit = () => {
-    handleUpdateConfigureInterview({
-      module: currentlySelectedModuleKey,
-      centreId: centreId,
-      payload: { data: interviewTable },
-      onSuccessCallback: () => {
-        redirectToMockInterviewListing();
-      },
-      onErrorCallback: (error) => {
-        showNotification({ text: error, type: NOTIFICATION_TYPES.ERROR });
-      },
-    });
+    if (
+      interviewTable.at(-1)?.schedule_date ||
+      interviewTable.at(-1)?.start_time ||
+      interviewTable.at(-1)?.end_time ||
+      interviewTable.at(-1)?.no_of_facilities ||
+      interviewTable.at(-1)?.slot_duration
+    ) {
+      if (validate()) {
+        handleUpdateConfigureInterview({
+          module: currentlySelectedModuleKey,
+          centreId: centreId,
+          payload: { data: interviewTable },
+          onSuccessCallback: () => {
+            redirectToMockInterviewListing();
+          },
+          onErrorCallback: (error) => {
+            showNotification({ text: error, type: NOTIFICATION_TYPES.ERROR });
+          },
+        });
+      }
+    } else {
+      console.log(interviewTable.slice(0, -1), "interviewTable.slice(-1)..");
+      handleUpdateConfigureInterview({
+        module: currentlySelectedModuleKey,
+        centreId: centreId,
+        payload: { data: interviewTable.slice(0, -1) },
+        onSuccessCallback: () => {
+          redirectToMockInterviewListing();
+        },
+        onErrorCallback: (error) => {
+          showNotification({ text: error, type: NOTIFICATION_TYPES.ERROR });
+        },
+      });
+    }
   };
   const handleCancel = () => {
     redirectToMockInterviewListing();
@@ -205,7 +263,7 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
                   isEdit && styles.editableTableContainer,
                 ].join(" ")}
                 originalData={interviewTable}
-                isHoverEffectRequired={isEdit}
+                isHoverEffectRequired={false}
               />
             }
           />
@@ -218,7 +276,14 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
               })}
               cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
               onActionBtnClick={handleOnSubmit}
-              isActionBtnDisable={false}
+              isActionBtnDisable={
+                interviewTable.length === 1 &&
+                !interviewTable.at(-1)?.schedule_date &&
+                !interviewTable.at(-1)?.start_time &&
+                !interviewTable.at(-1)?.end_time &&
+                !interviewTable.at(-1)?.no_of_facilities &&
+                !interviewTable.at(-1)?.slot_duration
+              }
               onCancelBtnClick={handleCancel}
             />
           )

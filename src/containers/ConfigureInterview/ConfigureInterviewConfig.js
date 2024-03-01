@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import styles from "./ConfigureInterview.module.scss";
 
 const getConfigureDateColumns = (
@@ -18,7 +19,7 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
-        errorMessage: errors.schedule_date,
+        getError: (index) => errors[index].schedule_date,
         visible: true,
         type: "date",
         placeholder: intl.formatMessage({
@@ -42,7 +43,7 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
-        errorMessage: errors.start_time,
+        getError: (index) => errors[index].start_time,
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
@@ -66,7 +67,7 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
-        errorMessage: errors.end_time,
+        getError: (index) => errors[index].end_time,
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
@@ -90,6 +91,7 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
+        getInputError: (index) => errors[index].no_of_facilities,
         inputErrorMessage: errors.no_of_facilities,
         visible: true,
         inputType: "inputNumber",
@@ -109,7 +111,7 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderInput: {
-        inputErrorMessage: errors.slot_duration,
+        getInputError: (index) => errors[index].slot_duration,
         visible: true,
         inputType: "inputNumber",
         inputPlaceholder: intl.formatMessage({
@@ -129,11 +131,11 @@ const getConfigureDateColumns = (
       customColumnHeading: styles.customColumnHeading,
       renderImage: {
         alt: "minusCircle/addCircle",
-        alternateOnClick: (rowData) => {
-          handleAdd(rowData);
+        alternateOnClick: (rowData, index) => {
+          handleAdd(rowData, index);
         },
-        onClick: (rowData) => {
-          handleRemove(rowData);
+        onClick: (rowData, index) => {
+          handleRemove(rowData, index);
         },
         preview: false,
         src: getImage("minusCircle"),
