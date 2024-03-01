@@ -161,6 +161,7 @@ const CustomInput = React.forwardRef(
           )}
           {type === "inputNumber" && (
             <InputNumber
+              maxLength={maxLength}
               controls={controls}
               className={[
                 styles.inputNumberStyles,

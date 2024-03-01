@@ -16,6 +16,7 @@ import {
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useDeleteImageApi from "../../services/api-services/Images/useDeleteImageApi";
+import useGetUserDetails from "../../services/api-services/UserProfile/useGetUserProfile";
 import { EMAIL_REGEX, MOBILE_NO_REGEX } from "../../constant/regex";
 import { FORM_STATES } from "../../constant/constant";
 import { classes } from "./UserDetailsContent.styles";
@@ -53,7 +54,7 @@ const UserDetailsContent = ({
   const [deletedImage, setDeletedImage] = useState([]);
   const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
-
+  const { getUserDetails } = useGetUserDetails();
   const emailRef = useRef();
   const phoneRef = useRef();
   const nameRef = useRef();
@@ -110,6 +111,9 @@ const UserDetailsContent = ({
       };
 
       updateUserDetails(userId, payload, () => {
+        if (userId == userProfileDetails?.userDetails?.id) {
+          getUserDetails();
+        }
         goBackToViewDetailsPage();
         setNotificationStateDispatch(updateUserNotification(true));
         deletedImage.map((item) => {

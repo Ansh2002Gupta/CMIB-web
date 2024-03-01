@@ -73,6 +73,7 @@ import greenTick from "./green-tick.svg";
 import disabledArrow from "./disabled arrow.svg";
 import iconProfileAdd from "./iconProfileAdd.svg";
 import iconProfileAddDisabled from "./iconProfileAddDisabled.svg";
+import disableEdit from "../icons/disableEdit.svg";
 
 const images = {
   activeSend,
@@ -150,6 +151,7 @@ const images = {
   changeIcon,
   iconProfileAdd,
   iconProfileAddDisabled,
+  disableEdit,
 };
 
 export default images;

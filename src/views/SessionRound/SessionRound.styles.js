@@ -1,7 +1,7 @@
 import variables from "../../themes/base/styles/variables";
 
 export const classes = {
-  bottomContainer: { marginBottom: variables.marginSmall },
+  bottomContainer: { marginBottom: variables.marginMedium },
   bottomSectionStyle: {
     gap: variables.gapMedium,
   },
