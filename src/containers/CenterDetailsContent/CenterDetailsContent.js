@@ -182,13 +182,17 @@ const CenterDetailsContent = ({
     setErrors((prevErrors) => {
       const newErrors = [...prevErrors];
       if (nestedName) {
-        const updatedNestedData = {
-          ...newErrors[index][name],
-          [nestedName]: error,
-        };
-        newErrors[index][name] = updatedNestedData;
+        if (newErrors?.[index]) {
+          const updatedNestedData = {
+            ...newErrors[index][name],
+            [nestedName]: error,
+          };
+          newErrors[index][name] = updatedNestedData;
+        }
       } else {
-        newErrors[index][name] = error;
+        if (newErrors?.[index]) {
+          newErrors[index][name] = error;
+        }
       }
       return newErrors;
     });
@@ -213,22 +217,25 @@ const CenterDetailsContent = ({
 
     let allRowsValid = true;
 
+    const defaultErrorState = {
+      scheduleDate: "",
+      participationFee: "",
+      firm: { firmFee: "", uptoPartners: "" },
+      norm1: "",
+      norm2: "",
+      norm2MinVacancy: "",
+    };
+
     const newErrors = interviewDatesData.map((_, index) => {
       if (!validate(index)) {
         allRowsValid = false;
         return errors[index];
       }
-      return {
-        scheduleDate: "",
-        participationFee: "",
-        firm: { firmFee: "", uptoPartners: "" },
-        norm1: "",
-        norm2: "",
-        norm2MinVacancy: "",
-      };
+
+      return defaultErrorState;
     });
 
-    setErrors(newErrors);
+    setErrors([...newErrors, { ...defaultErrorState }]);
 
     if (!allRowsValid) {
       return;
