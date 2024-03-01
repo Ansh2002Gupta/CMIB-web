@@ -181,16 +181,14 @@ const CenterDetailsContent = ({
   const handleSetError = (error, name, index, nestedName) => {
     setErrors((prevErrors) => {
       const newErrors = [...prevErrors];
-      if (nestedName) {
-        if (newErrors?.[index]) {
+      if (newErrors?.[index]) {
+        if (nestedName) {
           const updatedNestedData = {
             ...newErrors[index][name],
             [nestedName]: error,
           };
           newErrors[index][name] = updatedNestedData;
-        }
-      } else {
-        if (newErrors?.[index]) {
+        } else {
           newErrors[index][name] = error;
         }
       }
