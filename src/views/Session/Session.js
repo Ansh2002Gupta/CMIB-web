@@ -24,6 +24,7 @@ import { getCurrentActiveTab } from "../../constant/utils";
 import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { ADD_SESSION } from "../../routes/routeNames";
 import {
+  MENU_KEYS,
   NOTIFICATION_TYPES,
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
@@ -121,7 +122,7 @@ function Session() {
                 roundId={
                   (
                     sessionData?.rounds?.find(
-                      (obj) => obj.round_code === "round-1"
+                      (obj) => obj.round_code === MENU_KEYS.ROUND_1_PLACEMENT
                     ) || {}
                   ).id
                 }
@@ -145,7 +146,7 @@ function Session() {
               roundId={
                 (
                   sessionData?.rounds?.find(
-                    (obj) => obj.round_code === "round-2"
+                    (obj) => obj.round_code === MENU_KEYS.ROUND_2_PLACEMENT
                   ) || {}
                 ).id
               }

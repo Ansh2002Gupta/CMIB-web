@@ -9,7 +9,10 @@ import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
-import { NOTIFICATION_TYPES } from "../../constant/constant";
+import {
+  MENU_KEYS,
+  NOTIFICATION_TYPES,
+} from "../../constant/constant";
 
 const EditSessionRound = ({
   intl,
@@ -105,7 +108,8 @@ const EditSessionRound = ({
     };
     return [
       ...(!!bigCentres?.length ? [mapBigCentres] : []),
-      ...(!!smallCentres?.length && roundDetails?.round_code !== "round-2"
+      ...(!!smallCentres?.length &&
+      roundDetails?.round_code !== MENU_KEYS.ROUND_2_PLACEMENT
         ? [mapSmallCentres]
         : []),
     ];
