@@ -111,7 +111,6 @@ const UserDetailsContent = ({
       };
 
       updateUserDetails(userId, payload, () => {
-        console.log(userId, userProfileDetails?.userDetails?.id);
         if (userId == userProfileDetails?.userDetails?.id) {
           getUserDetails();
         }
