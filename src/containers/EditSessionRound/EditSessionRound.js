@@ -8,7 +8,6 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 
 import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
-import useShowNotification from "../../core/hooks/useShowNotification";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
 import { MENU_KEYS, NOTIFICATION_TYPES } from "../../constant/constant";
 
@@ -46,8 +45,6 @@ const EditSessionRound = ({
   const { isLoading, updateSessionRoundDetails } =
     useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);
-  const { showNotification, notificationContextHolder } = useShowNotification();
-
   const { data, isError } = useFetch({
     url: ADMIN_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT,
   });
@@ -132,44 +129,6 @@ const EditSessionRound = ({
         ? [mapSmallCentres]
         : []),
     ];
-  };
-
-  const handleError = (key, error) => {
-    setErrors((prev) => ({
-      ...prev,
-      [key]: error,
-    }));
-  };
-
-  const validate = () => {
-    let errorCount = 0;
-    if (!addExperience?.min_ctc) {
-      handleError(
-        "min_ctc",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
-      );
-      errorCount += 1;
-    }
-    if (addExperience?.work_experience_min === null) {
-      handleError(
-        "work_experience_min",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
-      );
-      errorCount += 1;
-    }
-    if (
-      !addExperience?.work_experience_max &&
-      !addExperience?.use_more_experience
-    ) {
-      handleError(
-        "work_experience_max",
-        intl.formatMessage({ id: "label.error.fieldEmpty" })
-      );
-      errorCount += 1;
-    }
-    if (errorCount > 0) return false;
-
-    return true;
   };
 
   const handleError = (key, error) => {
