@@ -7,6 +7,7 @@ import useResponsive from "../../core/hooks/useResponsive";
 
 import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
 
 const EditSessionRound = ({
@@ -17,12 +18,12 @@ const EditSessionRound = ({
   sessionData,
   switchLabel,
 }) => {
-
   const [activeStatus, setActiveStatus] = useState(roundDetails?.status === 1);
   const [selectedCentres, setSelectedCentres] = useState([]);
   const responsive = useResponsive();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const { data, isError } = useFetch({
     url: ADMIN_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT,
@@ -33,10 +34,10 @@ const EditSessionRound = ({
   }, []);
 
   useEffect(() => {
-    if(!sessionData?.status){
+    if (!sessionData?.status) {
       onClickCancel();
     }
-  }, [sessionData?.status])
+  }, [sessionData?.status]);
 
   const mapSelectedCentres = () => {
     let centres =
@@ -51,7 +52,7 @@ const EditSessionRound = ({
   };
 
   const handleSelectCentre = (item, option) => {
-    setCentresError(false)
+    setCentresError(false);
     let centre = option?.[0];
     if (selectedCentres.some((item) => item.id === centre.id)) {
       handleDeselectCentre(centre);
@@ -63,7 +64,7 @@ const EditSessionRound = ({
   const handleDeselectCentre = (item) => {
     const updatedCenters = selectedCentres?.filter((ele) => ele.id !== item.id);
     setSelectedCentres(updatedCenters);
-    if(!updatedCenters?.length){
+    if (!updatedCenters?.length) {
       setCentresError(true);
     }
   };
@@ -103,7 +104,9 @@ const EditSessionRound = ({
     };
     return [
       ...(!!bigCentres?.length ? [mapBigCentres] : []),
-      ...(!!smallCentres?.length && roundDetails?.round_code !== "round-2" ? [mapSmallCentres] : []),
+      ...(!!smallCentres?.length && roundDetails?.round_code !== "round-2"
+        ? [mapSmallCentres]
+        : []),
     ];
   };
 
@@ -118,8 +121,10 @@ const EditSessionRound = ({
 
       updateSessionRoundDetails({
         payload: payload,
-        onErrorCallback: () => {},
-        onSuccessCallback:() => onClickCancel(true),
+        onErrorCallback: (error) => {
+          showNotification({ text: error, type: "error" });
+        },
+        onSuccessCallback: () => onClickCancel(true),
         roundId: roundDetails?.id,
         selectedModuleKey: selectedModule?.key,
       });
@@ -127,22 +132,25 @@ const EditSessionRound = ({
   };
 
   return (
-    <EditSessionRoundTemplate
-      activeStatus={activeStatus}
-      centresError={centresError}
-      getCentreListFromResponse={getCentreListFromResponse}
-      handleDeselectCentre={handleDeselectCentre}
-      handleSelectCentre={handleSelectCentre}
-      handleStatusToggle={handleStatusToggle}
-      intl={intl}
-      isError={isError}
-      onClickCancel={onClickCancel}
-      onClickSave={onClickSave}
-      responsive={responsive}
-      selectedCentres={selectedCentres}
-      selectedModule={selectedModule}
-      switchLabel={switchLabel}
-    />
+    <>
+      {notificationContextHolder}
+      <EditSessionRoundTemplate
+        activeStatus={activeStatus}
+        centresError={centresError}
+        getCentreListFromResponse={getCentreListFromResponse}
+        handleDeselectCentre={handleDeselectCentre}
+        handleSelectCentre={handleSelectCentre}
+        handleStatusToggle={handleStatusToggle}
+        intl={intl}
+        isError={isError}
+        onClickCancel={onClickCancel}
+        onClickSave={onClickSave}
+        responsive={responsive}
+        selectedCentres={selectedCentres}
+        selectedModule={selectedModule}
+        switchLabel={switchLabel}
+      />
+    </>
   );
 };
 
