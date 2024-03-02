@@ -184,7 +184,10 @@ const useRenderColumn = () => {
       if (isMoney) {
         return `${text} INR`;
       }
-      return text;
+      if (text) {
+        return text;
+      }
+      return "-";
     };
 
     const getRenderText = (text) => {
@@ -197,7 +200,7 @@ const useRenderColumn = () => {
             isCapitalize ? styles.capitalize : "",
           ].join(" ")}
         >
-          {textRenderFormat({ text: text || "-" })}
+          {textRenderFormat({ text: text })}
         </p>
       );
     };
