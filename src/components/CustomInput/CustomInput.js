@@ -240,7 +240,7 @@ CustomInput.defaultProps = {
   onSuffixElementClick: () => {},
   placeholder: "",
   prefixElement: null,
-  precision: 5,
+  precision: 0,
   ref: null,
   selectOptions: [],
   SuffixIcon: null,
