@@ -90,6 +90,7 @@
   font-weight: var(--fontWeightSmall, 400) !important;
   height: var(--height_44);
   padding: var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px) !important;
+  height: var(--height_44);
   &::placeholder {
     color: var(--textBold) !important;
   }

@@ -140,7 +140,7 @@ const EditSessionRound = ({
 
   const validate = () => {
     let errorCount = 0;
-    if (!addExperience?.min_ctc) {
+    if (addExperience?.min_ctc === null) {
       handleError(
         "min_ctc",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
