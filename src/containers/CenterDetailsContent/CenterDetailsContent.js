@@ -203,10 +203,11 @@ const CenterDetailsContent = ({
         if (typeof value === "object" && value !== null) {
           return Object.entries(value).every(
             ([nestedKey, nestedValue]) =>
-              nestedValue === addTableData[key][nestedKey]
+              nestedValue === addTableData[key][nestedKey] ||
+              nestedValue === null
           );
         }
-        return value === addTableData[key];
+        return value === addTableData[key] || value === null;
       });
 
     const interviewDatesData = isLastRowEmpty
@@ -265,6 +266,11 @@ const CenterDetailsContent = ({
       payload: centreDetailsPayload,
       centreId: centreId,
       roundId: roundId,
+      onSuccessCallback: () =>
+        showNotification({
+          text: intl.formatMessage({ id: "label.data_saved_successfully" }),
+          type: "success",
+        }),
       onErrorCallback: (error) => {
         showNotification({ text: error, type: "error" });
       },
