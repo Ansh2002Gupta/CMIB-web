@@ -6,6 +6,7 @@ import { TwoColumn, ThreeColumn, TwoRow, ThreeRow } from "../../core/layouts";
 
 import CustomCheckBox from "../../components/CustomCheckBox/CustomCheckBox";
 import CustomInput from "../../components/CustomInput/CustomInput";
+import { MAX_CTC_LENGTH, MAX_EXPERIENCE_LENGTH } from "../../constant/constant";
 import styles from "./WorkExperienceRange.module.scss";
 import { classes } from "./WorkExperienceRange.styles";
 
@@ -177,7 +178,7 @@ const WorkExperienceRangeTemplate = ({
                         leftSection={
                           <CustomInput
                             controls={true}
-                            maxLength={20}
+                            maxLength={MAX_EXPERIENCE_LENGTH}
                             type="inputNumber"
                             placeholder={intl.formatMessage({
                               id: "label.from",
@@ -223,7 +224,7 @@ const WorkExperienceRangeTemplate = ({
                           ) : (
                             <CustomInput
                               controls={true}
-                              maxLength={20}
+                              maxLength={MAX_EXPERIENCE_LENGTH}
                               isError={
                                 !!experienceErrors[index]?.work_experience_max
                               }
@@ -259,7 +260,7 @@ const WorkExperienceRangeTemplate = ({
                         leftSection={
                           <CustomInput
                             controls={true}
-                            maxLength={20}
+                            maxLength={MAX_CTC_LENGTH}
                             type="inputNumber"
                             isError={!!experienceErrors[index]?.min_ctc}
                             errorMessage={experienceErrors[index]?.min_ctc}
@@ -314,7 +315,7 @@ const WorkExperienceRangeTemplate = ({
                   leftSection={
                     <CustomInput
                       controls={true}
-                      maxLength={20}
+                      maxLength={MAX_EXPERIENCE_LENGTH}
                       isError={!!errors.work_experience_min}
                       type="inputNumber"
                       placeholder={intl.formatMessage({
@@ -352,7 +353,7 @@ const WorkExperienceRangeTemplate = ({
                           />
                         ) : (
                           <CustomInput
-                            maxLength={20}
+                            maxLength={MAX_EXPERIENCE_LENGTH}
                             controls={true}
                             isError={!!errors.work_experience_max}
                             type="inputNumber"
@@ -402,7 +403,7 @@ const WorkExperienceRangeTemplate = ({
                   leftSection={
                     <CustomInput
                       controls={true}
-                      maxLength={20}
+                      maxLength={MAX_CTC_LENGTH}
                       isError={errors.min_ctc ? true : false}
                       type="inputNumber"
                       placeholder={intl.formatMessage({
