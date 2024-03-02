@@ -178,7 +178,6 @@ const WorkExperienceRangeTemplate = ({
                           <CustomInput
                             controls={true}
                             maxLength={20}
-                            precision={0}
                             type="inputNumber"
                             placeholder={intl.formatMessage({
                               id: "label.from",
