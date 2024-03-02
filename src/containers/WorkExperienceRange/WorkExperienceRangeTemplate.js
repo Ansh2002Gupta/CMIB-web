@@ -28,17 +28,27 @@ const WorkExperienceRangeTemplate = ({
     setAddExperience((prevData) => ({
       ...prevData,
       [name]: value,
+      ...(name === "use_more_experience" && value === 1
+        ? {
+            work_experience_max: null,
+          }
+        : {}),
     }));
     setErrors((prev) => ({
       ...prev,
       [name]: "",
+      ...(name === "use_more_experience" && value === 1
+        ? {
+            work_experience_max: "",
+          }
+        : {}),
     }));
     if (name === "work_experience_min" && value === null) {
       handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
-    } else {
-      if (name !== "work_experience_min" && !value) {
-        handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
-      }
+      return;
+    }
+    if (name !== "work_experience_min" && !value) {
+      handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
     }
   };
   const handleInputChangeExperience = (value, name, index) => {
@@ -378,7 +388,6 @@ const WorkExperienceRangeTemplate = ({
                               addExperience.use_more_experience ? 0 : 1,
                               "use_more_experience"
                             );
-                            handleInputChange(null, "work_experience_max");
                           }}
                         >
                           <Typography className={styles.blackText}>
