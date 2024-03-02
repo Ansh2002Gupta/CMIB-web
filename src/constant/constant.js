@@ -388,3 +388,8 @@ export const MAX_BANK_AC_NO_LENGTH = 18;
 export const ROLES = {
   SUPER_ADMIN: "super-admin",
 };
+
+export const MAX_CTC_LENGTH = 10;
+export const MAX_EXPERIENCE_LENGTH = 2;
+export const MAX_PARTNERS_LENGTH = 3;
+export const MAX_VACANCIES_LENGTH = 4;
