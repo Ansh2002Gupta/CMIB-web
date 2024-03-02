@@ -8,6 +8,7 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 
 import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
+import { checkForValidNumber } from "../../constant/utils";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
 import { MENU_KEYS, NOTIFICATION_TYPES } from "../../constant/constant";
 
@@ -141,14 +142,14 @@ const EditSessionRound = ({
 
   const validate = () => {
     let errorCount = 0;
-    if (addExperience?.min_ctc === null) {
+    if (!checkForValidNumber(addExperience?.min_ctc)) {
       handleError(
         "min_ctc",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
       );
       errorCount += 1;
     }
-    if (addExperience?.work_experience_min === null) {
+    if (!checkForValidNumber(addExperience?.work_experience_min)) {
       handleError(
         "work_experience_min",
         intl.formatMessage({ id: "label.error.fieldEmpty" })
@@ -156,7 +157,7 @@ const EditSessionRound = ({
       errorCount += 1;
     }
     if (
-      !addExperience?.work_experience_max &&
+      !checkForValidNumber(addExperience?.work_experience_max) &&
       !addExperience?.use_more_experience
     ) {
       handleError(
@@ -175,9 +176,9 @@ const EditSessionRound = ({
       setCentresError(true);
     } else {
       if (
-        addExperience?.work_experience_min ||
-        addExperience?.work_experience_max ||
-        addExperience?.min_ctc
+        checkForValidNumber(addExperience?.work_experience_min) ||
+        checkForValidNumber(addExperience?.work_experience_max) ||
+        checkForValidNumber(addExperience?.min_ctc)
       ) {
         if (validate()) {
           let payload = {
