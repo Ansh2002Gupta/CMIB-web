@@ -47,7 +47,7 @@ const WorkExperienceRangeTemplate = ({
       handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
       return;
     }
-    if (name !== "work_experience_min" && !value) {
+    if (name !== "work_experience_min" && value === null) {
       handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
     }
   };
@@ -89,7 +89,7 @@ const WorkExperienceRangeTemplate = ({
         })
       );
     } else {
-      if (name !== "work_experience_min" && !value) {
+      if (name !== "work_experience_min" && value === null) {
         setExperienceErrors((prevData) =>
           prevData.map((item, i) => {
             if (index === i) {
