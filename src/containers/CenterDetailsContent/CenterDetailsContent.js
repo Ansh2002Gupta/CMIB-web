@@ -204,10 +204,11 @@ const CenterDetailsContent = ({
           return Object.entries(value).every(
             ([nestedKey, nestedValue]) =>
               nestedValue === addTableData[key][nestedKey] ||
-              nestedValue === null
+              nestedValue === null ||
+              value === ""
           );
         }
-        return value === addTableData[key] || value === null;
+        return value === addTableData[key] || value === null || value === "";
       });
 
     const interviewDatesData = isLastRowEmpty
