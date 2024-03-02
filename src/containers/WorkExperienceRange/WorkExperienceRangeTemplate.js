@@ -178,7 +178,6 @@ const WorkExperienceRangeTemplate = ({
                           <CustomInput
                             controls={true}
                             maxLength={20}
-                            precision={0}
                             type="inputNumber"
                             placeholder={intl.formatMessage({
                               id: "label.from",
@@ -191,9 +190,7 @@ const WorkExperienceRangeTemplate = ({
                               );
                             }}
                             isError={
-                              experienceErrors[index]?.work_experience_min
-                                ? true
-                                : false
+                              !!experienceErrors[index]?.work_experience_min
                             }
                             errorMessage={
                               experienceErrors[index]?.work_experience_min
@@ -227,11 +224,8 @@ const WorkExperienceRangeTemplate = ({
                             <CustomInput
                               controls={true}
                               maxLength={20}
-                              precision={0}
                               isError={
-                                experienceErrors[index]?.work_experience_max
-                                  ? true
-                                  : false
+                                !!experienceErrors[index]?.work_experience_max
                               }
                               type="inputNumber"
                               placeholder={intl.formatMessage({
@@ -265,12 +259,9 @@ const WorkExperienceRangeTemplate = ({
                         leftSection={
                           <CustomInput
                             controls={true}
-                            precision={0}
                             maxLength={20}
                             type="inputNumber"
-                            isError={
-                              experienceErrors[index]?.min_ctc ? true : false
-                            }
+                            isError={!!experienceErrors[index]?.min_ctc}
                             errorMessage={experienceErrors[index]?.min_ctc}
                             placeholder={intl.formatMessage({
                               id: "session.min_ctc",
@@ -324,8 +315,7 @@ const WorkExperienceRangeTemplate = ({
                     <CustomInput
                       controls={true}
                       maxLength={20}
-                      precision={0}
-                      isError={errors.work_experience_min ? true : false}
+                      isError={!!errors.work_experience_min}
                       type="inputNumber"
                       placeholder={intl.formatMessage({
                         id: "label.from",
@@ -364,8 +354,7 @@ const WorkExperienceRangeTemplate = ({
                           <CustomInput
                             maxLength={20}
                             controls={true}
-                            precision={0}
-                            isError={errors.work_experience_max ? true : false}
+                            isError={!!errors.work_experience_max}
                             type="inputNumber"
                             placeholder={intl.formatMessage({
                               id: "label.to",
@@ -385,9 +374,7 @@ const WorkExperienceRangeTemplate = ({
                       rightSection={
                         <CustomCheckBox
                           customStyles={styles.customStyles}
-                          checked={
-                            addExperience.use_more_experience ? true : false
-                          }
+                          checked={!!addExperience.use_more_experience}
                           onChange={() => {
                             handleInputChange(
                               addExperience.use_more_experience ? 0 : 1,
@@ -416,7 +403,6 @@ const WorkExperienceRangeTemplate = ({
                     <CustomInput
                       controls={true}
                       maxLength={20}
-                      precision={0}
                       isError={errors.min_ctc ? true : false}
                       type="inputNumber"
                       placeholder={intl.formatMessage({
