@@ -345,3 +345,10 @@ export const isUserAdmin = (userDetails) => {
     noOfControlItems === controlMenu?.length
   );
 };
+
+export const checkForValidNumber = (number) => {
+  if (number || number === 0) {
+    return true;
+  }
+  return false;
+};

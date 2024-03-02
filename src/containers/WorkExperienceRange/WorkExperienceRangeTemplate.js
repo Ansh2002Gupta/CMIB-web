@@ -48,7 +48,14 @@ const WorkExperienceRangeTemplate = ({
       handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
       return;
     }
-    if (name !== "work_experience_min" && value === null) {
+    if (name === "use_more_experience" && !value) {
+      handleError(
+        "work_experience_max",
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
+      );
+      return;
+    }
+    if (name !== "work_experience_min" && !(value || value === 0)) {
       handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
     }
   };
