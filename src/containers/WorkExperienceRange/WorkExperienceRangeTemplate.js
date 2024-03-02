@@ -226,7 +226,6 @@ const WorkExperienceRangeTemplate = ({
                             <CustomInput
                               controls={true}
                               maxLength={20}
-                              precision={0}
                               isError={
                                 experienceErrors[index]?.work_experience_max
                                   ? true
@@ -264,7 +263,6 @@ const WorkExperienceRangeTemplate = ({
                         leftSection={
                           <CustomInput
                             controls={true}
-                            precision={0}
                             maxLength={20}
                             type="inputNumber"
                             isError={
@@ -323,7 +321,6 @@ const WorkExperienceRangeTemplate = ({
                     <CustomInput
                       controls={true}
                       maxLength={20}
-                      precision={0}
                       isError={errors.work_experience_min ? true : false}
                       type="inputNumber"
                       placeholder={intl.formatMessage({
@@ -363,7 +360,6 @@ const WorkExperienceRangeTemplate = ({
                           <CustomInput
                             maxLength={20}
                             controls={true}
-                            precision={0}
                             isError={errors.work_experience_max ? true : false}
                             type="inputNumber"
                             placeholder={intl.formatMessage({
@@ -415,7 +411,6 @@ const WorkExperienceRangeTemplate = ({
                     <CustomInput
                       controls={true}
                       maxLength={20}
-                      precision={0}
                       isError={errors.min_ctc ? true : false}
                       type="inputNumber"
                       placeholder={intl.formatMessage({
