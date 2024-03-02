@@ -141,6 +141,7 @@ const CentreTable = ({
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterFee",
           })}
+          maxLength={11}
           errorMessage={errors[index]?.participationFee}
           isError={!!errors[index]?.participationFee}
         />
@@ -184,6 +185,7 @@ const CentreTable = ({
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterFee",
                 })}
+                maxLength={11}
                 errorMessage={errors[index]?.firm?.firmFee}
                 isError={!!errors[index]?.firm?.firmFee}
               />
@@ -231,6 +233,7 @@ const CentreTable = ({
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterNorm1",
           })}
+          maxLength={11}
           errorMessage={errors[index]?.norm1}
           isError={!!errors[index]?.norm1}
         />
@@ -254,6 +257,7 @@ const CentreTable = ({
           onChange={(val) => {
             handleInputChange(val, "norm2", index);
           }}
+          maxLength={11}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterNorm2",
           })}
@@ -283,6 +287,7 @@ const CentreTable = ({
           placeholder={intl.formatMessage({
             id: "centre.placeholder.enterVacancy",
           })}
+          maxLength={4}
           errorMessage={errors[index]?.norm2MinVacancy}
           isError={!!errors[index]?.norm2MinVacancy}
         />
