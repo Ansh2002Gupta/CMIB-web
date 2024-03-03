@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Space, Card, Button } from "antd";
 
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { urlService } from "../../Utils/urlService";
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
@@ -25,8 +25,6 @@ export default function CardDropdownOverlay({
 }) {
   const intl = useIntl();
   const [, userProfileDispatch] = useContext(UserProfileContext);
-
-  const [, setSearchParams] = useSearchParams();
   const { firstName, lastName } = splitName(userName);
 
   const handleLogoutClick = () => {
@@ -40,10 +38,7 @@ export default function CardDropdownOverlay({
       userProfileDispatch(setShowChangePasswordModal(true));
     },
     myProfile: () => {
-      setSearchParams((prev) => {
-        prev.set(USER_PROFILE_QUERY_PARAMS, "open");
-        return prev;
-      });
+      urlService.setQueryStringValue(USER_PROFILE_QUERY_PARAMS, "open");
       setDropdownVisible(false);
       userProfileDispatch(setUserProfileModalNumber(1));
     },

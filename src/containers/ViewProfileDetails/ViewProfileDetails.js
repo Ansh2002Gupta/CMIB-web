@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography, Image, Switch } from "antd";
@@ -18,6 +17,7 @@ import {
   setUserDetails,
   setUserProfileModalNumber,
 } from "../../globalContext/userProfile/userProfileActions";
+import { urlService } from "../../Utils/urlService";
 import { USER_PROFILE_QUERY_PARAMS } from "../../constant/constant";
 import { classes } from "./ViewProfileDetails.styles";
 import styles from "./ViewProfileDetails.module.scss";
@@ -27,7 +27,6 @@ const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
     useContext(UserProfileContext);
   const { getImage } = useContext(ThemeContext);
   const intl = useIntl();
-  const [, setSearchParams] = useSearchParams();
   const responsive = useResponsive();
 
   const userName = userProfileDetails?.userDetails?.name;
@@ -75,10 +74,7 @@ const ViewProfileDetails = ({ includeDeleteButton, showNotification }) => {
   };
 
   const handleCloseUserProfile = () => {
-    setSearchParams((prev) => {
-      prev.delete(USER_PROFILE_QUERY_PARAMS);
-      return prev;
-    });
+    urlService.removeParam(USER_PROFILE_QUERY_PARAMS);
     userProfileDispatch(closeUserProfileModal());
   };
 

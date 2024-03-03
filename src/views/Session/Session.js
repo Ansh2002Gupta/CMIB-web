@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useSearchParams } from "react-router-dom";
 
 import { TwoRow } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
@@ -21,6 +20,7 @@ import {
   updateSessionNotification,
 } from "../../globalContext/notification/notificationActions";
 import { getCurrentActiveTab } from "../../constant/utils";
+import { urlService } from "../../Utils/urlService";
 import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { ADD_SESSION } from "../../routes/routeNames";
 import {
@@ -29,7 +29,6 @@ import {
   ROUND_TWO_CARD_LIST,
   VALID_CONSENT_MARKING_TABS_ID,
 } from "../../constant/constant";
-import variables from "../../themes/base/styles/variables";
 import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./session.module.scss";
 
@@ -40,9 +39,11 @@ function Session() {
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const [globalSessionDetails] = useContext(GlobalSessionContext);
-  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(
-    getCurrentActiveTab(searchParams?.get("tab"), VALID_CONSENT_MARKING_TABS_ID)
+    getCurrentActiveTab(
+      urlService?.getQueryStringValue("tab"),
+      VALID_CONSENT_MARKING_TABS_ID
+    )
   );
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [notificationState, setNotificationStateDispatch] =
