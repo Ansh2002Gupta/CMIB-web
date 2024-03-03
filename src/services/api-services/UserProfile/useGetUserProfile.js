@@ -31,7 +31,7 @@ const useGetUserDetails = () => {
   const setFirstActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
     userProfileDispatch(setSelectedModule(accessibleModules[0]));
-    accessibleModules[0] && getGlobalSessionList(accessibleModules?.[0]?.key);
+    accessibleModules?.[0] && getGlobalSessionList(accessibleModules?.[0]?.key);
     navigate(`/${accessibleModules[0]?.key}/${DASHBOARD}`);
   };
 
