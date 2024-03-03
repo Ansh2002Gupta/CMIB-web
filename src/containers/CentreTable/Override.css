@@ -5,6 +5,7 @@
 }
 
 .customTable .ant-table-tbody > tr > td {
+  vertical-align: top;
   border-bottom: none !important;
   padding-top: var(--paddingNone) !important;
   padding-bottom: var(--paddingSmall) !important;
@@ -15,14 +16,18 @@
   padding-right: var(--paddingNone) !important;
   border: none !important;
 }
- .ant-table-tbody > tr:hover > td {
+.customTableHover .ant-table-tbody > tr:hover > td {
   background-color: transparent !important; 
+}
+
+.customTableNoHover .ant-table-tbody > tr:hover > td {
+  background:var(--bodyBg) !important; 
+  transition: none !important;
 }
 
 .customTable .ant-table-tbody .ant-table-cell {
   padding-left: var(--paddingNone) !important;
   padding-right: var(--paddingMedium) !important;
-  vertical-align: top !important;
 }
 
 .ant-input-number-disabled {

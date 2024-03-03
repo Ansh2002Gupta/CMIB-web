@@ -11,7 +11,6 @@ import useFetch from "../../core/hooks/useFetch";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
-import variables from "../../themes/base/styles/variables";
 import styles from "./EditSession.module.scss";
 
 function EditSession() {

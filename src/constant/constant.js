@@ -25,6 +25,14 @@ export const STATUS_CODES = {
   UNAUTHORIZED_USER: 401,
 };
 
+export const SESSION_PATHS = [
+  "setup-centers",
+  "orientation-centers",
+  "setup-mock-interview",
+  "consent-marking",
+  "campus-interview",
+];
+
 export const ROW_PER_PAGE_OPTIONS = [
   {
     value: 10,
@@ -194,7 +202,7 @@ export const ROUND_ONE_CARD_LIST = [
     imageUrl: "DeviceMessage",
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
-    headingIntl: "Mock Interviews",
+    headingIntl: "Setup Mock Interviews",
     onClickNaviagtion: SETUP_MOCK_INTERVIEW,
   },
   {
@@ -202,7 +210,7 @@ export const ROUND_ONE_CARD_LIST = [
     imageUrl: "Key",
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
-    headingIntl: "Orientation Centres",
+    headingIntl: "Setup Orientation Centres",
     onClickNaviagtion: ROUND_ONE_ORIENTATION_CENTERS,
   },
   {
@@ -376,3 +384,12 @@ export const CENTRE_TYPE_ENUM = {
 export const SESSION_KEY = "sessionKey";
 export const MAX_HSN_CODE_LENGTH = 8;
 export const MAX_BANK_AC_NO_LENGTH = 18;
+
+export const ROLES = {
+  SUPER_ADMIN: "super-admin",
+};
+
+export const MAX_CTC_LENGTH = 10;
+export const MAX_EXPERIENCE_LENGTH = 2;
+export const MAX_PARTNERS_LENGTH = 3;
+export const MAX_VACANCIES_LENGTH = 4;

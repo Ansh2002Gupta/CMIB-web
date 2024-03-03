@@ -60,6 +60,7 @@ const CustomDateTimePicker = ({
                   disabled,
                   disabledTime,
                 }}
+                use12Hours={false}
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("clock")} />}
                 value={value ? dayjs(value) : null}

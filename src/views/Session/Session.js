@@ -24,6 +24,7 @@ import { urlService } from "../../Utils/urlService";
 import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { ADD_SESSION } from "../../routes/routeNames";
 import {
+  MENU_KEYS,
   NOTIFICATION_TYPES,
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
@@ -102,7 +103,9 @@ function Session() {
           key={Date.now()}
           {...{
             isEditable: false,
-            isGettingSessions,
+            isGettingSessions:
+              globalSessionDetails?.isGettingGlobalSessions ||
+              isGettingSessions,
             isSessionError,
             fetchData,
             sessionData,
@@ -118,11 +121,12 @@ function Session() {
             title: intl.formatMessage({ id: "session.roundOne" }),
             children: (
               <SessionRound
+                {...{ currentlySelectedModuleKey }}
                 roundNo={1}
                 roundId={
                   (
                     sessionData?.rounds?.find(
-                      (obj) => obj.round_code === "round-1"
+                      (obj) => obj.round_code === MENU_KEYS.ROUND_1_PLACEMENT
                     ) || {}
                   ).id
                 }
@@ -143,6 +147,14 @@ function Session() {
             title: intl.formatMessage({ id: "session.roundTwo" }),
             children: (
               <SessionRound
+                {...{ currentlySelectedModuleKey }}
+              roundId={
+                (
+                  sessionData?.rounds?.find(
+                    (obj) => obj.round_code === MENU_KEYS.ROUND_2_PLACEMENT
+                  ) || {}
+                ).id
+              }
                 roundNo={2}
                 roundList={ROUND_TWO_CARD_LIST}
                 sessionData={sessionData}

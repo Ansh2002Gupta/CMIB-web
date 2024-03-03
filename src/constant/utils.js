@@ -246,8 +246,8 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   if (
     chatData?.author?.id === userDetails?.id &&
-    chatData?.author?.type.toLowerCase() ===
-      userDetails?.user_type.toLowerCase()
+    (chatData?.author?.type.toLowerCase() === "admin" ||
+      chatData?.author?.type.toLowerCase() === "super admin")
   ) {
     return "sender";
   }
@@ -341,4 +341,11 @@ export const isUserAdmin = (userDetails) => {
     noOfMenuItems === modules?.length &&
     noOfControlItems === controlMenu?.length
   );
+};
+
+export const checkForValidNumber = (number) => {
+  if (number || number === 0) {
+    return true;
+  }
+  return false;
 };
