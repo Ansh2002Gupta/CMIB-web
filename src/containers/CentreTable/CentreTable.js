@@ -322,7 +322,7 @@ const CentreTable = ({
       title: intl.formatMessage({ id: "centre.scheduleDate" }),
       dataIndex: "scheduleDate",
       key: "scheduleDate",
-      renderText: { visible: true },
+      renderText: { visible: true, isTypeDate: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "centre.participationFee" }),
