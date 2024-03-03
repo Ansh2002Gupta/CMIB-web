@@ -86,7 +86,21 @@ const OrientationCenter = () => {
     setFormData((prevFormData) => {
       return prevFormData.map((item) => {
         if (item.id === recordId) {
-          return { ...item, [field]: value };
+          if (
+            typeof value === "object" &&
+            value?.venue &&
+            value?.latitude &&
+            value?.longitude
+          ) {
+            return {
+              ...item,
+              [field]: value?.venue,
+              latitude: value?.latitude,
+              longitude: value?.longitude,
+            };
+          } else {
+            return { ...item, [field]: value };
+          }
         }
         return item;
       });
@@ -183,6 +197,8 @@ const OrientationCenter = () => {
   const getApiPayload = (formData) => {
     return {
       data: formData.map((item) => ({
+        latitude: item.latitude,
+        longitude: item.longitude,
         id: item.id,
         venue: item.venue,
         schedule_date: dayjs(item.schedule_date).format("YYYY-MM-DD"),
@@ -250,6 +266,7 @@ const OrientationCenter = () => {
       <DataTable
         columns={columns}
         hidePagination
+        showTableBorderBottom
         currentDataLength={formData?.length}
         customContainerStyles={styles.tableContainer}
         originalData={formData}
@@ -284,6 +301,7 @@ const OrientationCenter = () => {
             fetchCentersSuccessFlag &&
             !isUpdatingOrientationCentre &&
             !!orientationCentres?.length &&
+            !errorWhileUpdatingCentre &&
             !!currentGlobalSession?.status && (
               <TwoColumn
                 className={styles.buttonContainer}

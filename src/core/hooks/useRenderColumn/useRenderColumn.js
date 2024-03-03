@@ -116,6 +116,8 @@ const useRenderColumn = () => {
       textStyles,
       isCapitalize,
       isRequiredTooltip,
+      isMoney,
+      isYearRange,
       mobile,
       isIntl,
       isDataObject,
@@ -179,7 +181,13 @@ const useRenderColumn = () => {
       if (isIntl) {
         return intl.formatMessage({ id: `label.${text}` });
       }
-      return text;
+      if (isMoney) {
+        return `${text} INR`;
+      }
+      if (text) {
+        return text;
+      }
+      return "-";
     };
 
     const getRenderText = (text) => {
@@ -192,7 +200,33 @@ const useRenderColumn = () => {
             isCapitalize ? styles.capitalize : "",
           ].join(" ")}
         >
-          {textRenderFormat({ text: text || "-" })}
+          {textRenderFormat({ text: text })}
+        </p>
+      );
+    };
+
+    const getRenderYearRange = (data) => {
+      return (
+        <p
+          className={[
+            textStyles,
+            isTextBold ? styles.boldText : "",
+            styles.textEllipsis,
+            isCapitalize ? styles.capitalize : "",
+          ].join(" ")}
+        >
+          {data?.use_more_experience
+            ? `${data?.work_experience_min} ${intl.formatMessage({
+                id: "label.yearsAndMore",
+              })}`
+            : `${data?.work_experience_min} - ${
+                data?.work_experience_max
+              } ${intl.formatMessage({
+                id:
+                  data?.work_experience_max === 1
+                    ? "label.year"
+                    : "label.years",
+              })}`}
         </p>
       );
     };
@@ -321,6 +355,8 @@ const useRenderColumn = () => {
             </p>
           ) : isRequiredTooltip ? (
             <Tooltip title={text}>{getRenderText(text)}</Tooltip>
+          ) : isYearRange ? (
+            getRenderYearRange(rowData)
           ) : (
             getRenderText(text)
           ),
