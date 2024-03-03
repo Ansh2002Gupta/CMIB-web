@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
@@ -16,6 +15,7 @@ import useFetch from "../../core/hooks/useFetch";
 import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { getQueryColumn } from "./QueriesTableConfig";
+import { urlService } from "../../Utils/urlService";
 import {
   ADMIN_ROUTE,
   CORE_ROUTE,
@@ -44,14 +44,13 @@ const QueryTable = ({
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
   const [sortDirection, setSortDirection] = useState(
-    searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_DIRECTION)
+    urlService.getQueryStringValue(SORTING_QUERY_PARAMS?.SORTED_DIRECTION)
   );
   const [sortBy, setSortBy] = useState(
-    searchParams?.get(SORTING_QUERY_PARAMS?.SORTED_KEY)
+    urlService.getQueryStringValue(SORTING_QUERY_PARAMS?.SORTED_KEY)
   );
 
   const [
@@ -59,7 +58,7 @@ const QueryTable = ({
     setSelctedQueriesToBeMarkedAsAnswered,
   ] = useState([]);
   const [filterArray, setFilterArray] = useState(
-    getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
+    getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isSelectedFromTick, setIsSelectedFromTick] = useState(false);
@@ -228,14 +227,20 @@ const QueryTable = ({
     setSortBy(newSortDirection ? sortField : "");
     setSortDirection(newSortDirection);
 
-    setSearchParams((prev) => {
-      newSortDirection &&
-        prev.set(SORTING_QUERY_PARAMS.SORTED_DIRECTION, newSortDirection);
-      !newSortDirection && prev.delete(SORTING_QUERY_PARAMS.SORTED_DIRECTION);
-      sortField && prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortField);
-      !newSortDirection && prev.delete(SORTING_QUERY_PARAMS.SORTED_KEY);
-      return prev;
-    });
+    newSortDirection &&
+      urlService.setQueryStringValue(
+        SORTING_QUERY_PARAMS.SORTED_DIRECTION,
+        newSortDirection
+      );
+    !newSortDirection &&
+      urlService.removeParam(SORTING_QUERY_PARAMS.SORTED_DIRECTION);
+    sortField &&
+      urlService.setQueryStringValue(
+        SORTING_QUERY_PARAMS.SORTED_KEY,
+        sortField
+      );
+    !newSortDirection &&
+      urlService.removeParam(SORTING_QUERY_PARAMS.SORTED_KEY);
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -257,7 +262,6 @@ const QueryTable = ({
     sortBy: sortDirection,
     setSortBy: setSortDirection,
     sortField: sortBy,
-    setSearchParams,
     setIsConfirmationModalOpen,
     toggleSelectAllItems,
     areAllItemsSelected,
@@ -274,33 +278,30 @@ const QueryTable = ({
           q: validateSearchTextLength(str),
         }),
       });
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
     }
-    if (!str?.trim() && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
+    if (
+      !str?.trim() &&
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY)
+    ) {
       debounceSearch({
         queryParamsObject: getRequestedParams({
           page: 1,
           q: "",
         }),
       });
-      setSearchParams((prev) => {
-        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
-        return prev;
-      });
+      urlService.removeParam(PAGINATION_PROPERTIES.SEARCH_QUERY);
     }
   };
 
   const onChangePageSize = (size) => {
     setPageSize(size);
     setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      return prev;
-    });
+    const queryParams = {
+      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: size,
+      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
+    };
+    urlService.setMultipleQueryStringValues(queryParams);
     const requestedParams = getRequestedParams({
       perPage: size,
       page: 1,
@@ -314,10 +315,10 @@ const QueryTable = ({
 
   const onChangeCurrentPage = (newPageNumber) => {
     setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
-      return prev;
-    });
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE,
+      newPageNumber
+    );
     const requestedParams = getRequestedParams({
       page: newPageNumber,
       sortOrder: sortDirection,
@@ -331,10 +332,11 @@ const QueryTable = ({
   const handleOnFilterApply = (updatedFiltersValue) => {
     setCurrent(1);
     let arrayAsString = JSON.stringify(updatedFiltersValue);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
-      return prev;
-    });
+
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.FILTER,
+      encodeURIComponent(arrayAsString)
+    );
     const requestedParams = getRequestedParams({
       updatedFiltersValue,
       sortOrder: sortDirection,
@@ -449,10 +451,7 @@ const QueryTable = ({
             sortField: sortBy,
           }),
         });
-        setSearchParams((prev) => {
-          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-          return prev;
-        });
+        urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
         setCurrent(1);
       }
     }
@@ -460,17 +459,15 @@ const QueryTable = ({
 
   useEffect(() => {
     let arrayAsString = JSON.stringify(filterArray);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
-      sortDirection &&
-        prev.set(SORTING_QUERY_PARAMS.SORTED_DIRECTION, sortDirection);
-      sortBy && prev.set(SORTING_QUERY_PARAMS.SORTED_KEY, sortBy);
-      prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
-      searchedValue &&
-        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
-      return prev;
-    });
+    const defaultQueryParams = {
+      [PAGINATION_PROPERTIES.CURRENT_PAGE]: current,
+      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: pageSize,
+      [SORTING_QUERY_PARAMS.SORTED_DIRECTION]: sortDirection,
+      [SORTING_QUERY_PARAMS.SORTED_KEY]: sortBy,
+      [PAGINATION_PROPERTIES.FILTER]: encodeURIComponent(arrayAsString),
+      [PAGINATION_PROPERTIES.SEARCH_QUERY]: searchedValue,
+    };
+    urlService.setMultipleQueryStringValues(defaultQueryParams);
 
     const requestedParams = getRequestedParams({
       sortOrder: sortDirection,

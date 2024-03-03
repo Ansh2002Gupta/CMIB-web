@@ -1,17 +1,17 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Breadcrumb } from "antd";
 
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { getLabelForPath } from "../../routes/helpers/breadCrumbHelpers";
+import { urlService } from "../../Utils/urlService";
 import styles from "./BreadCrumbs.module.scss";
 
 const BreadCrumbs = () => {
-  const [searchParams] = useSearchParams();
   const location = useLocation();
   const intl = useIntl();
-  const isEdit = searchParams.get("mode") === "edit";
+  const isEdit = urlService.getQueryStringValue("mode") === "edit";
   const addSlashInPathName = location.pathname?.endsWith("/")
     ? location.pathname
     : location.pathname + "/";
