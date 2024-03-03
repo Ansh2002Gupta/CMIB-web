@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 import { useIntl } from "react-intl";
-import { useSearchParams } from "react-router-dom";
 import { ThemeContext } from "core/providers/theme";
 import { Spin, Typography } from "antd";
 
@@ -14,6 +13,7 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { urlService } from "../../Utils/urlService";
 import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
@@ -25,7 +25,6 @@ import {
   ROUND_ID,
   VALID_ROW_PER_OPTIONS,
 } from "../../constant/constant";
-
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
 
@@ -34,14 +33,13 @@ const SetupCenter = () => {
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [searchParams, setSearchParams] = useSearchParams();
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
   const isEditable = currentGlobalSession?.is_editable;
 
-  const roundId = searchParams.get(ROUND_ID);
+  const roundId = urlService.getQueryStringValue(ROUND_ID);
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
@@ -164,25 +162,24 @@ const SetupCenter = () => {
   };
 
   useLayoutEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
+    const currentPage = +urlService.getQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE
+    );
+    const currentPagePerRow = +urlService.getQueryStringValue(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
     if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     }
 
     if (
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
     ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
-        return prev;
-      });
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES.ROW_PER_PAGE,
+        DEFAULT_PAGE_SIZE
+      );
     }
   }, []);
 

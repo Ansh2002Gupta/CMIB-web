@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
@@ -25,6 +24,7 @@ import { ROUND_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 
 import { classes } from "./OrientationCenter.styles";
+import { urlService } from "../../Utils/urlService";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./OrientationCenter.module.scss";
 import "./Override.css";
@@ -33,10 +33,9 @@ const OrientationCenter = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [searchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const roundId = searchParams.get(ROUND_ID);
+  const roundId = urlService.getQueryStringValue(ROUND_ID);
 
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);

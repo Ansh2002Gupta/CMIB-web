@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Spin } from "antd";
 
@@ -10,21 +10,21 @@ import CenterDetailsHeader from "../../containers/CenterDetailsHeader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import useFetch from "../../core/hooks/useFetch";
+import { getErrorMessage } from "../../constant/utils";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { urlService } from "../../Utils/urlService";
 import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
 } from "../../constant/apiEndpoints";
-import { getErrorMessage } from "../../constant/utils";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { ROUND_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 import styles from "./SetupCenterDetails.module.scss";
 
 const SetupCenterDetails = () => {
-  const [searchParams] = useSearchParams();
   const { centreId } = useParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
@@ -34,7 +34,7 @@ const SetupCenterDetails = () => {
   );
   const { navigateScreen: navigate } = useNavigateScreen();
   const isEdit = currentGlobalSession?.is_editable;
-  const roundId = searchParams.get(ROUND_ID);
+  const roundId = urlService.getQueryStringValue(ROUND_ID);
   const {
     data: centreDetailData,
     error: errorWhileGettingDetails,

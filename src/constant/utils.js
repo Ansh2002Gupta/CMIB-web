@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 import { controlMenu, modules } from "../containers/SideMenu/sideMenuItems";
+import { urlService } from "../Utils/urlService";
 import {
   DEFAULT_PAGE_SIZE,
   FORM_STATES,
@@ -321,17 +322,13 @@ export const resetListingData = ({
   fetchDataCallback,
   listData,
   setCurrent,
-  setSearchParams,
 }) => {
   if (listData?.meta?.total) {
     const totalRecords = listData?.meta?.total;
     const numberOfPages = Math.ceil(totalRecords / listData?.meta?.perPage);
     if (currentPage > numberOfPages) {
       fetchDataCallback();
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       setCurrent(1);
     }
   }

@@ -5,7 +5,6 @@ import React, {
   useMemo,
   useLayoutEffect,
 } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
 import { Image, Input, Spin, message } from "antd";
@@ -21,6 +20,7 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import { convertPermissionFilter } from "../../constant/utils";
+import { urlService } from "../../Utils/urlService";
 import {
   getValidPageNumber,
   getValidPageSize,
@@ -41,24 +41,27 @@ const ManageUsersContent = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
   const [messageApi, contextHolder] = message.useMessage();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { data } = useFetch({
     url: ADMIN_ROUTE + ROLES_PERMISSION,
   });
 
   const [current, setCurrent] = useState(
-    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+    getValidPageNumber(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
+    )
   );
   const [pageSize, setPageSize] = useState(
-    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+    getValidPageSize(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE)
+    )
   );
   const [showFilters, setShowFilters] = useState(false);
 
   const [filterArray, setFilterArray] = useState(
-    getValidFilter(searchParams.get(PAGINATION_PROPERTIES.FILTER))
+    getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
   const [searchedValue, setSearchedValue] = useState(
-    searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
+    urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
   const [currentDataLength, setCurrentDataLength] = useState(0);
 
@@ -83,19 +86,19 @@ const ManageUsersContent = () => {
   const onChangePageSize = (size) => {
     setPageSize(Number(size));
     setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      return prev;
-    });
+    const queryParams = {
+      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: size,
+      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
+    };
+    urlService.setMultipleQueryStringValues(queryParams);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
     setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
-      return prev;
-    });
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE,
+      newPageNumber
+    );
   };
 
   const handleOnUserSearch = (event) => {
@@ -111,20 +114,14 @@ const ManageUsersContent = () => {
         filterArray["1"]
       );
     searchedValue.length > 2 && setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      return prev;
-    });
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     event.target.value &&
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.SEARCH_QUERY], event.target.value);
-        return prev;
-      });
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES.SEARCH_QUERY,
+        event.target.value
+      );
     !event.target.value &&
-      setSearchParams((prev) => {
-        prev.delete([PAGINATION_PROPERTIES.SEARCH_QUERY]);
-        return prev;
-      });
+      urlService.removeParam(PAGINATION_PROPERTIES.SEARCH_QUERY);
   };
 
   const ChipWithOverflow = ({ textArray, maxChips }) => {
@@ -235,25 +232,24 @@ const ManageUsersContent = () => {
   ];
 
   useLayoutEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
+    const currentPage = +urlService.getQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE
+    );
+    const currentPagePerRow = +urlService.getQueryStringValue(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
     if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     }
 
     if (
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
     ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
-        return prev;
-      });
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES.ROW_PER_PAGE,
+        DEFAULT_PAGE_SIZE
+      );
     }
   }, []);
 
@@ -265,10 +261,7 @@ const ManageUsersContent = () => {
       metaData?.total / metaData?.perPage
     );
     if (current > totalNumberOfValidPages) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       setCurrent(1);
     }
   }, [metaData?.total, metaData?.perPage]);
@@ -291,10 +284,10 @@ const ManageUsersContent = () => {
       filterArray["1"]
     );
     let arrayAsString = JSON.stringify(filterArray);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.FILTER, encodeURIComponent(arrayAsString));
-      return prev;
-    });
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.FILTER,
+      encodeURIComponent(arrayAsString)
+    );
   }, [current, filterArray, pageSize]);
 
   useEffect(() => {
