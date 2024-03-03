@@ -386,14 +386,17 @@ const CenterDetailsContent = ({
       { heading: "writtenTestFee", value: formData?.PsychometricFee },
       {
         heading: "centreStartTime",
-        value: dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A"),
+        value: formData?.centreStartTime
+          ? dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A")
+          : "-",
       },
       {
         heading: "centreEndTime",
-        value: dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A"),
+        value: formData?.centreEndTime
+          ? dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A")
+          : "-",
       },
     ];
-
     return (
       <>
         {notificationContextHolder}
@@ -422,7 +425,9 @@ const CenterDetailsContent = ({
                         </Typography>
                       }
                       bottomSection={
-                        <div className={styles.blackText}>{item.value}</div>
+                        <div className={styles.blackText}>
+                          {item.value || "-"}
+                        </div>
                       }
                     />
                   ))}
