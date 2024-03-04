@@ -28,13 +28,13 @@ const CentreTable = ({
   validate,
 }) => {
   const intl = useIntl();
-  const [disabledDates, setDisabledDates] = useState([]);
+  const [selectedDates, setSelectedDates] = useState([]);
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
 
   useEffect(() => {
     const dates = tableData.map((data) => data.scheduleDate);
-    setDisabledDates(dates);
+    setSelectedDates(dates);
   }, [tableData]);
 
   const handleRemove = (index) => {
@@ -67,7 +67,7 @@ const CentreTable = ({
   const isDateDisabled = (current) => {
     const isBeforeTomorrow =
       current && current < dayjs().add(1, "day").startOf("day");
-    const isAlreadySelected = disabledDates.some((date) =>
+    const isAlreadySelected = selectedDates.some((date) =>
       dayjs(date).isSame(current, "day")
     );
     return isBeforeTomorrow || isAlreadySelected;
