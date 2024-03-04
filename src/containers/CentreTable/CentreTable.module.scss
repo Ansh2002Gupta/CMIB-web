@@ -17,7 +17,8 @@
 }
 
 .sectionStyle {
-  width: 50%;
+  min-width: var(--width_150);
+  width: var(--halfWidth);
 }
 
 .inputStyle {
@@ -72,6 +73,8 @@
   cursor: pointer;
   height: var(--height_24);
   width: var(--width_24);
+  padding-top: var(--paddingExtraSmall);
+  padding-bottom: var(--paddingExtraSmall);
 }
 
 .editContainer {

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import CustomInput from "../CustomInput/CustomInput";
 import CustomDateTimePicker from "../CustomDateTimePicker/CustomDateTimePicker";
-import { MODULE_KEYS } from "../../constant/constant";
+import { MAX_CTC_LENGTH, MODULE_KEYS } from "../../constant/constant";
 import styles from "./EditCentreSetupFeeAndTime.module.scss";
 
 const EditCentreSetupFeeAndTime = ({
@@ -53,7 +53,8 @@ const EditCentreSetupFeeAndTime = ({
           onChange={(val) => {
             handleInputChange(val, "PsychometricFee");
           }}
-          placeholder={intl.formatMessage({
+          maxLength={MAX_CTC_LENGTH}
+        placeholder={intl.formatMessage({
             id: `label.placeholder.writtenTestFee`,
           })}
           value={formData?.PsychometricFee}

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -35,8 +35,14 @@ const CentreTable = ({
   validate,
 }) => {
   const intl = useIntl();
+  const [selectedDates, setSelectedDates] = useState([]);
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
+
+  useEffect(() => {
+    const dates = tableData.map((data) => data.scheduleDate);
+    setSelectedDates(dates);
+  }, [tableData]);
 
   const handleRemove = (index) => {
     const filteredData = tableData.filter((item, idx) => idx !== index);
@@ -72,6 +78,15 @@ const CentreTable = ({
     }
   };
 
+  const isDateDisabled = (current) => {
+    const isBeforeTomorrow =
+      current && current < dayjs().add(1, "day").startOf("day");
+    const isAlreadySelected = selectedDates.some((date) =>
+      dayjs(date).isSame(current, "day")
+    );
+    return isBeforeTomorrow || isAlreadySelected;
+  };
+
   const handleInputChange = (value, name, index, nestedName) => {
     setTableData((prevTableData) => {
       const newTableData = [...prevTableData];
@@ -92,18 +107,48 @@ const CentreTable = ({
       }
       return newTableData;
     });
-    setErrors((prevErrors) => {
-      const newErrors = [...prevErrors];
-      if (nestedName) {
-        newErrors[index][name] = {
-          ...newErrors[index][name],
-          [nestedName]: "",
-        };
-      } else {
-        newErrors[index][name] = "";
-      }
-      return newErrors;
-    });
+
+    if (value === null || value === "") {
+      setErrors((prevErrors) => {
+        const newErrors = [...prevErrors];
+        if (nestedName) {
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: {
+              ...newErrors[index][name],
+              [nestedName]: intl.formatMessage({
+                id: "label.error.fieldEmpty",
+              }),
+            },
+          };
+        } else {
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
+          };
+        }
+        return newErrors;
+      });
+    } else {
+      setErrors((prevErrors) => {
+        const newErrors = [...prevErrors];
+        if (nestedName) {
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: {
+              ...newErrors[index][name],
+              [nestedName]: "",
+            },
+          };
+        } else {
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: "",
+          };
+        }
+        return newErrors;
+      });
+    }
   };
 
   const columns = [
@@ -139,9 +184,7 @@ const CentreTable = ({
                 index
               );
             }}
-            disabledDate={(current) => {
-              return current && current < dayjs().add(1, "day").startOf("day");
-            }}
+            disabledDate={isDateDisabled}
             placeholder={intl.formatMessage({
               id: "centre.placeholder.selectDate",
             })}

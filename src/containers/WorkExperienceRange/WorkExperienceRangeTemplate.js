@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Image, Typography } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
@@ -59,6 +59,7 @@ const WorkExperienceRangeTemplate = ({
       handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
     }
   };
+
   const handleInputChangeExperience = (value, name, index) => {
     experienceValidate(value, name, index);
     setExperience((prevData) =>
@@ -96,20 +97,19 @@ const WorkExperienceRangeTemplate = ({
           return item;
         })
       );
-    } else {
-      if (name !== "work_experience_min" && value === null) {
-        setExperienceErrors((prevData) =>
-          prevData.map((item, i) => {
-            if (index === i) {
-              return {
-                ...item,
-                [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
-              };
-            }
-            return item;
-          })
-        );
-      }
+    }
+    if (name !== "work_experience_min" && value === null) {
+      setExperienceErrors((prevData) =>
+        prevData.map((item, i) => {
+          if (index === i) {
+            return {
+              ...item,
+              [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            };
+          }
+          return item;
+        })
+      );
     }
   };
 
@@ -184,7 +184,7 @@ const WorkExperienceRangeTemplate = ({
                         isLeftFillSpace
                         leftSection={
                           <CustomInput
-                            controls={true}
+                            controls
                             maxLength={MAX_EXPERIENCE_LENGTH}
                             type="inputNumber"
                             placeholder={intl.formatMessage({
@@ -220,7 +220,7 @@ const WorkExperienceRangeTemplate = ({
                         rightSection={
                           item?.use_more_experience ? (
                             <CustomInput
-                              controls={true}
+                              controls
                               maxLength={20}
                               value={"and more"}
                               customInputStyles={styles.customInputStyles}
@@ -230,7 +230,7 @@ const WorkExperienceRangeTemplate = ({
                             />
                           ) : (
                             <CustomInput
-                              controls={true}
+                              controls
                               maxLength={MAX_EXPERIENCE_LENGTH}
                               isError={
                                 !!experienceErrors[index]?.work_experience_max
@@ -266,7 +266,7 @@ const WorkExperienceRangeTemplate = ({
                         isLeftFillSpace
                         leftSection={
                           <CustomInput
-                            controls={true}
+                            controls
                             maxLength={MAX_CTC_LENGTH}
                             type="inputNumber"
                             isError={!!experienceErrors[index]?.min_ctc}
@@ -321,7 +321,7 @@ const WorkExperienceRangeTemplate = ({
                   isLeftFillSpace
                   leftSection={
                     <CustomInput
-                      controls={true}
+                      controls
                       maxLength={MAX_EXPERIENCE_LENGTH}
                       isError={!!errors.work_experience_min}
                       type="inputNumber"
@@ -349,9 +349,9 @@ const WorkExperienceRangeTemplate = ({
                       leftSection={
                         addExperience.use_more_experience ? (
                           <CustomInput
-                            controls={true}
+                            controls
                             type="inputNumber"
-                            disabled={true}
+                            disabled
                             value={"and more"}
                             customInputNumberStyles={
                               styles.customInputNumberStyles
@@ -411,7 +411,7 @@ const WorkExperienceRangeTemplate = ({
                     <CustomInput
                       controls={true}
                       maxLength={MAX_CTC_LENGTH}
-                      isError={errors.min_ctc ? true : false}
+                      isError={!!errors.min_ctc}
                       type="inputNumber"
                       placeholder={intl.formatMessage({
                         id: "session.min_ctc",

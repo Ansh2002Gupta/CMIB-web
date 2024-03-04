@@ -124,7 +124,7 @@ const EditSessionRound = ({
       }),
     };
     return [
-      ...(!!bigCentres?.length ? [mapBigCentres] : []),
+      ...(bigCentres?.length ? [mapBigCentres] : []),
       ...(!!smallCentres?.length &&
       roundDetails?.round_code !== MENU_KEYS.ROUND_2_PLACEMENT
         ? [mapSmallCentres]
