@@ -225,7 +225,7 @@ const ConfigureCentreDetails = () => {
                                       disabled={!data?.is_editable}
                                       size={"large"}
                                       style={
-                                        !!data?.is_editable
+                                        data?.is_editable
                                           ? classes.selectStyle
                                           : classes.inactiveSelectStyle
                                       }
