@@ -17,7 +17,8 @@
 }
 
 .sectionStyle {
-  width: var(--width_100);
+  min-width: var(--width_150);
+  width: var(--halfWidth);
 }
 
 .inputStyle {
