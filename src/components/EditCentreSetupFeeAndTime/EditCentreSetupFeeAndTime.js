@@ -44,9 +44,9 @@ const EditCentreSetupFeeAndTime = ({
     <div className={styles.topSectionStyle}>
       {selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
         <CustomInput
-        type="inputNumber"
-        customInputNumberStyles={styles.input}
-        customLabelStyles={styles.inputLabel}
+          type="inputNumber"
+          customInputNumberStyles={styles.input}
+          customLabelStyles={styles.inputLabel}
           customContainerStyles={styles.customContainerStyles}
           isRequired
           label={intl.formatMessage({ id: "label.writtenTestFee" })}
@@ -89,7 +89,7 @@ const EditCentreSetupFeeAndTime = ({
         label={intl.formatMessage({ id: "label.centreEndTime" })}
         onChange={(momentValue) => {
           const endTime = momentValue
-            ? dayjs(formData?.centreEndTime).format("HH:mm:ss")
+            ? dayjs(momentValue).format("HH:mm:ss")
             : "";
           const startTime = formData?.centreStartTime;
           if (

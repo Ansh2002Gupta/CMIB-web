@@ -142,3 +142,15 @@
 .customContainerStyles {
   width: var(--fullWidth, 100%);
 }
+
+.noteText {
+  font-size: var(--fontSizeExtraSmall, 12px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--subHeadingColor, #616C82);
+  font-style: italic;
+  margin-top: var(--marginMedium, 16px);
+}
+
+.participationFeesModalGap {
+  gap: var(--marginXXSmall, 4px);
+}

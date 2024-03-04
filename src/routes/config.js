@@ -127,11 +127,11 @@ const config = [
         element: <EditSession />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
@@ -380,11 +380,11 @@ const config = [
         element: <EditSession />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },

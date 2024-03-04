@@ -5,12 +5,16 @@ import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Image, Select, Table, Typography } from "antd";
 
-import { TwoColumn } from "../../core/layouts";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import CustomDateTimePicker from "../../components/CustomDateTimePicker/CustomDateTimePicker";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
-import { INTERVIEW_TYPE, MODULE_KEYS } from "../../constant/constant";
+import {
+  INTERVIEW_TYPE,
+  MODULE_KEYS,
+  PAYMENT_TYPE,
+} from "../../constant/constant";
 import { classes } from "./CentreTable.styles";
 import styles from "./CentreTable.module.scss";
 import "./Override.css";
@@ -20,6 +24,7 @@ const CentreTable = ({
   errors,
   isEdit,
   isNqcaModule,
+  paymentType,
   selectedModule,
   setErrors,
   setTableData,
@@ -47,8 +52,12 @@ const CentreTable = ({
         ...prevErrors,
         {
           scheduleDate: "",
-          participationFee: "",
-          firm: { firmFee: "", uptoPartners: "" },
+          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+            participationFee: "",
+          }),
+          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+            firm: { firmFee: "", uptoPartners: "" },
+          }),
           ...(isNqcaModule && { norm1: "" }),
           ...(isNqcaModule && { norm2: "" }),
           ...(isNqcaModule && { norm2MinVacancy: "" }),
@@ -104,28 +113,40 @@ const CentreTable = ({
       ),
       className: styles.tableHeader,
       key: "scheduleDate",
-      render: (text, record, index) => (
-        <CustomDateTimePicker
-          value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
-          customTimeStyle={styles.inputStyle}
-          type="date"
-          onChange={(val) => {
-            handleInputChange(
-              val ? dayjs(val).format("YYYY-MM-DD") : "",
-              "scheduleDate",
-              index
-            );
-          }}
-          disabledDate={(current) => {
-            return current && current < dayjs().add(1, "day").startOf("day");
-          }}
-          placeholder={intl.formatMessage({
-            id: "centre.placeholder.selectDate",
-          })}
-          errorMessage={errors[index]?.scheduleDate}
-          isError={!!errors[index]?.scheduleDate}
-        />
-      ),
+      render: (text, record, index) => ({
+        props: {
+          className:
+            isNqcaModule || paymentType === PAYMENT_TYPE.CENTRE_WISE
+              ? {}
+              : styles.inputTableStyleFixedWidth,
+        },
+        children: (
+          <CustomDateTimePicker
+            value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
+            customTimeStyle={
+              isNqcaModule || paymentType === PAYMENT_TYPE.CENTRE_WISE
+                ? styles.inputStyle
+                : styles.inputStyleFixedWidth
+            }
+            type="date"
+            onChange={(val) => {
+              handleInputChange(
+                val ? dayjs(val).format("YYYY-MM-DD") : "",
+                "scheduleDate",
+                index
+              );
+            }}
+            disabledDate={(current) => {
+              return current && current < dayjs().add(1, "day").startOf("day");
+            }}
+            placeholder={intl.formatMessage({
+              id: "centre.placeholder.selectDate",
+            })}
+            errorMessage={errors[index]?.scheduleDate}
+            isError={!!errors[index]?.scheduleDate}
+          />
+        ),
+      }),
     },
     ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY
       ? [
@@ -138,115 +159,154 @@ const CentreTable = ({
             ),
             dataIndex: "interviewType",
             key: "interviewType",
+            render: (text, record, index) => ({
+              props: {
+                className:
+                  isNqcaModule || paymentType === PAYMENT_TYPE.CENTRE_WISE
+                    ? {}
+                    : styles.inputTableStyleFixedWidth,
+              },
+              children: (
+                <TwoRow
+                  className={styles.errorGap}
+                  topSection={
+                    <Select
+                      bordered={false}
+                      size={"large"}
+                      style={classes.interviewTypeDropDown}
+                      className={
+                        isNqcaModule || paymentType === PAYMENT_TYPE.CENTRE_WISE
+                          ? styles.inputStyle
+                          : styles.inputStyleFixedWidth
+                      }
+                      onChange={(val) =>
+                        handleInputChange(val, "interviewType", index)
+                      }
+                      options={INTERVIEW_TYPE}
+                      placeholder={intl.formatMessage({
+                        id: `centre.placeholder.selectOnlineOffline`,
+                      })}
+                      value={!text?.length ? null : text}
+                    />
+                  }
+                  bottomSection={
+                    !!errors[index]?.interviewType ? (
+                      <Typography className={styles.redText}>
+                        <span className={styles.redText}>* </span>
+                        {errors[index]?.interviewType}
+                      </Typography>
+                    ) : (
+                      <></>
+                    )
+                  }
+                />
+              ),
+            }),
+          },
+        ]
+      : []),
+    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+      ? [
+          {
+            title: () => (
+              <Typography className={styles.tableHeader}>
+                {intl.formatMessage({ id: "centre.participationFee" })}
+                <span className={styles.redText}> *</span>
+              </Typography>
+            ),
+            dataIndex: "participationFee",
+            key: "participationFee",
             render: (text, record, index) => (
-              <Select
-                bordered={false}
-                size={"large"}
-                style={classes.interviewTypeDropDown}
-                className={styles.selectInput}
-                onChange={(val) =>
-                  handleInputChange(val, "interviewType", index)
-                }
-                options={INTERVIEW_TYPE}
+              <CustomInput
+                type="inputNumber"
+                value={text}
+                customContainerStyles={styles.customContainerStyles}
+                customInputNumberStyles={styles.inputStyle}
+                onChange={(val) => {
+                  handleInputChange(val, "participationFee", index);
+                }}
                 placeholder={intl.formatMessage({
-                  id: `centre.placeholder.selectOnlineOffline`,
+                  id: "centre.placeholder.enterFee",
                 })}
-                value={!text?.length ? null : text}
+                errorMessage={errors[index]?.participationFee}
+                isError={!!errors[index]?.participationFee}
               />
             ),
           },
         ]
       : []),
-    {
-      title: () => (
-        <Typography className={styles.tableHeader}>
-          {intl.formatMessage({ id: "centre.participationFee" })}
-          <span className={styles.redText}> *</span>
-        </Typography>
-      ),
-      dataIndex: "participationFee",
-      key: "participationFee",
-      render: (text, record, index) => (
-        <CustomInput
-          type="inputNumber"
-          value={text}
-          customContainerStyles={styles.customContainerStyles}
-          customInputNumberStyles={styles.inputStyle}
-          onChange={(val) => {
-            handleInputChange(val, "participationFee", index);
-          }}
-          placeholder={intl.formatMessage({
-            id: "centre.placeholder.enterFee",
-          })}
-          errorMessage={errors[index]?.participationFee}
-          isError={!!errors[index]?.participationFee}
-        />
-      ),
-    },
-    {
-      title: () => (
-        <TwoColumn
-          className={styles.twoJointContainer}
-          leftSection={
-            <Typography className={styles.tableHeader}>
-              {intl.formatMessage({ id: "centre.firmFee" })}
-              <span className={styles.redText}> *</span>
-            </Typography>
-          }
-          rightSection={
-            <Typography className={styles.tableHeader}>
-              {intl.formatMessage({ id: "centre.uptoPartners" })}
-              <span className={styles.redText}> *</span>
-            </Typography>
-          }
-        />
-      ),
-      dataIndex: "firm",
-      key: "firm",
-      render: (text, record, index) => {
-        return (
-          <TwoColumn
-            leftSectionClassName={styles.sectionStyle}
-            rightSectionClassName={styles.sectionStyle}
-            className={styles.customColumnStyle}
-            leftSection={
-              <CustomInput
-                type="inputNumber"
-                value={text?.firmFee}
-                customContainerStyles={styles.customContainerStyles}
-                customInputNumberStyles={styles.joinedCustomContainerStyles}
-                onChange={(val) => {
-                  handleInputChange(val, "firm", index, "firmFee");
-                }}
-                placeholder={intl.formatMessage({
-                  id: "centre.placeholder.enterFee",
-                })}
-                errorMessage={errors[index]?.firm?.firmFee}
-                isError={!!errors[index]?.firm?.firmFee}
+    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+      ? [
+          {
+            title: () => (
+              <TwoColumn
+                className={styles.twoJointContainer}
+                leftSectionStyle={classes.flexStyle}
+                leftSection={
+                  <Typography className={styles.tableHeader}>
+                    {intl.formatMessage({ id: "centre.firmFee" })}
+                    <span className={styles.redText}> *</span>
+                  </Typography>
+                }
+                rightSectionStyle={classes.flexStyle}
+                rightSection={
+                  <Typography className={styles.tableHeader}>
+                    {intl.formatMessage({ id: "centre.uptoPartners" })}
+                    <span className={styles.redText}> *</span>
+                  </Typography>
+                }
               />
-            }
-            rightSection={
-              <CustomInput
-                controls
-                type="inputNumber"
-                customContainerStyles={styles.customContainerStyles}
-                customInputNumberStyles={styles.inputNumberStyle}
-                value={text?.uptoPartners}
-                onChange={(val) => {
-                  handleInputChange(val, "firm", index, "uptoPartners");
-                }}
-                maxLength={3}
-                placeholder={intl.formatMessage({
-                  id: "centre.placeholder.enterpartner",
-                })}
-                errorMessage={errors[index]?.firm?.uptoPartners}
-                isError={!!errors[index]?.firm?.uptoPartners}
-              />
-            }
-          />
-        );
-      },
-    },
+            ),
+            dataIndex: "firm",
+            key: "firm",
+            render: (text, record, index) => {
+              return (
+                <TwoColumn
+                  leftSectionClassName={styles.sectionStyle}
+                  rightSectionClassName={styles.sectionStyle}
+                  className={styles.customColumnStyle}
+                  leftSection={
+                    <CustomInput
+                      type="inputNumber"
+                      value={text?.firmFee}
+                      customContainerStyles={styles.customContainerStyles}
+                      customInputNumberStyles={
+                        styles.joinedCustomContainerStyles
+                      }
+                      onChange={(val) => {
+                        handleInputChange(val, "firm", index, "firmFee");
+                      }}
+                      placeholder={intl.formatMessage({
+                        id: "centre.placeholder.enterFee",
+                      })}
+                      errorMessage={errors[index]?.firm?.firmFee}
+                      isError={!!errors[index]?.firm?.firmFee}
+                    />
+                  }
+                  rightSection={
+                    <CustomInput
+                      controls
+                      type="inputNumber"
+                      customContainerStyles={styles.customContainerStyles}
+                      customInputNumberStyles={styles.inputNumberStyle}
+                      value={text?.uptoPartners}
+                      onChange={(val) => {
+                        handleInputChange(val, "firm", index, "uptoPartners");
+                      }}
+                      maxLength={3}
+                      placeholder={intl.formatMessage({
+                        id: "centre.placeholder.enterpartner",
+                      })}
+                      errorMessage={errors[index]?.firm?.uptoPartners}
+                      isError={!!errors[index]?.firm?.uptoPartners}
+                    />
+                  }
+                />
+              );
+            },
+          },
+        ]
+      : []),
     ...(isNqcaModule
       ? [
           {
@@ -368,30 +428,46 @@ const CentreTable = ({
       key: "scheduleDate",
       renderText: { visible: true },
     }),
-    renderColumn({
-      title: intl.formatMessage({ id: "centre.participationFee" }),
-      dataIndex: "participationFee",
-      key: "participationFee",
-      renderText: {
-        visible: true,
-      },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "centre.firmFee" }),
-      dataIndex: "firm",
-      key: "firm",
-      renderText: { visible: true, isDataObject: true, dataKey: "firmFee" },
-    }),
-    renderColumn({
-      title: intl.formatMessage({ id: "centre.uptoPartners" }),
-      dataIndex: "firm",
-      key: "firm",
-      renderText: {
-        visible: true,
-        isDataObject: true,
-        dataKey: "uptoPartners",
-      },
-    }),
+    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+      ? [
+          renderColumn({
+            title: intl.formatMessage({ id: "centre.participationFee" }),
+            dataIndex: "participationFee",
+            key: "participationFee",
+            renderText: {
+              visible: true,
+            },
+          }),
+        ]
+      : []),
+    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+      ? [
+          renderColumn({
+            title: intl.formatMessage({ id: "centre.firmFee" }),
+            dataIndex: "firm",
+            key: "firm",
+            renderText: {
+              visible: true,
+              isDataObject: true,
+              dataKey: "firmFee",
+            },
+          }),
+        ]
+      : []),
+    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+      ? [
+          renderColumn({
+            title: intl.formatMessage({ id: "centre.uptoPartners" }),
+            dataIndex: "firm",
+            key: "firm",
+            renderText: {
+              visible: true,
+              isDataObject: true,
+              dataKey: "uptoPartners",
+            },
+          }),
+        ]
+      : []),
     ...(isNqcaModule
       ? [
           renderColumn({

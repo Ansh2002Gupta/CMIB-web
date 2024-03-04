@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Spin } from "antd";
 
@@ -35,6 +35,7 @@ const SetupCenterDetails = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const isEdit = currentGlobalSession?.is_editable;
   const roundId = searchParams.get(ROUND_ID);
+
   const {
     data: centreDetailData,
     error: errorWhileGettingDetails,
@@ -51,7 +52,9 @@ const SetupCenterDetails = () => {
       `/${centreId}`,
     otherOptions: { skipApiCallOnMount: true },
   });
+
   const intl = useIntl();
+  const location = useLocation();
 
   const { centre_code, name } = centreDetailData || {};
 
@@ -98,6 +101,7 @@ const SetupCenterDetails = () => {
                 centreDetailData,
                 centreId,
                 isEdit,
+                location,
                 roundId,
                 selectedModule: selectedModule?.key,
               }}

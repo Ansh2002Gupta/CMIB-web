@@ -1,6 +1,6 @@
-import React, { useContext, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ThemeContext } from "core/providers/theme";
 import { Image, Spin, Typography } from "antd";
 
@@ -13,8 +13,8 @@ import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
 import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
@@ -38,25 +38,31 @@ const SetupCenter = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const { navigateScreen: navigate } = useNavigateScreen();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
   const isEditable = currentGlobalSession?.is_editable;
-  const [paymentType, setPaymentType] = useState(PAYMENT_TYPE.CENTRE_WISE);
-  const [paymentModalType, setPaymentModalType] = useState(paymentType);
   const [isPaymentTypeModalOpen, setIsPaymentTypeModalOpen] = useState(false);
-  const [participationFees, setParticipationFees] = useState("");
   const [isFeesError, setIsFeesError] = useState(false);
-  const [participationModalFees, setParticipationModalFees] =
-    useState(participationFees);
-
+  const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
   const roundId = searchParams.get(ROUND_ID);
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
+  const { isLoading, fetchData: fetchRoundDetails } = useFetch({
+    url: ADMIN_ROUTE + `/${selectedModule?.key}` + ROUNDS + `/${roundId}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+  const [paymentType, setPaymentType] = useState(PAYMENT_TYPE.CENTRE_WISE);
+  const [participationFees, setParticipationFees] = useState("");
+  const [paymentModalType, setPaymentModalType] = useState(paymentType);
+  const [participationModalFees, setParticipationModalFees] =
+    useState(participationFees);
   const {
     data: setupCentres,
     error: errorWhileGettingCentres,
@@ -72,6 +78,19 @@ const SetupCenter = () => {
     otherOptions: { skipApiCallOnMount: true },
   });
 
+  useEffect(() => {
+    fetchRoundDetails({
+      onSuccessCallback: (roundDetails) => {
+        setParticipationFees(roundDetails?.participation_fee || "");
+        setPaymentType(roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE);
+        setParticipationModalFees(roundDetails?.participation_fee || "");
+        setPaymentModalType(
+          roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE
+        );
+      },
+    });
+  }, []);
+
   useModuleWiseApiCall({
     initialApiCall: () => {
       getSetupCentres({});
@@ -80,7 +99,12 @@ const SetupCenter = () => {
 
   const goToEditCentrePage = (rowData) => {
     const centreId = rowData?.id;
-    navigate(`details/${centreId}?roundId=${roundId}`);
+    navigate(`details/${centreId}?roundId=${roundId}`, {
+      state: {
+        paymentType: paymentType,
+        participationFees: participationFees,
+      },
+    });
   };
 
   const columns = [
@@ -202,6 +226,22 @@ const SetupCenter = () => {
     getSetupCentres({});
   };
 
+  const handleEditPaymentType = () => {
+    setParticipationFees(participationModalFees);
+    setPaymentType(paymentModalType);
+    setIsPaymentTypeModalOpen(false);
+    updateSessionRoundDetails({
+      payload: {
+        payment_type: paymentModalType,
+        ...(paymentModalType === PAYMENT_TYPE.WHOLE && {
+          participation_fee: participationModalFees,
+        }),
+      },
+      roundId: roundId,
+      selectedModuleKey: selectedModule?.key,
+    });
+  };
+
   return (
     <>
       {
@@ -212,11 +252,11 @@ const SetupCenter = () => {
             id: "setupCentres.editPaymentType",
           })}
           onBtnClick={() => {
-            const isError = !participationModalFees?.length;
+            const isError =
+              paymentModalType === PAYMENT_TYPE.WHOLE &&
+              !participationModalFees?.length;
             if (!isError) {
-              setParticipationFees(participationModalFees);
-              setPaymentType(paymentModalType);
-              setIsPaymentTypeModalOpen(false);
+              handleEditPaymentType();
             } else {
               setIsFeesError(true);
             }
@@ -289,59 +329,73 @@ const SetupCenter = () => {
                 />
               }
               bottomSection={
-                paymentModalType === PAYMENT_TYPE.WHOLE ? (
-                  <TwoRow
-                    topSection={
-                      <Typography className={styles.grayText}>
-                        {intl.formatMessage({
-                          id: "setupCentres.participationFees",
-                        })}
-                        <span className={styles.redText}> *</span>
-                      </Typography>
-                    }
-                    bottomSection={
+                <TwoRow
+                  topSection={
+                    paymentModalType === PAYMENT_TYPE.WHOLE ? (
                       <TwoRow
+                        className={styles.participationFeesModalGap}
                         topSection={
-                          <CustomInput
-                            customLabelStyles={styles.inputLabel}
-                            customInputStyles={styles.input}
-                            customContainerStyles={styles.customContainerStyles}
-                            onChange={(val) => {
-                              if (val.target.value === "") {
-                                setIsFeesError(true);
-                              } else {
-                                setIsFeesError(false);
-                              }
-                              (NUMERIC_VALUE_REGEX.test(val.target.value) ||
-                                val.target.value === "") &&
-                                setParticipationModalFees(val.target.value);
-                            }}
-                            placeholder={intl.formatMessage({
-                              id: "setupCentres.enterParticipationFees",
+                          <Typography className={styles.grayText}>
+                            {intl.formatMessage({
+                              id: "setupCentres.participationFees",
                             })}
-                            value={participationModalFees}
-                            onBlur={(val) => {
-                              setIsFeesError(!val.target.value.length);
-                            }}
-                          />
+                            <span className={styles.redText}> *</span>
+                          </Typography>
                         }
                         bottomSection={
-                          isFeesError ? (
-                            <Typography className={styles.errorText}>
-                              {intl.formatMessage({
-                                id: "setupCentres.feesError",
-                              })}
-                            </Typography>
-                          ) : (
-                            <></>
-                          )
+                          <TwoRow
+                            topSection={
+                              <CustomInput
+                                customLabelStyles={styles.inputLabel}
+                                customInputStyles={styles.input}
+                                customContainerStyles={
+                                  styles.customContainerStyles
+                                }
+                                onChange={(val) => {
+                                  if (val.target.value === "") {
+                                    setIsFeesError(true);
+                                  } else {
+                                    setIsFeesError(false);
+                                  }
+                                  (NUMERIC_VALUE_REGEX.test(val.target.value) ||
+                                    val.target.value === "") &&
+                                    setParticipationModalFees(val.target.value);
+                                }}
+                                placeholder={intl.formatMessage({
+                                  id: "setupCentres.enterParticipationFees",
+                                })}
+                                value={participationModalFees}
+                                onBlur={(val) => {
+                                  setIsFeesError(!val.target.value.length);
+                                }}
+                              />
+                            }
+                            bottomSection={
+                              isFeesError ? (
+                                <Typography className={styles.errorText}>
+                                  {intl.formatMessage({
+                                    id: "setupCentres.feesError",
+                                  })}
+                                </Typography>
+                              ) : (
+                                <></>
+                              )
+                            }
+                          />
                         }
                       />
-                    }
-                  />
-                ) : (
-                  <></>
-                )
+                    ) : (
+                      <></>
+                    )
+                  }
+                  bottomSection={
+                    <Typography className={styles.noteText}>
+                      {intl.formatMessage({
+                        id: "setupCentres.paymentTypeNote",
+                      })}
+                    </Typography>
+                  }
+                />
               }
             />
           }
@@ -368,7 +422,7 @@ const SetupCenter = () => {
           <TwoRow
             topSection={
               selectedModule?.key !==
-              MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY ? (
+                MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && !isLoading ? (
                 <TwoColumn
                   className={styles.paymentTypeContainer}
                   leftSection={

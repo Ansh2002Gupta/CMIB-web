@@ -14,7 +14,7 @@ import useConfigUpdateHandler from "../../services/api-services/SetupCentre/useC
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useResponsive from "../../core/hooks/useResponsive";
-import { INTERVIEW_TYPE, MODULE_KEYS } from "../../constant/constant";
+import { MODULE_KEYS, PAYMENT_TYPE } from "../../constant/constant";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
 
@@ -22,6 +22,7 @@ const CenterDetailsContent = ({
   centreDetailData,
   centreId,
   isEdit,
+  location,
   roundId,
   selectedModule,
 }) => {
@@ -33,6 +34,7 @@ const CenterDetailsContent = ({
   const [formData, setFormData] = useState({});
   const [tableData, setTableData] = useState([]);
   const { showNotification, notificationContextHolder } = useShowNotification();
+  const paymentType = location?.state?.paymentType || PAYMENT_TYPE.CENTRE_WISE;
 
   const addTableData = {
     isAddRow: true,
@@ -63,23 +65,25 @@ const CenterDetailsContent = ({
     const interviewConfiguration = (interview_dates || []).map(
       (interviewRow) => ({
         id: interviewRow.id,
-        scheduleDate: interviewRow.interview_schedule_date || null,
-        participationFee: interviewRow.participation_fee.toString(),
-        firm: {
-          firmFee: interviewRow.firm_fee.toString(),
-          uptoPartners: interviewRow.numbers_of_partners.toString(),
-        },
+        scheduleDate: interviewRow?.interview_schedule_date || null,
+        ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+          participationFee: interviewRow.participation_fee?.toString(),
+        }),
+        ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+          firm: {
+            firmFee: interviewRow?.firm_fee?.toString(),
+            uptoPartners: interviewRow.numbers_of_partners?.toString(),
+          },
+        }),
         ...(isNqcaModule && { norm1: interviewRow.norm1.toString() }),
         ...(isNqcaModule && { norm2: interviewRow.norm2.toString() }),
-      ...(isNqcaModule && {
-          norm2MinVacancy: interviewRow.norm2_min_vacancy.toString(),
+        ...(isNqcaModule && {
+          norm2MinVacancy: interviewRow.norm2_min_vacancy?.toString(),
         }),
-      ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
-        interviewType: INTERVIEW_TYPE.filter(
-          (item) => item.value === date.interview_type
-        )?.[0],
-      }),
-    })
+        ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+          interviewType: interviewRow.interview_type,
+        }),
+      })
     );
 
     setTableData(() => {
@@ -90,8 +94,12 @@ const CenterDetailsContent = ({
       setErrors(
         newTableData.map(() => ({
           scheduleDate: "",
-          participationFee: "",
-          firm: { firmFee: "", uptoPartners: "" },
+          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+            participationFee: "",
+          }),
+          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+            firm: { firmFee: "", uptoPartners: "" },
+          }),
           ...(isNqcaModule && { norm1: "" }),
           ...(isNqcaModule && { norm2: "" }),
           ...(isNqcaModule && { norm2MinVacancy: "" }),
@@ -122,6 +130,7 @@ const CenterDetailsContent = ({
       errorCount += 1;
     }
     if (
+      paymentType === PAYMENT_TYPE.CENTRE_WISE &&
       !(
         !!tableData[index]?.participationFee ||
         tableData[index]?.participationFee === 0
@@ -135,6 +144,7 @@ const CenterDetailsContent = ({
       errorCount += 1;
     }
     if (
+      paymentType === PAYMENT_TYPE.CENTRE_WISE &&
       !(
         !!tableData[index]?.firm?.firmFee ||
         tableData[index]?.firm?.firmFee === 0
@@ -149,6 +159,7 @@ const CenterDetailsContent = ({
       errorCount += 1;
     }
     if (
+      paymentType === PAYMENT_TYPE.CENTRE_WISE &&
       !(
         !!tableData[index]?.firm?.uptoPartners ||
         tableData[index]?.firm?.uptoPartners === 0
@@ -162,7 +173,10 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (!(!!tableData[index]?.norm1 || tableData[index]?.norm1 === 0)) {
+    if (
+      isNqcaModule &&
+      !(!!tableData[index]?.norm1 || tableData[index]?.norm1 === 0)
+    ) {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterNorm1" }),
         "norm1",
@@ -170,7 +184,10 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (!(!!tableData[index]?.norm2 || tableData[index]?.norm2 === 0)) {
+    if (
+      isNqcaModule &&
+      !(!!tableData[index]?.norm2 || tableData[index]?.norm2 === 0)
+    ) {
       handleSetError(
         intl.formatMessage({ id: "centre.error.enterNorm2" }),
         "norm2",
@@ -179,6 +196,7 @@ const CenterDetailsContent = ({
       errorCount += 1;
     }
     if (
+      isNqcaModule &&
       !(
         !!tableData[index]?.norm2MinVacancy ||
         tableData[index]?.norm2MinVacancy === 0
@@ -191,7 +209,10 @@ const CenterDetailsContent = ({
       );
       errorCount += 1;
     }
-    if (tableData[index]?.interviewType === "") {
+    if (
+      selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY &&
+      tableData[index]?.interviewType === ""
+    ) {
       handleSetError(
         intl.formatMessage({ id: "centre.error.interviewType" }),
         "interviewType",
@@ -246,8 +267,12 @@ const CenterDetailsContent = ({
         const lastErrorIndex = newErrors.length - 1;
         newErrors[lastErrorIndex] = {
           scheduleDate: "",
-          participationFee: "",
-          firm: { firmFee: "", uptoPartners: "" },
+          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+            participationFee: "",
+          }),
+          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+            firm: { firmFee: "", uptoPartners: "" },
+          }),
           ...(isNqcaModule && { norm1: "" }),
           ...(isNqcaModule && { norm2: "" }),
           ...(isNqcaModule && { norm2MinVacancy: "" }),
@@ -267,17 +292,23 @@ const CenterDetailsContent = ({
       }),
       interview_dates: interviewDatesData.map((item) => {
         const interviewDateDetails = {
-          firm_fee: parseInt(item.firm.firmFee),
+          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+            firm_fee: parseInt(item.firm.firmFee),
+          }),
           ...(isNqcaModule && { norm1: parseInt(item.norm1) }),
           ...(isNqcaModule && { norm2: parseInt(item.norm2) }),
-        ...(isNqcaModule && {
+          ...(isNqcaModule && {
             norm2_min_vacancy: parseInt(item.norm2MinVacancy),
           }),
-        ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
-          interview_type: item.interviewType,
-        }),
-        numbers_of_partners: parseInt(item.firm.uptoPartners),
-          participation_fee: parseInt(item.participationFee),
+          ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+            interview_type: item.interviewType,
+          }),
+          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+            numbers_of_partners: parseInt(item.firm.uptoPartners),
+          }),
+          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+            participation_fee: parseInt(item.participationFee),
+          }),
           interview_schedule_date: item.scheduleDate,
         };
         if (item.id) {
@@ -295,6 +326,9 @@ const CenterDetailsContent = ({
       onErrorCallback: (error) => {
         showNotification({ text: error, type: "error" });
       },
+      onSuccessCallback: () => {
+        navigate(-1);
+      }
     });
   };
 
@@ -331,6 +365,7 @@ const CenterDetailsContent = ({
       handleSetError,
       isNqcaModule,
       isEdit,
+      paymentType,
       selectedModule,
       setTableData,
       setErrors,
@@ -346,12 +381,21 @@ const CenterDetailsContent = ({
 
       return (
         isValueFilled(firstRow.scheduleDate) &&
-        isValueFilled(firstRow.participationFee) &&
-        isValueFilled(firstRow.firm.firmFee) &&
-        isValueFilled(firstRow.firm.uptoPartners) &&
-        isValueFilled(firstRow.norm1) &&
-        isValueFilled(firstRow.norm2) &&
-        isValueFilled(firstRow.norm2MinVacancy)
+        (paymentType === PAYMENT_TYPE.CENTRE_WISE
+          ? isValueFilled(firstRow.participationFee)
+          : true) &&
+        (paymentType === PAYMENT_TYPE.CENTRE_WISE
+          ? isValueFilled(firstRow.firm.firmFee)
+          : true) &&
+        (paymentType === PAYMENT_TYPE.CENTRE_WISE
+          ? isValueFilled(firstRow.firm.uptoPartners)
+          : true) &&
+        (isNqcaModule ? isValueFilled(firstRow.norm1) : true) &&
+        (isNqcaModule ? isValueFilled(firstRow.norm2) : true) &&
+        (isNqcaModule ? isValueFilled(firstRow.norm2MinVacancy) : true) &&
+        (selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY
+          ? isValueFilled(firstRow.interviewType)
+          : true)
       );
     };
 
@@ -428,7 +472,7 @@ const CenterDetailsContent = ({
                 handleInputChange={handleInputChange}
                 formData={formData}
                 selectedModule={selectedModule}
-            />
+              />
             ) : (
               <div className={styles.gridStyle}>
                 <CustomGrid>
