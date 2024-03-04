@@ -10,6 +10,7 @@ import MarkRequired from "../MarkRequired";
 import { formatDate } from "../../constant/utils";
 import classes from "./CustomDateTimePicker.module.scss";
 import { styles } from "./CustomDateTimePicker.styles";
+import "./Override.css";
 
 const CustomDateTimePicker = ({
   customContainerStyles,
@@ -64,6 +65,9 @@ const CustomDateTimePicker = ({
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("clock")} />}
                 value={value ? dayjs(value) : null}
+                onSelect={onChange}
+                popupClassName="noFooterTimePick"
+                needConfirm={false}
               />
             ) : isEditable ? (
               <DatePicker
