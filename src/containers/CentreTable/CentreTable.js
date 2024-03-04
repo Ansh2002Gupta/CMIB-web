@@ -64,11 +64,6 @@ const CentreTable = ({
     }
   };
 
-  const updateDisabledDates = () => {
-    const dates = tableData.map((data) => data.scheduleDate);
-    setDisabledDates(dates);
-  };
-
   const isDateDisabled = (current) => {
     const isBeforeTomorrow =
       current && current < dayjs().add(1, "day").startOf("day");
@@ -98,18 +93,79 @@ const CentreTable = ({
       }
       return newTableData;
     });
-    setErrors((prevErrors) => {
-      const newErrors = [...prevErrors];
-      if (nestedName) {
-        newErrors[index][name] = {
-          ...newErrors[index][name],
-          [nestedName]: "",
-        };
-      } else {
-        newErrors[index][name] = "";
+    const isLastRow = index === tableData.length - 1;
+    const otherInputsEmpty = Object.keys(tableData[index]).every((key) => {
+      if (key !== name && key !== "isAddRow") {
+        if (key === "firm") {
+          return Object.keys(tableData[index][key]).every((nestedKey) => {
+            if (nestedKey === nestedName) {
+              return true;
+            }
+            const val = tableData[index][key][nestedKey];
+            return val === null || val === "";
+          });
+        } else {
+          const val = tableData[index][key];
+          return val === null || val === "";
+        }
       }
-      return newErrors;
+      return true;
     });
+
+    if ((value === null || value === "") && (!isLastRow || !otherInputsEmpty)) {
+      setErrors((prevErrors) => {
+        const newErrors = [...prevErrors];
+        if (nestedName) {
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: {
+              ...newErrors[index][name],
+              [nestedName]: intl.formatMessage({
+                id: "label.error.fieldEmpty",
+              }),
+            },
+          };
+        } else {
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
+          };
+        }
+        return newErrors;
+      });
+    } else if (isLastRow && otherInputsEmpty) {
+      setErrors((prevErrors) => {
+        const newErrors = [...prevErrors];
+        newErrors[index] = {
+          scheduleDate: "",
+          participationFee: "",
+          firm: { firmFee: "", uptoPartners: "" },
+          norm1: "",
+          norm2: "",
+          norm2MinVacancy: "",
+        };
+        return newErrors;
+      });
+    } else {
+      setErrors((prevErrors) => {
+        const newErrors = [...prevErrors];
+        if (nestedName) {
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: {
+              ...newErrors[index][name],
+              [nestedName]: "",
+            },
+          };
+        } else {
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: "",
+          };
+        }
+        return newErrors;
+      });
+    }
   };
 
   const columns = [
