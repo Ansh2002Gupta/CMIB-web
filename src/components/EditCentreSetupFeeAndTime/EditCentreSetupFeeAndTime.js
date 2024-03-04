@@ -54,7 +54,7 @@ const EditCentreSetupFeeAndTime = ({
             handleInputChange(val, "PsychometricFee");
           }}
           maxLength={MAX_CTC_LENGTH}
-        placeholder={intl.formatMessage({
+          placeholder={intl.formatMessage({
             id: `label.placeholder.writtenTestFee`,
           })}
           value={formData?.PsychometricFee}
@@ -89,9 +89,9 @@ const EditCentreSetupFeeAndTime = ({
         isRequired
         label={intl.formatMessage({ id: "label.centreEndTime" })}
         onChange={(momentValue) => {
-          const endTime = momentValue
-            ? dayjs(momentValue).format("HH:mm:ss")
-            : "";
+          const time = dayjs(momentValue).format("HH:mm:ss");
+          let timeWithputSec = `${time.split(":")?.slice(0, 2).join(":")}:00`;
+          const endTime = timeWithputSec;
           const startTime = formData?.centreStartTime;
           if (
             !startTime ||

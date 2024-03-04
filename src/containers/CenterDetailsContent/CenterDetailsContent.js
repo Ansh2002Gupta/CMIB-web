@@ -325,7 +325,7 @@ const CenterDetailsContent = ({
           dayjs(endTime, "HH:mm:ss"),
           "minutes"
         );
-        if (timeDifference > 0) {
+        if (timeDifference >= 0) {
           updatedFormData.centreEndTime = "";
         }
       }
