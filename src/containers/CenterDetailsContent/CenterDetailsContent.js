@@ -97,11 +97,7 @@ const CenterDetailsContent = ({
   const validate = (index) => {
     let errorCount = 0;
     if (!tableData[index]?.scheduleDate) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.selectDate" }),
-        "scheduleDate",
-        index
-      );
+      handleSetError("scheduleDate", index);
       errorCount += 1;
     }
     if (
@@ -110,11 +106,7 @@ const CenterDetailsContent = ({
         tableData[index]?.participationFee === 0
       )
     ) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterParticipationFee" }),
-        "participationFee",
-        index
-      );
+      handleSetError("participationFee", index);
       errorCount += 1;
     }
     if (
@@ -123,12 +115,7 @@ const CenterDetailsContent = ({
         tableData[index]?.firm?.firmFee === 0
       )
     ) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterFirmFee" }),
-        "firm",
-        index,
-        "firmFee"
-      );
+      handleSetError("firm", index, "firmFee");
       errorCount += 1;
     }
     if (
@@ -137,28 +124,15 @@ const CenterDetailsContent = ({
         tableData[index]?.firm?.uptoPartners === 0
       )
     ) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterpartner" }),
-        "firm",
-        index,
-        "uptoPartners"
-      );
+      handleSetError("firm", index, "uptoPartners");
       errorCount += 1;
     }
     if (!(!!tableData[index]?.norm1 || tableData[index]?.norm1 === 0)) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterNorm1" }),
-        "norm1",
-        index
-      );
+      handleSetError("norm1", index);
       errorCount += 1;
     }
     if (!(!!tableData[index]?.norm2 || tableData[index]?.norm2 === 0)) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterNorm2" }),
-        "norm2",
-        index
-      );
+      handleSetError("norm2", index);
       errorCount += 1;
     }
     if (
@@ -167,29 +141,27 @@ const CenterDetailsContent = ({
         tableData[index]?.norm2MinVacancy === 0
       )
     ) {
-      handleSetError(
-        intl.formatMessage({ id: "centre.error.enterVacancy" }),
-        "norm2MinVacancy",
-        index
-      );
+      handleSetError("norm2MinVacancy", index);
       errorCount += 1;
     }
 
     return errorCount <= 0;
   };
 
-  const handleSetError = (error, name, index, nestedName) => {
+  const handleSetError = (name, index, nestedName) => {
     setErrors((prevErrors) => {
       const newErrors = [...prevErrors];
       if (newErrors?.[index]) {
         if (nestedName) {
           const updatedNestedData = {
             ...newErrors[index][name],
-            [nestedName]: error,
+            [nestedName]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
           };
           newErrors[index][name] = updatedNestedData;
         } else {
-          newErrors[index][name] = error;
+          newErrors[index][name] = intl.formatMessage({
+            id: "label.error.fieldEmpty",
+          });
         }
       }
       return newErrors;
