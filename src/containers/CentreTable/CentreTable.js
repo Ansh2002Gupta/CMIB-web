@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -28,8 +28,14 @@ const CentreTable = ({
   validate,
 }) => {
   const intl = useIntl();
+  const [disabledDates, setDisabledDates] = useState([]);
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
+
+  useEffect(() => {
+    const dates = tableData.map((data) => data.scheduleDate);
+    setDisabledDates(dates);
+  }, [tableData]);
 
   const handleRemove = (index) => {
     const filteredData = tableData.filter((item, idx) => idx !== index);
@@ -56,6 +62,20 @@ const CentreTable = ({
         },
       ]);
     }
+  };
+
+  const updateDisabledDates = () => {
+    const dates = tableData.map((data) => data.scheduleDate);
+    setDisabledDates(dates);
+  };
+
+  const isDateDisabled = (current) => {
+    const isBeforeTomorrow =
+      current && current < dayjs().add(1, "day").startOf("day");
+    const isAlreadySelected = disabledDates.some((date) =>
+      dayjs(date).isSame(current, "day")
+    );
+    return isBeforeTomorrow || isAlreadySelected;
   };
 
   const handleInputChange = (value, name, index, nestedName) => {
@@ -114,9 +134,7 @@ const CentreTable = ({
               index
             );
           }}
-          disabledDate={(current) => {
-            return current && current < dayjs().add(1, "day").startOf("day");
-          }}
+          disabledDate={isDateDisabled}
           placeholder={intl.formatMessage({
             id: "centre.placeholder.selectDate",
           })}
