@@ -93,26 +93,8 @@ const CentreTable = ({
       }
       return newTableData;
     });
-    const isLastRow = index === tableData.length - 1;
-    const otherInputsEmpty = Object.keys(tableData[index]).every((key) => {
-      if (key !== name && key !== "isAddRow") {
-        if (key === "firm") {
-          return Object.keys(tableData[index][key]).every((nestedKey) => {
-            if (nestedKey === nestedName) {
-              return true;
-            }
-            const val = tableData[index][key][nestedKey];
-            return val === null || val === "";
-          });
-        } else {
-          const val = tableData[index][key];
-          return val === null || val === "";
-        }
-      }
-      return true;
-    });
 
-    if ((value === null || value === "") && (!isLastRow || !otherInputsEmpty)) {
+    if (value === null || value === "") {
       setErrors((prevErrors) => {
         const newErrors = [...prevErrors];
         if (nestedName) {
@@ -131,19 +113,6 @@ const CentreTable = ({
             [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
           };
         }
-        return newErrors;
-      });
-    } else if (isLastRow && otherInputsEmpty) {
-      setErrors((prevErrors) => {
-        const newErrors = [...prevErrors];
-        newErrors[index] = {
-          scheduleDate: "",
-          participationFee: "",
-          firm: { firmFee: "", uptoPartners: "" },
-          norm1: "",
-          norm2: "",
-          norm2MinVacancy: "",
-        };
         return newErrors;
       });
     } else {
