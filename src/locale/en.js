@@ -511,6 +511,7 @@ const locale = {
   "label.session.orientation-centers": "Setup orientation centres",
   "label.session.setup-mock-interview": "Setup Mock Interview",
   "label.session.setupMockInterview.details": "Configure Interview Dates",
+  "label.data_saved_successfully": "Data Saved Successfully.",
 };
 
 export default locale;

@@ -31,6 +31,7 @@ const useGetUserDetails = () => {
   const setFirstActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
     userProfileDispatch(setSelectedModule(accessibleModules[0]));
+    accessibleModules?.[0] && getGlobalSessionList(accessibleModules?.[0]?.key);
     navigate(`/${accessibleModules[0]?.key}/${DASHBOARD}`);
   };
 
@@ -39,7 +40,7 @@ const useGetUserDetails = () => {
     const selectedModule = accessibleModules.filter((item) => {
       return item.key === pathSegments[1];
     });
-    getGlobalSessionList(selectedModule?.[0]?.key);
+    selectedModule?.length && getGlobalSessionList(selectedModule?.[0]?.key);
     if (selectedModule?.length) {
       userProfileDispatch(setSelectedModule(selectedModule[0]));
       return;

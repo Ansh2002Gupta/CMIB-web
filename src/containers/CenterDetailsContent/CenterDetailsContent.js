@@ -203,10 +203,12 @@ const CenterDetailsContent = ({
         if (typeof value === "object" && value !== null) {
           return Object.entries(value).every(
             ([nestedKey, nestedValue]) =>
-              nestedValue === addTableData[key][nestedKey]
+              nestedValue === addTableData[key][nestedKey] ||
+              nestedValue === null ||
+              value === ""
           );
         }
-        return value === addTableData[key];
+        return value === addTableData[key] || value === null || value === "";
       });
 
     const interviewDatesData = isLastRowEmpty
@@ -265,6 +267,11 @@ const CenterDetailsContent = ({
       payload: centreDetailsPayload,
       centreId: centreId,
       roundId: roundId,
+      onSuccessCallback: () =>
+        showNotification({
+          text: intl.formatMessage({ id: "label.data_saved_successfully" }),
+          type: "success",
+        }),
       onErrorCallback: (error) => {
         showNotification({ text: error, type: "error" });
       },
@@ -379,14 +386,17 @@ const CenterDetailsContent = ({
       { heading: "writtenTestFee", value: formData?.PsychometricFee },
       {
         heading: "centreStartTime",
-        value: dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A"),
+        value: formData?.centreStartTime
+          ? dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A")
+          : "-",
       },
       {
         heading: "centreEndTime",
-        value: dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A"),
+        value: formData?.centreEndTime
+          ? dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A")
+          : "-",
       },
     ];
-
     return (
       <>
         {notificationContextHolder}
@@ -415,7 +425,9 @@ const CenterDetailsContent = ({
                         </Typography>
                       }
                       bottomSection={
-                        <div className={styles.blackText}>{item.value}</div>
+                        <div className={styles.blackText}>
+                          {item.value || "-"}
+                        </div>
                       }
                     />
                   ))}

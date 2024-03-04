@@ -15,6 +15,8 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import updateConfigureInterview from "../../services/api-services/ConfigureInterview/updateConfigureInterview";
 import { getValidMode } from "../../Utils/validation";
+import { urlService } from "../../Utils/urlService";
+import { CONFIGURE_INTERVIEW_DATES } from "../../dummyData";
 import { SETUP_MOCK_INTERVIEW, SESSION } from "../../routes/routeNames";
 import { ROUND_ID, NOTIFICATION_TYPES } from "../../constant/constant";
 import styles from "./ConfigureInterview.module.scss";
@@ -40,7 +42,8 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
     slot_duration: "",
   };
 
-  const isEdit = getValidMode(searchParams.get("mode")) === "edit";
+  const isEdit =
+    getValidMode(urlService.getQueryStringValue("mode")) === "edit";
   const roundId = searchParams.get(ROUND_ID);
 
   const [interviewTable, setInterviewTable] = useState(

@@ -6,6 +6,7 @@ import { TwoColumn, ThreeColumn, TwoRow, ThreeRow } from "../../core/layouts";
 
 import CustomCheckBox from "../../components/CustomCheckBox/CustomCheckBox";
 import CustomInput from "../../components/CustomInput/CustomInput";
+import { MAX_CTC_LENGTH, MAX_EXPERIENCE_LENGTH } from "../../constant/constant";
 import styles from "./WorkExperienceRange.module.scss";
 import { classes } from "./WorkExperienceRange.styles";
 
@@ -28,17 +29,34 @@ const WorkExperienceRangeTemplate = ({
     setAddExperience((prevData) => ({
       ...prevData,
       [name]: value,
+      ...(name === "use_more_experience" && value === 1
+        ? {
+            work_experience_max: null,
+          }
+        : {}),
     }));
     setErrors((prev) => ({
       ...prev,
       [name]: "",
+      ...(name === "use_more_experience" && value === 1
+        ? {
+            work_experience_max: "",
+          }
+        : {}),
     }));
     if (name === "work_experience_min" && value === null) {
       handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
-    } else {
-      if (name !== "work_experience_min" && !value) {
-        handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
-      }
+      return;
+    }
+    if (name === "use_more_experience" && !value) {
+      handleError(
+        "work_experience_max",
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
+      );
+      return;
+    }
+    if (name !== "work_experience_min" && !(value || value === 0)) {
+      handleError(name, intl.formatMessage({ id: "label.error.fieldEmpty" }));
     }
   };
   const handleInputChangeExperience = (value, name, index) => {
@@ -79,7 +97,7 @@ const WorkExperienceRangeTemplate = ({
         })
       );
     } else {
-      if (name !== "work_experience_min" && !value) {
+      if (name !== "work_experience_min" && value === null) {
         setExperienceErrors((prevData) =>
           prevData.map((item, i) => {
             if (index === i) {
@@ -167,7 +185,7 @@ const WorkExperienceRangeTemplate = ({
                         leftSection={
                           <CustomInput
                             controls={true}
-                            maxLength={20}
+                            maxLength={MAX_EXPERIENCE_LENGTH}
                             type="inputNumber"
                             placeholder={intl.formatMessage({
                               id: "label.from",
@@ -180,9 +198,7 @@ const WorkExperienceRangeTemplate = ({
                               );
                             }}
                             isError={
-                              experienceErrors[index]?.work_experience_min
-                                ? true
-                                : false
+                              !!experienceErrors[index]?.work_experience_min
                             }
                             errorMessage={
                               experienceErrors[index]?.work_experience_min
@@ -207,9 +223,7 @@ const WorkExperienceRangeTemplate = ({
                               controls={true}
                               maxLength={20}
                               value={"and more"}
-                              customInputNumberStyles={
-                                styles.customInputNumberStyles
-                              }
+                              customInputStyles={styles.customInputStyles}
                               customContainerStyles={
                                 styles.customContainerStyles
                               }
@@ -217,11 +231,9 @@ const WorkExperienceRangeTemplate = ({
                           ) : (
                             <CustomInput
                               controls={true}
-                              maxLength={20}
+                              maxLength={MAX_EXPERIENCE_LENGTH}
                               isError={
-                                experienceErrors[index]?.work_experience_max
-                                  ? true
-                                  : false
+                                !!experienceErrors[index]?.work_experience_max
                               }
                               type="inputNumber"
                               placeholder={intl.formatMessage({
@@ -255,11 +267,9 @@ const WorkExperienceRangeTemplate = ({
                         leftSection={
                           <CustomInput
                             controls={true}
-                            maxLength={20}
+                            maxLength={MAX_CTC_LENGTH}
                             type="inputNumber"
-                            isError={
-                              experienceErrors[index]?.min_ctc ? true : false
-                            }
+                            isError={!!experienceErrors[index]?.min_ctc}
                             errorMessage={experienceErrors[index]?.min_ctc}
                             placeholder={intl.formatMessage({
                               id: "session.min_ctc",
@@ -312,8 +322,8 @@ const WorkExperienceRangeTemplate = ({
                   leftSection={
                     <CustomInput
                       controls={true}
-                      maxLength={20}
-                      isError={errors.work_experience_min ? true : false}
+                      maxLength={MAX_EXPERIENCE_LENGTH}
+                      isError={!!errors.work_experience_min}
                       type="inputNumber"
                       placeholder={intl.formatMessage({
                         id: "label.from",
@@ -350,9 +360,9 @@ const WorkExperienceRangeTemplate = ({
                           />
                         ) : (
                           <CustomInput
-                            maxLength={20}
+                            maxLength={MAX_EXPERIENCE_LENGTH}
                             controls={true}
-                            isError={errors.work_experience_max ? true : false}
+                            isError={!!errors.work_experience_max}
                             type="inputNumber"
                             placeholder={intl.formatMessage({
                               id: "label.to",
@@ -372,15 +382,12 @@ const WorkExperienceRangeTemplate = ({
                       rightSection={
                         <CustomCheckBox
                           customStyles={styles.customStyles}
-                          checked={
-                            addExperience.use_more_experience ? true : false
-                          }
+                          checked={!!addExperience.use_more_experience}
                           onChange={() => {
                             handleInputChange(
                               addExperience.use_more_experience ? 0 : 1,
                               "use_more_experience"
                             );
-                            handleInputChange(null, "work_experience_max");
                           }}
                         >
                           <Typography className={styles.blackText}>
@@ -403,7 +410,7 @@ const WorkExperienceRangeTemplate = ({
                   leftSection={
                     <CustomInput
                       controls={true}
-                      maxLength={20}
+                      maxLength={MAX_CTC_LENGTH}
                       isError={errors.min_ctc ? true : false}
                       type="inputNumber"
                       placeholder={intl.formatMessage({

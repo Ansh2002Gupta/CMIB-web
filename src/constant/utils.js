@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 import { controlMenu, modules } from "../containers/SideMenu/sideMenuItems";
+import { urlService } from "../Utils/urlService";
 import {
   DEFAULT_PAGE_SIZE,
   FORM_STATES,
@@ -252,8 +253,8 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   if (
     chatData?.author?.id === userDetails?.id &&
-    chatData?.author?.type.toLowerCase() ===
-      userDetails?.user_type.toLowerCase()
+    (chatData?.author?.type.toLowerCase() === "admin" ||
+      chatData?.author?.type.toLowerCase() === "super admin")
   ) {
     return "sender";
   }
@@ -328,17 +329,13 @@ export const resetListingData = ({
   fetchDataCallback,
   listData,
   setCurrent,
-  setSearchParams,
 }) => {
   if (listData?.meta?.total) {
     const totalRecords = listData?.meta?.total;
     const numberOfPages = Math.ceil(totalRecords / listData?.meta?.perPage);
     if (currentPage > numberOfPages) {
       fetchDataCallback();
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       setCurrent(1);
     }
   }
@@ -351,4 +348,11 @@ export const isUserAdmin = (userDetails) => {
     noOfMenuItems === modules?.length &&
     noOfControlItems === controlMenu?.length
   );
+};
+
+export const checkForValidNumber = (number) => {
+  if (number || number === 0) {
+    return true;
+  }
+  return false;
 };

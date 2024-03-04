@@ -84,10 +84,23 @@
   color: var(--textBold);
 }
 
+.customInputStyles {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightSmall, 400) !important;
+  height: var(--height_44);
+  padding: var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px) !important;
+  height: var(--height_44);
+  &::placeholder {
+    color: var(--textBold) !important;
+  }
+}
+
 .customInputNumberStyles {
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
   padding: 9px 5px;
+  height: var(--height_44);
   font-weight: var(--fontWeightMedium);
   border-radius: var(--radiusLg);
   border: var(--borderLight);

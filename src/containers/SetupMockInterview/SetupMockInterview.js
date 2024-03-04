@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 
@@ -14,6 +13,7 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import useFetch from "../../core/hooks/useFetch";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
 import { ROUND_ID } from "../../constant/constant";
+import { urlService } from "../../Utils/urlService";
 import {
   CORE_ROUTE,
   MOCK_INTERVIEWS,
@@ -29,13 +29,12 @@ const SetupMockInterviewContent = () => {
   const isEdit = true;
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
 
-  const roundId = searchParams.get(ROUND_ID);
+  const roundId = urlService.getQueryStringValue(ROUND_ID);
   const {
     data,
     error: errorWhileFetchingInterview,
