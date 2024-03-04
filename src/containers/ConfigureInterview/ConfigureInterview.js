@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 import { ThemeContext } from "core/providers/theme";
@@ -16,7 +15,6 @@ import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import updateConfigureInterview from "../../services/api-services/ConfigureInterview/updateConfigureInterview";
 import { getValidMode } from "../../Utils/validation";
 import { urlService } from "../../Utils/urlService";
-import { CONFIGURE_INTERVIEW_DATES } from "../../dummyData";
 import { SETUP_MOCK_INTERVIEW, SESSION } from "../../routes/routeNames";
 import { ROUND_ID, NOTIFICATION_TYPES } from "../../constant/constant";
 import styles from "./ConfigureInterview.module.scss";
@@ -26,7 +24,6 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [searchParams] = useSearchParams();
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { handleUpdateConfigureInterview } = updateConfigureInterview();
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -44,7 +41,7 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
 
   const isEdit =
     getValidMode(urlService.getQueryStringValue("mode")) === "edit";
-  const roundId = searchParams.get(ROUND_ID);
+  const roundId = urlService.getQueryStringValue(ROUND_ID);
 
   const [interviewTable, setInterviewTable] = useState(
     isEdit
