@@ -212,6 +212,8 @@ const locale = {
   "centre.placeholder.bigSmallCentre": "Choose Centre Type",
   "centre.placeholder.centreId": "Enter Centre Id",
   "centre.placeholder.centreCode": "Enter Centre Id",
+  "centre.editCentreNote":
+    "*You can only update Centre Id because this centre is being used in one of the rounds in current session.",
   "label.queriesId": "Query ID",
   "label.studentOrCompany": "Student / Company Name",
   "label.nonRegisteredStudentOrCompany": "Non-Registered Student / Company",
@@ -518,6 +520,7 @@ const locale = {
   "label.session.setupCenters.details": "Edit centre setup",
   "label.users.details": "User Details",
   "label.session.orientation-centers": "Setup orientation centres",
+  "label.data_saved_successfully": "Data Saved Successfully.",
 };
 
 export default locale;

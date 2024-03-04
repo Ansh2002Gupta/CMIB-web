@@ -129,3 +129,15 @@
   width: var(--fullWidth);
   height: var(--fullHeight);
 }
+
+.noteText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+  font-style: italic;
+}
+
+.centreFormBox {
+  justify-content: space-between;
+}

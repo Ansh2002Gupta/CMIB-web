@@ -138,6 +138,7 @@ const SessionRoundDetailsTemplate = ({
                         <span className={styles.redText}> *</span>
                       </Typography>
                     }
+                    bottomSectionStyle={classes.statusGap}
                     bottomSection={
                       <Typography className={styles.text}>
                         {intl.formatMessage({

@@ -12,6 +12,9 @@ import CustomInput from "../../components/CustomInput/CustomInput";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import {
   INTERVIEW_TYPE,
+  MAX_CTC_LENGTH,
+  MAX_PARTNERS_LENGTH,
+  MAX_VACANCIES_LENGTH,
   MODULE_KEYS,
   PAYMENT_TYPE,
 } from "../../constant/constant";
@@ -228,6 +231,7 @@ const CentreTable = ({
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterFee",
                 })}
+                maxLength={MAX_CTC_LENGTH}
                 errorMessage={errors[index]?.participationFee}
                 isError={!!errors[index]?.participationFee}
               />
@@ -279,6 +283,7 @@ const CentreTable = ({
                       placeholder={intl.formatMessage({
                         id: "centre.placeholder.enterFee",
                       })}
+                      maxLength={MAX_CTC_LENGTH}
                       errorMessage={errors[index]?.firm?.firmFee}
                       isError={!!errors[index]?.firm?.firmFee}
                     />
@@ -293,7 +298,7 @@ const CentreTable = ({
                       onChange={(val) => {
                         handleInputChange(val, "firm", index, "uptoPartners");
                       }}
-                      maxLength={3}
+                      maxLength={MAX_PARTNERS_LENGTH}
                       placeholder={intl.formatMessage({
                         id: "centre.placeholder.enterpartner",
                       })}
@@ -330,6 +335,7 @@ const CentreTable = ({
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterNorm1",
                 })}
+                maxLength={MAX_CTC_LENGTH}
                 errorMessage={errors[index]?.norm1}
                 isError={!!errors[index]?.norm1}
               />
@@ -357,6 +363,7 @@ const CentreTable = ({
                 onChange={(val) => {
                   handleInputChange(val, "norm2", index);
                 }}
+                maxLength={MAX_CTC_LENGTH}
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterNorm2",
                 })}
@@ -390,6 +397,7 @@ const CentreTable = ({
                 placeholder={intl.formatMessage({
                   id: "centre.placeholder.enterVacancy",
                 })}
+                maxLength={MAX_VACANCIES_LENGTH}
                 errorMessage={errors[index]?.norm2MinVacancy}
                 isError={!!errors[index]?.norm2MinVacancy}
               />
@@ -426,7 +434,7 @@ const CentreTable = ({
       title: intl.formatMessage({ id: "centre.scheduleDate" }),
       dataIndex: "scheduleDate",
       key: "scheduleDate",
-      renderText: { visible: true },
+      renderText: { visible: true, isTypeDate: true },
     }),
     ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
       ? [

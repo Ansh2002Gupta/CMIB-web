@@ -389,6 +389,11 @@ export const ROLES = {
   SUPER_ADMIN: "super-admin",
 };
 
+export const MAX_CTC_LENGTH = 10;
+export const MAX_EXPERIENCE_LENGTH = 2;
+export const MAX_PARTNERS_LENGTH = 3;
+export const MAX_VACANCIES_LENGTH = 4;
+
 export const PAYMENT_TYPE = {
   WHOLE: "whole",
   CENTRE_WISE: "centrewise",

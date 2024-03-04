@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 
@@ -10,8 +9,9 @@ import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingA
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
+import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import { urlService } from "../../Utils/urlService";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
@@ -27,16 +27,19 @@ const SetupMockInterviewContent = () => {
   const isEdit = true;
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [currentTableData, setCurrentTableData] = useState(MOCK_INTERVIEW);
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [current, setCurrent] = useState(
-    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+    getValidPageNumber(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
+    )
   );
   const [pageSize, setPageSize] = useState(
-    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+    getValidPageSize(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE)
+    )
   );
 
   const goToConfigureInterview = (rowData, isEdit) => {
@@ -63,21 +66,21 @@ const SetupMockInterviewContent = () => {
     //TODO : Replace this code with API Pagination
     setPageSize(Number(size));
     setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      return prev;
-    });
+    const queryParams = {
+      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: size,
+      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
+    };
+    urlService.setMultipleQueryStringValues(queryParams);
     updateTableData(1, size);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
     //TODO : Replace this code with API Pagination
     setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
-      return prev;
-    });
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE,
+      newPageNumber
+    );
     updateTableData(newPageNumber, pageSize);
   };
 
@@ -90,8 +93,10 @@ const SetupMockInterviewContent = () => {
   );
 
   useEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
+    const currentPage = +urlService.getQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE
+    );
+    const currentPagePerRow = +urlService.getQueryStringValue(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
 
@@ -104,10 +109,7 @@ const SetupMockInterviewContent = () => {
       currentPage <= 0 ||
       currentPage > availalblePage
     ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       setCurrent(1);
       startIndex = 0;
       endIndex = currentPagePerRow;
@@ -116,10 +118,10 @@ const SetupMockInterviewContent = () => {
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
     ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
-        return prev;
-      });
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES.ROW_PER_PAGE,
+        DEFAULT_PAGE_SIZE
+      );
       startIndex = currentPage;
       endIndex = DEFAULT_PAGE_SIZE;
     }

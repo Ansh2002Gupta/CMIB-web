@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Table, Typography } from "antd";
 import { ThemeContext } from "core/providers/theme";
@@ -12,6 +12,7 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { getValidMode } from "../../Utils/validation";
+import { urlService } from "../../Utils/urlService";
 import { CONFIGURE_INTERVIEW_DATES } from "../../dummyData";
 import { SETUP_MOCK_INTERVIEW, SESSION } from "../../routes/routeNames";
 import { PAGINATION_PROPERTIES } from "../../constant/constant";
@@ -22,10 +23,10 @@ const ConfigureInterview = () => {
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [searchParams] = useSearchParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const isEdit = getValidMode(searchParams.get("mode")) === "edit";
+  const isEdit =
+    getValidMode(urlService.getQueryStringValue("mode")) === "edit";
   const [tableData, setTableData] = useState(CONFIGURE_INTERVIEW_DATES);
   const [addTableData, setAddTableData] = useState({
     id: Date.now().toString(),

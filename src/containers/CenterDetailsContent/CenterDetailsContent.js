@@ -226,62 +226,71 @@ const CenterDetailsContent = ({
   const handleSetError = (error, name, index, nestedName) => {
     setErrors((prevErrors) => {
       const newErrors = [...prevErrors];
-      if (nestedName) {
-        const updatedNestedData = {
-          ...newErrors[index][name],
-          [nestedName]: error,
-        };
-        newErrors[index][name] = updatedNestedData;
-      } else {
-        newErrors[index][name] = error;
+      if (newErrors?.[index]) {
+        if (nestedName) {
+          const updatedNestedData = {
+            ...newErrors[index][name],
+            [nestedName]: error,
+          };
+          newErrors[index][name] = updatedNestedData;
+        } else {
+          newErrors[index][name] = error;
+        }
       }
       return newErrors;
     });
   };
 
   const handleSave = () => {
-    const isLastRowEmpty = Object.entries(
-      tableData[tableData.length - 1]
-    ).every(([key, value]) => {
-      if (typeof value === "object" && value !== null) {
-        return Object.entries(value).every(
-          ([nestedKey, nestedValue]) =>
-            nestedValue === addTableData[key][nestedKey]
-        );
-      }
-      return value === addTableData[key];
-    });
+    const isLastRowEmpty =
+      tableData.length > 0 &&
+      Object.entries(tableData[tableData.length - 1]).every(([key, value]) => {
+        if (typeof value === "object" && value !== null) {
+          return Object.entries(value).every(
+            ([nestedKey, nestedValue]) =>
+              nestedValue === addTableData[key][nestedKey] ||
+              nestedValue === null ||
+              value === ""
+          );
+        }
+        return value === addTableData[key] || value === null || value === "";
+      });
 
     const interviewDatesData = isLastRowEmpty
       ? tableData.slice(0, -1)
       : tableData;
 
-    const isValid = interviewDatesData.every((_, index) => validate(index));
-    if (!isValid) {
-      return;
-    }
+    let allRowsValid = true;
 
-    if (errors.length > 0) {
-      setErrors((prevErrors) => {
-        const newErrors = [...prevErrors];
-        const lastErrorIndex = newErrors.length - 1;
-        newErrors[lastErrorIndex] = {
-          scheduleDate: "",
+    const defaultErrorState = {
+      scheduleDate: "",
           ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
-            participationFee: "",
+        participationFee: "",
           }),
           ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
-            firm: { firmFee: "", uptoPartners: "" },
-          }),
+        firm: { firmFee: "", uptoPartners: "" },
+      }),
           ...(isNqcaModule && { norm1: "" }),
-          ...(isNqcaModule && { norm2: "" }),
-          ...(isNqcaModule && { norm2MinVacancy: "" }),
+      ...(isNqcaModule && { norm2: "" }),
+      ...(isNqcaModule && { norm2MinVacancy: "" }),
           ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
             interviewType: "",
           }),
-        };
-        return newErrors;
-      });
+    };
+
+    const newErrors = interviewDatesData.map((_, index) => {
+      if (!validate(index)) {
+        allRowsValid = false;
+        return errors[index];
+      }
+
+      return defaultErrorState;
+    });
+
+    setErrors([...newErrors, { ...defaultErrorState }]);
+
+    if (!allRowsValid) {
+      return;
     }
 
     const centreDetailsPayload = {
@@ -323,6 +332,11 @@ const CenterDetailsContent = ({
       payload: centreDetailsPayload,
       centreId: centreId,
       roundId: roundId,
+      onSuccessCallback: () =>
+        showNotification({
+          text: intl.formatMessage({ id: "label.data_saved_successfully" }),
+          type: "success",
+        }),
       onErrorCallback: (error) => {
         showNotification({ text: error, type: "error" });
       },
@@ -380,19 +394,19 @@ const CenterDetailsContent = ({
       const isValueFilled = (value) => !!value || value === 0;
 
       return (
-        isValueFilled(firstRow.scheduleDate) &&
+        isValueFilled(firstRow?.scheduleDate) &&
         (paymentType === PAYMENT_TYPE.CENTRE_WISE
-          ? isValueFilled(firstRow.participationFee)
+          ? isValueFilled(firstRow?.participationFee)
           : true) &&
         (paymentType === PAYMENT_TYPE.CENTRE_WISE
-          ? isValueFilled(firstRow.firm.firmFee)
+          ? isValueFilled(firstRow?.firm?.firmFee)
           : true) &&
         (paymentType === PAYMENT_TYPE.CENTRE_WISE
-          ? isValueFilled(firstRow.firm.uptoPartners)
+          ? isValueFilled(firstRow?.firm?.uptoPartners)
           : true) &&
-        (isNqcaModule ? isValueFilled(firstRow.norm1) : true) &&
-        (isNqcaModule ? isValueFilled(firstRow.norm2) : true) &&
-        (isNqcaModule ? isValueFilled(firstRow.norm2MinVacancy) : true) &&
+        (isNqcaModule ? isValueFilled(firstRow?.norm1) : true) &&
+        (isNqcaModule ? isValueFilled(firstRow?.norm2) : true) &&
+        (isNqcaModule ? isValueFilled(firstRow?.norm2MinVacancy) : true) &&
         (selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY
           ? isValueFilled(firstRow.interviewType)
           : true)
@@ -452,14 +466,17 @@ const CenterDetailsContent = ({
       { heading: "writtenTestFee", value: formData?.PsychometricFee },
       {
         heading: "centreStartTime",
-        value: dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A"),
+        value: formData?.centreStartTime
+          ? dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A")
+          : "-",
       },
       {
         heading: "centreEndTime",
-        value: dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A"),
+        value: formData?.centreEndTime
+          ? dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A")
+          : "-",
       },
     ];
-
     return (
       <>
         {notificationContextHolder}
@@ -489,7 +506,9 @@ const CenterDetailsContent = ({
                         </Typography>
                       }
                       bottomSection={
-                        <div className={styles.blackText}>{item.value}</div>
+                        <div className={styles.blackText}>
+                          {item.value || "-"}
+                        </div>
                       }
                     />
                   ))}

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useSearchParams } from "react-router-dom";
 
 import { TwoRow } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
@@ -21,9 +20,11 @@ import {
   updateSessionNotification,
 } from "../../globalContext/notification/notificationActions";
 import { getCurrentActiveTab } from "../../constant/utils";
+import { urlService } from "../../Utils/urlService";
 import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { ADD_SESSION } from "../../routes/routeNames";
 import {
+  MENU_KEYS,
   NOTIFICATION_TYPES,
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
@@ -39,9 +40,11 @@ function Session() {
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const [globalSessionDetails] = useContext(GlobalSessionContext);
-  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(
-    getCurrentActiveTab(searchParams?.get("tab"), VALID_CONSENT_MARKING_TABS_ID)
+    getCurrentActiveTab(
+      urlService?.getQueryStringValue("tab"),
+      VALID_CONSENT_MARKING_TABS_ID
+    )
   );
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [notificationState, setNotificationStateDispatch] =
@@ -123,7 +126,7 @@ function Session() {
                 roundId={
                   (
                     sessionData?.rounds?.find(
-                      (obj) => obj.round_code === "round-1"
+                      (obj) => obj.round_code === MENU_KEYS.ROUND_1_PLACEMENT
                     ) || {}
                   ).id
                 }
@@ -145,6 +148,13 @@ function Session() {
             children: (
               <SessionRound
                 {...{ currentlySelectedModuleKey }}
+              roundId={
+                (
+                  sessionData?.rounds?.find(
+                    (obj) => obj.round_code === MENU_KEYS.ROUND_2_PLACEMENT
+                  ) || {}
+                ).id
+              }
                 roundNo={2}
                 roundList={ROUND_TWO_CARD_LIST}
                 sessionData={sessionData}
