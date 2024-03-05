@@ -9,7 +9,7 @@ import {
   MOCK_INTERVIEWS,
 } from "../../../constant/apiEndpoints";
 
-const updateConfigureInterview = () => {
+const useUpdateConfigureInterview = () => {
   const intl = useIntl();
   const [
     updatingConfigureInterviewStatus,
@@ -75,4 +75,4 @@ const updateConfigureInterview = () => {
   };
 };
 
-export default updateConfigureInterview;
+export default useUpdateConfigureInterview;

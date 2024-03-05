@@ -2,19 +2,19 @@ import React, { useContext, useState } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
-import { ThemeContext } from "core/providers/theme";
 
 import { TwoRow } from "../../core/layouts";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import DataTable from "../../components/DataTable/DataTable";
-import getConfigureDateColumns from "./ConfigureInterviewConfig";
+import { ThemeContext } from "core/providers/theme";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import useUpdateConfigureInterview from "../../services/api-services/ConfigureInterview/useUpdateConfigureInterview";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import updateConfigureInterview from "../../services/api-services/ConfigureInterview/updateConfigureInterview";
-import { getValidMode } from "../../Utils/validation";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import getConfigureDateColumns from "./ConfigureInterviewConfig";
+import { isOverlapping, getValidMode } from "../../Utils/validation";
 import { urlService } from "../../Utils/urlService";
 import { SETUP_MOCK_INTERVIEW, SESSION } from "../../routes/routeNames";
 import { ROUND_ID, NOTIFICATION_TYPES } from "../../constant/constant";
@@ -26,7 +26,7 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { showNotification, notificationContextHolder } = useShowNotification();
-  const { handleUpdateConfigureInterview } = updateConfigureInterview();
+  const { handleUpdateConfigureInterview } = useUpdateConfigureInterview();
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
@@ -43,14 +43,17 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
   const isEdit =
     getValidMode(urlService.getQueryStringValue("mode")) === "edit";
   const roundId = urlService.getQueryStringValue(ROUND_ID);
+  const getInterviewTable = () => {
+    if (isEdit) {
+      if (interviewData) {
+        return [...interviewData, addTableData];
+      }
+      return [addTableData];
+    }
+    return interviewData || [];
+  };
 
-  const [interviewTable, setInterviewTable] = useState(
-    isEdit
-      ? interviewData
-        ? [...interviewData, addTableData]
-        : [addTableData]
-      : interviewData || []
-  );
+  const [interviewTable, setInterviewTable] = useState(getInterviewTable());
   const [errors, setErrors] = useState(
     interviewTable.map(() => ({
       schedule_date: "",
@@ -175,18 +178,12 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
       );
       errorCount += 1;
     }
-    if (errorCount > 0) return false;
+    if (errorCount) return false;
 
     return true;
   };
 
   const overlapValidate = () => {
-    const isOverlapping = (time, startTime2, endTime2) => {
-      return (
-        dayjs(time, "HH:mm:ss").isAfter(dayjs(startTime2, "HH:mm:ss")) &&
-        dayjs(time, "HH:mm:ss").isBefore(dayjs(endTime2, "HH:mm:ss"))
-      );
-    };
     let errorCount = 0;
     interviewTable.map((item, index) => {
       const sameDates = interviewTable.filter(
@@ -214,9 +211,9 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
         }
       });
     });
-    if (errorCount > 0) {
-      return false;
-    } else return true;
+    if (errorCount) return false;
+
+    return true;
   };
 
   const redirectToMockInterviewListing = () => {

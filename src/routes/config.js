@@ -67,16 +67,16 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 );
 
 const config = [
-  // {
-  //   pagePath: OUT_SOURCED,
-  //   element: <DefaultRoute />,
-  //   views: [
-  //     {
-  //       viewPath: "",
-  //       element: <DefaultRoute />,
-  //     },
-  //   ],
-  // },
+  {
+    pagePath: OUT_SOURCED,
+    element: <DefaultRoute />,
+    views: [
+      {
+        viewPath: "",
+        element: <DefaultRoute />,
+      },
+    ],
+  },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,

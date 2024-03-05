@@ -1,19 +1,20 @@
 import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
 
 import { TwoRow } from "../../core/layouts";
 
-import DataTable from "../../components/DataTable/DataTable";
 import CustomLoader from "../../components/CustomLoader";
+import DataTable from "../../components/DataTable/DataTable";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { ThemeContext } from "core/providers/theme";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
-import { ROUND_ID } from "../../constant/constant";
 import { urlService } from "../../Utils/urlService";
+import { ROUND_ID } from "../../constant/constant";
 import {
   CORE_ROUTE,
   MOCK_INTERVIEWS,
@@ -22,7 +23,6 @@ import {
 import { classes } from "./SetupMockInterview.styles";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./SetupMockInterview.module.scss";
-import ErrorMessageBox from "../../components/ErrorMessageBox";
 
 const SetupMockInterviewContent = () => {
   const intl = useIntl();

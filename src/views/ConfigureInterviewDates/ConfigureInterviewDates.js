@@ -16,9 +16,9 @@ import {
   MOCK_INTERVIEWS,
 } from "../../constant/apiEndpoints";
 import { API_STATUS } from "../../constant/constant";
+import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./ConfigureInterviewDates.module.scss";
 import { classes } from "./ConfigureInterviewDate.styles";
-import commonStyles from "../../common/commonStyles.module.scss";
 
 const ConfigureInterviewDates = () => {
   const intl = useIntl();
@@ -31,6 +31,7 @@ const ConfigureInterviewDates = () => {
     data: interviewData,
     error: errorWhileFetchingInterview,
     isLoading: isGettingInterview,
+    isSuccess: isInterviewSuccess,
     fetchData,
   } = useFetch({
     url:
@@ -64,33 +65,31 @@ const ConfigureInterviewDates = () => {
       }
       bottomSection={
         <>
-          {(isGettingInterview ||
-            apiStatus === API_STATUS.IDLE ||
-            apiStatus === API_STATUS.LOADING) && (
+          {(isGettingInterview || apiStatus === API_STATUS.IDLE) && (
             <div
               className={[
                 commonStyles.errorContainer,
-                styles.erroredContainer,
+                styles.errorContainer,
               ].join(" ")}
             >
               <CustomLoader />
             </div>
           )}
-          {errorWhileFetchingInterview && (
+          {!!errorWhileFetchingInterview && (
             <div
               className={[
                 commonStyles.errorContainer,
-                styles.erroredContainer,
+                styles.errorContainer,
               ].join(" ")}
             >
               <ErrorMessageBox
                 onRetry={() => fetchData({})}
-                errorText={errorWhileFetchingInterview?.data?.message}
+                errorText={errorWhileFetchingInterview?.data?.message || ""}
                 errorHeading={intl.formatMessage({ id: "label.error" })}
               />
             </div>
           )}
-          {apiStatus === API_STATUS.SUCCESS && interviewData && (
+          {isInterviewSuccess && interviewData && (
             <ConfigureInterview
               {...{
                 centreId,
