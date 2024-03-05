@@ -8,8 +8,8 @@ import { ThemeContext } from "core/providers/theme";
 
 import MarkRequired from "../MarkRequired";
 import { formatDate } from "../../constant/utils";
-import classes from "./CustomDateTimePicker.module.scss";
-import { styles } from "./CustomDateTimePicker.styles";
+import styles from "./CustomDateTimePicker.module.scss";
+import { classes } from "./CustomDateTimePicker.styles";
 import "./Override.css";
 
 const CustomDateTimePicker = ({
@@ -37,10 +37,10 @@ const CustomDateTimePicker = ({
 
   return (
     <TwoRow
-      className={[classes.container, customContainerStyles].join(" ")}
+      className={[styles.container, customContainerStyles].join(" ")}
       topSection={
         label && (
-          <div className={classes.inputLabelContainer}>
+          <div className={styles.inputLabelContainer}>
             <Typography className={customLabelStyles}>
               {label}
               {isRequired && <MarkRequired />}
@@ -85,7 +85,7 @@ const CustomDateTimePicker = ({
                 style={styles.inputStyle}
               />
             ) : (
-              <Typography className={classes.dateText}>
+              <Typography className={styles.dateText}>
                 {formatDate({ date: value })}
               </Typography>
             )
@@ -93,7 +93,7 @@ const CustomDateTimePicker = ({
           bottomSection={
             errorMessage && (
               <Typography
-                className={[classes.errorText, customErrorTextStyles].join(" ")}
+                className={[styles.errorText, customErrorTextStyles].join(" ")}
               >
                 {errorMessage ? ` * ${errorMessage}` : ""}
               </Typography>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Spin } from "antd";
 
@@ -9,12 +9,12 @@ import CenterDetailsContent from "../../containers/CenterDetailsContent";
 import CenterDetailsHeader from "../../containers/CenterDetailsHeader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
-import useFetch from "../../core/hooks/useFetch";
-import { getErrorMessage } from "../../constant/utils";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { urlService } from "../../Utils/urlService";
+import useFetch from "../../core/hooks/useFetch";
 import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { urlService } from "../../Utils/urlService";
+import { getErrorMessage } from "../../constant/utils";
 import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
@@ -51,7 +51,9 @@ const SetupCenterDetails = () => {
       `/${centreId}`,
     otherOptions: { skipApiCallOnMount: true },
   });
+
   const intl = useIntl();
+  const location = useLocation();
 
   const { centre_code, name } = centreDetailData || {};
 
@@ -98,6 +100,7 @@ const SetupCenterDetails = () => {
                 centreDetailData,
                 centreId,
                 isEdit,
+                location,
                 roundId,
                 selectedModule: selectedModule?.key,
               }}

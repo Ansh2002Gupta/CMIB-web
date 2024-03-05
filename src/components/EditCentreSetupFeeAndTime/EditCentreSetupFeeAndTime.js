@@ -5,10 +5,16 @@ import PropTypes from "prop-types";
 
 import CustomInput from "../CustomInput/CustomInput";
 import CustomDateTimePicker from "../CustomDateTimePicker/CustomDateTimePicker";
-import { MAX_CTC_LENGTH } from "../../constant/constant";
+import { getTimeWithZeroSec } from "../../constant/utils";
+import { MAX_CTC_LENGTH, MODULE_KEYS } from "../../constant/constant";
 import styles from "./EditCentreSetupFeeAndTime.module.scss";
 
-const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
+const EditCentreSetupFeeAndTime = ({
+  formData,
+  handleInputChange,
+  isEdit,
+  selectedModule,
+}) => {
   const intl = useIntl();
   const handleDisabledEndTime = () => {
     if (!formData.centreStartTime) {
@@ -35,25 +41,41 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
     };
   };
 
+  const handleOnChangeEndTime = (momentValue) => {
+    const time = dayjs(momentValue).format("HH:mm:ss");
+    const endTime = getTimeWithZeroSec(time);;
+    const startTime = formData?.centreStartTime;
+    if (
+      !startTime ||
+      dayjs(endTime, "HH:mm:ss").isAfter(dayjs(startTime, "HH:mm:ss"))
+    ) {
+      handleInputChange(endTime, "centreEndTime");
+    } else {
+      handleInputChange("", "centreEndTime");
+    }
+  }
+
   return (
     <div className={styles.topSectionStyle}>
-      <CustomInput
-        type="inputNumber"
-        customContainerStyles={styles.customContainerStyles}
-        customInputNumberStyles={styles.input}
-        customLabelStyles={styles.inputLabel}
-        isRequired
-        label={intl.formatMessage({ id: "label.writtenTestFee" })}
-        onChange={(val) => {
-          handleInputChange(val, "PsychometricFee");
-        }}
-        maxLength={MAX_CTC_LENGTH}
-        placeholder={intl.formatMessage({
-          id: `label.placeholder.writtenTestFee`,
-        })}
-        value={formData?.PsychometricFee}
-        disabled={!isEdit}
-      />
+      {selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
+        <CustomInput
+          type="inputNumber"
+          customInputNumberStyles={styles.input}
+          customLabelStyles={styles.inputLabel}
+          customContainerStyles={styles.customContainerStyles}
+          isRequired
+          label={intl.formatMessage({ id: "label.writtenTestFee" })}
+          onChange={(val) => {
+            handleInputChange(val, "PsychometricFee");
+          }}
+          maxLength={MAX_CTC_LENGTH}
+          placeholder={intl.formatMessage({
+            id: `label.placeholder.writtenTestFee`,
+          })}
+          value={formData?.PsychometricFee}
+          disabled={!isEdit}
+        />
+      )}
       <CustomDateTimePicker
         customLabelStyles={styles.inputLabel}
         customTimeStyle={styles.timeInput}
@@ -81,20 +103,7 @@ const EditCentreSetupFeeAndTime = ({ formData, handleInputChange, isEdit }) => {
         customContainerStyles={styles.customContainerStyles}
         isRequired
         label={intl.formatMessage({ id: "label.centreEndTime" })}
-        onChange={(momentValue) => {
-          const endTime = momentValue
-            ? dayjs(momentValue).format("HH:mm:ss")
-            : "";
-          const startTime = formData?.centreStartTime;
-          if (
-            !startTime ||
-            dayjs(endTime, "HH:mm:ss").isAfter(dayjs(startTime, "HH:mm:ss"))
-          ) {
-            handleInputChange(endTime, "centreEndTime");
-          } else {
-            handleInputChange("", "centreEndTime");
-          }
-        }}
+        onChange={handleOnChangeEndTime}
         disabledTime={handleDisabledEndTime}
         placeholder={intl.formatMessage({
           id: "label.placeholder.centreEndTime",
