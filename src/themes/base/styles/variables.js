@@ -271,6 +271,7 @@ const variables = {
   gapXSmall: "8px",
   gapSmallMedium: "12px",
   gapSmall: "16px",
+  gap_18: "18px",
   gap_20: "20px",
   gapMedium: "24px",
   gap_26: "26px",

@@ -349,3 +349,7 @@ export const checkForValidNumber = (number) => {
   }
   return false;
 };
+
+export const getTimeWithZeroSec = (time) => {
+  return `${time.split(":")?.slice(0, 2).join(":")}:00`;
+}

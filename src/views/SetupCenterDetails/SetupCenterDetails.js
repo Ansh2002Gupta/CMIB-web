@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Spin } from "antd";
 
@@ -51,7 +51,9 @@ const SetupCenterDetails = () => {
       `/${centreId}`,
     otherOptions: { skipApiCallOnMount: true },
   });
+
   const intl = useIntl();
+  const location = useLocation();
 
   const { centre_code, name } = centreDetailData || {};
 
@@ -98,6 +100,7 @@ const SetupCenterDetails = () => {
                 centreDetailData,
                 centreId,
                 isEdit,
+                location,
                 roundId,
                 selectedModule: selectedModule?.key,
               }}

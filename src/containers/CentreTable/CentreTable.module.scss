@@ -28,6 +28,15 @@
   align-items: center;
 }
 
+.inputStyleFixedWidth {
+  height: var(--height_44);
+  width: var(--width_250);
+}
+
+.inputTableStyleFixedWidth {
+  width: var(--width_250);
+}
+
 .joinedCustomContainerStyles {
   height: var(--height_44);
   display: flex;
@@ -57,7 +66,7 @@
 }
 
 .twoJointContainer {
-  gap: var(--gapXLarge);
+ padding-right: var(--paddingMedium);
 }
 
 .imageStyle {
@@ -76,4 +85,19 @@
 
 .customColumnStyle {
   width: var(--fullWidth);
+}
+
+.selectInput {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+}
+
+.errorGap {
+  gap: var(--gapXXSmall);
+}
+
+.customContainerStyle {
+  border: var(--borderLight);
 }

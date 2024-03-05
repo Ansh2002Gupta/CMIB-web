@@ -8,7 +8,7 @@
   vertical-align: top;
   border-bottom: none !important;
   padding-top: var(--paddingNone) !important;
-  padding-bottom: var(--paddingSmall) !important;
+  padding-bottom: var(--paddingMediumSmall) !important;
 }
 
 .customTable .ant-table-thead > tr > th .ant-table-cell {

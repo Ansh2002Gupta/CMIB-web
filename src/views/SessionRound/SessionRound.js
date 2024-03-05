@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "../../core/providers/theme";
@@ -6,7 +7,6 @@ import { Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 import useFetch from "../../core/hooks/useFetch";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomLoader from "../../components/CustomLoader";
@@ -32,7 +32,7 @@ const SessionRound = ({
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
-  const { navigateScreen: navigate } = useNavigateScreen();
+  const navigate  = useNavigate();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
