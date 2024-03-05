@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 import { ThemeContext } from "core/providers/theme";
@@ -179,6 +180,49 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
     return true;
   };
 
+  const overlapValidate = () => {
+    const isOverlapping = (startTime1, endTime1, startTime2, endTime2) => {
+      return (
+        (dayjs(startTime1, "HH:mm:ss").isAfter(dayjs(startTime2, "HH:mm:ss")) &&
+          dayjs(startTime1, "HH:mm:ss").isBefore(
+            dayjs(endTime2, "HH:mm:ss")
+          )) ||
+        (dayjs(endTime1, "HH:mm:ss").isAfter(dayjs(startTime2, "HH:mm:ss")) &&
+          dayjs(endTime1, "HH:mm:ss").isBefore(dayjs(endTime2, "HH:mm:ss")))
+      );
+    };
+    let errorCount = 0;
+    interviewTable.map((item, index) => {
+      const sameDates = interviewTable.filter(
+        (schedule, ind) =>
+          schedule.schedule_date === item.schedule_date && index !== ind
+      );
+      sameDates.map((data) => {
+        if (
+          isOverlapping(
+            item.start_time,
+            item.end_time,
+            data.start_time,
+            data.end_time
+          )
+        ) {
+          errorCount++;
+          handleError(
+            "end_time",
+            intl.formatMessage({ id: "label.error.overlap" }),
+            index
+          );
+        }
+      });
+    });
+    console.log(errorCount, "errorCount..");
+    if (errorCount > 0) {
+      return false;
+    } else return true;
+  };
+
+  console.log(errors, "errors...");
+
   const redirectToMockInterviewListing = () => {
     navigate(
       `/${currentlySelectedModuleKey}/${SESSION}${SETUP_MOCK_INTERVIEW}?${ROUND_ID}=${roundId}`
@@ -204,11 +248,27 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
       interviewTable.at(-1)?.no_of_facilities ||
       interviewTable.at(-1)?.slot_duration
     ) {
-      if (validate()) {
+      if (overlapValidate()) {
+        if (validate()) {
+          handleUpdateConfigureInterview({
+            module: currentlySelectedModuleKey,
+            centreId: centreId,
+            payload: { data: interviewTable },
+            onSuccessCallback: () => {
+              redirectToMockInterviewListing();
+            },
+            onErrorCallback: (error) => {
+              showNotification({ text: error, type: NOTIFICATION_TYPES.ERROR });
+            },
+          });
+        }
+      }
+    } else {
+      if (overlapValidate()) {
         handleUpdateConfigureInterview({
           module: currentlySelectedModuleKey,
           centreId: centreId,
-          payload: { data: interviewTable },
+          payload: { data: interviewTable.slice(0, -1) },
           onSuccessCallback: () => {
             redirectToMockInterviewListing();
           },
@@ -217,18 +277,6 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
           },
         });
       }
-    } else {
-      handleUpdateConfigureInterview({
-        module: currentlySelectedModuleKey,
-        centreId: centreId,
-        payload: { data: interviewTable.slice(0, -1) },
-        onSuccessCallback: () => {
-          redirectToMockInterviewListing();
-        },
-        onErrorCallback: (error) => {
-          showNotification({ text: error, type: NOTIFICATION_TYPES.ERROR });
-        },
-      });
     }
   };
   const handleCancel = () => {
@@ -242,7 +290,9 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
         className={styles.mainContainer}
         topSection={
           <TwoRow
-            className={[isEdit ? styles.topContainer : styles.viewTopContainer]}
+            className={[
+              isEdit ? styles.topContainer : styles.viewTopContainer,
+            ].join(" ")}
             topSection={
               isEdit && (
                 <Typography className={styles.titleText}>

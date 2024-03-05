@@ -446,6 +446,7 @@ const locale = {
   "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
     "Some query/query(s) have already been marked as answered. Continuing marking for the remaining queries.",
   "label.error.fieldEmpty": "Field cannot be empty.",
+  "label.error.overlap": "Please choose different times.",
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
