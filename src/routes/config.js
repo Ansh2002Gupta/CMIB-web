@@ -41,6 +41,7 @@ import {
   EDIT_CONFIGURE_CENTRE,
   EDIT_SESSION,
   FORGOT_PASSWORD,
+  INTERVIEW_DETAILS,
   LOGIN,
   OUT_SOURCED,
   QUERIES,
@@ -66,16 +67,16 @@ const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
 );
 
 const config = [
-  {
-    pagePath: OUT_SOURCED,
-    element: <DefaultRoute />,
-    views: [
-      {
-        viewPath: "",
-        element: <DefaultRoute />,
-      },
-    ],
-  },
+  // {
+  //   pagePath: OUT_SOURCED,
+  //   element: <DefaultRoute />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <DefaultRoute />,
+  //     },
+  //   ],
+  // },
   {
     pagePath: FORGOT_PASSWORD,
     element: <HeaderContentWithFooterWithPublicAccess />,
@@ -160,7 +161,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
@@ -295,7 +296,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
@@ -354,7 +355,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
@@ -413,7 +414,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],

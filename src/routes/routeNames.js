@@ -17,6 +17,7 @@ export const CONSENT_MARKING = "consent-marking";
 export const CONTACT_US = "contact-us/";
 export const DASHBOARD = "dashboard/";
 export const DETAILS = "details/:centreId";
+export const INTERVIEW_DETAILS = "interviewDetails/:centreId";
 export const EDIT_CONFIGURE_CENTRE = "centre-details/:centreId";
 export const EDIT_SESSION = "edit-session/";
 export const ORIENTATION_CENTERS = "orientation-centers";

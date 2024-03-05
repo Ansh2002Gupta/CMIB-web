@@ -405,6 +405,7 @@ const locale = {
   "label.path.setup-mock-interview": "Setup Mock Interview",
   "label.path.queries": "Queries",
   "label.path.queries-details": "Query Details",
+  "label.path.interviewDetails": "Configure Interview Dates",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",

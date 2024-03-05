@@ -55,7 +55,9 @@ const SetupMockInterviewContent = () => {
   const goToConfigureInterview = (rowData, isEdit) => {
     const centreId = rowData?.id;
     navigate(
-      `details/${centreId}?roundId=${roundId}&mode=${isEdit ? "edit" : "view"}`,
+      `interviewDetails/${centreId}?roundId=${roundId}&mode=${
+        isEdit ? "edit" : "view"
+      }`,
       false
     );
   };
