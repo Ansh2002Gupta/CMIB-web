@@ -84,7 +84,7 @@ const SessionRound = ({
 
   useEffect(() => {
     if (!currentGlobalSession?.is_editable) {
-      urlService.setQueryStringValue("mode", FORM_STATES.VIEW_ONLY);
+      urlService.getQueryStringValue("mode", FORM_STATES.VIEW_ONLY);
     }
   }, [globalSessionDetails]);
 
