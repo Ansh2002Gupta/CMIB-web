@@ -38,6 +38,8 @@ const CentreTable = ({
   const [selectedDates, setSelectedDates] = useState([]);
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
+  const isCentreWisePayment = paymentType === PAYMENT_TYPE.CENTRE_WISE;
+  const isOverseasModule = selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY;
 
   useEffect(() => {
     const dates = tableData.map((data) => data.scheduleDate);
@@ -61,16 +63,16 @@ const CentreTable = ({
         ...prevErrors,
         {
           scheduleDate: "",
-          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+          ...(isCentreWisePayment && {
             participationFee: "",
           }),
-          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+          ...(isCentreWisePayment && {
             firm: { firmFee: "", uptoPartners: "" },
           }),
           ...(isNqcaModule && { norm1: "" }),
           ...(isNqcaModule && { norm2: "" }),
           ...(isNqcaModule && { norm2MinVacancy: "" }),
-          ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+          ...(isOverseasModule && {
             interviewType: "",
           }),
         },
@@ -164,15 +166,15 @@ const CentreTable = ({
       render: (text, record, index) => ({
         props: {
           className:
-            isNqcaModule || paymentType === PAYMENT_TYPE.CENTRE_WISE
-              ? {}
+            isNqcaModule || isCentreWisePayment
+              ? ""
               : styles.inputTableStyleFixedWidth,
         },
         children: (
           <CustomDateTimePicker
             value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
             customTimeStyle={
-              isNqcaModule || paymentType === PAYMENT_TYPE.CENTRE_WISE
+              isNqcaModule || isCentreWisePayment
                 ? styles.inputStyle
                 : styles.inputStyleFixedWidth
             }
@@ -194,7 +196,7 @@ const CentreTable = ({
         ),
       }),
     },
-    ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY
+    ...(isOverseasModule
       ? [
           {
             title: () => (
@@ -208,8 +210,8 @@ const CentreTable = ({
             render: (text, record, index) => ({
               props: {
                 className:
-                  isNqcaModule || paymentType === PAYMENT_TYPE.CENTRE_WISE
-                    ? {}
+                  isNqcaModule || isCentreWisePayment
+                    ? ""
                     : styles.inputTableStyleFixedWidth,
               },
               children: (
@@ -221,7 +223,7 @@ const CentreTable = ({
                       size={"large"}
                       style={classes.interviewTypeDropDown}
                       className={
-                        isNqcaModule || paymentType === PAYMENT_TYPE.CENTRE_WISE
+                        isNqcaModule || isCentreWisePayment
                           ? styles.inputStyle
                           : styles.inputStyleFixedWidth
                       }
@@ -251,7 +253,7 @@ const CentreTable = ({
           },
         ]
       : []),
-    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+    ...(isCentreWisePayment
       ? [
           {
             title: () => (
@@ -282,7 +284,7 @@ const CentreTable = ({
           },
         ]
       : []),
-    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+    ...(isCentreWisePayment
       ? [
           {
             title: () => (
@@ -479,7 +481,7 @@ const CentreTable = ({
       key: "scheduleDate",
       renderText: { visible: true, isTypeDate: true },
     }),
-    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+    ...(isCentreWisePayment
       ? [
           renderColumn({
             title: intl.formatMessage({ id: "centre.participationFee" }),
@@ -491,7 +493,7 @@ const CentreTable = ({
           }),
         ]
       : []),
-    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+    ...(isCentreWisePayment
       ? [
           renderColumn({
             title: intl.formatMessage({ id: "centre.firmFee" }),
@@ -505,7 +507,7 @@ const CentreTable = ({
           }),
         ]
       : []),
-    ...(paymentType === PAYMENT_TYPE.CENTRE_WISE
+    ...(isCentreWisePayment
       ? [
           renderColumn({
             title: intl.formatMessage({ id: "centre.uptoPartners" }),
@@ -559,7 +561,9 @@ const CentreTable = ({
         pagination={false}
         rowClassName={!isEdit ? styles.rowtext : ""}
         scroll={{ x: "max-content" }}
-        className={`${isEdit ? "customTable" : ""} ${styles.table}`}
+        className={`${isEdit ? "customTable" : ""} ${
+          styles.table
+        } customTableNoHover`}
         rowKey="id"
       />
     </div>

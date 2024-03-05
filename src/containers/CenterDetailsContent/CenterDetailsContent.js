@@ -14,6 +14,7 @@ import useConfigUpdateHandler from "../../services/api-services/SetupCentre/useC
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useResponsive from "../../core/hooks/useResponsive";
+import { checkForValidNumber } from "../../constant/utils";
 import { MODULE_KEYS, PAYMENT_TYPE } from "../../constant/constant";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
@@ -35,6 +36,7 @@ const CenterDetailsContent = ({
   const [tableData, setTableData] = useState([]);
   const { showNotification, notificationContextHolder } = useShowNotification();
   const paymentType = location?.state?.paymentType || PAYMENT_TYPE.CENTRE_WISE;
+  const isCentreWisePayment = paymentType === PAYMENT_TYPE.CENTRE_WISE;
 
   const addTableData = {
     isAddRow: true,
@@ -66,10 +68,10 @@ const CenterDetailsContent = ({
       (interviewRow) => ({
         id: interviewRow.id,
         scheduleDate: interviewRow?.interview_schedule_date || null,
-        ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+        ...(isCentreWisePayment && {
           participationFee: interviewRow.participation_fee?.toString(),
         }),
-        ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+        ...(isCentreWisePayment && {
           firm: {
             firmFee: interviewRow?.firm_fee?.toString(),
             uptoPartners: interviewRow.numbers_of_partners?.toString(),
@@ -94,10 +96,10 @@ const CenterDetailsContent = ({
       setErrors(
         newTableData.map(() => ({
           scheduleDate: "",
-          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+          ...(isCentreWisePayment && {
             participationFee: "",
           }),
-          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+          ...(isCentreWisePayment && {
             firm: { firmFee: "", uptoPartners: "" },
           }),
           ...(isNqcaModule && { norm1: "" }),
@@ -126,55 +128,37 @@ const CenterDetailsContent = ({
       errorCount += 1;
     }
     if (
-      paymentType === PAYMENT_TYPE.CENTRE_WISE &&
-      !(
-        !!tableData[index]?.participationFee ||
-        tableData[index]?.participationFee === 0
-      )
+      isCentreWisePayment &&
+      !checkForValidNumber(tableData[index]?.participationFee)
     ) {
       handleSetError("participationFee", index);
       errorCount += 1;
     }
     if (
-      paymentType === PAYMENT_TYPE.CENTRE_WISE &&
-      !(
-        !!tableData[index]?.firm?.firmFee ||
-        tableData[index]?.firm?.firmFee === 0
-      )
+      isCentreWisePayment &&
+      !checkForValidNumber(tableData[index]?.firm?.firmFee)
     ) {
       handleSetError("firm", index, "firmFee");
       errorCount += 1;
     }
     if (
-      paymentType === PAYMENT_TYPE.CENTRE_WISE &&
-      !(
-        !!tableData[index]?.firm?.uptoPartners ||
-        tableData[index]?.firm?.uptoPartners === 0
-      )
+      isCentreWisePayment &&
+      !checkForValidNumber(tableData[index]?.firm?.uptoPartners)
     ) {
       handleSetError("firm", index, "uptoPartners");
       errorCount += 1;
     }
-    if (
-      isNqcaModule &&
-      !(!!tableData[index]?.norm1 || tableData[index]?.norm1 === 0)
-    ) {
+    if (isNqcaModule && !checkForValidNumber(tableData[index]?.norm1)) {
       handleSetError("norm1", index);
       errorCount += 1;
     }
-    if (
-      isNqcaModule &&
-      !(!!tableData[index]?.norm2 || tableData[index]?.norm2 === 0)
-    ) {
+    if (isNqcaModule && !checkForValidNumber(tableData[index]?.norm2)) {
       handleSetError("norm2", index);
       errorCount += 1;
     }
     if (
       isNqcaModule &&
-      !(
-        !!tableData[index]?.norm2MinVacancy ||
-        tableData[index]?.norm2MinVacancy === 0
-      )
+      !checkForValidNumber(tableData[index]?.norm2MinVacancy)
     ) {
       handleSetError("norm2MinVacancy", index);
       errorCount += 1;
@@ -233,10 +217,10 @@ const CenterDetailsContent = ({
 
     const defaultErrorState = {
       scheduleDate: "",
-      ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+      ...(isCentreWisePayment && {
         participationFee: "",
       }),
-      ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+      ...(isCentreWisePayment && {
         firm: { firmFee: "", uptoPartners: "" },
       }),
       ...(isNqcaModule && { norm1: "" }),
@@ -270,7 +254,7 @@ const CenterDetailsContent = ({
       }),
       interview_dates: interviewDatesData.map((item) => {
         const interviewDateDetails = {
-          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+          ...(isCentreWisePayment && {
             firm_fee: parseInt(item.firm.firmFee),
           }),
           ...(isNqcaModule && { norm1: parseInt(item.norm1) }),
@@ -281,10 +265,10 @@ const CenterDetailsContent = ({
           ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
             interview_type: item.interviewType,
           }),
-          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+          ...(isCentreWisePayment && {
             numbers_of_partners: parseInt(item.firm.uptoPartners),
           }),
-          ...(paymentType === PAYMENT_TYPE.CENTRE_WISE && {
+          ...(isCentreWisePayment && {
             participation_fee: parseInt(item.participationFee),
           }),
           interview_schedule_date: item.scheduleDate,
@@ -364,13 +348,11 @@ const CenterDetailsContent = ({
 
       return (
         isValueFilled(firstRow?.scheduleDate) &&
-        (paymentType === PAYMENT_TYPE.CENTRE_WISE
+        (isCentreWisePayment
           ? isValueFilled(firstRow?.participationFee)
           : true) &&
-        (paymentType === PAYMENT_TYPE.CENTRE_WISE
-          ? isValueFilled(firstRow?.firm?.firmFee)
-          : true) &&
-        (paymentType === PAYMENT_TYPE.CENTRE_WISE
+        (isCentreWisePayment ? isValueFilled(firstRow?.firm?.firmFee) : true) &&
+        (isCentreWisePayment
           ? isValueFilled(firstRow?.firm?.uptoPartners)
           : true) &&
         (isNqcaModule ? isValueFilled(firstRow?.norm1) : true) &&

@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import CustomInput from "../CustomInput/CustomInput";
 import CustomDateTimePicker from "../CustomDateTimePicker/CustomDateTimePicker";
+import { getTimeWithZeroSec } from "../../constant/utils";
 import { MAX_CTC_LENGTH, MODULE_KEYS } from "../../constant/constant";
 import styles from "./EditCentreSetupFeeAndTime.module.scss";
 
@@ -90,8 +91,7 @@ const EditCentreSetupFeeAndTime = ({
         label={intl.formatMessage({ id: "label.centreEndTime" })}
         onChange={(momentValue) => {
           const time = dayjs(momentValue).format("HH:mm:ss");
-          let timeWithputSec = `${time.split(":")?.slice(0, 2).join(":")}:00`;
-          const endTime = timeWithputSec;
+          const endTime = getTimeWithZeroSec(time);;
           const startTime = formData?.centreStartTime;
           if (
             !startTime ||

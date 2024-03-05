@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
-import { useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
+import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Image, Spin, Typography } from "antd";
 
