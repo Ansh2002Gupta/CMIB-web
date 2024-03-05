@@ -18,6 +18,13 @@ export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
   return dayjs(new Date()).format(dateFormat);
 };
 
+export const formatTime = ({ time, timeFormat = "h:mm A" }) => {
+  if (time) {
+    return dayjs(time).format(timeFormat);
+  }
+  return dayjs().format(timeFormat);
+};
+
 export const convertDateToStringDate = (date) => {
   return dayjs(date, "M-YYYY").format("MMM YYYY");
 };
