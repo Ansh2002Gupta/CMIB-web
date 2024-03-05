@@ -49,7 +49,10 @@ const getConfigureDateColumns = (
       renderDateTime: {
         getDisabledTime: (current, record) => {
           return (
-            current && current.isBefore(dayjs(record?.end_time, "HH:mm:ss"))
+            current &&
+            dayjs(current, "HH:mm:ss").isAfter(
+              dayjs(record?.end_time, "HH:mm:ss")
+            )
           );
         },
 
@@ -77,6 +80,14 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
+        getDisabledTime: (current, record) => {
+          return (
+            current &&
+            dayjs(current, "HH:mm:ss").isBefore(
+              dayjs(record?.start_time, "HH:mm:ss")
+            )
+          );
+        },
         getError: (index) => errors[index].end_time,
         visible: true,
         type: "time",
