@@ -77,7 +77,7 @@ const CustomDateTimePicker = ({
                 />
               ) : (
                 <Typography className={classes.dateText}>
-                  {formatTime(value)}
+                  {formatTime({ time: dayjs(value, "HH:mm:ss") })}
                 </Typography>
               )
             ) : isEditable ? (
@@ -104,7 +104,7 @@ const CustomDateTimePicker = ({
           bottomSection={
             errorMessage && (
               <Typography
-                className={[styles.errorText, customErrorTextStyles].join(" ")}
+                className={[classes.errorText, customErrorTextStyles].join(" ")}
               >
                 {errorMessage ? ` * ${errorMessage}` : ""}
               </Typography>
