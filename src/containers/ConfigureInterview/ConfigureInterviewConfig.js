@@ -19,6 +19,9 @@ const getConfigureDateColumns = (
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
+        getDisabledDate: (current, record) => {
+          return current && current < dayjs().add(1, "day").startOf("day");
+        },
         getError: (index) => errors[index].schedule_date,
         visible: true,
         type: "date",
@@ -42,8 +45,17 @@ const getConfigureDateColumns = (
       key: "start_time",
       isRequiredField: true,
       customColumnHeading: styles.customColumnHeading,
+
       renderDateTime: {
-        getError: (index) => errors[index].start_time,
+        getDisabledTime: (current, record) => {
+          return (
+            current && current.isBefore(dayjs(record?.end_time, "HH:mm:ss"))
+          );
+        },
+
+        getError: (index) => {
+          errors[index].start_time;
+        },
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
@@ -53,7 +65,7 @@ const getConfigureDateColumns = (
         onChange: (val, record, index) => {
           handleInputChange(
             "start_time",
-            val ? dayjs(val).format("hh:mm:ss") : "",
+            val ? dayjs(val).format("HH:mm:ss") : "",
             index
           );
         },
@@ -77,7 +89,7 @@ const getConfigureDateColumns = (
         onChange: (val, record, index) => {
           handleInputChange(
             "end_time",
-            val ? dayjs(val).format("hh:mm:ss") : "",
+            val ? dayjs(val).format("HH:mm:ss") : "",
             index
           );
         },
@@ -139,6 +151,7 @@ const getConfigureDateColumns = (
         onClick: (rowData, index) => {
           handleRemove(rowData, index);
         },
+        customImageStyle: styles.customImageStyle,
         preview: false,
         src: getImage("minusCircle"),
         alternateSrc: getImage("addCircle"),

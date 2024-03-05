@@ -30,6 +30,7 @@ const CustomDateTimePicker = ({
   onChange,
   placeholder,
   type,
+  use12Hours,
   value,
 }) => {
   const { getImage } = useContext(ThemeContext);
@@ -61,7 +62,7 @@ const CustomDateTimePicker = ({
                     disabled,
                     disabledTime,
                   }}
-                  use12Hours={false}
+                  use12Hours={use12Hours}
                   className={[
                     styles.timeInput,
                     customTimeStyle,
@@ -121,13 +122,14 @@ CustomDateTimePicker.defaultProps = {
   disabled: false,
   errorMessage: "",
   errorTimeInput: "",
-  format: "h:mm a",
+  format: "hh:mm a",
   isEditable: true,
   isRequired: false,
   label: "",
   onChange: () => {},
   placeholder: "",
   type: "time",
+  use12Hours: false,
   value: null,
 };
 
@@ -150,6 +152,7 @@ CustomDateTimePicker.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
+  use12Hours: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 

@@ -64,6 +64,9 @@ const useRenderColumn = () => {
       defaultValue,
       disabled = false,
       errorMessage,
+      format,
+      getDisabledDate = () => {},
+      getDisabledTime = () => {},
       getError = () => {},
       isEditable = true,
       isRequired = false,
@@ -517,7 +520,7 @@ const useRenderColumn = () => {
                 customTimeStyle,
                 defaultValue,
                 disabled,
-                disabledDate,
+                format,
                 isEditable,
                 isRequired,
                 type,
@@ -534,6 +537,8 @@ const useRenderColumn = () => {
               errorMessage={
                 (record.isAddRow && errorMessage) || getError(index)
               }
+              disabledDate={(current) => getDisabledDate(current, record)}
+              disabledTime={(current) => getDisabledTime(current, record)}
             />
           ),
         };
