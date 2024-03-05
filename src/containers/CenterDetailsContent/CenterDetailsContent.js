@@ -31,6 +31,7 @@ const CenterDetailsContent = ({
   const responsive = useResponsive();
   const isNqcaModule =
     selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY;
+  const isOverseasModule = selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY;
   const { interview_dates } = centreDetailData || {};
   const [formData, setFormData] = useState({});
   const [tableData, setTableData] = useState([]);
@@ -43,7 +44,7 @@ const CenterDetailsContent = ({
     scheduleDate: null,
     participationFee: "",
     firm: { firmFee: "", uptoPartners: "" },
-    ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+    ...(isOverseasModule && {
       interviewType: "",
     }),
     ...(isNqcaModule && { norm1: "" }),
@@ -82,7 +83,7 @@ const CenterDetailsContent = ({
         ...(isNqcaModule && {
           norm2MinVacancy: interviewRow.norm2_min_vacancy?.toString(),
         }),
-        ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+        ...(isOverseasModule && {
           interviewType: interviewRow.interview_type,
         }),
       })
@@ -105,7 +106,7 @@ const CenterDetailsContent = ({
           ...(isNqcaModule && { norm1: "" }),
           ...(isNqcaModule && { norm2: "" }),
           ...(isNqcaModule && { norm2MinVacancy: "" }),
-          ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+          ...(isOverseasModule && {
             interviewType: "",
           }),
         }))
@@ -163,10 +164,7 @@ const CenterDetailsContent = ({
       handleSetError("norm2MinVacancy", index);
       errorCount += 1;
     }
-    if (
-      selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY &&
-      tableData[index]?.interviewType === ""
-    ) {
+    if (isOverseasModule && tableData[index]?.interviewType === "") {
       handleSetError("interviewType", index);
       errorCount += 1;
     }
@@ -226,7 +224,7 @@ const CenterDetailsContent = ({
       ...(isNqcaModule && { norm1: "" }),
       ...(isNqcaModule && { norm2: "" }),
       ...(isNqcaModule && { norm2MinVacancy: "" }),
-      ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+      ...(isOverseasModule && {
         interviewType: "",
       }),
     };
@@ -262,7 +260,7 @@ const CenterDetailsContent = ({
           ...(isNqcaModule && {
             norm2_min_vacancy: parseInt(item.norm2MinVacancy),
           }),
-          ...(selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY && {
+          ...(isOverseasModule && {
             interview_type: item.interviewType,
           }),
           ...(isCentreWisePayment && {
@@ -358,9 +356,7 @@ const CenterDetailsContent = ({
         (isNqcaModule ? isValueFilled(firstRow?.norm1) : true) &&
         (isNqcaModule ? isValueFilled(firstRow?.norm2) : true) &&
         (isNqcaModule ? isValueFilled(firstRow?.norm2MinVacancy) : true) &&
-        (selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY
-          ? isValueFilled(firstRow.interviewType)
-          : true)
+        (isOverseasModule ? isValueFilled(firstRow.interviewType) : true)
       );
     };
 
