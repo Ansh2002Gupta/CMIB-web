@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import useConsentTableColumns from "./ConsentTableConfig";
 import DataTable from "../../components/DataTable/DataTable";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
-import { urlService } from "../../Utils/urlService";
-import {
-  PAGINATION_PROPERTIES,
-  VALID_ROW_PER_OPTIONS,
-  DEFAULT_PAGE_SIZE,
-} from "../../constant/constant";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
 const ConsentTable = ({
-  activeTab,
   isEdit,
   totalData,
   registration,
@@ -30,50 +22,9 @@ const ConsentTable = ({
 
   const columns = useConsentTableColumns(isEdit, registration, onDateChange);
 
-  useEffect(() => {
-    const currentPage = +urlService.getQueryStringValue(
-      PAGINATION_PROPERTIES.CURRENT_PAGE
-    );
-    const currentPagePerRow = +urlService.getQueryStringValue(
-      PAGINATION_PROPERTIES.ROW_PER_PAGE
-    );
-    const availablePage = Math.ceil(totalData.length / currentPagePerRow);
-
-    let startIndex = (currentPage - 1) * currentPagePerRow;
-    let endIndex = currentPage * currentPagePerRow;
-
-    if (
-      !currentPage ||
-      isNaN(currentPage) ||
-      currentPage <= 0 ||
-      currentPage > availablePage
-    ) {
-      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-      startIndex = 0;
-      endIndex = DEFAULT_PAGE_SIZE;
-    }
-
-    if (
-      !currentPagePerRow ||
-      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
-    ) {
-      urlService.setQueryStringValue(
-        PAGINATION_PROPERTIES.ROW_PER_PAGE,
-        DEFAULT_PAGE_SIZE
-      );
-      startIndex = 0;
-      endIndex = DEFAULT_PAGE_SIZE;
-    }
-    const updatedData = totalData.slice(startIndex, endIndex);
-    setTableData(updatedData);
-  }, [activeTab]);
-
   return (
     <DataTable
       {...{ columns }}
-      current={
-        +urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
-      }
       currentDataLength={totalData.length}
       customContainerStyles={[styles.table, "customConsentTable"].join(" ")}
       hidePagination={true}

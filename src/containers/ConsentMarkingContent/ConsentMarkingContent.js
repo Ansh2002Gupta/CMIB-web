@@ -20,11 +20,7 @@ import {
   LAST_MARKING_REGESTRATION_DETAILS,
   REGISTRATION_DATES,
 } from "../../dummyData";
-import {
-  DEFAULT_PAGE_SIZE,
-  PAGINATION_PROPERTIES,
-  VALID_CONSENT_MARKING_TABS_ID,
-} from "../../constant/constant";
+import { VALID_CONSENT_MARKING_TABS_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
@@ -141,30 +137,8 @@ const ConsentMarkingContent = ({ isEdit }) => {
     navigate(`${SESSION}?tab=2`);
   };
 
-  const setPageSizeAndNumberToDefault = () => {
-    const queryParams = {
-      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
-      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: DEFAULT_PAGE_SIZE,
-    };
-    urlService.setMultipleQueryStringValues(queryParams);
-  };
-
-  const setTableToDefault = () => {
-    const startIndex = 0;
-    const endIndex = DEFAULT_PAGE_SIZE;
-    const round1UpdatedData = round1InitialData.slice(startIndex, endIndex);
-    setTableData(round1UpdatedData);
-    const registrationUpdatedData = registrationInitialData.slice(
-      startIndex,
-      endIndex
-    );
-    registrationTableData(registrationUpdatedData);
-  };
-
   const handleOnTabSwitch = useCallback((tabId) => {
     setActiveTab(tabId);
-    setPageSizeAndNumberToDefault();
-    setTableToDefault();
   }, []);
 
   useEffect(() => {
