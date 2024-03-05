@@ -218,7 +218,6 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
         });
       }
     } else {
-      console.log(interviewTable.slice(0, -1), "interviewTable.slice(-1)..");
       handleUpdateConfigureInterview({
         module: currentlySelectedModuleKey,
         centreId: centreId,
