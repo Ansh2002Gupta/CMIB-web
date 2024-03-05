@@ -41,6 +41,20 @@ const EditCentreSetupFeeAndTime = ({
     };
   };
 
+  const handleOnChangeEndTime = (momentValue) => {
+    const time = dayjs(momentValue).format("HH:mm:ss");
+    const endTime = getTimeWithZeroSec(time);;
+    const startTime = formData?.centreStartTime;
+    if (
+      !startTime ||
+      dayjs(endTime, "HH:mm:ss").isAfter(dayjs(startTime, "HH:mm:ss"))
+    ) {
+      handleInputChange(endTime, "centreEndTime");
+    } else {
+      handleInputChange("", "centreEndTime");
+    }
+  }
+
   return (
     <div className={styles.topSectionStyle}>
       {selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
@@ -89,19 +103,7 @@ const EditCentreSetupFeeAndTime = ({
         customContainerStyles={styles.customContainerStyles}
         isRequired
         label={intl.formatMessage({ id: "label.centreEndTime" })}
-        onChange={(momentValue) => {
-          const time = dayjs(momentValue).format("HH:mm:ss");
-          const endTime = getTimeWithZeroSec(time);;
-          const startTime = formData?.centreStartTime;
-          if (
-            !startTime ||
-            dayjs(endTime, "HH:mm:ss").isAfter(dayjs(startTime, "HH:mm:ss"))
-          ) {
-            handleInputChange(endTime, "centreEndTime");
-          } else {
-            handleInputChange("", "centreEndTime");
-          }
-        }}
+        onChange={handleOnChangeEndTime}
         disabledTime={handleDisabledEndTime}
         placeholder={intl.formatMessage({
           id: "label.placeholder.centreEndTime",
