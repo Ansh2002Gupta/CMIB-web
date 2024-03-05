@@ -29,6 +29,7 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.lastRegistrationDate" }),
+          customColumnHeading: styles.customColumnHeading,
           dataIndex: "lastRegistrationDate",
           key: "lastRegistrationDate",
           isRequiredField: true,
@@ -46,6 +47,7 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.psychometricTestDate" }),
+          customColumnHeading: styles.customColumnHeading,
           dataIndex: "psychometricTestDate",
           isRequiredField: true,
           key: "psychometricTestDate",
@@ -82,6 +84,7 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.companyStartDate" }),
+          customColumnHeading: styles.customColumnHeading,
           dataIndex: "companyStartDate",
           key: "companyStartDate",
           isRequiredField: true,
@@ -99,6 +102,7 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.consentFromDate" }),
+          customColumnHeading: styles.customColumnHeading,
           dataIndex: "companyEndDate",
           isRequiredField: true,
           key: "companyEndDate",
@@ -116,6 +120,7 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.consentFromDate" }),
+          customColumnHeading: styles.customColumnHeading,
           dataIndex: "consentFromDate",
           isRequiredField: true,
           key: "consentFromDate",
@@ -133,6 +138,7 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.consentToDate" }),
+          customColumnHeading: styles.customColumnHeading,
           dataIndex: "consentToDate",
           isRequiredField: true,
           key: "consentToDate",
