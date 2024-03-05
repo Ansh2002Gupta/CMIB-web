@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -11,9 +11,10 @@ import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getCurrentActiveTab } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
-import { ACTIVE_TAB } from "../../constant/constant";
+import { ACTIVE_TAB, MODULE_KEYS } from "../../constant/constant";
 import {
   CONSENT_MARKING_REGESTRATION_DETAILS,
   LAST_MARKING_REGESTRATION_DETAILS,
@@ -32,6 +33,9 @@ const ConsentMarkingContent = ({ isEdit }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
       urlService.getQueryStringValue(ACTIVE_TAB),
@@ -71,31 +75,26 @@ const ConsentMarkingContent = ({ isEdit }) => {
     registrationInitialData
   );
 
-  const RegistrationDates = [
-    { id: 1, labeIntl: "startDateCompanies" },
-    { id: 2, labeIntl: "startDateCandidates" },
-    { id: 3, labeIntl: "lastDateBigCentres" },
-    { id: 4, labeIntl: "lastDateSmallCentres" },
-  ];
+  const RegistrationDates =
+    currentlySelectedModuleKey === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY
+      ? [
+          { id: 1, labeIntl: "startDateCompanies" },
+          { id: 2, labeIntl: "startDateCandidates" },
+          { id: 3, labeIntl: "lastDateBigCentres" },
+          {
+            id: 4,
+            labeIntl: "lastDateSmallCentres",
+          },
+        ]
+      : [
+          { id: 1, labeIntl: "startDateCompanies" },
+          { id: 2, labeIntl: "startDateCandidates" },
+          { id: 3, labeIntl: "lastDateBigCentres" },
+        ];
 
   const tabItems = [
     {
       key: "1",
-      title: intl.formatMessage({ id: "session.roundOne" }),
-      children: (
-        <ConsentTable
-          {...{ activeTab, isEdit, tableData, setTableData }}
-          totalData={round1InitialData}
-        />
-      ),
-    },
-    {
-      key: "2",
-      title: intl.formatMessage({ id: "session.roundTwo" }),
-      children: <>Round2</>,
-    },
-    {
-      key: "3",
       title: intl.formatMessage({
         id: "session.lastDateRegistrationCompanies",
       }),
@@ -107,6 +106,22 @@ const ConsentMarkingContent = ({ isEdit }) => {
           totalData={registrationInitialData}
         />
       ),
+    },
+    {
+      key: "2",
+      title: intl.formatMessage({ id: "session.roundOne" }),
+      children: (
+        <ConsentTable
+          {...{ activeTab, isEdit, tableData, setTableData }}
+          totalData={round1InitialData}
+        />
+      ),
+    },
+    currentlySelectedModuleKey ===
+      MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && {
+      key: "3",
+      title: intl.formatMessage({ id: "session.roundTwo" }),
+      children: <>Round2</>,
     },
   ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
