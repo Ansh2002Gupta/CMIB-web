@@ -21,49 +21,11 @@ const ConsentTable = ({
   setTableData,
   tableData,
 }) => {
-  const [current, setCurrent] = useState(
-    getValidPageNumber(
-      urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
-    )
-  );
-  const [pageSize, setPageSize] = useState(
-    getValidPageSize(
-      urlService.getQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE)
-    )
-  );
-
-  const updateTableData = (currentPageNumber, currentPageSize) => {
-    const startIndex = (currentPageNumber - 1) * currentPageSize;
-    const endIndex = currentPageNumber * currentPageSize;
-    const updatedData = totalData.slice(startIndex, endIndex);
-    setTableData(updatedData);
-  };
-
   const onDateChange = (record, key, value) => {
     const index = tableData.findIndex((item) => item.sNo === record.sNo);
     const newData = [...tableData];
     newData[index][key] = value;
     setTableData(newData);
-  };
-
-  const onChangeCurrentPage = (newPageNumber) => {
-    setCurrent(newPageNumber);
-    urlService.setQueryStringValue(
-      PAGINATION_PROPERTIES.CURRENT_PAGE,
-      newPageNumber
-    );
-    updateTableData(newPageNumber, pageSize);
-  };
-
-  const onChangePageSize = (size) => {
-    setPageSize(Number(size));
-    setCurrent(1);
-    const queryParams = {
-      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: size,
-      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
-    };
-    urlService.setMultipleQueryStringValues(queryParams);
-    updateTableData(1, size);
   };
 
   const columns = useConsentTableColumns(isEdit, registration, onDateChange);
@@ -108,7 +70,7 @@ const ConsentTable = ({
 
   return (
     <DataTable
-      {...{ columns, pageSize, onChangePageSize, onChangeCurrentPage }}
+      {...{ columns }}
       current={
         +urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
       }
