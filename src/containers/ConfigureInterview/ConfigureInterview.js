@@ -221,7 +221,8 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
 
   const redirectToMockInterviewListing = () => {
     navigate(
-      `/${currentlySelectedModuleKey}/${SESSION}${SETUP_MOCK_INTERVIEW}?${ROUND_ID}=${roundId}`
+      `/${currentlySelectedModuleKey}/${SESSION}${SETUP_MOCK_INTERVIEW}?${ROUND_ID}=${roundId}`,
+      { replace: true }
     );
   };
 

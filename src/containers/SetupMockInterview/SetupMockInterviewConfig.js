@@ -47,7 +47,7 @@ const getSetupMockColumn = (
         leftPreview: false,
         rightPreview: false,
         leftSrc: getImage("download"),
-        rightSrc: getImage("edit"),
+        rightSrc: getImage(isEdit ? "edit" : "eye"),
         visible: true,
       },
     }),
