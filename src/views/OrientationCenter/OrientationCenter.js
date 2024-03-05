@@ -159,7 +159,7 @@ const OrientationCenter = () => {
         onChange: (val, record) => {
           handleInputChange("schedule_date", val, record.id);
         },
-        disabledDate: (current) => {
+        getDisabledDate: (current, record) => {
           return current && current < dayjs().add(1, "day").startOf("day");
         },
       },
