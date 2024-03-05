@@ -181,14 +181,10 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
   };
 
   const overlapValidate = () => {
-    const isOverlapping = (startTime1, endTime1, startTime2, endTime2) => {
+    const isOverlapping = (time, startTime2, endTime2) => {
       return (
-        (dayjs(startTime1, "HH:mm:ss").isAfter(dayjs(startTime2, "HH:mm:ss")) &&
-          dayjs(startTime1, "HH:mm:ss").isBefore(
-            dayjs(endTime2, "HH:mm:ss")
-          )) ||
-        (dayjs(endTime1, "HH:mm:ss").isAfter(dayjs(startTime2, "HH:mm:ss")) &&
-          dayjs(endTime1, "HH:mm:ss").isBefore(dayjs(endTime2, "HH:mm:ss")))
+        dayjs(time, "HH:mm:ss").isAfter(dayjs(startTime2, "HH:mm:ss")) &&
+        dayjs(time, "HH:mm:ss").isBefore(dayjs(endTime2, "HH:mm:ss"))
       );
     };
     let errorCount = 0;
@@ -198,30 +194,30 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
           schedule.schedule_date === item.schedule_date && index !== ind
       );
       sameDates.map((data) => {
-        if (
-          isOverlapping(
-            item.start_time,
-            item.end_time,
-            data.start_time,
-            data.end_time
-          )
-        ) {
+        if (isOverlapping(item.start_time, data.start_time, data.end_time)) {
+          errorCount++;
+          handleError(
+            "start_time",
+            intl.formatMessage({ id: "label.error.overlap" }),
+            index
+          );
+          return;
+        }
+        if (isOverlapping(item.end_time, data.start_time, data.end_time)) {
           errorCount++;
           handleError(
             "end_time",
             intl.formatMessage({ id: "label.error.overlap" }),
             index
           );
+          return;
         }
       });
     });
-    console.log(errorCount, "errorCount..");
     if (errorCount > 0) {
       return false;
     } else return true;
   };
-
-  console.log(errors, "errors...");
 
   const redirectToMockInterviewListing = () => {
     navigate(

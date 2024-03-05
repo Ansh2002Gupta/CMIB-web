@@ -53,9 +53,7 @@ const getConfigureDateColumns = (
           );
         },
 
-        getError: (index) => {
-          errors[index].start_time;
-        },
+        getError: (index) => errors[index].start_time,
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
