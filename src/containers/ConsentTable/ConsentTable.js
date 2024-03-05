@@ -76,6 +76,7 @@ const ConsentTable = ({
       }
       currentDataLength={totalData.length}
       customContainerStyles={[styles.table, "customConsentTable"].join(" ")}
+      hidePagination={true}
       originalData={tableData}
     />
   );
