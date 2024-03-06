@@ -17,7 +17,7 @@ export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
   }
   if (date === "-") return date;
 
-  returndayjs(new Date()).format(dateFormat);
+  return dayjs(new Date()).format(dateFormat);
 };
 
 export const convertDateToStringDate = (date) => {
