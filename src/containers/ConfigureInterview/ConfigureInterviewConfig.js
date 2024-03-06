@@ -1,5 +1,9 @@
 import dayjs from "dayjs";
 
+import {
+  handleDisabledEndTime,
+  handleDisabledStartTime,
+} from "../../constant/utils";
 import styles from "./ConfigureInterview.module.scss";
 
 const getConfigureDateColumns = (
@@ -49,12 +53,7 @@ const getConfigureDateColumns = (
 
       renderDateTime: {
         getDisabledTime: (current, record) => {
-          return (
-            current &&
-            dayjs(current, "HH:mm:ss").isAfter(
-              dayjs(record?.end_time, "HH:mm:ss")
-            )
-          );
+          return handleDisabledStartTime(record?.end_time);
         },
 
         getError: (index) => errors[index].start_time,
@@ -82,12 +81,7 @@ const getConfigureDateColumns = (
       customColumnHeading: styles.customColumnHeading,
       renderDateTime: {
         getDisabledTime: (current, record) => {
-          return (
-            current &&
-            dayjs(current, "HH:mm:ss").isBefore(
-              dayjs(record?.start_time, "HH:mm:ss")
-            )
-          );
+          return handleDisabledEndTime(record?.start_time);
         },
         getError: (index) => errors[index].end_time,
         visible: true,
