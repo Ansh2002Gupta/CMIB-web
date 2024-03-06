@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { Image, Typography } from "antd";
@@ -7,36 +7,37 @@ import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { filterMenuData } from "../../constant/utils";
-import { setSelectedModule } from "../../globalContext/userProfile/userProfileActions";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useGlobalSessionListApi from "../../services/api-services/GlobalSessionList/useGlobalSessionListApi";
+import useSelectActiveMenuItem from "../../core/hooks/useSelectActiveMenuItem";
+import { setSelectedModule } from "../../globalContext/userProfile/userProfileActions";
+import { filterMenuData } from "../../constant/utils";
 import { removeItem } from "../../services/encrypted-storage-service";
-import { DASHBOARD } from "../../routes/routeNames";
 import modules from "../SideMenu/sideMenuItems";
 import { SESSION_KEY } from "../../constant/constant";
 import styles from "./ModuleChange.module.scss";
 import { classes } from "./Module.styles";
 
 const ModuleChange = ({ setIsModalOpen }) => {
+  const intl = useIntl();
+  const { getImage } = useContext(ThemeContext);
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
+
   const userData = userProfileDetails?.userDetails;
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const { navigateScreen: navigate } = useNavigateScreen();
-  const { getImage } = useContext(ThemeContext);
-  const intl = useIntl();
+
   const { getGlobalSessionList } = useGlobalSessionListApi();
+  const { navigateToMenuItem } = useSelectActiveMenuItem();
 
   const handleModuleSelect = (item) => {
     setIsModalOpen(false);
-    userProfileDispatch(setSelectedModule(item));   
+    userProfileDispatch(setSelectedModule(item));
     if (selectedModule?.key !== item?.key) {
       removeItem(SESSION_KEY);
       getGlobalSessionList(item?.key);
     }
-    navigate(`/${item.key}/${DASHBOARD}`);
+    navigateToMenuItem({ selectedModule: item });
   };
   return (
     <TwoRow

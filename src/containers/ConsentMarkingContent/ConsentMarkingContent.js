@@ -34,7 +34,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
   const { navigateScreen: navigate } = useNavigateScreen();
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
-      urlService.get(ACTIVE_TAB),
+      urlService.getQueryStringValue(ACTIVE_TAB),
       VALID_CONSENT_MARKING_TABS_ID
     )
   );
