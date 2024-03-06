@@ -9,7 +9,6 @@ import { ThemeContext } from "core/providers/theme";
 import MarkRequired from "../MarkRequired";
 import { formatDate } from "../../constant/utils";
 import styles from "./CustomDateTimePicker.module.scss";
-import { classes } from "./CustomDateTimePicker.styles";
 import "./Override.css";
 
 const CustomDateTimePicker = ({
@@ -61,7 +60,7 @@ const CustomDateTimePicker = ({
                   disabled,
                   disabledTime,
                 }}
-                use12Hours={false}
+                use12Hours={true}
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("clock")} />}
                 value={value ? dayjs(value) : null}

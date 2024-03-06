@@ -12,7 +12,7 @@ import styles from "./EditCentreSetupFeeAndTime.module.scss";
 const EditCentreSetupFeeAndTime = ({
   formData,
   handleInputChange,
-  hasRound2,
+  hasRoundTwo,
   isEdit,
   selectedModule,
 }) => {
@@ -60,7 +60,7 @@ const EditCentreSetupFeeAndTime = ({
     <div className={styles.topSectionStyle}>
       {selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
         <>
-          {!hasRound2 && (
+          {!hasRoundTwo && (
             <CustomInput
               type="inputNumber"
               customInputNumberStyles={styles.input}

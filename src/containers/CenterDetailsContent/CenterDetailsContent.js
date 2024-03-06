@@ -39,7 +39,7 @@ const CenterDetailsContent = ({
   const paymentType = location?.state?.paymentType || PAYMENT_TYPE.CENTRE_WISE;
   const isCentreWisePayment = paymentType === PAYMENT_TYPE.CENTRE_WISE;
 
-  const hasRound2 = /round2/i.test(location?.pathname);
+  const hasRoundTwo = /round2/i.test(location?.pathname);
 
   const addTableData = {
     isAddRow: true,
@@ -93,7 +93,7 @@ const CenterDetailsContent = ({
 
     setTableData(() => {
       const newTableData = isEdit
-        ? hasRound2 && !!interview_dates?.length
+        ? hasRoundTwo && !!interview_dates?.length
           ? [...interviewConfiguration]
           : [...interviewConfiguration, addTableData]
         : interviewConfiguration;
@@ -243,7 +243,7 @@ const CenterDetailsContent = ({
     };
 
     const newErrors = interviewDatesData.map((_, index) => {
-      if (hasRound2) {
+      if (hasRoundTwo) {
         if (!validateScheduleDate(index)) {
           allRowsValid = false;
           return errors[index];
@@ -310,7 +310,9 @@ const CenterDetailsContent = ({
 
     updateCentreConfig({
       module: selectedModule,
-      payload: hasRound2 ? roundTwoCentreDetailsPayload : centreDetailsPayload,
+      payload: hasRoundTwo
+        ? roundTwoCentreDetailsPayload
+        : centreDetailsPayload,
       centreId: centreId,
       roundId: roundId,
       onSuccessCallback: () =>
@@ -358,7 +360,7 @@ const CenterDetailsContent = ({
       addTableData,
       errors,
       handleSetError,
-      hasRound2,
+      hasRoundTwo,
       isNqcaModule,
       isEdit,
       paymentType,
@@ -372,7 +374,7 @@ const CenterDetailsContent = ({
     const isFirstTableRowFilled = () => {
       if (!tableData.length) return false;
 
-      if (hasRound2) {
+      if (hasRoundTwo) {
         const firstRow = tableData[0];
         const isValueFilled = (value) => !!value || value === 0;
         return isValueFilled(firstRow?.scheduleDate);
@@ -429,7 +431,7 @@ const CenterDetailsContent = ({
         rightSection={
           <CustomButton
             isBtnDisable={
-              (!hasRound2 && isNqcaModule && !formData?.PsychometricFee) ||
+              (!hasRoundTwo && isNqcaModule && !formData?.PsychometricFee) ||
               !formData?.centreStartTime ||
               !formData?.centreEndTime ||
               !isFirstTableRowFilled()
@@ -470,32 +472,35 @@ const CenterDetailsContent = ({
               <EditCentreSetupFeeAndTime
                 isEdit={isEdit}
                 handleInputChange={handleInputChange}
-                hasRound2={hasRound2}
+                hasRoundTwo={hasRoundTwo}
                 formData={formData}
                 selectedModule={selectedModule}
               />
             ) : (
               <div className={styles.gridStyle}>
                 <CustomGrid>
-                  {centreDetails.map((item) => (
-                    <TwoRow
-                      key={item.id}
-                      className={styles.gridItem}
-                      topSection={
-                        <Typography className={styles.grayText}>
-                          {intl.formatMessage({
-                            id: `label.${item.heading}`,
-                          })}
-                          <span className={styles.redText}> *</span>
-                        </Typography>
-                      }
-                      bottomSection={
-                        <div className={styles.blackText}>
-                          {item.value || "-"}
-                        </div>
-                      }
-                    />
-                  ))}
+                  {centreDetails.map((item) =>
+                    item?.heading?.toLowerCase() === "writtentestfee" &&
+                    hasRoundTwo ? null : (
+                      <TwoRow
+                        key={item.id}
+                        className={styles.gridItem}
+                        topSection={
+                          <Typography className={styles.grayText}>
+                            {intl.formatMessage({
+                              id: `label.${item.heading}`,
+                            })}
+                            <span className={styles.redText}> *</span>
+                          </Typography>
+                        }
+                        bottomSection={
+                          <div className={styles.blackText}>
+                            {item.value || "-"}
+                          </div>
+                        }
+                      />
+                    )
+                  )}
                 </CustomGrid>
               </div>
             )

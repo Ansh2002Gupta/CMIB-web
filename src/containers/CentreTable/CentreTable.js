@@ -25,7 +25,7 @@ import "./Override.css";
 const CentreTable = ({
   addTableData,
   errors,
-  hasRound2,
+  hasRoundTwo,
   isEdit,
   isNqcaModule,
   paymentType,
@@ -527,18 +527,6 @@ const CentreTable = ({
       key: "scheduleDate",
       renderText: { visible: true, isTypeDate: true },
     }),
-    ...(isCentreWisePayment
-      ? [
-          renderColumn({
-            title: intl.formatMessage({ id: "centre.participationFee" }),
-            dataIndex: "participationFee",
-            key: "participationFee",
-            renderText: {
-              visible: true,
-            },
-          }),
-        ]
-      : []),
   ];
 
   const viewConfigurationDetails = [
@@ -622,13 +610,13 @@ const CentreTable = ({
 
   return (
     <div
-      className={`${hasRound2 ? styles.roundTwoEditContainer : {}} ${
-        isEdit ? styles.editContainer : styles.container
-      }`}
+      className={`${
+        hasRoundTwo && isEdit ? styles.roundTwoEditContainer : {}
+      } ${isEdit ? styles.editContainer : styles.container}`}
     >
       <Table
         columns={
-          hasRound2
+          hasRoundTwo
             ? isEdit
               ? renderRound2Colomn
               : viewConfigurationDetailsRound2
