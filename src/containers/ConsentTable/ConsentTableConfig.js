@@ -34,7 +34,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
           key: "lastRegistrationDate",
           isRequiredField: true,
           renderDateTime: {
-            visible: isEdit,
+            visible: true,
+            isEditable: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
               id: "label.placeholder.lastRegistrationDate",
@@ -42,8 +43,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
               onDateChange(record, "lastRegistrationDate", date),
+            useExactDate: true,
           },
-          renderText: { visible: !isEdit, isTypeDate: true },
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.psychometricTestDate" }),
@@ -53,7 +54,7 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
           key: "psychometricTestDate",
           renderDateTime: {
             isEditable: isEdit,
-            visible: isEdit,
+            visible: true,
             type: "date",
             placeholder: intl.formatMessage({
               id: "label.placeholder.psychometricTestDate",
@@ -61,8 +62,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
               onDateChange(record, "psychometricTestDate", date),
+            useExactDate: true,
           },
-          renderText: { visible: !isEdit, isTypeDate: true },
         }),
       ]
     : [

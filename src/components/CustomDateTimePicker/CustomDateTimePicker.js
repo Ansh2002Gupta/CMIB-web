@@ -31,6 +31,7 @@ const CustomDateTimePicker = ({
   placeholder,
   type,
   value,
+  useExactDate,
 }) => {
   const { getImage } = useContext(ThemeContext);
 
@@ -81,7 +82,7 @@ const CustomDateTimePicker = ({
               />
             ) : (
               <Typography className={classes.dateText}>
-                {formatDate({ date: value })}
+                {formatDate({ date: value, useExactDate })}
               </Typography>
             )
           }

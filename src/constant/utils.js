@@ -11,11 +11,17 @@ import {
   VALID_ROW_PER_OPTIONS,
 } from "./constant";
 
-export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
-  if (date && date !== undefined && date !== "-") {
+export const formatDate = ({
+  date,
+  dateFormat = "DD/MM/YYYY",
+  useExactDate = false,
+}) => {
+  if (date && date !== undefined) {
     return dayjs(new Date(date)).format(dateFormat);
   }
-  if (date === "-") return date;
+  if (useExactDate) {
+    return "-";
+  }
 
   return dayjs(new Date()).format(dateFormat);
 };
