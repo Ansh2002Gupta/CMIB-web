@@ -41,6 +41,7 @@ import {
   EDIT_CONFIGURE_CENTRE,
   EDIT_SESSION,
   FORGOT_PASSWORD,
+  INTERVIEW_DETAILS,
   LOGIN,
   OUT_SOURCED,
   QUERIES,
@@ -161,7 +162,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
@@ -304,7 +305,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
@@ -363,7 +364,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
@@ -422,7 +423,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],

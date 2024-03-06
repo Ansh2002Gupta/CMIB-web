@@ -18,6 +18,13 @@ export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
   return dayjs(new Date()).format(dateFormat);
 };
 
+export const formatTime = ({ time, timeFormat = "h:mm A" }) => {
+  if (time) {
+    return dayjs(time).format(timeFormat);
+  }
+  return dayjs().format(timeFormat);
+};
+
 export const convertDateToStringDate = (date) => {
   return dayjs(date, "M-YYYY").format("MMM YYYY");
 };
@@ -352,4 +359,54 @@ export const checkForValidNumber = (number) => {
 
 export const getTimeWithZeroSec = (time) => {
   return `${time.split(":")?.slice(0, 2).join(":")}:00`;
-}
+};
+
+export const handleDisabledEndTime = (time) => {
+  if (!time) {
+    return {};
+  }
+  const startTime = dayjs(time, "HH:mm:ss");
+  return {
+    disabledHours: () => {
+      const hours = [];
+      for (let i = 0; i < startTime.hour(); i++) {
+        hours.push(i);
+      }
+      return hours;
+    },
+    disabledMinutes: (selectedHour) => {
+      const minutes = [];
+      if (selectedHour === startTime.hour()) {
+        for (let i = 0; i < startTime.minute(); i++) {
+          minutes.push(i);
+        }
+      }
+      return minutes;
+    },
+  };
+};
+
+export const handleDisabledStartTime = (time) => {
+  if (!time) {
+    return {};
+  }
+  const endTime = dayjs(time, "HH:mm:ss");
+  return {
+    disabledHours: () => {
+      const hours = [];
+      for (let i = endTime.hour() + 1; i < 24; i++) {
+        hours.push(i);
+      }
+      return hours;
+    },
+    disabledMinutes: (selectedHour) => {
+      const minutes = [];
+      if (selectedHour === endTime.hour()) {
+        for (let i = endTime.minute(); i < 60; i++) {
+          minutes.push(i);
+        }
+      }
+      return minutes;
+    },
+  };
+};

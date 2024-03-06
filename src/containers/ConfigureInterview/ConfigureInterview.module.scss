@@ -9,6 +9,11 @@
   gap: var(--gapMedium);
 }
 
+.viewTopContainer {
+  background-color: var(--bodyBg);
+  border-radius: var(--radiusMLg);
+}
+
 .titleText {
   font-size: var(--fontSizeNormal);
   color: var(--headingColor);
@@ -16,11 +21,18 @@
 }
 
 .table {
+  border-radius: var(--radiusMLg);
+  overflow: hidden;
   flex: 1;
   width: var(--fullWidth);
-  max-height: var(--height_60vh);
-  min-height: var(--height_45vh);
-  overflow-y: auto;
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
+}
+
+.editableTableContainer {
+  border-radius: 0px;
+  border: none;
 }
 
 .rowtext {
@@ -31,15 +43,33 @@
 
 .customTimeStyle {
   width: var(--fullWidth);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
+  border: var(--borderLight);
 }
 
 .customInputStyle {
-  max-width: var(--fullWidth);
-  min-width: var(--width_150);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
+  border: var(--borderLight);
 }
 
 .customColumnHeading {
   color: var(--subHeadingColor);
   font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
+}
+
+.bottomSectionStyle {
+  background-color: white;
+}
+
+.customImageStyle {
+  padding-top: var(--margin_10);
+}
+
+.customInputContainerStyles {
+  min-width: var(--width_120);
 }

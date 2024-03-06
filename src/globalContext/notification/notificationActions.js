@@ -34,3 +34,10 @@ export const updateSessionNotification = (payload) => {
     payload,
   };
 };
+
+export const updateInterviewNotification = (payload) => {
+  return {
+    type: types.UPDATE_INTERVIEW_NOTIFICATION,
+    payload,
+  };
+};

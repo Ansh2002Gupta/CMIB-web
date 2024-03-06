@@ -7,8 +7,9 @@ import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 
 import MarkRequired from "../MarkRequired";
-import { formatDate } from "../../constant/utils";
-import styles from "./CustomDateTimePicker.module.scss";
+import { formatDate, formatTime } from "../../constant/utils";
+import classes from "./CustomDateTimePicker.module.scss";
+import { styles } from "./CustomDateTimePicker.styles";
 import "./Override.css";
 
 const CustomDateTimePicker = ({
@@ -30,6 +31,7 @@ const CustomDateTimePicker = ({
   onChange,
   placeholder,
   type,
+  use12Hours,
   value,
 }) => {
   const { getImage } = useContext(ThemeContext);
@@ -51,23 +53,33 @@ const CustomDateTimePicker = ({
         <TwoRow
           topSection={
             type === "time" ? (
-              <TimePicker
-                {...{
-                  format,
-                  defaultValue,
-                  onChange,
-                  placeholder,
-                  disabled,
-                  disabledTime,
-                }}
-                use12Hours={true}
-                className={[styles.timeInput, customTimeStyle, errorTimeInput]}
-                suffixIcon={<Image src={getImage("clock")} />}
-                value={value ? dayjs(value) : null}
-                onSelect={onChange}
-                popupClassName="noFooterTimePick"
-                needConfirm={false}
-              />
+              isEditable ? (
+                <TimePicker
+                  {...{
+                    format,
+                    defaultValue,
+                    onChange,
+                    placeholder,
+                    disabled,
+                    disabledTime,
+                  }}
+                  use12Hours={use12Hours}
+                  className={[
+                    styles.timeInput,
+                    customTimeStyle,
+                    errorTimeInput,
+                  ]}
+                  suffixIcon={<Image src={getImage("clock")} />}
+                  value={value ? dayjs(value, "HH:mm:ss") : null}
+                  onSelect={onChange}
+                  popupClassName="noFooterTimePick"
+                  needConfirm={false}
+                />
+              ) : (
+                <Typography className={classes.dateText}>
+                  {formatTime({ time: dayjs(value, "HH:mm:ss") })}
+                </Typography>
+              )
             ) : isEditable ? (
               <DatePicker
                 {...{
@@ -92,7 +104,7 @@ const CustomDateTimePicker = ({
           bottomSection={
             errorMessage && (
               <Typography
-                className={[styles.errorText, customErrorTextStyles].join(" ")}
+                className={[classes.errorText, customErrorTextStyles].join(" ")}
               >
                 {errorMessage ? ` * ${errorMessage}` : ""}
               </Typography>
@@ -114,13 +126,14 @@ CustomDateTimePicker.defaultProps = {
   disabled: false,
   errorMessage: "",
   errorTimeInput: "",
-  format: "h:mm a",
+  format: "hh:mm a",
   isEditable: true,
   isRequired: false,
   label: "",
   onChange: () => {},
   placeholder: "",
   type: "time",
+  use12Hours: false,
   value: null,
 };
 
@@ -143,6 +156,7 @@ CustomDateTimePicker.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   type: PropTypes.string,
+  use12Hours: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 

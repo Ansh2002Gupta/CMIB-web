@@ -225,8 +225,8 @@ const CentreTable = ({
                       style={classes.interviewTypeDropDown}
                       className={
                         isNqcaModule || isCentreWisePayment
-                          ? styles.inputStyle
-                          : styles.inputStyleFixedWidth
+                          ? styles.inputDropdownStyle
+                          : styles.inputDropdownStyleFixedWidth
                       }
                       onChange={(val) =>
                         handleInputChange(val, "interviewType", index)
@@ -270,7 +270,7 @@ const CentreTable = ({
                 type="inputNumber"
                 value={text}
                 customContainerStyles={styles.customContainerStyles}
-                customInputNumberStyles={styles.inputStyle}
+                customInputNumberStyles={styles.inputNumberStyle}
                 onChange={(val) => {
                   handleInputChange(val, "participationFee", index);
                 }}
@@ -339,7 +339,7 @@ const CentreTable = ({
                       controls
                       type="inputNumber"
                       customContainerStyles={styles.customContainerStyles}
-                      customInputNumberStyles={styles.inputNumberStyle}
+                      customInputNumberStyles={styles.inputPartnersStyle}
                       value={text?.uptoPartners}
                       onChange={(val) => {
                         handleInputChange(val, "firm", index, "uptoPartners");
@@ -374,7 +374,7 @@ const CentreTable = ({
                 type="inputNumber"
                 value={text}
                 customContainerStyles={styles.customContainerStyles}
-                customInputNumberStyles={styles.inputStyle}
+                customInputNumberStyles={styles.inputNumberStyle}
                 onChange={(val) => {
                   handleInputChange(val, "norm1", index);
                 }}
@@ -405,7 +405,7 @@ const CentreTable = ({
                 type="inputNumber"
                 value={text}
                 customContainerStyles={styles.customContainerStyles}
-                customInputNumberStyles={styles.inputStyle}
+                customInputNumberStyles={styles.inputNumberStyle}
                 onChange={(val) => {
                   handleInputChange(val, "norm2", index);
                 }}
@@ -436,7 +436,7 @@ const CentreTable = ({
                 type="inputNumber"
                 value={text}
                 customContainerStyles={styles.customContainerStyles}
-                customInputNumberStyles={styles.inputStyle}
+                customInputNumberStyles={styles.inputNumberStyle}
                 onChange={(val) => {
                   handleInputChange(val, "norm2MinVacancy", index);
                 }}
