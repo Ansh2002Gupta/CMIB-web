@@ -17,7 +17,7 @@ import {
   setSelectedSession,
 } from "../../globalContext/globalSession/globalSessionActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { DASHBOARD } from "../../routes/routeNames";
+import useSelectActiveMenuItem from "../../core/hooks/useSelectActiveMenuItem";
 import { filterMenuData } from "../../constant/utils";
 import modules from "./sideMenuItems";
 import { MODULE_KEYS, SESSION_KEY } from "../../constant/constant";
@@ -27,19 +27,22 @@ import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./sideMenu.module.scss";
 
 const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
-  const [userProfileDetails] = useContext(UserProfileContext);
-  const responsive = useResponsive();
-  const { navigateScreen: navigate } = useNavigateScreen();
   const intl = useIntl();
-  const userData = userProfileDetails?.userDetails;
-  const [selectedKey, setSelectedKey] = useState();
-  const [openSessionSelector, setOpenSessionSelector] = useState(false);
-  const selectedModule = userProfileDetails?.selectedModuleItem;
+  const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails, globalSessionDispatch] =
     useContext(GlobalSessionContext);
-  const { globalSessionList, selectedSession } = globalSessionDetails;
+
+  const [selectedKey, setSelectedKey] = useState();
+  const [openSessionSelector, setOpenSessionSelector] = useState(false);
 
   const location = useLocation();
+  const { navigateScreen: navigate } = useNavigateScreen();
+  const responsive = useResponsive();
+  const { navigateToFirstAccessibleItem } = useSelectActiveMenuItem();
+
+  const userData = userProfileDetails?.userDetails;
+  const selectedModule = userProfileDetails?.selectedModuleItem;
+  const { globalSessionList, selectedSession } = globalSessionDetails;
   const accessibleModules = filterMenuData(modules, userData?.menu_items);
 
   function updateLabelsForIntl(menuItems, selectedKey) {
@@ -73,7 +76,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
   };
 
   const handleOnClickLogo = () => {
-    navigate(`/${selectedModule.key}/${DASHBOARD}`);
+    navigateToFirstAccessibleItem({ selectedModule });
   };
 
   useEffect(() => {
