@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -11,19 +11,16 @@ import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getCurrentActiveTab } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
-import { ACTIVE_TAB } from "../../constant/constant";
+import { ACTIVE_TAB, MODULE_KEYS } from "../../constant/constant";
 import {
   CONSENT_MARKING_REGESTRATION_DETAILS,
   LAST_MARKING_REGESTRATION_DETAILS,
   REGISTRATION_DATES,
 } from "../../dummyData";
-import {
-  DEFAULT_PAGE_SIZE,
-  PAGINATION_PROPERTIES,
-  VALID_CONSENT_MARKING_TABS_ID,
-} from "../../constant/constant";
+import { VALID_CONSENT_MARKING_TABS_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
@@ -32,9 +29,12 @@ const ConsentMarkingContent = ({ isEdit }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
-      urlService.get(ACTIVE_TAB),
+      urlService.getQueryStringValue(ACTIVE_TAB),
       VALID_CONSENT_MARKING_TABS_ID
     )
   );
@@ -71,31 +71,26 @@ const ConsentMarkingContent = ({ isEdit }) => {
     registrationInitialData
   );
 
-  const RegistrationDates = [
-    { id: 1, labeIntl: "startDateCompanies" },
-    { id: 2, labeIntl: "startDateCandidates" },
-    { id: 3, labeIntl: "lastDateBigCentres" },
-    { id: 4, labeIntl: "lastDateSmallCentres" },
-  ];
+  const registrationDates =
+    currentlySelectedModuleKey === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY
+      ? [
+          { id: 1, labeIntl: "startDateCompanies" },
+          { id: 2, labeIntl: "startDateCandidates" },
+          { id: 3, labeIntl: "lastDateBigCentres" },
+          {
+            id: 4,
+            labeIntl: "lastDateSmallCentres",
+          },
+        ]
+      : [
+          { id: 1, labeIntl: "startDateCompanies" },
+          { id: 2, labeIntl: "startDateCandidates" },
+          { id: 3, labeIntl: "lastDateBigCentres" },
+        ];
 
   const tabItems = [
     {
       key: "1",
-      title: intl.formatMessage({ id: "session.roundOne" }),
-      children: (
-        <ConsentTable
-          {...{ activeTab, isEdit, tableData, setTableData }}
-          totalData={round1InitialData}
-        />
-      ),
-    },
-    {
-      key: "2",
-      title: intl.formatMessage({ id: "session.roundTwo" }),
-      children: <>Round2</>,
-    },
-    {
-      key: "3",
       title: intl.formatMessage({
         id: "session.lastDateRegistrationCompanies",
       }),
@@ -105,6 +100,27 @@ const ConsentMarkingContent = ({ isEdit }) => {
           tableData={registrationTableData}
           setTableData={setRegistrationTableData}
           totalData={registrationInitialData}
+        />
+      ),
+    },
+    {
+      key: "2",
+      title: intl.formatMessage({ id: "session.roundOne" }),
+      children: (
+        <ConsentTable
+          {...{ activeTab, isEdit, tableData, setTableData }}
+          totalData={round1InitialData}
+        />
+      ),
+    },
+    currentlySelectedModuleKey ===
+      MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && {
+      key: "3",
+      title: intl.formatMessage({ id: "session.roundTwo" }),
+      children: (
+        <ConsentTable
+          {...{ activeTab, isEdit, tableData, setTableData }}
+          totalData={round1InitialData}
         />
       ),
     },
@@ -126,30 +142,8 @@ const ConsentMarkingContent = ({ isEdit }) => {
     navigate(`${SESSION}?tab=2`);
   };
 
-  const setPageSizeAndNumberToDefault = () => {
-    const queryParams = {
-      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
-      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: DEFAULT_PAGE_SIZE,
-    };
-    urlService.setMultipleQueryStringValues(queryParams);
-  };
-
-  const setTableToDefault = () => {
-    const startIndex = 0;
-    const endIndex = DEFAULT_PAGE_SIZE;
-    const round1UpdatedData = round1InitialData.slice(startIndex, endIndex);
-    setTableData(round1UpdatedData);
-    const registrationUpdatedData = registrationInitialData.slice(
-      startIndex,
-      endIndex
-    );
-    registrationTableData(registrationUpdatedData);
-  };
-
   const handleOnTabSwitch = useCallback((tabId) => {
     setActiveTab(tabId);
-    setPageSizeAndNumberToDefault();
-    setTableToDefault();
   }, []);
 
   useEffect(() => {
@@ -164,7 +158,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
       className={styles.mainContainer}
       topSection={
         <CustomGrid customStyle={styles.customStyle}>
-          {RegistrationDates.map((item) => {
+          {registrationDates.map((item) => {
             return (
               <CustomDateTimePicker
                 key={item?.id}
@@ -241,7 +235,9 @@ const ConsentMarkingContent = ({ isEdit }) => {
               />
             }
           />
-        ) : null
+        ) : (
+          <></>
+        )
       }
       bottomSectionStyle={classes.bottomSectionStyle}
     />
