@@ -9,35 +9,44 @@
   font-weight: var(--fontWeightMedium);
 }
 
-
-.customDateContainerStyles {
-  width: var(--width_160);;
+.container {
+  width: var(--fullWidth);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  overflow: hidden;
 }
 
-.inputNumbeCustomStyles {
-  width: var(--width_160);
-
+.sectionStyle {
+  min-width: var(--width_150);
+  width: var(--halfWidth);
 }
 
 .inputStyle {
-  width: var(--width_160);
   height: var(--height_44);
+  width: var(--fullWidth);
   display: flex;
   align-items: center;
+}
+
+.inputStyleFixedWidth {
+  height: var(--height_44);
+  width: var(--width_250);
+}
+
+.inputTableStyleFixedWidth {
+  width: var(--width_250);
 }
 
 .joinedCustomContainerStyles {
   height: var(--height_44);
   display: flex;
   align-items: center;
-  width: 91px;
   border-top-right-radius: var(--radiusNone);
   border-bottom-right-radius: var(--radiusNone);
 }
 
 .inputNumberStyle {
   height: var(--height_44);
-  width: 91px;
   display: flex;
   align-items: center;
   border-top-left-radius: var(--radiusNone);
@@ -57,11 +66,38 @@
 }
 
 .twoJointContainer {
-  gap: var(--gapXLarge);
+ padding-right: var(--paddingMedium);
 }
 
 .imageStyle {
   cursor: pointer;
   height: var(--height_24);
   width: var(--width_24);
+  padding-top: var(--paddingExtraSmall);
+  padding-bottom: var(--paddingExtraSmall);
+}
+
+.editContainer {
+  width: var(--fullWidth);
+  display: flex;
+  flex: 1;
+}
+
+.customColumnStyle {
+  width: var(--fullWidth);
+}
+
+.selectInput {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+}
+
+.errorGap {
+  gap: var(--gapXXSmall);
+}
+
+.customContainerStyle {
+  border: var(--borderLight);
 }

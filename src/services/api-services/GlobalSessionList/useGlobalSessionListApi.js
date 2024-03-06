@@ -6,6 +6,7 @@ import { getItem } from "../../encrypted-storage-service";
 import {
   setGlobalSessionDetails,
   setGlobalSessionList,
+  setIsGettingGlobalSessionList,
   setSelectedSession,
 } from "../../../globalContext/globalSession/globalSessionActions";
 import {
@@ -25,7 +26,9 @@ const useGlobalSessionListApi = () => {
         `/${selectedModule}` +
         GLOBAL_SESSION_LIST +
         "?perPage=9999";
+      globalSessionDispatch(setIsGettingGlobalSessionList(true));
       const res = await Http.get(url);
+      globalSessionDispatch(setIsGettingGlobalSessionList(false));
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS
@@ -53,7 +56,7 @@ const useGlobalSessionListApi = () => {
             })
           );
         }
-       return;
+        return;
       }
     } catch (err) {}
   };

@@ -18,6 +18,13 @@ export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
   return dayjs(new Date()).format(dateFormat);
 };
 
+export const formatTime = ({ time, timeFormat = "h:mm A" }) => {
+  if (time) {
+    return dayjs(time).format(timeFormat);
+  }
+  return dayjs().format(timeFormat);
+};
+
 export const convertDateToStringDate = (date) => {
   return dayjs(date, "M-YYYY").format("MMM YYYY");
 };
@@ -246,8 +253,8 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   if (
     chatData?.author?.id === userDetails?.id &&
-    chatData?.author?.type.toLowerCase() ===
-      userDetails?.user_type.toLowerCase()
+    (chatData?.author?.type.toLowerCase() === "admin" ||
+      chatData?.author?.type.toLowerCase() === "super admin")
   ) {
     return "sender";
   }
@@ -342,3 +349,14 @@ export const isUserAdmin = (userDetails) => {
     noOfControlItems === controlMenu?.length
   );
 };
+
+export const checkForValidNumber = (number) => {
+  if (number || number === 0) {
+    return true;
+  }
+  return false;
+};
+
+export const getTimeWithZeroSec = (time) => {
+  return `${time.split(":")?.slice(0, 2).join(":")}:00`;
+}
