@@ -62,7 +62,7 @@ const CampusInterviewContent = () => {
         />
       }
       isBottomFillSpace
-      bottomSection={!!activeTabChildren && activeTabChildren.children}
+      bottomSection={!!activeTabChildren ? activeTabChildren.children : ""}
     />
   );
 };
