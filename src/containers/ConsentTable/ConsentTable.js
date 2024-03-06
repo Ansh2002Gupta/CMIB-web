@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import useConsentTableColumns from "./ConsentTableConfig";
 import DataTable from "../../components/DataTable/DataTable";
+import useConsentTableColumns from "./ConsentTableConfig";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 

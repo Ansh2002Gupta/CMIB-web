@@ -22,7 +22,6 @@ export const formatDate = ({
   if (useExactDate) {
     return "-";
   }
-
   return dayjs(new Date()).format(dateFormat);
 };
 
