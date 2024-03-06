@@ -8,10 +8,12 @@ import DataTable from "../../components/DataTable/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
 import { ThemeContext } from "core/providers/theme";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+
 import getSetupMockColumn from "./SetupMockInterviewConfig";
 import { urlService } from "../../Utils/urlService";
 import { ROUND_ID } from "../../constant/constant";
@@ -26,7 +28,6 @@ import styles from "./SetupMockInterview.module.scss";
 
 const SetupMockInterviewContent = () => {
   const intl = useIntl();
-  const isEdit = true;
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -51,6 +52,12 @@ const SetupMockInterviewContent = () => {
       skipApiCallOnMount: true,
     },
   });
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+
+  const isEdit = currentGlobalSession?.is_editable;
 
   const goToConfigureInterview = (rowData, isEdit) => {
     const centreId = rowData?.id;
