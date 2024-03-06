@@ -59,7 +59,7 @@ const SetupCenterDetails = () => {
 
   useModuleWiseApiCall({
     initialApiCall: () => {
-      if (roundId) {
+      if (roundId && centreId) {
         getCentreDetail({});
       } else {
         navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
