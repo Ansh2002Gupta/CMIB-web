@@ -1,4 +1,5 @@
 import {
+  CAMPUS_INTERVIEW_SETTINGS,
   CONSENT_MARKING,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
@@ -48,6 +49,7 @@ export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 export const VALID_CONSENT_MARKING_TABS_ID = ["1", "2", "3"];
+export const CAMPUS_INTERVIEW_SETTINGS_TAB = ["1","2"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
@@ -219,7 +221,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
-    onClickNaviagtion: ROUND_ONE_SETUP_CENTERS,
+    onClickNaviagtion: CAMPUS_INTERVIEW_SETTINGS,
   },
 ];
 
@@ -376,3 +378,4 @@ export const CENTRE_TYPE_ENUM = {
 export const SESSION_KEY = "sessionKey";
 export const MAX_HSN_CODE_LENGTH = 8;
 export const MAX_BANK_AC_NO_LENGTH = 18;
+export const MAX_REGISTRATION_FEE = 10;

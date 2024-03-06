@@ -1,3 +1,5 @@
+
+import CampusInterviewSettings from "../views/CampusInterviewSettings";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
@@ -31,6 +33,7 @@ import {
   ADD,
   ADD_NEW_USER_DETAILS,
   ADD_SESSION,
+  CAMPUS_INTERVIEW_SETTINGS,
   CONFIGURATIONS,
   COMPANIES,
   COMPANIES_DETAILS,
@@ -162,6 +165,10 @@ const config = [
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
         element: <ConfigureInterviewDates />,
+      },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
       },
     ],
   },
@@ -298,6 +305,10 @@ const config = [
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
         element: <ConfigureInterviewDates />,
       },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
+      },
     ],
   },
   {
@@ -357,6 +368,10 @@ const config = [
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
         element: <ConfigureInterviewDates />,
       },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
+      },
     ],
   },
   {
@@ -415,6 +430,10 @@ const config = [
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
         element: <ConfigureInterviewDates />,
+      },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
       },
     ],
   },

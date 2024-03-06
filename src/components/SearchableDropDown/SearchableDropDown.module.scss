@@ -4,7 +4,6 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   border-radius: var(--radiusLg);
-  border: var(--borderLight);
 }
 
 .redText {
@@ -22,7 +21,6 @@
 }
 
 .selectedItemsContainer {
-  padding-top: var(--paddingXXSmall);
   gap: var(--paddingXXSmall);
   display: flex;
   flex-wrap: wrap;
@@ -69,7 +67,7 @@
 }
 
 .errorText {
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--error);
 }

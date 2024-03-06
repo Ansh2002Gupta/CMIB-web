@@ -108,6 +108,12 @@ const locale = {
   "session.placeholder.hsnCode": "Enter HSN Code/ SAC ",
   "session.placeholder.bankACNumber": "Enter Bank A/C Number",
   "session.placeholder.ifscCode": "Enter IFSC Code",
+  "session.placeholder.cgst": "Enter CGST / Taxes (in %)",
+  "session.placeholder.sgst": "Enter SGST / Taxes (in %)",
+  "session.placeholder.igst": "Enter IGST / Taxes (in %)",
+  "session.placeholder.noGst": "Select Company Type",
+  "session.placeholder.discountRate": "Enter Discount Rate (in %)",
+  "session.placeholder.memberRegistrationFee": "Enter Member Registration Fee",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
   "session.lastDateRegistrationCompanies":
@@ -142,6 +148,14 @@ const locale = {
   "session.setUpRoundTwo": "Set Up Round 2",
   "session.addRoundTwoDetails": "Add Round 2 Details",
   "session.centreErrorMsg": "Please select alteast one centre.",
+  "session.paymentSettings": "Payment Settings",
+  "session.forCandidateAndCompany": "For Candidate & Company",
+  "session.payment.cgst": "CGST / Taxes (in %)",
+  "session.payment.sgst": "SGST / Taxes (in %)",
+  "session.payment.igst": "IGST / Taxes (in %)",
+  "session.payment.noGst": "No GST For",
+  "session.payment.discountRate": "Discount Rate (in %)",
+  "session.payment.memberRegistrationFee": "Member Registration Fee",
   "label.viewProfile": "View Profile",
   "label.myProfile": "My Profile",
   "label.changePassword": "Change Password",
@@ -487,6 +501,8 @@ const locale = {
   "label.updateSessionSuccessfully": "Session has been updated successfully",
   "label.company_name": "Company Name",
   "label.no_prior_chats_found": "No prior chats found",
+  "label.path.campus-interview-settings": "Campus Interview Settings",
+  "label.setCampusInterviewSettings": "Set Campus Interview Settings",
 };
 
 export default locale;

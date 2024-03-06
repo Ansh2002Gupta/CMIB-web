@@ -1,0 +1,17 @@
+.topSectionStyle {
+  padding-top: var(--gapMedium);
+  padding-left: var(--gapMedium);
+  padding-right: var(--gapMedium);
+  border-bottom: var(--borderLight);
+  background-color: var(--bodyBg);
+  gap: var(--gapMedium);
+}
+
+.customStyles {
+  justify-content: space-between;
+  font-size: var(--fontSizeXlargeMedium);
+}
+
+.mainContainer {
+  background-color: var(--blueBg);
+}
