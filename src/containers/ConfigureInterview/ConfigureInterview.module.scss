@@ -50,8 +50,6 @@
 }
 
 .customInputStyle {
-  max-width: var(--fullWidth);
-  min-width: var(--width_150);
   height: var(--height_44);
   display: flex;
   align-items: center;
@@ -70,4 +68,8 @@
 
 .customImageStyle {
   padding-top: var(--margin_10);
+}
+
+.customInputContainerStyles {
+  min-width: var(--width_120);
 }
