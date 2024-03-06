@@ -25,6 +25,7 @@ import "./Override.css";
 const CentreTable = ({
   addTableData,
   errors,
+  hasRound2,
   isEdit,
   isNqcaModule,
   paymentType,
@@ -474,6 +475,72 @@ const CentreTable = ({
     },
   ];
 
+  const renderRound2Colomn = [
+    {
+      title: () => (
+        <Typography className={styles.tableHeader}>
+          {intl.formatMessage({ id: "centre.scheduleDate" })}
+          <span className={styles.redText}> *</span>
+        </Typography>
+      ),
+      className: styles.tableHeader,
+      key: "scheduleDate",
+      render: (text, record, index) => ({
+        props: {
+          className:
+            isNqcaModule || isCentreWisePayment
+              ? ""
+              : styles.inputTableStyleFixedWidth,
+        },
+        children: (
+          <CustomDateTimePicker
+            value={text?.scheduleDate ? dayjs(text?.scheduleDate) : null}
+            customTimeStyle={
+              isNqcaModule || isCentreWisePayment
+                ? styles.inputStyle
+                : styles.inputStyleFixedWidth
+            }
+            type="date"
+            onChange={(val) => {
+              handleInputChange(
+                val ? dayjs(val).format("YYYY-MM-DD") : "",
+                "scheduleDate",
+                index
+              );
+            }}
+            disabledDate={isDateDisabled}
+            placeholder={intl.formatMessage({
+              id: "centre.placeholder.selectDate",
+            })}
+            errorMessage={errors[index]?.scheduleDate}
+            isError={!!errors[index]?.scheduleDate}
+          />
+        ),
+      }),
+    },
+  ];
+
+  const viewConfigurationDetailsRound2 = [
+    renderColumn({
+      title: intl.formatMessage({ id: "centre.scheduleDate" }),
+      dataIndex: "scheduleDate",
+      key: "scheduleDate",
+      renderText: { visible: true, isTypeDate: true },
+    }),
+    ...(isCentreWisePayment
+      ? [
+          renderColumn({
+            title: intl.formatMessage({ id: "centre.participationFee" }),
+            dataIndex: "participationFee",
+            key: "participationFee",
+            renderText: {
+              visible: true,
+            },
+          }),
+        ]
+      : []),
+  ];
+
   const viewConfigurationDetails = [
     renderColumn({
       title: intl.formatMessage({ id: "centre.scheduleDate" }),
@@ -556,7 +623,15 @@ const CentreTable = ({
   return (
     <div className={isEdit ? styles.editContainer : styles.container}>
       <Table
-        columns={isEdit ? columns : viewConfigurationDetails}
+        columns={
+          hasRound2
+            ? isEdit
+              ? renderRound2Colomn
+              : viewConfigurationDetailsRound2
+            : isEdit
+            ? columns
+            : viewConfigurationDetails
+        }
         dataSource={tableData}
         pagination={false}
         rowClassName={!isEdit ? styles.rowtext : ""}

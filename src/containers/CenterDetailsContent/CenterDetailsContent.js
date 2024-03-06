@@ -39,6 +39,8 @@ const CenterDetailsContent = ({
   const paymentType = location?.state?.paymentType || PAYMENT_TYPE.CENTRE_WISE;
   const isCentreWisePayment = paymentType === PAYMENT_TYPE.CENTRE_WISE;
 
+  const hasRound2 = /round2/i.test(location?.pathname);
+
   const addTableData = {
     isAddRow: true,
     scheduleDate: null,
@@ -70,7 +72,7 @@ const CenterDetailsContent = ({
         id: interviewRow.id,
         scheduleDate: interviewRow?.interview_schedule_date || null,
         ...(isCentreWisePayment && {
-          participationFee: interviewRow.participation_fee?.toString(),
+          participationFee: interviewRow?.participation_fee?.toString(),
         }),
         ...(isCentreWisePayment && {
           firm: {
@@ -78,20 +80,22 @@ const CenterDetailsContent = ({
             uptoPartners: interviewRow.numbers_of_partners?.toString(),
           },
         }),
-        ...(isNqcaModule && { norm1: interviewRow.norm1.toString() }),
-        ...(isNqcaModule && { norm2: interviewRow.norm2.toString() }),
+        ...(isNqcaModule && { norm1: interviewRow?.norm1?.toString() }),
+        ...(isNqcaModule && { norm2: interviewRow?.norm2?.toString() }),
         ...(isNqcaModule && {
-          norm2MinVacancy: interviewRow.norm2_min_vacancy?.toString(),
+          norm2MinVacancy: interviewRow?.norm2_min_vacancy?.toString(),
         }),
         ...(isOverseasModule && {
-          interviewType: interviewRow.interview_type,
+          interviewType: interviewRow?.interview_type,
         }),
       })
     );
 
     setTableData(() => {
       const newTableData = isEdit
-        ? [...interviewConfiguration, addTableData]
+        ? hasRound2 && !!interview_dates?.length
+          ? [...interviewConfiguration]
+          : [...interviewConfiguration, addTableData]
         : interviewConfiguration;
 
       setErrors(
@@ -120,6 +124,15 @@ const CenterDetailsContent = ({
 
   const handleCancel = () => {
     navigate(-1);
+  };
+
+  const validateScheduleDate = (index) => {
+    let errorCount = 0;
+    if (!tableData[index]?.scheduleDate) {
+      handleSetError("scheduleDate", index);
+      errorCount += 1;
+    }
+    return errorCount <= 0;
   };
 
   const validate = (index) => {
@@ -230,11 +243,17 @@ const CenterDetailsContent = ({
     };
 
     const newErrors = interviewDatesData.map((_, index) => {
-      if (!validate(index)) {
-        allRowsValid = false;
-        return errors[index];
+      if (hasRound2) {
+        if (!validateScheduleDate(index)) {
+          allRowsValid = false;
+          return errors[index];
+        }
+      } else {
+        if (!validate(index)) {
+          allRowsValid = false;
+          return errors[index];
+        }
       }
-
       return defaultErrorState;
     });
 
@@ -243,6 +262,17 @@ const CenterDetailsContent = ({
     if (!allRowsValid) {
       return;
     }
+
+    const roundTwoCentreDetailsPayload = {
+      centre_start_time: formData?.centreStartTime,
+      centre_end_time: formData.centreEndTime,
+      interview_dates: interviewDatesData.map((item) => {
+        const interviewDateDetails = {
+          interview_schedule_date: item.scheduleDate,
+        };
+        return interviewDateDetails;
+      }),
+    };
 
     const centreDetailsPayload = {
       centre_start_time: formData?.centreStartTime,
@@ -280,7 +310,7 @@ const CenterDetailsContent = ({
 
     updateCentreConfig({
       module: selectedModule,
-      payload: centreDetailsPayload,
+      payload: hasRound2 ? roundTwoCentreDetailsPayload : centreDetailsPayload,
       centreId: centreId,
       roundId: roundId,
       onSuccessCallback: () =>
@@ -328,6 +358,7 @@ const CenterDetailsContent = ({
       addTableData,
       errors,
       handleSetError,
+      hasRound2,
       isNqcaModule,
       isEdit,
       paymentType,
@@ -341,6 +372,11 @@ const CenterDetailsContent = ({
     const isFirstTableRowFilled = () => {
       if (!tableData.length) return false;
 
+      if (hasRound2) {
+        const firstRow = tableData[0];
+        const isValueFilled = (value) => !!value || value === 0;
+        return isValueFilled(firstRow?.scheduleDate);
+      }
       const firstRow = tableData[0];
       const isValueFilled = (value) => !!value || value === 0;
 
@@ -393,7 +429,7 @@ const CenterDetailsContent = ({
         rightSection={
           <CustomButton
             isBtnDisable={
-              (isNqcaModule && !formData?.PsychometricFee) ||
+              (!hasRound2 && isNqcaModule && !formData?.PsychometricFee) ||
               !formData?.centreStartTime ||
               !formData?.centreEndTime ||
               !isFirstTableRowFilled()
@@ -434,6 +470,7 @@ const CenterDetailsContent = ({
               <EditCentreSetupFeeAndTime
                 isEdit={isEdit}
                 handleInputChange={handleInputChange}
+                hasRound2={hasRound2}
                 formData={formData}
                 selectedModule={selectedModule}
               />

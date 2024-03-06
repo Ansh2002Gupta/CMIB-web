@@ -158,7 +158,8 @@ const locale = {
   "setupCentres.participationFees": "Participation Fees",
   "setupCentres.enterParticipationFees": "Enter Participation Fees",
   "setupCentres.feesError": "Please enter valid participation fees",
-  "setupCentres.paymentTypeNote": "*If you change the payment type then the data of interview dates for all centres will be lost and you have to fill it again.",
+  "setupCentres.paymentTypeNote":
+    "*If you change the payment type then the data of interview dates for all centres will be lost and you have to fill it again.",
   "label.dragNdrop": "Drag & drop files or",
   "label.browse": "Browse",
   "label.supportedFormat": "Supported formats: png, jpg, jpeg",
@@ -477,6 +478,7 @@ const locale = {
   "label.search_by_name_or_registration_no":
     "Search by name and registration/membership number",
   "label.path.round1": "Round 1",
+  "label.path.round2": "Round 2",
   "label.path.setup-centers": "Setup centres",
   "label.big_centres": "Big Centres",
   "label.small_centres": "Small Centres",
