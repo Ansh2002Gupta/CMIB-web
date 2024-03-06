@@ -1,5 +1,4 @@
-import React, { useCallback, useState, useMemo, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useCallback, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -11,7 +10,9 @@ import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { getCurrentActiveTab } from "../../constant/utils";
+import { urlService } from "../../Utils/urlService";
 import { ACTIVE_TAB } from "../../constant/constant";
 import {
   CONSENT_MARKING_REGESTRATION_DETAILS,
@@ -24,18 +25,16 @@ import {
   VALID_CONSENT_MARKING_TABS_ID,
 } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
 
 const ConsentMarkingContent = ({ isEdit }) => {
   const intl = useIntl();
   const responsive = useResponsive();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
-      searchParams.get(ACTIVE_TAB),
+      urlService.get(ACTIVE_TAB),
       VALID_CONSENT_MARKING_TABS_ID
     )
   );
@@ -128,11 +127,11 @@ const ConsentMarkingContent = ({ isEdit }) => {
   };
 
   const setPageSizeAndNumberToDefault = () => {
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
-      return prev;
-    });
+    const queryParams = {
+      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
+      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: DEFAULT_PAGE_SIZE,
+    };
+    urlService.setMultipleQueryStringValues(queryParams);
   };
 
   const setTableToDefault = () => {
@@ -154,12 +153,9 @@ const ConsentMarkingContent = ({ isEdit }) => {
   }, []);
 
   useEffect(() => {
-    const activeTab = searchParams.get(ACTIVE_TAB);
+    const activeTab = urlService.getQueryStringValue(ACTIVE_TAB);
     if (!VALID_CONSENT_MARKING_TABS_ID.includes(activeTab)) {
-      setSearchParams((prev) => {
-        prev.set(ACTIVE_TAB, 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(ACTIVE_TAB, 1);
     }
   }, []);
 

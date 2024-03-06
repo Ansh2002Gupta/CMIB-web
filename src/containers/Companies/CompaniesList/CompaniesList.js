@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState, useLayoutEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Image, Input } from "antd";
 
@@ -10,13 +9,14 @@ import DataTable from "../../../components/DataTable";
 import SearchFilter from "../../../components/SearchFilter";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
+import { getValidPageNumber, getValidPageSize } from "../../../constant/utils";
+import { urlService } from "../../../Utils/urlService";
 import { ReactComponent as ArrowDown } from "../../../themes/base/assets/images/arrow-down.svg";
 import {
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
 } from "../../../constant/constant";
-import { getValidPageNumber, getValidPageSize } from "../../../constant/utils";
 import { COMPANY_DATA_SOURCE, COMPANIES_FILTER_DATA } from "../../../dummyData";
 import styles from "./CompaniesList.module.scss";
 
@@ -24,7 +24,6 @@ const CompaniesContent = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const { getImage } = useContext(ThemeContext);
 
@@ -35,10 +34,14 @@ const CompaniesContent = () => {
     COMPANY_DATA_SOURCE.length
   );
   const [current, setCurrent] = useState(
-    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+    getValidPageNumber(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
+    )
   );
   const [pageSize, setPageSize] = useState(
-    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+    getValidPageSize(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE)
+    )
   );
 
   const goToUserDetailsPage = (data) => {
@@ -72,22 +75,21 @@ const CompaniesContent = () => {
     setPageSize(Number(size));
     setCurrent(1);
     updateTableData(1, size);
-
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-      return prev;
-    });
+    const queryParams = {
+      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: size,
+      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
+    };
+    urlService.setMultipleQueryStringValues(queryParams);
   };
 
   const onChangeCurrentPage = (newPageNumber) => {
     //NOTE: if you want to do anything on changing of current page number please consider doing it here
     setCurrent(newPageNumber);
     updateTableData(newPageNumber, pageSize);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
-      return prev;
-    });
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE,
+      newPageNumber
+    );
   };
 
   const columns = [
@@ -146,25 +148,24 @@ const CompaniesContent = () => {
   ];
 
   useLayoutEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
+    const currentPage = +urlService.getQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE
+    );
+    const currentPagePerRow = +urlService.getQueryStringValue(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
     if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     }
 
     if (
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
     ) {
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, DEFAULT_PAGE_SIZE);
-        return prev;
-      });
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES.ROW_PER_PAGE,
+        DEFAULT_PAGE_SIZE
+      );
     }
   }, []);
 
@@ -176,10 +177,7 @@ const CompaniesContent = () => {
       COMPANY_DATA_SOURCE.length / pageSize
     );
     if (current > totalNumberOfValidPages) {
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       setCurrent(1);
     }
   }, [currentTableData, current, pageSize]);

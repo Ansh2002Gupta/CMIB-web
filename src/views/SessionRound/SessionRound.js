@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
-import { useSearchParams } from "react-router-dom";
 
 import { TwoRow } from "../../core/layouts";
 import useFetch from "../../core/hooks/useFetch";
@@ -14,6 +13,7 @@ import EditSessionRound from "../../containers/EditSessionRound";
 import RoundCard from "../../containers/RoundCard";
 import SessionRoundDetails from "../../containers/SessionRoundDetails";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { urlService } from "../../Utils/urlService";
 import { ADMIN_ROUTE, ROUNDS } from "../../constant/apiEndpoints";
 import { API_STATUS, FORM_STATES } from "../../constant/constant";
 import { classes } from "./SessionRound.styles";
@@ -31,9 +31,8 @@ const SessionRound = ({
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const [searchParams, setSearchParams] = useSearchParams();
   const [currentMode, setCurrentMode] = useState(
-    searchParams.get("mode") || FORM_STATES.VIEW_ONLY
+    urlService.getQueryStringValue("mode") || FORM_STATES.VIEW_ONLY
   );
 
   const {
@@ -54,16 +53,13 @@ const SessionRound = ({
   }, [selectedModule?.key, roundId]);
 
   useEffect(() => {
-    if (searchParams?.get("mode") !== currentMode) {
-      setCurrentMode(searchParams?.get("mode"));
+    if (urlService.getQueryStringValue("mode") !== currentMode) {
+      setCurrentMode(urlService.getQueryStringValue("mode"));
     }
-  }, [searchParams?.get("mode")]);
+  }, [urlService.getQueryStringValue("mode")]);
 
   const handleOnClickEdit = () => {
-    setSearchParams((prev) => {
-      prev.set("mode", FORM_STATES.EDITABLE);
-      return prev;
-    });
+    urlService.setQueryStringValue("mode", FORM_STATES.EDITABLE);
     setCurrentMode(FORM_STATES.EDITABLE);
   };
 
@@ -71,10 +67,7 @@ const SessionRound = ({
     if (value) {
       fetchData({});
     }
-    setSearchParams((prev) => {
-      prev.set("mode", FORM_STATES.VIEW_ONLY);
-      return prev;
-    });
+    urlService.setQueryStringValue("mode", FORM_STATES.VIEW_ONLY);
     setCurrentMode(FORM_STATES.VIEW_ONLY);
   };
 

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
+import { useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Spin } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -8,24 +9,23 @@ import CenterDetailsContent from "../../containers/CenterDetailsContent";
 import CenterDetailsHeader from "../../containers/CenterDetailsHeader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
+import { getErrorMessage } from "../../constant/utils";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { urlService } from "../../Utils/urlService";
 import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
 } from "../../constant/apiEndpoints";
-import { getErrorMessage } from "../../constant/utils";
 import { ROUND_ID } from "../../constant/constant";
-import { Spin } from "antd";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import styles from "./SetupCenterDetails.module.scss";
 
 const SetupCenterDetails = () => {
-  const [searchParams] = useSearchParams();
   const { centreId } = useParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const isEdit = searchParams.get("mode") === "edit";
-  const roundId = searchParams.get(ROUND_ID);
+  const isEdit = urlService.getQueryStringValue("mode") === "edit";
+  const roundId = urlService.getQueryStringValue(ROUND_ID);
   const {
     data: centreDetailData,
     error: errorWhileGettingDetails,

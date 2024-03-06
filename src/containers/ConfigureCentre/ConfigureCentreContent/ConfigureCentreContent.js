@@ -1,21 +1,22 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
-import { Image, Input, Typography } from "antd";
 import * as _ from "lodash";
+import { Image, Input, Typography } from "antd";
 
 import CustomLoader from "../../../components/CustomLoader";
 import DataTable from "../../../components/DataTable";
 import ErrorMessageBox from "../../../components/ErrorMessageBox/ErrorMessageBox";
 import useFetch from "../../../core/hooks/useFetch";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
+import { ThemeContext } from "core/providers/theme";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
+import { urlService } from "../../../Utils/urlService";
+import { validateSearchTextLength } from "../../../Utils/validations";
 import { CENTRE_DETAILS } from "../../../routes/routeNames";
-import { ADMIN_ROUTE, CENTRE_END_POINT, } from "../../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../../constant/apiEndpoints";
 import {
   DEBOUNCE_TIME,
   PAGINATION_PROPERTIES,
@@ -28,7 +29,6 @@ import {
   getValidSortByValue,
   toggleSorting,
 } from "../../../constant/utils";
-import { validateSearchTextLength } from "../../../Utils/validations";
 import styles from "./ConfigureCentreContent.module.scss";
 
 const ConfigureCentreContent = () => {
@@ -36,23 +36,26 @@ const ConfigureCentreContent = () => {
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
-  const [searchParams, setSearchParams] = useSearchParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
 
   const [searchedValue, setSearchedValue] = useState(
-    searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
+    urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
   const [current, setCurrent] = useState(
-    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+    getValidPageNumber(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
+    )
   );
   const [pageSize, setPageSize] = useState(
-    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+    getValidPageSize(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE)
+    )
   );
   const [sortedOrder, setSortedOrder] = useState({
     sortDirection: getValidSortByValue(
-      searchParams.get(SORT_PROPERTIES.SORT_BY)
+      urlService.getQueryStringValue(SORT_PROPERTIES.SORT_BY)
     ),
     sortKeyName: "name",
   });
@@ -117,11 +120,8 @@ const ConfigureCentreContent = () => {
   const onChangePageSize = (size) => {
     setPageSize(Number(size));
     setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
-      return prev;
-    });
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
     fetchData({
       queryParamsObject: getRequestedParams({
         page: 1,
@@ -132,10 +132,10 @@ const ConfigureCentreContent = () => {
 
   const onChangeCurrentPage = (newPageNumber) => {
     setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
-      return prev;
-    });
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE,
+      newPageNumber
+    );
 
     fetchData({
       queryParamsObject: getRequestedParams({
@@ -154,25 +154,22 @@ const ConfigureCentreContent = () => {
           search: validateSearchTextLength(str),
         }),
       });
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     }
 
-    if (!str?.trim() && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
+    if (
+      !str?.trim() &&
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY)
+    ) {
       debounceSearch({
         queryParamsObject: getRequestedParams({
           page: 1,
           search: "",
         }),
       });
-      setSearchParams((prev) => {
-        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.removeParam(PAGINATION_PROPERTIES.SEARCH_QUERY);
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     }
     setSearchedValue(str);
   };
@@ -204,13 +201,10 @@ const ConfigureCentreContent = () => {
                 validSortByValue: toggleSorting(sortedOrder.sortDirection),
               }),
               onSuccessCallback: () => {
-                setSearchParams((prevValue) => {
-                  prevValue.set(
-                    SORT_PROPERTIES.SORT_BY,
-                    toggleSorting(sortedOrder.sortDirection)
-                  );
-                  return prevValue;
-                });
+                urlService.setQueryStringValue(
+                  SORT_PROPERTIES.SORT_BY,
+                  toggleSorting(sortedOrder.sortDirection)
+                );
                 setSortedOrder((prev) => {
                   return {
                     ...prev,
@@ -300,30 +294,27 @@ const ConfigureCentreContent = () => {
       const numberOfPages = Math.ceil(total / pageSize);
       if (current > numberOfPages || current <= 0) {
         setCurrent(1);
-        setSearchParams((prev) => {
-          prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-          return prev;
-        });
+        urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       }
     }
   }, [data?.meta?.total]);
 
   useEffect(() => {
     const validPageSize = getValidPageSize(
-      searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE)
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE)
     );
     const validPageNumber = getValidPageNumber(
-      searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE)
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
     );
     const validSortByValue = getValidSortByValue(
-      searchParams.get(SORT_PROPERTIES.SORT_BY)
+      urlService.getQueryStringValue(SORT_PROPERTIES.SORT_BY)
     );
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, validPageNumber);
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, validPageSize);
-      prev.set(SORT_PROPERTIES.SORT_BY, validSortByValue);
-      return prev;
-    });
+    const defaultQueryParams = {
+      [PAGINATION_PROPERTIES.CURRENT_PAGE]: validPageNumber,
+      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: validPageSize,
+      [SORT_PROPERTIES.SORT_BY]: validSortByValue,
+    };
+    urlService.setMultipleQueryStringValues(defaultQueryParams);
     if (userProfileDetails?.selectedModuleItem?.key) {
       fetchData({
         queryParamsObject: getRequestedParams({
