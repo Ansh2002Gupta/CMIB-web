@@ -12,10 +12,12 @@ import {
 } from "./constant";
 
 export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
-  if (date && date !== undefined) {
+  if (date && date !== undefined && date !== "-") {
     return dayjs(new Date(date)).format(dateFormat);
   }
-  return dayjs(new Date()).format(dateFormat);
+  if (date === "-") return date;
+
+  returndayjs(new Date()).format(dateFormat);
 };
 
 export const convertDateToStringDate = (date) => {

@@ -71,7 +71,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
     registrationInitialData
   );
 
-  const RegistrationDates =
+  const registrationDates =
     currentlySelectedModuleKey === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY
       ? [
           { id: 1, labeIntl: "startDateCompanies" },
@@ -158,7 +158,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
       className={styles.mainContainer}
       topSection={
         <CustomGrid customStyle={styles.customStyle}>
-          {RegistrationDates.map((item) => {
+          {registrationDates.map((item) => {
             return (
               <CustomDateTimePicker
                 key={item?.id}
@@ -235,7 +235,9 @@ const ConsentMarkingContent = ({ isEdit }) => {
               />
             }
           />
-        ) : null
+        ) : (
+          <></>
+        )
       }
       bottomSectionStyle={classes.bottomSectionStyle}
     />

@@ -8,10 +8,10 @@ import "./Override.css";
 
 const ConsentTable = ({
   isEdit,
-  totalData,
   registration,
   setTableData,
   tableData,
+  totalData,
 }) => {
   const onDateChange = (record, key, value) => {
     const index = tableData.findIndex((item) => item.sNo === record.sNo);
@@ -27,7 +27,7 @@ const ConsentTable = ({
       {...{ columns }}
       currentDataLength={totalData.length}
       customContainerStyles={[styles.table, "customConsentTable"].join(" ")}
-      hidePagination={true}
+      hidePagination
       originalData={tableData}
     />
   );

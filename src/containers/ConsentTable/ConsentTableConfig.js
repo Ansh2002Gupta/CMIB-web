@@ -25,7 +25,7 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
           title: intl.formatMessage({ id: "label.centreName" }),
           dataIndex: "centreName",
           key: "centreName",
-          renderText: { isTextBold: true, visible: true },
+          renderText: { isTextBold: true, visible: true, isCapitalize: true },
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.lastRegistrationDate" }),
