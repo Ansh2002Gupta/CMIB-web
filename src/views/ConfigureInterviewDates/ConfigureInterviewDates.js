@@ -10,12 +10,14 @@ import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
+import { urlService } from "../../Utils/urlService";
 import {
   CORE_ROUTE,
   INTERVIEW_DATES,
   MOCK_INTERVIEWS,
 } from "../../constant/apiEndpoints";
-import { API_STATUS } from "../../constant/constant";
+import { API_STATUS, STATUS_CODES, ROUND_ID } from "../../constant/constant";
+import { SESSION, SETUP_MOCK_INTERVIEW } from "../../routes/routeNames";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./ConfigureInterviewDates.module.scss";
 import { classes } from "./ConfigureInterviewDate.styles";
@@ -24,6 +26,7 @@ const ConfigureInterviewDates = () => {
   const intl = useIntl();
   const { centreId } = useParams();
   const [userProfileDetails] = useContext(UserProfileContext);
+  const roundId = urlService.getQueryStringValue(ROUND_ID);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const {
@@ -50,6 +53,14 @@ const ConfigureInterviewDates = () => {
       fetchData({});
     }
   }, [userProfileDetails?.selectedModuleItem?.key]);
+
+  useEffect(() => {
+    if (errorWhileFetchingInterview?.data?.code === STATUS_CODES.NOT_FOUND) {
+      navigate(
+        `/${currentlySelectedModuleKey}/${SESSION}${SETUP_MOCK_INTERVIEW}?${ROUND_ID}=${roundId}`
+      );
+    }
+  }, [errorWhileFetchingInterview?.data?.code]);
 
   return (
     <TwoRow
@@ -94,6 +105,7 @@ const ConfigureInterviewDates = () => {
               {...{
                 centreId,
                 interviewData,
+                roundId,
               }}
             />
           )}
