@@ -7,7 +7,7 @@ import CustomInput from "../../components/CustomInput";
 import SearchableDropDown from "../../components/SearchableDropDown";
 import { TwoRow } from "../../core/layouts";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
-import { MAX_REGISTRATION_FEE, SESSION_PERIOD } from "../../constant/constant";
+import { MAX_REGISTRATION_FEE_LENGTH, SESSION_PERIOD } from "../../constant/constant";
 import { classes } from "./PaymentSettings.styles";
 import styles from "./PaymentSettings.module.scss";
 
@@ -74,7 +74,7 @@ const PaymentSettingsTemplate = ({
                         customInputStyles={styles.input}
                         customContainerStyles={styles.customContainerStyles}
                         onChange={(val) => {
-                            (item.id !== 6 ? val.target.value <= 100 : val.target.value.length <= MAX_REGISTRATION_FEE) &&
+                            (item.id !== 6 ? val.target.value <= 100 : val.target.value.length <= MAX_REGISTRATION_FEE_LENGTH) &&
                           (NUMERIC_VALUE_REGEX.test(val.target.value) ||
                             val.target.value === "") &&
                             handleInputChange(val.target.value, item.label);
