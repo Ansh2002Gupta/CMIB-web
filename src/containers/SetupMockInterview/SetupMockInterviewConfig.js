@@ -12,13 +12,11 @@ const getSetupMockColumn = (
       title: intl.formatMessage({ id: "label.sNo" }),
       dataIndex: "id",
       key: "id",
-      renderText: {
-        visible: true,
-        includeDotAfterText: true,
-        textStyles: styles.textStyles,
-      },
       render: (_, __, index) => {
         return {
+          props: {
+            className: styles.customStyles,
+          },
           children: <p>{index + 1}.</p>,
         };
       },
