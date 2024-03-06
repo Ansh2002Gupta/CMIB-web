@@ -20,7 +20,7 @@
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
-  padding: var(--paddingExtraSmall);
+  padding: var(--padding_9) var(--padding_5);
   border-radius: var(--radiusLg);
   border: var(--borderLight);
   background-color: var(--bodyBg);
@@ -35,10 +35,7 @@
   color: var(--textBold) !important;
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
-  padding-left: var(--paddingSmall);
-  padding-right: var(--paddingSmall);
-  padding-top: var(--paddingExtraSmall);
-  padding-bottom: var(--paddingExtraSmall);
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
   border-radius: var(--radiusLg);
   border: var(--borderLight);
   flex: 1;
@@ -50,6 +47,10 @@
 
 .customContainerStyles {
   width: var(--fullWidth);
+}
+
+.customDatePickerStyles {
+  gap: var(--gapXXSmall);
 }
 
 @media (min-width: 400px) and (max-width: 600px) {

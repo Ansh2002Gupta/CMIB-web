@@ -79,7 +79,7 @@ const EditCentreSetupFeeAndTime = ({
       <CustomDateTimePicker
         customLabelStyles={styles.inputLabel}
         customTimeStyle={styles.timeInput}
-        customContainerStyles={styles.customContainerStyles}
+        customContainerStyles={styles.customDatePickerStyles}
         isRequired
         label={intl.formatMessage({ id: "label.centreStartTime" })}
         onChange={(momentValue, timeString) => {
@@ -100,7 +100,7 @@ const EditCentreSetupFeeAndTime = ({
       <CustomDateTimePicker
         customLabelStyles={styles.inputLabel}
         customTimeStyle={styles.timeInput}
-        customContainerStyles={styles.customContainerStyles}
+        customContainerStyles={styles.customDatePickerStyles}
         isRequired
         label={intl.formatMessage({ id: "label.centreEndTime" })}
         onChange={handleOnChangeEndTime}
