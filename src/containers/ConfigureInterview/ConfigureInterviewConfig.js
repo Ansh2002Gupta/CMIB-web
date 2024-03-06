@@ -121,6 +121,7 @@ const getConfigureDateColumns = (
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.no_of_facilities",
         }),
+        customInputContainerStyles: styles.customInputContainerStyles,
         customInputNumberStyles: styles.customInputStyle,
         onInputChange: (val, record, index) => {
           handleInputChange("no_of_facilities", val, index);
@@ -141,6 +142,7 @@ const getConfigureDateColumns = (
         inputPlaceholder: intl.formatMessage({
           id: "label.placeholder.slot_duration",
         }),
+        customInputContainerStyles: styles.customInputContainerStyles,
         customInputNumberStyles: styles.customInputStyle,
         onInputChange: (val, record, index) => {
           handleInputChange("slot_duration", val, index);

@@ -27,7 +27,7 @@ const getSetupMockColumn = (
       title: intl.formatMessage({ id: "label.centreName" }),
       dataIndex: "centre_name",
       key: "centre_name",
-      renderText: { isTextBold: true, visible: true },
+      renderText: { isTextBold: true, visible: true, isCapitalize: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.totalStudentsBooked" }),
