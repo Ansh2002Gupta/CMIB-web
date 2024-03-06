@@ -6,6 +6,7 @@ const initialState = {
   addSessionSuccessfully: false,
   updateUserSuccessfully: false,
   updateSessionSuccesssfully: false,
+  updateInterviewDateSuccessfully: false,
   isError: false,
 };
 
@@ -35,6 +36,11 @@ const notificationReducer = (state, action) => {
       return {
         ...state,
         updateSessionSuccessfully: action.payload,
+      };
+    case types.UPDATE_INTERVIEW_NOTIFICATION:
+      return {
+        ...state,
+        updateInterviewDateSuccessfully: action.payload,
       };
     default:
       return state;
