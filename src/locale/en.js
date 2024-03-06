@@ -158,7 +158,8 @@ const locale = {
   "setupCentres.participationFees": "Participation Fees",
   "setupCentres.enterParticipationFees": "Enter Participation Fees",
   "setupCentres.feesError": "Please enter valid participation fees",
-  "setupCentres.paymentTypeNote": "*If you change the payment type then the data of interview dates for all centres will be lost and you have to fill it again.",
+  "setupCentres.paymentTypeNote":
+    "*If you change the payment type then the data of interview dates for all centres will be lost and you have to fill it again.",
   "label.dragNdrop": "Drag & drop files or",
   "label.browse": "Browse",
   "label.supportedFormat": "Supported formats: png, jpg, jpeg",
@@ -525,6 +526,8 @@ const locale = {
   "label.session.setup-mock-interview": "Setup Mock Interview",
   "label.session.setupMockInterview.details": "Configure Interview Dates",
   "label.data_saved_successfully": "Data Saved Successfully.",
+  "label.updateInterviewDateSuccessfully":
+    "Interview Date Updated Successfully",
 };
 
 export default locale;

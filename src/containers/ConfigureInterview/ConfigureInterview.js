@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
@@ -8,19 +7,21 @@ import { TwoRow } from "../../core/layouts";
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import DataTable from "../../components/DataTable/DataTable";
 import { ThemeContext } from "core/providers/theme";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useUpdateConfigureInterview from "../../services/api-services/ConfigureInterview/useUpdateConfigureInterview";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import getConfigureDateColumns from "./ConfigureInterviewConfig";
-import { isOverlapping, getValidMode } from "../../Utils/validation";
-import { urlService } from "../../Utils/urlService";
+import { updateInterviewNotification } from "../../globalContext/notification/notificationActions";
+import { isOverlapping } from "../../Utils/validation";
 import { SETUP_MOCK_INTERVIEW, SESSION } from "../../routes/routeNames";
 import { ROUND_ID, NOTIFICATION_TYPES } from "../../constant/constant";
 import styles from "./ConfigureInterview.module.scss";
 
-const ConfigureInterview = ({ centreId, interviewData }) => {
+const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
@@ -39,10 +40,15 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
     no_of_facilities: null,
     slot_duration: "",
   };
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const [, setNotificationStateDispatch] = useContext(NotificationContext);
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
 
-  const isEdit =
-    getValidMode(urlService.getQueryStringValue("mode")) === "edit";
-  const roundId = urlService.getQueryStringValue(ROUND_ID);
+  const isEdit = !!(
+    currentGlobalSession?.is_editable && currentGlobalSession?.status
+  );
   const getInterviewTable = () => {
     if (isEdit) {
       if (interviewData) {
@@ -104,6 +110,21 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
       });
     }
   };
+
+  function checkForErrors() {
+    for (let error of errors) {
+      if (
+        error.schedule_date ||
+        error.start_time ||
+        error.end_time ||
+        error.no_of_facilities ||
+        error.slot_duration
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   const handleInputChange = (key, value, index) => {
     setInterviewTable((prevTableData) => {
@@ -249,6 +270,7 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
             centreId: centreId,
             payload: { data: interviewTable },
             onSuccessCallback: () => {
+              setNotificationStateDispatch(updateInterviewNotification(true));
               redirectToMockInterviewListing();
             },
             onErrorCallback: (error) => {
@@ -264,6 +286,7 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
           centreId: centreId,
           payload: { data: interviewTable.slice(0, -1) },
           onSuccessCallback: () => {
+            setNotificationStateDispatch(updateInterviewNotification(true));
             redirectToMockInterviewListing();
           },
           onErrorCallback: (error) => {
@@ -320,12 +343,13 @@ const ConfigureInterview = ({ centreId, interviewData }) => {
               cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
               onActionBtnClick={handleOnSubmit}
               isActionBtnDisable={
-                interviewTable.length === 1 &&
-                !interviewTable.at(-1)?.schedule_date &&
-                !interviewTable.at(-1)?.start_time &&
-                !interviewTable.at(-1)?.end_time &&
-                !interviewTable.at(-1)?.no_of_facilities &&
-                !interviewTable.at(-1)?.slot_duration
+                (interviewTable.length === 1 &&
+                  !interviewTable.at(-1)?.schedule_date &&
+                  !interviewTable.at(-1)?.start_time &&
+                  !interviewTable.at(-1)?.end_time &&
+                  !interviewTable.at(-1)?.no_of_facilities &&
+                  !interviewTable.at(-1)?.slot_duration) ||
+                checkForErrors()
               }
               onCancelBtnClick={handleCancel}
             />
