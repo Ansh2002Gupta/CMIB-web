@@ -21,16 +21,30 @@
   width: var(--halfWidth);
 }
 
-.inputStyle {
+.inputDropdownStyle {
   height: var(--height_44);
   width: var(--fullWidth);
   display: flex;
   align-items: center;
 }
 
+.inputDropdownStyleFixedWidth {
+  height: var(--height_44);
+  width: var(--width_250);
+}
+
+.inputStyle {
+  height: var(--height_44);
+  width: var(--fullWidth);
+  display: flex;
+  align-items: center;
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
+}
+
 .inputStyleFixedWidth {
   height: var(--height_44);
   width: var(--width_250);
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
 }
 
 .inputTableStyleFixedWidth {
@@ -43,14 +57,24 @@
   align-items: center;
   border-top-right-radius: var(--radiusNone);
   border-bottom-right-radius: var(--radiusNone);
+  padding: var(--padding_9) var(--padding_5);
 }
 
-.inputNumberStyle {
+.inputPartnersStyle {
   height: var(--height_44);
   display: flex;
   align-items: center;
   border-top-left-radius: var(--radiusNone);
   border-bottom-left-radius: var(--radiusNone);
+  padding: var(--padding_9) var(--padding_5);
+}
+
+.inputNumberStyle {
+  width: var(--fullWidth);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
+  padding: var(--padding_9) var(--padding_5);
 }
 
 .tableHeader {

@@ -260,6 +260,7 @@ const locale = {
   "centre.norm2": "Norm 2",
   "centre.norm2MinVacancy": "Norm 2 Min Vacancy",
   "centre.onlineOffline": "Online/Offline",
+  "centre.scheduleDate": "Schedule Date",
   "centre.placeholder.selectDate": "Select date",
   "centre.placeholder.enterFee": "Enter fee",
   "centre.placeholder.enterpartner": "Enter Partner",

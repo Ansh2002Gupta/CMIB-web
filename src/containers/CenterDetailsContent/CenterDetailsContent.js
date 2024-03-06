@@ -291,9 +291,6 @@ const CenterDetailsContent = ({
       onErrorCallback: (error) => {
         showNotification({ text: error, type: "error" });
       },
-      onSuccessCallback: () => {
-        navigate(-1);
-      },
     });
   };
 
