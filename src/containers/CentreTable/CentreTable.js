@@ -621,7 +621,11 @@ const CentreTable = ({
   ];
 
   return (
-    <div className={isEdit ? styles.editContainer : styles.container}>
+    <div
+      className={`${hasRound2 ? styles.roundTwoEditContainer : {}} ${
+        isEdit ? styles.editContainer : styles.container
+      }`}
+    >
       <Table
         columns={
           hasRound2
