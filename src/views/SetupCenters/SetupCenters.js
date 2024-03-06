@@ -53,7 +53,11 @@ const SetupCenter = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
-  const { isLoading, data: roundDetails, fetchData: fetchRoundDetails } = useFetch({
+  const {
+    isLoading,
+    data: roundDetails,
+    fetchData: fetchRoundDetails,
+  } = useFetch({
     url: ADMIN_ROUTE + `/${selectedModule?.key}` + ROUNDS + `/${roundId}`,
     otherOptions: {
       skipApiCallOnMount: true,
@@ -80,22 +84,26 @@ const SetupCenter = () => {
   });
 
   useEffect(() => {
-    fetchRoundDetails({
-      onSuccessCallback: (roundDetails) => {
-        setParticipationFees(roundDetails?.participation_fee || "");
-        setPaymentType(roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE);
-        setParticipationModalFees(roundDetails?.participation_fee || "");
-        setPaymentModalType(
-          roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE
-        );
-      },
-    });
+    if (roundId) {
+      fetchRoundDetails({
+        onSuccessCallback: (roundDetails) => {
+          setParticipationFees(roundDetails?.participation_fee || "");
+          setPaymentType(
+            roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE
+          );
+          setParticipationModalFees(roundDetails?.participation_fee || "");
+          setPaymentModalType(
+            roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE
+          );
+        },
+      });
+    }
   }, []);
 
   useModuleWiseApiCall({
     initialApiCall: () => {
-      if(roundId){
-      getSetupCentres({});
+      if (roundId) {
+        getSetupCentres({});
       } else {
         navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
       }
@@ -409,7 +417,9 @@ const SetupCenter = () => {
           <TwoRow
             topSection={
               selectedModule?.key !==
-                MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && !isLoading && roundDetails ? (
+                MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+              !isLoading &&
+              roundDetails ? (
                 <TwoColumn
                   className={styles.paymentTypeContainer}
                   leftSection={
@@ -462,27 +472,30 @@ const SetupCenter = () => {
                   }
                   isLeftFillSpace
                   rightSection={
-                    isEditable ? 
-                    <TwoColumn
-                      onClick={() => {
-                        setParticipationModalFees(participationFees);
-                        setPaymentModalType(paymentType);
-                        setIsPaymentTypeModalOpen(true);
-                      }}
-                      className={styles.editContainer}
-                      leftSection={
-                        <Image
-                          src={getImage("editDark")}
-                          className={styles.editIcon}
-                          preview={false}
-                        />
-                      }
-                      rightSection={
-                        <Typography className={styles.text}>
-                          {intl.formatMessage({ id: "session.edit" })}
-                        </Typography>
-                      }
-                    /> : <></>
+                    isEditable ? (
+                      <TwoColumn
+                        onClick={() => {
+                          setParticipationModalFees(participationFees);
+                          setPaymentModalType(paymentType);
+                          setIsPaymentTypeModalOpen(true);
+                        }}
+                        className={styles.editContainer}
+                        leftSection={
+                          <Image
+                            src={getImage("editDark")}
+                            className={styles.editIcon}
+                            preview={false}
+                          />
+                        }
+                        rightSection={
+                          <Typography className={styles.text}>
+                            {intl.formatMessage({ id: "session.edit" })}
+                          </Typography>
+                        }
+                      />
+                    ) : (
+                      <></>
+                    )
                   }
                 />
               ) : (

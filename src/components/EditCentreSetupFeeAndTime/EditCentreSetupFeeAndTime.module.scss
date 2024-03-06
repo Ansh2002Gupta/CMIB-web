@@ -50,7 +50,7 @@
 }
 
 .customDatePickerStyles {
-  gap: 4px;
+  gap: var(--gapXXSmall);
 }
 
 @media (min-width: 400px) and (max-width: 600px) {
