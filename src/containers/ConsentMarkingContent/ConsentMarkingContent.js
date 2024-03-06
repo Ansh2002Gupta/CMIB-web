@@ -134,12 +134,16 @@ const ConsentMarkingContent = ({ isEdit }) => {
     }));
   };
 
+  const navigateBackToSession = () => {
+    navigate(`/${currentlySelectedModuleKey}/${SESSION}?tab=2`);
+  };
+
   const handleCancel = () => {
-    navigate(`${SESSION}?tab=2`);
+    navigateBackToSession();
   };
 
   const handleSave = () => {
-    navigate(`${SESSION}?tab=2`);
+    navigateBackToSession();
   };
 
   const handleOnTabSwitch = useCallback((tabId) => {
