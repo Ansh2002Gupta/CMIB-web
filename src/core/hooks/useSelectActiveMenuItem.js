@@ -8,7 +8,7 @@ const useSelectActiveMenuItem = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
 
   const navigateToMenuItem = ({ selectedModule }) => {
-    let menuItem = DASHBOARD;
+    let menuItem = "";
     const activeMenuItemPath = location.pathname?.split("/")?.[2] || "";
     const activeMenuDetailsInSelectedModule = selectedModule?.children?.find(
       (item) => item?.key?.includes(activeMenuItemPath)
@@ -16,7 +16,7 @@ const useSelectActiveMenuItem = () => {
     if (activeMenuDetailsInSelectedModule) {
       menuItem = activeMenuDetailsInSelectedModule?.key;
     } else {
-      menuItem = selectedModule?.children?.[0]?.key;
+      menuItem = selectedModule?.children?.[0]?.key || DASHBOARD;
     }
     navigate(`/${selectedModule?.key}/${menuItem}`);
   };
