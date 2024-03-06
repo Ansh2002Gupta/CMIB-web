@@ -117,7 +117,12 @@ const ConsentMarkingContent = ({ isEdit }) => {
       MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && {
       key: "3",
       title: intl.formatMessage({ id: "session.roundTwo" }),
-      children: <>Round2</>,
+      children: (
+        <ConsentTable
+          {...{ activeTab, isEdit, tableData, setTableData }}
+          totalData={round1InitialData}
+        />
+      ),
     },
   ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
