@@ -21,6 +21,7 @@
 }
 
 .selectedItemsContainer {
+  padding-top: var(--paddingXXSmall);
   gap: var(--paddingXXSmall);
   display: flex;
   flex-wrap: wrap;
