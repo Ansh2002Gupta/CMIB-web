@@ -98,9 +98,14 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
         ];
       });
       setErrors((prevData) => {
+        const newError = [...prevData];
+        if (newError?.at(-1) && newError?.at(-1).hasOwnProperty("isAddRow")) {
+          delete newError?.at(-1).isAddRow;
+        }
         return [
           ...prevData,
           {
+            isAddRow: true,
             schedule_date: "",
             start_time: "",
             end_time: "",
