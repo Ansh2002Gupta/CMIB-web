@@ -33,7 +33,7 @@ const SetupCenterDetails = () => {
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
   const { navigateScreen: navigate } = useNavigateScreen();
-  const isEdit = currentGlobalSession?.is_editable;
+  const isEdit = !!currentGlobalSession?.is_editable;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
   const {
     data: centreDetailData,

@@ -12,8 +12,8 @@ import CustomGrid from "../../components/CustomGrid";
 import EditCentreSetupFeeAndTime from "../../components/EditCentreSetupFeeAndTime/EditCentreSetupFeeAndTime";
 import useConfigUpdateHandler from "../../services/api-services/SetupCentre/useConfigUpdateHandler";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import useShowNotification from "../../core/hooks/useShowNotification";
 import useResponsive from "../../core/hooks/useResponsive";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { checkForValidNumber } from "../../constant/utils";
 import { MODULE_KEYS, PAYMENT_TYPE } from "../../constant/constant";
 import { classes } from "./CenterDetailsContent.styles";
@@ -39,7 +39,7 @@ const CenterDetailsContent = ({
   const paymentType = location?.state?.paymentType || PAYMENT_TYPE.CENTRE_WISE;
   const isCentreWisePayment = paymentType === PAYMENT_TYPE.CENTRE_WISE;
 
-  const hasRoundTwo = /round2/i.test(location?.pathname);
+  const hasRoundTwo = location?.pathname.includes("round2");
 
   const addTableData = {
     isAddRow: true,
@@ -91,12 +91,32 @@ const CenterDetailsContent = ({
       })
     );
 
+    function getNewTableData(
+      isEdit,
+      hasRoundTwo,
+      interviewConfiguration,
+      addTableData,
+      interview_dates
+    ) {
+      if (isEdit) {
+        if (hasRoundTwo && !!interview_dates?.length) {
+          return [...interviewConfiguration];
+        } else {
+          return [...interviewConfiguration, addTableData];
+        }
+      } else {
+        return interviewConfiguration;
+      }
+    }
+
     setTableData(() => {
-      const newTableData = isEdit
-        ? hasRoundTwo && !!interview_dates?.length
-          ? [...interviewConfiguration]
-          : [...interviewConfiguration, addTableData]
-        : interviewConfiguration;
+      const newTableData = getNewTableData(
+        isEdit,
+        hasRoundTwo,
+        interviewConfiguration,
+        addTableData,
+        interview_dates
+      );
 
       setErrors(
         newTableData.map(() => ({
@@ -373,25 +393,27 @@ const CenterDetailsContent = ({
 
       if (hasRoundTwo) {
         const firstRow = tableData[0];
-        const isValueFilled = (value) => !!value || value === 0;
-        return isValueFilled(firstRow?.scheduleDate);
+        return checkForValidNumber(firstRow?.scheduleDate);
       }
       const firstRow = tableData[0];
-      const isValueFilled = (value) => !!value || value === 0;
 
       return (
-        isValueFilled(firstRow?.scheduleDate) &&
+        checkForValidNumber(firstRow?.scheduleDate) &&
         (isCentreWisePayment
-          ? isValueFilled(firstRow?.participationFee)
+          ? checkForValidNumber(firstRow?.participationFee)
           : true) &&
-        (isCentreWisePayment ? isValueFilled(firstRow?.firm?.firmFee) : true) &&
         (isCentreWisePayment
-          ? isValueFilled(firstRow?.firm?.uptoPartners)
+          ? checkForValidNumber(firstRow?.firm?.firmFee)
           : true) &&
-        (isNqcaModule ? isValueFilled(firstRow?.norm1) : true) &&
-        (isNqcaModule ? isValueFilled(firstRow?.norm2) : true) &&
-        (isNqcaModule ? isValueFilled(firstRow?.norm2MinVacancy) : true) &&
-        (isOverseasModule ? isValueFilled(firstRow.interviewType) : true)
+        (isCentreWisePayment
+          ? checkForValidNumber(firstRow?.firm?.uptoPartners)
+          : true) &&
+        (isNqcaModule ? checkForValidNumber(firstRow?.norm1) : true) &&
+        (isNqcaModule ? checkForValidNumber(firstRow?.norm2) : true) &&
+        (isNqcaModule
+          ? checkForValidNumber(firstRow?.norm2MinVacancy)
+          : true) &&
+        (isOverseasModule ? checkForValidNumber(firstRow.interviewType) : true)
       );
     };
 

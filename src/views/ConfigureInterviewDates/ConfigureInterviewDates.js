@@ -19,7 +19,6 @@ import {
 import { API_STATUS, STATUS_CODES, ROUND_ID } from "../../constant/constant";
 import { SESSION, SETUP_MOCK_INTERVIEW } from "../../routes/routeNames";
 import commonStyles from "../../common/commonStyles.module.scss";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import styles from "./ConfigureInterviewDates.module.scss";
 import { classes } from "./ConfigureInterviewDate.styles";
 

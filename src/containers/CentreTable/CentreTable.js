@@ -475,7 +475,7 @@ const CentreTable = ({
     },
   ];
 
-  const renderRound2Colomn = [
+  const renderRoundTwoColumn = [
     {
       title: () => (
         <Typography className={styles.tableHeader}>
@@ -513,14 +513,14 @@ const CentreTable = ({
               id: "centre.placeholder.selectDate",
             })}
             errorMessage={errors[index]?.scheduleDate}
-            isError={!!errors[index]?.scheduleDate}
+            isError={!!errors?.[index]?.scheduleDate}
           />
         ),
       }),
     },
   ];
 
-  const viewConfigurationDetailsRound2 = [
+  const viewConfigurationDetailsRoundTwo = [
     renderColumn({
       title: intl.formatMessage({ id: "centre.scheduleDate" }),
       dataIndex: "scheduleDate",
@@ -608,6 +608,14 @@ const CentreTable = ({
       : []),
   ];
 
+  function getColumnData(hasRoundTwo, isEdit) {
+    if (hasRoundTwo) {
+      return isEdit ? renderRoundTwoColumn : viewConfigurationDetailsRoundTwo;
+    } else {
+      return isEdit ? columns : viewConfigurationDetails;
+    }
+  }
+
   return (
     <div
       className={`${
@@ -615,15 +623,7 @@ const CentreTable = ({
       } ${isEdit ? styles.editContainer : styles.container}`}
     >
       <Table
-        columns={
-          hasRoundTwo
-            ? isEdit
-              ? renderRound2Colomn
-              : viewConfigurationDetailsRound2
-            : isEdit
-            ? columns
-            : viewConfigurationDetails
-        }
+        columns={getColumnData(hasRoundTwo, isEdit)}
         dataSource={tableData}
         pagination={false}
         rowClassName={!isEdit ? styles.rowtext : ""}
