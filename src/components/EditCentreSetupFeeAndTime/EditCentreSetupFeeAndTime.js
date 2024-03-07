@@ -96,7 +96,6 @@ const EditCentreSetupFeeAndTime = ({
         placeholder={intl.formatMessage({
           id: "label.placeholder.centreStartTime",
         })}
-        use12Hours
         value={
           formData?.centreStartTime &&
           dayjs(formData?.centreStartTime, "HH:mm:ss")
