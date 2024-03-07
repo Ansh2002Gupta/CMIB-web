@@ -63,7 +63,7 @@ const CustomDateTimePicker = ({
                     disabled,
                     disabledTime,
                   }}
-                  use12Hours={use12Hours}
+                  use12Hours={true}
                   className={[
                     styles.timeInput,
                     customTimeStyle,
