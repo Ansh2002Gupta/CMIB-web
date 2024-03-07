@@ -32,7 +32,7 @@ const SessionRound = ({
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
@@ -84,7 +84,7 @@ const SessionRound = ({
 
   useEffect(() => {
     if (!currentGlobalSession?.is_editable) {
-      urlService.getQueryStringValue("mode", FORM_STATES.VIEW_ONLY);
+      urlService.setQueryStringValue("mode", FORM_STATES.VIEW_ONLY);
     }
   }, [globalSessionDetails]);
 
