@@ -61,7 +61,8 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
 
   const [interviewTable, setInterviewTable] = useState(getInterviewTable());
   const [errors, setErrors] = useState(
-    interviewTable.map(() => ({
+    interviewTable.map((item) => ({
+      isAddRow: item?.isAddRow,
       schedule_date: "",
       start_time: "",
       end_time: "",
@@ -114,11 +115,12 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
   function checkForErrors() {
     for (let error of errors) {
       if (
-        error.schedule_date ||
-        error.start_time ||
-        error.end_time ||
-        error.no_of_facilities ||
-        error.slot_duration
+        (error.schedule_date ||
+          error.start_time ||
+          error.end_time ||
+          error.no_of_facilities ||
+          error.slot_duration) &&
+        !error.isAddRow
       ) {
         return true;
       }
