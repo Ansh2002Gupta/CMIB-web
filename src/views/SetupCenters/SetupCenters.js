@@ -84,10 +84,14 @@ const SetupCenter = () => {
   });
 
   useEffect(() => {
-    if (roundId) {
+    if (roundId && selectedModule) {
       fetchRoundDetails({
         onSuccessCallback: (roundDetails) => {
-          setParticipationFees(roundDetails?.participation_fee || "");
+          setParticipationFees(
+            roundDetails?.participation_fee !== null
+              ? roundDetails?.participation_fee
+              : ""
+          );
           setPaymentType(
             roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE
           );
@@ -98,7 +102,7 @@ const SetupCenter = () => {
         },
       });
     }
-  }, []);
+  }, [userProfileDetails?.selectedModuleItem]);
 
   useModuleWiseApiCall({
     initialApiCall: () => {
@@ -281,9 +285,10 @@ const SetupCenter = () => {
                       leftSection={
                         <TwoColumn
                           className={styles.assigneeRow}
-                          onClick={() =>
-                            setPaymentModalType(PAYMENT_TYPE.CENTRE_WISE)
-                          }
+                          onClick={() => {
+                            setIsFeesError(false);
+                            setPaymentModalType(PAYMENT_TYPE.CENTRE_WISE);
+                          }}
                           leftSection={
                             <CustomRadioButton
                               checked={
@@ -460,7 +465,9 @@ const SetupCenter = () => {
                             }
                             bottomSection={
                               <Typography className={styles.blackText}>
-                                {participationFees || "-"}
+                                {participationFees !== null
+                                  ? participationFees
+                                  : "-"}
                               </Typography>
                             }
                           />

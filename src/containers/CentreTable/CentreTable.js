@@ -536,6 +536,16 @@ const CentreTable = ({
       key: "scheduleDate",
       renderText: { visible: true, isTypeDate: true },
     }),
+    ...(isOverseasModule
+      ? [
+          renderColumn({
+            title: intl.formatMessage({ id: "centre.onlineOffline" }),
+            dataIndex: "interviewType",
+            key: "interviewType",
+            renderText: { visible: true },
+          }),
+        ]
+      : []),
     ...(isCentreWisePayment
       ? [
           renderColumn({

@@ -466,21 +466,39 @@ const CenterDetailsContent = ({
       />
     );
 
-    const centreDetails = [
-      { heading: "writtenTestFee", value: formData?.PsychometricFee },
-      {
-        heading: "centreStartTime",
-        value: formData?.centreStartTime
-          ? dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A")
-          : "-",
-      },
-      {
-        heading: "centreEndTime",
-        value: formData?.centreEndTime
-          ? dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A")
-          : "-",
-      },
-    ];
+    const centreDetails = isNqcaModule
+      ? [
+          {
+            heading: "writtenTestFee",
+            value: formData?.PsychometricFee,
+          },
+          {
+            heading: "centreStartTime",
+            value: formData?.centreStartTime
+              ? dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A")
+              : "-",
+          },
+          {
+            heading: "centreEndTime",
+            value: formData?.centreEndTime
+              ? dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A")
+              : "-",
+          },
+        ]
+      : [
+          {
+            heading: "centreStartTime",
+            value: formData?.centreStartTime
+              ? dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A")
+              : "-",
+          },
+          {
+            heading: "centreEndTime",
+            value: formData?.centreEndTime
+              ? dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A")
+              : "-",
+          },
+        ];
     return (
       <>
         {notificationContextHolder}
