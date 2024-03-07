@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -10,11 +10,18 @@ import CentreTable from "../CentreTable";
 import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import EditCentreSetupFeeAndTime from "../../components/EditCentreSetupFeeAndTime/EditCentreSetupFeeAndTime";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import useConfigUpdateHandler from "../../services/api-services/SetupCentre/useConfigUpdateHandler";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useResponsive from "../../core/hooks/useResponsive";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
 import { checkForValidNumber } from "../../constant/utils";
+import {
+  ROUND_ONE_SETUP_CENTERS,
+  ROUND_TWO_SETUP_CENTERS,
+  SESSION,
+} from "../../routes/routeNames";
 import { MODULE_KEYS, PAYMENT_TYPE } from "../../constant/constant";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
@@ -29,13 +36,16 @@ const CenterDetailsContent = ({
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const { showNotification, notificationContextHolder } = useShowNotification();
+  const [, setNotificationStateDispatch] = useContext(NotificationContext);
+
+  const [formData, setFormData] = useState({});
+  const [tableData, setTableData] = useState([]);
+
   const isNqcaModule =
     selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY;
   const isOverseasModule = selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY;
   const { interview_dates } = centreDetailData || {};
-  const [formData, setFormData] = useState({});
-  const [tableData, setTableData] = useState([]);
-  const { showNotification, notificationContextHolder } = useShowNotification();
   const paymentType = location?.state?.paymentType || PAYMENT_TYPE.CENTRE_WISE;
   const isCentreWisePayment = paymentType === PAYMENT_TYPE.CENTRE_WISE;
 
@@ -142,8 +152,12 @@ const CenterDetailsContent = ({
 
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const handleCancel = () => {
-    navigate(-1);
+  const navigateToSetupCentreScreen = () => {
+    navigate(
+      `/${selectedModule}/${SESSION}${
+        hasRoundTwo ? ROUND_TWO_SETUP_CENTERS : ROUND_ONE_SETUP_CENTERS
+      }?roundId=${roundId}`
+    );
   };
 
   const validateScheduleDate = (index) => {
@@ -335,11 +349,10 @@ const CenterDetailsContent = ({
         : centreDetailsPayload,
       centreId: centreId,
       roundId: roundId,
-      onSuccessCallback: () =>
-        showNotification({
-          text: intl.formatMessage({ id: "label.data_saved_successfully" }),
-          type: "success",
-        }),
+      onSuccessCallback: () => {
+        setNotificationStateDispatch(setShowSuccessNotification(true));
+        navigateToSetupCentreScreen();
+      },
       onErrorCallback: (error) => {
         showNotification({ text: error, type: "error" });
       },
@@ -444,7 +457,7 @@ const CenterDetailsContent = ({
               responsive.isMd ? styles.buttonStyles : styles.mobileButtonStyles
             }
             textStyle={styles.textStyle}
-            onClick={handleCancel}
+            onClick={navigateToSetupCentreScreen}
           />
         }
         rightSection={
