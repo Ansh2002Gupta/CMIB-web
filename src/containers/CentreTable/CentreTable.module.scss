@@ -107,6 +107,12 @@
   flex: 1;
 }
 
+.roundTwoEditContainer{
+  max-width: var(--width_400);
+  display: flex;
+  flex: 1;
+}
+
 .customColumnStyle {
   width: var(--fullWidth);
 }
