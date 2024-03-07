@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -31,10 +32,11 @@ import styles from "./ConsentMarkingContent.module.scss";
 const ConsentMarkingContent = ({ isEdit }) => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const location = useLocation();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
-      urlService.get(ACTIVE_TAB),
+      urlService.getQueryStringValue(ACTIVE_TAB),
       VALID_CONSENT_MARKING_TABS_ID
     )
   );
@@ -71,11 +73,25 @@ const ConsentMarkingContent = ({ isEdit }) => {
     registrationInitialData
   );
 
+  const hasRoundTwo = /round2/i.test(location?.pathname);
+
   const RegistrationDates = [
     { id: 1, labeIntl: "startDateCompanies" },
     { id: 2, labeIntl: "startDateCandidates" },
     { id: 3, labeIntl: "lastDateBigCentres" },
     { id: 4, labeIntl: "lastDateSmallCentres" },
+  ];
+
+  const RegistrationDatesForRoundTwo = [
+    { id: 1, labeIntl: "registrationStartDateCompanies" },
+    { id: 2, labeIntl: "registrationEndDateCompanies" },
+    { id: 3, labeIntl: "registrationStartDateCandidates" },
+    { id: 4, labeIntl: "registrationEndDateCandidates" },
+    { id: 5, labeIntl: "startShortlistingbyCompany" },
+    { id: 6, labeIntl: "endShortlistingbyCompany" },
+    { id: 7, labeIntl: "startCondidateConsentmarking" },
+    { id: 8, labeIntl: "endCondidateConsentmarking" },
+    { id: 9, labeIntl: "writtenTestDate" },
   ];
 
   const tabItems = [
@@ -159,12 +175,16 @@ const ConsentMarkingContent = ({ isEdit }) => {
     }
   }, []);
 
+  const currentRegistrationDates = hasRoundTwo
+    ? RegistrationDatesForRoundTwo
+    : RegistrationDates;
+
   return (
     <ThreeRow
       className={styles.mainContainer}
       topSection={
         <CustomGrid customStyle={styles.customStyle}>
-          {RegistrationDates.map((item) => {
+          {currentRegistrationDates.map((item) => {
             return (
               <CustomDateTimePicker
                 key={item?.id}
@@ -197,20 +217,22 @@ const ConsentMarkingContent = ({ isEdit }) => {
       }
       topSectionStyle={classes.topSectionStyle}
       middleSection={
-        <TwoRow
-          className={styles.tabContainer}
-          topSection={
-            <CustomTabs
-              tabs={tabItems}
-              activeTab={activeTab}
-              setActiveTab={handleOnTabSwitch}
-              tabsKeyText={ACTIVE_TAB}
-            />
-          }
-          topSectionStyle={classes.tabTopSectionStyle}
-          bottomSection={activeTabChildren.children}
-          bottomSectionStyle={classes.tabBottomSectionStyle}
-        />
+        !hasRoundTwo && (
+          <TwoRow
+            className={styles.tabContainer}
+            topSection={
+              <CustomTabs
+                tabs={tabItems}
+                activeTab={activeTab}
+                setActiveTab={handleOnTabSwitch}
+                tabsKeyText={ACTIVE_TAB}
+              />
+            }
+            topSectionStyle={classes.tabTopSectionStyle}
+            bottomSection={activeTabChildren.children}
+            bottomSectionStyle={classes.tabBottomSectionStyle}
+          />
+        )
       }
       bottomSection={
         isEdit ? (

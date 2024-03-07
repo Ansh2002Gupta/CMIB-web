@@ -2,6 +2,8 @@ import {
   CONSENT_MARKING,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
+  ROUND_TWO_CONSENT_MARKING,
+  ROUND_TWO_SETUP_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
@@ -238,7 +240,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: CONSENT_MARKING,
+    onClickNaviagtion: ROUND_TWO_CONSENT_MARKING,
   },
   {
     id: 3,

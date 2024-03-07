@@ -48,6 +48,8 @@ import {
   ROOT,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
+  ROUND_TWO_SETUP_CENTERS,
+  ROUND_TWO_CONSENT_MARKING,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -265,7 +267,19 @@ const config = [
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
+      {
+        viewPath: SESSION + ROUND_TWO_SETUP_CENTERS,
+        element: <SetupCenter />,
+      },
+      {
+        viewPath: SESSION + ROUND_TWO_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        element: <SetupCenterDetails />,
+      },
       { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + ROUND_TWO_CONSENT_MARKING,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: SESSION + ROUND_ONE_ORIENTATION_CENTERS,
         element: <OrientationCenter />,
