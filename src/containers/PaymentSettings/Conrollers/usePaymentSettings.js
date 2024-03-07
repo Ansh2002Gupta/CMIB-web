@@ -119,8 +119,7 @@ const usePaymentSettings = () => {
       (ele) => ele.id !== item.id
     );
     setSelectedCompanyList(updatedCompany);
-    console.log(updatedCompany.length);
-    if(!updatedCompany.length){
+    if (!updatedCompany.length) {
       setFormErrors({
         ...formErrors,
         ["no_gst"]: "fieldEmpty",
