@@ -351,21 +351,21 @@ export const isUserAdmin = (userDetails) => {
 };
 
 export const handleDisabledDate = (current) => {
-  console.log(
-    current,
-    "current..",
-    dayjs().add(1, "day").startOf("day"),
-    "dsdsds"
-  );
   return current && current < dayjs().add(1, "day").startOf("day");
 };
 
-export const handleDisabledDateBeforeStartDate = (current, startDate) => {
-  return () => {
-    if (!startDate) {
-      return false;
-    }
-    const startOfDay = dayjs(startDate).startOf("day");
-    return current && current < startOfDay;
-  };
+export const handleDisabledBeforeDate = (current, startDate) => {
+  if (!startDate) {
+    return false;
+  }
+  const startOfDay = dayjs(startDate).startOf("day");
+  return current && current <= startOfDay;
+};
+
+export const handleDisabledAfterDate = (current, endDate) => {
+  if (!endDate) {
+    return false;
+  }
+  const endOfDay = dayjs(endDate).startOf("day");
+  return current && current > endOfDay;
 };

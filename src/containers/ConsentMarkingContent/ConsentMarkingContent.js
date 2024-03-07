@@ -16,7 +16,8 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import {
   getCurrentActiveTab,
   handleDisabledDate,
-  handleDisabledDateBeforeStartDate,
+  handleDisabledBeforeDate,
+  handleDisabledAfterDate,
 } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
 import { ACTIVE_TAB, MODULE_KEYS } from "../../constant/constant";
@@ -77,12 +78,33 @@ const ConsentMarkingContent = ({ isEdit }) => {
   );
 
   const disabledDate = (key, current) => {
-    if (key === "startDateCompanies" || key === "startDateCandidates") {
+    if (key === "startDateCompanies") {
       return handleDisabledDate(current);
     }
-    return handleDisabledDateBeforeStartDate(
+    if (key === "startDateCandidates") {
+      return (
+        handleDisabledDate(current) ||
+        handleDisabledAfterDate(
+          current,
+          registrationDatesData["lastDateBigCentres"]
+        )
+      );
+    }
+    if (key === "lastDateBigCentres")
+      return (
+        handleDisabledBeforeDate(
+          current,
+          registrationDatesData["startDateCandidates"]
+        ) ||
+        handleDisabledAfterDate(
+          current,
+          registrationDatesData["lastDateSmallCentres"]
+        )
+      );
+    return handleDisabledBeforeDate(
       current,
-      registrationDatesData["startDateCompanies"]
+      registrationDatesData["lastDateBigCentres"] ||
+        registrationDatesData["startDateCandidates"]
     );
   };
 
