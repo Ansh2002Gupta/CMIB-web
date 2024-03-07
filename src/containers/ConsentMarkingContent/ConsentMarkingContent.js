@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState, useEffect } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -12,7 +13,11 @@ import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { getCurrentActiveTab } from "../../constant/utils";
+import {
+  getCurrentActiveTab,
+  handleDisabledDate,
+  handleDisabledDateBeforeStartDate,
+} from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
 import { ACTIVE_TAB, MODULE_KEYS } from "../../constant/constant";
 import {
@@ -71,21 +76,49 @@ const ConsentMarkingContent = ({ isEdit }) => {
     registrationInitialData
   );
 
+  const disabledDate = (key, current) => {
+    if (key === "startDateCompanies" || key === "startDateCandidates") {
+      return handleDisabledDate(current);
+    }
+    return handleDisabledDateBeforeStartDate(
+      current,
+      registrationDatesData["startDateCompanies"]
+    );
+  };
+
   const registrationDates =
     currentlySelectedModuleKey === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY
       ? [
-          { id: 1, labeIntl: "startDateCompanies" },
-          { id: 2, labeIntl: "startDateCandidates" },
-          { id: 3, labeIntl: "lastDateBigCentres" },
+          {
+            id: 1,
+            labeIntl: "startDateCompanies",
+          },
+          {
+            id: 2,
+            labeIntl: "startDateCandidates",
+          },
+          {
+            id: 3,
+            labeIntl: "lastDateBigCentres",
+          },
           {
             id: 4,
             labeIntl: "lastDateSmallCentres",
           },
         ]
       : [
-          { id: 1, labeIntl: "startDateCompanies" },
-          { id: 2, labeIntl: "startDateCandidates" },
-          { id: 3, labeIntl: "lastDateBigCentres" },
+          {
+            id: 1,
+            labeIntl: "startDateCompanies",
+          },
+          {
+            id: 2,
+            labeIntl: "startDateCandidates",
+          },
+          {
+            id: 3,
+            labeIntl: "lastDateBigCentres",
+          },
         ];
 
   const tabItems = [
@@ -169,6 +202,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
                 customLabelStyles={styles.customLabelStyles}
                 customContainerStyles={styles.customContainerStyles}
                 customTimeStyle={styles.customTimeStyle}
+                disabledDate={(current) => disabledDate(item.labeIntl, current)}
                 isEditable={isEdit}
                 type="date"
                 isRequired

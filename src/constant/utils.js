@@ -349,3 +349,23 @@ export const isUserAdmin = (userDetails) => {
     noOfControlItems === controlMenu?.length
   );
 };
+
+export const handleDisabledDate = (current) => {
+  console.log(
+    current,
+    "current..",
+    dayjs().add(1, "day").startOf("day"),
+    "dsdsds"
+  );
+  return current && current < dayjs().add(1, "day").startOf("day");
+};
+
+export const handleDisabledDateBeforeStartDate = (current, startDate) => {
+  return () => {
+    if (!startDate) {
+      return false;
+    }
+    const startOfDay = dayjs(startDate).startOf("day");
+    return current && current < startOfDay;
+  };
+};
