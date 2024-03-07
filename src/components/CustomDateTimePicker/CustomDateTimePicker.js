@@ -96,7 +96,7 @@ const CustomDateTimePicker = ({
                 style={styles.inputStyle}
               />
             ) : (
-              <Typography className={styles.dateText}>
+              <Typography className={classes.dateText}>
                 {formatDate({ date: value })}
               </Typography>
             )
@@ -106,7 +106,7 @@ const CustomDateTimePicker = ({
               <Typography
                 className={[classes.errorText, customErrorTextStyles].join(" ")}
               >
-                {errorMessage ? ` * ${errorMessage}` : ""}
+                {errorMessage ? `${errorMessage}` : ""}
               </Typography>
             )
           }

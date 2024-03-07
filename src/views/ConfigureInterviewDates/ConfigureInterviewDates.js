@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 
 import { TwoRow } from "../../core/layouts";
@@ -26,7 +26,7 @@ import { classes } from "./ConfigureInterviewDate.styles";
 const ConfigureInterviewDates = () => {
   const intl = useIntl();
   const { centreId } = useParams();
-  const { navigateScreen: navigate } = useNavigateScreen();
+  const navigate = useNavigate();
   const [userProfileDetails] = useContext(UserProfileContext);
   const roundId = urlService.getQueryStringValue(ROUND_ID);
   const currentlySelectedModuleKey =

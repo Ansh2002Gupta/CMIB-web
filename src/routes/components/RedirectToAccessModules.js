@@ -1,16 +1,17 @@
 import React, { useContext, useEffect } from "react";
 
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { DASHBOARD } from "../routeNames";
+import useSelectActiveMenuItem from "../../core/hooks/useSelectActiveMenuItem";
 
 const RedirectToAccessedModule = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
-  const { navigateScreen: navigate } = useNavigateScreen();
+  const { navigateToMenuItem } = useSelectActiveMenuItem();
 
   useEffect(() => {
     if (userProfileDetails?.selectedModuleItem?.key) {
-      navigate(`/${userProfileDetails?.selectedModuleItem?.key}/${DASHBOARD}`);
+      navigateToMenuItem({
+        selectedModule: userProfileDetails?.selectedModuleItem,
+      });
     }
   }, [userProfileDetails?.selectedModuleItem]);
 
