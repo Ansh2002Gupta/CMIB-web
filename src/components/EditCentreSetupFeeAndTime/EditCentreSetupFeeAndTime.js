@@ -12,6 +12,7 @@ import styles from "./EditCentreSetupFeeAndTime.module.scss";
 const EditCentreSetupFeeAndTime = ({
   formData,
   handleInputChange,
+  hasRoundTwo,
   isEdit,
   selectedModule,
 }) => {
@@ -43,7 +44,7 @@ const EditCentreSetupFeeAndTime = ({
 
   const handleOnChangeEndTime = (momentValue) => {
     const time = dayjs(momentValue).format("HH:mm:ss");
-    const endTime = getTimeWithZeroSec(time);;
+    const endTime = getTimeWithZeroSec(time);
     const startTime = formData?.centreStartTime;
     if (
       !startTime ||
@@ -53,28 +54,32 @@ const EditCentreSetupFeeAndTime = ({
     } else {
       handleInputChange("", "centreEndTime");
     }
-  }
+  };
 
   return (
     <div className={styles.topSectionStyle}>
       {selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && (
-        <CustomInput
-          type="inputNumber"
-          customInputNumberStyles={styles.input}
-          customLabelStyles={styles.inputLabel}
-          customContainerStyles={styles.customContainerStyles}
-          isRequired
-          label={intl.formatMessage({ id: "label.writtenTestFee" })}
-          onChange={(val) => {
-            handleInputChange(val, "PsychometricFee");
-          }}
-          maxLength={MAX_CTC_LENGTH}
-          placeholder={intl.formatMessage({
-            id: `label.placeholder.writtenTestFee`,
-          })}
-          value={formData?.PsychometricFee}
-          disabled={!isEdit}
-        />
+        <>
+          {!hasRoundTwo && (
+            <CustomInput
+              type="inputNumber"
+              customInputNumberStyles={styles.input}
+              customLabelStyles={styles.inputLabel}
+              customContainerStyles={styles.customContainerStyles}
+              isRequired
+              label={intl.formatMessage({ id: "label.writtenTestFee" })}
+              onChange={(val) => {
+                handleInputChange(val, "PsychometricFee");
+              }}
+              maxLength={MAX_CTC_LENGTH}
+              placeholder={intl.formatMessage({
+                id: `label.placeholder.writtenTestFee`,
+              })}
+              value={formData?.PsychometricFee}
+              disabled={!isEdit}
+            />
+          )}
+        </>
       )}
       <CustomDateTimePicker
         customLabelStyles={styles.inputLabel}
