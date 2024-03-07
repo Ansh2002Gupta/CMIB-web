@@ -28,6 +28,7 @@ const SetupCenterDetails = () => {
   const { centreId } = useParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId

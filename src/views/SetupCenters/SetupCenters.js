@@ -14,9 +14,12 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
 import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
 import { urlService } from "../../Utils/urlService";
 import {
   ADMIN_ROUTE,
@@ -24,33 +27,33 @@ import {
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { SESSION } from "../../routes/routeNames";
-import {
-  DEFAULT_PAGE_SIZE,
-  MODULE_KEYS,
-  PAGINATION_PROPERTIES,
-  PAYMENT_TYPE,
-  ROUND_ID,
-  VALID_ROW_PER_OPTIONS,
-} from "../../constant/constant";
+import { MODULE_KEYS, PAYMENT_TYPE, ROUND_ID } from "../../constant/constant";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
 
 const SetupCenter = () => {
   const intl = useIntl();
-  const { renderColumn } = useRenderColumn();
-  const { getImage } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const { getImage } = useContext(ThemeContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const [notificationState, setNotificationStateDispatch] =
+    useContext(NotificationContext);
+
+  const [isPaymentTypeModalOpen, setIsPaymentTypeModalOpen] = useState(false);
+  const [isFeesError, setIsFeesError] = useState(false);
+
+  const { renderColumn } = useRenderColumn();
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
-  const isEditable = currentGlobalSession?.is_editable;
-  const [isPaymentTypeModalOpen, setIsPaymentTypeModalOpen] = useState(false);
-  const [isFeesError, setIsFeesError] = useState(false);
+
+  const { showNotification, notificationContextHolder } = useShowNotification();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
+
+  const isEditable = currentGlobalSession?.is_editable;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
-  const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const {
@@ -123,6 +126,16 @@ const SetupCenter = () => {
       },
     });
   };
+
+  useEffect(() => {
+    if (notificationState?.showSuccessNotification) {
+      showNotification({
+        text: intl.formatMessage({ id: "label.data_saved_successfully" }),
+        type: "success",
+      });
+      setNotificationStateDispatch(setShowSuccessNotification(false));
+    }
+  }, [notificationState?.showSuccessNotification]);
 
   const columns = [
     renderColumn({
@@ -243,6 +256,7 @@ const SetupCenter = () => {
 
   return (
     <>
+      {notificationContextHolder}
       {
         <CustomModal
           btnText={intl.formatMessage({ id: "label.save" })}
