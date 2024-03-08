@@ -128,7 +128,7 @@ const ConsentMarking = () => {
           })}
         />
       }
-      bottomSection={<ConsentMarkingContent {...{ isEdit }} />}
+      bottomSection={<ConsentMarkingContent {...{ isEdit, roundId }} />}
     />
   );
 };

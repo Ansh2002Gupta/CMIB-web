@@ -20,18 +20,24 @@ import {
   handleDisabledAfterDate,
 } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
+import { usePut } from "../../core/hooks/useApiRequest";
 import { ACTIVE_TAB, MODULE_KEYS } from "../../constant/constant";
 import {
   CONSENT_MARKING_REGESTRATION_DETAILS,
   LAST_MARKING_REGESTRATION_DETAILS,
-  REGISTRATION_DATES,
+  REGISTRATION_DUMMY_DATES,
 } from "../../dummyData";
+import {
+  CORE_ROUTE,
+  REGISTRATION_DATES,
+  ROUNDS,
+} from "../../constant/apiEndpoints";
 import { VALID_CONSENT_MARKING_TABS_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
 
-const ConsentMarkingContent = ({ isEdit }) => {
+const ConsentMarkingContent = ({ isEdit, roundId }) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
@@ -44,8 +50,25 @@ const ConsentMarkingContent = ({ isEdit }) => {
       VALID_CONSENT_MARKING_TABS_ID
     )
   );
-  const [registrationDatesData, setRegistrationDatesData] =
-    useState(REGISTRATION_DATES);
+
+  const {
+    error: errorWhileUpdatingRegistrationDate,
+    makeRequest: updateRegistrationDate,
+    isLoading: isUpdatingRegistrationDate,
+    isSuccess: isRegistrationDateUpdatedSuccessful,
+  } = usePut({
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      ROUNDS +
+      `/${roundId}` +
+      REGISTRATION_DATES,
+  });
+
+  const [registrationDatesData, setRegistrationDatesData] = useState(
+    REGISTRATION_DUMMY_DATES
+  );
+
   const round1InitialData = CONSENT_MARKING_REGESTRATION_DETAILS.map(
     (item) => ({
       ...item,
@@ -198,7 +221,20 @@ const ConsentMarkingContent = ({ isEdit }) => {
   };
 
   const handleSave = () => {
-    navigateBackToSession();
+    updateRegistrationDate({
+      body: {
+        company_reg_start_date: "2024-10-11",
+        candidate_reg_start_date: "2024-10-11",
+        candidate_reg_end_date_bg_centre: "2024-10-11",
+        candidate_reg_end_date_sm_centre: "2024-10-11",
+      },
+      onSuccessCallback: () => {
+        navigateBackToSession();
+      },
+      onErrorCallback: () => {
+        navigateBackToSession();
+      },
+    });
   };
 
   const handleOnTabSwitch = useCallback((tabId) => {
