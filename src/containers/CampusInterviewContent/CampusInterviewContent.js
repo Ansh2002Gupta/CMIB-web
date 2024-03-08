@@ -27,7 +27,6 @@ const CampusInterviewContent = () => {
       title: intl.formatMessage({ id: "session.forCandidateAndCompany" }),
       children: <></>,
     },
-
     {
       key: "2",
       title: intl.formatMessage({ id: "session.paymentSettings" }),
