@@ -132,14 +132,12 @@ const usePaymentSettings = () => {
       ...prevFormData,
       [name]: value,
     }));
-    console.log(value);
     let error = false;
     if (name === "no_gst") {
       error = !selectedCompanyList.length;
     } else if (value === null || value === "") {
       error = true;
     }
-
     setFormErrors({
       ...formErrors,
       [name]: error ? "fieldEmpty" : "",
