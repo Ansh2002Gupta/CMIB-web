@@ -1,4 +1,3 @@
-
 import CampusInterviewSettings from "../views/CampusInterviewSettings";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";

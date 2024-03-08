@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
+import { SESSION } from "../../../routes/routeNames";
 
 const usePaymentSettings = () => {
   const [selectedCompanyList, setSelectedCompanyList] = useState([]);
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
   const navigate = useNavigate();
 
   const initialFormState = {
@@ -156,7 +160,7 @@ const usePaymentSettings = () => {
   };
 
   const onClickCancel = () => {
-    navigate(-1);
+    navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
   };
 
   const onClickSave = () => {};
