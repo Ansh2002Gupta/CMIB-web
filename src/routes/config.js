@@ -1,4 +1,4 @@
-import CaJobsConfigurations from "../views/CAJobs/CaJobsConfigurations";
+import CaJobsConfigurations from "../views/CAJobs/CaJobsConfigurations/CaJobsConfigurations.js";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";

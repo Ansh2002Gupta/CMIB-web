@@ -194,6 +194,7 @@ const variables = {
   height_184: "184px",
   height_240: "240px",
   height_250: "250px",
+  height_280: "280px",
   height_300: "300px",
   height_350: "350px",
   height_400: "400px",
@@ -277,6 +278,7 @@ const variables = {
   gapLarge: "32px",
   gapXLarge: "40px",
   gapXXLarge: "56px",
+  gap_80: "80px",
 
   // margin
   margin_2: "2px",

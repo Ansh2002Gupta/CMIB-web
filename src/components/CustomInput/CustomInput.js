@@ -12,6 +12,7 @@ import { classes } from "./CustomInput.styles";
 const CustomInput = React.forwardRef(
   (
     {
+      showControls = false,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,
@@ -160,7 +161,7 @@ const CustomInput = React.forwardRef(
           {type === "inputNumber" && (
             <InputNumber
               type="number"
-              controls={false}
+              controls={showControls}
               className={[
                 styles.inputNumberStyles,
                 customInputNumberStyles,

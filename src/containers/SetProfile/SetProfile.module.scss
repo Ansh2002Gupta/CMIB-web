@@ -1,0 +1,46 @@
+.outerContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  width: var(--fullWidth);
+  min-height: var(--height_300);
+  overflow: hidden;
+}
+
+.flexDirectionCol {
+  flex-direction: column;
+}
+
+.flexDirectionRow {
+  flex-direction: row;
+}
+
+.topSectionHeader {
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textDefault);
+  margin-bottom: var(--marginLarge);
+}
+
+.leftSectionStyling {
+  flex: 1;
+}
+
+.rightSectionStyling {
+  flex: 1;
+  margin-right: var(--marginSmall);
+}
+
+.twoColumnStyling {
+  gap: var(--gap_80);
+}
+
+.twoColumnWrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: var(--height_184);
+  width: var(--fullWidth);
+}

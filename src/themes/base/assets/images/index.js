@@ -6,6 +6,7 @@ import arrowLeft from "./arrow-left.svg";
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import blackArrowDown from "./blackArrowDown.svg";
+import blackArrowUp from "./blackArrowUp.svg";
 import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
 import checkIconWhite from "./check-white.svg";
@@ -82,6 +83,7 @@ const images = {
   arrowRight,
   arrowRightFilter,
   blackArrowDown,
+  blackArrowUp,
   Building,
   checkedBox,
   download,

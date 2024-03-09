@@ -1,21 +1,27 @@
 import React from "react";
 
 import { TwoRow } from "../../../core/layouts";
-
+import CaJobsConfig from "../../../containers/CaJobsConfig";
 import ContentHeader from "../../../containers/ContentHeader";
 import styles from "./CaJobsConfigurations.module.scss";
 
-const Configrations = () => {
+const CaJobsConfigurations = () => {
+  //created these functions for future purpose.
+  const handleCancel = () => {};
+  const handleSave = () => {};
+
   return (
     <TwoRow
       topSection={
-        <div className={styles.container}>
+        <div className={styles.headerContainer}>
           <ContentHeader headerText="Global Configurations" />
         </div>
       }
-      bottomSection={<></>}
+      bottomSection={
+        <CaJobsConfig onCancel={handleCancel} onSave={handleSave} />
+      }
     />
   );
 };
 
-export default Configrations;
+export default CaJobsConfigurations;
