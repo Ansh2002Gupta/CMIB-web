@@ -342,3 +342,23 @@ export const isUserAdmin = (userDetails) => {
     noOfControlItems === controlMenu?.length
   );
 };
+
+export const handleDisabledDate = (current) => {
+  return current && current < dayjs().add(1, "day").startOf("day");
+};
+
+export const handleDisabledBeforeDate = (current, startDate) => {
+  if (!startDate) {
+    return false;
+  }
+  const startOfDay = dayjs(startDate).startOf("day");
+  return current && current <= startOfDay;
+};
+
+export const handleDisabledAfterDate = (current, endDate) => {
+  if (!endDate) {
+    return false;
+  }
+  const endOfDay = dayjs(endDate).startOf("day");
+  return current && current >= endOfDay;
+};

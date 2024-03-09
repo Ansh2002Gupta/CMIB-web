@@ -235,7 +235,9 @@ const locale = {
     "Last Date of Registration for Candidates for Small Centres",
   "label.centreCodeColon": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
-  "label.writtenTestDate": "Written/Psychometric Test Date",
+  "label.consent.writtenTestDate": "Written/Psychometric Test Date",
+  "label.consent.placeholder.writtenTestDate":
+    "Select Written/Psychometric Test Date",
   "label.centreStartTime": "Centre Start Time",
   "label.centreEndTime": "Centre End Time",
   "label.placeholder.writtenTestFee": " Enter Written/Psychometric Test Fee",
@@ -529,6 +531,7 @@ const locale = {
     "Select Consent Marking By Candidate End Date",
   "label.path.round2": "Round 2",
   "label.path.consent-marking": "Registration and Consent Marking Schedule",
+  "label.this_field_is_required": "This field is required.",
 };
 
 export default locale;

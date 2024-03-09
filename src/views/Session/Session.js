@@ -144,6 +144,13 @@ function Session() {
             children: (
               <SessionRound
                 roundNo={2}
+                roundId={
+                  (
+                    sessionData?.rounds?.find(
+                      (obj) => obj.round_code === "round-2"
+                    ) || {}
+                  ).id
+                }
                 roundList={ROUND_TWO_CARD_LIST}
                 sessionData={sessionData}
                 switchLabel={intl.formatMessage({

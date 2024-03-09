@@ -378,3 +378,22 @@ export const CENTRE_TYPE_ENUM = {
 export const SESSION_KEY = "sessionKey";
 export const MAX_HSN_CODE_LENGTH = 8;
 export const MAX_BANK_AC_NO_LENGTH = 18;
+
+export const REGISTRATION_DATES = [
+  { id: 1, labeIntl: "startDateCompanies" },
+  { id: 2, labeIntl: "startDateCandidates" },
+  { id: 3, labeIntl: "lastDateBigCentres" },
+  { id: 4, labeIntl: "lastDateSmallCentres" },
+];
+
+export const REGISTRATIONS_DATES_FOR_ROUND_TWO = [
+  { id: 1, labeIntl: "registrationStartDateCompanies" },
+  { id: 2, labeIntl: "registrationEndDateCompanies" },
+  { id: 3, labeIntl: "registrationStartDateCandidates" },
+  { id: 4, labeIntl: "registrationEndDateCandidates" },
+  { id: 5, labeIntl: "startShortlistingbyCompany" },
+  { id: 6, labeIntl: "endShortlistingbyCompany" },
+  { id: 7, labeIntl: "startCondidateConsentmarking" },
+  { id: 8, labeIntl: "endCondidateConsentmarking" },
+  { id: 9, labeIntl: "writtenTestDate" },
+];
