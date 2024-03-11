@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useState, useEffect } from "react";
-import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -13,12 +12,7 @@ import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import {
-  getCurrentActiveTab,
-  handleDisabledDate,
-  handleDisabledBeforeDate,
-  handleDisabledAfterDate,
-} from "../../constant/utils";
+import { compareTwoDayjsDates, isNotAFutureDate } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
 import { usePut } from "../../core/hooks/useApiRequest";
 import { ACTIVE_TAB, MODULE_KEYS } from "../../constant/constant";
@@ -37,19 +31,18 @@ import { SESSION } from "../../routes/routeNames";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
 
-const ConsentMarkingContent = ({ isEdit, roundId }) => {
+const ConsentMarkingContent = ({
+  activeTab,
+  isEdit,
+  roundId,
+  setActiveTab,
+}) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
-  const [activeTab, setActiveTab] = useState(
-    getCurrentActiveTab(
-      urlService.getQueryStringValue(ACTIVE_TAB),
-      VALID_CONSENT_MARKING_TABS_ID
-    )
-  );
 
   const {
     error: errorWhileUpdatingRegistrationDate,
@@ -102,69 +95,77 @@ const ConsentMarkingContent = ({ isEdit, roundId }) => {
 
   const disabledDate = (key, current) => {
     if (key === "startDateCompanies") {
-      return handleDisabledDate(current);
+      return isNotAFutureDate(current);
     }
     if (key === "startDateCandidates") {
       return (
-        handleDisabledDate(current) ||
-        handleDisabledAfterDate(
-          current,
-          registrationDatesData["lastDateBigCentres"]
-        )
+        isNotAFutureDate(current) ||
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["lastDateBigCentres"],
+          checkForFuture: false,
+        })
       );
     }
     if (key === "lastDateBigCentres")
       return (
-        handleDisabledBeforeDate(
-          current,
-          registrationDatesData["startDateCandidates"]
-        ) ||
-        handleDisabledAfterDate(
-          current,
-          registrationDatesData["lastDateSmallCentres"]
-        )
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["startDateCandidates"],
+          checkForFuture: false,
+        }) ||
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["lastDateSmallCentres"],
+          checkForFuture: true,
+        })
       );
-    return handleDisabledBeforeDate(
-      current,
-      registrationDatesData["lastDateBigCentres"] ||
-        registrationDatesData["startDateCandidates"]
-    );
+    return compareTwoDayjsDates({
+      current: current,
+      date:
+        registrationDatesData["lastDateBigCentres"] ||
+        registrationDatesData["startDateCandidates"],
+      checkForFuture: false,
+    });
   };
+  const NQCA_REGISTRATION_DATE_FIELDS = [
+    {
+      id: 1,
+      labeIntl: "startDateCompanies",
+    },
+    {
+      id: 2,
+      labeIntl: "startDateCandidates",
+    },
+    {
+      id: 3,
+      labeIntl: "lastDateBigCentres",
+    },
+    {
+      id: 4,
+      labeIntl: "lastDateSmallCentres",
+    },
+  ];
+
+  const OTHER_MODULES_REGISTRATION_DATE_FIELDS = [
+    {
+      id: 1,
+      labeIntl: "startDateCompanies",
+    },
+    {
+      id: 2,
+      labeIntl: "startDateCandidates",
+    },
+    {
+      id: 3,
+      labeIntl: "lastDateBigCentres",
+    },
+  ];
 
   const registrationDates =
     currentlySelectedModuleKey === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY
-      ? [
-          {
-            id: 1,
-            labeIntl: "startDateCompanies",
-          },
-          {
-            id: 2,
-            labeIntl: "startDateCandidates",
-          },
-          {
-            id: 3,
-            labeIntl: "lastDateBigCentres",
-          },
-          {
-            id: 4,
-            labeIntl: "lastDateSmallCentres",
-          },
-        ]
-      : [
-          {
-            id: 1,
-            labeIntl: "startDateCompanies",
-          },
-          {
-            id: 2,
-            labeIntl: "startDateCandidates",
-          },
-          {
-            id: 3,
-            labeIntl: "lastDateBigCentres",
-          },
-        ];
+      ? NQCA_REGISTRATION_DATE_FIELDS
+      : OTHER_MODULES_REGISTRATION_DATE_FIELDS;
 
   const tabItems = [
     {

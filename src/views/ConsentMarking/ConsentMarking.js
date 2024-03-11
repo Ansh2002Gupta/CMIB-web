@@ -1,15 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { TwoRow } from "../../core/layouts";
 
 import ConsentMarkingContent from "../../containers/ConsentMarkingContent";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
+import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import HeaderAndTitle from "../../components/HeaderAndTitle";
 import useFetch from "../../core/hooks/useFetch";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
+import { getCurrentActiveTab } from "../../constant/utils";
 import {
-  ADMIN_ROUTE,
   CORE_ROUTE,
   LAST_REGISTRATION_DATES,
   REGISTRATION_CONSENT,
@@ -18,7 +20,12 @@ import {
   ROUND_1,
   ROUND_2,
 } from "../../constant/apiEndpoints";
-import { ROUND_ID } from "../../constant/constant";
+import {
+  ACTIVE_TAB,
+  ROUND_ID,
+  VALID_CONSENT_MARKING_TABS_ID,
+} from "../../constant/constant";
+import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./ConsentMarking.module.scss";
 
 const ConsentMarking = () => {
@@ -26,6 +33,12 @@ const ConsentMarking = () => {
   const isEdit = true;
   const [userProfileDetails] = useContext(UserProfileContext);
   const roundId = urlService.getQueryStringValue(ROUND_ID);
+  const [activeTab, setActiveTab] = useState(
+    getCurrentActiveTab(
+      urlService.getQueryStringValue(ACTIVE_TAB),
+      VALID_CONSENT_MARKING_TABS_ID
+    )
+  );
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const {
@@ -104,16 +117,76 @@ const ConsentMarking = () => {
 
   const getAllData = () => {
     getRegistrationDate({});
+    if (activeTab === "2") {
+      getConsentRound1({});
+      return;
+    }
+    if (activeTab === "3") {
+      getConsentRound2({});
+      return;
+    }
     getlastRegistrationDates({});
-    getConsentRound1({});
-    getConsentRound2({});
+  };
+
+  const renderError = (errorText, errorHeading, onRetryHandler) => (
+    <div className={commonStyles.errorContainer}>
+      <ErrorMessageBox
+        onRetry={onRetryHandler}
+        errorText={errorText}
+        errorHeading={errorHeading}
+      />
+    </div>
+  );
+
+  const renderContent = () => {
+    const isLoading =
+      isGettingConsentRound1 ||
+      isGettingConsentRound2 ||
+      isGettingRegistrationDate ||
+      isGettinglastRegistrationDates;
+    const errorHeading = intl.formatMessage({ id: "label.error" });
+
+    if (isLoading) {
+      return <CustomLoader />;
+    }
+
+    if (errorWhileGettingconsentRound1) {
+      const errorText = errorWhileGettingconsentRound1?.data?.message;
+      return renderError(errorText, errorHeading, getAllData);
+    }
+
+    if (errorWhileGettingconsentRound2) {
+      const errorText = errorWhileGettingconsentRound2?.data?.message;
+      return renderError(errorText, errorHeading, getAllData);
+    }
+
+    if (errorWhileGettingRegistrationDate) {
+      const errorText = errorWhileGettingRegistrationDate?.data?.message;
+      return renderError(errorText, errorHeading, getAllData);
+    }
+
+    if (errorWhileGettinglastRegistrationDates) {
+      const errorText = errorWhileGettinglastRegistrationDates?.data?.message;
+      return renderError(errorText, errorHeading, getAllData);
+    }
+
+    if (
+      (consentRound2Data || consentRound1Data || lastRegistrationDatesData) &&
+      registrationDateData && <ConsentMarkingContent {...{ isEdit, roundId }} />
+    ) {
+      return (
+        <ConsentMarkingContent
+          {...{ activeTab, isEdit, roundId, setActiveTab }}
+        />
+      );
+    }
   };
 
   useEffect(() => {
     if (currentlySelectedModuleKey) {
       getAllData();
     }
-  }, [userProfileDetails?.selectedModuleItem?.key]);
+  }, [userProfileDetails?.selectedModuleItem?.key, activeTab]);
 
   return (
     <TwoRow
@@ -128,7 +201,7 @@ const ConsentMarking = () => {
           })}
         />
       }
-      bottomSection={<ConsentMarkingContent {...{ isEdit, roundId }} />}
+      bottomSection={renderContent()}
     />
   );
 };
