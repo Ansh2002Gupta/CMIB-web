@@ -487,6 +487,10 @@ const locale = {
   "label.updateSessionSuccessfully": "Session has been updated successfully",
   "label.company_name": "Company Name",
   "label.no_prior_chats_found": "No prior chats found",
+  "label.headerTextItSkills": "IT skills",
+  "label.headerTextSoftSkills": "Soft skills",
+  "label.placeholderItSkills": "Enter IT skills",
+  "label.placeholderSoftSkills": "Enter Soft skills",
 };
 
 export default locale;

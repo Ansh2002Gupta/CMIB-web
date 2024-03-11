@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../../src/core/layouts";
-import ProfileSkillsLeftSection from "../../components/ProfileSkillsLeftSection/ProfileSkillsLeftSection";
-import ProfileSkillsRightSection from "../../components/ProfileSkillsRightSection/ProfileSkillsRightSection";
+import MultiRowInput from "../../components/MultiRowInput/MultiRowInput";
 import useResponsive from "../../core/hooks/useResponsive";
 import { initialFieldState } from "./constant";
 import styles from "./SetProfile.module.scss";
@@ -13,6 +13,7 @@ const SetProfile = () => {
     useState(initialFieldState);
   const [currentFieldStateSoftSkills, setCurrentFieldStateSoftSkills] =
     useState(initialFieldState);
+  const intl = useIntl();
   const responsive = useResponsive();
 
   const handleChange = (
@@ -89,24 +90,58 @@ const SetProfile = () => {
                   : styles.flexDirectionCol
               }`}
               leftSection={
-                <ProfileSkillsLeftSection
+                <MultiRowInput
                   currentFieldState={currentFieldStateItSkills}
-                  setCurrentFieldState={setCurrentFieldStateItSkills}
-                  onChange={handleChange}
-                  onClick={handleClick}
-                  onAdd={handleAdd}
-                  onDelete={handleDelete}
+                  headerText={intl?.formatMessage({
+                    id: "label.headerTextItSkills",
+                  })}
+                  onChange={(newText, fieldIndex) =>
+                    handleChange(
+                      newText,
+                      fieldIndex,
+                      currentFieldStateItSkills,
+                      setCurrentFieldStateItSkills
+                    )
+                  }
+                  onClick={(buttonType, currFieldIndex) =>
+                    handleClick(
+                      buttonType,
+                      currFieldIndex,
+                      currentFieldStateItSkills,
+                      setCurrentFieldStateItSkills
+                    )
+                  }
+                  placeholderText={intl?.formatMessage({
+                    id: "label.placeholderItSkills",
+                  })}
                 />
               }
               leftSectionClassName={styles.leftSectionStyling}
               rightSection={
-                <ProfileSkillsRightSection
+                <MultiRowInput
                   currentFieldState={currentFieldStateSoftSkills}
-                  setCurrentFieldState={setCurrentFieldStateSoftSkills}
-                  onChange={handleChange}
-                  onClick={handleClick}
-                  onAdd={handleAdd}
-                  onDelete={handleDelete}
+                  headerText={intl?.formatMessage({
+                    id: "label.headerTextSoftSkills",
+                  })}
+                  onChange={(newText, fieldIndex) =>
+                    handleChange(
+                      newText,
+                      fieldIndex,
+                      currentFieldStateSoftSkills,
+                      setCurrentFieldStateSoftSkills
+                    )
+                  }
+                  onClick={(buttonType, currFieldIndex) =>
+                    handleClick(
+                      buttonType,
+                      currFieldIndex,
+                      currentFieldStateSoftSkills,
+                      setCurrentFieldStateSoftSkills
+                    )
+                  }
+                  placeholderText={intl?.formatMessage({
+                    id: "label.placeholderSoftSkills",
+                  })}
                 />
               }
               rightSectionClassName={styles.rightSectionStyling}
