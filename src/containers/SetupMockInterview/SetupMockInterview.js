@@ -91,7 +91,7 @@ const SetupMockInterviewContent = () => {
         CORE_ROUTE +
         `/${currentlySelectedModuleKey}` +
         ROUNDS +
-        `/${1}` +
+        `/${id}` +
         MOCK_INTERVIEWS +
         DOWNLOAD,
       onSuccessCallback: (response) => {

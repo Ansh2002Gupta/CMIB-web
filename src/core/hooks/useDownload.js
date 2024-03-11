@@ -37,8 +37,7 @@ const useDownload = ({
         ...apiOptions,
         responseType: "blob",
       });
-
-      if (response.status === STATUS_CODES.SUCCESS_STATUS) {
+      if (response) {
         saveAs(new Blob([response.data]), filename);
         setApiStatus(API_STATUS.SUCCESS);
         onSuccessCallback && onSuccessCallback(response.data);
