@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import useConsentTableColumns from "./ConsentTableConfig";
 import DataTable from "../../components/DataTable/DataTable";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import { urlService } from "../../Utils/urlService";
 import {
   PAGINATION_PROPERTIES,
   VALID_ROW_PER_OPTIONS,
@@ -21,12 +21,15 @@ const ConsentTable = ({
   setTableData,
   tableData,
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [current, setCurrent] = useState(
-    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+    getValidPageNumber(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
+    )
   );
   const [pageSize, setPageSize] = useState(
-    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
+    getValidPageSize(
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE)
+    )
   );
 
   const updateTableData = (currentPageNumber, currentPageSize) => {
@@ -45,29 +48,31 @@ const ConsentTable = ({
 
   const onChangeCurrentPage = (newPageNumber) => {
     setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, newPageNumber);
-      return prev;
-    });
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE,
+      newPageNumber
+    );
     updateTableData(newPageNumber, pageSize);
   };
 
   const onChangePageSize = (size) => {
     setPageSize(Number(size));
     setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-      return prev;
-    });
+    const queryParams = {
+      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: size,
+      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
+    };
+    urlService.setMultipleQueryStringValues(queryParams);
     updateTableData(1, size);
   };
 
   const columns = useConsentTableColumns(isEdit, registration, onDateChange);
 
   useEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
+    const currentPage = +urlService.getQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE
+    );
+    const currentPagePerRow = +urlService.getQueryStringValue(
       PAGINATION_PROPERTIES.ROW_PER_PAGE
     );
     const availablePage = Math.ceil(totalData.length / currentPagePerRow);
@@ -81,10 +86,7 @@ const ConsentTable = ({
       currentPage <= 0 ||
       currentPage > availablePage
     ) {
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       startIndex = 0;
       endIndex = DEFAULT_PAGE_SIZE;
     }
@@ -93,10 +95,10 @@ const ConsentTable = ({
       !currentPagePerRow ||
       !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
     ) {
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, DEFAULT_PAGE_SIZE);
-        return prev;
-      });
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES.ROW_PER_PAGE,
+        DEFAULT_PAGE_SIZE
+      );
       startIndex = 0;
       endIndex = DEFAULT_PAGE_SIZE;
     }
@@ -107,7 +109,9 @@ const ConsentTable = ({
   return (
     <DataTable
       {...{ columns, pageSize, onChangePageSize, onChangeCurrentPage }}
-      current={+searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE)}
+      current={
+        +urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
+      }
       currentDataLength={totalData.length}
       customContainerStyles={[styles.table, "customConsentTable"].join(" ")}
       originalData={tableData}

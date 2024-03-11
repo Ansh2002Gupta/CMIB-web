@@ -14,7 +14,6 @@ const AutoPlaceComplete = ({
   const intl = useIntl();
   const [searchedLocation, setSearchedLocation] = useState(defaultValue);
   const [suggestedLocations, setSuggestedLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState({});
 
   useEffect(() => {
     if (!window.google) {
@@ -59,13 +58,12 @@ const AutoPlaceComplete = ({
     }
   }, [searchedLocation]);
 
-  const getPanelValue = (searchText) => {
-    return !searchText ? [] : [];
+  const getPanelValue = () => {
+    return [];
   };
 
   const setLatLngFromAddress = (address) => {
-    onSelectLocation && onSelectLocation(address);
-    var geocoder = new window.google.maps.Geocoder();
+    const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode(
       {
         address,
@@ -78,10 +76,17 @@ const AutoPlaceComplete = ({
           return;
         }
         let place = results[0];
-        setSelectedLocation({
+        const location = {
+          venue: address,
           latitude: place.geometry.location.lat(),
           longitude: place.geometry.location.lng(),
-        });
+        };
+        onSelectLocation &&
+          onSelectLocation(
+            location,
+            place.geometry.location.lat(),
+            place.geometry.location.lng()
+          );
       }
     );
   };
@@ -103,18 +108,18 @@ const AutoPlaceComplete = ({
       }}
       style={styles.inputStyle}
       onSelect={setLatLngFromAddress}
-      onSearch={(item) => setSuggestedLocations(getPanelValue(item))}
+      onSearch={() => setSuggestedLocations(getPanelValue())}
       placeholder={intl.formatMessage({ id: "label.enter_location" })}
       onBlur={handleOnBlur}
     />
   );
 };
 
-AutoComplete.defaultProps = {
+AutoPlaceComplete.defaultProps = {
   defaultValue: "",
 };
 
-AutoComplete.propTypes = {
+AutoPlaceComplete.propTypes = {
   allowManualText: PropTypes.bool,
   defaultValue: PropTypes.string,
   onSelectLocation: PropTypes.func,

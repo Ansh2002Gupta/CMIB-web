@@ -6,6 +6,7 @@
   padding: var(--gapMedium);
   background-color: var(--bodyBg);
   border-bottom: var(--borderLight);
+  gap: var(--gap_18);
 }
 
 .headingText {
@@ -55,4 +56,101 @@
   align-items: center;
   height: var(--height_50vh);
   width: var(--fullWidth);
+}
+
+.paymentTypeContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  margin-bottom: var(--marginLarge);
+}
+
+.grayText {
+  font-size: var(--fontSizeExtraSmall, 12px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--subHeadingColor, #616C82);
+}
+
+.blackText {
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--textBold, #000833);
+}
+
+.editContainer {
+  align-items: center;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+}
+
+.text {
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--textBold, #000833);
+}
+
+.paymentTypeGap {
+  gap: var(--gapXSmall, 8px)
+}
+
+.participationFeesGap {
+  gap: 15%;
+}
+
+.redText {
+  color: var(--error, #D93400);
+}
+
+.errorText {
+  color: var(--error, #D93400);
+  font-size: var(--fontSizeExtraSmall, 12px);
+  font-weight: var(--fontWeightMedium, 500);
+}
+
+.modalGap {
+  gap: var(--gapMedium, 24px);
+  margin-top: var(--gapSmall, 16px);
+}
+
+.radioButtonGap {
+  gap: var(--gapSmall, 16px);
+}
+
+.inputLabel {
+  color: var(--inputPlaceHolder, #616C82);
+  font-size: var(--fontSizeExtraSmall, 12px);
+  font-weight: var(--fontWeightMedium, 500);
+}
+
+.input {
+  height: var(--height_44, 44px);
+  color: var(--textBold, #000833) !important;
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  padding: var(--paddingExtraSmall, 8px) var(--paddingSmall, 16px);
+  border-radius: var(--radiusLg, 8px);
+  border-width: var(--width_1, 1px);
+  border-color: var(--borderLight, #ccd0e5);
+  background-color: var(--bodyBg, #ffffff);
+
+  &::placeholder {
+    color: var(--inputPlaceHolder, #616C82) !important;
+  }
+}
+
+.customContainerStyles {
+  width: var(--fullWidth, 100%);
+}
+
+.noteText {
+  font-size: var(--fontSizeExtraSmall, 12px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--subHeadingColor, #616C82);
+  font-style: italic;
+  margin-top: var(--marginMedium, 16px);
+}
+
+.participationFeesModalGap {
+  gap: var(--marginXXSmall, 4px);
 }

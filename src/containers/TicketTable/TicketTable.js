@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
@@ -15,6 +14,7 @@ import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import { urlService } from "../../Utils/urlService";
 import { getTicketColumn } from "./TicketTableConfig";
 import { resetListingData } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
@@ -43,7 +43,6 @@ const TicketTable = ({
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTicketData, setCurrentTicketData] = useState({});
@@ -131,13 +130,13 @@ const TicketTable = ({
           sortField: sortFilter?.sortField,
         }),
       });
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     }
-    if (!str?.trim() && searchParams.get(PAGINATION_PROPERTIES.SEARCH_QUERY)) {
+    if (
+      !str?.trim() &&
+      urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY)
+    ) {
       debounceSearch({
         queryParamsObject: getRequestedQueryParams({
           page: 1,
@@ -147,20 +146,14 @@ const TicketTable = ({
           sortField: sortFilter?.sortField,
         }),
       });
-      setSearchParams((prev) => {
-        prev.delete(PAGINATION_PROPERTIES.SEARCH_QUERY);
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.removeParam(PAGINATION_PROPERTIES.SEARCH_QUERY);
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     }
   };
 
   const handleSorting = (sortDetails) => {
     setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-      return prev;
-    });
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     const requestedParams = getRequestedQueryParams({
       currentFilterStatus: filterArray,
       page: 1,
@@ -200,11 +193,8 @@ const TicketTable = ({
   const onChangePageSize = (size) => {
     setPageSize(size);
     setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      return prev;
-    });
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     const requestedParams = getRequestedQueryParams({
       rowPerPage: size,
       page: 1,
@@ -218,10 +208,11 @@ const TicketTable = ({
 
   const onChangeCurrentPage = (newPageNumber) => {
     setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
-      return prev;
-    });
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE,
+      newPageNumber
+    );
+
     const requestedParams = getRequestedQueryParams({
       page: newPageNumber,
       search: searchedValue,
@@ -234,13 +225,16 @@ const TicketTable = ({
   };
 
   useEffect(() => {
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
-      prev.set(PAGINATION_PROPERTIES.ROW_PER_PAGE, pageSize);
-      searchedValue &&
-        prev.set(PAGINATION_PROPERTIES.SEARCH_QUERY, searchedValue);
-      return prev;
-    });
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, current);
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.ROW_PER_PAGE,
+      pageSize
+    );
+    searchedValue &&
+      urlService.setQueryStringValue(
+        PAGINATION_PROPERTIES.SEARCH_QUERY,
+        searchedValue
+      );
 
     const requestedParams = getRequestedQueryParams({
       search: searchedValue,
@@ -265,7 +259,6 @@ const TicketTable = ({
                 sortField: sortFilter?.sortField,
               }),
             }),
-          setSearchParams,
           setCurrent,
         });
       },
@@ -282,10 +275,7 @@ const TicketTable = ({
       sortField: sortFilter?.sortField,
     });
     setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-      return prev;
-    });
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -331,10 +321,7 @@ const TicketTable = ({
       sortField: sortFilter?.sortField,
     });
     setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-      return prev;
-    });
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     fetchData({ queryParamsObject: requestedParams });
   };
 

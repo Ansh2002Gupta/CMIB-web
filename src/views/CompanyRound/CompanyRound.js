@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
@@ -7,11 +6,11 @@ import { TwoRow } from "../../core/layouts";
 import ContentSlider from "../../components/ContentSlider/ContentSlider";
 import CompanyProfile from "../../containers/CompanyDetails/CompanyProfile";
 import JobDetails from "../../containers/CompanyDetails/JobDetails";
+import { urlService } from "../../Utils/urlService";
 import styles from "./CompanyRound.module.scss";
 
 const CompanyRound = ({ roundList }) => {
   const [activeCompanyTab, setActiveCompanyTab] = useState("1");
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const tabItems = [
     {
@@ -26,22 +25,16 @@ const CompanyRound = ({ roundList }) => {
 
   const handleSelectTab = (idx) => {
     setActiveCompanyTab();
-    setSearchParams((params) => {
-      params.set("company-tab", idx);
-      return params;
-    });
+    urlService.setQueryStringValue("company-tab", idx);
   };
 
   useEffect(() => {
-    const tabQueryParam = searchParams.get("company-tab");
+    const tabQueryParam = urlService.getQueryStringValue("company-tab");
     if (tabItems.some((tab) => tab.key === tabQueryParam)) {
       setActiveCompanyTab(tabQueryParam);
     } else {
       setActiveCompanyTab(tabItems[0].key);
-      setSearchParams((params) => {
-        params.set("company-tab", tabItems[0].key);
-        return params;
-      });
+      urlService.setQueryStringValue("company-tab", tabItems[0].key);
     }
   }, [activeCompanyTab]);
 

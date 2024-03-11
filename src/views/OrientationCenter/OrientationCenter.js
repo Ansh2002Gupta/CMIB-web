@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
@@ -25,6 +24,7 @@ import { ROUND_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 
 import { classes } from "./OrientationCenter.styles";
+import { urlService } from "../../Utils/urlService";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./OrientationCenter.module.scss";
 import "./Override.css";
@@ -33,10 +33,9 @@ const OrientationCenter = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [searchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const roundId = searchParams.get(ROUND_ID);
+  const roundId = urlService.getQueryStringValue(ROUND_ID);
 
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
@@ -87,7 +86,21 @@ const OrientationCenter = () => {
     setFormData((prevFormData) => {
       return prevFormData.map((item) => {
         if (item.id === recordId) {
-          return { ...item, [field]: value };
+          if (
+            typeof value === "object" &&
+            value?.venue &&
+            value?.latitude &&
+            value?.longitude
+          ) {
+            return {
+              ...item,
+              [field]: value?.venue,
+              latitude: value?.latitude,
+              longitude: value?.longitude,
+            };
+          } else {
+            return { ...item, [field]: value };
+          }
         }
         return item;
       });
@@ -146,7 +159,7 @@ const OrientationCenter = () => {
         onChange: (val, record) => {
           handleInputChange("schedule_date", val, record.id);
         },
-        disabledDate: (current) => {
+        getDisabledDate: (current, record) => {
           return current && current < dayjs().add(1, "day").startOf("day");
         },
       },
@@ -184,6 +197,8 @@ const OrientationCenter = () => {
   const getApiPayload = (formData) => {
     return {
       data: formData.map((item) => ({
+        latitude: item.latitude,
+        longitude: item.longitude,
         id: item.id,
         venue: item.venue,
         schedule_date: dayjs(item.schedule_date).format("YYYY-MM-DD"),
@@ -251,6 +266,7 @@ const OrientationCenter = () => {
       <DataTable
         columns={columns}
         hidePagination
+        showTableBorderBottom
         currentDataLength={formData?.length}
         customContainerStyles={styles.tableContainer}
         originalData={formData}
@@ -285,6 +301,7 @@ const OrientationCenter = () => {
             fetchCentersSuccessFlag &&
             !isUpdatingOrientationCentre &&
             !!orientationCentres?.length &&
+            !errorWhileUpdatingCentre &&
             !!currentGlobalSession?.status && (
               <TwoColumn
                 className={styles.buttonContainer}
