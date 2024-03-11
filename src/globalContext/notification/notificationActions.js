@@ -34,3 +34,17 @@ export const updateSessionNotification = (payload) => {
     payload,
   };
 };
+
+export const updateInterviewNotification = (payload) => {
+  return {
+    type: types.UPDATE_INTERVIEW_NOTIFICATION,
+    payload,
+  };
+};
+
+export const setShowSuccessNotification = (payload) => {
+  return {
+    type: types.SHOW_SUCCESS_NOTIFICATION,
+    payload,
+  };
+};

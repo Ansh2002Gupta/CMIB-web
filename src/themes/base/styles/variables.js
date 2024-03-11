@@ -33,6 +33,7 @@ const variables = {
   ltGrey4: colorPallets.ltGrey4,
   darkBlueBg1: colorPallets.blue9,
   lightGrey: colorPallets.lightGrey,
+  disableColor: colorPallets.disableColor,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -192,6 +193,7 @@ const variables = {
   height_150: "150px",
   height_200: "200px",
   height_184: "184px",
+  height_210: "210px",
   height_240: "240px",
   height_250: "250px",
   height_300: "300px",
@@ -248,6 +250,7 @@ const variables = {
   paddingXXSmall: "4px",
   paddingExtraSmall: "8px",
   padding_9: "9px",
+  padding_5: "5px",
   paddingMediumSmall: "12px",
   padding_14: "14px",
   paddingSmall: "16px",
@@ -270,6 +273,7 @@ const variables = {
   gapXSmall: "8px",
   gapSmallMedium: "12px",
   gapSmall: "16px",
+  gap_18: "18px",
   gap_20: "20px",
   gapMedium: "24px",
   gap_26: "26px",

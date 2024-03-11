@@ -1,84 +1,78 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
-import { ThemeContext } from "core/providers/theme";
 
 import { TwoRow } from "../../core/layouts";
 
+import CustomLoader from "../../components/CustomLoader";
 import DataTable from "../../components/DataTable/DataTable";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
 import HeadingAndSubHeading from "../../components/HeadingAndSubHeading/HeadingAndSubHeading";
+import { ThemeContext } from "core/providers/theme";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import useFetch from "../../core/hooks/useFetch";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import { updateInterviewNotification } from "../../globalContext/notification/notificationActions";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
+import { urlService } from "../../Utils/urlService";
+
 import {
-  DEFAULT_PAGE_SIZE,
-  PAGINATION_PROPERTIES,
-  VALID_ROW_PER_OPTIONS,
+  ROUND_ID,
+  NOTIFICATION_TYPES,
+  STATUS_CODES,
 } from "../../constant/constant";
-import { MOCK_INTERVIEW } from "../../dummyData";
-import { SESSION, SETUP_MOCK_INTERVIEW } from "../../routes/routeNames";
+import {
+  CORE_ROUTE,
+  MOCK_INTERVIEWS,
+  ROUNDS,
+} from "../../constant/apiEndpoints";
+import { SESSION } from "../../routes/routeNames";
 import { classes } from "./SetupMockInterview.styles";
+import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./SetupMockInterview.module.scss";
 
 const SetupMockInterviewContent = () => {
   const intl = useIntl();
-  const isEdit = true;
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
-  const [searchParams, setSearchParams] = useSearchParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [currentTableData, setCurrentTableData] = useState(MOCK_INTERVIEW);
   const [userProfileDetails] = useContext(UserProfileContext);
-  const selectedModule = userProfileDetails?.selectedModuleItem;
-  const [current, setCurrent] = useState(
-    getValidPageNumber(searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE))
+  const [notificationState, setNotificationStateDispatch] =
+    useContext(NotificationContext);
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
+
+  const roundId = urlService.getQueryStringValue(ROUND_ID);
+  const {
+    data,
+    error: errorWhileFetchingInterview,
+    isLoading: isGettingInterview,
+    fetchData,
+  } = useFetch({
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      ROUNDS +
+      `/${roundId}` +
+      MOCK_INTERVIEWS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const { showNotification, notificationContextHolder } = useShowNotification();
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
   );
-  const [pageSize, setPageSize] = useState(
-    getValidPageSize(searchParams.get(PAGINATION_PROPERTIES.ROW_PER_PAGE))
-  );
+  const isEdit =
+    currentGlobalSession?.is_editable && currentGlobalSession?.status;
 
   const goToConfigureInterview = (rowData, isEdit) => {
     const centreId = rowData?.id;
-    navigate(
-      `/${
-        selectedModule?.key
-      }/${SESSION}${SETUP_MOCK_INTERVIEW}details/${centreId}?mode=${
-        isEdit ? "edit" : "view"
-      }`,
-      false,
-      { current: current, pageSize: pageSize }
-    );
-  };
-
-  const updateTableData = (currentPageNumber, currentPageSize) => {
-    const startIndex = (currentPageNumber - 1) * currentPageSize;
-    const endIndex = currentPageNumber * currentPageSize;
-    const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
-  };
-
-  const onChangePageSize = (size) => {
-    //TODO : Replace this code with API Pagination
-    setPageSize(Number(size));
-    setCurrent(1);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], size);
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-      return prev;
-    });
-    updateTableData(1, size);
-  };
-
-  const onChangeCurrentPage = (newPageNumber) => {
-    //TODO : Replace this code with API Pagination
-    setCurrent(newPageNumber);
-    setSearchParams((prev) => {
-      prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], newPageNumber);
-      return prev;
-    });
-    updateTableData(newPageNumber, pageSize);
+    navigate(`interviewDetails/${centreId}?roundId=${roundId}`, false);
   };
 
   const columns = getSetupMockColumn(
@@ -90,73 +84,76 @@ const SetupMockInterviewContent = () => {
   );
 
   useEffect(() => {
-    const currentPage = +searchParams.get(PAGINATION_PROPERTIES.CURRENT_PAGE);
-    const currentPagePerRow = +searchParams.get(
-      PAGINATION_PROPERTIES.ROW_PER_PAGE
-    );
+    if (userProfileDetails?.selectedModuleItem?.key) {
+      if (roundId) {
+        fetchData({});
+        return;
+      }
+      navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
+    }
+  }, [userProfileDetails?.selectedModuleItem?.key]);
 
-    let startIndex = (currentPage - 1) * currentPagePerRow;
-    let endIndex = currentPage * currentPagePerRow;
-    const availalblePage = Math.ceil(MOCK_INTERVIEW.length / currentPagePerRow);
-    if (
-      !currentPage ||
-      isNaN(currentPage) ||
-      currentPage <= 0 ||
-      currentPage > availalblePage
-    ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.CURRENT_PAGE], 1);
-        return prev;
-      });
-      setCurrent(1);
-      startIndex = 0;
-      endIndex = currentPagePerRow;
+  useEffect(() => {
+    if (errorWhileFetchingInterview?.data?.code === STATUS_CODES.NOT_FOUND) {
+      navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
     }
-    if (
-      !currentPagePerRow ||
-      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
-    ) {
-      setSearchParams((prev) => {
-        prev.set([PAGINATION_PROPERTIES.ROW_PER_PAGE], DEFAULT_PAGE_SIZE);
-        return prev;
+  }, [errorWhileFetchingInterview?.data?.code]);
+
+  useEffect(() => {
+    if (notificationState?.updateInterviewDateSuccessfully) {
+      showNotification({
+        text: intl.formatMessage({
+          id: "label.updateInterviewDateSuccessfully",
+        }),
+        type: NOTIFICATION_TYPES.SUCCESS,
       });
-      startIndex = currentPage;
-      endIndex = DEFAULT_PAGE_SIZE;
+      setNotificationStateDispatch(updateInterviewNotification(false));
     }
-    const updatedData = MOCK_INTERVIEW.slice(startIndex, endIndex);
-    setCurrentTableData(updatedData);
-  }, []);
+  }, [notificationState?.updateInterviewDateSuccessfully]);
 
   return (
-    <TwoRow
-      className={styles.mainContainer}
-      topSection={
-        <HeadingAndSubHeading
-          customContainerStyles={styles.customContainerStyles}
-          headingText={intl.formatMessage({
-            id: "label.session.setupMockInterviews",
-          })}
-          subHeadingText={intl.formatMessage({
-            id: "label.warning.setupMockInterviews",
-          })}
-        />
-      }
-      bottomSection={
-        <DataTable
-          {...{
-            columns,
-            current,
-            pageSize,
-            onChangePageSize,
-            onChangeCurrentPage,
-          }}
-          currentDataLength={MOCK_INTERVIEW.length}
-          customContainerStyles={styles.tableContainer}
-          originalData={currentTableData}
-        />
-      }
-      bottomSectionStyle={classes.bottomSectionStyle}
-    />
+    <>
+      {notificationContextHolder}
+      <TwoRow
+        className={styles.mainContainer}
+        topSection={
+          <HeadingAndSubHeading
+            customContainerStyles={styles.customContainerStyles}
+            headingText={intl.formatMessage({
+              id: "label.session.setupMockInterviews",
+            })}
+            subHeadingText={intl.formatMessage({
+              id: "label.warning.setupMockInterviews",
+            })}
+          />
+        }
+        bottomSection={
+          isGettingInterview ? (
+            <div className={commonStyles.errorContainer}>
+              <CustomLoader />
+            </div>
+          ) : errorWhileFetchingInterview ? (
+            <div className={commonStyles.errorContainer}>
+              <ErrorMessageBox
+                onRetry={() => fetchData({})}
+                errorText={errorWhileFetchingInterview?.data?.message}
+                errorHeading={intl.formatMessage({ id: "label.error" })}
+              />
+            </div>
+          ) : (
+            <DataTable
+              {...{
+                columns,
+              }}
+              hidePagination={true}
+              customContainerStyles={styles.tableContainer}
+              originalData={data}
+            />
+          )
+        }
+        bottomSectionStyle={classes.bottomSectionStyle}
+      />
+    </>
   );
 };
 export default SetupMockInterviewContent;

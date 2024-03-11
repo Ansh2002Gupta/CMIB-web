@@ -41,6 +41,7 @@ import {
   EDIT_CONFIGURE_CENTRE,
   EDIT_SESSION,
   FORGOT_PASSWORD,
+  INTERVIEW_DETAILS,
   LOGIN,
   OUT_SOURCED,
   QUERIES,
@@ -48,6 +49,7 @@ import {
   ROOT,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
+  ROUND_TWO_SETUP_CENTERS,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -127,11 +129,11 @@ const config = [
         element: <EditSession />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
@@ -160,7 +162,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
@@ -265,6 +267,14 @@ const config = [
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
+      {
+        viewPath: SESSION + ROUND_TWO_SETUP_CENTERS,
+        element: <SetupCenter />,
+      },
+      {
+        viewPath: SESSION + ROUND_TWO_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        element: <SetupCenterDetails />,
+      },
       { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
       {
         viewPath: SESSION + ROUND_ONE_ORIENTATION_CENTERS,
@@ -295,7 +305,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
@@ -321,11 +331,11 @@ const config = [
         element: <EditSession />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
@@ -354,7 +364,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
@@ -380,11 +390,11 @@ const config = [
         element: <EditSession />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS,
         element: <SetupCenter />,
       },
       {
-        viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
+        viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
       { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
@@ -413,7 +423,7 @@ const config = [
         element: <SetupMockInterview />,
       },
       {
-        viewPath: SESSION + SETUP_MOCK_INTERVIEW + DETAILS,
+        viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
     ],
