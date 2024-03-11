@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Image, Typography } from "antd";
+import { Image, InputNumber, Typography } from "antd";
 
 import { TwoRow } from "../../../src/core/layouts";
 import useResponsive from "../../core/hooks/useResponsive";
+import CustomInput from "../../components/CustomInput/CustomInput";
 import images from "../../themes/base/assets/images";
 import styles from "./VideoUpload.module.scss";
 
@@ -27,7 +28,7 @@ const VideoUpload = () => {
             <Typography className={styles.topSectionLabel}>
               Maximum Video Upload Time Limit
             </Typography>
-            <div className={styles.inputNumberOuterContainer}>
+            {/* <div className={styles.inputNumberOuterContainer}>
               <div className={styles.inputNumberMainContainer}>
                 {value < 0 ? 0 : value}s
               </div>
@@ -47,7 +48,15 @@ const VideoUpload = () => {
                   src={images.blackArrowDown}
                 />
               </div>
-            </div>
+            </div> */}
+            <CustomInput
+              showControls={true}
+              type="inputNumber"
+              value={0}
+              onChange={(val) => {
+                console.log("Changed value:", val);
+              }}
+            />
           </div>
         }
       />
