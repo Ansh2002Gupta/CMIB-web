@@ -5,7 +5,7 @@ import Http from "../../services/http-service";
 import { API_STATUS, STATUS_CODES } from "../../constant/constant";
 import { objectToQueryString } from "../../Utils/queryParamHelpers";
 
-const useApiRequest = (method, url, apiOptions = {}, otherOptions = {}) => {
+const useApiRequest = ({ method, url, apiOptions = {}, otherOptions = {} }) => {
   const intl = useIntl();
 
   const [data, setData] = useState(null);
@@ -28,13 +28,10 @@ const useApiRequest = (method, url, apiOptions = {}, otherOptions = {}) => {
     if (queryParamsObject && objectToQueryString(queryParamsObject)) {
       modifiedURL = `${requestUrl}?${objectToQueryString(queryParamsObject)}`;
     }
-
     try {
       setApiStatus(API_STATUS.LOADING);
       error && setError("");
-
       const response = await Http[method](modifiedURL, body, apiOptions);
-
       if (
         response.code === STATUS_CODES.SUCCESS_STATUS ||
         response.status === STATUS_CODES.SUCCESS_STATUS
@@ -44,7 +41,6 @@ const useApiRequest = (method, url, apiOptions = {}, otherOptions = {}) => {
         onSuccessCallback && onSuccessCallback(response.data);
         return response.data;
       }
-
       setApiStatus(API_STATUS.ERROR);
       setError(GENERIC_API_FAILED_ERROR_MESSAGE);
       onErrorCallback && onErrorCallback(GENERIC_API_FAILED_ERROR_MESSAGE);
@@ -73,8 +69,8 @@ const useApiRequest = (method, url, apiOptions = {}, otherOptions = {}) => {
 };
 
 export const usePost = ({ url, apiOptions, otherOptions }) =>
-  useApiRequest("post", url, apiOptions, otherOptions);
+  useApiRequest({ method: "post", url, apiOptions, otherOptions });
 export const usePut = ({ url, apiOptions, otherOptions }) =>
-  useApiRequest("put", url, apiOptions, otherOptions);
+  useApiRequest({ method: "put", url, apiOptions, otherOptions });
 export const usePatch = ({ url, apiOptions, otherOptions }) =>
-  useApiRequest("patch", url, apiOptions, otherOptions);
+  useApiRequest({ method: "patch", url, apiOptions, otherOptions });
