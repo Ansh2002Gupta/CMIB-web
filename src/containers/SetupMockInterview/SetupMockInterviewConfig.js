@@ -1,6 +1,7 @@
 import styles from "./SetupMockInterview.module.scss";
 
 const getSetupMockColumn = (
+  downloadInteview,
   intl,
   isEdit,
   getImage,
@@ -40,7 +41,9 @@ const getSetupMockColumn = (
       renderTwoImage: {
         leftAlt: "download",
         rightAlt: "edit",
-        leftOnClick: (rowData) => {},
+        leftOnClick: (rowData) => {
+          downloadInteview(rowData.id);
+        },
         rightOnClick: (rowData) => goToConfigureInterview(rowData, isEdit),
         leftPreview: false,
         rightPreview: false,

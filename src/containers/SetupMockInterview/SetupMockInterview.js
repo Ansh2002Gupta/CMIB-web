@@ -12,6 +12,7 @@ import { GlobalSessionContext } from "../../globalContext/globalSession/globalSe
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
+import useDownload from "../../core/hooks/useDownload";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
@@ -26,6 +27,7 @@ import {
 } from "../../constant/constant";
 import {
   CORE_ROUTE,
+  DOWNLOAD,
   MOCK_INTERVIEWS,
   ROUNDS,
 } from "../../constant/apiEndpoints";
@@ -62,6 +64,14 @@ const SetupMockInterviewContent = () => {
       skipApiCallOnMount: true,
     },
   });
+
+  const {
+    data: downloadData,
+    error: errorWhileDownloadingInterview,
+    isLoading: isDownloadingInterview,
+    download,
+  } = useDownload({});
+
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const { showNotification, notificationContextHolder } = useShowNotification();
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
@@ -75,7 +85,35 @@ const SetupMockInterviewContent = () => {
     navigate(`interviewDetails/${centreId}?roundId=${roundId}`, false);
   };
 
+  const downloadInteview = (id) => {
+    download({
+      url:
+        CORE_ROUTE +
+        `/${currentlySelectedModuleKey}` +
+        ROUNDS +
+        `/${1}` +
+        MOCK_INTERVIEWS +
+        DOWNLOAD,
+      onSuccessCallback: (response) => {
+        console.log(response);
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.downloadSucess",
+          }),
+          type: NOTIFICATION_TYPES.SUCCESS,
+        });
+      },
+      onErrorCallback: (errorMessage) => {
+        showNotification({
+          text: errorMessage,
+          type: NOTIFICATION_TYPES.ERROR,
+        });
+      },
+    });
+  };
+
   const columns = getSetupMockColumn(
+    downloadInteview,
     intl,
     isEdit,
     getImage,
