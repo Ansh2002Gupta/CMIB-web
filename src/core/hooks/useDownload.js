@@ -33,7 +33,7 @@ const useDownload = ({
     try {
       setApiStatus(API_STATUS.LOADING);
       error && setError("");
-      const response = await Http.dget(modifiedURL, {
+      const response = await Http.get(modifiedURL, {
         ...apiOptions,
         responseType: "blob",
       });

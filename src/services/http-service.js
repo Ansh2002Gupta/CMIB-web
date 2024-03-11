@@ -1,27 +1,9 @@
 import axios from "axios";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
-const dbaseUrl =
-  "https://9127-2401-4900-51e0-460d-dcb5-3ec6-f7b8-a3c6.ngrok-free.app/api/";
-
 export default class Http {
   static async get(_url, apiOptions = {}, handleDiscard = () => {}) {
     const url = `${baseUrl}${_url}`;
-    try {
-      const cancelGetRequest = axios.CancelToken.source();
-      handleDiscard(cancelGetRequest);
-      const response = await axios.get(url, {
-        cancelToken: cancelGetRequest.token,
-        ...apiOptions,
-      });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async dget(_url, apiOptions = {}, handleDiscard = () => {}) {
-    const url = `${dbaseUrl}${_url}`;
     try {
       const cancelGetRequest = axios.CancelToken.source();
       handleDiscard(cancelGetRequest);
