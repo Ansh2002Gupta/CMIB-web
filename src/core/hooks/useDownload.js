@@ -38,9 +38,9 @@ const useDownload = ({
         responseType: "blob",
       });
       if (response) {
-        saveAs(new Blob([response.data]), filename);
+        saveAs(new Blob([response]), filename);
         setApiStatus(API_STATUS.SUCCESS);
-        onSuccessCallback && onSuccessCallback(response.data);
+        onSuccessCallback && onSuccessCallback(response);
       } else {
         throw new Error("Server responded with non-200 status");
       }
