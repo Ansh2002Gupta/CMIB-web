@@ -2,16 +2,16 @@ export const initialFieldState = [
   {
     fieldValue: "",
     buttonType: "delete",
-    index: 0,
+    id: 0,
   },
   {
     fieldValue: "",
     buttonType: "delete",
-    index: 1,
+    id: 1,
   },
   {
     fieldValue: "",
     buttonType: "add",
-    index: 2,
+    id: 2,
   },
 ];

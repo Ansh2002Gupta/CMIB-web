@@ -21,12 +21,12 @@ const MultiRowInput = ({
       {!!currentFieldState?.length &&
         currentFieldState?.map((field) => {
           return (
-            <div key={field?.index} className={styles.innerContainerFlexRow}>
+            <div key={field?.id} className={styles.innerContainerFlexRow}>
               <CustomInput
                 value={field?.fieldValue}
                 type="text"
                 controls={true}
-                onChange={(e) => onChange(e?.target?.value, field?.index)}
+                onChange={(e) => onChange(e?.target?.value, field?.id)}
                 customContainerStyles={styles.customInputOuterContainer}
                 placeholder={placeholderText}
               />
@@ -40,10 +40,7 @@ const MultiRowInput = ({
                 alt="add/remove"
                 preview={false}
                 onClick={() =>
-                  onClick(
-                    field?.buttonType?.trim()?.toLowerCase(),
-                    field?.index
-                  )
+                  onClick(field?.buttonType?.trim()?.toLowerCase(), field?.id)
                 }
               />
             </div>

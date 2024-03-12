@@ -1,8 +1,8 @@
 import React from "react";
-import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Typography } from "antd";
 
+import { urlService } from "../../Utils/urlService";
 import { FORM_STATES } from "../../constant/constant";
 import styles from "./CustomTabs.module.scss";
 
@@ -13,8 +13,6 @@ const CustomTabs = ({
   tabs,
   tabsKeyText,
 }) => {
-  const [, setSearchParams] = useSearchParams();
-
   const tabClass = (tabKey) => {
     let classes = `${styles.tab}`;
     if (activeTab === tabKey) classes += ` ${styles.active}`;
@@ -23,13 +21,10 @@ const CustomTabs = ({
 
   const handleSelectTab = (tabName) => {
     setActiveTab(tabName);
-    setSearchParams((params) => {
-      if (resetMode && tabName !== params.get("tab")) {
-        params.set("mode", FORM_STATES.VIEW_ONLY);
-      }
-      params.set(tabsKeyText, tabName);
-      return params;
-    });
+    resetMode &&
+      tabName !== urlService.getQueryStringValue("tab") &&
+      urlService.setQueryStringValue("mode", FORM_STATES.VIEW_ONLY);
+    urlService.setQueryStringValue(tabsKeyText, tabName);
   };
 
   return (

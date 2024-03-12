@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 import { controlMenu, modules } from "../containers/SideMenu/sideMenuItems";
+import { urlService } from "../Utils/urlService";
 import {
   DEFAULT_PAGE_SIZE,
   FORM_STATES,
@@ -15,6 +16,13 @@ export const formatDate = ({ date, dateFormat = "DD/MM/YYYY" }) => {
     return dayjs(new Date(date)).format(dateFormat);
   }
   return dayjs(new Date()).format(dateFormat);
+};
+
+export const formatTime = ({ time, timeFormat = "h:mm A" }) => {
+  if (time) {
+    return dayjs(time).format(timeFormat);
+  }
+  return dayjs().format(timeFormat);
 };
 
 export const convertDateToStringDate = (date) => {
@@ -245,8 +253,8 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   if (
     chatData?.author?.id === userDetails?.id &&
-    chatData?.author?.type.toLowerCase() ===
-      userDetails?.user_type.toLowerCase()
+    (chatData?.author?.type.toLowerCase() === "admin" ||
+      chatData?.author?.type.toLowerCase() === "super admin")
   ) {
     return "sender";
   }
@@ -321,17 +329,13 @@ export const resetListingData = ({
   fetchDataCallback,
   listData,
   setCurrent,
-  setSearchParams,
 }) => {
   if (listData?.meta?.total) {
     const totalRecords = listData?.meta?.total;
     const numberOfPages = Math.ceil(totalRecords / listData?.meta?.perPage);
     if (currentPage > numberOfPages) {
       fetchDataCallback();
-      setSearchParams((prev) => {
-        prev.set(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        return prev;
-      });
+      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
       setCurrent(1);
     }
   }
@@ -344,4 +348,65 @@ export const isUserAdmin = (userDetails) => {
     noOfMenuItems === modules?.length &&
     noOfControlItems === controlMenu?.length
   );
+};
+
+export const checkForValidNumber = (number) => {
+  if (number || number === 0) {
+    return true;
+  }
+  return false;
+};
+
+export const getTimeWithZeroSec = (time) => {
+  return `${time.split(":")?.slice(0, 2).join(":")}:00`;
+};
+
+export const handleDisabledEndTime = (time) => {
+  if (!time) {
+    return {};
+  }
+  const startTime = dayjs(time, "HH:mm:ss");
+  return {
+    disabledHours: () => {
+      const hours = [];
+      for (let i = 0; i < startTime.hour(); i++) {
+        hours.push(i);
+      }
+      return hours;
+    },
+    disabledMinutes: (selectedHour) => {
+      const minutes = [];
+      if (selectedHour === startTime.hour()) {
+        for (let i = 0; i < startTime.minute(); i++) {
+          minutes.push(i);
+        }
+      }
+      return minutes;
+    },
+  };
+};
+
+export const handleDisabledStartTime = (time) => {
+  if (!time) {
+    return {};
+  }
+  const endTime = dayjs(time, "HH:mm:ss");
+  return {
+    disabledHours: () => {
+      const hours = [];
+      for (let i = endTime.hour() + 1; i < 24; i++) {
+        hours.push(i);
+      }
+      return hours;
+    },
+    disabledMinutes: (selectedHour) => {
+      const minutes = [];
+      if (selectedHour === endTime.hour()) {
+        for (let i = endTime.minute(); i < 60; i++) {
+          minutes.push(i);
+        }
+      }
+      return minutes;
+    },
+  };
 };

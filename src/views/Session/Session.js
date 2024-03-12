@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useSearchParams } from "react-router-dom";
 
 import { TwoRow } from "core/layouts";
 import useResponsive from "core/hooks/useResponsive";
@@ -21,15 +20,16 @@ import {
   updateSessionNotification,
 } from "../../globalContext/notification/notificationActions";
 import { getCurrentActiveTab } from "../../constant/utils";
+import { urlService } from "../../Utils/urlService";
 import { CORE_ROUTE, SESSIONS } from "../../constant/apiEndpoints";
 import { ADD_SESSION } from "../../routes/routeNames";
 import {
+  MENU_KEYS,
   NOTIFICATION_TYPES,
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
   VALID_CONSENT_MARKING_TABS_ID,
 } from "../../constant/constant";
-import variables from "../../themes/base/styles/variables";
 import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./session.module.scss";
 
@@ -40,9 +40,11 @@ function Session() {
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const [globalSessionDetails] = useContext(GlobalSessionContext);
-  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(
-    getCurrentActiveTab(searchParams?.get("tab"), VALID_CONSENT_MARKING_TABS_ID)
+    getCurrentActiveTab(
+      urlService?.getQueryStringValue("tab"),
+      VALID_CONSENT_MARKING_TABS_ID
+    )
   );
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [notificationState, setNotificationStateDispatch] =
@@ -101,7 +103,9 @@ function Session() {
           key={Date.now()}
           {...{
             isEditable: false,
-            isGettingSessions,
+            isGettingSessions:
+              globalSessionDetails?.isGettingGlobalSessions ||
+              isGettingSessions,
             isSessionError,
             fetchData,
             sessionData,
@@ -117,11 +121,12 @@ function Session() {
             title: intl.formatMessage({ id: "session.roundOne" }),
             children: (
               <SessionRound
+                {...{ currentlySelectedModuleKey }}
                 roundNo={1}
                 roundId={
                   (
                     sessionData?.rounds?.find(
-                      (obj) => obj.round_code === "round-1"
+                      (obj) => obj.round_code === MENU_KEYS.ROUND_1_PLACEMENT
                     ) || {}
                   ).id
                 }
@@ -142,6 +147,14 @@ function Session() {
             title: intl.formatMessage({ id: "session.roundTwo" }),
             children: (
               <SessionRound
+                {...{ currentlySelectedModuleKey }}
+              roundId={
+                (
+                  sessionData?.rounds?.find(
+                    (obj) => obj.round_code === MENU_KEYS.ROUND_2_PLACEMENT
+                  ) || {}
+                ).id
+              }
                 roundNo={2}
                 roundList={ROUND_TWO_CARD_LIST}
                 sessionData={sessionData}

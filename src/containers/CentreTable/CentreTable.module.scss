@@ -9,39 +9,72 @@
   font-weight: var(--fontWeightMedium);
 }
 
-
-.customDateContainerStyles {
-  width: var(--width_160);;
+.container {
+  width: var(--fullWidth);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  overflow: hidden;
 }
 
-.inputNumbeCustomStyles {
-  width: var(--width_160);
+.sectionStyle {
+  min-width: var(--width_150);
+  width: var(--halfWidth);
+}
 
+.inputDropdownStyle {
+  height: var(--height_44);
+  width: var(--fullWidth);
+  display: flex;
+  align-items: center;
+}
+
+.inputDropdownStyleFixedWidth {
+  height: var(--height_44);
+  width: var(--width_250);
 }
 
 .inputStyle {
-  width: var(--width_160);
   height: var(--height_44);
+  width: var(--fullWidth);
   display: flex;
   align-items: center;
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
+}
+
+.inputStyleFixedWidth {
+  height: var(--height_44);
+  width: var(--width_250);
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
+}
+
+.inputTableStyleFixedWidth {
+  width: var(--width_250);
 }
 
 .joinedCustomContainerStyles {
   height: var(--height_44);
   display: flex;
   align-items: center;
-  width: 91px;
   border-top-right-radius: var(--radiusNone);
   border-bottom-right-radius: var(--radiusNone);
+  padding: var(--padding_9) var(--padding_5);
 }
 
-.inputNumberStyle {
+.inputPartnersStyle {
   height: var(--height_44);
-  width: 91px;
   display: flex;
   align-items: center;
   border-top-left-radius: var(--radiusNone);
   border-bottom-left-radius: var(--radiusNone);
+  padding: var(--padding_9) var(--padding_5);
+}
+
+.inputNumberStyle {
+  width: var(--fullWidth);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
+  padding: var(--padding_9) var(--padding_5);
 }
 
 .tableHeader {
@@ -57,11 +90,44 @@
 }
 
 .twoJointContainer {
-  gap: var(--gapXLarge);
+ padding-right: var(--paddingMedium);
 }
 
 .imageStyle {
   cursor: pointer;
   height: var(--height_24);
   width: var(--width_24);
+  padding-top: var(--paddingExtraSmall);
+  padding-bottom: var(--paddingExtraSmall);
+}
+
+.editContainer {
+  width: var(--fullWidth);
+  display: flex;
+  flex: 1;
+}
+
+.roundTwoEditContainer{
+  max-width: var(--width_400);
+  display: flex;
+  flex: 1;
+}
+
+.customColumnStyle {
+  width: var(--fullWidth);
+}
+
+.selectInput {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+}
+
+.errorGap {
+  gap: var(--gapXXSmall);
+}
+
+.customContainerStyle {
+  border: var(--borderLight);
 }

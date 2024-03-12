@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import TwoRow from "../../core/layouts/TwoRow";
 
@@ -14,6 +14,7 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import useUpdateUserDetailsApi from "../../services/api-services/Users/useUpdateUserDetailsApi";
 import useUserDetails from "../../services/api-services/Users/useUserDetails";
 import { getCurrentFormState } from "../../constant/utils";
+import { urlService } from "../../Utils/urlService";
 import { FORM_STATES, NOTIFICATION_TYPES } from "../../constant/constant";
 import {
   ADMIN_ROUTE,
@@ -26,9 +27,8 @@ const UserDetails = () => {
   const intl = useIntl();
   const { userId } = useParams();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [searchParams, setSearchParams] = useSearchParams();
   const currentFormState = getCurrentFormState(
-    searchParams.get("mode"),
+    urlService.getQueryStringValue("mode"),
     userId
   );
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -206,12 +206,9 @@ const UserDetails = () => {
   }, []);
 
   useEffect(() => {
-    if (currentFormState !== searchParams.get("mode")) {
+    if (currentFormState !== urlService.getQueryStringValue("mode")) {
       currentFormState !== FORM_STATES.EMPTY &&
-        setSearchParams((prev) => {
-          prev.set("mode", currentFormState);
-          return prev;
-        });
+        urlService.setQueryStringValue("mode", currentFormState);
     }
   }, []);
 
