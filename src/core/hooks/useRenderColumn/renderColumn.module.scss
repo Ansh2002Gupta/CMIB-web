@@ -19,10 +19,10 @@
 }
 
 .textEllipsis {
-  max-width: 200px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  width: var(--fullWidth);
 }
 
 .centreStatusContainer {

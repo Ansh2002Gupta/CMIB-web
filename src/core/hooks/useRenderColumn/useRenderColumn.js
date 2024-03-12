@@ -74,6 +74,7 @@ const useRenderColumn = () => {
       placeholder = "",
       type,
       disabledDate = () => {},
+      useExactDate,
     } = renderDateTime;
 
     const {
@@ -526,6 +527,7 @@ const useRenderColumn = () => {
                 type,
                 placeholder,
                 value,
+                useExactDate,
               }}
               errorTimeInput={
                 ((record?.isAddRow && errorMessage) || getError(index)) &&
