@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
-import { TwoColumn, TwoRow } from "../../../src/core/layouts";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 import MultiRowInput from "../../components/MultiRowInput/MultiRowInput";
 import useResponsive from "../../core/hooks/useResponsive";
 import { initialFieldState } from "./constant";
-import styles from "./SetProfile.module.scss";
+import styles from "./ProfileSkills.module.scss";
 
-const SetProfile = () => {
+const ProfileSkills = () => {
   const [currentFieldStateItSkills, setCurrentFieldStateItSkills] =
     useState(initialFieldState);
   const [currentFieldStateSoftSkills, setCurrentFieldStateSoftSkills] =
@@ -18,12 +18,12 @@ const SetProfile = () => {
 
   const handleChange = (
     newText,
-    currFieldIndex,
+    currFieldid,
     currentFieldState,
     setCurrentFieldState
   ) => {
     const updatedFields = currentFieldState.map((item) => {
-      if (currFieldIndex === item?.index) {
+      if (currFieldid === item?.id) {
         return { ...item, fieldValue: newText };
       } else {
         return item;
@@ -34,45 +34,41 @@ const SetProfile = () => {
 
   const handleClick = (
     buttonType,
-    currFieldIndex,
+    currFieldid,
     currentFieldState,
     setCurrentFieldState
   ) => {
     if (buttonType === "add") {
-      handleAdd(currFieldIndex, currentFieldState, setCurrentFieldState);
+      handleAdd(currFieldid, currentFieldState, setCurrentFieldState);
     } else {
-      handleDelete(currFieldIndex, currentFieldState, setCurrentFieldState);
+      handleDelete(currFieldid, currentFieldState, setCurrentFieldState);
     }
   };
 
-  const handleAdd = (
-    currFieldIndex,
-    currentFieldState,
-    setCurrentFieldState
-  ) => {
+  const handleAdd = (currFieldid, currentFieldState, setCurrentFieldState) => {
     const updatedFields = currentFieldState.map((item) => {
-      if (item.index === currFieldIndex) {
+      if (item.id === currFieldid) {
         return { ...item, buttonType: "delete" };
       } else return item;
     });
     setCurrentFieldState([
       ...updatedFields,
-      { fieldValue: "", buttonType: "add", index: currFieldIndex + 1 },
+      { fieldValue: "", buttonType: "add", id: currFieldid + 1 },
     ]);
   };
 
   const handleDelete = (
-    fieldToBeDeletedIndex,
+    fieldToBeDeletedid,
     currentFieldState,
     setCurrentFieldState
   ) => {
     const filteredFields = currentFieldState.filter(
-      (item) => item?.index !== fieldToBeDeletedIndex
+      (item) => item?.id !== fieldToBeDeletedid
     );
     const updatedFields = filteredFields.map((item) => {
-      if (item?.index < fieldToBeDeletedIndex) return item;
-      else if (item?.index > fieldToBeDeletedIndex)
-        return { ...item, index: item?.index - 1 };
+      if (item?.id < fieldToBeDeletedid) return item;
+      else if (item?.id > fieldToBeDeletedid)
+        return { ...item, id: item?.id - 1 };
       else return item;
     });
     setCurrentFieldState(updatedFields);
@@ -95,18 +91,18 @@ const SetProfile = () => {
                   headerText={intl?.formatMessage({
                     id: "label.headerTextItSkills",
                   })}
-                  onChange={(newText, fieldIndex) =>
+                  onChange={(newText, fieldid) =>
                     handleChange(
                       newText,
-                      fieldIndex,
+                      fieldid,
                       currentFieldStateItSkills,
                       setCurrentFieldStateItSkills
                     )
                   }
-                  onClick={(buttonType, currFieldIndex) =>
+                  onClick={(buttonType, currFieldid) =>
                     handleClick(
                       buttonType,
-                      currFieldIndex,
+                      currFieldid,
                       currentFieldStateItSkills,
                       setCurrentFieldStateItSkills
                     )
@@ -123,18 +119,18 @@ const SetProfile = () => {
                   headerText={intl?.formatMessage({
                     id: "label.headerTextSoftSkills",
                   })}
-                  onChange={(newText, fieldIndex) =>
+                  onChange={(newText, fieldid) =>
                     handleChange(
                       newText,
-                      fieldIndex,
+                      fieldid,
                       currentFieldStateSoftSkills,
                       setCurrentFieldStateSoftSkills
                     )
                   }
-                  onClick={(buttonType, currFieldIndex) =>
+                  onClick={(buttonType, currFieldid) =>
                     handleClick(
                       buttonType,
-                      currFieldIndex,
+                      currFieldid,
                       currentFieldStateSoftSkills,
                       setCurrentFieldStateSoftSkills
                     )
@@ -158,4 +154,4 @@ const SetProfile = () => {
   );
 };
 
-export default SetProfile;
+export default ProfileSkills;
