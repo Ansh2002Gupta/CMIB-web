@@ -172,7 +172,8 @@ const locale = {
   "setupCentres.participationFees": "Participation Fees",
   "setupCentres.enterParticipationFees": "Enter Participation Fees",
   "setupCentres.feesError": "Please enter valid participation fees",
-  "setupCentres.paymentTypeNote": "*If you change the payment type then the data of interview dates for all centres will be lost and you have to fill it again.",
+  "setupCentres.paymentTypeNote":
+    "*If you change the payment type then the data of interview dates for all centres will be lost and you have to fill it again.",
   "label.dragNdrop": "Drag & drop files or",
   "label.browse": "Browse",
   "label.supportedFormat": "Supported formats: png, jpg, jpeg",
@@ -273,6 +274,7 @@ const locale = {
   "centre.norm2": "Norm 2",
   "centre.norm2MinVacancy": "Norm 2 Min Vacancy",
   "centre.onlineOffline": "Online/Offline",
+  "centre.scheduleDate": "Schedule Date",
   "centre.placeholder.selectDate": "Select date",
   "centre.placeholder.enterFee": "Enter fee",
   "centre.placeholder.enterpartner": "Enter Partner",
@@ -493,6 +495,7 @@ const locale = {
   "label.search_by_name_or_registration_no":
     "Search by name and registration/membership number",
   "label.path.round1": "Round 1",
+  "label.path.round2": "Round 2",
   "label.path.setup-centers": "Setup centres",
   "label.big_centres": "Big Centres",
   "label.small_centres": "Small Centres",
@@ -541,6 +544,8 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.path.campus-interview-settings": "Campus Interview Settings",
   "label.setCampusInterviewSettings": "Set Campus Interview Settings",
+  "label.updateInterviewDateSuccessfully":
+    "Interview Date Updated Successfully",
 };
 
 export default locale;

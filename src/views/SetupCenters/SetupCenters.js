@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
@@ -14,45 +14,53 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
 import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
 import { urlService } from "../../Utils/urlService";
 import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
 } from "../../constant/apiEndpoints";
-import {
-  DEFAULT_PAGE_SIZE,
-  MODULE_KEYS,
-  PAGINATION_PROPERTIES,
-  PAYMENT_TYPE,
-  ROUND_ID,
-  VALID_ROW_PER_OPTIONS,
-} from "../../constant/constant";
+import { SESSION } from "../../routes/routeNames";
+import { MODULE_KEYS, PAYMENT_TYPE, ROUND_ID } from "../../constant/constant";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
 
 const SetupCenter = () => {
   const intl = useIntl();
-  const { renderColumn } = useRenderColumn();
-  const { getImage } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const { getImage } = useContext(ThemeContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const [notificationState, setNotificationStateDispatch] =
+    useContext(NotificationContext);
+
+  const [isPaymentTypeModalOpen, setIsPaymentTypeModalOpen] = useState(false);
+  const [isFeesError, setIsFeesError] = useState(false);
+
+  const { renderColumn } = useRenderColumn();
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
-  const isEditable = currentGlobalSession?.is_editable;
-  const [isPaymentTypeModalOpen, setIsPaymentTypeModalOpen] = useState(false);
-  const [isFeesError, setIsFeesError] = useState(false);
+
+  const { showNotification, notificationContextHolder } = useShowNotification();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
+
+  const isEditable = currentGlobalSession?.is_editable;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
-  const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
-  const { isLoading, fetchData: fetchRoundDetails } = useFetch({
+  const {
+    isLoading,
+    data: roundDetails,
+    fetchData: fetchRoundDetails,
+  } = useFetch({
     url: ADMIN_ROUTE + `/${selectedModule?.key}` + ROUNDS + `/${roundId}`,
     otherOptions: {
       skipApiCallOnMount: true,
@@ -79,21 +87,33 @@ const SetupCenter = () => {
   });
 
   useEffect(() => {
-    fetchRoundDetails({
-      onSuccessCallback: (roundDetails) => {
-        setParticipationFees(roundDetails?.participation_fee || "");
-        setPaymentType(roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE);
-        setParticipationModalFees(roundDetails?.participation_fee || "");
-        setPaymentModalType(
-          roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE
-        );
-      },
-    });
-  }, []);
+    if (roundId && selectedModule) {
+      fetchRoundDetails({
+        onSuccessCallback: (roundDetails) => {
+          setParticipationFees(
+            roundDetails?.participation_fee !== null
+              ? roundDetails?.participation_fee
+              : ""
+          );
+          setPaymentType(
+            roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE
+          );
+          setParticipationModalFees(roundDetails?.participation_fee || "");
+          setPaymentModalType(
+            roundDetails?.payment_type || PAYMENT_TYPE.CENTRE_WISE
+          );
+        },
+      });
+    }
+  }, [userProfileDetails?.selectedModuleItem]);
 
   useModuleWiseApiCall({
     initialApiCall: () => {
-      getSetupCentres({});
+      if (roundId) {
+        getSetupCentres({});
+      } else {
+        navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
+      }
     },
   });
 
@@ -106,6 +126,16 @@ const SetupCenter = () => {
       },
     });
   };
+
+  useEffect(() => {
+    if (notificationState?.showSuccessNotification) {
+      showNotification({
+        text: intl.formatMessage({ id: "label.data_saved_successfully" }),
+        type: "success",
+      });
+      setNotificationStateDispatch(setShowSuccessNotification(false));
+    }
+  }, [notificationState?.showSuccessNotification]);
 
   const columns = [
     renderColumn({
@@ -199,36 +229,19 @@ const SetupCenter = () => {
     );
   };
 
-  useLayoutEffect(() => {
-    const currentPage = +urlService.getQueryStringValue(
-      PAGINATION_PROPERTIES.CURRENT_PAGE
-    );
-    const currentPagePerRow = +urlService.getQueryStringValue(
-      PAGINATION_PROPERTIES.ROW_PER_PAGE
-    );
-    if (!currentPage || isNaN(currentPage) || currentPage <= 0) {
-      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-    }
-
-    if (
-      !currentPagePerRow ||
-      !VALID_ROW_PER_OPTIONS.includes(currentPagePerRow)
-    ) {
-      urlService.setQueryStringValue(
-        PAGINATION_PROPERTIES.ROW_PER_PAGE,
-        DEFAULT_PAGE_SIZE
-      );
-    }
-  }, []);
-
   const handleOnReTry = () => {
     getSetupCentres({});
   };
 
   const handleEditPaymentType = () => {
-    setParticipationFees(participationModalFees);
+    setParticipationFees(
+      paymentModalType === PAYMENT_TYPE.CENTRE_WISE
+        ? ""
+        : participationModalFees
+    );
     setPaymentType(paymentModalType);
     setIsPaymentTypeModalOpen(false);
+    setIsFeesError(false);
     updateSessionRoundDetails({
       payload: {
         payment_type: paymentModalType,
@@ -243,6 +256,7 @@ const SetupCenter = () => {
 
   return (
     <>
+      {notificationContextHolder}
       {
         <CustomModal
           btnText={intl.formatMessage({ id: "label.save" })}
@@ -285,9 +299,10 @@ const SetupCenter = () => {
                       leftSection={
                         <TwoColumn
                           className={styles.assigneeRow}
-                          onClick={() =>
-                            setPaymentModalType(PAYMENT_TYPE.CENTRE_WISE)
-                          }
+                          onClick={() => {
+                            setIsFeesError(false);
+                            setPaymentModalType(PAYMENT_TYPE.CENTRE_WISE);
+                          }}
                           leftSection={
                             <CustomRadioButton
                               checked={
@@ -421,7 +436,9 @@ const SetupCenter = () => {
           <TwoRow
             topSection={
               selectedModule?.key !==
-                MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY && !isLoading ? (
+                MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY &&
+              !isLoading &&
+              roundDetails ? (
                 <TwoColumn
                   className={styles.paymentTypeContainer}
                   leftSection={
@@ -462,7 +479,9 @@ const SetupCenter = () => {
                             }
                             bottomSection={
                               <Typography className={styles.blackText}>
-                                {participationFees || "-"}
+                                {participationFees !== null
+                                  ? participationFees
+                                  : "-"}
                               </Typography>
                             }
                           />
@@ -474,26 +493,30 @@ const SetupCenter = () => {
                   }
                   isLeftFillSpace
                   rightSection={
-                    <TwoColumn
-                      onClick={() => {
-                        setParticipationModalFees(participationFees);
-                        setPaymentModalType(paymentType);
-                        setIsPaymentTypeModalOpen(true);
-                      }}
-                      className={styles.editContainer}
-                      leftSection={
-                        <Image
-                          src={getImage("editDark")}
-                          className={styles.editIcon}
-                          preview={false}
-                        />
-                      }
-                      rightSection={
-                        <Typography className={styles.text}>
-                          {intl.formatMessage({ id: "session.edit" })}
-                        </Typography>
-                      }
-                    />
+                    isEditable ? (
+                      <TwoColumn
+                        onClick={() => {
+                          setParticipationModalFees(participationFees);
+                          setPaymentModalType(paymentType);
+                          setIsPaymentTypeModalOpen(true);
+                        }}
+                        className={styles.editContainer}
+                        leftSection={
+                          <Image
+                            src={getImage("editDark")}
+                            className={styles.editIcon}
+                            preview={false}
+                          />
+                        }
+                        rightSection={
+                          <Typography className={styles.text}>
+                            {intl.formatMessage({ id: "session.edit" })}
+                          </Typography>
+                        }
+                      />
+                    ) : (
+                      <></>
+                    )
                   }
                 />
               ) : (

@@ -67,6 +67,10 @@
   color: var(--textBold) !important;
 }
 
+.ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
+  padding-left: var(--paddingSmall);
+}
+
 
 
 

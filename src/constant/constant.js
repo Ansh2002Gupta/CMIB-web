@@ -3,6 +3,7 @@ import {
   CONSENT_MARKING,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
+  ROUND_TWO_SETUP_CENTERS,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
@@ -239,7 +240,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: ROUND_TWO_SETUP_CENTERS,
   },
   {
     id: 2,

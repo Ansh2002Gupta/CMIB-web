@@ -28,12 +28,13 @@ const SetupCenterDetails = () => {
   const { centreId } = useParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
   const { navigateScreen: navigate } = useNavigateScreen();
-  const isEdit = currentGlobalSession?.is_editable;
+  const isEdit = !!currentGlobalSession?.is_editable;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
   const {
     data: centreDetailData,
@@ -59,7 +60,7 @@ const SetupCenterDetails = () => {
 
   useModuleWiseApiCall({
     initialApiCall: () => {
-      if (roundId) {
+      if (roundId && centreId) {
         getCentreDetail({});
       } else {
         navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
