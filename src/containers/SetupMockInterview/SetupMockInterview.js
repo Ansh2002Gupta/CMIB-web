@@ -69,7 +69,7 @@ const SetupMockInterviewContent = () => {
     data: downloadData,
     error: errorWhileDownloadingInterview,
     isLoading: isDownloadingInterview,
-    download,
+    initiateDownload,
   } = useDownload({});
 
   const [globalSessionDetails] = useContext(GlobalSessionContext);
@@ -85,8 +85,8 @@ const SetupMockInterviewContent = () => {
     navigate(`interviewDetails/${centreId}?roundId=${roundId}`, false);
   };
 
-  const downloadInteview = (id) => {
-    download({
+  const downloadInterviewDatesCSV = (id) => {
+    initiateDownload({
       url:
         CORE_ROUTE +
         `/${currentlySelectedModuleKey}` +
@@ -95,7 +95,6 @@ const SetupMockInterviewContent = () => {
         MOCK_INTERVIEWS +
         DOWNLOAD,
       onSuccessCallback: (response) => {
-        console.log(response);
         showNotification({
           text: intl.formatMessage({
             id: "label.downloadSucess",
@@ -113,7 +112,8 @@ const SetupMockInterviewContent = () => {
   };
 
   const columns = getSetupMockColumn(
-    downloadInteview,
+    downloadInterviewDatesCSV,
+    isDownloadingInterview,
     intl,
     isEdit,
     getImage,

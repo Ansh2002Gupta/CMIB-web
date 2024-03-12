@@ -46,6 +46,11 @@
   display: flex;
 }
 
+.disableIcon {
+  cursor: not-allowed;
+  display: flex;
+}
+
 .twoImageStyle {
   gap: var(--gapMedium);
 }

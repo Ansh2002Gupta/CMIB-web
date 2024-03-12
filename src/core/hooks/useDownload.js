@@ -4,7 +4,6 @@ import { useIntl } from "react-intl";
 import Http from "../../services/http-service";
 import { API_STATUS, STATUS_CODES } from "../../constant/constant";
 import { objectToQueryString } from "../../Utils/queryParamHelpers";
-import { saveAs } from "file-saver";
 
 const useDownload = ({
   apiOptions = {},
@@ -20,7 +19,7 @@ const useDownload = ({
     id: "label.generalGetApiFailedErrorMessage",
   });
 
-  const download = async ({
+  const initiateDownload = async ({
     url,
     queryParamsObject = {},
     onSuccessCallback,
@@ -38,7 +37,13 @@ const useDownload = ({
         responseType: "blob",
       });
       if (response) {
-        saveAs(new Blob([response]), filename);
+        const url = window.URL.createObjectURL(new Blob([response]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${filename}`);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
         setApiStatus(API_STATUS.SUCCESS);
         onSuccessCallback && onSuccessCallback(response);
       } else {
@@ -66,7 +71,7 @@ const useDownload = ({
   return {
     apiStatus,
     error,
-    download,
+    initiateDownload,
     isError,
     isLoading,
     isSuccess,

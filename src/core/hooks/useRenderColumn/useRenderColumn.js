@@ -140,6 +140,8 @@ const useRenderColumn = () => {
     } = renderSwitch;
 
     const {
+      leftDisabled = false,
+      rightDisabled = false,
       leftAlt = "",
       rightAlt = "",
       customTwoImageStyle = "",
@@ -443,8 +445,14 @@ const useRenderColumn = () => {
                   alt={leftAlt}
                   src={leftSrc}
                   preview={leftPreview}
-                  className={`${leftCustomImageStyle} ${styles.editIcon}`}
-                  onClick={leftOnClick ? () => leftOnClick(rowData) : () => {}}
+                  className={`${leftCustomImageStyle} ${
+                    leftDisabled ? styles.disableIcon : styles.editIcon
+                  }`}
+                  onClick={
+                    leftOnClick && !leftDisabled
+                      ? () => leftOnClick(rowData)
+                      : () => {}
+                  }
                 />
               }
               rightSection={
@@ -452,9 +460,13 @@ const useRenderColumn = () => {
                   alt={rightAlt}
                   src={rightSrc}
                   preview={rightPreview}
-                  className={`${rightCustomImageStyle} ${styles.editIcon}`}
+                  className={`${rightCustomImageStyle} ${
+                    rightDisabled ? styles.disableIcon : styles.editIcon
+                  }`}
                   onClick={
-                    rightOnClick ? () => rightOnClick(rowData) : () => {}
+                    rightOnClick && !rightDisabled
+                      ? () => rightOnClick(rowData)
+                      : () => {}
                   }
                 />
               }
