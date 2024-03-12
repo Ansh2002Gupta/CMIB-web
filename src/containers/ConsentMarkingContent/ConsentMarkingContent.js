@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState, useEffect } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -12,34 +13,56 @@ import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { getCurrentActiveTab } from "../../constant/utils";
+import { compareTwoDayjsDates, isNotAFutureDate } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
+import { usePut } from "../../core/hooks/useApiRequest";
 import { ACTIVE_TAB, MODULE_KEYS } from "../../constant/constant";
 import {
   CONSENT_MARKING_REGESTRATION_DETAILS,
   LAST_MARKING_REGESTRATION_DETAILS,
-  REGISTRATION_DATES,
+  REGISTRATION_DUMMY_DATES,
 } from "../../dummyData";
+import {
+  CORE_ROUTE,
+  REGISTRATION_DATES,
+  ROUNDS,
+} from "../../constant/apiEndpoints";
 import { VALID_CONSENT_MARKING_TABS_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
 
-const ConsentMarkingContent = ({ isEdit }) => {
+const ConsentMarkingContent = ({
+  activeTab,
+  isEdit,
+  roundId,
+  registrationDateData,
+  setActiveTab,
+}) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
-  const [activeTab, setActiveTab] = useState(
-    getCurrentActiveTab(
-      urlService.getQueryStringValue(ACTIVE_TAB),
-      VALID_CONSENT_MARKING_TABS_ID
-    )
-  );
+
+  const {
+    error: errorWhileUpdatingRegistrationDate,
+    makeRequest: updateRegistrationDate,
+    isLoading: isUpdatingRegistrationDate,
+    isSuccess: isRegistrationDateUpdatedSuccessful,
+  } = usePut({
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      ROUNDS +
+      `/${roundId}` +
+      REGISTRATION_DATES,
+  });
+
   const [registrationDatesData, setRegistrationDatesData] =
-    useState(REGISTRATION_DATES);
+    useState(registrationDateData);
+
   const round1InitialData = CONSENT_MARKING_REGESTRATION_DETAILS.map(
     (item) => ({
       ...item,
@@ -71,22 +94,79 @@ const ConsentMarkingContent = ({ isEdit }) => {
     registrationInitialData
   );
 
+  const disabledDate = (key, current) => {
+    if (key === "company_reg_start_date") {
+      return isNotAFutureDate(current);
+    }
+    if (key === "candidate_reg_start_date") {
+      return (
+        isNotAFutureDate(current) ||
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["candidate_reg_end_date_bg_centre"],
+          checkForFuture: false,
+        })
+      );
+    }
+    if (key === "candidate_reg_end_date_bg_centre")
+      return (
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["candidate_reg_start_date"],
+          checkForFuture: false,
+        }) ||
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["candidate_reg_end_date_sm_centre"],
+          checkForFuture: true,
+        })
+      );
+    return compareTwoDayjsDates({
+      current: current,
+      date:
+        registrationDatesData["candidate_reg_end_date_bg_centre"] ||
+        registrationDatesData["candidate_reg_start_date"],
+      checkForFuture: false,
+    });
+  };
+  const NQCA_REGISTRATION_DATE_FIELDS = [
+    {
+      id: 1,
+      labeIntl: "company_reg_start_date",
+    },
+    {
+      id: 2,
+      labeIntl: "candidate_reg_start_date",
+    },
+    {
+      id: 3,
+      labeIntl: "candidate_reg_end_date_bg_centre",
+    },
+    {
+      id: 4,
+      labeIntl: "candidate_reg_end_date_sm_centre",
+    },
+  ];
+
+  const OTHER_MODULES_REGISTRATION_DATE_FIELDS = [
+    {
+      id: 1,
+      labeIntl: "company_reg_start_date",
+    },
+    {
+      id: 2,
+      labeIntl: "candidate_reg_start_date",
+    },
+    {
+      id: 3,
+      labeIntl: "candidate_reg_end_date_bg_centre",
+    },
+  ];
+
   const registrationDates =
     currentlySelectedModuleKey === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY
-      ? [
-          { id: 1, labeIntl: "startDateCompanies" },
-          { id: 2, labeIntl: "startDateCandidates" },
-          { id: 3, labeIntl: "lastDateBigCentres" },
-          {
-            id: 4,
-            labeIntl: "lastDateSmallCentres",
-          },
-        ]
-      : [
-          { id: 1, labeIntl: "startDateCompanies" },
-          { id: 2, labeIntl: "startDateCandidates" },
-          { id: 3, labeIntl: "lastDateBigCentres" },
-        ];
+      ? NQCA_REGISTRATION_DATE_FIELDS
+      : OTHER_MODULES_REGISTRATION_DATE_FIELDS;
 
   const tabItems = [
     {
@@ -130,16 +210,29 @@ const ConsentMarkingContent = ({ isEdit }) => {
   const handleInputChange = (value, name) => {
     setRegistrationDatesData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      [name]: value && dayjs(value).format("YYYY-MM-DD"),
     }));
   };
 
+  const navigateBackToSession = () => {
+    navigate(`/${currentlySelectedModuleKey}/${SESSION}?tab=2`);
+  };
+
   const handleCancel = () => {
-    navigate(`${SESSION}?tab=2`);
+    navigateBackToSession();
   };
 
   const handleSave = () => {
-    navigate(`${SESSION}?tab=2`);
+    updateRegistrationDate({
+      body: registrationDatesData,
+
+      onSuccessCallback: () => {
+        navigateBackToSession();
+      },
+      onErrorCallback: () => {
+        navigateBackToSession();
+      },
+    });
   };
 
   const handleOnTabSwitch = useCallback((tabId) => {
@@ -165,6 +258,7 @@ const ConsentMarkingContent = ({ isEdit }) => {
                 customLabelStyles={styles.customLabelStyles}
                 customContainerStyles={styles.customContainerStyles}
                 customTimeStyle={styles.customTimeStyle}
+                disabledDate={(current) => disabledDate(item.labeIntl, current)}
                 isEditable={isEdit}
                 type="date"
                 isRequired

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../services/http-service";
-import { API_STATUS, STATUS_CODES } from "../../constant/constant";
 import { objectToQueryString } from "../../Utils/queryParamHelpers";
+import { API_STATUS, STATUS_CODES } from "../../constant/constant";
 
 const useApiRequest = ({ method, url, apiOptions = {}, otherOptions = {} }) => {
   const intl = useIntl();

@@ -531,11 +531,11 @@ export const LAST_MARKING_REGESTRATION_DETAILS = [
   },
 ];
 
-export const REGISTRATION_DATES = {
-  startDateCompanies: "2023-12-19T05:11:46.000000Z",
-  startDateCandidates: "2023-12-19T05:11:46.000000Z",
-  lastDateBigCentres: "2023-12-19T05:11:46.000000Z",
-  lastDateSmallCentres: "2023-12-19T05:11:46.000000Z",
+export const REGISTRATION_DUMMY_DATES = {
+  company_reg_start_date: "2023-12-09T05:11:46.000000Z",
+  candidate_reg_start_date: "2023-12-19T05:11:46.000000Z",
+  candidate_reg_end_date_bg_centre: "2023-12-29T05:11:46.000000Z",
+  candidate_reg_end_date_sm_centre: "2023-12-01T05:11:46.000000Z",
 };
 
 export const PERMISION_AND_ROLE = {
