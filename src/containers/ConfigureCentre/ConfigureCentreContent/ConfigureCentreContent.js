@@ -96,7 +96,7 @@ const ConfigureCentreContent = () => {
       centre_size: centerData.centre_size,
       centre_code: centerData.centre_code,
       name: centerData.name,
-      status: !centerData?.status,
+      status: centerData?.status ? 0 : 1,
     };
 
     updateCenterDetails(
@@ -126,6 +126,7 @@ const ConfigureCentreContent = () => {
       queryParamsObject: getRequestedParams({
         page: 1,
         search: validateSearchTextLength(searchedValue),
+        size: +size,
       }),
     });
   };
@@ -271,7 +272,7 @@ const ConfigureCentreContent = () => {
         switchToggleHandler: (data) => onHandleCentreStatus(data),
         visible: true,
         checkIsSwitchEditable: (data) => {
-          return !isUpdatingCenterDetails;
+          return !!data?.is_editable && !isUpdatingCenterDetails;
         },
       },
     }),
@@ -280,10 +281,13 @@ const ConfigureCentreContent = () => {
       key: "edit",
       renderImage: {
         alt: "edit",
-        onClick: (rowData) => goToEditCentrePage(rowData),
+        onClick: (rowData) => {
+          goToEditCentrePage(rowData);
+        },
         preview: false,
         src: getImage("edit"),
         visible: true,
+        customImageStyle: styles.editIcon,
       },
     }),
   ];

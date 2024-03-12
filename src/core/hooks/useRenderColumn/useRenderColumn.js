@@ -64,6 +64,10 @@ const useRenderColumn = () => {
       defaultValue,
       disabled = false,
       errorMessage,
+      format,
+      getDisabledDate = () => {},
+      getDisabledTime = () => {},
+      getError = () => {},
       isEditable = true,
       isRequired = false,
       onChange = () => {},
@@ -84,10 +88,12 @@ const useRenderColumn = () => {
     } = renderImage;
 
     const {
+      controls,
       customInputContainerStyles,
       customInputNumberStyles,
       customInputStyles,
       customSelectInputStyles,
+      getInputError = () => {},
       inputDisabled,
       inputErrorMessage,
       inputPlaceholder = "",
@@ -117,6 +123,8 @@ const useRenderColumn = () => {
       textStyles,
       isCapitalize,
       isRequiredTooltip,
+      isMoney,
+      isYearRange,
       mobile,
       isIntl,
       isDataObject,
@@ -180,7 +188,13 @@ const useRenderColumn = () => {
       if (isIntl) {
         return intl.formatMessage({ id: `label.${text}` });
       }
-      return text;
+      if (isMoney) {
+        return `${text} INR`;
+      }
+      if (text) {
+        return text;
+      }
+      return "-";
     };
 
     const getRenderText = (text) => {
@@ -193,7 +207,33 @@ const useRenderColumn = () => {
             isCapitalize ? styles.capitalize : "",
           ].join(" ")}
         >
-          {textRenderFormat({ text: text || "-" })}
+          {textRenderFormat({ text: text })}
+        </p>
+      );
+    };
+
+    const getRenderYearRange = (data) => {
+      return (
+        <p
+          className={[
+            textStyles,
+            isTextBold ? styles.boldText : "",
+            styles.textEllipsis,
+            isCapitalize ? styles.capitalize : "",
+          ].join(" ")}
+        >
+          {data?.use_more_experience
+            ? `${data?.work_experience_min} ${intl.formatMessage({
+                id: "label.yearsAndMore",
+              })}`
+            : `${data?.work_experience_min} - ${
+                data?.work_experience_max
+              } ${intl.formatMessage({
+                id:
+                  data?.work_experience_max === 1
+                    ? "label.year"
+                    : "label.years",
+              })}`}
         </p>
       );
     };
@@ -322,6 +362,8 @@ const useRenderColumn = () => {
             </p>
           ) : isRequiredTooltip ? (
             <Tooltip title={text}>{getRenderText(text)}</Tooltip>
+          ) : isYearRange ? (
+            getRenderYearRange(rowData)
           ) : (
             getRenderText(text)
           ),
@@ -369,7 +411,7 @@ const useRenderColumn = () => {
       });
 
     renderImage.visible &&
-      (columnObject.render = (_, rowData) => {
+      (columnObject.render = (_, rowData, index) => {
         return {
           props: {
             className: customStyles || "",
@@ -381,7 +423,9 @@ const useRenderColumn = () => {
               preview={preview}
               className={`${customImageStyle} ${styles.editIcon}`}
               onClick={() =>
-                rowData?.isAddRow ? alternateOnClick(rowData) : onClick(rowData)
+                rowData?.isAddRow
+                  ? alternateOnClick(rowData, index)
+                  : onClick(rowData, index)
               }
             />
           ),
@@ -465,7 +509,7 @@ const useRenderColumn = () => {
       });
 
     renderDateTime.visible &&
-      (columnObject.render = (value, record) => {
+      (columnObject.render = (value, record, index) => {
         return {
           props: {
             className: customStyles,
@@ -477,7 +521,7 @@ const useRenderColumn = () => {
                 customTimeStyle,
                 defaultValue,
                 disabled,
-                disabledDate,
+                format,
                 isEditable,
                 isRequired,
                 type,
@@ -486,36 +530,52 @@ const useRenderColumn = () => {
                 useExactDate,
               }}
               errorTimeInput={
-                record?.isAddRow && errorMessage && styles.errorTimeInput
+                ((record?.isAddRow && errorMessage) || getError(index)) &&
+                styles.errorTimeInput
               }
               onChange={(val) => {
-                onChange(val, record);
+                onChange(val, record, index);
               }}
-              errorMessage={record?.isAddRow && errorMessage}
+              errorMessage={
+                (record.isAddRow && errorMessage) || getError(index)
+              }
+              disabledDate={(current) => getDisabledDate(current, record)}
+              disabledTime={(current) => getDisabledTime(current, record)}
             />
           ),
         };
       });
 
     renderInput.visible &&
-      (columnObject.render = (value, record) => {
+      (columnObject.render = (value, record, index) => {
         return (
           <CustomInput
             {...{
+              controls,
               value,
               customInputNumberStyles,
               customInputStyles,
               customSelectInputStyles,
             }}
-            disabled={inputDisabled || !record?.isAddRow}
+            disabled={inputDisabled}
             placeholder={inputPlaceholder}
             type={inputType}
             customContainerStyles={customInputContainerStyles}
-            onChange={onInputChange}
-            errorMessage={record.isAddRow && inputErrorMessage}
-            isError={record.isAddRow && inputErrorMessage ? true : false}
+            onChange={(val, record) => {
+              onInputChange(val, record, index);
+            }}
+            errorMessage={
+              (record.isAddRow && inputErrorMessage) || getInputError(index)
+            }
+            isError={
+              (record.isAddRow && inputErrorMessage) || getInputError(index)
+                ? true
+                : false
+            }
             errorInput={
-              record.isAddRow && inputErrorMessage && styles.errorTimeInput
+              ((record.isAddRow && inputErrorMessage) ||
+                getInputError(index)) &&
+              styles.errorTimeInput
             }
           />
         );

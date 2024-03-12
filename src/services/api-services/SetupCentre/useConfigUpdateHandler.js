@@ -18,6 +18,7 @@ const useConfigUpdateHandler = () => {
   const updateCentreConfig = async ({
     centreId,
     module,
+    onErrorCallback,
     onSuccessCallback,
     payload,
     roundId,
@@ -39,6 +40,12 @@ const useConfigUpdateHandler = () => {
           id: "label.generalGetApiFailedErrorMessage",
         })
       );
+      onErrorCallback &&
+        onErrorCallback(
+          intl.formatMessage({
+            id: "label.generalGetApiFailedErrorMessage",
+          })
+        );
     } catch (err) {
       setConfigUpdateStatus(API_STATUS.ERROR);
       setErrorWhileUpdatingConfig(
@@ -47,6 +54,13 @@ const useConfigUpdateHandler = () => {
             id: "label.generalGetApiFailedErrorMessage",
           })
       );
+      onErrorCallback &&
+        onErrorCallback(
+          err?.response?.data?.message ||
+            intl.formatMessage({
+              id: "label.generalGetApiFailedErrorMessage",
+            })
+        );
     }
   };
 
