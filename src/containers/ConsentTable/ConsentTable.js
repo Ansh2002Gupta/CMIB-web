@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 
 import DataTable from "../../components/DataTable/DataTable";
@@ -16,7 +17,7 @@ const ConsentTable = ({
   const onDateChange = (record, key, value) => {
     const index = tableData.findIndex((item) => item.sNo === record.sNo);
     const newData = [...tableData];
-    newData[index][key] = value;
+    newData[index][key] = value && dayjs(value).format("YYYY-MM-DD");
     setTableData(newData);
   };
 

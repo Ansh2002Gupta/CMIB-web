@@ -126,7 +126,7 @@ const ConsentMarkingContent = ({
       : null,
   }));
 
-  const [tableData, setTableData] = useState(round1InitialData);
+  const [roundOneTableData, setRoundOneTableData] = useState(round1InitialData);
   const [roundTwoTableData, setRoundTwoTableData] =
     useState(roundTwoInitialData);
   const [registrationTableData, setRegistrationTableData] = useState(
@@ -206,8 +206,6 @@ const ConsentMarkingContent = ({
     ? NQCA_REGISTRATION_DATE_FIELDS
     : OTHER_MODULES_REGISTRATION_DATE_FIELDS;
 
-  console.log("");
-
   const tabItems = [
     {
       key: "1",
@@ -228,7 +226,9 @@ const ConsentMarkingContent = ({
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
         <ConsentTable
-          {...{ activeTab, isEdit, tableData, setTableData }}
+          {...{ activeTab, isEdit }}
+          tableData={roundOneTableData}
+          setTableData={setRoundOneTableData}
           totalData={round1InitialData}
         />
       ),
@@ -289,6 +289,10 @@ const ConsentMarkingContent = ({
       urlService.setQueryStringValue(ACTIVE_TAB, 1);
     }
   }, []);
+
+  console.log(registrationTableData, "registrationTableData..");
+  console.log(roundOneTableData, "roundOneTableData..");
+  console.log(roundTwoTableData, "roundTwoTableData..");
 
   return (
     <>
