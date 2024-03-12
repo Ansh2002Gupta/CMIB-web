@@ -5,7 +5,6 @@ import { ThreeRow } from "../../../core/layouts";
 
 import CaJobsConfig from "../../../containers/CaJobsConfig";
 import ContentHeader from "../../../containers/ContentHeader";
-import useFetch from "../../core/hooks/useFetch";
 import { initialFieldState } from "./constant";
 import styles from "./CaJobsConfigurations.module.scss";
 import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
@@ -22,15 +21,18 @@ const CaJobsConfigurations = () => {
   //created these functions for future purpose.
   const handleCancel = () => {};
   const handleSave = () => {
-    handlePostGlobalConfigurations({
-      payload: { itSkillsList, softSkillsList, videoTimeLimit },
-      onErrorCallback: (errMessage) => {
-        console.log("onErrorCallback: ", errMessage);
-      },
-      onSuccessCallback: () => {
-        console.log("Succefully submitted data to the database!");
-      },
-    });
+    console.log("payload(itSkillsList): ", itSkillsList);
+    console.log("payload(softSkillsList): ", softSkillsList);
+    console.log("payload(videoTimeLimit): ", videoTimeLimit);
+    // handlePostGlobalConfigurations({
+    //   payload: { itSkillsList, softSkillsList, videoTimeLimit },
+    //   onErrorCallback: (errMessage) => {
+    //     console.log("onErrorCallback: ", errMessage);
+    //   },
+    //   onSuccessCallback: () => {
+    //     console.log("Succefully submitted data to the database!");
+    //   },
+    // });
   };
 
   return (
