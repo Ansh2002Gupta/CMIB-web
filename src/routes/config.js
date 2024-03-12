@@ -35,7 +35,8 @@ import {
   COMPANIES,
   COMPANIES_DETAILS,
   CONFIGURE_CENTRES,
-  CONSENT_MARKING,
+  CONSENT_MARKING_ROUND_ONE,
+  CONSENT_MARKING_ROUND_TWO,
   DASHBOARD,
   DETAILS,
   EDIT_CONFIGURE_CENTRE,
@@ -134,7 +135,14 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -265,7 +273,14 @@ const config = [
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: SESSION + ROUND_ONE_ORIENTATION_CENTERS,
         element: <OrientationCenter />,
@@ -328,7 +343,14 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -387,7 +409,14 @@ const config = [
         viewPath: SESSION + SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
