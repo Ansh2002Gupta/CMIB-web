@@ -227,11 +227,13 @@ const locale = {
     "Registration and Consent Marking Schedule",
   "label.consentMarkingScheduleWarning":
     "*This cannot be edited once this section data is submitted.",
-  "label.consent.startDateCompanies": "Registration Start Date for Companies",
-  "label.consent.startDateCandidates": "Registration Start Date for Candidates",
-  "label.consent.lastDateBigCentres":
+  "label.consent.company_reg_start_date":
+    "Registration Start Date for Companies",
+  "label.consent.candidate_reg_start_date":
+    "Registration Start Date for Candidates",
+  "label.consent.candidate_reg_end_date_bg_centre":
     "Last Date of Registration for Candidates for Big Centres",
-  "label.consent.lastDateSmallCentres":
+  "label.consent.candidate_reg_end_date_sm_centre":
     "Last Date of Registration for Candidates for Small Centres",
   "label.centreCodeColon": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
@@ -274,13 +276,13 @@ const locale = {
   "label.warning.setupMockInterviews":
     "*This cannot be edited once registration for the students starts.",
   "label.totalStudentsBooked": "Total Students Booked",
-  "label.consent.placeholder.startDateCompanies":
+  "label.consent.placeholder.company_reg_start_date":
     " Select Start Date for Companies",
-  "label.consent.placeholder.startDateCandidates":
+  "label.consent.placeholder.candidate_reg_start_date":
     "Select Start Date for Candidates",
-  "label.consent.placeholder.lastDateBigCentres":
+  "label.consent.placeholder.candidate_reg_end_date_bg_centre":
     "Select Last Date for Big Centres",
-  "label.consent.placeholder.lastDateSmallCentres":
+  "label.consent.placeholder.candidate_reg_end_date_sm_centre":
     " Select Last Date for Small Centres",
   "label.companyStartDate": "Shortlist By Company Start Date",
   "label.companyEndDate": "Shortlist By Company end Date",

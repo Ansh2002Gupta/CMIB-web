@@ -172,11 +172,17 @@ const ConsentMarking = () => {
 
     if (
       (consentRound2Data || consentRound1Data || lastRegistrationDatesData) &&
-      registrationDateData && <ConsentMarkingContent {...{ isEdit, roundId }} />
+      registrationDateData
     ) {
       return (
         <ConsentMarkingContent
-          {...{ activeTab, isEdit, roundId, setActiveTab }}
+          {...{
+            activeTab,
+            isEdit,
+            roundId,
+            registrationDateData,
+            setActiveTab,
+          }}
         />
       );
     }

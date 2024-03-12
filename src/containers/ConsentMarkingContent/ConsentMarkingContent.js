@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState, useEffect } from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -35,6 +36,7 @@ const ConsentMarkingContent = ({
   activeTab,
   isEdit,
   roundId,
+  registrationDateData,
   setActiveTab,
 }) => {
   const intl = useIntl();
@@ -58,9 +60,8 @@ const ConsentMarkingContent = ({
       REGISTRATION_DATES,
   });
 
-  const [registrationDatesData, setRegistrationDatesData] = useState(
-    REGISTRATION_DUMMY_DATES
-  );
+  const [registrationDatesData, setRegistrationDatesData] =
+    useState(registrationDateData);
 
   const round1InitialData = CONSENT_MARKING_REGESTRATION_DETAILS.map(
     (item) => ({
@@ -94,71 +95,71 @@ const ConsentMarkingContent = ({
   );
 
   const disabledDate = (key, current) => {
-    if (key === "startDateCompanies") {
+    if (key === "company_reg_start_date") {
       return isNotAFutureDate(current);
     }
-    if (key === "startDateCandidates") {
+    if (key === "candidate_reg_start_date") {
       return (
         isNotAFutureDate(current) ||
         compareTwoDayjsDates({
           current: current,
-          date: registrationDatesData["lastDateBigCentres"],
+          date: registrationDatesData["candidate_reg_end_date_bg_centre"],
           checkForFuture: false,
         })
       );
     }
-    if (key === "lastDateBigCentres")
+    if (key === "candidate_reg_end_date_bg_centre")
       return (
         compareTwoDayjsDates({
           current: current,
-          date: registrationDatesData["startDateCandidates"],
+          date: registrationDatesData["candidate_reg_start_date"],
           checkForFuture: false,
         }) ||
         compareTwoDayjsDates({
           current: current,
-          date: registrationDatesData["lastDateSmallCentres"],
+          date: registrationDatesData["candidate_reg_end_date_sm_centre"],
           checkForFuture: true,
         })
       );
     return compareTwoDayjsDates({
       current: current,
       date:
-        registrationDatesData["lastDateBigCentres"] ||
-        registrationDatesData["startDateCandidates"],
+        registrationDatesData["candidate_reg_end_date_bg_centre"] ||
+        registrationDatesData["candidate_reg_start_date"],
       checkForFuture: false,
     });
   };
   const NQCA_REGISTRATION_DATE_FIELDS = [
     {
       id: 1,
-      labeIntl: "startDateCompanies",
+      labeIntl: "company_reg_start_date",
     },
     {
       id: 2,
-      labeIntl: "startDateCandidates",
+      labeIntl: "candidate_reg_start_date",
     },
     {
       id: 3,
-      labeIntl: "lastDateBigCentres",
+      labeIntl: "candidate_reg_end_date_bg_centre",
     },
     {
       id: 4,
-      labeIntl: "lastDateSmallCentres",
+      labeIntl: "candidate_reg_end_date_sm_centre",
     },
   ];
 
   const OTHER_MODULES_REGISTRATION_DATE_FIELDS = [
     {
       id: 1,
-      labeIntl: "startDateCompanies",
+      labeIntl: "company_reg_start_date",
     },
     {
       id: 2,
-      labeIntl: "startDateCandidates",
+      labeIntl: "candidate_reg_start_date",
     },
     {
       id: 3,
-      labeIntl: "lastDateBigCentres",
+      labeIntl: "candidate_reg_end_date_bg_centre",
     },
   ];
 
@@ -209,7 +210,7 @@ const ConsentMarkingContent = ({
   const handleInputChange = (value, name) => {
     setRegistrationDatesData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      [name]: value && dayjs(value).format("YYYY-MM-DD"),
     }));
   };
 
@@ -223,12 +224,8 @@ const ConsentMarkingContent = ({
 
   const handleSave = () => {
     updateRegistrationDate({
-      body: {
-        company_reg_start_date: "2024-10-11",
-        candidate_reg_start_date: "2024-10-11",
-        candidate_reg_end_date_bg_centre: "2024-10-11",
-        candidate_reg_end_date_sm_centre: "2024-10-11",
-      },
+      body: registrationDatesData,
+
       onSuccessCallback: () => {
         navigateBackToSession();
       },
