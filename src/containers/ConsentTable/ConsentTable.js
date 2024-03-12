@@ -8,21 +8,14 @@ import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
 const ConsentTable = ({
-  error,
+  errors,
   isEdit,
+  onDateChange,
   registration,
-  setTableData,
   tableData,
 }) => {
-  const onDateChange = (record, key, value) => {
-    const index = tableData.findIndex((item) => item.id === record.id);
-    const newData = [...tableData];
-    newData[index][key] = value && dayjs(value).format("YYYY-MM-DD");
-    setTableData(newData);
-  };
-
   const columns = useConsentTableColumns(
-    error,
+    errors,
     isEdit,
     registration,
     onDateChange

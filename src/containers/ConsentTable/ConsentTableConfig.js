@@ -4,7 +4,7 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
-const useConsentTableColumns = (error, isEdit, registration, onDateChange) => {
+const useConsentTableColumns = (errors, isEdit, registration, onDateChange) => {
   const { renderColumn } = useRenderColumn();
   const intl = useIntl();
 
@@ -38,6 +38,7 @@ const useConsentTableColumns = (error, isEdit, registration, onDateChange) => {
           key: "company_reg_end_date",
           isRequiredField: true,
           renderDateTime: {
+            getError: (index) => errors[index].company_reg_end_date,
             visible: true,
             isEditable: isEdit,
             type: "date",
@@ -57,6 +58,7 @@ const useConsentTableColumns = (error, isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "psychometric_test_date",
           renderDateTime: {
+            getError: (index) => errors[index].psychometric_test_date,
             isEditable: isEdit,
             visible: true,
             type: "date",
@@ -101,6 +103,7 @@ const useConsentTableColumns = (error, isEdit, registration, onDateChange) => {
           key: "company_shortlisting_start_date",
           isRequiredField: true,
           renderDateTime: {
+            getError: (index) => errors[index].company_shortlisting_start_date,
             visible: true,
             isEditable: isEdit,
             type: "date",
@@ -122,6 +125,7 @@ const useConsentTableColumns = (error, isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "company_shortlisting_end_date",
           renderDateTime: {
+            getError: (index) => errors[index].company_shortlisting_end_date,
             visible: true,
             isEditable: isEdit,
             type: "date",
@@ -144,6 +148,8 @@ const useConsentTableColumns = (error, isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "candidate_consent_marking_start_date",
           renderDateTime: {
+            getError: (index) =>
+              errors[index].candidate_consent_marking_start_date,
             visible: true,
             isEditable: isEdit,
             type: "date",
@@ -169,6 +175,8 @@ const useConsentTableColumns = (error, isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "candidate_consent_marking_end_date",
           renderDateTime: {
+            getError: (index) =>
+              errors[index].candidate_consent_marking_end_date,
             visible: true,
             isEditable: isEdit,
             type: "date",

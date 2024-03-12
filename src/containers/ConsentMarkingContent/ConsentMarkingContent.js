@@ -52,12 +52,30 @@ const ConsentMarkingContent = ({
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
-  const [activeTab, setActiveTab] = useState(
-    getCurrentActiveTab(
-      urlService.getQueryStringValue(ACTIVE_TAB),
-      VALID_CONSENT_MARKING_TABS_ID
-    )
-  );
+
+  const onDateChange = (
+    record,
+    key,
+    value,
+    tableData,
+    setTableData,
+    setErrors
+  ) => {
+    const index = tableData.findIndex((item) => item.id === record.id);
+    const newData = [...tableData];
+    newData[index][key] = value && dayjs(value).format("YYYY-MM-DD");
+    setTableData(newData);
+    if (!value) {
+      handleError(
+        key,
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        index,
+        setErrors
+      );
+    } else {
+      handleError(key, "", index, setErrors);
+    }
+  };
 
   const {
     makeRequest: updateRegistrationDate,
@@ -159,31 +177,35 @@ const ConsentMarkingContent = ({
       : null,
   }));
 
-  const [lastRegistrationError, setLastRegistrationError] = useState(
-    lastRegistrationDatesData?.map((item) => ({
+  const lastRegistrationInitialError = lastRegistrationDatesData?.map(
+    (item) => ({
       name: "",
       company_reg_end_date: "",
       psychometric_test_date: "",
-    }))
+    })
   );
-  const [roundOneError, setRoundOneError] = useState(
-    consentRoundOneData?.map((item) => ({
-      centre_name: "",
-      company_shortlisting_start_date: "",
-      company_shortlisting_end_date: "",
-      candidate_consent_marking_start_date: "",
-      candidate_consent_marking_end_date: "",
-    }))
+
+  const roundOneInitialError = consentRoundOneData?.map((item) => ({
+    centre_name: "",
+    company_shortlisting_start_date: "",
+    company_shortlisting_end_date: "",
+    candidate_consent_marking_start_date: "",
+    candidate_consent_marking_end_date: "",
+  }));
+
+  const roundTwoInitialError = consentRoundTwoData?.map((item) => ({
+    centre_name: "",
+    company_shortlisting_start_date: "",
+    company_shortlisting_end_date: "",
+    candidate_consent_marking_start_date: "",
+    candidate_consent_marking_end_date: "",
+  }));
+
+  const [lastRegistrationError, setLastRegistrationError] = useState(
+    lastRegistrationInitialError
   );
-  const [roundTwoError, setRoundTwoError] = useState(
-    consentRoundTwoData?.map((item) => ({
-      centre_name: "",
-      company_shortlisting_start_date: "",
-      company_shortlisting_end_date: "",
-      candidate_consent_marking_start_date: "",
-      candidate_consent_marking_end_date: "",
-    }))
-  );
+  const [roundOneError, setRoundOneError] = useState(roundOneInitialError);
+  const [roundTwoError, setRoundTwoError] = useState(roundTwoInitialError);
 
   const [roundOneTableData, setRoundOneTableData] =
     useState(roundOneInitialData);
@@ -281,7 +303,16 @@ const ConsentMarkingContent = ({
             errors: lastRegistrationError,
           }}
           tableData={registrationTableData}
-          setTableData={setRegistrationTableData}
+          onDateChange={(record, key, value) => {
+            onDateChange(
+              record,
+              key,
+              value,
+              registrationTableData,
+              setRegistrationTableData,
+              setLastRegistrationError
+            );
+          }}
         />
       ),
     },
@@ -290,9 +321,22 @@ const ConsentMarkingContent = ({
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
         <ConsentTable
-          {...{ activeTab, isEdit: isTableDateEdit, error: roundOneError }}
+          {...{
+            activeTab,
+            isEdit: isTableDateEdit,
+            errors: roundOneError,
+          }}
           tableData={roundOneTableData}
-          setTableData={setRoundOneTableData}
+          onDateChange={(record, key, value) => {
+            onDateChange(
+              record,
+              key,
+              value,
+              roundOneTableData,
+              setRoundOneTableData,
+              setRoundOneError
+            );
+          }}
         />
       ),
     },
@@ -301,9 +345,22 @@ const ConsentMarkingContent = ({
       title: intl.formatMessage({ id: "session.roundTwo" }),
       children: (
         <ConsentTable
-          {...{ activeTab, isEdit: isTableDateEdit, error: roundTwoError }}
+          {...{
+            activeTab,
+            isEdit: isTableDateEdit,
+            errors: roundTwoError,
+          }}
           tableData={roundTwoTableData}
-          setTableData={setRoundTwoTableData}
+          onDateChange={(record, key, value) => {
+            onDateChange(
+              record,
+              key,
+              value,
+              roundTwoTableData,
+              setRoundTwoTableData,
+              setRoundTwoError
+            );
+          }}
         />
       ),
     },
@@ -441,12 +498,15 @@ const ConsentMarkingContent = ({
   const handleCancel = () => {
     if (activeTab === "1") {
       setRegistrationTableData(registrationInitialData);
+      setLastRegistrationError(lastRegistrationInitialError);
     }
     if (activeTab === "2") {
       setRoundOneTableData(roundOneInitialData);
+      setRoundOneError(roundOneInitialError);
     }
     if (activeTab === "3") {
       setRoundTwoTableData(roundTwoInitialData);
+      setRoundTwoError(roundTwoInitialError);
     }
     setIsTableDateEdit(false);
   };

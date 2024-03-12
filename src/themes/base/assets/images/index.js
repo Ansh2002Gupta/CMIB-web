@@ -14,7 +14,6 @@ import clock from "./clock.svg";
 import cancel from "./cancel.svg";
 import CircleCheck from "./CircleCheck.svg";
 import disabledArrowLeft from "./disabledArrowLeft.svg";
-import disableEdit from "./disableEdit.svg";
 import DeviceMessage from "./DeviceMessage.svg";
 import Document from "./Document.svg";
 import edit from "./edit.svg";
@@ -95,7 +94,6 @@ const images = {
   CircleCheck,
   checkIconWhite,
   disabledArrowLeft,
-  disableEdit,
   DeviceMessage,
   Document,
   edit,
