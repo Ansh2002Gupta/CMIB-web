@@ -1,0 +1,33 @@
+.editIcon {
+  width: var(--lineHeightNormal);
+  height: var(--lineHeightNormal);
+}
+.disabledEditContainer {
+  gap: var(--gapXSmall);
+  cursor: not-allowed;
+  justify-content: center;
+  display: flex;
+  flex: 1;
+}
+
+.editContainer {
+  gap: var(--gapXSmall);
+  cursor: pointer;
+  justify-content: center;
+  display: flex;
+  flex: 1;
+}
+
+.grayText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--disableLink);
+}
+
+.blackText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}

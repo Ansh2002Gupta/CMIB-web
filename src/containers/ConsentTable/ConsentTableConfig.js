@@ -19,6 +19,11 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             includeDotAfterText: true,
             textStyles: styles.textStyles,
           },
+          render: (_, __, index) => {
+            return {
+              children: <p>{index + 1}.</p>,
+            };
+          },
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.centreName" }),
@@ -74,6 +79,11 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             visible: true,
             includeDotAfterText: true,
             textStyles: styles.textStyles,
+          },
+          render: (_, __, index) => {
+            return {
+              children: <p>{index + 1}.</p>,
+            };
           },
         }),
         renderColumn({

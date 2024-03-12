@@ -86,3 +86,9 @@
 .tabEdit {
   padding-right: var(--paddingMedium);
 }
+
+.tableDataContainer {
+  background-color: var(--bodyBg);
+  border: var(--borderLight);
+  border-radius: var(--radiusMLg) !important;
+}

@@ -1,9 +1,9 @@
 .table {
   flex: 1;
   width: var(--fullWidth);
-  border-radius: var(--radiusMLg) !important;
+  border-radius: 0px !important;
   overflow: hidden !important;
-  border: var(--borderLight);
+  border: none;
 }
 
 .rowtext {

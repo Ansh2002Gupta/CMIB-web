@@ -3,28 +3,22 @@ import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
-import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import ConsentTable from "../ConsentTable";
-import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import CustomTabs from "../../components/CustomTabs";
+import EditButton from "../../components/EditButton";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { ReactComponent as Edit } from "../../themes/base/assets/images/editDark.svg";
 import { compareTwoDayjsDates, isNotAFutureDate } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
 import { usePut } from "../../core/hooks/useApiRequest";
 import useShowNotification from "../../core/hooks/useShowNotification";
-import {
-  CONSENT_MARKING_REGESTRATION_DETAILS,
-  LAST_MARKING_REGESTRATION_DETAILS,
-  REGISTRATION_DUMMY_DATES,
-} from "../../dummyData";
 import {
   CORE_ROUTE,
   LAST_REGISTRATION_DATES,
@@ -400,7 +394,7 @@ const ConsentMarkingContent = ({
   return (
     <>
       {notificationContextHolder}
-      <ThreeRow
+      <TwoRow
         className={styles.mainContainer}
         topSection={
           <TwoRow
@@ -448,15 +442,9 @@ const ConsentMarkingContent = ({
                     isLeftFillSpace
                     rightSection={
                       !isRegistrationDateEdit && (
-                        <CustomButton
-                          isBtnDisable={!isEdit}
-                          btnText={intl.formatMessage({ id: "label.edit" })}
-                          IconElement={Edit}
+                        <EditButton
+                          disable={!isEdit}
                           onClick={() => setIsRegistrationDateEdit(true)}
-                          withWhiteBackground
-                          iconStyles={styles.btnIconStyles}
-                          customStyle={styles.btnCustomStyles}
-                          textStyle={styles.textStyle}
                         />
                       )
                     }
@@ -488,7 +476,7 @@ const ConsentMarkingContent = ({
           />
         }
         topSectionStyle={classes.topSectionStyle}
-        middleSection={
+        bottomSection={
           <TwoRow
             className={styles.tabContainer}
             topSection={
@@ -505,50 +493,46 @@ const ConsentMarkingContent = ({
                 }
                 rightSection={
                   !isTableDateEdit && (
-                    <CustomButton
-                      isBtnDisable={!isEdit}
-                      btnText={intl.formatMessage({ id: "label.edit" })}
-                      IconElement={Edit}
+                    <EditButton
+                      disable={!isEdit}
                       onClick={() => setIsTableDateEdit(true)}
-                      iconStyles={styles.btnIconStyles}
-                      customStyle={styles.editBtnCustomStyles}
-                      textStyle={styles.textStyle}
                     />
                   )
                 }
               />
             }
             topSectionStyle={classes.tabTopSectionStyle}
-            bottomSection={activeTabChildren.children}
+            bottomSection={
+              <TwoRow
+                className={styles.tableDataContainer}
+                topSection={activeTabChildren.children}
+                bottomSection={
+                  isTableDateEdit && (
+                    <ActionAndCancelButtons
+                      actionBtnText={intl.formatMessage({
+                        id: "label.saveChanges",
+                      })}
+                      cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                      onActionBtnClick={handleSave}
+                      isActionBtnDisable={
+                        isUpdatingLastRegistrationDate ||
+                        isUpdatingRoundOneDate ||
+                        isUpdatingRoundTwoDate
+                      }
+                      onCancelBtnClick={handleCancel}
+                      isctionButtonLoading={
+                        isUpdatingLastRegistrationDate ||
+                        isUpdatingRoundOneDate ||
+                        isUpdatingRoundTwoDate
+                      }
+                    />
+                  )
+                }
+              />
+            }
             bottomSectionStyle={classes.tabBottomSectionStyle}
           />
         }
-        bottomSection={
-          isTableDateEdit ? (
-            <ActionAndCancelButtons
-              customContainerStyle={styles.customContainerStyle}
-              actionBtnText={intl.formatMessage({
-                id: "label.saveChanges",
-              })}
-              cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-              onActionBtnClick={handleSave}
-              isActionBtnDisable={
-                isUpdatingLastRegistrationDate ||
-                isUpdatingRoundOneDate ||
-                isUpdatingRoundTwoDate
-              }
-              onCancelBtnClick={handleCancel}
-              isctionButtonLoading={
-                isUpdatingLastRegistrationDate ||
-                isUpdatingRoundOneDate ||
-                isUpdatingRoundTwoDate
-              }
-            />
-          ) : (
-            <></>
-          )
-        }
-        bottomSectionStyle={classes.bottomSectionStyle}
       />
     </>
   );
