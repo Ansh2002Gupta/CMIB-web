@@ -446,12 +446,7 @@ const ConsentMarkingContent = ({
                         />
                       )
                     }
-                    rightSectionStyle={{
-                      paddingLeft: "20px",
-                      alignItems: "center",
-                      alignContent: "center",
-                      justifyContent: "center",
-                    }}
+                    rightSectionStyle={classes.editStyles}
                   />
                 )}
               </>
