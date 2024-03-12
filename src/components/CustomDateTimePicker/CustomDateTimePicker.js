@@ -42,7 +42,7 @@ const CustomDateTimePicker = ({
         label && (
           <div className={classes.inputLabelContainer}>
             <Typography className={customLabelStyles}>
-              {label}
+              {label}&nbsp;
               {isRequired && <MarkRequired />}
             </Typography>
           </div>

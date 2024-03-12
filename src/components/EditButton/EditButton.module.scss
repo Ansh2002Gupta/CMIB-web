@@ -23,6 +23,7 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--disableLink);
+  padding-top: var(--paddingXXXSmall);
 }
 
 .blackText {
@@ -30,4 +31,5 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
+  padding-top: var(--paddingXXXSmall);
 }

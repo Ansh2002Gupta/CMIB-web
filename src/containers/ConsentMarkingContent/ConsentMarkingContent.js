@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
-import useResponsive from "core/hooks/useResponsive";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import ConsentTable from "../ConsentTable";
@@ -48,7 +47,6 @@ const ConsentMarkingContent = ({
   setActiveTab,
 }) => {
   const intl = useIntl();
-  const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [isRegistrationDateEdit, setIsRegistrationDateEdit] = useState(false);
@@ -448,6 +446,12 @@ const ConsentMarkingContent = ({
                         />
                       )
                     }
+                    rightSectionStyle={{
+                      paddingLeft: "20px",
+                      alignItems: "center",
+                      alignContent: "center",
+                      justifyContent: "center",
+                    }}
                   />
                 )}
               </>
