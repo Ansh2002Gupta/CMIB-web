@@ -6,9 +6,8 @@ import useResponsive from "../../core/hooks/useResponsive";
 import CustomInput from "../../components/CustomInput/CustomInput";
 import styles from "./VideoTimeLimitSection.module.scss";
 
-const VideoTimeLimitSection = () => {
+const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
   const responsive = useResponsive();
-  const [value, setValue] = useState(0);
   return (
     <div className={styles.outerContainer}>
       <TwoRow
@@ -32,10 +31,10 @@ const VideoTimeLimitSection = () => {
               min={0}
               max={15}
               type="inputNumber"
-              value={value}
+              value={videoTimeLimit}
               onChange={(val) => {
-                console.log("Changed value:", val);
-                setValue(val);
+                console.log("Changed videoTimeLimit:", val);
+                setVideoTimeLimit(val);
               }}
             />
           </div>

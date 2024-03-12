@@ -1,5 +1,4 @@
-import React from "react";
-import { Button } from "antd";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
@@ -7,33 +6,38 @@ import ProfileSkills from "../ProfileSkills/index";
 import VideoTimeLimitSection from "../VideoTimeLimitSection/index";
 import styles from "./CaJobsConfig.module.scss";
 
-const CaJobsConfig = ({ onCancel, onSave }) => {
+const CaJobsConfig = ({
+  currentFieldStateItSkills,
+  currentFieldStateSoftSkills,
+  setCurrentFieldStateItSkills,
+  setCurrentFieldStateSoftSkills,
+  videoTimeLimit,
+  setVideoTimeLimit,
+}) => {
   return (
     <div className={styles.outerContainer}>
       <TwoRow
-        bottomSection={<ProfileSkills />}
-        topSection={<VideoTimeLimitSection />}
+        bottomSection={
+          <ProfileSkills
+            currentFieldStateItSkills={currentFieldStateItSkills}
+            currentFieldStateSoftSkills={currentFieldStateSoftSkills}
+            setCurrentFieldStateItSkills={setCurrentFieldStateItSkills}
+            setCurrentFieldStateSoftSkills={setCurrentFieldStateSoftSkills}
+          />
+        }
+        topSection={
+          <VideoTimeLimitSection
+            videoTimeLimit={videoTimeLimit}
+            setVideoTimeLimit={setVideoTimeLimit}
+          />
+        }
       />
-      <div className={styles.buttonWrapper}>
-        <Button onClick={() => onCancel()} className={styles.cancelButton}>
-          Cancel
-        </Button>
-        <Button onClick={() => onSave()} className={styles.saveButton}>
-          Save
-        </Button>
-      </div>
     </div>
   );
 };
 
-CaJobsConfig.defaultProps = {
-  onCancel: () => {},
-  onSave: () => {},
-};
+CaJobsConfig.defaultProps = {};
 
-CaJobsConfig.propTypes = {
-  onCancel: PropTypes.func,
-  onSave: PropTypes.func,
-};
+CaJobsConfig.propTypes = {};
 
 export default CaJobsConfig;

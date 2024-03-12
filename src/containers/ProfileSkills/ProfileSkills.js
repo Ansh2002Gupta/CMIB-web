@@ -8,11 +8,12 @@ import useResponsive from "../../core/hooks/useResponsive";
 import { initialFieldState } from "./constant";
 import styles from "./ProfileSkills.module.scss";
 
-const ProfileSkills = () => {
-  const [currentFieldStateItSkills, setCurrentFieldStateItSkills] =
-    useState(initialFieldState);
-  const [currentFieldStateSoftSkills, setCurrentFieldStateSoftSkills] =
-    useState(initialFieldState);
+const ProfileSkills = ({
+  currentFieldStateItSkills,
+  currentFieldStateSoftSkills,
+  setCurrentFieldStateItSkills,
+  setCurrentFieldStateSoftSkills,
+}) => {
   const intl = useIntl();
   const responsive = useResponsive();
 
