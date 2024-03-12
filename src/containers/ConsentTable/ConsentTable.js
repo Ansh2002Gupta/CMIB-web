@@ -7,7 +7,13 @@ import useConsentTableColumns from "./ConsentTableConfig";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
-const ConsentTable = ({ isEdit, registration, setTableData, tableData }) => {
+const ConsentTable = ({
+  error,
+  isEdit,
+  registration,
+  setTableData,
+  tableData,
+}) => {
   const onDateChange = (record, key, value) => {
     const index = tableData.findIndex((item) => item.id === record.id);
     const newData = [...tableData];
@@ -15,7 +21,12 @@ const ConsentTable = ({ isEdit, registration, setTableData, tableData }) => {
     setTableData(newData);
   };
 
-  const columns = useConsentTableColumns(isEdit, registration, onDateChange);
+  const columns = useConsentTableColumns(
+    error,
+    isEdit,
+    registration,
+    onDateChange
+  );
 
   return (
     <DataTable

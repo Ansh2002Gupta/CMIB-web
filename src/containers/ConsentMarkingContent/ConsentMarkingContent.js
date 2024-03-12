@@ -153,6 +153,32 @@ const ConsentMarkingContent = ({
       : null,
   }));
 
+  const [lastRegistrationError, setLastRegistrationError] = useState(
+    lastRegistrationDatesData?.map((item) => ({
+      name: "",
+      company_reg_end_date: "",
+      psychometric_test_date: "",
+    }))
+  );
+  const [roundOneError, setRoundOneError] = useState(
+    consentRoundOneData?.map((item) => ({
+      centre_name: "",
+      company_shortlisting_start_date: "",
+      company_shortlisting_end_date: "",
+      candidate_consent_marking_start_date: "",
+      candidate_consent_marking_end_date: "",
+    }))
+  );
+  const [roundTwoError, setRoundTwoError] = useState(
+    consentRoundTwoData?.map((item) => ({
+      centre_name: "",
+      company_shortlisting_start_date: "",
+      company_shortlisting_end_date: "",
+      candidate_consent_marking_start_date: "",
+      candidate_consent_marking_end_date: "",
+    }))
+  );
+
   const [roundOneTableData, setRoundOneTableData] =
     useState(roundOneInitialData);
   const [roundTwoTableData, setRoundTwoTableData] =
@@ -246,6 +272,7 @@ const ConsentMarkingContent = ({
             activeTab,
             isEdit: isTableDateEdit,
             registration: true,
+            errors: lastRegistrationError,
           }}
           tableData={registrationTableData}
           setTableData={setRegistrationTableData}
@@ -257,7 +284,7 @@ const ConsentMarkingContent = ({
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
         <ConsentTable
-          {...{ activeTab, isEdit: isTableDateEdit }}
+          {...{ activeTab, isEdit: isTableDateEdit, error: roundOneError }}
           tableData={roundOneTableData}
           setTableData={setRoundOneTableData}
         />
@@ -268,7 +295,7 @@ const ConsentMarkingContent = ({
       title: intl.formatMessage({ id: "session.roundTwo" }),
       children: (
         <ConsentTable
-          {...{ activeTab, isEdit: isTableDateEdit }}
+          {...{ activeTab, isEdit: isTableDateEdit, error: roundTwoError }}
           tableData={roundTwoTableData}
           setTableData={setRoundTwoTableData}
         />
@@ -284,7 +311,124 @@ const ConsentMarkingContent = ({
     }));
   };
 
+  const handleError = (key, error, index, setErrors) => {
+    setErrors((prevTableError) => {
+      const newTableError = [...prevTableError];
+      newTableError[index] = {
+        ...newTableError[index],
+        [key]: error,
+      };
+      return newTableError;
+    });
+  };
+
   const validate = () => {
+    let errorCount = 0;
+    if (activeTab === "1") {
+      registrationTableData.map((item, index) => {
+        if (!item?.company_reg_end_date) {
+          errorCount++;
+          handleError(
+            "company_reg_end_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setLastRegistrationError
+          );
+        }
+        if (!item?.psychometric_test_date) {
+          errorCount++;
+          handleError(
+            "psychometric_test_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setLastRegistrationError
+          );
+        }
+      });
+    }
+    if (activeTab === "2") {
+      roundOneTableData.map((item, index) => {
+        if (!item?.candidate_consent_marking_end_date) {
+          errorCount++;
+          handleError(
+            "candidate_consent_marking_end_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setRoundOneError
+          );
+        }
+        if (!item?.candidate_consent_marking_start_date) {
+          errorCount++;
+          handleError(
+            "candidate_consent_marking_start_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setRoundOneError
+          );
+        }
+        if (!item?.company_shortlisting_end_date) {
+          errorCount++;
+          handleError(
+            "company_shortlisting_end_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setRoundOneError
+          );
+        }
+        if (!item?.company_shortlisting_start_date) {
+          errorCount++;
+          handleError(
+            "company_shortlisting_start_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setRoundOneError
+          );
+        }
+      });
+    }
+    if (activeTab === "3") {
+      roundTwoTableData.map((item, index) => {
+        if (!item?.candidate_consent_marking_end_date) {
+          errorCount++;
+          handleError(
+            "candidate_consent_marking_end_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setRoundTwoError
+          );
+        }
+        if (!item?.candidate_consent_marking_start_date) {
+          errorCount++;
+          handleError(
+            "candidate_consent_marking_start_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setRoundTwoError
+          );
+        }
+        if (!item?.company_shortlisting_end_date) {
+          errorCount++;
+          handleError(
+            "company_shortlisting_end_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setRoundTwoError
+          );
+        }
+        if (!item?.company_shortlisting_start_date) {
+          errorCount++;
+          handleError(
+            "company_shortlisting_start_date",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index,
+            setRoundTwoError
+          );
+        }
+      });
+    }
+    if (errorCount) {
+      return false;
+    }
     return true;
   };
 
@@ -302,65 +446,67 @@ const ConsentMarkingContent = ({
   };
 
   const handleSave = () => {
-    if (activeTab === "1") {
-      updateLastRegistrationDate({
-        body: { data: registrationTableData },
-        onSuccessCallback: () => {
-          showNotification({
-            text: intl.formatMessage({ id: "label.lastRegistrationSuccess" }),
-            type: NOTIFICATION_TYPES.SUCCESS,
-          });
-          setIsTableDateEdit(false);
-        },
-        onErrorCallback: (ErrorMessage) => {
-          showNotification({
-            text: ErrorMessage,
-            type: NOTIFICATION_TYPES.ERROR,
-            headingText: intl.formatMessage({ id: "label.errorMessage" }),
-          });
-        },
-      });
-      return;
-    }
-    if (activeTab === "2") {
-      updateRoundOneDate({
-        body: { data: roundOneTableData },
-        onSuccessCallback: () => {
-          showNotification({
-            text: intl.formatMessage({ id: "label.roundOneDatesSuccess" }),
-            type: NOTIFICATION_TYPES.SUCCESS,
-          });
-          setIsTableDateEdit(false);
-        },
-        onErrorCallback: (ErrorMessage) => {
-          showNotification({
-            text: ErrorMessage,
-            type: "error",
-            headingText: intl.formatMessage({ id: "label.errorMessage" }),
-          });
-        },
-      });
-      return;
-    }
-    if (activeTab === "3") {
-      updateRoundTwoDate({
-        body: { data: roundTwoTableData },
-        onSuccessCallback: () => {
-          showNotification({
-            text: intl.formatMessage({ id: "label.roundTwoDatesSuccess" }),
-            type: NOTIFICATION_TYPES.SUCCESS,
-          });
-          setIsTableDateEdit(false);
-        },
-        onErrorCallback: (ErrorMessage) => {
-          showNotification({
-            text: ErrorMessage,
-            type: "error",
-            headingText: intl.formatMessage({ id: "label.errorMessage" }),
-          });
-        },
-      });
-      return;
+    if (validate()) {
+      if (activeTab === "1") {
+        updateLastRegistrationDate({
+          body: { data: registrationTableData },
+          onSuccessCallback: () => {
+            showNotification({
+              text: intl.formatMessage({ id: "label.lastRegistrationSuccess" }),
+              type: NOTIFICATION_TYPES.SUCCESS,
+            });
+            setIsTableDateEdit(false);
+          },
+          onErrorCallback: (ErrorMessage) => {
+            showNotification({
+              text: ErrorMessage,
+              type: NOTIFICATION_TYPES.ERROR,
+              headingText: intl.formatMessage({ id: "label.errorMessage" }),
+            });
+          },
+        });
+        return;
+      }
+      if (activeTab === "2") {
+        updateRoundOneDate({
+          body: { data: roundOneTableData },
+          onSuccessCallback: () => {
+            showNotification({
+              text: intl.formatMessage({ id: "label.roundOneDatesSuccess" }),
+              type: NOTIFICATION_TYPES.SUCCESS,
+            });
+            setIsTableDateEdit(false);
+          },
+          onErrorCallback: (ErrorMessage) => {
+            showNotification({
+              text: ErrorMessage,
+              type: "error",
+              headingText: intl.formatMessage({ id: "label.errorMessage" }),
+            });
+          },
+        });
+        return;
+      }
+      if (activeTab === "3") {
+        updateRoundTwoDate({
+          body: { data: roundTwoTableData },
+          onSuccessCallback: () => {
+            showNotification({
+              text: intl.formatMessage({ id: "label.roundTwoDatesSuccess" }),
+              type: NOTIFICATION_TYPES.SUCCESS,
+            });
+            setIsTableDateEdit(false);
+          },
+          onErrorCallback: (ErrorMessage) => {
+            showNotification({
+              text: ErrorMessage,
+              type: "error",
+              headingText: intl.formatMessage({ id: "label.errorMessage" }),
+            });
+          },
+        });
+        return;
+      }
     }
   };
 
@@ -398,10 +544,6 @@ const ConsentMarkingContent = ({
       urlService.setQueryStringValue(ACTIVE_TAB, 1);
     }
   }, []);
-
-  console.log(registrationTableData, "registrationTableData..");
-  console.log(roundOneTableData, "roundOneTableData..");
-  console.log(roundTwoTableData, "roundTwoTableData..");
 
   return (
     <>
@@ -453,11 +595,13 @@ const ConsentMarkingContent = ({
                     }
                     isLeftFillSpace
                     rightSection={
-                      !isRegistrationDateEdit && (
+                      !isRegistrationDateEdit ? (
                         <EditButton
                           disable={!isEdit}
                           onClick={() => setIsRegistrationDateEdit(true)}
                         />
+                      ) : (
+                        <></>
                       )
                     }
                     rightSectionStyle={classes.editStyles}
@@ -466,7 +610,7 @@ const ConsentMarkingContent = ({
               </>
             }
             bottomSection={
-              isRegistrationDateEdit && (
+              isRegistrationDateEdit ? (
                 <ActionAndCancelButtons
                   customContainerStyle={styles.customContainerStyle}
                   actionBtnText={intl.formatMessage({
@@ -484,6 +628,8 @@ const ConsentMarkingContent = ({
                   onCancelBtnClick={handleRegistrationCancel}
                   isctionButtonLoading={isUpdatingRegistrationDate}
                 />
+              ) : (
+                <></>
               )
             }
           />
@@ -505,11 +651,13 @@ const ConsentMarkingContent = ({
                   />
                 }
                 rightSection={
-                  !isTableDateEdit && (
+                  !isTableDateEdit ? (
                     <EditButton
                       disable={!isEdit}
                       onClick={() => setIsTableDateEdit(true)}
                     />
+                  ) : (
+                    <></>
                   )
                 }
               />
@@ -520,7 +668,7 @@ const ConsentMarkingContent = ({
                 className={styles.tableDataContainer}
                 topSection={activeTabChildren.children}
                 bottomSection={
-                  isTableDateEdit && (
+                  isTableDateEdit ? (
                     <ActionAndCancelButtons
                       actionBtnText={intl.formatMessage({
                         id: "label.saveChanges",
@@ -539,6 +687,8 @@ const ConsentMarkingContent = ({
                         isUpdatingRoundTwoDate
                       }
                     />
+                  ) : (
+                    <></>
                   )
                 }
               />
