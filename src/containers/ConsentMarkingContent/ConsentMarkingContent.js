@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
-import useResponsive from "core/hooks/useResponsive";
 
 import ConsentTable from "../ConsentTable";
 import CustomButton from "../../components/CustomButton";
@@ -12,6 +11,7 @@ import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
 import CustomTabs from "../../components/CustomTabs";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
+import useResponsive from "core/hooks/useResponsive";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import {
   formatDate,

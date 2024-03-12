@@ -4,10 +4,10 @@ import { useIntl } from "react-intl";
 import { TwoRow } from "../../core/layouts";
 
 import ConsentMarkingContent from "../../containers/ConsentMarkingContent";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
 import HeaderAndTitle from "../../components/HeaderAndTitle";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
-import styles from "./ConsentMarking.module.scss";
 import { ROUND_ID } from "../../constant/constant";
 import useFetch from "../../core/hooks/useFetch";
 import {
@@ -15,16 +15,21 @@ import {
   REGISTRATION_DATES,
   ROUNDS,
 } from "../../constant/apiEndpoints";
-import ErrorMessageBox from "../../components/ErrorMessageBox";
 import { Spin } from "antd";
 import { getErrorMessage } from "../../constant/utils";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import styles from "./ConsentMarking.module.scss";
 
 const ConsentMarking = () => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
-  const isEdit = true;
-  // const isEdit = urlService.getQueryStringValue("mode") === "edit";
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const isEdit =
+    currentGlobalSession?.is_editable && currentGlobalSession?.status;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
   const {
     data: regAndConsentData,
@@ -74,7 +79,7 @@ const ConsentMarking = () => {
             !!regAndConsentData && (
               <ConsentMarkingContent
                 {...{
-                  isEdit,
+                  isEdit: !!isEdit,
                   selectedModule: selectedModule?.key,
                   roundId,
                   regAndConsentData,
