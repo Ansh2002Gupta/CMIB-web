@@ -18,8 +18,8 @@ import {
   REGISTRATION_CONSENT,
   REGISTRATION_DATES,
   ROUNDS,
-  ROUND_1,
-  ROUND_2,
+  ROUND_ONE,
+  ROUND_TWO,
 } from "../../constant/apiEndpoints";
 import {
   ACTIVE_TAB,
@@ -82,10 +82,10 @@ const ConsentMarking = () => {
   });
 
   const {
-    data: consentRound1Data,
-    error: errorWhileGettingconsentRound1,
-    fetchData: getConsentRound1,
-    isLoading: isGettingConsentRound1,
+    data: consentRoundOneData,
+    error: errorWhileGettingconsentRoundOne,
+    fetchData: getConsentRoundOne,
+    isLoading: isGettingConsentRoundOne,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -93,17 +93,17 @@ const ConsentMarking = () => {
       ROUNDS +
       `/${roundId}` +
       REGISTRATION_CONSENT +
-      ROUND_1,
+      ROUND_ONE,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
 
   const {
-    data: consentRound2Data,
-    error: errorWhileGettingconsentRound2,
-    fetchData: getConsentRound2,
-    isLoading: isGettingConsentRound2,
+    data: consentRoundTwoData,
+    error: errorWhileGettingconsentRoundTwo,
+    fetchData: getConsentRoundTwo,
+    isLoading: isGettingConsentRoundTwo,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -111,20 +111,20 @@ const ConsentMarking = () => {
       ROUNDS +
       `/${roundId}` +
       REGISTRATION_CONSENT +
-      ROUND_2,
+      ROUND_TWO,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
 
   const getAllData = () => {
-    getRegistrationDate({});
+    !registrationDateData && getRegistrationDate({});
     if (activeTab === "2") {
-      getConsentRound1({});
+      getConsentRoundOne({});
       return;
     }
     if (activeTab === "3") {
-      getConsentRound2({});
+      getConsentRoundTwo({});
       return;
     }
     getlastRegistrationDates({});
@@ -142,8 +142,8 @@ const ConsentMarking = () => {
 
   const renderContent = () => {
     const isLoading =
-      isGettingConsentRound1 ||
-      isGettingConsentRound2 ||
+      isGettingConsentRoundOne ||
+      isGettingConsentRoundTwo ||
       isGettingRegistrationDate ||
       isGettinglastRegistrationDates;
     const errorHeading = intl.formatMessage({ id: "label.error" });
@@ -152,13 +152,13 @@ const ConsentMarking = () => {
       return <CustomLoader />;
     }
 
-    if (errorWhileGettingconsentRound1) {
-      const errorText = errorWhileGettingconsentRound1?.data?.message;
+    if (errorWhileGettingconsentRoundOne) {
+      const errorText = errorWhileGettingconsentRoundOne?.data?.message;
       return renderError(errorText, errorHeading, getAllData);
     }
 
-    if (errorWhileGettingconsentRound2) {
-      const errorText = errorWhileGettingconsentRound2?.data?.message;
+    if (errorWhileGettingconsentRoundTwo) {
+      const errorText = errorWhileGettingconsentRoundTwo?.data?.message;
       return renderError(errorText, errorHeading, getAllData);
     }
 
@@ -173,7 +173,9 @@ const ConsentMarking = () => {
     }
 
     if (
-      (consentRound2Data || consentRound1Data || lastRegistrationDatesData) &&
+      (consentRoundTwoData ||
+        consentRoundOneData ||
+        lastRegistrationDatesData) &&
       registrationDateData
     ) {
       return (
