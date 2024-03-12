@@ -98,8 +98,9 @@
 }
 
 .errorTimeInput {
-  border: var(--borderError);
+  border: var(--borderError) !important;
 }
+
 .centerContent {
   display: flex;
 }

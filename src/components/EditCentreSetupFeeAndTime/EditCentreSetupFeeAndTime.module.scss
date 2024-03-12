@@ -1,0 +1,65 @@
+.topSectionStyle {
+  border: var(--borderLight);
+  padding: var(--paddingMedium);
+  display: flex;
+  flex: 1;
+  background-color: var(--bodyBg);
+  border-radius: var(--radiusMLg);
+  flex-wrap: wrap;
+  gap: var(--gapMedium);
+}
+
+.inputLabel {
+  color: var(--inputPlaceHolder);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.input {
+  height: var(--height_44);
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  padding: var(--padding_9) var(--padding_5);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+
+  &::placeholder {
+    color: var(--inputPlaceHolder) !important;
+  }
+}
+
+.timeInput {
+  height: var(--height_44);
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  flex: 1;
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: var(--inputPlaceHolder) !important;
+  }
+}
+
+.customContainerStyles {
+  width: var(--fullWidth);
+}
+
+.customDatePickerStyles {
+  gap: var(--gapXXSmall);
+}
+
+@media (min-width: 400px) and (max-width: 600px) {
+  .customContainerStyles {
+    width: var(--width_45Per);
+  }
+}
+@media (min-width: 600px) {
+  .customContainerStyles {
+    width: var(--width_30Per);
+  }
+}

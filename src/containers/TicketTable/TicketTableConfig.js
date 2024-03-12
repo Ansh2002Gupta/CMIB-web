@@ -1,4 +1,4 @@
-import { Typography } from "antd";
+import { Image, Typography } from "antd";
 
 import { isUserAdmin } from "../../constant/utils";
 import { SORT_VALUES } from "../../constant/constant";
@@ -139,14 +139,25 @@ export const getTicketColumn = ({
           renderColumn({
             dataIndex: "see",
             key: "see",
-            renderImage: {
-              alt: "addAssignee",
-              preview: false,
-              src: getImage("iconProfileAdd"),
-              visible: true,
-              onClick: (data) => {
-                handleClickAssign(data);
-              },
+            render: (data, rowData) => {
+              const { status } = rowData;
+              const isClosed = status.toLowerCase() === "closed";
+              return (
+                <Image
+                  src={
+                    isClosed
+                      ? getImage("iconProfileAddDisabled")
+                      : getImage("iconProfileAdd")
+                  }
+                  preview={false}
+                  alt="addAssignee"
+                  visible
+                  onClick={() => !isClosed && handleClickAssign(rowData)}
+                  className={
+                    isClosed ? styles.assignIconDisabled : styles.assignIcon
+                  }
+                />
+              );
             },
           }),
         ]

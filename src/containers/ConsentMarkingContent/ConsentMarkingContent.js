@@ -52,6 +52,12 @@ const ConsentMarkingContent = ({
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
+  const [activeTab, setActiveTab] = useState(
+    getCurrentActiveTab(
+      urlService.getQueryStringValue(ACTIVE_TAB),
+      VALID_CONSENT_MARKING_TABS_ID
+    )
+  );
 
   const {
     makeRequest: updateRegistrationDate,

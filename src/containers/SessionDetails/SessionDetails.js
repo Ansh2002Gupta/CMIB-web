@@ -209,7 +209,6 @@ const SessionDetails = ({
             ? value?.trim()?.length <= 0
             : value?.length <= 0))
       ) {
-        console.log("error");
         return intl.formatMessage({ id: `session.error.${rule.message}` });
       }
       if (rule.regex && !rule.regex.test(value)) {
