@@ -5,7 +5,6 @@ import { Typography } from "antd";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import MultiRowInput from "../../components/MultiRowInput/MultiRowInput";
 import useResponsive from "../../core/hooks/useResponsive";
-import { initialFieldState } from "./constant";
 import styles from "./ProfileSkills.module.scss";
 
 const ProfileSkills = ({

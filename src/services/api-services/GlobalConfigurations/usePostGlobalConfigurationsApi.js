@@ -20,9 +20,9 @@ const usePostGlobalConfigurationsApi = () => {
       setApiStatus(API_STATUS.LOADING);
       errorWhilePostingData && setErrorWhilePostingData("");
       const url = CAJOBS_ROUTE + MASTER + CONFIGURATIONS;
-      const res = await Http.patch(url, payload);
+      const res = await Http.post(url, payload);
       if (
-        res.code === STATUS_CODES.SUCCESS_STATUS ||
+        res.code === STATUS_CODES.SUCCESS_POST ||
         res.status === STATUS_CODES.SUCCESS_STATUS
       ) {
         setApiStatus(API_STATUS.SUCCESS);

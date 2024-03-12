@@ -25,6 +25,7 @@ const useLogin = () => {
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         if (res?.data) {
           const auth = res.data.access_token;
+          console.log("auth:", auth);
           setItem("authToken", auth);
           setData(res.data);
         }
