@@ -495,6 +495,11 @@ const locale = {
   "label.updateSessionSuccessfully": "Session has been updated successfully",
   "label.company_name": "Company Name",
   "label.no_prior_chats_found": "No prior chats found",
+  "label.registrationSuccess": "Registration Dates updated Successfully",
+  "label.lastRegistrationSuccess":
+    "Last Registration Dates updated Successfully",
+  "label.roundOneDatesSuccess": "Round 1 Dates updated Successfully",
+  "label.roundTwoDatesSuccess": "Round 2 Dates updated Successfully",
 };
 
 export default locale;

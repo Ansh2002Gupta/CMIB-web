@@ -12,7 +12,6 @@ import CustomGrid from "../../components/CustomGrid";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import CustomTabs from "../../components/CustomTabs";
 import EditButton from "../../components/EditButton";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { compareTwoDayjsDates, isNotAFutureDate } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
@@ -31,8 +30,8 @@ import {
   ACTIVE_TAB,
   VALID_CONSENT_MARKING_TABS_ID,
   MODULE_KEYS,
+  NOTIFICATION_TYPES,
 } from "../../constant/constant";
-import { SESSION } from "../../routes/routeNames";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
 
@@ -47,7 +46,6 @@ const ConsentMarkingContent = ({
   setActiveTab,
 }) => {
   const intl = useIntl();
-  const { navigateScreen: navigate } = useNavigateScreen();
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [isRegistrationDateEdit, setIsRegistrationDateEdit] = useState(false);
   const [isTableDateEdit, setIsTableDateEdit] = useState(false);
@@ -286,8 +284,8 @@ const ConsentMarkingContent = ({
     }));
   };
 
-  const navigateBackToSession = () => {
-    navigate(`/${currentlySelectedModuleKey}/${SESSION}?mode=view&tab=2`);
+  const validate = () => {
+    return true;
   };
 
   const handleCancel = () => {
@@ -308,12 +306,16 @@ const ConsentMarkingContent = ({
       updateLastRegistrationDate({
         body: { data: registrationTableData },
         onSuccessCallback: () => {
+          showNotification({
+            text: intl.formatMessage({ id: "label.lastRegistrationSuccess" }),
+            type: NOTIFICATION_TYPES.SUCCESS,
+          });
           setIsTableDateEdit(false);
         },
         onErrorCallback: (ErrorMessage) => {
           showNotification({
             text: ErrorMessage,
-            type: "error",
+            type: NOTIFICATION_TYPES.ERROR,
             headingText: intl.formatMessage({ id: "label.errorMessage" }),
           });
         },
@@ -324,6 +326,10 @@ const ConsentMarkingContent = ({
       updateRoundOneDate({
         body: { data: roundOneTableData },
         onSuccessCallback: () => {
+          showNotification({
+            text: intl.formatMessage({ id: "label.roundOneDatesSuccess" }),
+            type: NOTIFICATION_TYPES.SUCCESS,
+          });
           setIsTableDateEdit(false);
         },
         onErrorCallback: (ErrorMessage) => {
@@ -340,6 +346,10 @@ const ConsentMarkingContent = ({
       updateRoundTwoDate({
         body: { data: roundTwoTableData },
         onSuccessCallback: () => {
+          showNotification({
+            text: intl.formatMessage({ id: "label.roundTwoDatesSuccess" }),
+            type: NOTIFICATION_TYPES.SUCCESS,
+          });
           setIsTableDateEdit(false);
         },
         onErrorCallback: (ErrorMessage) => {
@@ -362,6 +372,10 @@ const ConsentMarkingContent = ({
     updateRegistrationDate({
       body: registrationDatesData,
       onSuccessCallback: () => {
+        showNotification({
+          text: intl.formatMessage({ id: "label.registrationSuccess" }),
+          type: NOTIFICATION_TYPES.SUCCESS,
+        });
         setIsRegistrationDateEdit(false);
       },
       onErrorCallback: (ErrorMessage) => {
