@@ -57,3 +57,19 @@
 .tabContainer {
   gap: var(--gapSmall);
 }
+
+.btnIconStyles {
+  width: var(--width_20) !important;
+}
+
+.btnCustomStyles {
+  min-width: var(--width_100);
+  padding: var(--paddingNone);
+  min-height: 0px;
+  border-width: 0px;
+  box-shadow: none;
+}
+
+.customContainerStyle {
+  padding-bottom: var(--paddingNone);
+}

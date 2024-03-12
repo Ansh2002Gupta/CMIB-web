@@ -8,6 +8,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import HeaderAndTitle from "../../components/HeaderAndTitle";
 import useFetch from "../../core/hooks/useFetch";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
 import { getCurrentActiveTab } from "../../constant/utils";
@@ -30,7 +31,12 @@ import styles from "./ConsentMarking.module.scss";
 
 const ConsentMarking = () => {
   const intl = useIntl();
-  const isEdit = true;
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const isEdit =
+    currentGlobalSession?.is_editable && currentGlobalSession?.status;
   const [userProfileDetails] = useContext(UserProfileContext);
   const roundId = urlService.getQueryStringValue(ROUND_ID);
   const [activeTab, setActiveTab] = useState(
@@ -46,7 +52,6 @@ const ConsentMarking = () => {
     error: errorWhileGettingRegistrationDate,
     fetchData: getRegistrationDate,
     isLoading: isGettingRegistrationDate,
-    isSuccess: isRegistrationDateFetchSuccessful,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -64,7 +69,6 @@ const ConsentMarking = () => {
     error: errorWhileGettinglastRegistrationDates,
     fetchData: getlastRegistrationDates,
     isLoading: isGettinglastRegistrationDates,
-    isSuccess: islastRegistrationDatesFetchSuccessful,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -82,7 +86,6 @@ const ConsentMarking = () => {
     error: errorWhileGettingconsentRound1,
     fetchData: getConsentRound1,
     isLoading: isGettingConsentRound1,
-    isSuccess: isConsentRound1FetchSuccessful,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -101,7 +104,6 @@ const ConsentMarking = () => {
     error: errorWhileGettingconsentRound2,
     fetchData: getConsentRound2,
     isLoading: isGettingConsentRound2,
-    isSuccess: isConsentRound2FetchSuccessful,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -178,7 +180,10 @@ const ConsentMarking = () => {
         <ConsentMarkingContent
           {...{
             activeTab,
+            consentRound1Data,
+            consentRound2Data,
             isEdit,
+            lastRegistrationDatesData,
             roundId,
             registrationDateData,
             setActiveTab,

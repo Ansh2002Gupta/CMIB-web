@@ -13,8 +13,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
     ? [
         renderColumn({
           title: intl.formatMessage({ id: "label.sNo" }),
-          dataIndex: "sNo",
-          key: "sNo",
+          dataIndex: "id",
+          key: "id",
           renderText: {
             visible: true,
             includeDotAfterText: true,
@@ -23,45 +23,45 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.centreName" }),
-          dataIndex: "centreName",
-          key: "centreName",
+          dataIndex: "centre_name",
+          key: "centre_name",
           renderText: { isTextBold: true, visible: true, isCapitalize: true },
         }),
         renderColumn({
-          title: intl.formatMessage({ id: "label.lastRegistrationDate" }),
+          title: intl.formatMessage({ id: "label.company_reg_end_date" }),
           customColumnHeading: styles.customColumnHeading,
-          dataIndex: "lastRegistrationDate",
-          key: "lastRegistrationDate",
+          dataIndex: "company_reg_end_date",
+          key: "company_reg_end_date",
           isRequiredField: true,
           renderDateTime: {
             visible: true,
             isEditable: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
-              id: "label.placeholder.lastRegistrationDate",
+              id: "label.placeholder.company_reg_end_date",
             }),
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
-              onDateChange(record, "lastRegistrationDate", date),
+              onDateChange(record, "company_reg_end_date", date),
             useExactDate: true,
           },
         }),
         renderColumn({
-          title: intl.formatMessage({ id: "label.psychometricTestDate" }),
+          title: intl.formatMessage({ id: "label.psychometric_test_date" }),
           customColumnHeading: styles.customColumnHeading,
-          dataIndex: "psychometricTestDate",
+          dataIndex: "psychometric_test_date",
           isRequiredField: true,
-          key: "psychometricTestDate",
+          key: "psychometric_test_date",
           renderDateTime: {
             isEditable: isEdit,
             visible: true,
             type: "date",
             placeholder: intl.formatMessage({
-              id: "label.placeholder.psychometricTestDate",
+              id: "label.placeholder.psychometric_test_date",
             }),
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
-              onDateChange(record, "psychometricTestDate", date),
+              onDateChange(record, "psychometric_test_date", date),
             useExactDate: true,
           },
         }),
@@ -69,8 +69,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
     : [
         renderColumn({
           title: intl.formatMessage({ id: "label.sNo" }),
-          dataIndex: "sNo",
-          key: "sNo",
+          dataIndex: "id",
+          key: "id",
           renderText: {
             visible: true,
             includeDotAfterText: true,
@@ -79,79 +79,91 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.centreName" }),
-          dataIndex: "centreName",
-          key: "centreName",
+          dataIndex: "centre_name",
+          key: "centre_name",
           renderText: { isTextBold: true, visible: true },
         }),
         renderColumn({
-          title: intl.formatMessage({ id: "label.companyStartDate" }),
+          title: intl.formatMessage({
+            id: "label.company_shortlisting_start_date",
+          }),
           customColumnHeading: styles.customColumnHeading,
-          dataIndex: "companyStartDate",
-          key: "companyStartDate",
+          dataIndex: "company_shortlisting_start_date",
+          key: "company_shortlisting_start_date",
           isRequiredField: true,
           renderDateTime: {
             visible: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
-              id: "label.placeholder.companyStartDate",
+              id: "label.placeholder.company_shortlisting_start_date",
             }),
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
-              onDateChange(record, "companyStartDate", date),
+              onDateChange(record, "company_shortlisting_start_date", date),
           },
           renderText: { visible: !isEdit, isTypeDate: true },
         }),
         renderColumn({
-          title: intl.formatMessage({ id: "label.consentFromDate" }),
+          title: intl.formatMessage({
+            id: "label.candidate_consent_marking_start_date",
+          }),
           customColumnHeading: styles.customColumnHeading,
-          dataIndex: "companyEndDate",
+          dataIndex: "company_shortlisting_end_date",
           isRequiredField: true,
-          key: "companyEndDate",
+          key: "company_shortlisting_end_date",
           renderDateTime: {
             visible: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
-              id: "label.placeholder.companyEndDate",
+              id: "label.placeholder.company_shortlisting_end_date",
             }),
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
-              onDateChange(record, "companyEndDate", date),
+              onDateChange(record, "company_shortlisting_end_date", date),
           },
           renderText: { visible: !isEdit, isTypeDate: true },
         }),
         renderColumn({
-          title: intl.formatMessage({ id: "label.consentFromDate" }),
+          title: intl.formatMessage({
+            id: "label.candidate_consent_marking_start_date",
+          }),
           customColumnHeading: styles.customColumnHeading,
-          dataIndex: "consentFromDate",
+          dataIndex: "candidate_consent_marking_start_date",
           isRequiredField: true,
-          key: "consentFromDate",
+          key: "candidate_consent_marking_start_date",
           renderDateTime: {
             visible: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
-              id: "label.placeholder.consentFromDate",
+              id: "label.placeholder.candidate_consent_marking_start_date",
             }),
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
-              onDateChange(record, "consentFromDate", date),
+              onDateChange(
+                record,
+                "candidate_consent_marking_start_date",
+                date
+              ),
           },
           renderText: { visible: !isEdit, isTypeDate: true },
         }),
         renderColumn({
-          title: intl.formatMessage({ id: "label.consentToDate" }),
+          title: intl.formatMessage({
+            id: "label.candidate_consent_marking_end_date",
+          }),
           customColumnHeading: styles.customColumnHeading,
-          dataIndex: "consentToDate",
+          dataIndex: "candidate_consent_marking_end_date",
           isRequiredField: true,
-          key: "consentToDate",
+          key: "candidate_consent_marking_end_date",
           renderDateTime: {
             visible: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
-              id: "label.placeholder.consentToDate",
+              id: "label.placeholder.candidate_consent_marking_end_date",
             }),
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
-              onDateChange(record, "consentToDate", date),
+              onDateChange(record, "candidate_consent_marking_end_date", date),
           },
           renderText: { visible: !isEdit, isTypeDate: true },
         }),

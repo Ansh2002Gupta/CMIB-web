@@ -48,7 +48,9 @@ const useApiRequest = ({ method, url, apiOptions = {}, otherOptions = {} }) => {
       setApiStatus(API_STATUS.ERROR);
       setError(err?.response || GENERIC_API_FAILED_ERROR_MESSAGE);
       onErrorCallback &&
-        onErrorCallback(err?.response || GENERIC_API_FAILED_ERROR_MESSAGE);
+        onErrorCallback(
+          err?.response?.data?.message || GENERIC_API_FAILED_ERROR_MESSAGE
+        );
     }
   };
 

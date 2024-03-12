@@ -140,7 +140,7 @@ const OrientationCenter = () => {
           currentGlobalSession?.is_editable,
         disabled: false,
         placeholder: intl.formatMessage({
-          id: "label.placeholder.consentFromDate",
+          id: "label.placeholder.candidate_consent_marking_start_date",
         }),
         onChange: (val, record) => {
           handleInputChange("schedule_date", val, record.id);
