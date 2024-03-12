@@ -4,7 +4,7 @@ import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
-const useConsentTableColumns = (isEdit, registration, onDateChange) => {
+const useConsentTableColumns = (error, isEdit, registration, onDateChange) => {
   const { renderColumn } = useRenderColumn();
   const intl = useIntl();
 
