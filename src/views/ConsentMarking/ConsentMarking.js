@@ -118,7 +118,10 @@ const ConsentMarking = () => {
   });
 
   const getAllData = () => {
-    !registrationDateData && getRegistrationDate({});
+    if (!registrationDateData) {
+      getRegistrationDate({});
+    }
+
     if (activeTab === "2") {
       getConsentRoundOne({});
       return;
@@ -173,17 +176,17 @@ const ConsentMarking = () => {
     }
 
     if (
-      (consentRoundTwoData ||
-        consentRoundOneData ||
-        lastRegistrationDatesData) &&
+      ((activeTab === "3" && consentRoundTwoData) ||
+        (activeTab === "2" && consentRoundOneData) ||
+        (activeTab === "1" && lastRegistrationDatesData)) &&
       registrationDateData
     ) {
       return (
         <ConsentMarkingContent
           {...{
             activeTab,
-            consentRound1Data,
-            consentRound2Data,
+            consentRoundOneData,
+            consentRoundTwoData,
             isEdit,
             lastRegistrationDatesData,
             roundId,

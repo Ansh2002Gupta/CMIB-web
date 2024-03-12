@@ -41,8 +41,8 @@ import styles from "./ConsentMarkingContent.module.scss";
 
 const ConsentMarkingContent = ({
   activeTab,
-  consentRound1Data,
-  consentRound2Data,
+  consentRoundOneData,
+  consentRoundTwoData,
   isEdit,
   lastRegistrationDatesData,
   roundId,
@@ -76,7 +76,7 @@ const ConsentMarkingContent = ({
   const isNqca =
     currentlySelectedModuleKey === MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY;
 
-  const round1InitialData = consentRound1Data?.map((item) => ({
+  const round1InitialData = consentRoundOneData?.map((item) => ({
     ...item,
     sNo: item.id,
     centre_name: item.centre_name,
@@ -95,7 +95,7 @@ const ConsentMarkingContent = ({
       : null,
   }));
 
-  const roundTwoInitialData = consentRound2Data?.map((item) => ({
+  const roundTwoInitialData = consentRoundTwoData?.map((item) => ({
     ...item,
     id: item.id,
     centre_name: item.centre_name,
