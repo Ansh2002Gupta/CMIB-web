@@ -57,7 +57,6 @@ export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 export const VALID_CONSENT_MARKING_TABS_ID = ["1", "2", "3"];
-export const CAMPUS_INTERVIEW_SETTINGS_TAB = ["1","2"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [

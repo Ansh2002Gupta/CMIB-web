@@ -13,7 +13,7 @@ import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as MenuIcon } from "../../themes/base/assets/icons/menu.svg";
 import styles from "./header.module.scss";
 
-function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
+function HeaderContainer({ setOpenSideMenu }) {
   const responsive = useResponsive();
   return (
     <>
