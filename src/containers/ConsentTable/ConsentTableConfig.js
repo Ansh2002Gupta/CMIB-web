@@ -8,7 +8,6 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
   const { renderColumn } = useRenderColumn();
   const intl = useIntl();
 
-  // Define the columns based on registration prop and isEdit state
   const columns = registration
     ? [
         renderColumn({
@@ -92,7 +91,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
           key: "company_shortlisting_start_date",
           isRequiredField: true,
           renderDateTime: {
-            visible: isEdit,
+            visible: true,
+            isEditable: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
               id: "label.placeholder.company_shortlisting_start_date",
@@ -100,8 +100,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
               onDateChange(record, "company_shortlisting_start_date", date),
+            useExactDate: true,
           },
-          renderText: { visible: !isEdit, isTypeDate: true },
         }),
         renderColumn({
           title: intl.formatMessage({
@@ -112,7 +112,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "company_shortlisting_end_date",
           renderDateTime: {
-            visible: isEdit,
+            visible: true,
+            isEditable: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
               id: "label.placeholder.company_shortlisting_end_date",
@@ -120,6 +121,7 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
               onDateChange(record, "company_shortlisting_end_date", date),
+            useExactDate: true,
           },
           renderText: { visible: !isEdit, isTypeDate: true },
         }),
@@ -132,7 +134,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "candidate_consent_marking_start_date",
           renderDateTime: {
-            visible: isEdit,
+            visible: true,
+            isEditable: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
               id: "label.placeholder.candidate_consent_marking_start_date",
@@ -144,8 +147,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
                 "candidate_consent_marking_start_date",
                 date
               ),
+            useExactDate: true,
           },
-          renderText: { visible: !isEdit, isTypeDate: true },
         }),
         renderColumn({
           title: intl.formatMessage({
@@ -156,7 +159,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "candidate_consent_marking_end_date",
           renderDateTime: {
-            visible: isEdit,
+            visible: true,
+            isEditable: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
               id: "label.placeholder.candidate_consent_marking_end_date",
@@ -164,8 +168,8 @@ const useConsentTableColumns = (isEdit, registration, onDateChange) => {
             customTimeStyle: styles.customTimeStyle,
             onChange: (date, record) =>
               onDateChange(record, "candidate_consent_marking_end_date", date),
+            useExactDate: true,
           },
-          renderText: { visible: !isEdit, isTypeDate: true },
         }),
       ];
 

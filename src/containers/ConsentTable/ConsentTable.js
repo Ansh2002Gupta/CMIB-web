@@ -7,15 +7,9 @@ import useConsentTableColumns from "./ConsentTableConfig";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
-const ConsentTable = ({
-  isEdit,
-  registration,
-  setTableData,
-  tableData,
-  totalData,
-}) => {
+const ConsentTable = ({ isEdit, registration, setTableData, tableData }) => {
   const onDateChange = (record, key, value) => {
-    const index = tableData.findIndex((item) => item.sNo === record.sNo);
+    const index = tableData.findIndex((item) => item.id === record.id);
     const newData = [...tableData];
     newData[index][key] = value && dayjs(value).format("YYYY-MM-DD");
     setTableData(newData);
@@ -26,7 +20,7 @@ const ConsentTable = ({
   return (
     <DataTable
       {...{ columns }}
-      currentDataLength={totalData.length}
+      currentDataLength={tableData.length}
       customContainerStyles={[styles.table, "customConsentTable"].join(" ")}
       hidePagination
       originalData={tableData}
@@ -36,7 +30,6 @@ const ConsentTable = ({
 
 ConsentTable.defaultProps = {
   isEdit: false,
-  totalData: [],
   registration: false,
   setTableData: () => {},
   tableData: [],

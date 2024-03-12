@@ -27,8 +27,12 @@ import {
 } from "../../dummyData";
 import {
   CORE_ROUTE,
+  LAST_REGISTRATION_DATES,
+  REGISTRATION_CONSENT,
   REGISTRATION_DATES,
   ROUNDS,
+  ROUND_ONE,
+  ROUND_TWO,
 } from "../../constant/apiEndpoints";
 import {
   ACTIVE_TAB,
@@ -54,6 +58,7 @@ const ConsentMarkingContent = ({
   const { navigateScreen: navigate } = useNavigateScreen();
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [isRegistrationDateEdit, setIsRegistrationDateEdit] = useState(false);
+  const [isTableDateEdit, setIsTableDateEdit] = useState(false);
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
@@ -70,13 +75,45 @@ const ConsentMarkingContent = ({
       REGISTRATION_DATES,
   });
 
+  const {
+    makeRequest: updateLastRegistrationDate,
+    isLoading: isUpdatingLastRegistrationDate,
+  } = usePut({
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      ROUNDS +
+      `/${roundId}` +
+      LAST_REGISTRATION_DATES,
+  });
+  const { makeRequest: updateRoundOneDate, isLoading: isUpdatingRoundOneDate } =
+    usePut({
+      url:
+        CORE_ROUTE +
+        `/${currentlySelectedModuleKey}` +
+        ROUNDS +
+        `/${roundId}` +
+        REGISTRATION_CONSENT +
+        ROUND_ONE,
+    });
+  const { makeRequest: updateRoundTwoDate, isLoading: isUpdatingRoundTwoDate } =
+    usePut({
+      url:
+        CORE_ROUTE +
+        `/${currentlySelectedModuleKey}` +
+        ROUNDS +
+        `/${roundId}` +
+        REGISTRATION_CONSENT +
+        ROUND_TWO,
+    });
+
   const [registrationDatesData, setRegistrationDatesData] =
     useState(registrationDateData);
 
   const isNqca =
     currentlySelectedModuleKey === MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY;
 
-  const round1InitialData = consentRoundOneData?.map((item) => ({
+  const roundOneInitialData = consentRoundOneData?.map((item) => ({
     ...item,
     sNo: item.id,
     centre_name: item.centre_name,
@@ -126,7 +163,8 @@ const ConsentMarkingContent = ({
       : null,
   }));
 
-  const [roundOneTableData, setRoundOneTableData] = useState(round1InitialData);
+  const [roundOneTableData, setRoundOneTableData] =
+    useState(roundOneInitialData);
   const [roundTwoTableData, setRoundTwoTableData] =
     useState(roundTwoInitialData);
   const [registrationTableData, setRegistrationTableData] = useState(
@@ -214,10 +252,13 @@ const ConsentMarkingContent = ({
       }),
       children: (
         <ConsentTable
-          {...{ activeTab, isEdit, registration: true }}
+          {...{
+            activeTab,
+            isEdit: isTableDateEdit,
+            registration: true,
+          }}
           tableData={registrationTableData}
           setTableData={setRegistrationTableData}
-          totalData={registrationInitialData}
         />
       ),
     },
@@ -226,10 +267,9 @@ const ConsentMarkingContent = ({
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
         <ConsentTable
-          {...{ activeTab, isEdit }}
+          {...{ activeTab, isEdit: isTableDateEdit }}
           tableData={roundOneTableData}
           setTableData={setRoundOneTableData}
-          totalData={round1InitialData}
         />
       ),
     },
@@ -238,10 +278,9 @@ const ConsentMarkingContent = ({
       title: intl.formatMessage({ id: "session.roundTwo" }),
       children: (
         <ConsentTable
-          {...{ activeTab, isEdit }}
+          {...{ activeTab, isEdit: isTableDateEdit }}
           tableData={roundTwoTableData}
           setTableData={setRoundTwoTableData}
-          totalData={round1InitialData}
         />
       ),
     },
@@ -260,14 +299,78 @@ const ConsentMarkingContent = ({
   };
 
   const handleCancel = () => {
-    navigateBackToSession();
+    if (activeTab === "1") {
+      setRegistrationTableData(registrationInitialData);
+    }
+    if (activeTab === "2") {
+      setRoundOneTableData(roundOneInitialData);
+    }
+    if (activeTab === "3") {
+      setRoundTwoTableData(roundTwoInitialData);
+    }
+    setIsTableDateEdit(false);
   };
 
   const handleSave = () => {
+    if (activeTab === "1") {
+      updateLastRegistrationDate({
+        body: { data: registrationTableData },
+        onSuccessCallback: () => {
+          setIsTableDateEdit(false);
+        },
+        onErrorCallback: (ErrorMessage) => {
+          showNotification({
+            text: ErrorMessage,
+            type: "error",
+            headingText: intl.formatMessage({ id: "label.errorMessage" }),
+          });
+        },
+      });
+      return;
+    }
+    if (activeTab === "2") {
+      updateRoundOneDate({
+        body: { data: roundOneTableData },
+        onSuccessCallback: () => {
+          setIsTableDateEdit(false);
+        },
+        onErrorCallback: (ErrorMessage) => {
+          showNotification({
+            text: ErrorMessage,
+            type: "error",
+            headingText: intl.formatMessage({ id: "label.errorMessage" }),
+          });
+        },
+      });
+      return;
+    }
+    if (activeTab === "3") {
+      updateRoundTwoDate({
+        body: { data: roundTwoTableData },
+        onSuccessCallback: () => {
+          setIsTableDateEdit(false);
+        },
+        onErrorCallback: (ErrorMessage) => {
+          showNotification({
+            text: ErrorMessage,
+            type: "error",
+            headingText: intl.formatMessage({ id: "label.errorMessage" }),
+          });
+        },
+      });
+      return;
+    }
+  };
+
+  const handleRegistrationCancel = () => {
+    setIsRegistrationDateEdit(false);
+  };
+
+  const handleRegistrationSave = () => {
     updateRegistrationDate({
       body: registrationDatesData,
       onSuccessCallback: () => {
-        navigateBackToSession();
+        setIsRegistrationDateEdit(false);
       },
       onErrorCallback: (ErrorMessage) => {
         showNotification({
@@ -320,7 +423,7 @@ const ConsentMarkingContent = ({
                               disabledDate={(current) =>
                                 disabledDate(item.labeIntl, current)
                               }
-                              isEditable={isEdit && isRegistrationDateEdit}
+                              isEditable={isRegistrationDateEdit}
                               type="date"
                               isRequired
                               label={intl.formatMessage({
@@ -331,9 +434,7 @@ const ConsentMarkingContent = ({
                               })}
                               value={
                                 registrationDatesData[item?.labeIntl]
-                                  ? isEdit
-                                    ? registrationDatesData[item?.labeIntl]
-                                    : registrationDatesData[item?.labeIntl]
+                                  ? registrationDatesData[item?.labeIntl]
                                   : null
                               }
                               onChange={(val) => {
@@ -348,7 +449,7 @@ const ConsentMarkingContent = ({
                     rightSection={
                       !isRegistrationDateEdit && (
                         <CustomButton
-                          isBtnDisable={false}
+                          isBtnDisable={!isEdit}
                           btnText={intl.formatMessage({ id: "label.edit" })}
                           IconElement={Edit}
                           onClick={() => setIsRegistrationDateEdit(true)}
@@ -371,7 +472,7 @@ const ConsentMarkingContent = ({
                     id: "label.saveChanges",
                   })}
                   cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-                  onActionBtnClick={handleSave}
+                  onActionBtnClick={handleRegistrationSave}
                   isActionBtnDisable={
                     !registrationDatesData?.company_reg_start_date ||
                     !registrationDatesData?.candidate_reg_start_date ||
@@ -379,9 +480,7 @@ const ConsentMarkingContent = ({
                     (isNqca &&
                       !registrationDatesData?.candidate_reg_end_date_sm_centre)
                   }
-                  onCancelBtnClick={() => {
-                    setIsRegistrationDateEdit(false);
-                  }}
+                  onCancelBtnClick={handleRegistrationCancel}
                   isctionButtonLoading={isUpdatingRegistrationDate}
                 />
               )
@@ -393,11 +492,30 @@ const ConsentMarkingContent = ({
           <TwoRow
             className={styles.tabContainer}
             topSection={
-              <CustomTabs
-                tabs={tabItems}
-                activeTab={activeTab}
-                setActiveTab={handleOnTabSwitch}
-                tabsKeyText={ACTIVE_TAB}
+              <TwoColumn
+                className={styles.tabEdit}
+                isLeftFillSpace
+                leftSection={
+                  <CustomTabs
+                    tabs={tabItems}
+                    activeTab={activeTab}
+                    setActiveTab={handleOnTabSwitch}
+                    tabsKeyText={ACTIVE_TAB}
+                  />
+                }
+                rightSection={
+                  !isTableDateEdit && (
+                    <CustomButton
+                      isBtnDisable={!isEdit}
+                      btnText={intl.formatMessage({ id: "label.edit" })}
+                      IconElement={Edit}
+                      onClick={() => setIsTableDateEdit(true)}
+                      iconStyles={styles.btnIconStyles}
+                      customStyle={styles.editBtnCustomStyles}
+                      textStyle={styles.textStyle}
+                    />
+                  )
+                }
               />
             }
             topSectionStyle={classes.tabTopSectionStyle}
@@ -406,32 +524,24 @@ const ConsentMarkingContent = ({
           />
         }
         bottomSection={
-          isEdit ? (
-            <TwoColumn
-              className={styles.buttonContainer}
-              leftSection={
-                <CustomButton
-                  btnText={intl.formatMessage({
-                    id: "label.cancel",
-                  })}
-                  customStyle={
-                    responsive.isMd
-                      ? styles.buttonStyles
-                      : styles.mobileButtonStyles
-                  }
-                  textStyle={styles.textStyle}
-                  onClick={handleCancel}
-                />
+          isTableDateEdit ? (
+            <ActionAndCancelButtons
+              customContainerStyle={styles.customContainerStyle}
+              actionBtnText={intl.formatMessage({
+                id: "label.saveChanges",
+              })}
+              cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+              onActionBtnClick={handleSave}
+              isActionBtnDisable={
+                isUpdatingLastRegistrationDate ||
+                isUpdatingRoundOneDate ||
+                isUpdatingRoundTwoDate
               }
-              rightSection={
-                <CustomButton
-                  isBtnDisable={false}
-                  textStyle={styles.saveButtonTextStyles}
-                  btnText={intl.formatMessage({
-                    id: "session.saveChanges",
-                  })}
-                  onClick={handleSave}
-                />
+              onCancelBtnClick={handleCancel}
+              isctionButtonLoading={
+                isUpdatingLastRegistrationDate ||
+                isUpdatingRoundOneDate ||
+                isUpdatingRoundTwoDate
               }
             />
           ) : (

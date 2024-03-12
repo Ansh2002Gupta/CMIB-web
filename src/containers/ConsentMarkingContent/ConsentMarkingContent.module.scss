@@ -70,6 +70,19 @@
   box-shadow: none;
 }
 
+.editBtnCustomStyles {
+  min-width: var(--width_100);
+  padding: var(--paddingNone);
+  min-height: 0px;
+  border-width: 0px;
+  box-shadow: none;
+  background-color: var(--blueBg);
+}
+
 .customContainerStyle {
   padding-bottom: var(--paddingNone);
+}
+
+.tabEdit {
+  padding-right: var(--paddingMedium);
 }
