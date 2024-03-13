@@ -6,27 +6,24 @@ import CustomInput from "../../components/CustomInput";
 import SearchableDropDown from "../../components/SearchableDropDown";
 import { TwoRow } from "../../core/layouts";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
-import {
-  MAX_REGISTRATION_FEE_LENGTH,
-  SESSION_PERIOD,
-} from "../../constant/constant";
-import styles from "./PaymentSettings.module.scss";
+import { SESSION_PERIOD } from "../../constant/constant";
+import styles from "./CompanySettings.module.scss";
 
-const PaymentSettingsTemplate = ({
+const CompanySettingsTemplate = ({
   fields,
   formErrors,
   handleInputChange,
   intl,
-  onRemoveCompanyItem,
-  onSelectCompanyItem,
-  selectedCompanyList,
+  onRemoveInterviewType,
+  onSelectInterviewType,
+  selectedInterviewType,
 }) => {
   return (
     <TwoRow
       className={styles.mainContainer}
       topSection={
         <Typography className={styles.heading}>
-          {intl.formatMessage({ id: "session.paymentSettings" })}
+          {intl.formatMessage({ id: "label.for_company" })}
         </Typography>
       }
       bottomSection={
@@ -41,7 +38,7 @@ const PaymentSettingsTemplate = ({
                 !item.isMultiSelect && (
                   <Typography className={styles.grayText}>
                     {intl.formatMessage({
-                      id: `session.payment.${item.headingIntl}`,
+                      id: `label.${item.headingIntl}`,
                     })}
                     {item.rules.isRequired && (
                       <span className={styles.redText}> *</span>
@@ -55,27 +52,25 @@ const PaymentSettingsTemplate = ({
                     errorMessage={
                       formErrors[item.label] ? "label.error.fieldEmpty" : ""
                     }
-                    isRequiredField={true}
-                    onSelectItem={onSelectCompanyItem}
-                    onRemoveItem={onRemoveCompanyItem}
+                    isRequiredField
+                    onSelectItem={onSelectInterviewType}
+                    onRemoveItem={onRemoveInterviewType}
                     options={SESSION_PERIOD}
-                    selectedOptionsList={selectedCompanyList}
+                    selectedOptionsList={selectedInterviewType}
                     placeholderText={`session.placeholder.${item.headingIntl}`}
-                    title={`session.payment.${item.headingIntl}`}
+                    title={`label.${item.headingIntl}`}
                   />
                 ) : (
                   <CustomInput
+                    disabled={item.rules.isDisabled}
                     value={item.value}
                     customLabelStyles={styles.inputLabel}
                     customInputStyles={styles.input}
                     customContainerStyles={styles.customContainerStyles}
+                    maxLength={item.rules.maxLength}
                     onChange={(val) => {
-                      (item.rules.isPercentage
-                        ? val.target.value <= 100
-                        : val.target.value.length <=
-                          MAX_REGISTRATION_FEE_LENGTH) &&
-                        (NUMERIC_VALUE_REGEX.test(val.target.value) ||
-                          val.target.value === "") &&
+                      (NUMERIC_VALUE_REGEX.test(val.target.value) ||
+                        val.target.value === "") &&
                         handleInputChange(val.target.value, item.label);
                     }}
                     placeholder={intl.formatMessage({
@@ -100,4 +95,4 @@ const PaymentSettingsTemplate = ({
   );
 };
 
-export default PaymentSettingsTemplate;
+export default CompanySettingsTemplate;

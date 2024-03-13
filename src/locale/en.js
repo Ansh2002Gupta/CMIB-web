@@ -546,6 +546,17 @@ const locale = {
   "label.setCampusInterviewSettings": "Set Campus Interview Settings",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.max_no_of_vacancy": "Max. No. of Vacancy",
+  "label.multiplier": "Multiplier",
+  "label.shortlist_students_allowed":
+    "Shortlist Students Allowed (Max. No. of Vacancy * Multiplier)",
+  "label.company_interview_types": "Company Interview Types",
+  "label.for_company": "For Company",
+  "session.placeholder.max_no_of_vacancy": "Enter max. no. of vacancy",
+  "session.placeholder.multiplier": "Enter multiplier",
+  "session.placeholder.shortlist_students_allowed":
+    "Max. no. of vacancy * Multiplier",
+  "session.placeholder.company_interview_types": "Select interview types",
 };
 
 export default locale;

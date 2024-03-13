@@ -1,13 +1,7 @@
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
-import { SESSION } from "../../../routes/routeNames";
+import { useState } from "react";
 
 const usePaymentSettings = () => {
   const [selectedCompanyList, setSelectedCompanyList] = useState([]);
-  const [userProfileDetails] = useContext(UserProfileContext);
-  const selectedModule = userProfileDetails?.selectedModuleItem;
-  const navigate = useNavigate();
 
   const initialFormState = {
     cgst: "",
@@ -32,72 +26,65 @@ const usePaymentSettings = () => {
         headingIntl: "cgst",
         label: "cgst",
         value: cgst,
-        rules: [
-          {
-            required: true,
-            message: "cgst",
-          },
-        ],
+        rules: {
+          isPercentage: true,
+          isRequired: true,
+          message: "cgst",
+        },
       },
       {
         id: 2,
         headingIntl: "sgst",
         label: "sgst",
         value: sgst,
-        rules: [
-          {
-            required: true,
-            message: "sgst",
-          },
-        ],
+        rules: {
+          isPercentage: true,
+          isRequired: true,
+          message: "sgst",
+        },
       },
       {
         id: 3,
         headingIntl: "igst",
         label: "igst",
         value: igst,
-        rules: [
-          {
-            required: true,
-            message: "igst",
-          },
-        ],
+        rules: {
+          isPercentage: true,
+          isRequired: true,
+          message: "igst",
+        },
       },
       {
+        isMultiSelect: true,
         id: 4,
         headingIntl: "noGst",
         label: "no_gst",
         value: no_gst,
-        rules: [
-          {
-            required: true,
-            message: "noGst",
-          },
-        ],
+        rules: {
+          isRequired: true,
+          message: "noGst",
+        },
       },
       {
         id: 5,
         headingIntl: "discountRate",
         label: "discount_rate",
         value: discount_rate,
-        rules: [
-          {
-            required: true,
-            message: "discountRate",
-          },
-        ],
+        rules: {
+          isPercentage: true,
+          isRequired: true,
+          message: "discountRate",
+        },
       },
       {
         id: 6,
         headingIntl: "memberRegistrationFee",
         label: "member_registration_fee",
         value: member_registration_fee,
-        rules: [
-          {
-            required: true,
-            message: "memberRegistrationFee",
-          },
-        ],
+        rules: {
+          isRequired: true,
+          message: "memberRegistrationFee",
+        },
       },
     ];
   };
@@ -159,12 +146,6 @@ const usePaymentSettings = () => {
     );
   };
 
-  const onClickCancel = () => {
-    navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
-  };
-
-  const onClickSave = () => {};
-
   return {
     formErrors,
     formFields,
@@ -172,8 +153,6 @@ const usePaymentSettings = () => {
     handleInputChange,
     initialFormState,
     isButtonDisable,
-    onClickCancel,
-    onClickSave,
     onRemoveCompanyItem,
     onSelectCompanyItem,
     selectedCompanyList,
