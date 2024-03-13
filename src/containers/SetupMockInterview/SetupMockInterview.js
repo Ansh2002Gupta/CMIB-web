@@ -29,6 +29,7 @@ import {
   CORE_ROUTE,
   DOWNLOAD,
   MOCK_INTERVIEWS,
+  ORIENTATION_CENTRES,
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { SESSION } from "../../routes/routeNames";
@@ -91,8 +92,9 @@ const SetupMockInterviewContent = () => {
         CORE_ROUTE +
         `/${currentlySelectedModuleKey}` +
         ROUNDS +
-        `/${id}` +
+        `/${roundId}` +
         MOCK_INTERVIEWS +
+        `/${id}` +
         DOWNLOAD,
       onSuccessCallback: (response) => {
         showNotification({
