@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
 
-import DataTable from "../../components/DataTable";
+import DataTable from "../DataTable";
 import commonStyles from "../../common/commonStyles.module.scss";
 
 const CompanyDetailsApprovalCard = ({

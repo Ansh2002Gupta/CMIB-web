@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { TwoRow } from "../../core/layouts";
 
 import CompanyProfile from "../../containers/CompanyDetails/CompanyProfile";
-import CompanyDetailsApprovalCard from "../CompanyDetailsApprovalCard/CompanyDetailsApprovalCard";
+import CompanyDetailsApprovalCard from "../../components/CompanyDetailsApprovalCard/CompanyDetailsApprovalCard";
 import ContentHeader from "../../containers/ContentHeader";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { getRegisteredCompanyDetailsColumns } from "./RegisteredCompanyDetailsConfig";
