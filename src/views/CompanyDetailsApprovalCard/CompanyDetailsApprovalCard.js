@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
 
+import DataTable from "../../components/DataTable";
 import commonStyles from "../../common/commonStyles.module.scss";
 
 const CompanyDetailsApprovalCard = ({
@@ -37,7 +38,7 @@ CompanyDetailsApprovalCard.defaultProps = {
   customTableStyle: {},
 };
 
-CompanyDetailsApprovalCard.Proptypes = {
+CompanyDetailsApprovalCard.propTypes = {
   heading: PropTypes.string,
   columns: PropTypes.array,
   dataSource: PropTypes.array,
