@@ -2,8 +2,8 @@ import {
   CONSENT_MARKING,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
-  ROUND_TWO_CONSENT_MARKING,
   ROUND_TWO_SETUP_CENTERS,
+  ROUND_TWO_CONSENT_MARKING,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
@@ -26,6 +26,14 @@ export const STATUS_CODES = {
   NOT_FOUND: 404,
   UNAUTHORIZED_USER: 401,
 };
+
+export const SESSION_PATHS = [
+  "setup-centers",
+  "orientation-centers",
+  "setup-mock-interview",
+  "consent-marking",
+  "campus-interview",
+];
 
 export const ROW_PER_PAGE_OPTIONS = [
   {
@@ -196,7 +204,7 @@ export const ROUND_ONE_CARD_LIST = [
     imageUrl: "DeviceMessage",
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
-    headingIntl: "Mock Interviews",
+    headingIntl: "Setup Mock Interviews",
     onClickNaviagtion: SETUP_MOCK_INTERVIEW,
   },
   {
@@ -204,7 +212,7 @@ export const ROUND_ONE_CARD_LIST = [
     imageUrl: "Key",
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
-    headingIntl: "Orientation Centres",
+    headingIntl: "Setup Orientation Centres",
     onClickNaviagtion: ROUND_ONE_ORIENTATION_CENTERS,
   },
   {
@@ -232,7 +240,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNaviagtion: ROUND_TWO_SETUP_CENTERS,
   },
   {
     id: 2,
@@ -378,6 +386,25 @@ export const CENTRE_TYPE_ENUM = {
 export const SESSION_KEY = "sessionKey";
 export const MAX_HSN_CODE_LENGTH = 8;
 export const MAX_BANK_AC_NO_LENGTH = 18;
+
+export const ROLES = {
+  SUPER_ADMIN: "super-admin",
+};
+
+export const MAX_CTC_LENGTH = 10;
+export const MAX_EXPERIENCE_LENGTH = 2;
+export const MAX_PARTNERS_LENGTH = 3;
+export const MAX_VACANCIES_LENGTH = 4;
+
+export const PAYMENT_TYPE = {
+  WHOLE: "whole",
+  CENTRE_WISE: "centrewise",
+};
+
+export const INTERVIEW_TYPE = [
+  { id: 1, label: "Online", value: "online" },
+  { id: 2, label: "Offline", value: "offline" },
+];
 
 export const REGISTRATION_DATES = [
   { id: 1, labeIntl: "startDateCompanies" },

@@ -8,10 +8,12 @@ import Base from "../../core/layouts/Base/Base";
 import MarkRequired from "../MarkRequired";
 import styles from "./CustomInput.module.scss";
 import { classes } from "./CustomInput.styles";
+import "./override.css";
 
 const CustomInput = React.forwardRef(
   (
     {
+      controls,
       customContainerStyles,
       customErrorTextStyles,
       customInputNumberStyles,
@@ -42,6 +44,7 @@ const CustomInput = React.forwardRef(
       onSuffixElementClick,
       placeholder,
       prefixElement,
+      precision,
       selectOptions,
       SuffixIcon,
       type,
@@ -159,8 +162,9 @@ const CustomInput = React.forwardRef(
           )}
           {type === "inputNumber" && (
             <InputNumber
-              type="number"
-              controls={false}
+              maxLength={maxLength}
+              controls={controls}
+              precision={precision}
               className={[
                 styles.inputNumberStyles,
                 customInputNumberStyles,
@@ -186,7 +190,7 @@ const CustomInput = React.forwardRef(
                 isError ? styles.showError : "",
               ].join(" ")}
             >
-              {errorMessage ? ` * ${errorMessage}` : ""}
+              {errorMessage ? `${errorMessage}` : ""}
             </Typography>
           </div>
         )}
@@ -206,6 +210,7 @@ const CustomInput = React.forwardRef(
 );
 
 CustomInput.defaultProps = {
+  controls: false,
   customContainerStyles: "",
   customErrorTextStyles: "",
   customInputNumberStyles: "",
@@ -235,6 +240,7 @@ CustomInput.defaultProps = {
   onSuffixElementClick: () => {},
   placeholder: "",
   prefixElement: null,
+  precision: 0,
   ref: null,
   selectOptions: [],
   SuffixIcon: null,
@@ -243,6 +249,7 @@ CustomInput.defaultProps = {
 };
 
 CustomInput.propTypes = {
+  controls: PropTypes.PropTypes.bool,
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
   customInputNumberStyles: PropTypes.string,
@@ -273,6 +280,7 @@ CustomInput.propTypes = {
   onSuffixElementClick: PropTypes.func,
   placeholder: PropTypes.string,
   prefixElement: PropTypes.node,
+  precision: PropTypes.number,
   ref: PropTypes.func,
   selectOptions: PropTypes.array,
   SuffixIcon: PropTypes.node,

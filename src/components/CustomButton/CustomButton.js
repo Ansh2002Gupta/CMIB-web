@@ -69,6 +69,7 @@ CustomButton.propTypes = {
   textStyle: PropTypes.string,
   tooltipText: PropTypes.string,
   type: PropTypes.string,
+  withWhiteBackground: PropTypes.bool,
 };
 
 export default CustomButton;

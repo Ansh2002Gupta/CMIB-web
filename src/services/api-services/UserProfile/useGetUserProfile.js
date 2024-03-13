@@ -13,25 +13,31 @@ import {
   setSelectedModule,
 } from "../../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
-import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
+import useSelectActiveMenuItem from "../../../core/hooks/useSelectActiveMenuItem";
 import modules from "../../../containers/SideMenu/sideMenuItems";
-import { DASHBOARD } from "../../../routes/routeNames";
 import { GET_USER_PROFILE_DETAILS } from "../../../constant/apiEndpoints";
 import { STATUS_CODES } from "../../../constant/constant";
 
 const useGetUserDetails = () => {
-  const intl = useIntl();
   const location = useLocation();
-  const { navigateScreen: navigate } = useNavigateScreen();
-  const { onLogout } = useHeader();
+  const intl = useIntl();
+
   const [, userProfileDispatch] = useContext(UserProfileContext);
-  const pathSegments = location.pathname.split("/");
+
+  const { onLogout } = useHeader();
+  const { navigateToFirstAccessibleItem, navigateToMenuItem } =
+    useSelectActiveMenuItem();
   const { getGlobalSessionList } = useGlobalSessionListApi();
+
+  const pathSegments = location.pathname.split("/");
 
   const setFirstActiveModule = (userData) => {
     const accessibleModules = filterMenuData(modules, userData?.menu_items);
     userProfileDispatch(setSelectedModule(accessibleModules[0]));
-    navigate(`/${accessibleModules[0]?.key}/${DASHBOARD}`);
+    accessibleModules?.[0] && getGlobalSessionList(accessibleModules?.[0]?.key);
+    navigateToMenuItem({
+      selectedModule: accessibleModules[0],
+    });
   };
 
   const setDefaultActiveModule = (userData) => {
@@ -39,9 +45,16 @@ const useGetUserDetails = () => {
     const selectedModule = accessibleModules.filter((item) => {
       return item.key === pathSegments[1];
     });
-    getGlobalSessionList(selectedModule?.[0]?.key);
+    selectedModule?.length && getGlobalSessionList(selectedModule?.[0]?.key);
     if (selectedModule?.length) {
       userProfileDispatch(setSelectedModule(selectedModule[0]));
+      const activePath = location.pathname?.split("/")?.[2];
+      const menuItemDetails = selectedModule[0]?.children?.find(
+        (controlModule) => controlModule.key?.includes(activePath)
+      );
+      if (!menuItemDetails) {
+        navigateToFirstAccessibleItem({ selectedModule: selectedModule?.[0] });
+      }
       return;
     }
     setFirstActiveModule(userData);

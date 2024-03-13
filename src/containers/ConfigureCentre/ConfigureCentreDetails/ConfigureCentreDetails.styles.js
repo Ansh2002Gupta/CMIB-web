@@ -9,6 +9,10 @@ export const classes = {
     right: variables.gapMedium,
   },
   selectStyle: { width: variables.fullWidth },
+  inactiveSelectStyle: {
+    width: variables.fullWidth,
+    backgroundColor: variables.disableColor,    
+  },
   mainTopSection: {
     height: "calc(100% - 102px)",
     backgroundColor: variables.blueBg,
