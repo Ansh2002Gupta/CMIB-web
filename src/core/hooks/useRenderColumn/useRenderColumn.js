@@ -81,6 +81,7 @@ const useRenderColumn = () => {
       alternateSrc = "",
       alternateOnClick = () => {},
       customImageStyle = "",
+      imageDisable = false,
       src = "",
       onClick = () => {},
       preview,
@@ -422,11 +423,16 @@ const useRenderColumn = () => {
               alt={alt}
               src={rowData?.isAddRow ? alternateSrc : src}
               preview={preview}
-              className={`${customImageStyle} ${styles.editIcon}`}
-              onClick={() =>
-                rowData?.isAddRow
-                  ? alternateOnClick(rowData, index)
-                  : onClick(rowData, index)
+              className={`${customImageStyle} ${
+                imageDisable ? styles.disableIcon : styles.editIcon
+              }`}
+              onClick={
+                !imageDisable
+                  ? () =>
+                      rowData?.isAddRow
+                        ? alternateOnClick(rowData, index)
+                        : onClick(rowData, index)
+                  : () => {}
               }
             />
           ),

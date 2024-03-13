@@ -8,7 +8,7 @@ import { objectToQueryString } from "../../Utils/queryParamHelpers";
 const useDownload = ({
   apiOptions = {},
   otherOptions = {},
-  filename = "data.csv",
+  filename = "data.xls",
 }) => {
   const intl = useIntl();
 

@@ -86,7 +86,7 @@ const SetupMockInterviewContent = () => {
     navigate(`interviewDetails/${centreId}?roundId=${roundId}`, false);
   };
 
-  const downloadInterviewDatesCSV = (id) => {
+  const downloadInterviewDates = (id) => {
     initiateDownload({
       url:
         CORE_ROUTE +
@@ -114,7 +114,7 @@ const SetupMockInterviewContent = () => {
   };
 
   const columns = getSetupMockColumn(
-    downloadInterviewDatesCSV,
+    downloadInterviewDates,
     isDownloadingInterview,
     intl,
     isEdit,

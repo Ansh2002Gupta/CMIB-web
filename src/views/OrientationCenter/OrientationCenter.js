@@ -220,6 +220,7 @@ const OrientationCenter = () => {
       key: "download",
       renderImage: {
         alt: "download",
+        imageDisable: isDownloading,
         onClick: (rowData) => {
           downloadSheet(rowData.id);
         },

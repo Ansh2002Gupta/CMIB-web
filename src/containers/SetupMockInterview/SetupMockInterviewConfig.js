@@ -1,7 +1,7 @@
 import styles from "./SetupMockInterview.module.scss";
 
 const getSetupMockColumn = (
-  downloadInterviewDatesCSV,
+  downloadInterviewDates,
   isDownloadingInterview,
   intl,
   isEdit,
@@ -44,7 +44,7 @@ const getSetupMockColumn = (
         leftAlt: "download",
         rightAlt: "edit",
         leftOnClick: (rowData) => {
-          downloadInterviewDatesCSV(rowData.id);
+          downloadInterviewDates(rowData.id);
         },
         rightOnClick: (rowData) => goToConfigureInterview(rowData, isEdit),
         leftPreview: false,
