@@ -5,18 +5,16 @@ import { Typography } from "antd";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import MultiRowInput from "../../components/MultiRowInput/MultiRowInput";
 import useResponsive from "../../core/hooks/useResponsive";
-import useShowNotification from "../../core/hooks/useShowNotification";
-import { initialFieldState } from "./constant";
 import styles from "./ProfileSkills.module.scss";
 
-const ProfileSkills = () => {
-  const [errorMsg, setErrorMsg] = useState();
-  const [isError, setIsError] = useState();
-  const [currentFieldStateItSkills, setCurrentFieldStateItSkills] =
-    useState(initialFieldState);
-  const [currentFieldStateSoftSkills, setCurrentFieldStateSoftSkills] =
-    useState(initialFieldState);
-  const { showNotification, notificationContextHolder } = useShowNotification();
+const ProfileSkills = ({
+  currentFieldStateItSkills,
+  currentFieldStateSoftSkills,
+  setCurrentFieldStateItSkills,
+  setCurrentFieldStateSoftSkills,
+}) => {
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isError, setIsError] = useState(false);
   const intl = useIntl();
   const responsive = useResponsive();
 

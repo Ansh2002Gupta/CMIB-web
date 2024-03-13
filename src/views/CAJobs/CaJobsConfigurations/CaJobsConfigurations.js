@@ -7,17 +7,13 @@ import CaJobsConfig from "../../../containers/CaJobsConfig";
 import ContentHeader from "../../../containers/ContentHeader";
 import { initialFieldState } from "./constant";
 import styles from "./CaJobsConfigurations.module.scss";
-import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
-import { CONFIGURATIONS } from "../../../routes/routeNames";
-import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
 import CustomLoader from "../../../components/CustomLoader";
 
 const CaJobsConfigurations = () => {
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
   const [itSkillsObj, setItSkillsObj] = useState(initialFieldState);
   const [softSkillsObj, setSoftSkillsObj] = useState(initialFieldState);
-  const { isLoading, handlePostGlobalConfigurations } =
-    usePostGlobalConfigurationsApi();
+
   //created these functions for future purpose.
   const handleCancel = () => {};
   const handleSave = () => {

@@ -27,9 +27,7 @@ const MultiRowInput = ({
             <div key={field?.id} className={styles.innerContainerFlexRow}>
               <CustomInput
                 errorMessage={field?.fieldValue?.length > 0 ? "" : errorMessage}
-                isError={
-                  field?.fieldValue?.length > 0 ? isError(false) : isError(true)
-                }
+                isError={!field?.fieldValue?.length}
                 type="text"
                 controls={true}
                 onChange={(e) => onChange(e?.target?.value, field)}
