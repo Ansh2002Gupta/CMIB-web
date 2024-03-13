@@ -530,6 +530,9 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.type": "Type",
+  "label.approved_not_approved": "Approved/Not Approved",
+  "label.path.registered-company": "Registered Companies",
 };
 
 export default locale;
