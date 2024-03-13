@@ -1,13 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { TwoRow } from "../../core/layouts";
-import TicketListingHeader from "../../containers/TicketListingHeader";
-import TicketTable from "../../containers/TicketTable/TicketTable";
 import { useIntl } from "react-intl";
+
+import { TwoRow } from "../../core/layouts";
+
 import ContentHeader from "../../containers/ContentHeader";
-import styles from "./RegisteredCompany.module.scss";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import useRegisteredCompany from "./controllers/useRegisteredCompany";
+import commonStyles from "../../common/commonStyles.module.scss";
 
 const RegisteredCompany = () => {
   const intl = useIntl();
@@ -18,23 +17,23 @@ const RegisteredCompany = () => {
     searchedValue,
     onChangePageSize,
     onChangeCurrentPage,
+    onFilterApply,
     columns,
     filterOptions,
+    filterArray,
+    setFilterArray,
     handleOnUserSearch,
   } = useRegisteredCompany();
   return (
     <TwoRow
       topSection={
-        <div className={styles.headerBox}>
-          <ContentHeader
-            headerText={intl.formatMessage({
-              id: "label.path.registered-company",
-            })}
-            isLeftFillSpace
-            customStyles={styles.container}
-            customContainerStyle={styles.parentContainer}
-          />
-        </div>
+        <ContentHeader
+          headerText={intl.formatMessage({
+            id: "label.path.registered-company",
+          })}
+          isLeftFillSpace
+          customContainerStyle={commonStyles.headerBox}
+        />
       }
       bottomSection={
         <>
@@ -48,12 +47,12 @@ const RegisteredCompany = () => {
               columns,
               onChangePageSize,
               onChangeCurrentPage,
-              //   onFilterApply,
+              onFilterApply,
               placeholder: intl.formatMessage({
                 id: "label.search_by_name_or_registration_no",
               }),
-              //   filterArray,
-              //   setFilterArray,
+              filterArray,
+              setFilterArray,
             }}
             isLoading={false}
             data={registered_companies?.records}

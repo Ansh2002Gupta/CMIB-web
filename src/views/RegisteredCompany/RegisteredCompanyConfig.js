@@ -1,19 +1,16 @@
-import { Image, Typography } from "antd";
+import { Typography } from "antd";
 
-import { isUserAdmin } from "../../constant/utils";
 import { SORT_VALUES } from "../../constant/constant";
 import styles from "./RegisteredCompany.module.scss";
 
 export const getRegisteredCompanyColumn = ({
   getImage,
-  handleClickAssign,
-  handleTicketIcon,
+  handleEyeIcon,
   handleSorting,
   intl,
   renderColumn,
   setSortBy,
   sortBy,
-  userProfileDetails,
 }) => {
   return [
     renderColumn({
@@ -72,36 +69,8 @@ export const getRegisteredCompanyColumn = ({
         preview: false,
         src: getImage("eye"),
         visible: true,
-        onClick: (data) => handleTicketIcon(data),
+        onClick: (data) => handleEyeIcon(data),
       },
     }),
-    ...(isUserAdmin(userProfileDetails?.userDetails)
-      ? [
-          renderColumn({
-            dataIndex: "see",
-            key: "see",
-            render: (data, rowData) => {
-              const { status } = rowData;
-              const isClosed = status.toLowerCase() === "closed";
-              return (
-                <Image
-                  src={
-                    isClosed
-                      ? getImage("iconProfileAddDisabled")
-                      : getImage("iconProfileAdd")
-                  }
-                  preview={false}
-                  alt="addAssignee"
-                  visible
-                  onClick={() => !isClosed && handleClickAssign(rowData)}
-                  className={
-                    isClosed ? styles.assignIconDisabled : styles.assignIcon
-                  }
-                />
-              );
-            },
-          }),
-        ]
-      : []),
   ];
 };

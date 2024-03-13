@@ -16,6 +16,7 @@ import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import RegisteredCompany from "../views/RegisteredCompany/RegisteredCompany";
+import RegisteredCompaniesDetails from "../views/RegisteredCompaniesDetails/RegisteredCompaniesDetails";
 import Session from "../views/Session";
 import EditSession from "../views/EditSession/EditSession";
 import SetupCenter from "../views/SetupCenters";
@@ -48,6 +49,7 @@ import {
   QUERIES,
   QUERY_DETAILS,
   REGISTERED_COMPANY,
+  REGISTERED_COMPANY_DETAILS,
   ROOT,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
@@ -242,6 +244,10 @@ const config = [
       {
         viewPath: REGISTERED_COMPANY,
         element: <RegisteredCompany />,
+      },
+      {
+        viewPath: REGISTERED_COMPANY + REGISTERED_COMPANY_DETAILS,
+        element: <RegisteredCompaniesDetails />,
       },
     ],
   },

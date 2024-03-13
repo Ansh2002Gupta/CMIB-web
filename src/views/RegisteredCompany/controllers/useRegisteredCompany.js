@@ -1,29 +1,24 @@
-import React, { useContext, useMemo, useState } from "react";
-import { getRegisteredCompanyColumn } from "../RegisteredCompanyConfig";
+import { useContext, useState } from "react";
 import { useIntl } from "react-intl";
+import * as _ from "lodash";
+
+import { getRegisteredCompanyColumn } from "../RegisteredCompanyConfig";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
-import { ThemeContext } from "../../../core/providers/theme";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../../core/hooks/useShowNotification";
-import { getValidPageNumber, getValidPageSize } from "../../../constant/utils";
-import { urlService } from "../../../Utils/urlService";
-import {
-  DEBOUNCE_TIME,
-  PAGINATION_PROPERTIES,
-} from "../../../constant/constant";
-import { registered_companies } from "../dummydata";
-import { validateSearchTextLength } from "../../../Utils/validations";
-import * as _ from "lodash";
+import { ThemeContext } from "../../../core/providers/theme";
 import usePagination from "../../../core/hooks/usePagination";
 import useHandleSearch from "../../../core/hooks/useHandleSearch";
+import { urlService } from "../../../Utils/urlService";
+import { getValidPageNumber, getValidPageSize } from "../../../constant/utils";
+import { PAGINATION_PROPERTIES } from "../../../constant/constant";
+import { registered_companies } from "../dummydata";
 
 const useRegisteredCompany = () => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentTicketData, setCurrentTicketData] = useState({});
   const [sortBy, setSortBy] = useState("");
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [filterArray, setFilterArray] = useState({});
@@ -95,7 +90,10 @@ const useRegisteredCompany = () => {
   ];
 
   const handleClickAssign = () => {};
-  const handleTicketIcon = () => {};
+  const handleEyeIcon = (data) => {
+    const { id } = data;
+    navigate(`registered-company-details/${id}`);
+  };
   const handleSorting = () => {};
 
   const columns = getRegisteredCompanyColumn({
@@ -103,7 +101,7 @@ const useRegisteredCompany = () => {
     intl,
     getImage,
     handleClickAssign,
-    handleTicketIcon,
+    handleEyeIcon,
     navigate,
     renderColumn,
     queriesColumnProperties: {},
@@ -129,6 +127,8 @@ const useRegisteredCompany = () => {
     // fetchData({ queryParamsObject: requestedParams });
   };
 
+  const onFilterApply = (filter) => {};
+
   return {
     current,
     pageSize,
@@ -137,6 +137,9 @@ const useRegisteredCompany = () => {
     onChangePageSize,
     onChangeCurrentPage,
     columns,
+    onFilterApply,
+    filterArray,
+    setFilterArray,
     filterOptions,
     handleOnUserSearch,
   };
