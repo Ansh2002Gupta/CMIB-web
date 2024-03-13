@@ -13,6 +13,8 @@ const ProfileSkills = ({
   currentFieldStateSoftSkills,
   setCurrentFieldStateItSkills,
   setCurrentFieldStateSoftSkills,
+  disableActionButton,
+  setDisableActionButton,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -39,6 +41,8 @@ const ProfileSkills = ({
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderItSkills",
                   })}
+                  disableActionButton={disableActionButton}
+                  setDisableActionButton={setDisableActionButton}
                 />
               }
               leftSectionClassName={styles.leftSectionStyling}
@@ -53,6 +57,8 @@ const ProfileSkills = ({
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderSoftSkills",
                   })}
+                  disableActionButton={disableActionButton}
+                  setDisableActionButton={setDisableActionButton}
                 />
               }
               rightSectionClassName={styles.rightSectionStyling}

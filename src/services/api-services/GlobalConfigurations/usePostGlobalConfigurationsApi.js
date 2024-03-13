@@ -11,7 +11,7 @@ const usePostGlobalConfigurationsApi = () => {
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
   const [errorWhilePostingData, setErrorWhilePostingData] = useState("");
 
-  const handlePostGlobalConfigurations = async ({
+  const postGlobalConfigurations = async ({
     onSuccessCallback,
     onErrorCallback,
     payload,
@@ -53,7 +53,7 @@ const usePostGlobalConfigurationsApi = () => {
   return {
     apiStatus,
     errorWhilePostingData,
-    handlePostGlobalConfigurations,
+    postGlobalConfigurations,
     isError,
     isLoading,
     isSuccess,

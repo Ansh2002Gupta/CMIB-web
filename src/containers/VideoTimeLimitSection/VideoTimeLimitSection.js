@@ -36,7 +36,7 @@ const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
             <CustomInput
               controls={true}
               min={0}
-              max={15}
+              max={999}
               type="inputNumber"
               value={videoTimeLimit}
               onChange={(val) => setVideoTimeLimit(val)}

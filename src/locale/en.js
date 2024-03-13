@@ -175,6 +175,7 @@ const locale = {
   "label.photo": "Photo.jpg",
   "label.networkError": "Network Error!",
   "label.error": "Error!",
+  "label.error.DuplicateFields": "Duplicate Fields!",
   "label.tryAgain": "Try again!",
   "label.addNewUsers": "Add New User",
   "label.userCreatedSuccessfully": "User has been created successfully",

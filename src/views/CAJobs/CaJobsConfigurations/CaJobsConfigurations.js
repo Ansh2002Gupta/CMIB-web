@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Button } from "antd";
+import React, { useState, useEffect } from "react";
 
 import { ThreeRow } from "../../../core/layouts";
 
@@ -11,33 +10,87 @@ import { classes } from "./CaJobsConfigurations.styles";
 import { useIntl } from "react-intl";
 import CustomButton from "../../../components/CustomButton";
 import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
+import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
+import useFetch from "../../../core/hooks/useFetch";
+import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
+import { CONFIGURATIONS } from "../../../routes/routeNames";
+import { returnFieldObjects } from "./helpers";
+import { NOTIFICATION_TYPES } from "../../../constant/constant";
+import useShowNotification from "../../../core/hooks/useShowNotification";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
   const [itSkillsObj, setItSkillsObj] = useState(initialFieldState);
   const [softSkillsObj, setSoftSkillsObj] = useState(initialFieldState);
+  const [isFieldError, setIsFieldError] = useState(true);
+  const { postGlobalConfigurations } = usePostGlobalConfigurationsApi();
+  const { data, fetchData } = useFetch({
+    url: CAJOBS_ROUTE + MASTER + CONFIGURATIONS,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+  const { showNotification, notificationContextHolder } = useShowNotification();
+
+  useEffect(() => {
+    //check for empty field object.
+    const areThereEmptyFields =
+      itSkillsObj.some((obj) => obj.fieldValue === "") ||
+      softSkillsObj.some((obj) => obj.fieldValue === "");
+    if (areThereEmptyFields) {
+      setIsFieldError(true);
+      return;
+    }
+    setIsFieldError(false);
+  }, [itSkillsObj, softSkillsObj]);
 
   //created these functions for future purpose.
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    fetchData({
+      queryParamsObject: {},
+      onSuccessCallback: (responseFieldValues) => {
+        const { it_skill, soft_skill, video_max_time } = responseFieldValues[0];
+        setItSkillsObj(returnFieldObjects({ fieldValueList: it_skill }));
+        setSoftSkillsObj(returnFieldObjects({ fieldValueList: soft_skill }));
+        setVideoTimeLimit(video_max_time);
+      },
+      onErrorCallback: (error) => {
+        console.log("FETCH | error: ", error);
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.addSessionSuccessfully",
+          }),
+          type: NOTIFICATION_TYPES.ERROR,
+        });
+      },
+    });
+  };
+
   const handleSave = () => {
     const itSkillsList = itSkillsObj.map((obj) => obj.fieldValue);
     const softSkillsList = softSkillsObj.map((obj) => obj.fieldValue);
-    const videoLength = videoTimeLimit;
-    console.log("payload(itSkillsList): ", itSkillsList);
-    console.log("payload(softSkillsList): ", softSkillsList);
-    console.log("payload(videoTimeLimit): ", videoTimeLimit);
-    handlePostGlobalConfigurations({
+    postGlobalConfigurations({
       payload: {
         it_skill: itSkillsList,
         soft_skill: softSkillsList,
-        video_time_limit: videoLength,
+        video_time_limit: videoTimeLimit,
       },
       onErrorCallback: (errMessage) => {
-        console.log("error:", errMessage);
+        console.log("POST | error:", errMessage);
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.addSessionSuccessfully",
+          }),
+          type: NOTIFICATION_TYPES.ERROR,
+        });
       },
       onSuccessCallback: () => {
         console.log("Success!!!!");
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.addSessionSuccessfully",
+          }),
+          type: NOTIFICATION_TYPES.SUCCESS,
+        });
       },
     });
   };
@@ -57,6 +110,8 @@ const CaJobsConfigurations = () => {
           setCurrentFieldStateSoftSkills={setSoftSkillsObj}
           videoTimeLimit={videoTimeLimit}
           setVideoTimeLimit={setVideoTimeLimit}
+          disableActionButton={isFieldError}
+          setDisableActionButton={setIsFieldError}
         />
       }
       middleSectionStyle={classes.middleSection}
@@ -70,6 +125,7 @@ const CaJobsConfigurations = () => {
           customContainerStyles={styles.buttonWrapper}
           onActionBtnClick={handleSave}
           onCancelBtnClick={handleCancel}
+          isActionBtnDisable={isFieldError}
         />
       }
     />
