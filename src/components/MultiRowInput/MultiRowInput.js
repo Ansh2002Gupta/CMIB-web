@@ -116,16 +116,18 @@ const MultiRowInput = ({
 
 MultiRowInput.defaultProps = {
   inputFields: [],
+  headerText: "",
+  placeholderText: "",
   setinputFields: () => {},
-  onChange: () => {},
-  onClick: () => {},
+  valueKeyName: "",
 };
 
 MultiRowInput.propTypes = {
   inputFields: PropTypes.array,
+  headerText: PropTypes.string,
+  placeholderText: PropTypes.string,
   setinputFields: PropTypes.func,
-  onChange: PropTypes.func,
-  onClick: PropTypes.func,
+  valueKeyName: PropTypes.string,
 };
 
 export default MultiRowInput;
