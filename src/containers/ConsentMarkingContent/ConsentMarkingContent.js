@@ -355,7 +355,8 @@ const ConsentMarkingContent = ({
         />
       ),
     },
-    {
+
+    registrationDatesData?.is_round1_visible && {
       key: "2",
       title: intl.formatMessage({ id: "session.roundOne" }),
       children: (
@@ -380,31 +381,32 @@ const ConsentMarkingContent = ({
         />
       ),
     },
-    isNqca && {
-      key: "3",
-      title: intl.formatMessage({ id: "session.roundTwo" }),
-      children: (
-        <ConsentTable
-          {...{
-            activeTab,
-            isEdit: isTableDateEdit,
-            errors: roundTwoError,
-            registrationDatesData,
-          }}
-          tableData={roundTwoTableData}
-          onDateChange={(record, key, value) => {
-            onDateChange(
-              record,
-              key,
-              value,
-              roundTwoTableData,
-              setRoundTwoTableData,
-              setRoundTwoError
-            );
-          }}
-        />
-      ),
-    },
+    isNqca &&
+      registrationDatesData?.is_round2_visible && {
+        key: "3",
+        title: intl.formatMessage({ id: "session.roundTwo" }),
+        children: (
+          <ConsentTable
+            {...{
+              activeTab,
+              isEdit: isTableDateEdit,
+              errors: roundTwoError,
+              registrationDatesData,
+            }}
+            tableData={roundTwoTableData}
+            onDateChange={(record, key, value) => {
+              onDateChange(
+                record,
+                key,
+                value,
+                roundTwoTableData,
+                setRoundTwoTableData,
+                setRoundTwoError
+              );
+            }}
+          />
+        ),
+      },
   ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
