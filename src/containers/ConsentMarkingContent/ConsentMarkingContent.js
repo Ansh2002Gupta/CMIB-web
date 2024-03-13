@@ -13,10 +13,10 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import CustomTabs from "../../components/CustomTabs";
 import EditButton from "../../components/EditButton";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { compareTwoDayjsDates, isNotAFutureDate } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
 import { usePut } from "../../core/hooks/useApiRequest";
-import useShowNotification from "../../core/hooks/useShowNotification";
 import {
   CORE_ROUTE,
   LAST_REGISTRATION_DATES,
@@ -758,7 +758,10 @@ const ConsentMarkingContent = ({
                   />
                 }
                 rightSection={
-                  !isTableDateEdit ? (
+                  !isTableDateEdit &&
+                  (lastRegistrationTableData?.length ||
+                    roundOneTableData?.length ||
+                    roundTwoTableData?.length) ? (
                     <EditButton
                       disable={!isEdit}
                       onClick={() => setIsTableDateEdit(true)}
