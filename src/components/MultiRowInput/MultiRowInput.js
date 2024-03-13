@@ -8,13 +8,10 @@ import styles from "./MultiRowInput.module.scss";
 
 const MultiRowInput = ({
   currentFieldState,
-  errorMessage,
   headerText,
-  isError,
   onChange,
   onClick,
   placeholderText,
-  valueKeyName,
 }) => {
   const { getImage } = useContext(ThemeContext);
 
@@ -26,14 +23,12 @@ const MultiRowInput = ({
           return (
             <div key={field?.id} className={styles.innerContainerFlexRow}>
               <CustomInput
-                errorMessage={field?.fieldValue?.length > 0 ? "" : errorMessage}
-                isError={!field?.fieldValue?.length}
+                value={field?.fieldValue}
                 type="text"
                 controls={true}
-                onChange={(e) => onChange(e?.target?.value, field)}
+                onChange={(e) => onChange(e?.target?.value, field?.id)}
                 customContainerStyles={styles.customInputOuterContainer}
                 placeholder={placeholderText}
-                value={field?.[valueKeyName]}
               />
               <Image
                 className={styles.imageStyle}
@@ -45,7 +40,7 @@ const MultiRowInput = ({
                 alt="add/remove"
                 preview={false}
                 onClick={() =>
-                  onClick(field?.buttonType?.trim()?.toLowerCase(), field)
+                  onClick(field?.buttonType?.trim()?.toLowerCase(), field?.id)
                 }
               />
             </div>
