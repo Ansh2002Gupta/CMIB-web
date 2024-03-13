@@ -2,20 +2,18 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import CompanySettingsTemplate from "./CompanySettingsTemplate";
-import useCompanySettings from "./Conrollers/useCompanySettings";
 
-const CompanySettings = () => {
+const CompanySettings = ({
+  formErrors,
+  formFields,
+  getInitialFields,
+  handleInputChange,
+  initialFormState,
+  onRemoveInterviewType,
+  onSelectInterviewType,
+  selectedInterviewType,
+}) => {
   const intl = useIntl();
-  const {
-    formErrors,
-    formFields,
-    getInitialFields,
-    handleInputChange,
-    initialFormState,
-    onRemoveInterviewType,
-    onSelectInterviewType,
-    selectedInterviewType,
-  } = useCompanySettings();
 
   const fields = getInitialFields(
     formFields?.max_no_of_vacancy,

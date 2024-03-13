@@ -2,19 +2,17 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import PaymentSettingsTemplate from "./PaymentSettingsTemplate";
-import usePaymentSettings from "./Conrollers/usePaymentSettings";
 
-const PaymentSettings = () => {
+const PaymentSettings = ({
+  formErrors,
+  formFields,
+  getInitialFields,
+  handleInputChange,
+  onRemoveCompanyItem,
+  onSelectCompanyItem,
+  selectedCompanyList,
+}) => {
   const intl = useIntl();
-  const {
-    formErrors,
-    formFields,
-    getInitialFields,
-    handleInputChange,
-    onRemoveCompanyItem,
-    onSelectCompanyItem,
-    selectedCompanyList,
-  } = usePaymentSettings();
 
   const fields = getInitialFields(
     formFields?.cgst,

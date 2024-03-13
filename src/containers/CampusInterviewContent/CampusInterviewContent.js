@@ -6,6 +6,8 @@ import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import CompanySettings from "../CompanySettings";
 import ContentHeader from "../ContentHeader";
 import PaymentSettings from "../PaymentSettings";
+import useCompanySettings from "../CompanySettings/Conrollers/useCompanySettings";
+import usePaymentSettings from "../PaymentSettings/Conrollers/usePaymentSettings";
 import useResponsive from "../../core/hooks/useResponsive";
 import { ThreeRow } from "../../core/layouts";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -18,6 +20,28 @@ const CampusInterviewContent = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const navigate = useNavigate();
+  const {
+    formErrors: PaymentSettingsError,
+    formFields: paymentFields,
+    getInitialFields: getPaymentFields,
+    handleInputChange: handlePaymentInputChange,
+    onRemoveCompanyItem,
+    onSelectCompanyItem,
+    selectedCompanyList,
+    isButtonDisable: isPaymentSettingsInvalid,
+  } = usePaymentSettings();
+
+  const {
+    formErrors: companySettingsError,
+    formFields: companySettingsFields,
+    getInitialFields: getCompanyFields,
+    handleInputChange: handleCompanyInputChange,
+    initialFormState,
+    onRemoveInterviewType,
+    onSelectInterviewType,
+    selectedInterviewType,
+    isButtonDisable: isCompanySettingsInvalid,
+  } = useCompanySettings();
 
   const onClickCancel = () => {
     navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
@@ -38,8 +62,33 @@ const CampusInterviewContent = () => {
       middleSection={
         <ThreeRow
           topSection={<></>}
-          middleSection={<CompanySettings />}
-          bottomSection={<PaymentSettings />}
+          middleSection={
+            <CompanySettings
+              {...{
+                formErrors: companySettingsError,
+                formFields: companySettingsFields,
+                getInitialFields: getCompanyFields,
+                handleInputChange: handleCompanyInputChange,
+                initialFormState,
+                onRemoveInterviewType,
+                onSelectInterviewType,
+                selectedInterviewType,
+              }}
+            />
+          }
+          bottomSection={
+            <PaymentSettings
+              {...{
+                formErrors: PaymentSettingsError,
+                formFields: paymentFields,
+                getInitialFields: getPaymentFields,
+                handleInputChange: handlePaymentInputChange,
+                onRemoveCompanyItem,
+                onSelectCompanyItem,
+                selectedCompanyList,
+              }}
+            />
+          }
         />
       }
       bottomSection={
@@ -48,6 +97,9 @@ const CampusInterviewContent = () => {
             id: "session.saveChanges",
           })}
           cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+          isActionBtnDisable={
+            isPaymentSettingsInvalid() || isCompanySettingsInvalid()
+          }
           onActionBtnClick={() => {}}
           onCancelBtnClick={onClickCancel}
         />
