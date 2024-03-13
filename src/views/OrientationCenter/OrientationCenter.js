@@ -8,6 +8,8 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import CustomButton from "../../components/CustomButton";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
+import useDownload from "../../core/hooks/useDownload";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
@@ -15,12 +17,13 @@ import useUpdateOrientationCentre from "../../services/api-services/OrientationC
 import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import {
   CORE_ROUTE,
+  DOWNLOAD,
   ORIENTATION_CENTRES,
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { ROUND_ID } from "../../constant/constant";
+import { NOTIFICATION_TYPES, ROUND_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 
 import { classes } from "./OrientationCenter.styles";
@@ -34,6 +37,12 @@ const OrientationCenter = () => {
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
+  const {
+    data: downloadData,
+    error: errorWhileDownloading,
+    isLoading: isDownloading,
+    initiateDownload,
+  } = useDownload({});
 
   const roundId = urlService.getQueryStringValue(ROUND_ID);
 
@@ -41,6 +50,7 @@ const OrientationCenter = () => {
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [formData, setFormData] = useState([]);
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const {
     handleUpdateOrientationCentre,
@@ -63,6 +73,33 @@ const OrientationCenter = () => {
       ORIENTATION_CENTRES,
     otherOptions: { skipApiCallOnMount: true },
   });
+
+  const downloadSheet = (id) => {
+    initiateDownload({
+      url:
+        CORE_ROUTE +
+        `/${selectedModule?.key}` +
+        ROUNDS +
+        `/${roundId}` +
+        ORIENTATION_CENTRES +
+        `/${id}` +
+        DOWNLOAD,
+      onSuccessCallback: (response) => {
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.downloadSucess",
+          }),
+          type: NOTIFICATION_TYPES.SUCCESS,
+        });
+      },
+      onErrorCallback: (errorMessage) => {
+        showNotification({
+          text: errorMessage,
+          type: NOTIFICATION_TYPES.ERROR,
+        });
+      },
+    });
+  };
 
   useEffect(() => {
     setFormData(orientationCentres);
@@ -183,7 +220,9 @@ const OrientationCenter = () => {
       key: "download",
       renderImage: {
         alt: "download",
-        onClick: () => {},
+        onClick: (rowData) => {
+          downloadSheet(rowData.id);
+        },
         preview: false,
         src: getImage("iconDownload"),
         visible: true,
@@ -276,66 +315,71 @@ const OrientationCenter = () => {
   };
 
   return (
-    <TwoRow
-      className={styles.mainContainer}
-      topSection={
-        <TwoRow
-          className={styles.headerContainer}
-          topSection={
-            <Typography className={styles.headingText}>
-              {intl.formatMessage({ id: "label.setup_orientation_centers" })}
-            </Typography>
-          }
-          bottomSection={
-            <Typography className={styles.descriptionText}>
-              {intl.formatMessage({ id: "label.orientation_centers_warning" })}
-            </Typography>
-          }
-        />
-      }
-      bottomSection={
-        <TwoRow
-          isTopFillSpace
-          topSection={renderContent()}
-          bottomSection={
-            fetchCentersSuccessFlag &&
-            !isUpdatingOrientationCentre &&
-            !!orientationCentres?.length &&
-            !errorWhileUpdatingCentre &&
-            !!currentGlobalSession?.status && (
-              <TwoColumn
-                className={styles.buttonContainer}
-                leftSection={
-                  <CustomButton
-                    btnText={intl.formatMessage({
-                      id: "label.cancel",
-                    })}
-                    customStyle={styles.mobileButtonStyles}
-                    textStyle={styles.textStyle}
-                    onClick={handleCancel}
-                  />
-                }
-                rightSection={
-                  <CustomButton
-                    textStyle={styles.saveButtonTextStyles}
-                    customStyle={styles.saveButtonStyle}
-                    btnText={intl.formatMessage({
-                      id: "session.saveChanges",
-                    })}
-                    onClick={handleSaveChanges}
-                    isBtnDisable={
-                      !formData?.every((item) => item.schedule_date)
-                    }
-                  />
-                }
-              />
-            )
-          }
-        />
-      }
-      bottomSectionStyle={classes.bottomSectionStyle}
-      isBottomFillSpace
-    />
+    <>
+      {notificationContextHolder}
+      <TwoRow
+        className={styles.mainContainer}
+        topSection={
+          <TwoRow
+            className={styles.headerContainer}
+            topSection={
+              <Typography className={styles.headingText}>
+                {intl.formatMessage({ id: "label.setup_orientation_centers" })}
+              </Typography>
+            }
+            bottomSection={
+              <Typography className={styles.descriptionText}>
+                {intl.formatMessage({
+                  id: "label.orientation_centers_warning",
+                })}
+              </Typography>
+            }
+          />
+        }
+        bottomSection={
+          <TwoRow
+            isTopFillSpace
+            topSection={renderContent()}
+            bottomSection={
+              fetchCentersSuccessFlag &&
+              !isUpdatingOrientationCentre &&
+              !!orientationCentres?.length &&
+              !errorWhileUpdatingCentre &&
+              !!currentGlobalSession?.status && (
+                <TwoColumn
+                  className={styles.buttonContainer}
+                  leftSection={
+                    <CustomButton
+                      btnText={intl.formatMessage({
+                        id: "label.cancel",
+                      })}
+                      customStyle={styles.mobileButtonStyles}
+                      textStyle={styles.textStyle}
+                      onClick={handleCancel}
+                    />
+                  }
+                  rightSection={
+                    <CustomButton
+                      textStyle={styles.saveButtonTextStyles}
+                      customStyle={styles.saveButtonStyle}
+                      btnText={intl.formatMessage({
+                        id: "session.saveChanges",
+                      })}
+                      onClick={handleSaveChanges}
+                      isBtnDisable={
+                        !formData?.every((item) => item.schedule_date)
+                      }
+                    />
+                  }
+                />
+              )
+            }
+          />
+        }
+        bottomSectionStyle={classes.bottomSectionStyle}
+        isBottomFillSpace
+      />
+    </>
   );
 };
 
