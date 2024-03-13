@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import CustomInput from "../CustomInput/CustomInput";
 import { ThemeContext } from "core/providers/theme";
 import { returnEmptyRow } from "./helpers.js";
-import { updateArrayItem } from "../Utils/updateArrayItem";
+import { updateArrayItem } from "../../Utils/updateArrayItem.js";
 import styles from "./MultiRowInput.module.scss";
 
 const MultiRowInput = ({
@@ -82,14 +82,16 @@ const MultiRowInput = ({
           return (
             <div key={field?.id} className={styles.innerContainerFlexRow}>
               <CustomInput
-                value={field?.[valueKeyName]}
-                type="text"
                 controls={true}
+                customContainerStyles={styles.customInputOuterContainer}
+                errorMessage={field?.error}
+                isError={!!field?.error}
                 onChange={(e) =>
                   handleChange({ value: e?.target?.value, field })
                 }
-                customContainerStyles={styles.customInputOuterContainer}
                 placeholder={placeholderText}
+                type="text"
+                value={field?.[valueKeyName]}
               />
               <Image
                 className={styles.imageStyle}

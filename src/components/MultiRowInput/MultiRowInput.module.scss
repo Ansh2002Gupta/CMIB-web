@@ -13,7 +13,6 @@
 .innerContainerFlexRow {
   display: flex;
   flex-direction: row;
-  align-items: center;
   gap: var(--gapMedium);
 }
 
@@ -22,6 +21,8 @@
 }
 
 .imageStyle {
+  position: relative;
+  top: var(--top_10);
   cursor: pointer;
   height: var(--height_24);
   width: var(--width_24);
