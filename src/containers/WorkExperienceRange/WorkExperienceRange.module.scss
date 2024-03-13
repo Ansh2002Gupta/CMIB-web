@@ -1,0 +1,125 @@
+.mainContainer {
+  gap: var(--gapSmall);
+  padding-bottom: var(--paddingMedium);
+}
+
+.workExpContainer {
+  gap: var(--gapSmallMedium);
+}
+
+.addedExperience {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--gapSmall);
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.addMinusIcon {
+  margin-top: var(--marginMedium);
+  margin-left: var(--marginLarge);
+  cursor: pointer;
+}
+
+.addPlusIcon {
+  margin-left: var(--marginLarge);
+  margin-top: var(--marginMedium);
+  cursor: pointer;
+}
+
+.customContainerStyles {
+  flex: 1;
+  width: var(--fullWidth);
+}
+
+.columnCellContainer {
+  gap: var(--gapMedium);
+}
+
+.useMoreStyles {
+  gap: var(--gapSmall);
+  overflow-x: hidden;
+}
+
+.dash {
+  height: var(--height_1);
+  width: var(--width_8);
+  background-color: var(--borderColor);
+  margin-left: var(--gapXSmall);
+  margin-right: var(--gapXSmall);
+}
+.dashMargin {
+  margin-top: var(--lineHeightLarge);
+}
+
+.grayText {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.blackText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.blackBoldText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.heading {
+  margin-bottom: var(--gapSmallMedium);
+  justify-content: space-between;
+}
+
+.headingText {
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.customInputStyles {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightSmall, 400) !important;
+  height: var(--height_44);
+  padding: var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px) !important;
+  height: var(--height_44);
+  &::placeholder {
+    color: var(--textBold) !important;
+  }
+}
+
+.customInputNumberStyles {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  padding: 9px 5px;
+  height: var(--height_44);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: var(--textBold) !important;
+  }
+}
+
+.customStyles {
+  margin-top: var(--paddingMediumSmall);
+}
+
+.inputLabel {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.redText {
+  color: var(--error);
+}

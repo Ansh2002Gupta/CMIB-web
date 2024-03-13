@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Image, Modal, Typography } from "antd";
+import { Image, Modal, Typography } from "antd";
 
 import Base from "../../core/layouts/Base/Base";
 
@@ -9,7 +9,10 @@ import styles from "./CustomModal.module.scss";
 
 const CustomModal = ({
   btnText,
+  cancelBtnText,
   closeIcon,
+  content,
+  customButtonStyle,
   headingText,
   imgElement,
   isOpen,
@@ -17,8 +20,6 @@ const CustomModal = ({
   onBtnClick,
   onCancel,
   subHeadingText,
-  cancelBtnText,
-  content,
 }) => {
   return (
     <Modal
@@ -64,7 +65,7 @@ const CustomModal = ({
             customButtonContainerStyle={styles.actionBtnContainer}
             onClick={onBtnClick}
             {...{ btnText }}
-            customStyle={styles.btn}
+            customStyle={`${customButtonStyle} ${styles.btn}`}
           />
         </div>
       </Base>
@@ -76,7 +77,7 @@ CustomModal.defaultProps = {
   btnText: "",
   closeIcon: false,
   headingText: "",
-  ImgElement: null,
+  imgElement: null,
   isOpen: false,
   maskClosable: false,
   onBtnClick: () => {},
@@ -86,11 +87,14 @@ CustomModal.defaultProps = {
 
 CustomModal.propTypes = {
   btnText: PropTypes.string,
+  cancelBtnText: PropTypes.string,
   closeIcon: PropTypes.bool,
+  content: PropTypes.any,
+  customButtonStyle: PropTypes.string,
   headingText: PropTypes.string,
-  ImgElement: PropTypes.node,
+  imgElement: PropTypes.node,
   isOpen: PropTypes.bool,
-  maskclosable: PropTypes.bool,
+  maskClosable: PropTypes.bool,
   onBtnClick: PropTypes.func,
   onCancel: PropTypes.func,
   subHeadingText: PropTypes.string,

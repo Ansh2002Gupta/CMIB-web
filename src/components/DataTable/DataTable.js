@@ -20,12 +20,14 @@ const DataTable = ({
   currentDataLength,
   customContainerStyles,
   customTableClassName,
+  isHoverEffectRequired,
   hidePagination,
   keytoFindSelectedRow,
   onChangeCurrentPage,
   onChangePageSize,
   originalData,
   pageSize,
+  showTableBorderBottom,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
@@ -51,12 +53,17 @@ const DataTable = ({
     <div className={[styles.container, customContainerStyles].join(" ")}>
       <Table
         columns={columns}
-        className={customTableClassName}
         dataSource={originalData}
         pagination={false}
+        scroll={responsiveStyle}
+        className={[
+          styles.table,
+          customTableClassName,
+          hidePagination && !showTableBorderBottom && "nopagination",
+          isHoverEffectRequired ? "customTableHover" : "customTableNoHover",
+        ]}
         rowClassName={setRowClassName}
         rowKey="id"
-        scroll={responsiveStyle}
       />
       {!hidePagination && (
         <div className={styles.rowPerPageOptionsAndPaginationContainer}>
@@ -98,6 +105,8 @@ DataTable.defaultProps = {
   current: 1,
   currentDataLength: 0,
   customContainerStyles: "",
+  isHoverEffectRequired: true,
+  keytoFindSelectedRow: "id",
   hidePagination: false,
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
@@ -112,12 +121,15 @@ DataTable.propTypes = {
   current: PropTypes.number,
   currentDataLength: PropTypes.number,
   customContainerStyles: PropTypes.string,
+  isHoverEffectRequired: PropTypes.bool,
+  keytoFindSelectedRow: PropTypes.string,
   hidePagination: PropTypes.bool,
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
   originalData: PropTypes.array,
-  pageSize: PropTypes.number,
   keytoFindSelectedRow: PropTypes.string,
+  pageSize: PropTypes.number,
+  showTableBorderBottom: PropTypes.bool,
 };
 
 export default DataTable;

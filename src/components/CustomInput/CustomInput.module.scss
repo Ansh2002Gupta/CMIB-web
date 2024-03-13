@@ -32,7 +32,7 @@
 }
 
 .inputField {
-  min-height: var(--height_44);
+  min-height: var(--height_44) !important;
   min-width: 100%;
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
@@ -71,7 +71,7 @@
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightMedium);
-
+  border: var(--borderLight);
   &::placeholder {
     color: var(--inputPlaceHolder) !important;
   }
