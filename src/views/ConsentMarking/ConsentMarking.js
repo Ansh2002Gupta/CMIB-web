@@ -35,8 +35,9 @@ const ConsentMarking = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
-  const isEdit =
-    currentGlobalSession?.is_editable && currentGlobalSession?.status;
+  const isEdit = !!(
+    currentGlobalSession?.is_editable && currentGlobalSession?.status
+  );
   const [userProfileDetails] = useContext(UserProfileContext);
   const roundId = urlService.getQueryStringValue(ROUND_ID);
   const [activeTab, setActiveTab] = useState(
@@ -196,6 +197,7 @@ const ConsentMarking = () => {
         />
       );
     }
+    return <></>;
   };
 
   useEffect(() => {

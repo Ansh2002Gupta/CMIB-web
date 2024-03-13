@@ -13,7 +13,7 @@ const EditButton = ({ onClick, disable }) => {
 
   return (
     <TwoColumn
-      onClick={!disable && onClick}
+      onClick={!disable ? onClick : () => {}}
       className={disable ? styles.disabledEditContainer : styles.editContainer}
       leftSection={
         <Image

@@ -425,6 +425,7 @@ const locale = {
   "label.path.queries": "Queries",
   "label.path.queries-details": "Query Details",
   "label.path.consent-marking": " Registration and consent marking schedule",
+  "label.session.consent-marking": " Registration and consent marking schedule",
   "label.path.interviewDetails": "Configure Interview Dates",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
