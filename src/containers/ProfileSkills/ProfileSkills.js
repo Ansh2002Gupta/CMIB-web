@@ -5,25 +5,29 @@ import { Typography } from "antd";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import MultiRowInput from "../../components/MultiRowInput/MultiRowInput";
 import useResponsive from "../../core/hooks/useResponsive";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { initialFieldState } from "./constant";
 import styles from "./ProfileSkills.module.scss";
 
 const ProfileSkills = () => {
+  const [errorMsg, setErrorMsg] = useState();
+  const [isError, setIsError] = useState();
   const [currentFieldStateItSkills, setCurrentFieldStateItSkills] =
     useState(initialFieldState);
   const [currentFieldStateSoftSkills, setCurrentFieldStateSoftSkills] =
     useState(initialFieldState);
+  const { showNotification, notificationContextHolder } = useShowNotification();
   const intl = useIntl();
   const responsive = useResponsive();
 
   const handleChange = (
     newText,
-    currFieldid,
     currentFieldState,
+    field,
     setCurrentFieldState
   ) => {
     const updatedFields = currentFieldState.map((item) => {
-      if (currFieldid === item?.id) {
+      if (field?.id === item?.id) {
         return { ...item, fieldValue: newText };
       } else {
         return item;
@@ -34,40 +38,47 @@ const ProfileSkills = () => {
 
   const handleClick = (
     buttonType,
-    currFieldid,
     currentFieldState,
+    field,
     setCurrentFieldState
   ) => {
     if (buttonType === "add") {
-      handleAdd(currFieldid, currentFieldState, setCurrentFieldState);
+      handleAdd(field, currentFieldState, setCurrentFieldState);
     } else {
-      handleDelete(currFieldid, currentFieldState, setCurrentFieldState);
+      handleDelete(field, currentFieldState, setCurrentFieldState);
     }
   };
 
-  const handleAdd = (currFieldid, currentFieldState, setCurrentFieldState) => {
+  const handleAdd = (field, currentFieldState, setCurrentFieldState) => {
+    if (field?.fieldValue.length === 0) {
+      setErrorMsg("The field can't be empty!");
+      setIsError(true);
+      return;
+    }
+    setErrorMsg("");
+    setIsError(false);
     const updatedFields = currentFieldState.map((item) => {
-      if (item.id === currFieldid) {
+      if (item.id === field?.id) {
         return { ...item, buttonType: "delete" };
       } else return item;
     });
     setCurrentFieldState([
       ...updatedFields,
-      { fieldValue: "", buttonType: "add", id: currFieldid + 1 },
+      { fieldValue: "", buttonType: "add", id: field?.id + 1 },
     ]);
   };
 
   const handleDelete = (
-    fieldToBeDeletedid,
+    fieldToBeDeleted,
     currentFieldState,
     setCurrentFieldState
   ) => {
     const filteredFields = currentFieldState.filter(
-      (item) => item?.id !== fieldToBeDeletedid
+      (item) => item?.id !== fieldToBeDeleted?.id
     );
     const updatedFields = filteredFields.map((item) => {
-      if (item?.id < fieldToBeDeletedid) return item;
-      else if (item?.id > fieldToBeDeletedid)
+      if (item?.id < fieldToBeDeleted?.id) return item;
+      else if (item?.id > fieldToBeDeleted?.id)
         return { ...item, id: item?.id - 1 };
       else return item;
     });
@@ -88,56 +99,62 @@ const ProfileSkills = () => {
               leftSection={
                 <MultiRowInput
                   currentFieldState={currentFieldStateItSkills}
+                  errorMessage={errorMsg}
                   headerText={intl?.formatMessage({
                     id: "label.headerTextItSkills",
                   })}
-                  onChange={(newText, fieldid) =>
+                  isError={isError}
+                  onChange={(newText, field) =>
                     handleChange(
                       newText,
-                      fieldid,
                       currentFieldStateItSkills,
+                      field,
                       setCurrentFieldStateItSkills
                     )
                   }
-                  onClick={(buttonType, currFieldid) =>
+                  onClick={(buttonType, field) =>
                     handleClick(
                       buttonType,
-                      currFieldid,
                       currentFieldStateItSkills,
+                      field,
                       setCurrentFieldStateItSkills
                     )
                   }
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderItSkills",
                   })}
+                  valueKeyName="fieldValue"
                 />
               }
               leftSectionClassName={styles.leftSectionStyling}
               rightSection={
                 <MultiRowInput
                   currentFieldState={currentFieldStateSoftSkills}
+                  errorMessage={errorMsg}
                   headerText={intl?.formatMessage({
                     id: "label.headerTextSoftSkills",
                   })}
-                  onChange={(newText, fieldid) =>
+                  isError={isError}
+                  onChange={(newText, field) =>
                     handleChange(
                       newText,
-                      fieldid,
                       currentFieldStateSoftSkills,
+                      field,
                       setCurrentFieldStateSoftSkills
                     )
                   }
-                  onClick={(buttonType, currFieldid) =>
+                  onClick={(buttonType, field) =>
                     handleClick(
                       buttonType,
-                      currFieldid,
                       currentFieldStateSoftSkills,
+                      field,
                       setCurrentFieldStateSoftSkills
                     )
                   }
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderSoftSkills",
                   })}
+                  valueKeyName="fieldValue"
                 />
               }
               rightSectionClassName={styles.rightSectionStyling}
