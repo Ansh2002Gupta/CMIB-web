@@ -1,6 +1,47 @@
 .headerContainer {
   padding: var(--paddingSmall);
   width: 100%;
+  border: var(--borderLight);
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: var(--gapSmall);
+  background-color: var(--blueBg);
+  width: var(--fullWidth);
+  padding: 0px !important;
+  padding-right: var(--padding_20) !important;
+  padding-bottom: var(--padding_20) !important;
+}
+
+.cancelButton {
+  background-color: var(--bodyBg) !important;
+  color: var(--inputLabel) !important;
+  border: var(--borderLight);
+  padding-top: var(--paddingMediumSmall);
+  padding-bottom: var(--paddingMediumSmall);
+  padding-left: var(--paddingSmall);
+  padding-right: var(--paddingSmall);
+  border-radius: var(--radiusLg);
+  height: var(--height_48) !important;
+}
+
+.saveButton {
+  width: var(--width_70) !important;
+  background-color: pink;
+  padding-top: var(--paddingMediumSmall);
+  padding-bottom: var(--paddingMediumSmall);
+  padding-left: var(--paddingSmall);
+  padding-right: var(--paddingSmall);
+  border-radius: var(--radiusLg);
+  height: var(--height_48) !important;
+  color: var(--whiteText);
+}
+
+.middleSection {
+  flex: 1;
 }
 
 .buttonWrapper {

@@ -218,6 +218,7 @@ const variables = {
 
   // Distance for top, left, bottom and right
   distance_85: "85px",
+  top_10: "10px",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,

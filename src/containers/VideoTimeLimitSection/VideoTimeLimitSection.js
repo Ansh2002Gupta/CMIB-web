@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import { Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
-import useResponsive from "../../core/hooks/useResponsive";
+
 import CustomInput from "../../components/CustomInput/CustomInput";
+import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./VideoTimeLimitSection.module.scss";
+import { useIntl } from "react-intl";
 
 const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
   const responsive = useResponsive();
+  const intl = useIntl();
   return (
     <div className={styles.outerContainer}>
       <TwoRow
         topSection={
           <Typography className={styles.topSectionHeader}>
-            Setup Maximum Video Upload Time Limit
+            {intl.formatMessage({
+              id: "label.set_max_video_upload_time_limit",
+            })}
           </Typography>
         }
         bottomSection={
@@ -24,7 +29,9 @@ const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
             }
           >
             <Typography className={styles.topSectionLabel}>
-              Maximum Video Upload Time Limit
+              {intl.formatMessage({
+                id: "label.max_video_upload_time_limit",
+              })}
             </Typography>
             <CustomInput
               controls={true}
@@ -32,10 +39,8 @@ const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
               max={15}
               type="inputNumber"
               value={videoTimeLimit}
-              onChange={(val) => {
-                console.log("Changed videoTimeLimit:", val);
-                setVideoTimeLimit(val);
-              }}
+              onChange={(val) => setVideoTimeLimit(val)}
+              customInputNumberStyles={styles.inputNumberStyle}
             />
           </div>
         }

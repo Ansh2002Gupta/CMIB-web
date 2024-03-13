@@ -61,3 +61,11 @@
 .imageStyle {
   cursor: pointer;
 }
+
+.inputNumberStyle {
+  width: var(--fullWidth);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
+  padding: var(--padding_9) var(--padding_5);
+}
