@@ -92,3 +92,8 @@
   border: var(--borderLight);
   border-radius: var(--radiusMLg) !important;
 }
+
+.button {
+  padding: var(--paddingSmall);
+  min-height: var(--height_44);
+}

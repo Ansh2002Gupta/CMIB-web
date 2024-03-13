@@ -720,6 +720,8 @@ const ConsentMarkingContent = ({
               isRegistrationDateEdit ? (
                 <ActionAndCancelButtons
                   customContainerStyle={styles.customContainerStyle}
+                  customActionBtnStyles={styles.button}
+                  customCancelBtnStyles={styles.button}
                   actionBtnText={intl.formatMessage({
                     id: "label.saveChanges",
                   })}
@@ -783,6 +785,8 @@ const ConsentMarkingContent = ({
                       actionBtnText={intl.formatMessage({
                         id: "label.saveChanges",
                       })}
+                      customActionBtnStyles={styles.button}
+                      customCancelBtnStyles={styles.button}
                       cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
                       onActionBtnClick={handleSave}
                       isActionBtnDisable={
