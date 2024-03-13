@@ -20,9 +20,6 @@ const CaJobsConfigurations = () => {
     const itSkillsList = itSkillsObj.map((obj) => obj.fieldValue);
     const softSkillsList = softSkillsObj.map((obj) => obj.fieldValue);
     const videoLength = videoTimeLimit;
-    console.log("payload(itSkillsList): ", itSkillsList);
-    console.log("payload(softSkillsList): ", softSkillsList);
-    console.log("payload(videoTimeLimit): ", videoTimeLimit);
     handlePostGlobalConfigurations({
       payload: {
         it_skill: itSkillsList,
