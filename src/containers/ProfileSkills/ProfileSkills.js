@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
+
 import MultiRowInput from "../../components/MultiRowInput/MultiRowInput";
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./ProfileSkills.module.scss";
@@ -146,7 +147,7 @@ const ProfileSkills = ({
         }
         topSection={
           <Typography className={styles.topSectionHeader}>
-            Set Profile Skills
+            {intl.formatMessage({ id: "label.set_profile_skills" })}
           </Typography>
         }
       />

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { TwoRow } from "../../core/layouts";
 import ProfileSkills from "../ProfileSkills/index";
 import VideoTimeLimitSection from "../VideoTimeLimitSection/index";
-import styles from "./CaJobsConfig.module.scss";
+import styles from "./CaJobsConfigurationsContainer.module.scss";
 
 const CaJobsConfig = ({
   currentFieldStateItSkills,

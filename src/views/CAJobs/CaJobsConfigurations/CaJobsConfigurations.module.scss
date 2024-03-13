@@ -11,13 +11,14 @@
   gap: var(--gapSmall);
   background-color: var(--blueBg);
   width: var(--fullWidth);
-  padding-left: var(--padding_20);
-  padding-right: var(--padding_20);
-  padding-top: var(--padding_20);
-  padding-bottom: var(--padding_14);
+  padding: 0px !important;
+  padding-right: var(--padding_20) !important;
+  padding-bottom: var(--padding_20) !important;
 }
 
 .cancelButton {
+  background-color: var(--bodyBg) !important;
+  color: var(--inputLabel) !important;
   border: var(--borderLight);
   padding-top: var(--paddingMediumSmall);
   padding-bottom: var(--paddingMediumSmall);
@@ -28,7 +29,8 @@
 }
 
 .saveButton {
-  background-color: var(--greenBtnBg);
+  width: var(--width_70) !important;
+  background-color: pink;
   padding-top: var(--paddingMediumSmall);
   padding-bottom: var(--paddingMediumSmall);
   padding-left: var(--paddingSmall);
@@ -36,4 +38,8 @@
   border-radius: var(--radiusLg);
   height: var(--height_48) !important;
   color: var(--whiteText);
+}
+
+.middleSection {
+  flex: 1;
 }
