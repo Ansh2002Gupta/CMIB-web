@@ -165,17 +165,19 @@ const ConsentMarkingContent = ({
       : null,
   }));
 
-  const registrationInitialData = lastRegistrationDatesData?.map((item) => ({
-    ...item,
-    id: item.id,
-    name: item.name,
-    company_reg_end_date: item.company_reg_end_date
-      ? item.company_reg_end_date
-      : null,
-    psychometric_test_date: item.psychometric_test_date
-      ? item.psychometric_test_date
-      : null,
-  }));
+  const lastRegistrationInitialData = lastRegistrationDatesData?.map(
+    (item) => ({
+      ...item,
+      id: item.id,
+      name: item.name,
+      company_reg_end_date: item.company_reg_end_date
+        ? item.company_reg_end_date
+        : null,
+      psychometric_test_date: item.psychometric_test_date
+        ? item.psychometric_test_date
+        : null,
+    })
+  );
 
   const lastRegistrationInitialError = lastRegistrationDatesData?.map(
     (item) => ({
@@ -211,13 +213,25 @@ const ConsentMarkingContent = ({
     useState(roundOneInitialData);
   const [roundTwoTableData, setRoundTwoTableData] =
     useState(roundTwoInitialData);
-  const [registrationTableData, setRegistrationTableData] = useState(
-    registrationInitialData
+  const [lastRegistrationTableData, setLastRegistrationTableData] = useState(
+    lastRegistrationInitialData
   );
 
   const disabledDate = (key, current) => {
     if (key === "company_reg_start_date") {
-      return isNotAFutureDate(current);
+      return (
+        isNotAFutureDate(current) ||
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["candidate_reg_end_date_bg_centre"],
+          checkForFuture: true,
+        }) ||
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["candidate_reg_end_date_sm_centre"],
+          checkForFuture: true,
+        })
+      );
     }
     if (key === "candidate_reg_start_date") {
       return (
@@ -225,12 +239,23 @@ const ConsentMarkingContent = ({
         compareTwoDayjsDates({
           current: current,
           date: registrationDatesData["candidate_reg_end_date_bg_centre"],
-          checkForFuture: false,
+          checkForFuture: true,
+        }) ||
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["candidate_reg_end_date_sm_centre"],
+          checkForFuture: true,
         })
       );
     }
     if (key === "candidate_reg_end_date_bg_centre")
       return (
+        isNotAFutureDate(current) ||
+        compareTwoDayjsDates({
+          current: current,
+          date: registrationDatesData["company_reg_start_date"],
+          checkForFuture: false,
+        }) ||
         compareTwoDayjsDates({
           current: current,
           date: registrationDatesData["candidate_reg_start_date"],
@@ -242,13 +267,26 @@ const ConsentMarkingContent = ({
           checkForFuture: true,
         })
       );
-    return compareTwoDayjsDates({
-      current: current,
-      date:
-        registrationDatesData["candidate_reg_end_date_bg_centre"] ||
-        registrationDatesData["candidate_reg_start_date"],
-      checkForFuture: false,
-    });
+    return (
+      isNotAFutureDate(current) ||
+      compareTwoDayjsDates({
+        current: current,
+        date: registrationDatesData["company_reg_start_date"],
+        checkForFuture: false,
+      }) ||
+      compareTwoDayjsDates({
+        current: current,
+        date: registrationDatesData["candidate_reg_start_date"],
+        checkForFuture: false,
+      }) ||
+      compareTwoDayjsDates({
+        current: current,
+        date:
+          registrationDatesData["candidate_reg_end_date_bg_centre"] ||
+          registrationDatesData["candidate_reg_start_date"],
+        checkForFuture: false,
+      })
+    );
   };
   const NQCA_REGISTRATION_DATE_FIELDS = [
     {
@@ -301,15 +339,16 @@ const ConsentMarkingContent = ({
             isEdit: isTableDateEdit,
             registration: true,
             errors: lastRegistrationError,
+            registrationDatesData,
           }}
-          tableData={registrationTableData}
+          tableData={lastRegistrationTableData}
           onDateChange={(record, key, value) => {
             onDateChange(
               record,
               key,
               value,
-              registrationTableData,
-              setRegistrationTableData,
+              lastRegistrationTableData,
+              setLastRegistrationTableData,
               setLastRegistrationError
             );
           }}
@@ -325,6 +364,7 @@ const ConsentMarkingContent = ({
             activeTab,
             isEdit: isTableDateEdit,
             errors: roundOneError,
+            registrationDatesData,
           }}
           tableData={roundOneTableData}
           onDateChange={(record, key, value) => {
@@ -349,6 +389,7 @@ const ConsentMarkingContent = ({
             activeTab,
             isEdit: isTableDateEdit,
             errors: roundTwoError,
+            registrationDatesData,
           }}
           tableData={roundTwoTableData}
           onDateChange={(record, key, value) => {
@@ -388,7 +429,7 @@ const ConsentMarkingContent = ({
   const validate = () => {
     let errorCount = 0;
     if (activeTab === "1") {
-      registrationTableData.map((item, index) => {
+      lastRegistrationTableData.map((item, index) => {
         if (!item?.company_reg_end_date) {
           errorCount++;
           handleError(
@@ -497,7 +538,7 @@ const ConsentMarkingContent = ({
 
   const handleCancel = () => {
     if (activeTab === "1") {
-      setRegistrationTableData(registrationInitialData);
+      setLastRegistrationTableData(lastRegistrationInitialData);
       setLastRegistrationError(lastRegistrationInitialError);
     }
     if (activeTab === "2") {
@@ -515,7 +556,7 @@ const ConsentMarkingContent = ({
     if (validate()) {
       if (activeTab === "1") {
         updateLastRegistrationDate({
-          body: { data: registrationTableData },
+          body: { data: lastRegistrationTableData },
           onSuccessCallback: () => {
             showNotification({
               text: intl.formatMessage({ id: "label.lastRegistrationSuccess" }),

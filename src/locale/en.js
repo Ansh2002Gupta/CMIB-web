@@ -300,13 +300,13 @@ const locale = {
   "label.consent.placeholder.candidate_reg_end_date_sm_centre":
     " Select Last Date for Small Centres",
   "label.company_shortlisting_start_date": "Shortlist By Company Start Date",
-  "label.company_shortlisting_end_date": "Shortlist By Company end Date",
+  "label.company_shortlisting_end_date": "Shortlist By Company End Date",
   "label.candidate_consent_marking_start_date":
     "Consent From Date for Candidate",
   "label.candidate_consent_marking_end_date": "Consent To Date for Candidate",
   "label.placeholder.company_shortlisting_start_date":
     "Select Company Start Date",
-  "label.placeholder.company_shortlisting_end_date": "Select Company end Date",
+  "label.placeholder.company_shortlisting_end_date": "Select Company End Date",
   "label.placeholder.candidate_consent_marking_start_date":
     "Select From Date for Candidate",
   "label.placeholder.candidate_consent_marking_end_date":

@@ -1,10 +1,17 @@
 import { useIntl } from "react-intl";
 
+import { isNotAFutureDate, compareTwoDayjsDates } from "../../constant/utils";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
-const useConsentTableColumns = (errors, isEdit, registration, onDateChange) => {
+const useConsentTableColumns = (
+  errors,
+  isEdit,
+  registration,
+  registrationDatesData,
+  onDateChange
+) => {
   const { renderColumn } = useRenderColumn();
   const intl = useIntl();
 
@@ -38,6 +45,16 @@ const useConsentTableColumns = (errors, isEdit, registration, onDateChange) => {
           key: "company_reg_end_date",
           isRequiredField: true,
           renderDateTime: {
+            getDisabledDate: (current, record) => {
+              return (
+                isNotAFutureDate(current) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: registrationDatesData["company_reg_start_date"],
+                  checkForFuture: false,
+                })
+              );
+            },
             getError: (index) => errors[index].company_reg_end_date,
             visible: true,
             isEditable: isEdit,
@@ -58,6 +75,9 @@ const useConsentTableColumns = (errors, isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "psychometric_test_date",
           renderDateTime: {
+            getDisabledDate: (current, record) => {
+              return isNotAFutureDate(current);
+            },
             getError: (index) => errors[index].psychometric_test_date,
             isEditable: isEdit,
             visible: true,
@@ -103,6 +123,30 @@ const useConsentTableColumns = (errors, isEdit, registration, onDateChange) => {
           key: "company_shortlisting_start_date",
           isRequiredField: true,
           renderDateTime: {
+            getDisabledDate: (current, record) => {
+              return (
+                isNotAFutureDate(current) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: record["company_shortlisting_end_date"],
+                  checkForFuture: true,
+                }) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: record["candidate_consent_marking_start_date"],
+                  checkForFuture: true,
+                }) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: registrationDatesData[
+                    record?.centreSize === "small"
+                      ? "candidate_reg_end_date_sm_centre"
+                      : "candidate_reg_end_date_bg_centre"
+                  ],
+                  checkForFuture: false,
+                })
+              );
+            },
             getError: (index) => errors[index].company_shortlisting_start_date,
             visible: true,
             isEditable: isEdit,
@@ -118,13 +162,37 @@ const useConsentTableColumns = (errors, isEdit, registration, onDateChange) => {
         }),
         renderColumn({
           title: intl.formatMessage({
-            id: "label.candidate_consent_marking_start_date",
+            id: "label.company_shortlisting_end_date",
           }),
           customColumnHeading: styles.customColumnHeading,
           dataIndex: "company_shortlisting_end_date",
           isRequiredField: true,
           key: "company_shortlisting_end_date",
           renderDateTime: {
+            getDisabledDate: (current, record) => {
+              return (
+                isNotAFutureDate(current) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: record["company_shortlisting_start_date"],
+                  checkForFuture: false,
+                }) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: record["candidate_consent_marking_end_date"],
+                  checkForFuture: true,
+                }) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: registrationDatesData[
+                    record?.centreSize === "small"
+                      ? "candidate_reg_end_date_sm_centre"
+                      : "candidate_reg_end_date_bg_centre"
+                  ],
+                  checkForFuture: false,
+                })
+              );
+            },
             getError: (index) => errors[index].company_shortlisting_end_date,
             visible: true,
             isEditable: isEdit,
@@ -148,6 +216,30 @@ const useConsentTableColumns = (errors, isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "candidate_consent_marking_start_date",
           renderDateTime: {
+            getDisabledDate: (current, record) => {
+              return (
+                isNotAFutureDate(current) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: record["candidate_consent_marking_end_date"],
+                  checkForFuture: true,
+                }) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: record["company_shortlisting_start_date"],
+                  checkForFuture: false,
+                }) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: registrationDatesData[
+                    record?.centreSize === "small"
+                      ? "candidate_reg_end_date_sm_centre"
+                      : "candidate_reg_end_date_bg_centre"
+                  ],
+                  checkForFuture: false,
+                })
+              );
+            },
             getError: (index) =>
               errors[index].candidate_consent_marking_start_date,
             visible: true,
@@ -175,6 +267,30 @@ const useConsentTableColumns = (errors, isEdit, registration, onDateChange) => {
           isRequiredField: true,
           key: "candidate_consent_marking_end_date",
           renderDateTime: {
+            getDisabledDate: (current, record) => {
+              return (
+                isNotAFutureDate(current) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: record["candidate_consent_marking_start_date"],
+                  checkForFuture: false,
+                }) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: record["company_shortlisting_end_date"],
+                  checkForFuture: false,
+                }) ||
+                compareTwoDayjsDates({
+                  current: current,
+                  date: registrationDatesData[
+                    record?.centre_size === "small"
+                      ? "candidate_reg_end_date_sm_centre"
+                      : "candidate_reg_end_date_bg_centre"
+                  ],
+                  checkForFuture: false,
+                })
+              );
+            },
             getError: (index) =>
               errors[index].candidate_consent_marking_end_date,
             visible: true,

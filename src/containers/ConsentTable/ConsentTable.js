@@ -12,12 +12,14 @@ const ConsentTable = ({
   isEdit,
   onDateChange,
   registration,
+  registrationDatesData,
   tableData,
 }) => {
   const columns = useConsentTableColumns(
     errors,
     isEdit,
     registration,
+    registrationDatesData,
     onDateChange
   );
 
