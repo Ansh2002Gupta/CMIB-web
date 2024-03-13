@@ -3,32 +3,3 @@
   width: var(--widthFullViewPort);
   padding: var(--paddingMedium);
 }
-
-.buttonWrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: var(--gapSmall);
-  margin-top: var(--marginLarge);
-}
-
-.cancelButton {
-  border: var(--borderLight);
-  padding-top: var(--paddingMediumSmall);
-  padding-bottom: var(--paddingMediumSmall);
-  padding-left: var(--paddingSmall);
-  padding-right: var(--paddingSmall);
-  border-radius: var(--radiusLg);
-  height: var(--height_48) !important;
-}
-
-.saveButton {
-  background-color: var(--greenBtnBg);
-  padding-top: var(--paddingMediumSmall);
-  padding-bottom: var(--paddingMediumSmall);
-  padding-left: var(--paddingSmall);
-  padding-right: var(--paddingSmall);
-  border-radius: var(--radiusLg);
-  height: var(--height_48) !important;
-  color: var(--whiteText);
-}

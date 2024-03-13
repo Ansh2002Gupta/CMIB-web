@@ -3,3 +3,37 @@
   width: 100%;
   border: var(--borderLight);
 }
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: var(--gapSmall);
+  background-color: var(--blueBg);
+  width: var(--fullWidth);
+  padding-left: var(--padding_20);
+  padding-right: var(--padding_20);
+  padding-top: var(--padding_20);
+  padding-bottom: var(--padding_14);
+}
+
+.cancelButton {
+  border: var(--borderLight);
+  padding-top: var(--paddingMediumSmall);
+  padding-bottom: var(--paddingMediumSmall);
+  padding-left: var(--paddingSmall);
+  padding-right: var(--paddingSmall);
+  border-radius: var(--radiusLg);
+  height: var(--height_48) !important;
+}
+
+.saveButton {
+  background-color: var(--greenBtnBg);
+  padding-top: var(--paddingMediumSmall);
+  padding-bottom: var(--paddingMediumSmall);
+  padding-left: var(--paddingSmall);
+  padding-right: var(--paddingSmall);
+  border-radius: var(--radiusLg);
+  height: var(--height_48) !important;
+  color: var(--whiteText);
+}

@@ -22,6 +22,7 @@ export const API_STATUS = {
 
 export const STATUS_CODES = {
   SUCCESS_STATUS: 200,
+  SUCCESS_POST: 201,
   NOT_FOUND: 404,
   UNAUTHORIZED_USER: 401,
 };
