@@ -411,22 +411,16 @@ export const handleDisabledStartTime = (time) => {
   };
 };
 
-export const handleDisabledDate = (current) => {
+export const isNotAFutureDate = (current) => {
   return current && current < dayjs().add(1, "day").startOf("day");
 };
 
-export const handleDisabledBeforeDate = (current, startDate) => {
-  if (!startDate) {
+export const compareTwoDayjsDates = ({ current, date, checkForFuture }) => {
+  if (!date) {
     return false;
   }
-  const startOfDay = dayjs(startDate).startOf("day");
-  return current && current <= startOfDay;
-};
-
-export const handleDisabledAfterDate = (current, endDate) => {
-  if (!endDate) {
-    return false;
+  if (checkForFuture) {
+    return current && current >= dayjs(date).startOf("day");
   }
-  const endOfDay = dayjs(endDate).startOf("day");
-  return current && current >= endOfDay;
+  return current && current <= dayjs(date).startOf("day");
 };

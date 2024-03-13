@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
+import { Spin } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -15,7 +16,6 @@ import {
   REGISTRATION_DATES,
   ROUNDS,
 } from "../../constant/apiEndpoints";
-import { Spin } from "antd";
 import { getErrorMessage } from "../../constant/utils";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import styles from "./ConsentMarking.module.scss";
@@ -38,6 +38,9 @@ const ConsentMarking = () => {
     isLoading: isGettingRegAndConsentMarkingDetail,
     isSuccess: isDetailsFetchSuccessful,
   } = useFetch({
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
     url:
       CORE_ROUTE +
       `/${selectedModule?.key}` +
@@ -46,9 +49,15 @@ const ConsentMarking = () => {
       REGISTRATION_DATES,
   });
 
+  useEffect(() => {
+    if (!!selectedModule?.key) {
+      getRegAndConsentMarkingDetail({});
+    }
+  }, [selectedModule?.key]);
+
   return (
     <>
-      {isGettingRegAndConsentMarkingDetail && (
+      {isGettingRegAndConsentMarkingDetail && !currentGlobalSession && (
         <div className={styles.loaderContainer}>
           <Spin size="large" />
         </div>
@@ -76,7 +85,8 @@ const ConsentMarking = () => {
             />
           }
           bottomSection={
-            !!regAndConsentData && (
+            !!regAndConsentData &&
+            !!currentGlobalSession && (
               <ConsentMarkingContent
                 {...{
                   isEdit: !!isEdit,

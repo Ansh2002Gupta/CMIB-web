@@ -1,7 +1,8 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { Spin } from "antd";
 
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -14,11 +15,10 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import useResponsive from "core/hooks/useResponsive";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import {
+  compareTwoDayjsDates,
   formatDate,
   getCurrentActiveTab,
-  handleDisabledAfterDate,
-  handleDisabledBeforeDate,
-  handleDisabledDate,
+  isNotAFutureDate,
 } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
 import { ACTIVE_TAB } from "../../constant/constant";
@@ -34,10 +34,10 @@ import {
   REGISTRATIONS_DATES_FOR_ROUND_TWO,
 } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
-import { classes } from "./ConsentMarkingContent.styles";
-import { Spin } from "antd";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
+import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
 import useRegistrationAndConsentMarking from "../../services/api-services/RegistrationandConsentMarking/useRegistrationConsentMarking";
-import useShowNotification from "../../core/hooks/useShowNotification";
+import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
 
 const ConsentMarkingContent = ({
@@ -50,7 +50,7 @@ const ConsentMarkingContent = ({
   const responsive = useResponsive();
   const location = useLocation();
   const { navigateScreen: navigate } = useNavigateScreen();
-  const { showNotification, notificationContextHolder } = useShowNotification();
+  const [, setNotificationStateDispatch] = useContext(NotificationContext);
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
       urlService.getQueryStringValue(ACTIVE_TAB),
@@ -124,20 +124,22 @@ const ConsentMarkingContent = ({
     errorWhileUpdating,
     updateRegistrationAndConsentMarking,
     isError,
-    isLoading: isRegAncConfigLoading,
+    isLoading: isUpdatingRegistrationAndConsent,
   } = useRegistrationAndConsentMarking();
 
   const hasRoundTwo = location?.pathname.includes("round2");
 
   const disabledDate = (key, current) => {
-    if (handleDisabledDate(current)) return true;
+    if (isNotAFutureDate(current)) return true;
 
     const dateLimits = {
       registrationStartDateCompanies: {
         after: [
           "registrationEndDateCompanies",
           "startShortlistingbyCompany",
+          "endShortlistingbyCompany",
           "startCondidateConsentmarking",
+          "endCondidateConsentmarking",
           "writtenTestDate",
         ],
       },
@@ -149,7 +151,10 @@ const ConsentMarkingContent = ({
         after: [
           "registrationEndDateCandidates",
           "startShortlistingbyCompany",
+          "endShortlistingbyCompany",
           "startCondidateConsentmarking",
+          "endCondidateConsentmarking",
+          "writtenTestDate",
         ],
       },
       registrationEndDateCandidates: {
@@ -186,14 +191,37 @@ const ConsentMarkingContent = ({
     // Retrieve the appropriate limits for the current key
     const limits = dateLimits[key];
 
-    // Check if the current date is before the start limit
+    // TODO: We'll uncomment this code when this key last_interview_date_round1 come from API.
+    // if (key === "registrationStartDateCandidates") {
+    //   const beforeKeys = Array.isArray(limits.before)
+    //     ? limits.before
+    //     : [limits.before];
+    //   if (
+    //     beforeKeys.some((beforeKey) =>
+    //       compareTwoDayjsDates({
+    //         current,
+    //         date:
+    //           regAndConsentData?.last_interview_date_round1 ||
+    //           registrationDatesData[beforeKey],
+    //         checkForFuture: false,
+    //       })
+    //     )
+    //   ) {
+    //     return true;
+    //   }
+    // }
     if (limits.before) {
+      // Check if the current date is before the start limit
       const beforeKeys = Array.isArray(limits.before)
         ? limits.before
         : [limits.before];
       if (
         beforeKeys.some((beforeKey) =>
-          handleDisabledBeforeDate(current, registrationDatesData[beforeKey])
+          compareTwoDayjsDates({
+            current,
+            date: registrationDatesData[beforeKey],
+            checkForFuture: false,
+          })
         )
       ) {
         return true;
@@ -207,7 +235,11 @@ const ConsentMarkingContent = ({
         : [limits.after];
       if (
         afterKeys.some((afterKey) =>
-          handleDisabledAfterDate(current, registrationDatesData[afterKey])
+          compareTwoDayjsDates({
+            current,
+            date: registrationDatesData[afterKey],
+            checkForFuture: true,
+          })
         )
       ) {
         return true;
@@ -261,7 +293,7 @@ const ConsentMarkingContent = ({
     if (!newValue && name) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        [name]: intl.formatMessage({ id: "label.this_field_is_required" }),
+        [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
       }));
     } else {
       setErrors((prevErrors) => ({
@@ -304,7 +336,7 @@ const ConsentMarkingContent = ({
 
   const handleSave = () => {
     if (!isButtonDisabled()) {
-      const hasRoundTwoDetails = {
+      const roundTwoDetailsPayload = {
         company_reg_start_date: registrationStartDateCompanies,
         company_reg_end_date: registrationEndDateCompanies,
         candidate_reg_start_date: registrationStartDateCandidates,
@@ -317,17 +349,12 @@ const ConsentMarkingContent = ({
       };
       updateRegistrationAndConsentMarking({
         module: selectedModule,
-        payload: hasRoundTwoDetails,
+        payload: roundTwoDetailsPayload,
         onSuccessCallback: () => {
-          showNotification({
-            text: "Dates Added Successfully",
-            type: "success",
-          });
-          setTimeout(() => {
-            navigateBackToSession();
-          }, 1000);
+          setNotificationStateDispatch(setShowSuccessNotification(true));
+          navigateBackToSession();
         },
-        roundId: roundId,
+        roundId,
       });
     }
   };
@@ -354,14 +381,17 @@ const ConsentMarkingContent = ({
 
   const handleOnTabSwitch = useCallback((tabId) => {
     setActiveTab(tabId);
+    urlService.setQueryStringValue(ACTIVE_TAB, tabId);
     setPageSizeAndNumberToDefault();
     setTableToDefault();
   }, []);
 
   useEffect(() => {
-    const activeTab = urlService.getQueryStringValue(ACTIVE_TAB);
-    if (!VALID_CONSENT_MARKING_TABS_ID.includes(activeTab)) {
-      urlService.setQueryStringValue(ACTIVE_TAB, 1);
+    if (!hasRoundTwo) {
+      const activeTab = urlService.getQueryStringValue(ACTIVE_TAB);
+      if (!VALID_CONSENT_MARKING_TABS_ID.includes(activeTab)) {
+        urlService.setQueryStringValue(ACTIVE_TAB, 1);
+      }
     }
   }, []);
 
@@ -370,7 +400,7 @@ const ConsentMarkingContent = ({
     : REGISTRATION_DATES;
 
   const renderContent = () => {
-    if (!isRegAncConfigLoading && errorWhileUpdating && isError) {
+    if (!isUpdatingRegistrationAndConsent && errorWhileUpdating && isError) {
       return (
         <div className={styles.loaderContainer}>
           <ErrorMessageBox
@@ -384,7 +414,7 @@ const ConsentMarkingContent = ({
       );
     }
 
-    if (isRegAncConfigLoading) {
+    if (isUpdatingRegistrationAndConsent) {
       return (
         <div className={styles.loaderContainer}>
           <Spin size="large" />
@@ -393,7 +423,6 @@ const ConsentMarkingContent = ({
     }
     return (
       <>
-        {notificationContextHolder}
         <ThreeRow
           className={styles.mainContainer}
           topSection={
@@ -435,7 +464,7 @@ const ConsentMarkingContent = ({
           }
           topSectionStyle={classes.topSectionStyle}
           middleSection={
-            !hasRoundTwo && (
+            !hasRoundTwo ? (
               <TwoRow
                 className={styles.tabContainer}
                 topSection={
@@ -450,6 +479,8 @@ const ConsentMarkingContent = ({
                 bottomSection={activeTabChildren.children}
                 bottomSectionStyle={classes.tabBottomSectionStyle}
               />
+            ) : (
+              <></>
             )
           }
           bottomSection={
@@ -481,7 +512,9 @@ const ConsentMarkingContent = ({
                   />
                 }
               />
-            ) : null
+            ) : (
+              <></>
+            )
           }
           bottomSectionStyle={classes.bottomSectionStyle}
         />

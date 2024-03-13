@@ -17,6 +17,7 @@ import { NotificationContext } from "../../globalContext/notification/notificati
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   addSessionNotification,
+  setShowSuccessNotification,
   updateSessionNotification,
 } from "../../globalContext/notification/notificationActions";
 import { getCurrentActiveTab } from "../../constant/utils";
@@ -89,9 +90,17 @@ function Session() {
       setNotificationStateDispatch(addSessionNotification(false));
       setNotificationStateDispatch(updateSessionNotification(false));
     }
+    if (notificationState?.showSuccessNotification) {
+      showNotification({
+        text: intl.formatMessage({ id: "label.dates_added_successfully" }),
+        type: NOTIFICATION_TYPES.SUCCESS,
+      });
+      setNotificationStateDispatch(setShowSuccessNotification(false));
+    }
   }, [
     notificationState?.addSessionSuccessfully,
     notificationState?.updateSessionSuccesssfully,
+    notificationState?.showSuccessNotification,
   ]);
 
   const tabItems = [
@@ -148,13 +157,13 @@ function Session() {
             children: (
               <SessionRound
                 {...{ currentlySelectedModuleKey }}
-              roundId={
-                (
-                  sessionData?.rounds?.find(
-                    (obj) => obj.round_code === MENU_KEYS.ROUND_2_PLACEMENT
-                  ) || {}
-                ).id
-              }
+                roundId={
+                  (
+                    sessionData?.rounds?.find(
+                      (obj) => obj.round_code === MENU_KEYS.ROUND_2_PLACEMENT
+                    ) || {}
+                  ).id
+                }
                 roundNo={2}
                 roundId={
                   (
