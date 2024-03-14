@@ -60,6 +60,7 @@ const useRenderColumn = () => {
 
     const {
       customContainerStyles,
+      customInputStyle,
       customTimeStyle,
       defaultValue,
       disabled = false,
@@ -517,6 +518,7 @@ const useRenderColumn = () => {
             <CustomDateTimePicker
               {...{
                 customContainerStyles,
+                customInputStyle,
                 customTimeStyle,
                 defaultValue,
                 disabled,

@@ -572,6 +572,17 @@ const locale = {
   "placeholder.big_centre_end_date": "Enter big centre change end date",
   "placeholder.small_centre_start_date": "Enter small centre change start date",
   "placeholder.small_centre_end_date": "Enter small centre change end date",
+  "label.allow_consent_for_candidate":
+    "Allow consent for candidate to choose company again coming at their selected",
+  "label.centre": "Centre",
+  "label.from_date": "From Date",
+  "label.to_date": "To Date",
+  "label.from_time": "From Time",
+  "label.to_time": "To Time",
+  "label.select_from_date": "Select from date",
+  "label.select_to_date": "Select to date",
+  "label.select_from_time": "Select from time",
+  "label.select_to_time": "Select to time",
 };
 
 export default locale;
