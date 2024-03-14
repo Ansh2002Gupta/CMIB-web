@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
-
 export default class Http {
   static async get(_url, apiOptions = {}, handleDiscard = () => {}) {
     const url = `${baseUrl}${_url}`;

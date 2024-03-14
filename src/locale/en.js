@@ -530,6 +530,7 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.downloadSucess": "Download Successful",
 };
 
 export default locale;
