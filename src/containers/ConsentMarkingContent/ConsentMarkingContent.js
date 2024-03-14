@@ -191,25 +191,24 @@ const ConsentMarkingContent = ({
     // Retrieve the appropriate limits for the current key
     const limits = dateLimits[key];
 
-    // TODO: We'll uncomment this code when this key last_interview_date_round1 come from API.
-    // if (key === "registrationStartDateCandidates") {
-    //   const beforeKeys = Array.isArray(limits.before)
-    //     ? limits.before
-    //     : [limits.before];
-    //   if (
-    //     beforeKeys.some((beforeKey) =>
-    //       compareTwoDayjsDates({
-    //         current,
-    //         date:
-    //           regAndConsentData?.last_interview_date_round1 ||
-    //           registrationDatesData[beforeKey],
-    //         checkForFuture: false,
-    //       })
-    //     )
-    //   ) {
-    //     return true;
-    //   }
-    // }
+    if (key === "registrationStartDateCandidates") {
+      const beforeKeys = Array.isArray(limits.before)
+        ? limits.before
+        : [limits.before];
+      if (
+        beforeKeys.some((beforeKey) =>
+          compareTwoDayjsDates({
+            current,
+            date:
+              regAndConsentData?.last_interview_date_round1 ||
+              registrationDatesData[beforeKey],
+            checkForFuture: false,
+          })
+        )
+      ) {
+        return true;
+      }
+    }
     if (limits.before) {
       // Check if the current date is before the start limit
       const beforeKeys = Array.isArray(limits.before)
