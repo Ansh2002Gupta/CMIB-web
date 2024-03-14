@@ -88,7 +88,7 @@ const RegisteredCompaniesDetails = () => {
                 columns,
                 customTableStyle: styles.tableContainer,
                 dataSource,
-                heading: intl.formatMessage({ id: "label.companyDetails" }),
+                heading: intl.formatMessage({ id: "label.approval" }),
               }}
             />
           }

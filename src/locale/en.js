@@ -534,6 +534,7 @@ const locale = {
   "label.approved_not_approved": "Approved/Not Approved",
   "label.not_approved": "Not Approved",
   "label.approved": "Approved",
+  "label.approval": "Approval",
   "label.path.registered-company": "Registered Companies",
   "label.path.registered-company-details": "Company Details",
 };
