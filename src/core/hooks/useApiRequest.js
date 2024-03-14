@@ -46,10 +46,26 @@ const useApiRequest = ({ method, url, apiOptions = {}, otherOptions = {} }) => {
       onErrorCallback && onErrorCallback(GENERIC_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);
-      setError(err?.response || GENERIC_API_FAILED_ERROR_MESSAGE);
+
+      if (err.response?.data?.message) {
+        setError(err.response?.data?.message);
+        if (
+          err.response?.data?.data &&
+          err.response?.data?.data?.errors &&
+          Object.entries(err.response?.data?.data?.errors).length > 0
+        ) {
+          onErrorCallback && onErrorCallback(err.response?.data?.data);
+        } else {
+          onErrorCallback && onErrorCallback(err.response?.data?.message);
+        }
+        return;
+      }
+      setError(
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+      );
       onErrorCallback &&
         onErrorCallback(
-          err?.response?.data?.message || GENERIC_API_FAILED_ERROR_MESSAGE
+          intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
         );
     }
   };
