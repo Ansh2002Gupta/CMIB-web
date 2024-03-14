@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import { useIntl } from "react-intl";
 import { Typography } from "antd";
+import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
 
 import CustomInput from "../../components/CustomInput/CustomInput";
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./VideoTimeLimitSection.module.scss";
-import { useIntl } from "react-intl";
 
 const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
   const responsive = useResponsive();
@@ -47,6 +48,16 @@ const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
       />
     </div>
   );
+};
+
+VideoTimeLimitSection.defaultProps = {
+  videoTimeLimit: 0,
+  setVideoTimeLimit: () => {},
+};
+
+VideoTimeLimitSection.propTypes = {
+  videoTimeLimit: PropTypes.number,
+  setVideoTimeLimit: PropTypes.func,
 };
 
 export default VideoTimeLimitSection;

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
+import PropTypes from "prop-types";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -13,8 +14,6 @@ const ProfileSkills = ({
   currentFieldStateSoftSkills,
   setCurrentFieldStateItSkills,
   setCurrentFieldStateSoftSkills,
-  disableActionButton,
-  setDisableActionButton,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -32,33 +31,31 @@ const ProfileSkills = ({
               }`}
               leftSection={
                 <MultiRowInput
-                  inputFields={currentFieldStateItSkills}
-                  setInputFields={setCurrentFieldStateItSkills}
                   headerText={intl?.formatMessage({
                     id: "label.headerTextItSkills",
                   })}
-                  valueKeyName="fieldValue"
+                  inputFields={currentFieldStateItSkills}
+                  maxInputLength={100}
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderItSkills",
                   })}
-                  disableActionButton={disableActionButton}
-                  setDisableActionButton={setDisableActionButton}
+                  setInputFields={setCurrentFieldStateItSkills}
+                  valueKeyName="fieldValue"
                 />
               }
               leftSectionClassName={styles.leftSectionStyling}
               rightSection={
                 <MultiRowInput
-                  inputFields={currentFieldStateSoftSkills}
-                  setInputFields={setCurrentFieldStateSoftSkills}
                   headerText={intl?.formatMessage({
                     id: "label.headerTextSoftSkills",
                   })}
-                  valueKeyName="fieldValue"
+                  inputFields={currentFieldStateSoftSkills}
+                  maxInputLength={100}
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderSoftSkills",
                   })}
-                  disableActionButton={disableActionButton}
-                  setDisableActionButton={setDisableActionButton}
+                  setInputFields={setCurrentFieldStateSoftSkills}
+                  valueKeyName="fieldValue"
                 />
               }
               rightSectionClassName={styles.rightSectionStyling}
@@ -73,6 +70,20 @@ const ProfileSkills = ({
       />
     </div>
   );
+};
+
+ProfileSkills.defaultProps = {
+  currentFieldStateItSkills: [],
+  currentFieldStateSoftSkills: [],
+  setCurrentFieldStateItSkills: () => {},
+  setCurrentFieldStateSoftSkills: () => {},
+};
+
+ProfileSkills.propTypes = {
+  currentFieldStateItSkills: PropTypes.array,
+  currentFieldStateSoftSkills: PropTypes.array,
+  setCurrentFieldStateItSkills: PropTypes.func,
+  setCurrentFieldStateSoftSkills: PropTypes.func,
 };
 
 export default ProfileSkills;

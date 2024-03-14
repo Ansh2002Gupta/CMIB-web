@@ -1,50 +1,49 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from "react-intl";
+import { CONFIGURATIONS } from "../../../routes/routeNames";
 
 import { ThreeRow } from "../../../core/layouts";
 
+import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
 import CaJobsConfigurationsContainer from "../../../containers/CaJobsConfigurationsContainer";
 import ContentHeader from "../../../containers/ContentHeader";
-import { initialFieldState } from "./constant";
-import styles from "./CaJobsConfigurations.module.scss";
-import { classes } from "./CaJobsConfigurations.styles";
-import { useIntl } from "react-intl";
-import CustomButton from "../../../components/CustomButton";
-import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
-import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
 import useFetch from "../../../core/hooks/useFetch";
-import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
-import { CONFIGURATIONS } from "../../../routes/routeNames";
+import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
 import { returnFieldObjects } from "./helpers";
-import { NOTIFICATION_TYPES } from "../../../constant/constant";
-import useShowNotification from "../../../core/hooks/useShowNotification";
+import { initialFieldState } from "./constant";
+import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
+import { classes } from "./CaJobsConfigurations.styles";
+import styles from "./CaJobsConfigurations.module.scss";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();
+  const [postingSkillInfo, setPostingSkillInfo] = useState(false);
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
   const [itSkillsObj, setItSkillsObj] = useState(initialFieldState);
   const [softSkillsObj, setSoftSkillsObj] = useState(initialFieldState);
-  const [isFieldError, setIsFieldError] = useState(true);
+  const [isFieldError, setIsFieldError] = useState(false);
   const { postGlobalConfigurations } = usePostGlobalConfigurationsApi();
-  const { data, fetchData } = useFetch({
+  const { fetchData } = useFetch({
     url: CAJOBS_ROUTE + MASTER + CONFIGURATIONS,
     otherOptions: { skipApiCallOnMount: true },
   });
-  const { showNotification, notificationContextHolder } = useShowNotification();
 
+  //get last saved data on component mount.
   useEffect(() => {
-    //check for empty field object.
-    const areThereEmptyFields =
-      itSkillsObj.some((obj) => obj.fieldValue === "") ||
-      softSkillsObj.some((obj) => obj.fieldValue === "");
-    if (areThereEmptyFields) {
-      setIsFieldError(true);
-      return;
-    }
+    getSavedProfileSkills();
+  }, []);
+
+  //enable/disable action button
+  useEffect(() => {
     setIsFieldError(false);
+    const isError =
+      itSkillsObj.some((obj) => obj?.error) ||
+      softSkillsObj.some((obj) => obj?.error);
+    if (isError) setIsFieldError(true);
   }, [itSkillsObj, softSkillsObj]);
 
-  //created these functions for future purpose.
-  const handleCancel = () => {
+  //on cancel
+  const getSavedProfileSkills = () => {
     fetchData({
       queryParamsObject: {},
       onSuccessCallback: (responseFieldValues) => {
@@ -55,19 +54,37 @@ const CaJobsConfigurations = () => {
       },
       onErrorCallback: (error) => {
         console.log("FETCH | error: ", error);
-        showNotification({
-          text: intl.formatMessage({
-            id: "label.addSessionSuccessfully",
-          }),
-          type: NOTIFICATION_TYPES.ERROR,
-        });
       },
     });
   };
 
-  const handleSave = () => {
-    const itSkillsList = itSkillsObj.map((obj) => obj.fieldValue);
-    const softSkillsList = softSkillsObj.map((obj) => obj.fieldValue);
+  const excludeMoreThanOneEmptyField = ({ array, valueKeyName }) => {
+    const arrayWithoutEmptyFields = array.filter(
+      (field) => field?.[valueKeyName]
+    );
+    return arrayWithoutEmptyFields.length
+      ? arrayWithoutEmptyFields
+      : initialFieldState;
+  };
+
+  //on save
+  const postProfileSKills = () => {
+    setPostingSkillInfo(true);
+    //check for empty field object and excluding them.
+    const itSkillObjWithAtmostOneEmptyFields = excludeMoreThanOneEmptyField({
+      array: itSkillsObj,
+      valueKeyName: "fieldValue",
+    });
+    const softSkillObjWithAtmostOneEmptyFields = excludeMoreThanOneEmptyField({
+      array: softSkillsObj,
+      valueKeyName: "fieldValue",
+    });
+    const itSkillsList = itSkillObjWithAtmostOneEmptyFields.map(
+      (obj) => obj?.fieldValue
+    );
+    const softSkillsList = softSkillObjWithAtmostOneEmptyFields.map(
+      (obj) => obj?.fieldValue
+    );
     postGlobalConfigurations({
       payload: {
         it_skill: itSkillsList,
@@ -76,21 +93,9 @@ const CaJobsConfigurations = () => {
       },
       onErrorCallback: (errMessage) => {
         console.log("POST | error:", errMessage);
-        showNotification({
-          text: intl.formatMessage({
-            id: "label.addSessionSuccessfully",
-          }),
-          type: NOTIFICATION_TYPES.ERROR,
-        });
       },
       onSuccessCallback: () => {
-        console.log("Success!!!!");
-        showNotification({
-          text: intl.formatMessage({
-            id: "label.addSessionSuccessfully",
-          }),
-          type: NOTIFICATION_TYPES.SUCCESS,
-        });
+        setPostingSkillInfo(false);
       },
     });
   };
@@ -110,8 +115,6 @@ const CaJobsConfigurations = () => {
           setCurrentFieldStateSoftSkills={setSoftSkillsObj}
           videoTimeLimit={videoTimeLimit}
           setVideoTimeLimit={setVideoTimeLimit}
-          disableActionButton={isFieldError}
-          setDisableActionButton={setIsFieldError}
         />
       }
       middleSectionStyle={classes.middleSection}
@@ -123,8 +126,9 @@ const CaJobsConfigurations = () => {
           cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
           customActionBtnStyles={styles.saveButton}
           customContainerStyles={styles.buttonWrapper}
-          onActionBtnClick={handleSave}
-          onCancelBtnClick={handleCancel}
+          isLoading={postingSkillInfo}
+          onActionBtnClick={postProfileSKills}
+          onCancelBtnClick={getSavedProfileSkills}
           isActionBtnDisable={isFieldError}
         />
       }

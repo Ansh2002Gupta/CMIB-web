@@ -13,26 +13,22 @@ const CaJobsConfig = ({
   setCurrentFieldStateSoftSkills,
   videoTimeLimit,
   setVideoTimeLimit,
-  disableActionButton,
-  setDisableActionButton,
 }) => {
   return (
     <div className={styles.outerContainer}>
       <TwoRow
+        topSection={
+          <VideoTimeLimitSection
+            videoTimeLimit={videoTimeLimit}
+            setVideoTimeLimit={setVideoTimeLimit}
+          />
+        }
         bottomSection={
           <ProfileSkills
             currentFieldStateItSkills={currentFieldStateItSkills}
             currentFieldStateSoftSkills={currentFieldStateSoftSkills}
             setCurrentFieldStateItSkills={setCurrentFieldStateItSkills}
             setCurrentFieldStateSoftSkills={setCurrentFieldStateSoftSkills}
-            disableActionButton={disableActionButton}
-            setDisableActionButton={setDisableActionButton}
-          />
-        }
-        topSection={
-          <VideoTimeLimitSection
-            videoTimeLimit={videoTimeLimit}
-            setVideoTimeLimit={setVideoTimeLimit}
           />
         }
       />
@@ -40,8 +36,18 @@ const CaJobsConfig = ({
   );
 };
 
-CaJobsConfig.defaultProps = {};
+CaJobsConfig.defaultProps = {
+  currentFieldStateItSkills: [],
+  currentFieldStateSoftSkills: [],
+  setCurrentFieldStateItSkills: () => {},
+  setCurrentFieldStateSoftSkills: () => {},
+};
 
-CaJobsConfig.propTypes = {};
+CaJobsConfig.propTypes = {
+  currentFieldStateItSkills: PropTypes.array,
+  currentFieldStateSoftSkills: PropTypes.array,
+  setCurrentFieldStateItSkills: PropTypes.func,
+  setCurrentFieldStateSoftSkills: PropTypes.func,
+};
 
 export default CaJobsConfig;
