@@ -312,7 +312,7 @@ const locale = {
   "label.placeholder.candidate_consent_marking_end_date":
     "Select To Date for Candidate",
   "label.company_reg_end_date": "Last date of registration for companies",
-  "label.psychometric_test_date": "psychometric test/written test date",
+  "label.psychometric_test_date": "Psychometric test/written test date",
   "label.placeholder.company_reg_end_date": "Select Last Date for registration",
   "label.placeholder.psychometric_test_date":
     "Select To Date for psychometric test",

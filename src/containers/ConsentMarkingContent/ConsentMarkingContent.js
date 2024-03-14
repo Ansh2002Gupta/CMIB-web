@@ -326,6 +326,7 @@ const ConsentMarkingContent = ({
   };
 
   const handleRegistrationCancel = () => {
+    setRegistrationDatesData(registrationDateData);
     setRegistrationError({
       candidate_reg_end_date_bg_centre: "",
       candidate_reg_end_date_sm_centre: "",
