@@ -1,3 +1,4 @@
+import AddSubscription from "../containers/AddSubscription/AddSubscription";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
@@ -59,6 +60,7 @@ import {
   USER_DETAILS,
   TICKETS,
   TICKETS_VIEW_DETAILS,
+  ADD_SUBSCRIPTIONS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 
@@ -198,6 +200,10 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: SUBSCRIPTIONS + ADD_SUBSCRIPTIONS,
+        element: <AddSubscription />,
       },
     ],
   },
