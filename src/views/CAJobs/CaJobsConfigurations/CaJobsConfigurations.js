@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import { Button } from "antd";
+import { useIntl } from "react-intl";
 
 import { ThreeRow } from "../../../core/layouts";
 
+import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
 import CaJobsConfigurationsContainer from "../../../containers/CaJobsConfigurationsContainer";
 import ContentHeader from "../../../containers/ContentHeader";
 import { initialFieldState } from "./constant";
 import styles from "./CaJobsConfigurations.module.scss";
 import { classes } from "./CaJobsConfigurations.styles";
-import { useIntl } from "react-intl";
-import CustomButton from "../../../components/CustomButton";
-import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
-  const [itSkillsObj, setItSkillsObj] = useState(initialFieldState);
-  const [softSkillsObj, setSoftSkillsObj] = useState(initialFieldState);
+  const [itSkills, setItSkills] = useState(initialFieldState);
+  const [softSkills, setSoftSkills] = useState(initialFieldState);
 
-  //created these functions for future purpose.
+  //TODO: created these functions for future purpose.
   const handleCancel = () => {};
   const handleSave = () => {};
 
@@ -31,12 +29,14 @@ const CaJobsConfigurations = () => {
       }
       middleSection={
         <CaJobsConfigurationsContainer
-          currentFieldStateItSkills={itSkillsObj}
-          currentFieldStateSoftSkills={softSkillsObj}
-          setCurrentFieldStateItSkills={setItSkillsObj}
-          setCurrentFieldStateSoftSkills={setSoftSkillsObj}
-          videoTimeLimit={videoTimeLimit}
-          setVideoTimeLimit={setVideoTimeLimit}
+          {...{
+            itSkills,
+            setItSkills,
+            setSoftSkills,
+            softSkills,
+            videoTimeLimit,
+            setVideoTimeLimit,
+          }}
         />
       }
       middleSectionStyle={classes.middleSection}
