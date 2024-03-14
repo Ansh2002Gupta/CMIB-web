@@ -557,6 +557,21 @@ const locale = {
   "session.placeholder.shortlist_students_allowed":
     "Max. no. of vacancy * Multiplier",
   "session.placeholder.company_interview_types": "Select interview types",
+  "session.candidateSettings": "For Candidate",
+  "label.max_no_of_interview": "Max. No. of Interview Allowed to a Candidate",
+  "label.max_no_of_offer": "Max. No. of Offer can be Accepted by a Candidate",
+  "label.big_centre_start_date": "Big Centre Change Start Date",
+  "label.big_centre_end_date": "Big Centre Change End Date",
+  "label.small_centre_start_date": "Small Centre Change Start Date",
+  "label.small_centre_end_date": "Small Centre Change End Date",
+  "placeholder.max_no_of_interview":
+    "Enter max. No. of interview allowed to a candidate",
+  "placeholder.max_no_of_offer":
+    "Enter max. No. of offer can be accepted by a candidate",
+  "placeholder.big_centre_start_date": "Enter big centre change start date",
+  "placeholder.big_centre_end_date": "Enter big centre change end date",
+  "placeholder.small_centre_start_date": "Enter small centre change start date",
+  "placeholder.small_centre_end_date": "Enter small centre change end date",
 };
 
 export default locale;
