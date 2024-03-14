@@ -299,18 +299,22 @@ const locale = {
     "Select Last Date for Big Centres",
   "label.consent.placeholder.candidate_reg_end_date_sm_centre":
     " Select Last Date for Small Centres",
-  "label.companyStartDate": "Shortlist By Company Start Date",
-  "label.companyEndDate": "Shortlist By Company end Date",
-  "label.consentFromDate": "Consent From Date for Candidate",
-  "label.consentToDate": "Consent To Date for Candidate",
-  "label.placeholder.companyStartDate": "Select Company Start Date",
-  "label.placeholder.companyEndDate": "Select Company end Date",
-  "label.placeholder.consentFromDate": "Select From Date for Candidate",
-  "label.placeholder.consentToDate": "Select To Date for Candidate",
-  "label.lastRegistrationDate": "Last date of registration for companies",
-  "label.psychometricTestDate": "psychometric test/written test date",
-  "label.placeholder.lastRegistrationDate": "Select Last Date for registration",
-  "label.placeholder.psychometricTestDate":
+  "label.company_shortlisting_start_date": "Shortlist By Company Start Date",
+  "label.company_shortlisting_end_date": "Shortlist By Company End Date",
+  "label.candidate_consent_marking_start_date":
+    "Consent From Date for Candidate",
+  "label.candidate_consent_marking_end_date": "Consent To Date for Candidate",
+  "label.placeholder.company_shortlisting_start_date":
+    "Select Company Start Date",
+  "label.placeholder.company_shortlisting_end_date": "Select Company End Date",
+  "label.placeholder.candidate_consent_marking_start_date":
+    "Select From Date for Candidate",
+  "label.placeholder.candidate_consent_marking_end_date":
+    "Select To Date for Candidate",
+  "label.company_reg_end_date": "Last date of registration for companies",
+  "label.psychometric_test_date": "Psychometric test/written test date",
+  "label.placeholder.company_reg_end_date": "Select Last Date for registration",
+  "label.placeholder.psychometric_test_date":
     "Select To Date for psychometric test",
   "label.controlAccessHeading": " Control Access",
   "label.moduleAccess": "Module Access",
@@ -420,8 +424,9 @@ const locale = {
   "label.path.setup-mock-interview": "Setup Mock Interview",
   "label.path.queries": "Queries",
   "label.path.queries-details": "Query Details",
-  "label.path.interviewDetails": "Configure Interview Dates",
   "label.path.consent-marking": " Registration and consent marking schedule",
+  "label.session.consent-marking": " Registration and consent marking schedule",
+  "label.path.interviewDetails": "Configure Interview Dates",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
@@ -522,6 +527,11 @@ const locale = {
   "label.no_centres_selected_msg":
     "To proceed with the setup, please choose the centres for this round.",
   "label.no_prior_chats_found": "No prior chats found",
+  "label.registrationSuccess": "Registration Dates updated Successfully",
+  "label.lastRegistrationSuccess":
+    "Last Registration Dates updated Successfully",
+  "label.roundOneDatesSuccess": "Round 1 Dates updated Successfully",
+  "label.roundTwoDatesSuccess": "Round 2 Dates updated Successfully",
   "label.yearBracket": " (year(s))",
   "label.inrBracket": " (INR)",
   "label.session.setup-centers": "Setup Centres",

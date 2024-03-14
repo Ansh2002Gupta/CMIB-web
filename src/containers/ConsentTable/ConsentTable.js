@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import PropTypes from "prop-types";
 
 import DataTable from "../../components/DataTable/DataTable";
@@ -7,35 +8,35 @@ import styles from "./ConsentTable.module.scss";
 import "./Override.css";
 
 const ConsentTable = ({
+  errors,
   isEdit,
+  onDateChange,
   registration,
-  setTableData,
+  registrationDatesData,
   tableData,
-  totalData,
 }) => {
-  const onDateChange = (record, key, value) => {
-    const index = tableData.findIndex((item) => item.sNo === record.sNo);
-    const newData = [...tableData];
-    newData[index][key] = value;
-    setTableData(newData);
-  };
-
-  const columns = useConsentTableColumns(isEdit, registration, onDateChange);
+  const columns = useConsentTableColumns(
+    errors,
+    isEdit,
+    registration,
+    registrationDatesData,
+    onDateChange
+  );
 
   return (
     <DataTable
       {...{ columns }}
-      currentDataLength={totalData.length}
+      currentDataLength={tableData.length}
       customContainerStyles={[styles.table, "customConsentTable"].join(" ")}
       hidePagination
       originalData={tableData}
+      showTableBorderBottom={isEdit}
     />
   );
 };
 
 ConsentTable.defaultProps = {
   isEdit: false,
-  totalData: [],
   registration: false,
   setTableData: () => {},
   tableData: [],
