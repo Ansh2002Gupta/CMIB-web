@@ -11,6 +11,7 @@
 
 .customStyle {
   gap: var(--gapMedium);
+  align-items: flex-start;
 }
 
 .customLabelStyles {
@@ -56,4 +57,12 @@
 
 .tabContainer {
   gap: var(--gapSmall);
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--height_50vh);
+  width: var(--fullWidth);
 }
