@@ -10,14 +10,18 @@ import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/p
 import { ADD } from "../../../routes/routeNames";
 import styles from "./ConfigureCentreHeader.module.scss";
 
-const ConfigureCentreHeader = ({ showButton }) => {
+const ConfigureCentreHeader = ({
+  customHeaderStyling,
+  showButton,
+  tabComponent,
+}) => {
   const intl = useIntl();
   const responsive = useResponsive();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { centreId } = useParams();
 
   return (
-    <div className={styles.headerContainer}>
+    <div className={[styles.headerContainer, customHeaderStyling].join(" ")}>
       <ContentHeader
         headerText={intl.formatMessage({
           id: `label.${
@@ -25,7 +29,7 @@ const ConfigureCentreHeader = ({ showButton }) => {
               ? "configureCentres"
               : centreId
               ? "editCentreDetails"
-              : "addNewCentre"
+              : "global_configurations"
           }`,
         })}
         customStyles={styles.headerResponsiveStyle}
@@ -51,6 +55,7 @@ const ConfigureCentreHeader = ({ showButton }) => {
           )
         }
       />
+      {tabComponent}
     </div>
   );
 };

@@ -2,3 +2,14 @@
   padding-left: 0px;
   padding-right: 0px;
 }
+
+.customHeaderStyling {
+  padding: var(--paddingMedium);
+  padding-bottom: 0px;
+}
+
+.configureCentreContentWrapper {
+  background-color: var(--blueBg);
+  width: var(--fullWidth);
+  padding: var(--paddingMedium);
+}

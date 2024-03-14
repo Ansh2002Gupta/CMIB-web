@@ -197,6 +197,7 @@ const locale = {
   "label.companies": "Companies",
   "label.companyName": "Company Name",
   "label.entity": "Entity",
+  "label.global_configurations": "Global Configurations",
   "label.generatePaymentMis": "Generate Payment MIS",
   "label.manageCompanyDetails": "Manage company details",
   "label.phoneNumber": "Phone Number",

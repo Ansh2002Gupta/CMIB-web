@@ -13,8 +13,6 @@ const CaJobsConfig = ({
   setCurrentFieldStateSoftSkills,
   videoTimeLimit,
   setVideoTimeLimit,
-  disableActionButton,
-  setDisableActionButton,
 }) => {
   return (
     <div className={styles.outerContainer}>
@@ -25,8 +23,6 @@ const CaJobsConfig = ({
             currentFieldStateSoftSkills={currentFieldStateSoftSkills}
             setCurrentFieldStateItSkills={setCurrentFieldStateItSkills}
             setCurrentFieldStateSoftSkills={setCurrentFieldStateSoftSkills}
-            disableActionButton={disableActionButton}
-            setDisableActionButton={setDisableActionButton}
           />
         }
         topSection={

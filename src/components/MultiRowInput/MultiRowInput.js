@@ -16,8 +16,6 @@ const MultiRowInput = ({
   placeholderText,
   setInputFields,
   valueKeyName,
-  disableActionButton,
-  setDisableActionButton,
 }) => {
   const intl = useIntl();
   const fieldValuesEnteredSoFar = new Set();
@@ -54,7 +52,6 @@ const MultiRowInput = ({
       JSON.stringify(inputFieldsAfterDuplicacyCheck);
     if (isDifferent) {
       setInputFields(inputFieldsAfterDuplicacyCheck);
-      setDisableActionButton(true);
     }
   }, [inputFields]);
 

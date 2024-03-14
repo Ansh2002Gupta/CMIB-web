@@ -25,7 +25,7 @@ const CaJobsConfigurations = () => {
   const [softSkillsObj, setSoftSkillsObj] = useState(initialFieldState);
   const [isFieldError, setIsFieldError] = useState(true);
   const { postGlobalConfigurations } = usePostGlobalConfigurationsApi();
-  const { data, fetchData } = useFetch({
+  const { fetchData } = useFetch({
     url: CAJOBS_ROUTE + MASTER + CONFIGURATIONS,
     otherOptions: { skipApiCallOnMount: true },
   });
@@ -110,8 +110,6 @@ const CaJobsConfigurations = () => {
           setCurrentFieldStateSoftSkills={setSoftSkillsObj}
           videoTimeLimit={videoTimeLimit}
           setVideoTimeLimit={setVideoTimeLimit}
-          disableActionButton={isFieldError}
-          setDisableActionButton={setIsFieldError}
         />
       }
       middleSectionStyle={classes.middleSection}
