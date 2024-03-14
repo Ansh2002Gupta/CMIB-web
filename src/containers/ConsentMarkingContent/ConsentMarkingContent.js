@@ -104,6 +104,13 @@ const ConsentMarkingContent = ({
   const [registrationDatesData, setRegistrationDatesData] =
     useState(registrationDateData);
 
+  const [registrationError, setRegistrationError] = useState({
+    candidate_reg_end_date_bg_centre: "",
+    candidate_reg_end_date_sm_centre: "",
+    candidate_reg_start_date: "",
+    company_reg_start_date: "",
+  });
+
   const isNqca =
     currentlySelectedModuleKey === MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY;
 
@@ -319,6 +326,12 @@ const ConsentMarkingContent = ({
   };
 
   const handleRegistrationCancel = () => {
+    setRegistrationError({
+      candidate_reg_end_date_bg_centre: "",
+      candidate_reg_end_date_sm_centre: "",
+      candidate_reg_start_date: "",
+      company_reg_start_date: "",
+    });
     setIsRegistrationDateEdit(false);
   };
 
@@ -398,6 +411,7 @@ const ConsentMarkingContent = ({
                                   registrationDatesData
                                 )
                               }
+                              errorMessage={registrationError[item?.labeIntl]}
                               isEditable={isRegistrationDateEdit}
                               type="date"
                               isRequired
@@ -416,7 +430,9 @@ const ConsentMarkingContent = ({
                                 handleInputChange(
                                   val,
                                   item?.labeIntl,
-                                  setRegistrationDatesData
+                                  setRegistrationDatesData,
+                                  setRegistrationError,
+                                  intl
                                 );
                               }}
                             />

@@ -144,11 +144,33 @@ export const OTHER_MODULES_REGISTRATION_DATE_FIELDS = [
   },
 ];
 
-export const handleInputChange = (value, name, setRegistrationDatesData) => {
+export const handleInputChange = (
+  value,
+  name,
+  setRegistrationDatesData,
+  setRegistrationError,
+  intl
+) => {
   setRegistrationDatesData((prevFormData) => ({
     ...prevFormData,
     [name]: value && dayjs(value).format("YYYY-MM-DD"),
   }));
+
+  if (!value) {
+    setRegistrationError((prev) => {
+      return {
+        ...prev,
+        [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
+      };
+    });
+  } else {
+    setRegistrationError((prev) => {
+      return {
+        ...prev,
+        [name]: "",
+      };
+    });
+  }
 };
 
 export const useIntitalDataAndError = ({
