@@ -1,0 +1,28 @@
+.outerContainerFlexCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmallMedium);
+}
+
+.headerText {
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeExtraSmall);
+  color: var(--subHeadingColor);
+}
+
+.innerContainerFlexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--gapMedium);
+}
+
+.customInputOuterContainer {
+  width: var(--fullWidth);
+}
+
+.imageStyle {
+  cursor: pointer;
+  height: var(--height_24);
+  width: var(--width_24);
+}
