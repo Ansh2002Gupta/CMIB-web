@@ -7,7 +7,6 @@ import "./override.css";
 
 const CustomRadioButton = ({
   checked,
-  children,
   customStyles,
   disabled,
   onChange,
@@ -34,7 +33,6 @@ CustomRadioButton.defaultProps = {
 
 CustomRadioButton.propTypes = {
   checked: PropTypes.bool,
-  children: PropTypes.node,
   customStyles: PropTypes.string,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,

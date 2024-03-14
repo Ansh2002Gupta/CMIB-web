@@ -83,28 +83,26 @@ const CustomInput = React.forwardRef(
           ref={ref}
         >
           {type === "select" && (
-            <>
-              <Select
-                mode={isMultiSelect ? "multiple" : ""}
-                className={[styles.selectInput, customSelectInputStyles].join(
-                  " "
-                )}
-                onChange={(changedValue) => {
-                  onSelectItem({
-                    target: {
-                      value: changedValue,
-                    },
-                  });
-                }}
-                options={selectOptions}
-                defaultValue={
-                  isMultiSelect
-                    ? defaultSelectValueArray
-                    : defaultSelectValueString
-                }
-                disabled={isSelectBoxDisable}
-              />
-            </>
+            <Select
+              mode={isMultiSelect ? "multiple" : ""}
+              className={[styles.selectInput, customSelectInputStyles].join(
+                " "
+              )}
+              onChange={(changedValue) => {
+                onSelectItem({
+                  target: {
+                    value: changedValue,
+                  },
+                });
+              }}
+              options={selectOptions}
+              defaultValue={
+                isMultiSelect
+                  ? defaultSelectValueArray
+                  : defaultSelectValueString
+              }
+              disabled={isSelectBoxDisable}
+            />
           )}
           {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
             <Input
@@ -190,7 +188,7 @@ const CustomInput = React.forwardRef(
                 isError ? styles.showError : "",
               ].join(" ")}
             >
-              {errorMessage ? `${errorMessage}` : ""}
+              {errorMessage ? ` * ${errorMessage}` : ""}
             </Typography>
           </div>
         )}
