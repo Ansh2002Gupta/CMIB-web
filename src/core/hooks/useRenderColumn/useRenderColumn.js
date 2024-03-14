@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
-import { TwoColumn } from "../../layouts";
+import { TwoColumn, TwoRow } from "../../layouts";
 
 import AutoPlaceComplete from "../../../components/AutoPlaceComplete";
 import Chip from "../../../components/Chip/Chip";
@@ -117,7 +117,9 @@ const useRenderColumn = () => {
     } = renderTextWithCheckBoxes;
 
     const {
+      centreStyles,
       includeDotAfterText,
+      isCentre,
       isTextBold,
       isTypeDate,
       textStyles,
@@ -235,6 +237,19 @@ const useRenderColumn = () => {
                     : "label.years",
               })}`}
         </p>
+      );
+    };
+
+    const getRenderCentre = (data) => {
+      return (
+        <TwoRow
+          topSection={getRenderText(data?.centre_name)}
+          bottomSection={
+            <p className={[centreStyles, styles.customCentreStyles].join(" ")}>
+              {intl.formatMessage({ id: `label.${data?.centre_size}` })}
+            </p>
+          }
+        />
       );
     };
 
@@ -364,6 +379,8 @@ const useRenderColumn = () => {
             <Tooltip title={text}>{getRenderText(text)}</Tooltip>
           ) : isYearRange ? (
             getRenderYearRange(rowData)
+          ) : isCentre ? (
+            getRenderCentre(rowData)
           ) : (
             getRenderText(text)
           ),

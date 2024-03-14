@@ -28,6 +28,9 @@ const useConsentTableColumns = (
           },
           render: (_, __, index) => {
             return {
+              props: {
+                className: styles.customStyles,
+              },
               children: <p>{index + 1}.</p>,
             };
           },
@@ -36,7 +39,12 @@ const useConsentTableColumns = (
           title: intl.formatMessage({ id: "label.centreName" }),
           dataIndex: "centre_name",
           key: "centre_name",
-          renderText: { isTextBold: true, visible: true, isCapitalize: true },
+          renderText: {
+            isCapitalize: true,
+            isCentre: true,
+            isTextBold: true,
+            visible: true,
+          },
         }),
         renderColumn({
           title: intl.formatMessage({ id: "label.company_reg_end_date" }),
@@ -104,6 +112,9 @@ const useConsentTableColumns = (
           },
           render: (_, __, index) => {
             return {
+              props: {
+                className: styles.customStyles,
+              },
               children: <p>{index + 1}.</p>,
             };
           },
@@ -112,7 +123,12 @@ const useConsentTableColumns = (
           title: intl.formatMessage({ id: "label.centreName" }),
           dataIndex: "centre_name",
           key: "centre_name",
-          renderText: { isTextBold: true, visible: true },
+          renderText: {
+            isCapitalize: true,
+            isCentre: true,
+            isTextBold: true,
+            visible: true,
+          },
         }),
         renderColumn({
           title: intl.formatMessage({
