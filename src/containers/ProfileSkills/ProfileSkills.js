@@ -9,10 +9,10 @@ import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./ProfileSkills.module.scss";
 
 const ProfileSkills = ({
-  currentFieldStateItSkills,
-  currentFieldStateSoftSkills,
-  setCurrentFieldStateItSkills,
-  setCurrentFieldStateSoftSkills,
+  itSkills,
+  setItSkills,
+  setSoftSkills,
+  softSkills,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -30,8 +30,8 @@ const ProfileSkills = ({
               }`}
               leftSection={
                 <MultiRowInput
-                  inputFields={currentFieldStateItSkills}
-                  setInputFields={setCurrentFieldStateItSkills}
+                  inputFields={itSkills}
+                  setInputFields={setItSkills}
                   headerText={intl?.formatMessage({
                     id: "label.headerTextItSkills",
                   })}
@@ -44,8 +44,8 @@ const ProfileSkills = ({
               leftSectionClassName={styles.leftSectionStyling}
               rightSection={
                 <MultiRowInput
-                  inputFields={currentFieldStateSoftSkills}
-                  setInputFields={setCurrentFieldStateSoftSkills}
+                  inputFields={softSkills}
+                  setInputFields={setSoftSkills}
                   headerText={intl?.formatMessage({
                     id: "label.headerTextSoftSkills",
                   })}

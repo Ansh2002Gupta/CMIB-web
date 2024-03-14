@@ -15,6 +15,7 @@ import styles from "./VideoTimeLimitSection.module.scss";
 const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
   const responsive = useResponsive();
   const intl = useIntl();
+
   return (
     <div className={styles.outerContainer}>
       <TwoRow

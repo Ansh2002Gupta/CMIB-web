@@ -20,8 +20,8 @@ import styles from "./CaJobsConfigurations.module.scss";
 const CaJobsConfigurations = () => {
   const intl = useIntl();
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
-  const [itSkillsObj, setItSkillsObj] = useState(initialFieldState);
-  const [softSkillsObj, setSoftSkillsObj] = useState(initialFieldState);
+  const [itSkills, setItSkills] = useState(initialFieldState);
+  const [softSkills, setSoftSkills] = useState(initialFieldState);
   const [isFieldError, setIsFieldError] = useState(true);
   const { postGlobalConfigurations } = usePostGlobalConfigurationsApi();
   const { fetchData } = useFetch({
@@ -33,14 +33,14 @@ const CaJobsConfigurations = () => {
   useEffect(() => {
     //check for empty field object.
     const areThereEmptyFields =
-      itSkillsObj.some((obj) => obj.fieldValue === "") ||
-      softSkillsObj.some((obj) => obj.fieldValue === "");
+      itSkills.some((obj) => obj.fieldValue === "") ||
+      softSkills.some((obj) => obj.fieldValue === "");
     if (areThereEmptyFields) {
       setIsFieldError(true);
       return;
     }
     setIsFieldError(false);
-  }, [itSkillsObj, softSkillsObj]);
+  }, [itSkills, softSkills]);
 
   //created these functions for future purpose.
   const handleCancel = () => {
@@ -48,8 +48,8 @@ const CaJobsConfigurations = () => {
       queryParamsObject: {},
       onSuccessCallback: (responseFieldValues) => {
         const { it_skill, soft_skill, video_max_time } = responseFieldValues[0];
-        setItSkillsObj(returnFieldObjects({ fieldValueList: it_skill }));
-        setSoftSkillsObj(returnFieldObjects({ fieldValueList: soft_skill }));
+        setItSkills(returnFieldObjects({ fieldValueList: it_skill }));
+        setSoftSkills(returnFieldObjects({ fieldValueList: soft_skill }));
         setVideoTimeLimit(video_max_time);
       },
       onErrorCallback: (error) => {
@@ -64,8 +64,8 @@ const CaJobsConfigurations = () => {
   };
 
   const handleSave = () => {
-    const itSkillsList = itSkillsObj.map((obj) => obj.fieldValue);
-    const softSkillsList = softSkillsObj.map((obj) => obj.fieldValue);
+    const itSkillsList = itSkills.map((obj) => obj.fieldValue);
+    const softSkillsList = softSkills.map((obj) => obj.fieldValue);
     postGlobalConfigurations({
       payload: {
         it_skill: itSkillsList,
@@ -100,12 +100,14 @@ const CaJobsConfigurations = () => {
       }
       middleSection={
         <CaJobsConfigurationsContainer
-          currentFieldStateItSkills={itSkillsObj}
-          currentFieldStateSoftSkills={softSkillsObj}
-          setCurrentFieldStateItSkills={setItSkillsObj}
-          setCurrentFieldStateSoftSkills={setSoftSkillsObj}
-          videoTimeLimit={videoTimeLimit}
-          setVideoTimeLimit={setVideoTimeLimit}
+          {...{
+            itSkills,
+            setItSkills,
+            setSoftSkills,
+            softSkills,
+            videoTimeLimit,
+            setVideoTimeLimit,
+          }}
         />
       }
       middleSectionStyle={classes.middleSection}

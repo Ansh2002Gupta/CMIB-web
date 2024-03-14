@@ -7,10 +7,10 @@ import VideoTimeLimitSection from "../VideoTimeLimitSection/index";
 import styles from "./CaJobsConfigurationsContainer.module.scss";
 
 const CaJobsConfig = ({
-  currentFieldStateItSkills,
-  currentFieldStateSoftSkills,
-  setCurrentFieldStateItSkills,
-  setCurrentFieldStateSoftSkills,
+  itSkills,
+  setItSkills,
+  setSoftSkills,
+  softSkills,
   videoTimeLimit,
   setVideoTimeLimit,
 }) => {
@@ -19,17 +19,16 @@ const CaJobsConfig = ({
       <TwoRow
         bottomSection={
           <ProfileSkills
-            currentFieldStateItSkills={currentFieldStateItSkills}
-            currentFieldStateSoftSkills={currentFieldStateSoftSkills}
-            setCurrentFieldStateItSkills={setCurrentFieldStateItSkills}
-            setCurrentFieldStateSoftSkills={setCurrentFieldStateSoftSkills}
+            {...{
+              itSkills,
+              setItSkills,
+              setSoftSkills,
+              softSkills,
+            }}
           />
         }
         topSection={
-          <VideoTimeLimitSection
-            videoTimeLimit={videoTimeLimit}
-            setVideoTimeLimit={setVideoTimeLimit}
-          />
+          <VideoTimeLimitSection {...{ videoTimeLimit, setVideoTimeLimit }} />
         }
       />
     </div>
