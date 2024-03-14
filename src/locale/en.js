@@ -563,6 +563,7 @@ const locale = {
     "Select Consent Marking By Candidate End Date",
   "label.path.consent-marking": "Registration and Consent Marking Schedule",
   "label.dates_added_successfully": "Dates Added Successfully",
+  "label.downloadSucess": "Download Successful",
 };
 
 export default locale;
