@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
+import { useIntl } from "react-intl";
 import { Image, Typography } from "antd";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
 
-import CustomInput from "../CustomInput/CustomInput";
 import { ThemeContext } from "core/providers/theme";
+import CustomInput from "../CustomInput/CustomInput";
 import { returnEmptyRow } from "./helpers.js";
 import { updateArrayItem } from "../../Utils/updateArrayItem.js";
 import styles from "./MultiRowInput.module.scss";
