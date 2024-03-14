@@ -29,7 +29,6 @@ import {
 import {
   ACTIVE_TAB,
   VALID_CONSENT_MARKING_TABS_ID,
-  VALID_CONSENT_TABS_ID,
   MODULE_KEYS,
   NOTIFICATION_TYPES,
 } from "../../constant/constant";
@@ -650,21 +649,21 @@ const ConsentMarkingContent = ({
     const activeTab = urlService.getQueryStringValue(ACTIVE_TAB);
     if (registrationDateData?.is_round2_visible) {
       console.log("is_round2_visible");
-      if (!VALID_CONSENT_TABS_ID?.threeTab?.includes(activeTab)) {
+      if (!VALID_CONSENT_MARKING_TABS_ID?.threeTab?.includes(activeTab)) {
         urlService.setQueryStringValue(ACTIVE_TAB, 1);
         setActiveTab("1");
       }
       return;
     }
     if (registrationDateData?.is_round1_visible) {
-      if (!VALID_CONSENT_TABS_ID.twoTab.includes(activeTab)) {
+      if (!VALID_CONSENT_MARKING_TABS_ID.twoTab.includes(activeTab)) {
         urlService.setQueryStringValue(ACTIVE_TAB, 1);
         setActiveTab("1");
       }
       return;
     }
     console.log("is_round1_visible");
-    if (!VALID_CONSENT_TABS_ID.oneTab.includes(activeTab)) {
+    if (!VALID_CONSENT_MARKING_TABS_ID.oneTab.includes(activeTab)) {
       urlService.setQueryStringValue(ACTIVE_TAB, 1);
       setActiveTab("1");
     }
