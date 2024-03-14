@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from "react";
+import { useIntl } from "react-intl";
 import { Image, Typography } from "antd";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
 
-import CustomInput from "../CustomInput/CustomInput";
 import { ThemeContext } from "core/providers/theme";
+import CustomInput from "../CustomInput/CustomInput";
+import { handleDuplicateArrayItems } from "../../Utils/handleDuplicateArrayItem.js";
 import { returnEmptyRow } from "./helpers.js";
 import { updateArrayItem } from "../../Utils/updateArrayItem.js";
 import styles from "./MultiRowInput.module.scss";
-import { handleDuplicateArrayItems } from "../../Utils/handleDuplicateArrayItem.js";
 
 const MultiRowInput = ({
   inputFields,
@@ -18,7 +18,6 @@ const MultiRowInput = ({
   valueKeyName,
 }) => {
   const intl = useIntl();
-  const fieldValuesEnteredSoFar = new Set();
   const { getImage } = useContext(ThemeContext);
 
   useEffect(() => {
@@ -41,7 +40,6 @@ const MultiRowInput = ({
         ? { id: field?.id, value: field?.[valueKeyName].trim() }
         : {}
     );
-    //console.log("fieldValuesEnteresSOFar:", fieldValuesEnteredSoFar);
     const inputFieldsAfterDuplicacyCheck = handleDuplicateArrayItems({
       array: inputFields,
       errorMessage: intl.formatMessage({ id: "label.error.DuplicateFields" }),

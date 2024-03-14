@@ -378,6 +378,7 @@ export const USER_PROFILE_QUERY_PARAMS = "user-profile";
 export const ROUND_ID = "roundId";
 
 export const MIN_SEARCH_TEXT_LENGTH = 2;
+export const MIN_CHARACTERS_IN_INPUT_FIELD = 0;
 
 export const CENTRE_TYPE_ENUM = {
   BIG: "big",
@@ -396,6 +397,7 @@ export const MAX_CTC_LENGTH = 10;
 export const MAX_EXPERIENCE_LENGTH = 2;
 export const MAX_PARTNERS_LENGTH = 3;
 export const MAX_VACANCIES_LENGTH = 4;
+export const MAX_CHARACTERS_IN_INPUT_FIELD = 999;
 
 export const PAYMENT_TYPE = {
   WHOLE: "whole",

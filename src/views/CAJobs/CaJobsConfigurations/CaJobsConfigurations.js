@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from "react-intl";
+import { CONFIGURATIONS } from "../../../routes/routeNames";
 
 import { ThreeRow } from "../../../core/layouts";
 
+import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
 import CaJobsConfigurationsContainer from "../../../containers/CaJobsConfigurationsContainer";
 import ContentHeader from "../../../containers/ContentHeader";
-import { initialFieldState } from "./constant";
-import styles from "./CaJobsConfigurations.module.scss";
-import { classes } from "./CaJobsConfigurations.styles";
-import { useIntl } from "react-intl";
-import CustomButton from "../../../components/CustomButton";
-import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
 import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
 import useFetch from "../../../core/hooks/useFetch";
-import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
-import { CONFIGURATIONS } from "../../../routes/routeNames";
-import { returnFieldObjects } from "./helpers";
-import { NOTIFICATION_TYPES } from "../../../constant/constant";
 import useShowNotification from "../../../core/hooks/useShowNotification";
+import { returnFieldObjects } from "./helpers";
+import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
+import { initialFieldState } from "./constant";
+import { NOTIFICATION_TYPES } from "../../../constant/constant";
+import { classes } from "./CaJobsConfigurations.styles";
+import styles from "./CaJobsConfigurations.module.scss";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();
@@ -54,7 +53,6 @@ const CaJobsConfigurations = () => {
         setVideoTimeLimit(video_max_time);
       },
       onErrorCallback: (error) => {
-        console.log("FETCH | error: ", error);
         showNotification({
           text: intl.formatMessage({
             id: "label.addSessionSuccessfully",
@@ -75,7 +73,6 @@ const CaJobsConfigurations = () => {
         video_time_limit: videoTimeLimit,
       },
       onErrorCallback: (errMessage) => {
-        console.log("POST | error:", errMessage);
         showNotification({
           text: intl.formatMessage({
             id: "label.addSessionSuccessfully",
@@ -84,7 +81,6 @@ const CaJobsConfigurations = () => {
         });
       },
       onSuccessCallback: () => {
-        console.log("Success!!!!");
         showNotification({
           text: intl.formatMessage({
             id: "label.addSessionSuccessfully",

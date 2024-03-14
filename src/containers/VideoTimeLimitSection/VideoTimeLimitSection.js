@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
+import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
 
 import CustomInput from "../../components/CustomInput/CustomInput";
 import useResponsive from "../../core/hooks/useResponsive";
+import {
+  MAX_CHARACTERS_IN_INPUT_FIELD,
+  MIN_CHARACTERS_IN_INPUT_FIELD,
+} from "../../constant/constant";
 import styles from "./VideoTimeLimitSection.module.scss";
-import { useIntl } from "react-intl";
 
 const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
   const responsive = useResponsive();
@@ -35,8 +39,8 @@ const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
             </Typography>
             <CustomInput
               controls={true}
-              min={0}
-              max={999}
+              min={MIN_CHARACTERS_IN_INPUT_FIELD}
+              max={MAX_CHARACTERS_IN_INPUT_FIELD}
               type="inputNumber"
               value={videoTimeLimit}
               onChange={(val) => setVideoTimeLimit(val)}
