@@ -73,6 +73,8 @@ const ConsentMarkingContent = ({
       regAndConsentData?.candidate_consent_start_date || "",
     endCondidateConsentmarking:
       regAndConsentData?.candidate_consent_end_date || "",
+    last_interview_date_roundOne:
+      regAndConsentData?.last_interview_date_round1 || "",
     writtenTestDate: regAndConsentData?.psychometric_test_date || "",
   });
 
@@ -156,9 +158,13 @@ const ConsentMarkingContent = ({
           "endCondidateConsentmarking",
           "writtenTestDate",
         ],
+        before: ["last_interview_date_roundOne"],
       },
       registrationEndDateCandidates: {
-        before: "registrationStartDateCandidates",
+        before: [
+          "registrationStartDateCandidates",
+          "last_interview_date_roundOne",
+        ],
         after: "startShortlistingbyCompany",
       },
       startShortlistingbyCompany: {
@@ -191,24 +197,6 @@ const ConsentMarkingContent = ({
     // Retrieve the appropriate limits for the current key
     const limits = dateLimits[key];
 
-    if (key === "registrationStartDateCandidates") {
-      const beforeKeys = Array.isArray(limits.before)
-        ? limits.before
-        : [limits.before];
-      if (
-        beforeKeys.some((beforeKey) =>
-          compareTwoDayjsDates({
-            current,
-            date:
-              regAndConsentData?.last_interview_date_round1 ||
-              registrationDatesData[beforeKey],
-            checkForFuture: false,
-          })
-        )
-      ) {
-        return true;
-      }
-    }
     if (limits.before) {
       // Check if the current date is before the start limit
       const beforeKeys = Array.isArray(limits.before)
