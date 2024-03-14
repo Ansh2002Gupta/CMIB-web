@@ -43,9 +43,10 @@ const ConsentMarking = () => {
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
       urlService.getQueryStringValue(ACTIVE_TAB),
-      VALID_CONSENT_MARKING_TABS_ID
+      VALID_CONSENT_MARKING_TABS_ID.threeTab
     )
   );
+
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const {
@@ -188,6 +189,7 @@ const ConsentMarking = () => {
             activeTab,
             consentRoundOneData,
             consentRoundTwoData,
+            currentlySelectedModuleKey,
             isEdit,
             lastRegistrationDatesData,
             roundId,

@@ -30,6 +30,7 @@ const ConsentTable = ({
       customContainerStyles={[styles.table, "customConsentTable"].join(" ")}
       hidePagination
       originalData={tableData}
+      showTableBorderBottom={isEdit}
     />
   );
 };

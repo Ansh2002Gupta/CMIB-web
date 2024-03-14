@@ -29,6 +29,7 @@ import {
 import {
   ACTIVE_TAB,
   VALID_CONSENT_MARKING_TABS_ID,
+  VALID_CONSENT_TABS_ID,
   MODULE_KEYS,
   NOTIFICATION_TYPES,
 } from "../../constant/constant";
@@ -39,6 +40,7 @@ const ConsentMarkingContent = ({
   activeTab,
   consentRoundOneData,
   consentRoundTwoData,
+  currentlySelectedModuleKey,
   isEdit,
   lastRegistrationDatesData,
   roundId,
@@ -49,9 +51,6 @@ const ConsentMarkingContent = ({
   const { showNotification, notificationContextHolder } = useShowNotification();
   const [isRegistrationDateEdit, setIsRegistrationDateEdit] = useState(false);
   const [isTableDateEdit, setIsTableDateEdit] = useState(false);
-  const [userProfileDetails] = useContext(UserProfileContext);
-  const currentlySelectedModuleKey =
-    userProfileDetails?.selectedModuleItem?.key;
 
   const onDateChange = (
     record,
@@ -649,10 +648,27 @@ const ConsentMarkingContent = ({
 
   useEffect(() => {
     const activeTab = urlService.getQueryStringValue(ACTIVE_TAB);
-    if (!VALID_CONSENT_MARKING_TABS_ID.includes(activeTab)) {
-      urlService.setQueryStringValue(ACTIVE_TAB, 1);
+    if (registrationDateData?.is_round2_visible) {
+      console.log("is_round2_visible");
+      if (!VALID_CONSENT_TABS_ID?.threeTab?.includes(activeTab)) {
+        urlService.setQueryStringValue(ACTIVE_TAB, 1);
+        setActiveTab("1");
+      }
+      return;
     }
-  }, []);
+    if (registrationDateData?.is_round1_visible) {
+      if (!VALID_CONSENT_TABS_ID.twoTab.includes(activeTab)) {
+        urlService.setQueryStringValue(ACTIVE_TAB, 1);
+        setActiveTab("1");
+      }
+      return;
+    }
+    console.log("is_round1_visible");
+    if (!VALID_CONSENT_TABS_ID.oneTab.includes(activeTab)) {
+      urlService.setQueryStringValue(ACTIVE_TAB, 1);
+      setActiveTab("1");
+    }
+  }, [urlService]);
 
   return (
     <>
@@ -780,7 +796,7 @@ const ConsentMarkingContent = ({
             bottomSection={
               <TwoRow
                 className={styles.tableDataContainer}
-                topSection={activeTabChildren.children}
+                topSection={activeTabChildren?.children}
                 bottomSection={
                   isTableDateEdit ? (
                     <ActionAndCancelButtons
