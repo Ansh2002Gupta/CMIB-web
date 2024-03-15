@@ -22,8 +22,8 @@ const ConfigureCentres = () => {
       VALID_GLOBAL_CONFIGURATIONS_TABS_ID
     )
   );
-  const [itSkillsObj, setItSkillsObj] = useState(initialFieldState);
-  const [softSkillsObj, setSoftSkillsObj] = useState(initialFieldState);
+  const [itSkills, setItSkills] = useState(initialFieldState);
+  const [softSkills, setSoftSkills] = useState(initialFieldState);
 
   const tabItems = [
     {
@@ -37,10 +37,12 @@ const ConfigureCentres = () => {
       children: (
         <div className={styles.configureCentreContentWrapper}>
           <ProfileSkills
-            currentFieldStateItSkills={itSkillsObj}
-            currentFieldStateSoftSkills={softSkillsObj}
-            setCurrentFieldStateItSkills={setItSkillsObj}
-            setCurrentFieldStateSoftSkills={setSoftSkillsObj}
+            {...{
+              itSkills,
+              setItSkills,
+              setSoftSkills,
+              softSkills,
+            }}
           />
         </div>
       ),

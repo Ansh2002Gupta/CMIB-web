@@ -12,8 +12,8 @@ import useFetch from "../../../core/hooks/useFetch";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import { returnFieldObjects } from "./helpers";
 import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
-import { initialFieldState } from "./constant";
 import { NOTIFICATION_TYPES } from "../../../constant/constant";
+import { initialFieldState } from "./constant";
 import { classes } from "./CaJobsConfigurations.styles";
 import styles from "./CaJobsConfigurations.module.scss";
 
@@ -119,9 +119,9 @@ const CaJobsConfigurations = () => {
           cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
           customActionBtnStyles={styles.saveButton}
           customContainerStyles={styles.buttonWrapper}
+          isActionBtnDisable={isFieldError}
           onActionBtnClick={handleSave}
           onCancelBtnClick={handleCancel}
-          isActionBtnDisable={isFieldError}
         />
       }
     />

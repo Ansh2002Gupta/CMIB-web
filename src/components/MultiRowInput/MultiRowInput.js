@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import { ThemeContext } from "core/providers/theme";
 import CustomInput from "../CustomInput/CustomInput";
 import { handleDuplicateArrayItems } from "../../Utils/handleDuplicateArrayItem.js";
-import { returnEmptyRow } from "./helpers.js";
 import { updateArrayItem } from "../../Utils/updateArrayItem.js";
+import { returnEmptyRow } from "./helpers.js";
 import styles from "./MultiRowInput.module.scss";
 
 const MultiRowInput = ({
