@@ -35,16 +35,18 @@ const ConsentMarking = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
-  const isEdit =
-    currentGlobalSession?.is_editable && currentGlobalSession?.status;
+  const isEdit = !!(
+    currentGlobalSession?.is_editable && currentGlobalSession?.status
+  );
   const [userProfileDetails] = useContext(UserProfileContext);
   const roundId = urlService.getQueryStringValue(ROUND_ID);
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
       urlService.getQueryStringValue(ACTIVE_TAB),
-      VALID_CONSENT_MARKING_TABS_ID
+      VALID_CONSENT_MARKING_TABS_ID.threeTab
     )
   );
+
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
   const {
@@ -118,7 +120,10 @@ const ConsentMarking = () => {
   });
 
   const getAllData = () => {
-    !registrationDateData && getRegistrationDate({});
+    if (!registrationDateData) {
+      getRegistrationDate({});
+    }
+
     if (activeTab === "2") {
       getConsentRoundOne({});
       return;
@@ -173,16 +178,20 @@ const ConsentMarking = () => {
     }
 
     if (
-      (consentRoundTwoData ||
-        consentRoundOneData ||
-        lastRegistrationDatesData) &&
+      ((activeTab === "3" && consentRoundTwoData) ||
+        (activeTab === "2" && consentRoundOneData) ||
+        (activeTab === "1" && lastRegistrationDatesData)) &&
       registrationDateData
     ) {
       return (
         <ConsentMarkingContent
           {...{
             activeTab,
+            consentRoundOneData,
+            consentRoundTwoData,
+            currentlySelectedModuleKey,
             isEdit,
+            lastRegistrationDatesData,
             roundId,
             registrationDateData,
             setActiveTab,
@@ -190,6 +199,7 @@ const ConsentMarking = () => {
         />
       );
     }
+    return <></>;
   };
 
   useEffect(() => {

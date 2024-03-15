@@ -1,5 +1,6 @@
 import {
-  CONSENT_MARKING,
+  CONSENT_MARKING_ROUND_ONE,
+  CONSENT_MARKING_ROUND_TWO,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   ROUND_TWO_SETUP_CENTERS,
@@ -56,7 +57,13 @@ export const ROW_PER_PAGE_OPTIONS = [
 export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
-export const VALID_CONSENT_MARKING_TABS_ID = ["1", "2", "3"];
+export const VALID_SESSION_TABS_ID = ["1", "2", "3"];
+
+export const VALID_CONSENT_MARKING_TABS_ID = {
+  oneTab: ["1"],
+  twoTab: ["1", "2"],
+  threeTab: ["1", "2", "3"],
+};
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
@@ -220,7 +227,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: CONSENT_MARKING,
+    onClickNaviagtion: CONSENT_MARKING_ROUND_ONE,
   },
   {
     id: 5,
@@ -247,7 +254,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: CONSENT_MARKING,
+    onClickNaviagtion: CONSENT_MARKING_ROUND_TWO,
   },
   {
     id: 3,
