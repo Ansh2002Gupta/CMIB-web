@@ -264,6 +264,7 @@ const ConsentMarkingContentRoundTwo = ({
           setNotificationStateDispatch(setShowSuccessNotification(true));
           navigateBackToSession();
         },
+
         roundId,
       });
     }
