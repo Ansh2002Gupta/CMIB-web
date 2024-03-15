@@ -3,10 +3,10 @@ import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
-import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
+import { MASTER } from "../../../constant/apiEndpoints";
 import { CONFIGURATIONS } from "../../../routes/routeNames";
 
-const usePostGlobalConfigurationsApi = () => {
+const usePostGlobalConfigurationsApi = (selectedModule) => {
   const intl = useIntl();
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
   const [errorWhilePostingData, setErrorWhilePostingData] = useState("");
@@ -19,7 +19,7 @@ const usePostGlobalConfigurationsApi = () => {
     try {
       setApiStatus(API_STATUS.LOADING);
       errorWhilePostingData && setErrorWhilePostingData("");
-      const url = CAJOBS_ROUTE + MASTER + CONFIGURATIONS;
+      const url = selectedModule?.key + MASTER + CONFIGURATIONS;
       const res = await Http.post(url, payload);
       if (
         res.code === STATUS_CODES.SUCCESS_POST ||
