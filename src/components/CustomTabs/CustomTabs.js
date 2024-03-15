@@ -32,7 +32,7 @@ const CustomTabs = ({
       <div className={styles["tab-box"]}>
         {tabs?.map((tab, index) => (
           <Typography
-            key={tab.key}
+            key={index}
             className={tabClass(tab.key, index)}
             onClick={() => handleSelectTab(tab.key)}
           >

@@ -59,42 +59,10 @@
   gap: var(--gapSmall);
 }
 
-.btnIconStyles {
-  width: var(--width_20) !important;
-}
-
-.btnCustomStyles {
-  min-width: var(--width_100);
-  padding: var(--paddingNone);
-  min-height: 0px;
-  border-width: 0px;
-  box-shadow: none;
-}
-
-.editBtnCustomStyles {
-  min-width: var(--width_100);
-  padding: var(--paddingNone);
-  min-height: 0px;
-  border-width: 0px;
-  box-shadow: none;
-  background-color: var(--blueBg);
-}
-
-.customContainerStyle {
-  padding-bottom: var(--paddingNone);
-}
-
-.tabEdit {
-  padding-right: var(--paddingMedium);
-}
-
-.tableDataContainer {
-  background-color: var(--bodyBg);
-  border: var(--borderLight);
-  border-radius: var(--radiusMLg) !important;
-}
-
-.button {
-  padding: var(--paddingSmall);
-  min-height: var(--height_44);
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--height_50vh);
+  width: var(--fullWidth);
 }
