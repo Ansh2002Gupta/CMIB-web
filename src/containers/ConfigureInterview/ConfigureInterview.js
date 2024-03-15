@@ -150,6 +150,7 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
       );
     } else {
       handleError(key, "", index);
+      overlapValidate();
     }
   };
 
@@ -223,7 +224,7 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
           errorCount++;
           handleError(
             "start_time",
-            intl.formatMessage({ id: "label.error.overlap" }),
+            intl.formatMessage({ id: "label.error.startOverlap" }),
             index
           );
           return;
@@ -232,11 +233,13 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
           errorCount++;
           handleError(
             "end_time",
-            intl.formatMessage({ id: "label.error.overlap" }),
+            intl.formatMessage({ id: "label.error.endOverlap" }),
             index
           );
           return;
         }
+        handleError("end_time", "", index);
+        handleError("start_time", "", index);
       });
     });
     if (errorCount) return false;
