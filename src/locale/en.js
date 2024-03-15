@@ -483,6 +483,7 @@ const locale = {
   "label.search_by_name_or_registration_no":
     "Search by name and registration/membership number",
   "label.path.round1": "Round 1",
+  "label.path.round2": "Round 2",
   "label.path.setup-centers": "Setup centres",
   "label.big_centres": "Big Centres",
   "label.small_centres": "Small Centres",

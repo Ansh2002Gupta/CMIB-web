@@ -46,6 +46,7 @@ const EditSessionRound = ({
   const { isLoading, updateSessionRoundDetails } =
     useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);
+
   const { data, isError } = useFetch({
     url: ADMIN_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT,
   });

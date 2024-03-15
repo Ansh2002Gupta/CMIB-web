@@ -41,3 +41,10 @@ export const updateInterviewNotification = (payload) => {
     payload,
   };
 };
+
+export const setShowSuccessNotification = (payload) => {
+  return {
+    type: types.SHOW_SUCCESS_NOTIFICATION,
+    payload,
+  };
+};

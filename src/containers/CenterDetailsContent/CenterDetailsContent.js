@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -10,11 +10,18 @@ import CentreTable from "../CentreTable";
 import CustomButton from "../../components/CustomButton";
 import CustomGrid from "../../components/CustomGrid";
 import EditCentreSetupFeeAndTime from "../../components/EditCentreSetupFeeAndTime/EditCentreSetupFeeAndTime";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import useConfigUpdateHandler from "../../services/api-services/SetupCentre/useConfigUpdateHandler";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import useShowNotification from "../../core/hooks/useShowNotification";
 import useResponsive from "../../core/hooks/useResponsive";
+import useShowNotification from "../../core/hooks/useShowNotification";
+import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
 import { checkForValidNumber } from "../../constant/utils";
+import {
+  ROUND_ONE_SETUP_CENTERS,
+  ROUND_TWO_SETUP_CENTERS,
+  SESSION,
+} from "../../routes/routeNames";
 import { MODULE_KEYS, PAYMENT_TYPE } from "../../constant/constant";
 import { classes } from "./CenterDetailsContent.styles";
 import styles from "./CenterDetailsContent.module.scss";
@@ -29,15 +36,20 @@ const CenterDetailsContent = ({
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const { showNotification, notificationContextHolder } = useShowNotification();
+  const [, setNotificationStateDispatch] = useContext(NotificationContext);
+
+  const [formData, setFormData] = useState({});
+  const [tableData, setTableData] = useState([]);
+
   const isNqcaModule =
     selectedModule === MODULE_KEYS.NEWLY_QUALIFIED_PLACEMENTS_KEY;
   const isOverseasModule = selectedModule === MODULE_KEYS.OVERSEAS_CHAPTERS_KEY;
   const { interview_dates } = centreDetailData || {};
-  const [formData, setFormData] = useState({});
-  const [tableData, setTableData] = useState([]);
-  const { showNotification, notificationContextHolder } = useShowNotification();
   const paymentType = location?.state?.paymentType || PAYMENT_TYPE.CENTRE_WISE;
   const isCentreWisePayment = paymentType === PAYMENT_TYPE.CENTRE_WISE;
+
+  const hasRoundTwo = location?.pathname.includes("round2");
 
   const addTableData = {
     isAddRow: true,
@@ -70,7 +82,7 @@ const CenterDetailsContent = ({
         id: interviewRow.id,
         scheduleDate: interviewRow?.interview_schedule_date || null,
         ...(isCentreWisePayment && {
-          participationFee: interviewRow.participation_fee?.toString(),
+          participationFee: interviewRow?.participation_fee?.toString(),
         }),
         ...(isCentreWisePayment && {
           firm: {
@@ -78,21 +90,43 @@ const CenterDetailsContent = ({
             uptoPartners: interviewRow.numbers_of_partners?.toString(),
           },
         }),
-        ...(isNqcaModule && { norm1: interviewRow.norm1.toString() }),
-        ...(isNqcaModule && { norm2: interviewRow.norm2.toString() }),
+        ...(isNqcaModule && { norm1: interviewRow?.norm1?.toString() }),
+        ...(isNqcaModule && { norm2: interviewRow?.norm2?.toString() }),
         ...(isNqcaModule && {
-          norm2MinVacancy: interviewRow.norm2_min_vacancy?.toString(),
+          norm2MinVacancy: interviewRow?.norm2_min_vacancy?.toString(),
         }),
         ...(isOverseasModule && {
-          interviewType: interviewRow.interview_type,
+          interviewType: interviewRow?.interview_type,
         }),
       })
     );
 
+    function getNewTableData(
+      isEdit,
+      hasRoundTwo,
+      interviewConfiguration,
+      addTableData,
+      interview_dates
+    ) {
+      if (isEdit) {
+        if (hasRoundTwo && !!interview_dates?.length) {
+          return [...interviewConfiguration];
+        } else {
+          return [...interviewConfiguration, addTableData];
+        }
+      } else {
+        return interviewConfiguration;
+      }
+    }
+
     setTableData(() => {
-      const newTableData = isEdit
-        ? [...interviewConfiguration, addTableData]
-        : interviewConfiguration;
+      const newTableData = getNewTableData(
+        isEdit,
+        hasRoundTwo,
+        interviewConfiguration,
+        addTableData,
+        interview_dates
+      );
 
       setErrors(
         newTableData.map(() => ({
@@ -118,8 +152,21 @@ const CenterDetailsContent = ({
 
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const handleCancel = () => {
-    navigate(-1);
+  const navigateToSetupCentreScreen = () => {
+    navigate(
+      `/${selectedModule}/${SESSION}${
+        hasRoundTwo ? ROUND_TWO_SETUP_CENTERS : ROUND_ONE_SETUP_CENTERS
+      }?roundId=${roundId}`
+    );
+  };
+
+  const validateScheduleDate = (index) => {
+    let errorCount = 0;
+    if (!tableData[index]?.scheduleDate) {
+      handleSetError("scheduleDate", index);
+      errorCount += 1;
+    }
+    return errorCount <= 0;
   };
 
   const validate = (index) => {
@@ -230,11 +277,17 @@ const CenterDetailsContent = ({
     };
 
     const newErrors = interviewDatesData.map((_, index) => {
-      if (!validate(index)) {
-        allRowsValid = false;
-        return errors[index];
+      if (hasRoundTwo) {
+        if (!validateScheduleDate(index)) {
+          allRowsValid = false;
+          return errors[index];
+        }
+      } else {
+        if (!validate(index)) {
+          allRowsValid = false;
+          return errors[index];
+        }
       }
-
       return defaultErrorState;
     });
 
@@ -243,6 +296,17 @@ const CenterDetailsContent = ({
     if (!allRowsValid) {
       return;
     }
+
+    const roundTwoCentreDetailsPayload = {
+      centre_start_time: formData?.centreStartTime,
+      centre_end_time: formData.centreEndTime,
+      interview_dates: interviewDatesData.map((item) => {
+        const interviewDateDetails = {
+          interview_schedule_date: item.scheduleDate,
+        };
+        return interviewDateDetails;
+      }),
+    };
 
     const centreDetailsPayload = {
       centre_start_time: formData?.centreStartTime,
@@ -280,14 +344,15 @@ const CenterDetailsContent = ({
 
     updateCentreConfig({
       module: selectedModule,
-      payload: centreDetailsPayload,
+      payload: hasRoundTwo
+        ? roundTwoCentreDetailsPayload
+        : centreDetailsPayload,
       centreId: centreId,
       roundId: roundId,
-      onSuccessCallback: () =>
-        showNotification({
-          text: intl.formatMessage({ id: "label.data_saved_successfully" }),
-          type: "success",
-        }),
+      onSuccessCallback: () => {
+        setNotificationStateDispatch(setShowSuccessNotification(true));
+        navigateToSetupCentreScreen();
+      },
       onErrorCallback: (error) => {
         showNotification({ text: error, type: "error" });
       },
@@ -325,6 +390,7 @@ const CenterDetailsContent = ({
       addTableData,
       errors,
       handleSetError,
+      hasRoundTwo,
       isNqcaModule,
       isEdit,
       paymentType,
@@ -338,22 +404,29 @@ const CenterDetailsContent = ({
     const isFirstTableRowFilled = () => {
       if (!tableData.length) return false;
 
+      if (hasRoundTwo) {
+        const firstRow = tableData[0];
+        return checkForValidNumber(firstRow?.scheduleDate);
+      }
       const firstRow = tableData[0];
-      const isValueFilled = (value) => !!value || value === 0;
 
       return (
-        isValueFilled(firstRow?.scheduleDate) &&
+        checkForValidNumber(firstRow?.scheduleDate) &&
         (isCentreWisePayment
-          ? isValueFilled(firstRow?.participationFee)
+          ? checkForValidNumber(firstRow?.participationFee)
           : true) &&
-        (isCentreWisePayment ? isValueFilled(firstRow?.firm?.firmFee) : true) &&
         (isCentreWisePayment
-          ? isValueFilled(firstRow?.firm?.uptoPartners)
+          ? checkForValidNumber(firstRow?.firm?.firmFee)
           : true) &&
-        (isNqcaModule ? isValueFilled(firstRow?.norm1) : true) &&
-        (isNqcaModule ? isValueFilled(firstRow?.norm2) : true) &&
-        (isNqcaModule ? isValueFilled(firstRow?.norm2MinVacancy) : true) &&
-        (isOverseasModule ? isValueFilled(firstRow.interviewType) : true)
+        (isCentreWisePayment
+          ? checkForValidNumber(firstRow?.firm?.uptoPartners)
+          : true) &&
+        (isNqcaModule ? checkForValidNumber(firstRow?.norm1) : true) &&
+        (isNqcaModule ? checkForValidNumber(firstRow?.norm2) : true) &&
+        (isNqcaModule
+          ? checkForValidNumber(firstRow?.norm2MinVacancy)
+          : true) &&
+        (isOverseasModule ? checkForValidNumber(firstRow.interviewType) : true)
       );
     };
 
@@ -384,13 +457,13 @@ const CenterDetailsContent = ({
               responsive.isMd ? styles.buttonStyles : styles.mobileButtonStyles
             }
             textStyle={styles.textStyle}
-            onClick={handleCancel}
+            onClick={navigateToSetupCentreScreen}
           />
         }
         rightSection={
           <CustomButton
             isBtnDisable={
-              (isNqcaModule && !formData?.PsychometricFee) ||
+              (!hasRoundTwo && isNqcaModule && !formData?.PsychometricFee) ||
               !formData?.centreStartTime ||
               !formData?.centreEndTime ||
               !isFirstTableRowFilled()
@@ -406,21 +479,39 @@ const CenterDetailsContent = ({
       />
     );
 
-    const centreDetails = [
-      { heading: "writtenTestFee", value: formData?.PsychometricFee },
-      {
-        heading: "centreStartTime",
-        value: formData?.centreStartTime
-          ? dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A")
-          : "-",
-      },
-      {
-        heading: "centreEndTime",
-        value: formData?.centreEndTime
-          ? dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A")
-          : "-",
-      },
-    ];
+    const centreDetails = isNqcaModule
+      ? [
+          {
+            heading: "writtenTestFee",
+            value: formData?.PsychometricFee,
+          },
+          {
+            heading: "centreStartTime",
+            value: formData?.centreStartTime
+              ? dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A")
+              : "-",
+          },
+          {
+            heading: "centreEndTime",
+            value: formData?.centreEndTime
+              ? dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A")
+              : "-",
+          },
+        ]
+      : [
+          {
+            heading: "centreStartTime",
+            value: formData?.centreStartTime
+              ? dayjs(formData?.centreStartTime, "HH:mm:ss").format("hh:mm A")
+              : "-",
+          },
+          {
+            heading: "centreEndTime",
+            value: formData?.centreEndTime
+              ? dayjs(formData?.centreEndTime, "HH:mm:ss").format("hh:mm A")
+              : "-",
+          },
+        ];
     return (
       <>
         {notificationContextHolder}
@@ -431,31 +522,35 @@ const CenterDetailsContent = ({
               <EditCentreSetupFeeAndTime
                 isEdit={isEdit}
                 handleInputChange={handleInputChange}
+                hasRoundTwo={hasRoundTwo}
                 formData={formData}
                 selectedModule={selectedModule}
               />
             ) : (
               <div className={styles.gridStyle}>
                 <CustomGrid>
-                  {centreDetails.map((item) => (
-                    <TwoRow
-                      key={item.id}
-                      className={styles.gridItem}
-                      topSection={
-                        <Typography className={styles.grayText}>
-                          {intl.formatMessage({
-                            id: `label.${item.heading}`,
-                          })}
-                          <span className={styles.redText}> *</span>
-                        </Typography>
-                      }
-                      bottomSection={
-                        <div className={styles.blackText}>
-                          {item.value || "-"}
-                        </div>
-                      }
-                    />
-                  ))}
+                  {centreDetails.map((item) =>
+                    item?.heading?.toLowerCase() === "writtentestfee" &&
+                    hasRoundTwo ? null : (
+                      <TwoRow
+                        key={item.id}
+                        className={styles.gridItem}
+                        topSection={
+                          <Typography className={styles.grayText}>
+                            {intl.formatMessage({
+                              id: `label.${item.heading}`,
+                            })}
+                            <span className={styles.redText}> *</span>
+                          </Typography>
+                        }
+                        bottomSection={
+                          <div className={styles.blackText}>
+                            {item.value || "-"}
+                          </div>
+                        }
+                      />
+                    )
+                  )}
                 </CustomGrid>
               </div>
             )
