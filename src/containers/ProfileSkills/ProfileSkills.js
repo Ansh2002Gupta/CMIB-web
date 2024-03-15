@@ -8,12 +8,13 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import MultiRowInput from "../../components/MultiRowInput/MultiRowInput";
 import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./ProfileSkills.module.scss";
+import { MAX_INPUT_LENGTH } from "../../constant/constant";
 
 const ProfileSkills = ({
   itSkills,
-  softSkills,
   setItSkills,
   setSoftSkills,
+  softSkills,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -50,7 +51,7 @@ const ProfileSkills = ({
                     id: "label.headerTextSoftSkills",
                   })}
                   inputFields={softSkills}
-                  maxInputLength={100}
+                  maxInputLength={MAX_INPUT_LENGTH}
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderSoftSkills",
                   })}
@@ -74,16 +75,16 @@ const ProfileSkills = ({
 
 ProfileSkills.defaultProps = {
   itSkills: [],
-  softSkills: [],
   setItSkills: () => {},
-  setSoftSkills: () => {},
+  setSoftSkills: () => [],
+  softSkills: [],
 };
 
 ProfileSkills.propTypes = {
   itSkills: PropTypes.array,
-  softSkills: PropTypes.array,
   setItSkills: PropTypes.func,
   setSoftSkills: PropTypes.func,
+  softSkills: PropTypes.array,
 };
 
 export default ProfileSkills;

@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
+
 import ProfileSkills from "../ProfileSkills/index";
 import VideoTimeLimitSection from "../VideoTimeLimitSection/index";
 import styles from "./CaJobsConfigurationsContainer.module.scss";
 
 const CaJobsConfig = ({
   itSkills,
-  softSkills,
   setItSkills,
   setSoftSkills,
+  softSkills,
   videoTimeLimit,
   setVideoTimeLimit,
 }) => {
@@ -18,10 +19,7 @@ const CaJobsConfig = ({
     <div className={styles.outerContainer}>
       <TwoRow
         topSection={
-          <VideoTimeLimitSection
-            videoTimeLimit={videoTimeLimit}
-            setVideoTimeLimit={setVideoTimeLimit}
-          />
+          <VideoTimeLimitSection {...{ videoTimeLimit, setVideoTimeLimit }} />
         }
         bottomSection={
           <ProfileSkills
@@ -40,16 +38,20 @@ const CaJobsConfig = ({
 
 CaJobsConfig.defaultProps = {
   itSkills: [],
-  softSkills: [],
   setItSkills: () => {},
-  setSoftSkills: () => {},
+  setSoftSkills: () => [],
+  softSkills: [],
+  videoTimeLimit: 0,
+  setVideoTimeLimit: () => {},
 };
 
 CaJobsConfig.propTypes = {
   itSkills: PropTypes.array,
-  softSkills: PropTypes.array,
   setItSkills: PropTypes.func,
   setSoftSkills: PropTypes.func,
+  softSkills: PropTypes.array,
+  videoTimeLimit: PropTypes.number,
+  setVideoTimeLimit: PropTypes.func,
 };
 
 export default CaJobsConfig;

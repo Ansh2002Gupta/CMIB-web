@@ -136,9 +136,9 @@ const CaJobsConfigurations = () => {
         <CaJobsConfigurationsContainer
           {...{
             itSkills,
-            softSkills,
             setItSkills,
             setSoftSkills,
+            softSkills,
             videoTimeLimit,
             setVideoTimeLimit,
           }}
