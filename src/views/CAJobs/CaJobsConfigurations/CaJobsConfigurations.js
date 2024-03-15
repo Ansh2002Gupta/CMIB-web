@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ThreeRow } from "../../../core/layouts";
@@ -8,6 +8,7 @@ import CaJobsConfigurationsContainer from "../../../containers/CaJobsConfigurati
 import ContentHeader from "../../../containers/ContentHeader";
 import CustomLoader from "../../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../../components/ErrorMessageBox";
+import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../../core/hooks/useFetch";
 import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
 import useShowNotification from "../../../core/hooks/useShowNotification";
@@ -17,34 +18,33 @@ import {
   returnFieldObjects,
 } from "./helpers";
 import { initialFieldState } from "./constant";
-import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
+import { MASTER } from "../../../constant/apiEndpoints";
 import { CONFIGURATIONS } from "../../../routes/routeNames";
-import { NOTIFICATION_TYPES } from "../../../constant/constant";
+import { MODULE_KEYS, NOTIFICATION_TYPES } from "../../../constant/constant";
 import { classes } from "./CaJobsConfigurations.styles";
 import styles from "./CaJobsConfigurations.module.scss";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();
   const previousSavedData = useRef();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
+
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
   const [itSkills, setItSkills] = useState(initialFieldState);
   const [softSkills, setSoftSkills] = useState(initialFieldState);
   const { isLoading: isSavingConfigurations, postGlobalConfigurations } =
-    usePostGlobalConfigurationsApi();
+    usePostGlobalConfigurationsApi(selectedModule);
   const {
     error: errorGettingConfigurations,
     fetchData,
     isLoading,
     isSuccess: isGettingConfigurationsSuccessful,
   } = useFetch({
-    url: CAJOBS_ROUTE + MASTER + CONFIGURATIONS,
+    url: selectedModule?.key + MASTER + CONFIGURATIONS,
     otherOptions: { skipApiCallOnMount: true },
   });
   const { showNotification, notificationContextHolder } = useShowNotification();
-
-  useEffect(() => {
-    getSavedProfileSkills();
-  }, []);
 
   const getSavedProfileSkills = () => {
     fetchData({
@@ -69,6 +69,12 @@ const CaJobsConfigurations = () => {
     });
   };
 
+  useEffect(() => {
+    if (selectedModule?.key) {
+      getSavedProfileSkills();
+    }
+  }, [selectedModule?.key]);
+
   const postProfileSkills = ({ keyName }) => {
     const itSkillsWithAtmostOneEmptyField = removeInBetweenEmptyFields({
       array: itSkills,
@@ -88,13 +94,13 @@ const CaJobsConfigurations = () => {
       valueKeyName: keyName,
       actionKeyName: "buttonType",
     });
-
     const itSkillsList = updatedItSkills.map((obj) =>
       !!obj?.[keyName] ? obj?.[keyName] : ""
     );
     const softSkillsList = updatedSoftSkills.map((obj) =>
       !!obj?.[keyName] ? obj?.[keyName] : ""
     );
+
     postGlobalConfigurations({
       payload: {
         it_skill: itSkillsList,
@@ -123,13 +129,11 @@ const CaJobsConfigurations = () => {
       },
     });
   };
-
   const initializeWithPreviousSavedData = () => {
     setItSkills(previousSavedData.current.previousSavedItSkills);
     setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
     setVideoTimeLimit(previousSavedData.current.previousSavedVideoTimeLimit);
   };
-
   const renderContent = () => {
     if (isLoading) {
       return <CustomLoader />;
@@ -157,6 +161,7 @@ const CaJobsConfigurations = () => {
         <CaJobsConfigurationsContainer
           {...{
             itSkills,
+            selectedModule,
             setItSkills,
             setSoftSkills,
             softSkills,
@@ -167,15 +172,18 @@ const CaJobsConfigurations = () => {
       );
     }
   };
-
   return (
     <>
       {notificationContextHolder}
       <ThreeRow
         topSection={
-          <div className={styles.headerContainer}>
-            <ContentHeader headerText="Global Configurations" />
-          </div>
+          selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY ? (
+            <div className={styles.headerContainer}>
+              <ContentHeader headerText="Global Configurations" />
+            </div>
+          ) : (
+            <> </>
+          )
         }
         middleSection={renderContent()}
         middleSectionStyle={classes.middleSection}
@@ -208,5 +216,4 @@ const CaJobsConfigurations = () => {
     </>
   );
 };
-
 export default CaJobsConfigurations;

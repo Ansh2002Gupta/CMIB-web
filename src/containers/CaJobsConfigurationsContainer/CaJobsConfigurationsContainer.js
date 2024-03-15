@@ -5,10 +5,12 @@ import { TwoRow } from "../../core/layouts";
 
 import ProfileSkills from "../ProfileSkills/index";
 import VideoTimeLimitSection from "../VideoTimeLimitSection/index";
+import { MODULE_KEYS } from "../../constant/constant";
 import styles from "./CaJobsConfigurationsContainer.module.scss";
 
 const CaJobsConfigurationsContainer = ({
   itSkills,
+  selectedModule,
   setItSkills,
   setSoftSkills,
   softSkills,
@@ -16,10 +18,20 @@ const CaJobsConfigurationsContainer = ({
   setVideoTimeLimit,
 }) => {
   return (
-    <div className={styles.outerContainer}>
+    <div
+      className={`${styles.fullWidth} ${
+        selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY
+          ? styles.outerContainer
+          : ""
+      }`}
+    >
       <TwoRow
         topSection={
-          <VideoTimeLimitSection {...{ videoTimeLimit, setVideoTimeLimit }} />
+          selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY ? (
+            <VideoTimeLimitSection {...{ setVideoTimeLimit, videoTimeLimit }} />
+          ) : (
+            <></>
+          )
         }
         bottomSection={
           <ProfileSkills
@@ -47,6 +59,7 @@ CaJobsConfigurationsContainer.defaultProps = {
 
 CaJobsConfigurationsContainer.propTypes = {
   itSkills: PropTypes.array,
+  selectedModule: PropTypes.object,
   setItSkills: PropTypes.func,
   setSoftSkills: PropTypes.func,
   softSkills: PropTypes.array,

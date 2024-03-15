@@ -1,5 +1,8 @@
 .outerContainer {
   background-color: var(--blueBg);
-  width: var(--widthFullViewPort);
   padding: var(--paddingMedium);
+}
+
+.fullWidth {
+  width: var(--widthFullViewPort);
 }

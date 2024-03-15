@@ -197,6 +197,7 @@ const locale = {
   "label.companies": "Companies",
   "label.companyName": "Company Name",
   "label.entity": "Entity",
+  "label.global_configurations": "Global Configurations",
   "label.generatePaymentMis": "Generate Payment MIS",
   "label.manageCompanyDetails": "Manage company details",
   "label.phoneNumber": "Phone Number",
@@ -540,6 +541,7 @@ const locale = {
   "label.max_video_upload_time_limit":
     "Maximum Video Upload Time Limit (seconds)",
   "label.set_profile_skills": "Set Profile Skills",
+  "label.nqca-placements": "nqca-placements",
 };
 
 export default locale;
