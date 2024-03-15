@@ -12,21 +12,18 @@ import usePostGlobalConfigurationsApi from "../../../services/api-services/Globa
 import { returnFieldObjects } from "./helpers";
 import { initialFieldState } from "./constant";
 import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
+import { NOTIFICATION_TYPES } from "../../../constant/constant";
 import { classes } from "./CaJobsConfigurations.styles";
 import styles from "./CaJobsConfigurations.module.scss";
 import CustomLoader from "../../../components/CustomLoader/CustomLoader";
-import { NotificationContext } from "../../../globalContext/notification/notificationProvider";
-import { setShowSuccessNotification } from "../../../globalContext/notification/notificationActions";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();
   const previousSavedData = useRef();
-  const [postingSkillInfo, setPostingSkillInfo] = useState(false);
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
   const [itSkills, setItSkills] = useState(initialFieldState);
   const [softSkills, setSoftSkills] = useState(initialFieldState);
-  const [isFieldError, setIsFieldError] = useState(false);
   const { postGlobalConfigurations } = usePostGlobalConfigurationsApi();
   const { isLoading, fetchData } = useFetch({
     url: CAJOBS_ROUTE + MASTER + CONFIGURATIONS,
@@ -58,19 +55,16 @@ const CaJobsConfigurations = () => {
           previousSavedData.current.previousSavedVideoTimeLimit
         );
       },
-      //TODO: TO DESIGN THE ERROR LOGIC
-      onErrorCallback: (error) => {},
+      onErrorCallback: (error) => {
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.errorOccured",
+          }),
+          type: NOTIFICATION_TYPES.ERROR,
+        });
+      },
     });
   };
-
-  //to enable/disable action button.
-  useEffect(() => {
-    setIsFieldError(false);
-    const isError =
-      itSkills.some((obj) => obj?.error) ||
-      softSkills.some((obj) => obj?.error);
-    if (isError) setIsFieldError(true);
-  }, [itSkills, softSkills]);
 
   const removeInBetweenEmptyFields = ({ array, valueKeyName }) => {
     const arrayWithoutEmptyFields = array.filter((field, index) =>
@@ -79,27 +73,31 @@ const CaJobsConfigurations = () => {
     return arrayWithoutEmptyFields;
   };
 
-  const addEmptyRowAtLastIfAbsent = ({ array, valueKeyName }) => {
+  const addEmptyRowAtLastIfAbsent = ({
+    array,
+    valueKeyName,
+    actionKeyName,
+  }) => {
     let updatedArray = array.map((field, index) => {
       if (index === array.length - 1) {
         return !!field?.[valueKeyName]
-          ? { ...field, buttonType: "remove" }
+          ? { ...field, [actionKeyName]: "remove" }
           : field;
       } else return field;
     });
-    if (updatedArray[updatedArray.length - 1]?.buttonType?.trim() === "remove")
+    if (
+      updatedArray[updatedArray.length - 1]?.[actionKeyName]?.trim() ===
+      "remove"
+    )
       updatedArray.push({
-        fieldValue: "",
-        buttonType: "add",
+        [valueKeyName]: "",
+        [actionKeyName]: "add",
         id: Date.now(),
       });
     return updatedArray;
   };
 
-  //on save
   const postProfileSkills = ({ keyName }) => {
-    setPostingSkillInfo(true);
-    //checking and removing empty fields and keeping atmost one empty field if all fields were removed.
     const itSkillsWithAtmostOneEmptyField = removeInBetweenEmptyFields({
       array: itSkills,
       valueKeyName: keyName,
@@ -111,12 +109,13 @@ const CaJobsConfigurations = () => {
     const updatedItSkills = addEmptyRowAtLastIfAbsent({
       array: itSkillsWithAtmostOneEmptyField,
       valueKeyName: keyName,
+      actionKeyName: "buttonType",
     });
     const updatedSoftSkills = addEmptyRowAtLastIfAbsent({
       array: softSkillsWithAtmostOneEmptyField,
       valueKeyName: keyName,
+      actionKeyName: "buttonType",
     });
-    //update the useRef 'previousSavedData' with the current Data.
     previousSavedData.current = {
       previousSavedItSkills: updatedItSkills,
       previousSavedSoftSkills: updatedSoftSkills,
@@ -134,20 +133,24 @@ const CaJobsConfigurations = () => {
         soft_skill: softSkillsList,
         video_time_limit: videoTimeLimit,
       },
-      //TODO: TO DESIGN THE ERROR LOGIC
-      onErrorCallback: (errMessage) => {},
+      onErrorCallback: (errMessage) => {
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.errorOccured",
+          }),
+          type: NOTIFICATION_TYPES.ERROR,
+        });
+      },
       onSuccessCallback: () => {
         showNotification({
           text: intl.formatMessage({ id: "label.data_saved_successfully" }),
           type: "success",
         });
-        setPostingSkillInfo(false);
-        initializeWithPreviousSavedData();
       },
     });
+    initializeWithPreviousSavedData();
   };
 
-  //on cancel
   const initializeWithPreviousSavedData = () => {
     setItSkills(previousSavedData.current.previousSavedItSkills);
     setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
@@ -188,8 +191,11 @@ const CaJobsConfigurations = () => {
             cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
             customActionBtnStyles={styles.saveButton}
             customContainerStyles={styles.buttonWrapper}
-            isLoading={postingSkillInfo}
-            isActionBtnDisable={isFieldError}
+            isLoading={isLoading}
+            isActionBtnDisable={
+              itSkills.some((obj) => obj?.error) ||
+              softSkills.some((obj) => obj?.error)
+            }
             onActionBtnClick={() =>
               postProfileSkills({ keyName: "fieldValue" })
             }
