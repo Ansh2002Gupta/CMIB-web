@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ThreeRow } from "../../../core/layouts";
@@ -6,70 +6,101 @@ import { ThreeRow } from "../../../core/layouts";
 import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
 import CaJobsConfigurationsContainer from "../../../containers/CaJobsConfigurationsContainer";
 import ContentHeader from "../../../containers/ContentHeader";
-import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
-import useFetch from "../../../core/hooks/useFetch";
-import useShowNotification from "../../../core/hooks/useShowNotification";
+import CustomLoader from "../../../components/CustomLoader/CustomLoader";
+import ErrorMessageBox from "../../../components/ErrorMessageBox";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
-import { returnFieldObjects } from "./helpers";
+import useFetch from "../../../core/hooks/useFetch";
+import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
+import useShowNotification from "../../../core/hooks/useShowNotification";
+import {
+  addEmptyRowAtLastIfAbsent,
+  removeInBetweenEmptyFields,
+  returnFieldObjects,
+} from "./helpers";
+import { initialFieldState } from "./constant";
 import { MASTER } from "../../../constant/apiEndpoints";
 import { CONFIGURATIONS } from "../../../routes/routeNames";
 import { MODULE_KEYS, NOTIFICATION_TYPES } from "../../../constant/constant";
-import { initialFieldState } from "./constant";
 import { classes } from "./CaJobsConfigurations.styles";
 import styles from "./CaJobsConfigurations.module.scss";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();
+  const previousSavedData = useRef();
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
   const [itSkills, setItSkills] = useState(initialFieldState);
   const [softSkills, setSoftSkills] = useState(initialFieldState);
-  const [isFieldError, setIsFieldError] = useState(true);
-
-  const { postGlobalConfigurations } =
+  const { isLoading: isSavingConfigurations, postGlobalConfigurations } =
     usePostGlobalConfigurationsApi(selectedModule);
-  const { fetchData } = useFetch({
+  const {
+    error: errorGettingConfigurations,
+    fetchData,
+    isLoading,
+    isSuccess: isGettingConfigurationsSuccessful,
+  } = useFetch({
     url: selectedModule?.key + MASTER + CONFIGURATIONS,
     otherOptions: { skipApiCallOnMount: true },
   });
-  const { showNotification } = useShowNotification();
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
-  useEffect(() => {
-    const areThereEmptyFields =
-      itSkills.some((obj) => obj.fieldValue === "") ||
-      softSkills.some((obj) => obj.fieldValue === "");
-    if (areThereEmptyFields) {
-      setIsFieldError(true);
-      return;
-    }
-    setIsFieldError(false);
-  }, [itSkills, softSkills]);
-
-  const handleCancel = () => {
+  const getSavedProfileSkills = () => {
     fetchData({
       queryParamsObject: {},
       onSuccessCallback: (responseFieldValues) => {
         const { it_skill, soft_skill, video_max_time } = responseFieldValues[0];
-        setItSkills(returnFieldObjects({ fieldValueList: it_skill }));
-        setSoftSkills(returnFieldObjects({ fieldValueList: soft_skill }));
-        setVideoTimeLimit(video_max_time);
-      },
-      onErrorCallback: (error) => {
-        showNotification({
-          text: intl.formatMessage({
-            id: "label.addSessionSuccessfully",
+        previousSavedData.current = {
+          previousSavedItSkills: returnFieldObjects({
+            fieldValueList: it_skill,
           }),
-          type: NOTIFICATION_TYPES.ERROR,
-        });
+          previousSavedSoftSkills: returnFieldObjects({
+            fieldValueList: soft_skill,
+          }),
+          previousSavedVideoTimeLimit: video_max_time || 0,
+        };
+        setItSkills(previousSavedData.current.previousSavedItSkills);
+        setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
+        setVideoTimeLimit(
+          previousSavedData.current.previousSavedVideoTimeLimit
+        );
       },
     });
   };
 
-  const handleSave = () => {
-    const itSkillsList = itSkills.map((obj) => obj.fieldValue);
-    const softSkillsList = softSkills.map((obj) => obj.fieldValue);
+  useEffect(() => {
+    if (selectedModule?.key) {
+      getSavedProfileSkills();
+    }
+  }, [selectedModule?.key]);
+
+  const postProfileSkills = ({ keyName }) => {
+    const itSkillsWithAtmostOneEmptyField = removeInBetweenEmptyFields({
+      array: itSkills,
+      valueKeyName: keyName,
+    });
+    const softSkillsWithAtmostOneEmptyField = removeInBetweenEmptyFields({
+      array: softSkills,
+      valueKeyName: keyName,
+    });
+    const updatedItSkills = addEmptyRowAtLastIfAbsent({
+      array: itSkillsWithAtmostOneEmptyField,
+      valueKeyName: keyName,
+      actionKeyName: "buttonType",
+    });
+    const updatedSoftSkills = addEmptyRowAtLastIfAbsent({
+      array: softSkillsWithAtmostOneEmptyField,
+      valueKeyName: keyName,
+      actionKeyName: "buttonType",
+    });
+    const itSkillsList = updatedItSkills.map((obj) =>
+      !!obj?.[keyName] ? obj?.[keyName] : ""
+    );
+    const softSkillsList = updatedSoftSkills.map((obj) =>
+      !!obj?.[keyName] ? obj?.[keyName] : ""
+    );
+
     postGlobalConfigurations({
       payload: {
         it_skill: itSkillsList,
@@ -79,34 +110,54 @@ const CaJobsConfigurations = () => {
       onErrorCallback: (errMessage) => {
         showNotification({
           text: intl.formatMessage({
-            id: "label.addSessionSuccessfully",
+            id: errMessage || "label.errorOccured",
           }),
           type: NOTIFICATION_TYPES.ERROR,
         });
       },
       onSuccessCallback: () => {
         showNotification({
-          text: intl.formatMessage({
-            id: "label.addSessionSuccessfully",
-          }),
-          type: NOTIFICATION_TYPES.SUCCESS,
+          text: intl.formatMessage({ id: "label.data_saved_successfully" }),
+          type: "success",
         });
+        previousSavedData.current = {
+          previousSavedItSkills: updatedItSkills,
+          previousSavedSoftSkills: updatedSoftSkills,
+          previousSavedVideoTimeLimit: videoTimeLimit,
+        };
+        initializeWithPreviousSavedData();
       },
     });
   };
-
-  return (
-    <ThreeRow
-      topSection={
-        selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY ? (
-          <div className={styles.headerContainer}>
-            <ContentHeader headerText="Global Configurations" />
-          </div>
-        ) : (
-          <></>
-        )
-      }
-      middleSection={
+  const initializeWithPreviousSavedData = () => {
+    setItSkills(previousSavedData.current.previousSavedItSkills);
+    setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
+    setVideoTimeLimit(previousSavedData.current.previousSavedVideoTimeLimit);
+  };
+  const renderContent = () => {
+    if (isLoading) {
+      return <CustomLoader />;
+    }
+    if (!isLoading && errorGettingConfigurations) {
+      return (
+        <div className={styles.errorBox}>
+          <ErrorMessageBox
+            onRetry={getSavedProfileSkills}
+            errorText={
+              errorGettingConfigurations?.data?.message ||
+              errorGettingConfigurations
+            }
+            errorHeading={intl.formatMessage({ id: "label.error" })}
+          />
+        </div>
+      );
+    }
+    if (
+      !isLoading &&
+      !errorGettingConfigurations &&
+      isGettingConfigurationsSuccessful
+    ) {
+      return (
         <CaJobsConfigurationsContainer
           {...{
             itSkills,
@@ -114,27 +165,55 @@ const CaJobsConfigurations = () => {
             setItSkills,
             setSoftSkills,
             softSkills,
-            setVideoTimeLimit,
             videoTimeLimit,
+            setVideoTimeLimit,
           }}
         />
-      }
-      middleSectionStyle={classes.middleSection}
-      bottomSection={
-        <ActionAndCancelButtons
-          actionBtnText={intl.formatMessage({
-            id: "label.save",
-          })}
-          cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-          customActionBtnStyles={styles.saveButton}
-          customContainerStyles={styles.buttonWrapper}
-          isActionBtnDisable={isFieldError}
-          onActionBtnClick={handleSave}
-          onCancelBtnClick={handleCancel}
-        />
-      }
-    />
+      );
+    }
+  };
+  return (
+    <>
+      {notificationContextHolder}
+      <ThreeRow
+        topSection={
+          selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY ? (
+            <div className={styles.headerContainer}>
+              <ContentHeader headerText="Global Configurations" />
+            </div>
+          ) : (
+            <> </>
+          )
+        }
+        middleSection={renderContent()}
+        middleSectionStyle={classes.middleSection}
+        bottomSection={
+          !errorGettingConfigurations && !isLoading ? (
+            <ActionAndCancelButtons
+              actionBtnText={intl.formatMessage({
+                id: "label.save",
+              })}
+              cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+              customActionBtnStyles={styles.saveButton}
+              customContainerStyles={styles.buttonWrapper}
+              isLoading={isSavingConfigurations}
+              isActionBtnDisable={
+                itSkills.some(
+                  (obj) => obj?.error && obj.buttonType !== "add"
+                ) ||
+                softSkills.some((obj) => obj?.error && obj.buttonType !== "add")
+              }
+              onActionBtnClick={() =>
+                postProfileSkills({ keyName: "fieldValue" })
+              }
+              onCancelBtnClick={initializeWithPreviousSavedData}
+            />
+          ) : (
+            <> </>
+          )
+        }
+      />
+    </>
   );
 };
-
 export default CaJobsConfigurations;

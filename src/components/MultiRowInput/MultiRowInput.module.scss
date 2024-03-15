@@ -20,6 +20,12 @@
   width: var(--fullWidth);
 }
 
+.customInputStyles {
+  font-size: var(--fontSizeSmall);
+  line-height: var(--lineHeightNormal);
+  font-weight: var(--fontWeightMedium);
+}
+
 .imageStyle {
   position: relative;
   top: var(--top_10);
