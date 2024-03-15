@@ -424,6 +424,7 @@ const ConsentMarkingContent = ({
                               placeholder={intl.formatMessage({
                                 id: `label.consent.placeholder.${item?.labeIntl}`,
                               })}
+                              useExactDate
                               value={
                                 registrationDatesData[item?.labeIntl]
                                   ? registrationDatesData[item?.labeIntl]
