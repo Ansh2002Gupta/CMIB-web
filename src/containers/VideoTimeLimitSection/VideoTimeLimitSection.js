@@ -38,6 +38,7 @@ const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
             </Typography>
             <CustomInput
               controls={true}
+              customInputNumberStyles={styles.inputNumberStyle}
               min={MIN_VIDEO_LENGTH}
               max={MAX_VIDEO_LENGTH}
               onChange={(val) => setVideoTimeLimit(val)}
