@@ -2,6 +2,6 @@ export const initialFieldState = [
   {
     fieldValue: "",
     buttonType: "add",
-    id: 0,
+    id: Date.now(),
   },
 ];
