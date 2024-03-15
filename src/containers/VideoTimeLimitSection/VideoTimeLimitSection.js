@@ -1,6 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
+import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -36,18 +37,32 @@ const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
             </Typography>
             <CustomInput
               controls={true}
-              min={0}
+              customInputNumberStyles={styles.inputNumberStyle}
               max={15}
+              min={0}
+              onChange={(val) => setVideoTimeLimit(val)}
               type="inputNumber"
               value={videoTimeLimit}
-              onChange={(val) => setVideoTimeLimit(val)}
-              customInputNumberStyles={styles.inputNumberStyle}
             />
           </div>
         }
       />
     </div>
   );
+};
+
+VideoTimeLimitSection.defaultProps = {
+  itSkills: [],
+  setItSkills: () => {},
+  setSoftSkills: () => [],
+  softSkills: [],
+};
+
+VideoTimeLimitSection.propTypes = {
+  itSkills: PropTypes.array,
+  setItSkills: PropTypes.func,
+  setSoftSkills: PropTypes.func,
+  softSkills: PropTypes.array,
 };
 
 export default VideoTimeLimitSection;

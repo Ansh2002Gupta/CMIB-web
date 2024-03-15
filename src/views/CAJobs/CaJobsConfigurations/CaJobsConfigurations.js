@@ -7,8 +7,8 @@ import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
 import CaJobsConfigurationsContainer from "../../../containers/CaJobsConfigurationsContainer";
 import ContentHeader from "../../../containers/ContentHeader";
 import { initialFieldState } from "./constant";
-import styles from "./CaJobsConfigurations.module.scss";
 import { classes } from "./CaJobsConfigurations.styles";
+import styles from "./CaJobsConfigurations.module.scss";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();

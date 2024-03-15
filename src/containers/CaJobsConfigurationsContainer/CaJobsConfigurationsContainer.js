@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { TwoRow } from "../../core/layouts";
+
 import ProfileSkills from "../ProfileSkills/index";
 import VideoTimeLimitSection from "../VideoTimeLimitSection/index";
 import styles from "./CaJobsConfigurationsContainer.module.scss";
@@ -17,6 +18,9 @@ const CaJobsConfig = ({
   return (
     <div className={styles.outerContainer}>
       <TwoRow
+        topSection={
+          <VideoTimeLimitSection {...{ setVideoTimeLimit, videoTimeLimit }} />
+        }
         bottomSection={
           <ProfileSkills
             {...{
@@ -27,16 +31,27 @@ const CaJobsConfig = ({
             }}
           />
         }
-        topSection={
-          <VideoTimeLimitSection {...{ videoTimeLimit, setVideoTimeLimit }} />
-        }
       />
     </div>
   );
 };
 
-CaJobsConfig.defaultProps = {};
+CaJobsConfig.defaultProps = {
+  itSkills: [],
+  setItSkills: () => {},
+  setSoftSkills: () => [],
+  softSkills: [],
+  videoTimeLimit: 0,
+  setVideoTimeLimit: () => {},
+};
 
-CaJobsConfig.propTypes = {};
+CaJobsConfig.propTypes = {
+  itSkills: PropTypes.array,
+  setItSkills: PropTypes.func,
+  setSoftSkills: PropTypes.func,
+  softSkills: PropTypes.array,
+  videoTimeLimit: PropTypes.number,
+  setVideoTimeLimit: PropTypes.func,
+};
 
 export default CaJobsConfig;
