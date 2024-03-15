@@ -540,6 +540,7 @@ const locale = {
     "Setup Maximum Video Upload Time Limit",
   "label.max_video_upload_time_limit": "Maximum Video Upload Time Limit",
   "label.set_profile_skills": "Set Profile Skills",
+  "label.nqca-placements": "nqca-placements",
 };
 
 export default locale;

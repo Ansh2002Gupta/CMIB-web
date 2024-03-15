@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useContext } from "react";
 
 import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 
@@ -14,6 +14,7 @@ import {
 import { getCurrentActiveTab } from "../../constant/utils";
 import { initialFieldState } from "./constant";
 import styles from "./ConfigureCentres.module.scss";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 
 const ConfigureCentres = () => {
   const [activeTab, setActiveTab] = useState(
@@ -64,9 +65,10 @@ const ConfigureCentres = () => {
           customHeaderStyling={styles.customHeaderStyling}
           tabComponent={
             <CustomTabs
-              tabs={tabItems}
               activeTab={activeTab}
+              customTabContainerStyling={styles.tabContainer}
               setActiveTab={handleOnTabSwitch}
+              tabs={tabItems}
               tabsKeyText={ACTIVE_TAB}
             />
           }

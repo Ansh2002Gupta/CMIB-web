@@ -19,7 +19,6 @@
   .headerResponsiveStyle {
     font-size: var(--fontSizeHeading);
     max-width: 80vw;
-    margin-bottom: var(--marginLarge);
   }
 
   .btnCustomStyles {
@@ -31,11 +30,14 @@
   .headerResponsiveStyle {
     font-size: var(--fontSizeXlargeMedium);
     max-width: 80vw;
-    margin-bottom: var(--marginLarge);
   }
 
   .btnCustomStyles {
     min-height: var(--height_44);
     min-width: var(--width_50);
   }
+}
+
+.marginBottom {
+  margin-bottom: var(--paddingMedium);
 }
