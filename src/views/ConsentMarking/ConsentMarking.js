@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { TwoRow } from "../../core/layouts";
 
 import ConsentMarkingContent from "../../containers/ConsentMarkingContent";
+import ConsentMarkingContentRoundTwo from "../../containers/ConsentMarkingContentRoundTwo";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import HeaderAndTitle from "../../components/HeaderAndTitle";
@@ -187,7 +188,16 @@ const ConsentMarking = () => {
         hasRoundTwo) &&
       registrationDateData
     ) {
-      return (
+      return hasRoundTwo ? (
+        <ConsentMarkingContentRoundTwo
+          {...{
+            isEdit: !!isEdit,
+            selectedModule: currentlySelectedModuleKey,
+            roundId,
+            regAndConsentData: registrationDateData,
+          }}
+        />
+      ) : (
         <ConsentMarkingContent
           {...{
             activeTab,
