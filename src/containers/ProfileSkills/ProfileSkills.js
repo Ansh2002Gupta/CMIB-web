@@ -10,10 +10,10 @@ import useResponsive from "../../core/hooks/useResponsive";
 import styles from "./ProfileSkills.module.scss";
 
 const ProfileSkills = ({
-  currentFieldStateItSkills,
-  currentFieldStateSoftSkills,
-  setCurrentFieldStateItSkills,
-  setCurrentFieldStateSoftSkills,
+  itSkills,
+  softSkills,
+  setItSkills,
+  setSoftSkills,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -34,12 +34,12 @@ const ProfileSkills = ({
                   headerText={intl?.formatMessage({
                     id: "label.headerTextItSkills",
                   })}
-                  inputFields={currentFieldStateItSkills}
+                  inputFields={itSkills}
                   maxInputLength={100}
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderItSkills",
                   })}
-                  setInputFields={setCurrentFieldStateItSkills}
+                  setInputFields={setItSkills}
                   valueKeyName="fieldValue"
                 />
               }
@@ -49,12 +49,12 @@ const ProfileSkills = ({
                   headerText={intl?.formatMessage({
                     id: "label.headerTextSoftSkills",
                   })}
-                  inputFields={currentFieldStateSoftSkills}
+                  inputFields={softSkills}
                   maxInputLength={100}
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderSoftSkills",
                   })}
-                  setInputFields={setCurrentFieldStateSoftSkills}
+                  setInputFields={setSoftSkills}
                   valueKeyName="fieldValue"
                 />
               }
@@ -73,17 +73,17 @@ const ProfileSkills = ({
 };
 
 ProfileSkills.defaultProps = {
-  currentFieldStateItSkills: [],
-  currentFieldStateSoftSkills: [],
-  setCurrentFieldStateItSkills: () => {},
-  setCurrentFieldStateSoftSkills: () => {},
+  itSkills: [],
+  softSkills: [],
+  setItSkills: () => {},
+  setSoftSkills: () => {},
 };
 
 ProfileSkills.propTypes = {
-  currentFieldStateItSkills: PropTypes.array,
-  currentFieldStateSoftSkills: PropTypes.array,
-  setCurrentFieldStateItSkills: PropTypes.func,
-  setCurrentFieldStateSoftSkills: PropTypes.func,
+  itSkills: PropTypes.array,
+  softSkills: PropTypes.array,
+  setItSkills: PropTypes.func,
+  setSoftSkills: PropTypes.func,
 };
 
 export default ProfileSkills;

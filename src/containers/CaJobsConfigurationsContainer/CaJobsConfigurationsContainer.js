@@ -7,10 +7,10 @@ import VideoTimeLimitSection from "../VideoTimeLimitSection/index";
 import styles from "./CaJobsConfigurationsContainer.module.scss";
 
 const CaJobsConfig = ({
-  currentFieldStateItSkills,
-  currentFieldStateSoftSkills,
-  setCurrentFieldStateItSkills,
-  setCurrentFieldStateSoftSkills,
+  itSkills,
+  softSkills,
+  setItSkills,
+  setSoftSkills,
   videoTimeLimit,
   setVideoTimeLimit,
 }) => {
@@ -25,10 +25,12 @@ const CaJobsConfig = ({
         }
         bottomSection={
           <ProfileSkills
-            currentFieldStateItSkills={currentFieldStateItSkills}
-            currentFieldStateSoftSkills={currentFieldStateSoftSkills}
-            setCurrentFieldStateItSkills={setCurrentFieldStateItSkills}
-            setCurrentFieldStateSoftSkills={setCurrentFieldStateSoftSkills}
+            {...{
+              itSkills,
+              softSkills,
+              setItSkills,
+              setSoftSkills,
+            }}
           />
         }
       />
@@ -37,17 +39,17 @@ const CaJobsConfig = ({
 };
 
 CaJobsConfig.defaultProps = {
-  currentFieldStateItSkills: [],
-  currentFieldStateSoftSkills: [],
-  setCurrentFieldStateItSkills: () => {},
-  setCurrentFieldStateSoftSkills: () => {},
+  itSkills: [],
+  softSkills: [],
+  setItSkills: () => {},
+  setSoftSkills: () => {},
 };
 
 CaJobsConfig.propTypes = {
-  currentFieldStateItSkills: PropTypes.array,
-  currentFieldStateSoftSkills: PropTypes.array,
-  setCurrentFieldStateItSkills: PropTypes.func,
-  setCurrentFieldStateSoftSkills: PropTypes.func,
+  itSkills: PropTypes.array,
+  softSkills: PropTypes.array,
+  setItSkills: PropTypes.func,
+  setSoftSkills: PropTypes.func,
 };
 
 export default CaJobsConfig;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 import { CONFIGURATIONS } from "../../../routes/routeNames";
 
@@ -17,10 +17,11 @@ import styles from "./CaJobsConfigurations.module.scss";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();
+  const previousSavedData = useRef();
   const [postingSkillInfo, setPostingSkillInfo] = useState(false);
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
-  const [itSkillsObj, setItSkillsObj] = useState(initialFieldState);
-  const [softSkillsObj, setSoftSkillsObj] = useState(initialFieldState);
+  const [itSkills, setItSkills] = useState(initialFieldState);
+  const [softSkills, setSoftSkills] = useState(initialFieldState);
   const [isFieldError, setIsFieldError] = useState(false);
   const { postGlobalConfigurations } = usePostGlobalConfigurationsApi();
   const { fetchData } = useFetch({
@@ -33,57 +34,77 @@ const CaJobsConfigurations = () => {
     getSavedProfileSkills();
   }, []);
 
-  //enable/disable action button
-  useEffect(() => {
-    setIsFieldError(false);
-    const isError =
-      itSkillsObj.some((obj) => obj?.error) ||
-      softSkillsObj.some((obj) => obj?.error);
-    if (isError) setIsFieldError(true);
-  }, [itSkillsObj, softSkillsObj]);
-
-  //on cancel
+  //initialize field with last saved data on component mount.
   const getSavedProfileSkills = () => {
     fetchData({
       queryParamsObject: {},
       onSuccessCallback: (responseFieldValues) => {
         const { it_skill, soft_skill, video_max_time } = responseFieldValues[0];
-        setItSkillsObj(returnFieldObjects({ fieldValueList: it_skill }));
-        setSoftSkillsObj(returnFieldObjects({ fieldValueList: soft_skill }));
-        setVideoTimeLimit(video_max_time);
+        previousSavedData.current = {
+          previousSavedItSkills: returnFieldObjects({
+            fieldValueList: it_skill,
+          }),
+          previousSavedSoftSkills: returnFieldObjects({
+            fieldValueList: soft_skill,
+          }),
+          previousSavedVideoTimeLimit: video_max_time || 0,
+        };
+        setItSkills(previousSavedData.current.previousSavedItSkills);
+        setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
+        setVideoTimeLimit(
+          previousSavedData.current.previousSavedVideoTimeLimit
+        );
       },
-      onErrorCallback: (error) => {
-        console.log("FETCH | error: ", error);
-      },
+      //TODO: TO DESIGN THE ERROR LOGIC
+      onErrorCallback: (error) => {},
     });
   };
 
-  const excludeMoreThanOneEmptyField = ({ array, valueKeyName }) => {
+  //to enable/disable action button.
+  useEffect(() => {
+    setIsFieldError(false);
+    const isError =
+      itSkills.some((obj) => obj?.error) ||
+      softSkills.some((obj) => obj?.error);
+    if (isError) setIsFieldError(true);
+  }, [itSkills, softSkills]);
+
+  const removeEmptyFields = ({ array, valueKeyName }) => {
+    console.log("array:", array);
     const arrayWithoutEmptyFields = array.filter(
       (field) => field?.[valueKeyName]
     );
+    console.log("arrayWithoutEmptyFields:", arrayWithoutEmptyFields);
+    // keeping atmost one empty field if all fields were filtered.
     return arrayWithoutEmptyFields.length
       ? arrayWithoutEmptyFields
       : initialFieldState;
   };
 
   //on save
-  const postProfileSKills = () => {
+  const postProfileSkills = ({ keyName }) => {
     setPostingSkillInfo(true);
-    //check for empty field object and excluding them.
-    const itSkillObjWithAtmostOneEmptyFields = excludeMoreThanOneEmptyField({
-      array: itSkillsObj,
-      valueKeyName: "fieldValue",
+    //checking and removing empty fields and keeping atmost one empty field if all fields were removed.
+    const itSkillsWithAtmostOneEmptyField = removeEmptyFields({
+      array: itSkills,
+      valueKeyName: keyName,
     });
-    const softSkillObjWithAtmostOneEmptyFields = excludeMoreThanOneEmptyField({
-      array: softSkillsObj,
-      valueKeyName: "fieldValue",
+    const softSkillsWithAtmostOneEmptyField = removeEmptyFields({
+      array: softSkills,
+      valueKeyName: keyName,
     });
-    const itSkillsList = itSkillObjWithAtmostOneEmptyFields.map(
-      (obj) => obj?.fieldValue
+    //update the useRef 'previousSavedData' with the current Data.
+    previousSavedData.current = {
+      previousSavedItSkills: itSkillsWithAtmostOneEmptyField,
+      previousSavedSoftSkills: softSkillsWithAtmostOneEmptyField,
+      previousSavedVideoTimeLimit: videoTimeLimit,
+    };
+    initializeWithPreviousSavedData();
+    const itSkillsList = itSkillsWithAtmostOneEmptyField.map(
+      (obj) => obj?.[keyName]
     );
-    const softSkillsList = softSkillObjWithAtmostOneEmptyFields.map(
-      (obj) => obj?.fieldValue
+    const softSkillsList = softSkillsWithAtmostOneEmptyField.map(
+      (obj) => obj?.[keyName]
     );
     postGlobalConfigurations({
       payload: {
@@ -91,13 +112,17 @@ const CaJobsConfigurations = () => {
         soft_skill: softSkillsList,
         video_time_limit: videoTimeLimit,
       },
-      onErrorCallback: (errMessage) => {
-        console.log("POST | error:", errMessage);
-      },
-      onSuccessCallback: () => {
-        setPostingSkillInfo(false);
-      },
+      //TODO: TO DESIGN THE ERROR LOGIC
+      onErrorCallback: (errMessage) => {},
+      onSuccessCallback: () => setPostingSkillInfo(false),
     });
+  };
+
+  //on cancel
+  const initializeWithPreviousSavedData = () => {
+    setItSkills(previousSavedData.current.previousSavedItSkills);
+    setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
+    setVideoTimeLimit(previousSavedData.current.previousSavedVideoTimeLimit);
   };
 
   return (
@@ -109,12 +134,14 @@ const CaJobsConfigurations = () => {
       }
       middleSection={
         <CaJobsConfigurationsContainer
-          currentFieldStateItSkills={itSkillsObj}
-          currentFieldStateSoftSkills={softSkillsObj}
-          setCurrentFieldStateItSkills={setItSkillsObj}
-          setCurrentFieldStateSoftSkills={setSoftSkillsObj}
-          videoTimeLimit={videoTimeLimit}
-          setVideoTimeLimit={setVideoTimeLimit}
+          {...{
+            itSkills,
+            softSkills,
+            setItSkills,
+            setSoftSkills,
+            videoTimeLimit,
+            setVideoTimeLimit,
+          }}
         />
       }
       middleSectionStyle={classes.middleSection}
@@ -127,9 +154,9 @@ const CaJobsConfigurations = () => {
           customActionBtnStyles={styles.saveButton}
           customContainerStyles={styles.buttonWrapper}
           isLoading={postingSkillInfo}
-          onActionBtnClick={postProfileSKills}
-          onCancelBtnClick={getSavedProfileSkills}
           isActionBtnDisable={isFieldError}
+          onActionBtnClick={() => postProfileSkills({ keyName: "fieldValue" })}
+          onCancelBtnClick={initializeWithPreviousSavedData}
         />
       }
     />
