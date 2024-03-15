@@ -11,8 +11,9 @@ import { returnEmptyRow } from "./helpers.js";
 import styles from "./MultiRowInput.module.scss";
 
 const MultiRowInput = ({
-  inputFields,
   headerText,
+  inputFields,
+  maxInputLength,
   placeholderText,
   setInputFields,
   valueKeyName,
@@ -54,14 +55,15 @@ const MultiRowInput = ({
 
   const handleChange = ({ value, field }) => {
     value = value?.trim();
-    //updating field state
+    if (value?.length > maxInputLength) return;
     const updatedInputFields = updateArrayItem({
       array: inputFields,
       keyValuePairObject: {
         [valueKeyName]: value,
-        error: !value
-          ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-          : "",
+        error:
+          !value && field?.buttonType?.trim() === "remove"
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
       },
       itemToBeUpdatedId: field?.id,
     });
@@ -139,16 +141,18 @@ const MultiRowInput = ({
 };
 
 MultiRowInput.defaultProps = {
-  inputFields: [],
   headerText: "",
+  inputFields: [],
+  maxInputLength: 100,
   placeholderText: "",
   setinputFields: () => {},
   valueKeyName: "",
 };
 
 MultiRowInput.propTypes = {
-  inputFields: PropTypes.array,
   headerText: PropTypes.string,
+  inputFields: PropTypes.array,
+  maxInputLength: PropTypes.number,
   placeholderText: PropTypes.string,
   setinputFields: PropTypes.func,
   valueKeyName: PropTypes.string,

@@ -6,14 +6,14 @@ import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import ConfigureCentreContent from "../../containers/ConfigureCentre/ConfigureCentreContent/ConfigureCentreContent";
 import ConfigureCentreHeader from "../../containers/ConfigureCentre/ConfigureCentreHeader";
-import CustomLoader from "../../../components/CustomLoader/CustomLoader";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import CustomTabs from "../../components/CustomTabs";
 import ProfileSkills from "../../containers/ProfileSkills/ProfileSkills";
-import useFetch from "../../../core/hooks/useFetch";
+import useFetch from "../../core/hooks/useFetch";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import usePostGlobalConfigurationsApi from "../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
 import { urlService } from "../../Utils/urlService";
-import { returnFieldObjects } from "./helpers";
+import { returnFieldObjects } from "../CAJobs/CaJobsConfigurations/helpers";
 import { CAJOBS_ROUTE, MASTER } from "../../constant/apiEndpoints";
 import { CONFIGURATIONS } from "../../routes/routeNames";
 import {

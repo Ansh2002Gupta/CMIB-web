@@ -31,7 +31,6 @@ const CaJobsConfigurations = () => {
   const { showNotification } = useShowNotification();
 
   useEffect(() => {
-    //check for empty field object.
     const areThereEmptyFields =
       itSkills.some((obj) => obj.fieldValue === "") ||
       softSkills.some((obj) => obj.fieldValue === "");
@@ -42,7 +41,6 @@ const CaJobsConfigurations = () => {
     setIsFieldError(false);
   }, [itSkills, softSkills]);
 
-  //created these functions for future purpose.
   const handleCancel = () => {
     fetchData({
       queryParamsObject: {},
