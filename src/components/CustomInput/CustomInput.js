@@ -165,6 +165,7 @@ const CustomInput = React.forwardRef(
               maxLength={maxLength}
               controls={controls}
               precision={precision}
+              type="number"
               className={[
                 styles.inputNumberStyles,
                 customInputNumberStyles,
