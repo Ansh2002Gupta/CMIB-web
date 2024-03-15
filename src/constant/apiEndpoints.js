@@ -1,5 +1,5 @@
 // API version numbers
-export const API_VERSION_NUMBER = "v1";
+export const API_VERSION_NUMBER = "1.0.0";
 
 // API end-point role
 export const ADMIN_ROUTE = "admin";
@@ -23,6 +23,7 @@ export const FORGOT_PASSWORD_END_POINT = "/forget-password-otp";
 export const GET_USER_PROFILE_DETAILS = "core/users/permission";
 export const GLOBAL_SESSION_LIST = "/sessions";
 export const IMAGE_UPLOAD_END_POINT = "/save-logo";
+export const LAST_REGISTRATION_DATES = "/last-registration-dates";
 export const INTERVIEW_DATES = "/interview-dates";
 export const LOGIN_END_POINT = "/login";
 export const LOGOUT_END_POINT = "/logout";
@@ -31,10 +32,13 @@ export const ORIENTATION_CENTRES = "/orientation-centres";
 export const PROFILE_END_POINT = "/profile";
 export const QUERIES_END_POINT = "/queries";
 export const QUERY_TYPE = "/queries/types";
-export const RESET_ADMIN_PASSWORD = "/reset-password/confirm";
+export const REGISTRATION_CONSENT = "/registration-consent";
 export const REGISTRATION_DATES = "/registration-dates";
+export const RESET_ADMIN_PASSWORD = "/reset-password/confirm";
 export const ROLES_PERMISSION = "/roles-permissions";
 export const ROUNDS = "/rounds";
+export const ROUND_ONE = "/round-1";
+export const ROUND_TWO = "/round-2";
 export const SEND_OTP = "/reset-password/request";
 export const SESSIONS = "/sessions";
 export const STATUS = "/status";

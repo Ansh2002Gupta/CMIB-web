@@ -4,457 +4,497 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Spin } from "antd";
 
-import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import ConsentTable from "../ConsentTable";
-import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomGrid from "../../components/CustomGrid";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import CustomTabs from "../../components/CustomTabs";
-import ErrorMessageBox from "../../components/ErrorMessageBox";
-import useResponsive from "core/hooks/useResponsive";
-import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import EditButton from "../../components/EditButton";
 import {
-  compareTwoDayjsDates,
-  formatDate,
-  getCurrentActiveTab,
-  isNotAFutureDate,
-} from "../../constant/utils";
+  disabledDate,
+  handleInputChange,
+  onDateChange,
+  useIntitalDataAndError,
+  validate,
+  NQCA_REGISTRATION_DATE_FIELDS,
+  OTHER_MODULES_REGISTRATION_DATE_FIELDS,
+} from "./ConsentMarkingConfig";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
-import { ACTIVE_TAB } from "../../constant/constant";
+import { usePut } from "../../core/hooks/useApiRequest";
 import {
-  CONSENT_MARKING_REGESTRATION_DETAILS,
-  LAST_MARKING_REGESTRATION_DETAILS,
-} from "../../dummyData";
-import {
-  DEFAULT_PAGE_SIZE,
-  PAGINATION_PROPERTIES,
-  VALID_CONSENT_MARKING_TABS_ID,
+  CORE_ROUTE,
+  LAST_REGISTRATION_DATES,
+  REGISTRATION_CONSENT,
   REGISTRATION_DATES,
-  REGISTRATIONS_DATES_FOR_ROUND_TWO,
+  ROUNDS,
+  ROUND_ONE,
+  ROUND_TWO,
+} from "../../constant/apiEndpoints";
+import {
+  ACTIVE_TAB,
+  VALID_CONSENT_MARKING_TABS_ID,
+  MODULE_KEYS,
+  NOTIFICATION_TYPES,
 } from "../../constant/constant";
-import { SESSION } from "../../routes/routeNames";
-import { NotificationContext } from "../../globalContext/notification/notificationProvider";
-import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
-import useRegistrationAndConsentMarking from "../../services/api-services/RegistrationandConsentMarking/useRegistrationConsentMarking";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
 
 const ConsentMarkingContent = ({
+  activeTab,
+  consentRoundOneData,
+  consentRoundTwoData,
+  currentlySelectedModuleKey,
   isEdit,
-  selectedModule,
+  lastRegistrationDatesData,
   roundId,
-  regAndConsentData,
+  registrationDateData,
+  setActiveTab,
 }) => {
   const intl = useIntl();
-  const responsive = useResponsive();
-  const location = useLocation();
-  const { navigateScreen: navigate } = useNavigateScreen();
-  const [, setNotificationStateDispatch] = useContext(NotificationContext);
-  const [activeTab, setActiveTab] = useState(
-    getCurrentActiveTab(
-      urlService.getQueryStringValue(ACTIVE_TAB),
-      VALID_CONSENT_MARKING_TABS_ID
-    )
-  );
-  const [registrationDatesData, setRegistrationDatesData] = useState({
-    registrationStartDateCompanies:
-      regAndConsentData?.company_reg_start_date || "",
-    registrationEndDateCompanies: regAndConsentData?.company_reg_end_date || "",
-    registrationStartDateCandidates:
-      regAndConsentData?.candidate_reg_start_date || "",
-    registrationEndDateCandidates:
-      regAndConsentData?.candidate_reg_end_date || "",
-    startShortlistingbyCompany:
-      regAndConsentData?.company_shortlisting_start_date || "",
-    endShortlistingbyCompany:
-      regAndConsentData?.company_shortlisting_end_date || "",
-    startCondidateConsentmarking:
-      regAndConsentData?.candidate_consent_start_date || "",
-    endCondidateConsentmarking:
-      regAndConsentData?.candidate_consent_end_date || "",
-    last_interview_date_roundOne:
-      regAndConsentData?.last_interview_date_round1 || "",
-    writtenTestDate: regAndConsentData?.psychometric_test_date || "",
+  const { showNotification, notificationContextHolder } = useShowNotification();
+  const [isRegistrationDateEdit, setIsRegistrationDateEdit] = useState(false);
+  const [isTableDateEdit, setIsTableDateEdit] = useState(false);
+
+  const {
+    makeRequest: updateRegistrationDate,
+    isLoading: isUpdatingRegistrationDate,
+  } = usePut({
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      ROUNDS +
+      `/${roundId}` +
+      REGISTRATION_DATES,
   });
 
   const {
-    registrationStartDateCompanies,
-    registrationEndDateCompanies,
-    registrationStartDateCandidates,
-    registrationEndDateCandidates,
-    startShortlistingbyCompany,
-    endShortlistingbyCompany,
-    startCondidateConsentmarking,
-    endCondidateConsentmarking,
-    writtenTestDate,
-  } = registrationDatesData;
+    makeRequest: updateLastRegistrationDate,
+    isLoading: isUpdatingLastRegistrationDate,
+  } = usePut({
+    url:
+      CORE_ROUTE +
+      `/${currentlySelectedModuleKey}` +
+      ROUNDS +
+      `/${roundId}` +
+      LAST_REGISTRATION_DATES,
+  });
+  const { makeRequest: updateRoundOneDate, isLoading: isUpdatingRoundOneDate } =
+    usePut({
+      url:
+        CORE_ROUTE +
+        `/${currentlySelectedModuleKey}` +
+        ROUNDS +
+        `/${roundId}` +
+        REGISTRATION_CONSENT +
+        ROUND_ONE,
+    });
+  const { makeRequest: updateRoundTwoDate, isLoading: isUpdatingRoundTwoDate } =
+    usePut({
+      url:
+        CORE_ROUTE +
+        `/${currentlySelectedModuleKey}` +
+        ROUNDS +
+        `/${roundId}` +
+        REGISTRATION_CONSENT +
+        ROUND_TWO,
+    });
 
-  const [errors, setErrors] = useState([]);
-  const round1InitialData = CONSENT_MARKING_REGESTRATION_DETAILS.map(
-    (item) => ({
-      ...item,
-      sNo: item.sNo,
-      centreName: item.centreName,
-      companyStartDate: item.companyStartDate ? item.companyStartDate : null,
-      companyEndDate: item.companyEndDate ? item.companyEndDate : null,
-      consentFromDate: item.consentFromDate ? item.consentFromDate : null,
-      consentToDate: item.consentToDate ? item.consentToDate : null,
-    })
-  );
+  const [registrationDatesData, setRegistrationDatesData] =
+    useState(registrationDateData);
 
-  const registrationInitialData = LAST_MARKING_REGESTRATION_DETAILS.map(
-    (item) => ({
-      ...item,
-      sNo: item.sNo,
-      centreName: item.centreName,
-      lastRegistrationDate: item.lastRegistrationDate
-        ? item.lastRegistrationDate
-        : null,
-      psychometricTestDate: item.psychometricTestDate
-        ? item.psychometricTestDate
-        : null,
-    })
-  );
+  const [registrationError, setRegistrationError] = useState({
+    candidate_reg_end_date_bg_centre: "",
+    candidate_reg_end_date_sm_centre: "",
+    candidate_reg_start_date: "",
+    company_reg_start_date: "",
+  });
 
-  const [tableData, setTableData] = useState(round1InitialData);
-  const [registrationTableData, setRegistrationTableData] = useState(
-    registrationInitialData
-  );
+  const isNqca =
+    currentlySelectedModuleKey === MODULE_KEYS?.NEWLY_QUALIFIED_PLACEMENTS_KEY;
 
   const {
-    errorWhileUpdating,
-    updateRegistrationAndConsentMarking,
-    isError,
-    isLoading: isUpdatingRegistrationAndConsent,
-  } = useRegistrationAndConsentMarking();
+    roundOneInitialData,
+    roundTwoInitialData,
+    lastRegistrationInitialData,
+    roundOneInitialError,
+    roundTwoInitialError,
+    lastRegistrationInitialError,
+  } = useIntitalDataAndError({
+    consentRoundOneData,
+    consentRoundTwoData,
+    lastRegistrationDatesData,
+  });
 
-  const hasRoundTwo = location?.pathname.includes("round2");
+  const [lastRegistrationError, setLastRegistrationError] = useState(
+    lastRegistrationInitialError
+  );
+  const [roundOneError, setRoundOneError] = useState(roundOneInitialError);
+  const [roundTwoError, setRoundTwoError] = useState(roundTwoInitialError);
 
-  const disabledDate = (key, current) => {
-    if (isNotAFutureDate(current)) return true;
+  const [roundOneTableData, setRoundOneTableData] =
+    useState(roundOneInitialData);
+  const [roundTwoTableData, setRoundTwoTableData] =
+    useState(roundTwoInitialData);
+  const [lastRegistrationTableData, setLastRegistrationTableData] = useState(
+    lastRegistrationInitialData
+  );
 
-    const dateLimits = {
-      registrationStartDateCompanies: {
-        after: [
-          "registrationEndDateCompanies",
-          "startShortlistingbyCompany",
-          "endShortlistingbyCompany",
-          "startCondidateConsentmarking",
-          "endCondidateConsentmarking",
-          "writtenTestDate",
-        ],
-      },
-      registrationEndDateCompanies: {
-        before: "registrationStartDateCompanies",
-        after: ["startShortlistingbyCompany", "startCondidateConsentmarking"],
-      },
-      registrationStartDateCandidates: {
-        after: [
-          "registrationEndDateCandidates",
-          "startShortlistingbyCompany",
-          "endShortlistingbyCompany",
-          "startCondidateConsentmarking",
-          "endCondidateConsentmarking",
-          "writtenTestDate",
-        ],
-        before: ["last_interview_date_roundOne"],
-      },
-      registrationEndDateCandidates: {
-        before: [
-          "registrationStartDateCandidates",
-          "last_interview_date_roundOne",
-        ],
-        after: "startShortlistingbyCompany",
-      },
-      startShortlistingbyCompany: {
-        before: [
-          "registrationEndDateCandidates",
-          "registrationEndDateCompanies",
-        ],
-        after: "endShortlistingbyCompany",
-      },
-      endShortlistingbyCompany: {
-        before: ["startShortlistingbyCompany", "registrationEndDateCandidates"],
-        after: "startCondidateConsentmarking",
-      },
-      startCondidateConsentmarking: {
-        before: "endShortlistingbyCompany",
-        after: "endCondidateConsentmarking",
-      },
-      endCondidateConsentmarking: {
-        before: [
-          "startCondidateConsentmarking",
-          "registrationEndDateCandidates",
-        ],
-        after: "writtenTestDate",
-      },
-      writtenTestDate: {
-        before: "endCondidateConsentmarking",
-      },
-    };
-
-    // Retrieve the appropriate limits for the current key
-    const limits = dateLimits[key];
-
-    if (limits.before) {
-      // Check if the current date is before the start limit
-      const beforeKeys = Array.isArray(limits.before)
-        ? limits.before
-        : [limits.before];
-      if (
-        beforeKeys.some((beforeKey) =>
-          compareTwoDayjsDates({
-            current,
-            date: registrationDatesData[beforeKey],
-            checkForFuture: false,
-          })
-        )
-      ) {
-        return true;
-      }
-    }
-
-    // Check if the current date is after the end limit
-    if (limits.after) {
-      const afterKeys = Array.isArray(limits.after)
-        ? limits.after
-        : [limits.after];
-      if (
-        afterKeys.some((afterKey) =>
-          compareTwoDayjsDates({
-            current,
-            date: registrationDatesData[afterKey],
-            checkForFuture: true,
-          })
-        )
-      ) {
-        return true;
-      }
-    }
-
-    return false;
-  };
+  const registrationDates = isNqca
+    ? NQCA_REGISTRATION_DATE_FIELDS
+    : OTHER_MODULES_REGISTRATION_DATE_FIELDS;
 
   const tabItems = [
     {
       key: "1",
-      title: intl.formatMessage({ id: "session.roundOne" }),
-      children: (
-        <ConsentTable
-          {...{ activeTab, isEdit, tableData, setTableData }}
-          totalData={round1InitialData}
-        />
-      ),
-    },
-    {
-      key: "2",
-      title: intl.formatMessage({ id: "session.roundTwo" }),
-      children: <>Round2</>,
-    },
-    {
-      key: "3",
       title: intl.formatMessage({
         id: "session.lastDateRegistrationCompanies",
       }),
       children: (
         <ConsentTable
-          {...{ activeTab, isEdit, registration: true }}
-          tableData={registrationTableData}
-          setTableData={setRegistrationTableData}
-          totalData={registrationInitialData}
+          {...{
+            activeTab,
+            isEdit: isTableDateEdit,
+            registration: true,
+            errors: lastRegistrationError,
+            registrationDatesData,
+          }}
+          tableData={lastRegistrationTableData}
+          onDateChange={(record, key, value) => {
+            onDateChange(
+              intl,
+              record,
+              key,
+              value,
+              lastRegistrationTableData,
+              setLastRegistrationTableData,
+              setLastRegistrationError
+            );
+          }}
         />
       ),
     },
+
+    registrationDatesData?.is_round1_visible && {
+      key: "2",
+      title: intl.formatMessage({ id: "session.roundOne" }),
+      children: (
+        <ConsentTable
+          {...{
+            activeTab,
+            isEdit: isTableDateEdit,
+            errors: roundOneError,
+            registrationDatesData,
+          }}
+          tableData={roundOneTableData}
+          onDateChange={(record, key, value) => {
+            onDateChange(
+              intl,
+              record,
+              key,
+              value,
+              roundOneTableData,
+              setRoundOneTableData,
+              setRoundOneError
+            );
+          }}
+        />
+      ),
+    },
+    isNqca &&
+      registrationDatesData?.is_round2_visible && {
+        key: "3",
+        title: intl.formatMessage({ id: "session.roundTwo" }),
+        children: (
+          <ConsentTable
+            {...{
+              activeTab,
+              isEdit: isTableDateEdit,
+              errors: roundTwoError,
+              registrationDatesData,
+            }}
+            tableData={roundTwoTableData}
+            onDateChange={(record, key, value) => {
+              onDateChange(
+                intl,
+                record,
+                key,
+                value,
+                roundTwoTableData,
+                setRoundTwoTableData,
+                setRoundTwoError
+              );
+            }}
+          />
+        ),
+      },
   ];
+
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
-  const handleInputChange = (value, name) => {
-    const newValue = !!value
-      ? formatDate({ date: value, dateFormat: "YYYY-MM-DD" })
-      : "";
-    setRegistrationDatesData((prevFormData) => ({
-      ...prevFormData,
-      [name]: newValue,
-    }));
-    if (!newValue && name) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
-      }));
-    } else {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: undefined,
-      }));
-    }
-  };
-
-  const navigateBackToSession = () => {
-    navigate(`/${selectedModule}/${SESSION}?mode=view&tab=3`);
-  };
-
   const handleCancel = () => {
-    navigateBackToSession();
-  };
-
-  const isButtonDisabled = () => {
-    if (
-      !!registrationStartDateCompanies &&
-      !!registrationEndDateCompanies &&
-      !!registrationStartDateCandidates &&
-      !!registrationEndDateCandidates &&
-      !!startShortlistingbyCompany &&
-      !!endShortlistingbyCompany &&
-      !!startCondidateConsentmarking &&
-      !!endCondidateConsentmarking &&
-      !!writtenTestDate &&
-      registrationStartDateCompanies < registrationEndDateCompanies &&
-      registrationStartDateCandidates < registrationEndDateCandidates &&
-      startShortlistingbyCompany < endShortlistingbyCompany &&
-      startCondidateConsentmarking < endCondidateConsentmarking &&
-      writtenTestDate > endCondidateConsentmarking
-    ) {
-      return false;
+    if (activeTab === "1") {
+      setLastRegistrationTableData(lastRegistrationInitialData);
+      setLastRegistrationError(lastRegistrationInitialError);
     }
-
-    return true;
+    if (activeTab === "2") {
+      setRoundOneTableData(roundOneInitialData);
+      setRoundOneError(roundOneInitialError);
+    }
+    if (activeTab === "3") {
+      setRoundTwoTableData(roundTwoInitialData);
+      setRoundTwoError(roundTwoInitialError);
+    }
+    setIsTableDateEdit(false);
   };
 
   const handleSave = () => {
-    if (!isButtonDisabled()) {
-      const roundTwoDetailsPayload = {
-        company_reg_start_date: registrationStartDateCompanies,
-        company_reg_end_date: registrationEndDateCompanies,
-        candidate_reg_start_date: registrationStartDateCandidates,
-        candidate_reg_end_date: registrationEndDateCandidates,
-        company_shortlisting_start_date: startShortlistingbyCompany,
-        company_shortlisting_end_date: endShortlistingbyCompany,
-        candidate_consent_start_date: startCondidateConsentmarking,
-        candidate_consent_end_date: endCondidateConsentmarking,
-        psychometric_test_date: writtenTestDate,
-      };
-      updateRegistrationAndConsentMarking({
-        module: selectedModule,
-        payload: roundTwoDetailsPayload,
-        onSuccessCallback: () => {
-          setNotificationStateDispatch(setShowSuccessNotification(true));
-          navigateBackToSession();
-        },
-        roundId,
-      });
+    if (
+      validate({
+        activeTab,
+        intl,
+        lastRegistrationTableData,
+        roundOneTableData,
+        roundTwoTableData,
+        setLastRegistrationError,
+        setRoundOneError,
+        setRoundTwoError,
+      })
+    ) {
+      if (activeTab === "1") {
+        updateLastRegistrationDate({
+          body: { data: lastRegistrationTableData },
+          onSuccessCallback: () => {
+            showNotification({
+              text: intl.formatMessage({ id: "label.lastRegistrationSuccess" }),
+              type: NOTIFICATION_TYPES.SUCCESS,
+            });
+            setIsTableDateEdit(false);
+          },
+          onErrorCallback: (ErrorMessage) => {
+            showNotification({
+              text: ErrorMessage,
+              type: NOTIFICATION_TYPES.ERROR,
+              headingText: intl.formatMessage({ id: "label.errorMessage" }),
+            });
+          },
+        });
+        return;
+      }
+      if (activeTab === "2") {
+        updateRoundOneDate({
+          body: { data: roundOneTableData },
+          onSuccessCallback: () => {
+            showNotification({
+              text: intl.formatMessage({ id: "label.roundOneDatesSuccess" }),
+              type: NOTIFICATION_TYPES.SUCCESS,
+            });
+            setIsTableDateEdit(false);
+          },
+          onErrorCallback: (ErrorMessage) => {
+            showNotification({
+              text: ErrorMessage,
+              type: "error",
+              headingText: intl.formatMessage({ id: "label.errorMessage" }),
+            });
+          },
+        });
+        return;
+      }
+      if (activeTab === "3") {
+        updateRoundTwoDate({
+          body: { data: roundTwoTableData },
+          onSuccessCallback: () => {
+            showNotification({
+              text: intl.formatMessage({ id: "label.roundTwoDatesSuccess" }),
+              type: NOTIFICATION_TYPES.SUCCESS,
+            });
+            setIsTableDateEdit(false);
+          },
+          onErrorCallback: (ErrorMessage) => {
+            showNotification({
+              text: ErrorMessage,
+              type: "error",
+              headingText: intl.formatMessage({ id: "label.errorMessage" }),
+            });
+          },
+        });
+        return;
+      }
     }
   };
 
-  const setPageSizeAndNumberToDefault = () => {
-    const queryParams = {
-      [PAGINATION_PROPERTIES.CURRENT_PAGE]: 1,
-      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: DEFAULT_PAGE_SIZE,
-    };
-    urlService.setMultipleQueryStringValues(queryParams);
+  const handleRegistrationCancel = () => {
+    setRegistrationDatesData(registrationDateData);
+    setRegistrationError({
+      candidate_reg_end_date_bg_centre: "",
+      candidate_reg_end_date_sm_centre: "",
+      candidate_reg_start_date: "",
+      company_reg_start_date: "",
+    });
+    setIsRegistrationDateEdit(false);
   };
 
-  const setTableToDefault = () => {
-    const startIndex = 0;
-    const endIndex = DEFAULT_PAGE_SIZE;
-    const round1UpdatedData = round1InitialData.slice(startIndex, endIndex);
-    setTableData(round1UpdatedData);
-    const registrationUpdatedData = registrationInitialData.slice(
-      startIndex,
-      endIndex
-    );
-    registrationTableData(registrationUpdatedData);
+  const handleRegistrationSave = () => {
+    updateRegistrationDate({
+      body: registrationDatesData,
+      onSuccessCallback: () => {
+        showNotification({
+          text: intl.formatMessage({ id: "label.registrationSuccess" }),
+          type: NOTIFICATION_TYPES.SUCCESS,
+        });
+        setIsRegistrationDateEdit(false);
+      },
+      onErrorCallback: (ErrorMessage) => {
+        showNotification({
+          text: ErrorMessage,
+          type: "error",
+          headingText: intl.formatMessage({ id: "label.errorMessage" }),
+        });
+      },
+    });
   };
 
   const handleOnTabSwitch = useCallback((tabId) => {
     setActiveTab(tabId);
-    urlService.setQueryStringValue(ACTIVE_TAB, tabId);
-    setPageSizeAndNumberToDefault();
-    setTableToDefault();
   }, []);
 
   useEffect(() => {
-    if (!hasRoundTwo) {
-      const activeTab = urlService.getQueryStringValue(ACTIVE_TAB);
-      if (!VALID_CONSENT_MARKING_TABS_ID.includes(activeTab)) {
+    const activeTab = urlService.getQueryStringValue(ACTIVE_TAB);
+    if (registrationDateData?.is_round2_visible) {
+      if (!VALID_CONSENT_MARKING_TABS_ID?.threeTab?.includes(activeTab)) {
         urlService.setQueryStringValue(ACTIVE_TAB, 1);
+        setActiveTab("1");
       }
+      return;
     }
-  }, []);
-
-  const currentRegistrationDates = hasRoundTwo
-    ? REGISTRATIONS_DATES_FOR_ROUND_TWO
-    : REGISTRATION_DATES;
-
-  const renderContent = () => {
-    if (!isUpdatingRegistrationAndConsent && errorWhileUpdating && isError) {
-      return (
-        <div className={styles.loaderContainer}>
-          <ErrorMessageBox
-            onRetry={handleSave}
-            errorText={errorWhileUpdating}
-            errorHeading={intl.formatMessage({
-              id: "label.error",
-            })}
-          />
-        </div>
-      );
+    if (registrationDateData?.is_round1_visible) {
+      if (!VALID_CONSENT_MARKING_TABS_ID.twoTab.includes(activeTab)) {
+        urlService.setQueryStringValue(ACTIVE_TAB, 1);
+        setActiveTab("1");
+      }
+      return;
     }
-
-    if (isUpdatingRegistrationAndConsent) {
-      return (
-        <div className={styles.loaderContainer}>
-          <Spin size="large" />
-        </div>
-      );
+    if (!VALID_CONSENT_MARKING_TABS_ID.oneTab.includes(activeTab)) {
+      urlService.setQueryStringValue(ACTIVE_TAB, 1);
+      setActiveTab("1");
     }
-    return (
-      <>
-        <ThreeRow
-          className={styles.mainContainer}
-          topSection={
-            <CustomGrid customStyle={styles.customStyle}>
-              {currentRegistrationDates.map((item, index) => {
-                return (
-                  <CustomDateTimePicker
-                    key={item?.id}
-                    customLabelStyles={styles.customLabelStyles}
-                    customContainerStyles={styles.customContainerStyles}
-                    customTimeStyle={styles.customTimeStyle}
-                    isEditable={isEdit}
-                    type="date"
-                    isRequired
-                    label={intl.formatMessage({
-                      id: `label.consent.${item?.labeIntl}`,
-                    })}
-                    placeholder={intl.formatMessage({
-                      id: `label.consent.placeholder.${item?.labeIntl}`,
-                    })}
-                    disabledDate={(current) =>
-                      disabledDate(item.labeIntl, current)
+  }, [urlService]);
+
+  return (
+    <>
+      {notificationContextHolder}
+      <TwoRow
+        className={styles.mainContainer}
+        topSection={
+          <TwoRow
+            topSection={
+              <>
+                {isUpdatingRegistrationDate && <CustomLoader />}
+                {!isUpdatingRegistrationDate && (
+                  <TwoColumn
+                    leftSection={
+                      <CustomGrid customStyle={styles.customStyle}>
+                        {registrationDates?.map((item) => {
+                          return (
+                            <CustomDateTimePicker
+                              key={item?.id}
+                              customLabelStyles={styles.customLabelStyles}
+                              customContainerStyles={
+                                styles.customContainerStyles
+                              }
+                              customTimeStyle={styles.customTimeStyle}
+                              disabledDate={(current) =>
+                                disabledDate(
+                                  item.labeIntl,
+                                  current,
+                                  registrationDatesData
+                                )
+                              }
+                              errorMessage={registrationError[item?.labeIntl]}
+                              isEditable={isRegistrationDateEdit}
+                              type="date"
+                              isRequired
+                              label={intl.formatMessage({
+                                id: `label.consent.${item?.labeIntl}`,
+                              })}
+                              placeholder={intl.formatMessage({
+                                id: `label.consent.placeholder.${item?.labeIntl}`,
+                              })}
+                              value={
+                                registrationDatesData[item?.labeIntl]
+                                  ? registrationDatesData[item?.labeIntl]
+                                  : null
+                              }
+                              onChange={(val) => {
+                                handleInputChange(
+                                  val,
+                                  item?.labeIntl,
+                                  setRegistrationDatesData,
+                                  setRegistrationError,
+                                  intl
+                                );
+                              }}
+                            />
+                          );
+                        })}
+                      </CustomGrid>
                     }
-                    value={
-                      registrationDatesData[item?.labeIntl]
-                        ? isEdit
-                          ? registrationDatesData[item?.labeIntl]
-                          : registrationDatesData[item?.labeIntl]
-                        : null
+                    isLeftFillSpace
+                    rightSection={
+                      !isRegistrationDateEdit ? (
+                        <EditButton
+                          disable={!isEdit}
+                          onClick={() => setIsRegistrationDateEdit(true)}
+                        />
+                      ) : (
+                        <></>
+                      )
                     }
-                    onChange={(val) => {
-                      handleInputChange(val, item?.labeIntl);
-                    }}
-                    errorMessage={errors[item?.labeIntl]}
+                    rightSectionStyle={classes.editStyles}
                   />
-                );
-              })}
-            </CustomGrid>
-          }
-          topSectionStyle={classes.topSectionStyle}
-          middleSection={
-            !hasRoundTwo ? (
-              <TwoRow
-                className={styles.tabContainer}
-                topSection={
+                )}
+              </>
+            }
+            bottomSection={
+              isRegistrationDateEdit ? (
+                <ActionAndCancelButtons
+                  customContainerStyle={styles.customContainerStyle}
+                  customActionBtnStyles={styles.button}
+                  customCancelBtnStyles={styles.button}
+                  actionBtnText={intl.formatMessage({
+                    id: "label.saveChanges",
+                  })}
+                  cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                  onActionBtnClick={handleRegistrationSave}
+                  isActionBtnDisable={
+                    !registrationDatesData?.company_reg_start_date ||
+                    !registrationDatesData?.candidate_reg_start_date ||
+                    !registrationDatesData?.candidate_reg_end_date_bg_centre ||
+                    (isNqca &&
+                      !registrationDatesData?.candidate_reg_end_date_sm_centre)
+                  }
+                  onCancelBtnClick={handleRegistrationCancel}
+                  isctionButtonLoading={isUpdatingRegistrationDate}
+                />
+              ) : (
+                <></>
+              )
+            }
+          />
+        }
+        topSectionStyle={classes.topSectionStyle}
+        bottomSection={
+          <TwoRow
+            className={styles.tabContainer}
+            topSection={
+              <TwoColumn
+                className={styles.tabEdit}
+                isLeftFillSpace
+                leftSection={
                   <CustomTabs
                     tabs={tabItems}
                     activeTab={activeTab}
@@ -462,54 +502,60 @@ const ConsentMarkingContent = ({
                     tabsKeyText={ACTIVE_TAB}
                   />
                 }
-                topSectionStyle={classes.tabTopSectionStyle}
-                bottomSection={activeTabChildren.children}
-                bottomSectionStyle={classes.tabBottomSectionStyle}
-              />
-            ) : (
-              <></>
-            )
-          }
-          bottomSection={
-            isEdit ? (
-              <TwoColumn
-                className={styles.buttonContainer}
-                leftSection={
-                  <CustomButton
-                    btnText={intl.formatMessage({
-                      id: "label.cancel",
-                    })}
-                    customStyle={
-                      responsive.isMd
-                        ? styles.buttonStyles
-                        : styles.mobileButtonStyles
-                    }
-                    textStyle={styles.textStyle}
-                    onClick={handleCancel}
-                  />
-                }
                 rightSection={
-                  <CustomButton
-                    isBtnDisable={isButtonDisabled()}
-                    textStyle={styles.saveButtonTextStyles}
-                    btnText={intl.formatMessage({
-                      id: "session.saveChanges",
-                    })}
-                    onClick={handleSave}
-                  />
+                  !isTableDateEdit &&
+                  (lastRegistrationTableData?.length ||
+                    roundOneTableData?.length ||
+                    roundTwoTableData?.length) ? (
+                    <EditButton
+                      disable={!isEdit}
+                      onClick={() => setIsTableDateEdit(true)}
+                    />
+                  ) : (
+                    <></>
+                  )
                 }
               />
-            ) : (
-              <></>
-            )
-          }
-          bottomSectionStyle={classes.bottomSectionStyle}
-        />
-      </>
-    );
-  };
-
-  return renderContent();
+            }
+            topSectionStyle={classes.tabTopSectionStyle}
+            bottomSection={
+              <TwoRow
+                className={styles.tableDataContainer}
+                topSection={activeTabChildren?.children}
+                bottomSection={
+                  isTableDateEdit ? (
+                    <ActionAndCancelButtons
+                      actionBtnText={intl.formatMessage({
+                        id: "label.saveChanges",
+                      })}
+                      customActionBtnStyles={styles.button}
+                      customCancelBtnStyles={styles.button}
+                      cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                      onActionBtnClick={handleSave}
+                      isActionBtnDisable={
+                        isUpdatingLastRegistrationDate ||
+                        isUpdatingRoundOneDate ||
+                        isUpdatingRoundTwoDate
+                      }
+                      onCancelBtnClick={handleCancel}
+                      isctionButtonLoading={
+                        isUpdatingLastRegistrationDate ||
+                        isUpdatingRoundOneDate ||
+                        isUpdatingRoundTwoDate
+                      }
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
+              />
+            }
+            bottomSectionStyle={classes.tabBottomSectionStyle}
+          />
+        }
+      />
+    </>
+  );
 };
 
 ConsentMarkingContent.defaultProps = {
