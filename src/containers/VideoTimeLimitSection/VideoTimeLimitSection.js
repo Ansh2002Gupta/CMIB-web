@@ -52,17 +52,13 @@ const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
 };
 
 VideoTimeLimitSection.defaultProps = {
-  itSkills: [],
-  setItSkills: () => {},
-  setSoftSkills: () => [],
-  softSkills: [],
+  videoTimeLimit: 0,
+  setVideoTimeLimit: () => {},
 };
 
 VideoTimeLimitSection.propTypes = {
-  itSkills: PropTypes.array,
-  setItSkills: PropTypes.func,
-  setSoftSkills: PropTypes.func,
-  softSkills: PropTypes.array,
+  videoTimeLimit: PropTypes.number,
+  setVideoTimeLimit: PropTypes.func,
 };
 
 export default VideoTimeLimitSection;
