@@ -18,7 +18,7 @@ import {
   isNotAFutureDate,
 } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
-import { ACTIVE_TAB } from "../../constant/constant";
+import { ACTIVE_TAB, NOTIFICATION_TYPES } from "../../constant/constant";
 import {
   VALID_CONSENT_MARKING_TABS_ID,
   REGISTRATION_DATES,
@@ -28,6 +28,7 @@ import { SESSION } from "../../routes/routeNames";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
 import useRegistrationAndConsentMarking from "../../services/api-services/RegistrationandConsentMarking/useRegistrationConsentMarking";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { classes } from "./ConsentMarkingContentRoundTwo.styles";
 import styles from "./ConsentMarkingContentRoundTwo.module.scss";
 
@@ -42,6 +43,7 @@ const ConsentMarkingContentRoundTwo = ({
   const location = useLocation();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [, setNotificationStateDispatch] = useContext(NotificationContext);
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const [registrationDatesData, setRegistrationDatesData] = useState({
     registrationStartDateCompanies:
@@ -264,7 +266,13 @@ const ConsentMarkingContentRoundTwo = ({
           setNotificationStateDispatch(setShowSuccessNotification(true));
           navigateBackToSession();
         },
-
+        onErrorCallback: (errorMessage) => {
+          showNotification({
+            text: errorMessage,
+            type: NOTIFICATION_TYPES.ERROR,
+            headingText: intl.formatMessage({ id: "label.errorMessage" }),
+          });
+        },
         roundId,
       });
     }
@@ -284,20 +292,6 @@ const ConsentMarkingContentRoundTwo = ({
     : REGISTRATION_DATES;
 
   const renderContent = () => {
-    if (!isUpdatingRegistrationAndConsent && errorWhileUpdating && isError) {
-      return (
-        <div className={styles.loaderContainer}>
-          <ErrorMessageBox
-            onRetry={handleSave}
-            errorText={errorWhileUpdating}
-            errorHeading={intl.formatMessage({
-              id: "label.error",
-            })}
-          />
-        </div>
-      );
-    }
-
     if (isUpdatingRegistrationAndConsent) {
       return (
         <div className={styles.loaderContainer}>
@@ -307,6 +301,7 @@ const ConsentMarkingContentRoundTwo = ({
     }
     return (
       <>
+        {notificationContextHolder}
         <ThreeRow
           className={styles.mainContainer}
           topSection={

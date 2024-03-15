@@ -18,8 +18,13 @@ const useRegistrationAndConsentMarking = () => {
     useState(null);
   const [errorWhileUpdating, setErrorWhileUpdating] = useState("");
 
+  const GENERIC_API_FAILED_ERROR_MESSAGE = intl.formatMessage({
+    id: "label.generalGetApiFailedErrorMessage",
+  });
+
   const updateRegistrationAndConsentMarking = async ({
     module,
+    onErrorCallback,
     onSuccessCallback,
     payload,
     roundId,
@@ -36,19 +41,30 @@ const useRegistrationAndConsentMarking = () => {
         return;
       }
       setRegAndConsentUpdateStatus(API_STATUS.ERROR);
-      setErrorWhileUpdating(
-        intl.formatMessage({
-          id: "label.generalGetApiFailedErrorMessage",
-        })
-      );
+      setErrorWhileUpdating(GENERIC_API_FAILED_ERROR_MESSAGE);
+      onErrorCallback && onErrorCallback(GENERIC_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setRegAndConsentUpdateStatus(API_STATUS.ERROR);
+      if (err.response?.data?.message) {
+        setErrorWhileUpdating(err.response?.data?.message);
+        if (
+          err.response?.data?.data &&
+          err.response?.data?.data?.errors &&
+          Object.entries(err.response?.data?.data?.errors).length > 0
+        ) {
+          onErrorCallback && onErrorCallback(err.response?.data?.data);
+        } else {
+          onErrorCallback && onErrorCallback(err.response?.data?.message);
+        }
+        return;
+      }
       setErrorWhileUpdating(
-        err?.response?.data?.message ||
-          intl.formatMessage({
-            id: "label.generalGetApiFailedErrorMessage",
-          })
+        intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
       );
+      onErrorCallback &&
+        onErrorCallback(
+          intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+        );
     }
   };
 
