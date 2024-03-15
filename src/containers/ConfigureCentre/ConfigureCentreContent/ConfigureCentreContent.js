@@ -34,7 +34,6 @@ import {
 import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/plus icon.svg";
 import { ADD } from "../../../routes/routeNames";
 import styles from "./ConfigureCentreContent.module.scss";
-import { TwoColumn } from "../../../core/layouts";
 
 const ConfigureCentreContent = () => {
   const intl = useIntl();

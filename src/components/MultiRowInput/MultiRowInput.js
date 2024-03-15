@@ -33,7 +33,6 @@ const MultiRowInput = ({
     setInputFields(customisedInputArray);
   }, []);
 
-  //updating field state after checking for duplicate fields.
   useEffect(() => {
     const fieldValuesEnteredSoFar = inputFields?.map((field) =>
       field?.[valueKeyName]?.trim()

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
-import { CONFIGURATIONS } from "../../../routes/routeNames";
 
 import { ThreeRow } from "../../../core/layouts";
 
@@ -12,6 +11,7 @@ import useFetch from "../../../core/hooks/useFetch";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import { returnFieldObjects } from "./helpers";
 import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
+import { CONFIGURATIONS } from "../../../routes/routeNames";
 import { NOTIFICATION_TYPES } from "../../../constant/constant";
 import { initialFieldState } from "./constant";
 import { classes } from "./CaJobsConfigurations.styles";
@@ -28,7 +28,7 @@ const CaJobsConfigurations = () => {
     url: CAJOBS_ROUTE + MASTER + CONFIGURATIONS,
     otherOptions: { skipApiCallOnMount: true },
   });
-  const { showNotification, notificationContextHolder } = useShowNotification();
+  const { showNotification } = useShowNotification();
 
   useEffect(() => {
     //check for empty field object.
