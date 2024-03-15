@@ -121,6 +121,7 @@ const useRenderColumn = () => {
       isTypeDate,
       textStyles,
       isCapitalize,
+      isDays,
       isRequiredTooltip,
       isMoney,
       isYearRange,
@@ -164,7 +165,8 @@ const useRenderColumn = () => {
     const getStatusStyles = (status) => {
       if (
         status?.toLowerCase() === "closed" ||
-        status?.toLowerCase() === "answered"
+        status?.toLowerCase() === "answered" ||
+        status?.toLowerCase() === "active"
       ) {
         return ["statusContainer_success", "statusText_success"];
       }
@@ -188,7 +190,10 @@ const useRenderColumn = () => {
         return intl.formatMessage({ id: `label.${text}` });
       }
       if (isMoney) {
-        return `${text} INR`;
+        return `${text} ${intl.formatMessage({ id: "label.inr" })}`;
+      }
+      if (isDays) {
+        return `${text} ${intl.formatMessage({ id: "label.days" })}`;
       }
       if (text) {
         return text;

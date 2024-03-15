@@ -530,6 +530,16 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.manage-subscriptions": "Manage Subscriptions",
+  "label.addSubscription": "Add Subscription",
+  "label.package_name": "Package Name",
+  "label.package_description": "Package Description",
+  "label.createdBy": "Created By",
+  "label.package_validity": "Package Validity Period",
+  "label.price": "Price",
+  "label.activeInactive": "Active/Inactive",
+  "label.inr": "INR",
+  "label.days": "Days",
 };
 
 export default locale;

@@ -1,0 +1,15 @@
+.mainContainer {
+  padding: var(--paddingNone) var(--paddingMedium) var(--paddingMedium)
+    var(--paddingMedium);
+  gap: var(--gapSmall);
+}
+
+.customContainerStyles {
+  border-radius: var(--radiusMLg);
+  overflow: hidden;
+  flex: 1;
+  width: var(--fullWidth);
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
+}

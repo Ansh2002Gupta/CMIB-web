@@ -677,3 +677,52 @@ export const CONFIGURE_INTERVIEW_DATES = [
     slotDurationInMinutes: "59",
   },
 ];
+
+export const SUBSCRIPTION_DUMMY_DATA = [
+  {
+    id: 1,
+    package_name: "Package 1",
+    package_description: "Package description1",
+    created_by: "User Name 1",
+    package_validity: "30",
+    price: "10000",
+    status: "active",
+  },
+  {
+    id: 2,
+    package_name: "Package 2",
+    package_description: "Package description2",
+    created_by: "User Name 2",
+    package_validity: "60",
+    price: "20000",
+    status: "inactive",
+  },
+  {
+    id: 3,
+    package_name: "Package 3",
+    package_description: "Package description3",
+    created_by: "User Name 3",
+    package_validity: "90",
+    price: "30000",
+    status: "active",
+  },
+  {
+    id: 4,
+    package_name: "Package 4",
+    package_description: "Package description4",
+    created_by: "User Name 4",
+    package_validity: "120",
+    price: "40000",
+    status: "inactive",
+  },
+  {
+    id: 5,
+    package_name: "Package 5",
+    package_description: "Package description5",
+    created_by: "User Name 5",
+    package_validity: "150",
+    price: "50000",
+    status: "active",
+  },
+  // Add more entries as needed
+];
