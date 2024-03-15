@@ -7,7 +7,7 @@ import ProfileSkills from "../ProfileSkills/index";
 import VideoTimeLimitSection from "../VideoTimeLimitSection/index";
 import styles from "./CaJobsConfigurationsContainer.module.scss";
 
-const CaJobsConfig = ({
+const CaJobsConfigurationsContainer = ({
   itSkills,
   setItSkills,
   setSoftSkills,
@@ -36,7 +36,7 @@ const CaJobsConfig = ({
   );
 };
 
-CaJobsConfig.defaultProps = {
+CaJobsConfigurationsContainer.defaultProps = {
   itSkills: [],
   setItSkills: () => {},
   setSoftSkills: () => [],
@@ -45,7 +45,7 @@ CaJobsConfig.defaultProps = {
   setVideoTimeLimit: () => {},
 };
 
-CaJobsConfig.propTypes = {
+CaJobsConfigurationsContainer.propTypes = {
   itSkills: PropTypes.array,
   setItSkills: PropTypes.func,
   setSoftSkills: PropTypes.func,
@@ -54,4 +54,4 @@ CaJobsConfig.propTypes = {
   setVideoTimeLimit: PropTypes.func,
 };
 
-export default CaJobsConfig;
+export default CaJobsConfigurationsContainer;

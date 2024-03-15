@@ -1,22 +1,22 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
-import { CONFIGURATIONS } from "../../../routes/routeNames";
 
 import { ThreeRow } from "../../../core/layouts";
 
 import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
 import CaJobsConfigurationsContainer from "../../../containers/CaJobsConfigurationsContainer";
 import ContentHeader from "../../../containers/ContentHeader";
+import CustomLoader from "../../../components/CustomLoader/CustomLoader";
 import useFetch from "../../../core/hooks/useFetch";
 import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
+import useShowNotification from "../../../core/hooks/useShowNotification";
 import { returnFieldObjects } from "./helpers";
 import { initialFieldState } from "./constant";
 import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
+import { CONFIGURATIONS } from "../../../routes/routeNames";
 import { NOTIFICATION_TYPES } from "../../../constant/constant";
 import { classes } from "./CaJobsConfigurations.styles";
 import styles from "./CaJobsConfigurations.module.scss";
-import CustomLoader from "../../../components/CustomLoader/CustomLoader";
-import useShowNotification from "../../../core/hooks/useShowNotification";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();

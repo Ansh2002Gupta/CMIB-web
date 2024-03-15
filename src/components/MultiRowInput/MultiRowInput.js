@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 
 import { ThemeContext } from "core/providers/theme";
 import CustomInput from "../CustomInput/CustomInput";
-import { returnEmptyRow } from "./helpers.js";
 import { handleDuplicateArrayItems } from "../../Utils/handleDuplicateArrayItem.js";
 import { updateArrayItem } from "../../Utils/updateArrayItem.js";
+import { returnEmptyRow } from "./helpers.js";
 import styles from "./MultiRowInput.module.scss";
 
 const MultiRowInput = ({
@@ -34,7 +34,6 @@ const MultiRowInput = ({
     setInputFields(customisedInputArray);
   }, []);
 
-  //updating field state after checking for duplicate fields.
   useEffect(() => {
     const fieldValuesEnteredSoFar = inputFields?.map((field) =>
       field?.[valueKeyName]?.trim()
@@ -57,7 +56,6 @@ const MultiRowInput = ({
   const handleChange = ({ value, field }) => {
     value = value?.trim();
     if (value?.length > maxInputLength) return;
-    //updating field state
     const updatedInputFields = updateArrayItem({
       array: inputFields,
       keyValuePairObject: {

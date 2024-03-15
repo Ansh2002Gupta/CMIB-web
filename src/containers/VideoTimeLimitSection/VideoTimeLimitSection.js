@@ -7,8 +7,8 @@ import { TwoRow } from "../../core/layouts";
 
 import CustomInput from "../../components/CustomInput/CustomInput";
 import useResponsive from "../../core/hooks/useResponsive";
-import styles from "./VideoTimeLimitSection.module.scss";
 import { MAX_VIDEO_LENGTH, MIN_VIDEO_LENGTH } from "../../constant/constant";
+import styles from "./VideoTimeLimitSection.module.scss";
 
 const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
   const responsive = useResponsive();

@@ -7,8 +7,8 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import MultiRowInput from "../../components/MultiRowInput/MultiRowInput";
 import useResponsive from "../../core/hooks/useResponsive";
-import styles from "./ProfileSkills.module.scss";
 import { MAX_INPUT_LENGTH } from "../../constant/constant";
+import styles from "./ProfileSkills.module.scss";
 
 const ProfileSkills = ({
   itSkills,
@@ -36,7 +36,7 @@ const ProfileSkills = ({
                     id: "label.headerTextItSkills",
                   })}
                   inputFields={itSkills}
-                  maxInputLength={100}
+                  maxInputLength={MAX_INPUT_LENGTH}
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderItSkills",
                   })}
