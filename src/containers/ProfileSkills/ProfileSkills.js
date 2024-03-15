@@ -1,6 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
+import PropTypes from "prop-types";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -30,29 +31,29 @@ const ProfileSkills = ({
               }`}
               leftSection={
                 <MultiRowInput
-                  inputFields={itSkills}
-                  setInputFields={setItSkills}
                   headerText={intl?.formatMessage({
                     id: "label.headerTextItSkills",
                   })}
-                  valueKeyName="fieldValue"
+                  inputFields={itSkills}
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderItSkills",
                   })}
+                  setInputFields={setItSkills}
+                  valueKeyName="fieldValue"
                 />
               }
               leftSectionClassName={styles.leftSectionStyling}
               rightSection={
                 <MultiRowInput
-                  inputFields={softSkills}
-                  setInputFields={setSoftSkills}
                   headerText={intl?.formatMessage({
                     id: "label.headerTextSoftSkills",
                   })}
-                  valueKeyName="fieldValue"
+                  inputFields={softSkills}
                   placeholderText={intl?.formatMessage({
                     id: "label.placeholderSoftSkills",
                   })}
+                  setInputFields={setSoftSkills}
+                  valueKeyName="fieldValue"
                 />
               }
               rightSectionClassName={styles.rightSectionStyling}
@@ -67,6 +68,20 @@ const ProfileSkills = ({
       />
     </div>
   );
+};
+
+ProfileSkills.defaultProps = {
+  itSkills: [],
+  setItSkills: () => {},
+  setSoftSkills: () => [],
+  softSkills: [],
+};
+
+ProfileSkills.propTypes = {
+  itSkills: PropTypes.array,
+  setItSkills: PropTypes.func,
+  setSoftSkills: PropTypes.func,
+  softSkills: PropTypes.array,
 };
 
 export default ProfileSkills;
