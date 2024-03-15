@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
-import { TwoColumn } from "../../layouts";
+import { TwoColumn, TwoRow } from "../../layouts";
 
 import AutoPlaceComplete from "../../../components/AutoPlaceComplete";
 import Chip from "../../../components/Chip/Chip";
@@ -74,6 +74,7 @@ const useRenderColumn = () => {
       placeholder = "",
       type,
       disabledDate = () => {},
+      useExactDate,
     } = renderDateTime;
 
     const {
@@ -81,6 +82,7 @@ const useRenderColumn = () => {
       alternateSrc = "",
       alternateOnClick = () => {},
       customImageStyle = "",
+      imageDisable = false,
       src = "",
       onClick = () => {},
       preview,
@@ -116,7 +118,9 @@ const useRenderColumn = () => {
     } = renderTextWithCheckBoxes;
 
     const {
+      centreStyles,
       includeDotAfterText,
+      isCentre,
       isTextBold,
       isTypeDate,
       textStyles,
@@ -140,6 +144,8 @@ const useRenderColumn = () => {
     } = renderSwitch;
 
     const {
+      leftDisabled = false,
+      rightDisabled = false,
       leftAlt = "",
       rightAlt = "",
       customTwoImageStyle = "",
@@ -234,6 +240,19 @@ const useRenderColumn = () => {
                     : "label.years",
               })}`}
         </p>
+      );
+    };
+
+    const getRenderCentre = (data) => {
+      return (
+        <TwoRow
+          topSection={getRenderText(data?.centre_name)}
+          bottomSection={
+            <p className={[centreStyles, styles.customCentreStyles].join(" ")}>
+              {intl.formatMessage({ id: `label.${data?.centre_size}` })}
+            </p>
+          }
+        />
       );
     };
 
@@ -363,6 +382,8 @@ const useRenderColumn = () => {
             <Tooltip title={text}>{getRenderText(text)}</Tooltip>
           ) : isYearRange ? (
             getRenderYearRange(rowData)
+          ) : isCentre ? (
+            getRenderCentre(rowData)
           ) : (
             getRenderText(text)
           ),
@@ -420,11 +441,16 @@ const useRenderColumn = () => {
               alt={alt}
               src={rowData?.isAddRow ? alternateSrc : src}
               preview={preview}
-              className={`${customImageStyle} ${styles.editIcon}`}
-              onClick={() =>
-                rowData?.isAddRow
-                  ? alternateOnClick(rowData, index)
-                  : onClick(rowData, index)
+              className={`${customImageStyle} ${
+                imageDisable ? styles.disableIcon : styles.editIcon
+              }`}
+              onClick={
+                !imageDisable
+                  ? () =>
+                      rowData?.isAddRow
+                        ? alternateOnClick(rowData, index)
+                        : onClick(rowData, index)
+                  : () => {}
               }
             />
           ),
@@ -443,8 +469,14 @@ const useRenderColumn = () => {
                   alt={leftAlt}
                   src={leftSrc}
                   preview={leftPreview}
-                  className={`${leftCustomImageStyle} ${styles.editIcon}`}
-                  onClick={leftOnClick ? () => leftOnClick(rowData) : () => {}}
+                  className={`${leftCustomImageStyle} ${
+                    leftDisabled ? styles.disableIcon : styles.editIcon
+                  }`}
+                  onClick={
+                    leftOnClick && !leftDisabled
+                      ? () => leftOnClick(rowData)
+                      : () => {}
+                  }
                 />
               }
               rightSection={
@@ -452,9 +484,13 @@ const useRenderColumn = () => {
                   alt={rightAlt}
                   src={rightSrc}
                   preview={rightPreview}
-                  className={`${rightCustomImageStyle} ${styles.editIcon}`}
+                  className={`${rightCustomImageStyle} ${
+                    rightDisabled ? styles.disableIcon : styles.editIcon
+                  }`}
                   onClick={
-                    rightOnClick ? () => rightOnClick(rowData) : () => {}
+                    rightOnClick && !rightDisabled
+                      ? () => rightOnClick(rowData)
+                      : () => {}
                   }
                 />
               }
@@ -526,6 +562,7 @@ const useRenderColumn = () => {
                 type,
                 placeholder,
                 value,
+                useExactDate,
               }}
               errorTimeInput={
                 ((record?.isAddRow && errorMessage) || getError(index)) &&

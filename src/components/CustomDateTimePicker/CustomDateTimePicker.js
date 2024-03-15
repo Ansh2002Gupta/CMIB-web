@@ -33,6 +33,7 @@ const CustomDateTimePicker = ({
   type,
   use12Hours,
   value,
+  useExactDate,
 }) => {
   const { getImage } = useContext(ThemeContext);
 
@@ -43,7 +44,7 @@ const CustomDateTimePicker = ({
         label && (
           <div className={styles.inputLabelContainer}>
             <Typography className={customLabelStyles}>
-              {label}
+              {label}&nbsp;
               {isRequired && <MarkRequired />}
             </Typography>
           </div>
@@ -97,7 +98,7 @@ const CustomDateTimePicker = ({
               />
             ) : (
               <Typography className={classes.dateText}>
-                {formatDate({ date: value })}
+                {formatDate({ date: value, useExactDate })}
               </Typography>
             )
           }

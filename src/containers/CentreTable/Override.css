@@ -4,6 +4,10 @@
   border-bottom: none !important;
 }
 
+.ant-table-tbody > tr > td{
+  vertical-align: top;
+}
+
 .customTable .ant-table-tbody > tr > td {
   vertical-align: top;
   border-bottom: none !important;
@@ -71,6 +75,9 @@
   padding-left: var(--paddingSmall);
 }
 
+.ant-table-tbody > tr > td{
+  vertical-align: top;
+}
 
 
 
