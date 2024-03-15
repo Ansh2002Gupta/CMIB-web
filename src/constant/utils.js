@@ -366,7 +366,7 @@ export const compareTwoDayjsDates = ({ current, date, checkForFuture }) => {
     return false;
   }
   if (checkForFuture) {
-    return current && current > dayjs(date).startOf("day");
+    return current && current >= dayjs(date).startOf("day");
   }
   return current && current <= dayjs(date).startOf("day");
 };
@@ -430,18 +430,4 @@ export const handleDisabledStartTime = (time) => {
       return minutes;
     },
   };
-};
-
-export const isNotAFutureDate = (current) => {
-  return current && current < dayjs().add(1, "day").startOf("day");
-};
-
-export const compareTwoDayjsDates = ({ current, date, checkForFuture }) => {
-  if (!date) {
-    return false;
-  }
-  if (checkForFuture) {
-    return current && current >= dayjs(date).startOf("day");
-  }
-  return current && current <= dayjs(date).startOf("day");
 };

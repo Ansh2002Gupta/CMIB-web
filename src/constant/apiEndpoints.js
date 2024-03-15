@@ -35,7 +35,6 @@ export const QUERY_TYPE = "/queries/types";
 export const REGISTRATION_CONSENT = "/registration-consent";
 export const REGISTRATION_DATES = "/registration-dates";
 export const RESET_ADMIN_PASSWORD = "/reset-password/confirm";
-export const REGISTRATION_DATES = "/registration-dates";
 export const ROLES_PERMISSION = "/roles-permissions";
 export const ROUNDS = "/rounds";
 export const ROUND_ONE = "/round-1";
