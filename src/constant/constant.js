@@ -12,6 +12,10 @@ export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
 export const SLIDE_BY = 300;
 export const MESSAGE_MAX_LENGTH = 5000;
+export const MAX_INPUT_LENGTH = 100;
+export const MIN_INPUT_LENGTH = 0;
+export const MAX_VIDEO_LENGTH = 999;
+export const MIN_VIDEO_LENGTH = 0;
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -22,6 +26,7 @@ export const API_STATUS = {
 
 export const STATUS_CODES = {
   SUCCESS_STATUS: 200,
+  SUCCESS_POST: 201,
   NOT_FOUND: 404,
   UNAUTHORIZED_USER: 401,
 };
@@ -57,6 +62,7 @@ export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 export const VALID_CONSENT_MARKING_TABS_ID = ["1", "2", "3"];
+export const VALID_GLOBAL_CONFIGURATIONS_TABS_ID = ["1", "2"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
@@ -376,6 +382,7 @@ export const USER_PROFILE_QUERY_PARAMS = "user-profile";
 export const ROUND_ID = "roundId";
 
 export const MIN_SEARCH_TEXT_LENGTH = 2;
+export const MIN_CHARACTERS_IN_INPUT_FIELD = 0;
 
 export const CENTRE_TYPE_ENUM = {
   BIG: "big",
@@ -394,6 +401,7 @@ export const MAX_CTC_LENGTH = 10;
 export const MAX_EXPERIENCE_LENGTH = 2;
 export const MAX_PARTNERS_LENGTH = 3;
 export const MAX_VACANCIES_LENGTH = 4;
+export const MAX_CHARACTERS_IN_INPUT_FIELD = 999;
 
 export const PAYMENT_TYPE = {
   WHOLE: "whole",

@@ -1,0 +1,35 @@
+.outerContainerFlexCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmallMedium);
+}
+
+.headerText {
+  font-weight: var(--fontWeightMedium);
+  font-size: var(--fontSizeExtraSmall);
+  color: var(--subHeadingColor);
+}
+
+.innerContainerFlexRow {
+  display: flex;
+  flex-direction: row;
+  gap: var(--gapMedium);
+}
+
+.customInputOuterContainer {
+  width: var(--fullWidth);
+}
+
+.customInputStyles {
+  font-size: var(--fontSizeSmall);
+  line-height: var(--lineHeightNormal);
+  font-weight: var(--fontWeightMedium);
+}
+
+.imageStyle {
+  position: relative;
+  top: var(--top_10);
+  cursor: pointer;
+  height: var(--height_24);
+  width: var(--width_24);
+}
