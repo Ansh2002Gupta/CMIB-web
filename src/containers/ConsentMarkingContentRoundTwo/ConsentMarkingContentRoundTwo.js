@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Spin } from "antd";
 
-import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import CustomButton from "../../components/CustomButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
@@ -302,7 +302,7 @@ const ConsentMarkingContentRoundTwo = ({
     return (
       <>
         {notificationContextHolder}
-        <ThreeRow
+        <TwoRow
           className={styles.mainContainer}
           topSection={
             <CustomGrid customStyle={styles.customStyle}>
@@ -342,7 +342,6 @@ const ConsentMarkingContentRoundTwo = ({
             </CustomGrid>
           }
           topSectionStyle={classes.topSectionStyle}
-          middleSection={!hasRoundTwo ? <></> : <></>}
           bottomSection={
             isEdit ? (
               <TwoColumn
