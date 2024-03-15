@@ -108,6 +108,7 @@ const MultiRowInput = ({
               <CustomInput
                 controls={true}
                 customContainerStyles={styles.customInputOuterContainer}
+                customInputStyles={styles.customInputStyles}
                 errorMessage={field?.error}
                 isError={!!field?.error}
                 onChange={(e) =>

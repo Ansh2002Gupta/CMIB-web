@@ -7,10 +7,15 @@ import ActionAndCancelButtons from "../../../components/ActionAndCancelButtons";
 import CaJobsConfigurationsContainer from "../../../containers/CaJobsConfigurationsContainer";
 import ContentHeader from "../../../containers/ContentHeader";
 import CustomLoader from "../../../components/CustomLoader/CustomLoader";
+import ErrorMessageBox from "../../../components/ErrorMessageBox";
 import useFetch from "../../../core/hooks/useFetch";
 import usePostGlobalConfigurationsApi from "../../../services/api-services/GlobalConfigurations/usePostGlobalConfigurationsApi";
 import useShowNotification from "../../../core/hooks/useShowNotification";
-import { returnFieldObjects } from "./helpers";
+import {
+  addEmptyRowAtLastIfAbsent,
+  removeInBetweenEmptyFields,
+  returnFieldObjects,
+} from "./helpers";
 import { initialFieldState } from "./constant";
 import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
 import { CONFIGURATIONS } from "../../../routes/routeNames";
@@ -24,8 +29,14 @@ const CaJobsConfigurations = () => {
   const [videoTimeLimit, setVideoTimeLimit] = useState(0);
   const [itSkills, setItSkills] = useState(initialFieldState);
   const [softSkills, setSoftSkills] = useState(initialFieldState);
-  const { postGlobalConfigurations } = usePostGlobalConfigurationsApi();
-  const { isLoading, fetchData } = useFetch({
+  const { isLoading: isSavingConfigurations, postGlobalConfigurations } =
+    usePostGlobalConfigurationsApi();
+  const {
+    error: errorGettingConfigurations,
+    fetchData,
+    isLoading,
+    isSuccess: isGettingConfigurationsSuccessful,
+  } = useFetch({
     url: CAJOBS_ROUTE + MASTER + CONFIGURATIONS,
     otherOptions: { skipApiCallOnMount: true },
   });
@@ -55,46 +66,7 @@ const CaJobsConfigurations = () => {
           previousSavedData.current.previousSavedVideoTimeLimit
         );
       },
-      onErrorCallback: (error) => {
-        showNotification({
-          text: intl.formatMessage({
-            id: "label.errorOccured",
-          }),
-          type: NOTIFICATION_TYPES.ERROR,
-        });
-      },
     });
-  };
-
-  const removeInBetweenEmptyFields = ({ array, valueKeyName }) => {
-    const arrayWithoutEmptyFields = array.filter((field, index) =>
-      index !== array.length - 1 ? !!field?.[valueKeyName] : true
-    );
-    return arrayWithoutEmptyFields;
-  };
-
-  const addEmptyRowAtLastIfAbsent = ({
-    array,
-    valueKeyName,
-    actionKeyName,
-  }) => {
-    let updatedArray = array.map((field, index) => {
-      if (index === array.length - 1) {
-        return !!field?.[valueKeyName]
-          ? { ...field, [actionKeyName]: "remove" }
-          : field;
-      } else return field;
-    });
-    if (
-      updatedArray[updatedArray.length - 1]?.[actionKeyName]?.trim() ===
-      "remove"
-    )
-      updatedArray.push({
-        [valueKeyName]: "",
-        [actionKeyName]: "add",
-        id: Date.now(),
-      });
-    return updatedArray;
   };
 
   const postProfileSkills = ({ keyName }) => {
@@ -116,11 +88,7 @@ const CaJobsConfigurations = () => {
       valueKeyName: keyName,
       actionKeyName: "buttonType",
     });
-    previousSavedData.current = {
-      previousSavedItSkills: updatedItSkills,
-      previousSavedSoftSkills: updatedSoftSkills,
-      previousSavedVideoTimeLimit: videoTimeLimit,
-    };
+
     const itSkillsList = updatedItSkills.map((obj) =>
       !!obj?.[keyName] ? obj?.[keyName] : ""
     );
@@ -136,7 +104,7 @@ const CaJobsConfigurations = () => {
       onErrorCallback: (errMessage) => {
         showNotification({
           text: intl.formatMessage({
-            id: "label.errorOccured",
+            id: errMessage || "label.errorOccured",
           }),
           type: NOTIFICATION_TYPES.ERROR,
         });
@@ -146,15 +114,58 @@ const CaJobsConfigurations = () => {
           text: intl.formatMessage({ id: "label.data_saved_successfully" }),
           type: "success",
         });
+        previousSavedData.current = {
+          previousSavedItSkills: updatedItSkills,
+          previousSavedSoftSkills: updatedSoftSkills,
+          previousSavedVideoTimeLimit: videoTimeLimit,
+        };
+        initializeWithPreviousSavedData();
       },
     });
-    initializeWithPreviousSavedData();
   };
 
   const initializeWithPreviousSavedData = () => {
     setItSkills(previousSavedData.current.previousSavedItSkills);
     setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
     setVideoTimeLimit(previousSavedData.current.previousSavedVideoTimeLimit);
+  };
+
+  const renderContent = () => {
+    if (isLoading) {
+      return <CustomLoader />;
+    }
+    if (!isLoading && errorGettingConfigurations) {
+      return (
+        <div className={styles.errorBox}>
+          <ErrorMessageBox
+            onRetry={getSavedProfileSkills}
+            errorText={
+              errorGettingConfigurations?.data?.message ||
+              errorGettingConfigurations
+            }
+            errorHeading={intl.formatMessage({ id: "label.error" })}
+          />
+        </div>
+      );
+    }
+    if (
+      !isLoading &&
+      !errorGettingConfigurations &&
+      isGettingConfigurationsSuccessful
+    ) {
+      return (
+        <CaJobsConfigurationsContainer
+          {...{
+            itSkills,
+            setItSkills,
+            setSoftSkills,
+            softSkills,
+            videoTimeLimit,
+            setVideoTimeLimit,
+          }}
+        />
+      );
+    }
   };
 
   return (
@@ -166,41 +177,32 @@ const CaJobsConfigurations = () => {
             <ContentHeader headerText="Global Configurations" />
           </div>
         }
-        middleSection={
-          isLoading ? (
-            <CustomLoader />
-          ) : (
-            <CaJobsConfigurationsContainer
-              {...{
-                itSkills,
-                setItSkills,
-                setSoftSkills,
-                softSkills,
-                videoTimeLimit,
-                setVideoTimeLimit,
-              }}
-            />
-          )
-        }
+        middleSection={renderContent()}
         middleSectionStyle={classes.middleSection}
         bottomSection={
-          <ActionAndCancelButtons
-            actionBtnText={intl.formatMessage({
-              id: "label.save",
-            })}
-            cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-            customActionBtnStyles={styles.saveButton}
-            customContainerStyles={styles.buttonWrapper}
-            isLoading={isLoading}
-            isActionBtnDisable={
-              itSkills.some((obj) => obj?.error) ||
-              softSkills.some((obj) => obj?.error)
-            }
-            onActionBtnClick={() =>
-              postProfileSkills({ keyName: "fieldValue" })
-            }
-            onCancelBtnClick={initializeWithPreviousSavedData}
-          />
+          !errorGettingConfigurations && !isLoading ? (
+            <ActionAndCancelButtons
+              actionBtnText={intl.formatMessage({
+                id: "label.save",
+              })}
+              cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+              customActionBtnStyles={styles.saveButton}
+              customContainerStyles={styles.buttonWrapper}
+              isLoading={isSavingConfigurations}
+              isActionBtnDisable={
+                itSkills.some(
+                  (obj) => obj?.error && obj.buttonType !== "add"
+                ) ||
+                softSkills.some((obj) => obj?.error && obj.buttonType !== "add")
+              }
+              onActionBtnClick={() =>
+                postProfileSkills({ keyName: "fieldValue" })
+              }
+              onCancelBtnClick={initializeWithPreviousSavedData}
+            />
+          ) : (
+            <> </>
+          )
         }
       />
     </>

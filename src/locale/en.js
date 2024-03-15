@@ -537,7 +537,8 @@ const locale = {
     "Interview Date Updated Successfully",
   "label.set_max_video_upload_time_limit":
     "Setup Maximum Video Upload Time Limit",
-  "label.max_video_upload_time_limit": "Maximum Video Upload Time Limit",
+  "label.max_video_upload_time_limit":
+    "Maximum Video Upload Time Limit (seconds)",
   "label.set_profile_skills": "Set Profile Skills",
 };
 
