@@ -62,7 +62,10 @@ const MultiRowInput = ({
       array: inputFields,
       keyValuePairObject: {
         [valueKeyName]: value,
-        error: "",
+        error:
+          !value && field?.buttonType?.trim() === "remove"
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
       },
       itemToBeUpdatedId: field?.id,
     });

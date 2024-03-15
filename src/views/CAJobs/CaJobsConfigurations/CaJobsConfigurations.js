@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useIntl } from "react-intl";
 import { CONFIGURATIONS } from "../../../routes/routeNames";
 
@@ -14,6 +14,10 @@ import { initialFieldState } from "./constant";
 import { CAJOBS_ROUTE, MASTER } from "../../../constant/apiEndpoints";
 import { classes } from "./CaJobsConfigurations.styles";
 import styles from "./CaJobsConfigurations.module.scss";
+import CustomLoader from "../../../components/CustomLoader/CustomLoader";
+import { NotificationContext } from "../../../globalContext/notification/notificationProvider";
+import { setShowSuccessNotification } from "../../../globalContext/notification/notificationActions";
+import useShowNotification from "../../../core/hooks/useShowNotification";
 
 const CaJobsConfigurations = () => {
   const intl = useIntl();
@@ -24,17 +28,16 @@ const CaJobsConfigurations = () => {
   const [softSkills, setSoftSkills] = useState(initialFieldState);
   const [isFieldError, setIsFieldError] = useState(false);
   const { postGlobalConfigurations } = usePostGlobalConfigurationsApi();
-  const { fetchData } = useFetch({
+  const { isLoading, fetchData } = useFetch({
     url: CAJOBS_ROUTE + MASTER + CONFIGURATIONS,
     otherOptions: { skipApiCallOnMount: true },
   });
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
-  //get last saved data on component mount.
   useEffect(() => {
     getSavedProfileSkills();
   }, []);
 
-  //initialize field with last saved data on component mount.
   const getSavedProfileSkills = () => {
     fetchData({
       queryParamsObject: {},
@@ -69,42 +72,61 @@ const CaJobsConfigurations = () => {
     if (isError) setIsFieldError(true);
   }, [itSkills, softSkills]);
 
-  const removeEmptyFields = ({ array, valueKeyName }) => {
-    console.log("array:", array);
-    const arrayWithoutEmptyFields = array.filter(
-      (field) => field?.[valueKeyName]
+  const removeInBetweenEmptyFields = ({ array, valueKeyName }) => {
+    const arrayWithoutEmptyFields = array.filter((field, index) =>
+      index !== array.length - 1 ? !!field?.[valueKeyName] : true
     );
-    console.log("arrayWithoutEmptyFields:", arrayWithoutEmptyFields);
-    // keeping atmost one empty field if all fields were filtered.
-    return arrayWithoutEmptyFields.length
-      ? arrayWithoutEmptyFields
-      : initialFieldState;
+    return arrayWithoutEmptyFields;
+  };
+
+  const addEmptyRowAtLastIfAbsent = ({ array, valueKeyName }) => {
+    let updatedArray = array.map((field, index) => {
+      if (index === array.length - 1) {
+        return !!field?.[valueKeyName]
+          ? { ...field, buttonType: "remove" }
+          : field;
+      } else return field;
+    });
+    if (updatedArray[updatedArray.length - 1]?.buttonType?.trim() === "remove")
+      updatedArray.push({
+        fieldValue: "",
+        buttonType: "add",
+        id: Date.now(),
+      });
+    return updatedArray;
   };
 
   //on save
   const postProfileSkills = ({ keyName }) => {
     setPostingSkillInfo(true);
     //checking and removing empty fields and keeping atmost one empty field if all fields were removed.
-    const itSkillsWithAtmostOneEmptyField = removeEmptyFields({
+    const itSkillsWithAtmostOneEmptyField = removeInBetweenEmptyFields({
       array: itSkills,
       valueKeyName: keyName,
     });
-    const softSkillsWithAtmostOneEmptyField = removeEmptyFields({
+    const softSkillsWithAtmostOneEmptyField = removeInBetweenEmptyFields({
       array: softSkills,
+      valueKeyName: keyName,
+    });
+    const updatedItSkills = addEmptyRowAtLastIfAbsent({
+      array: itSkillsWithAtmostOneEmptyField,
+      valueKeyName: keyName,
+    });
+    const updatedSoftSkills = addEmptyRowAtLastIfAbsent({
+      array: softSkillsWithAtmostOneEmptyField,
       valueKeyName: keyName,
     });
     //update the useRef 'previousSavedData' with the current Data.
     previousSavedData.current = {
-      previousSavedItSkills: itSkillsWithAtmostOneEmptyField,
-      previousSavedSoftSkills: softSkillsWithAtmostOneEmptyField,
+      previousSavedItSkills: updatedItSkills,
+      previousSavedSoftSkills: updatedSoftSkills,
       previousSavedVideoTimeLimit: videoTimeLimit,
     };
-    initializeWithPreviousSavedData();
-    const itSkillsList = itSkillsWithAtmostOneEmptyField.map(
-      (obj) => obj?.[keyName]
+    const itSkillsList = updatedItSkills.map((obj) =>
+      !!obj?.[keyName] ? obj?.[keyName] : ""
     );
-    const softSkillsList = softSkillsWithAtmostOneEmptyField.map(
-      (obj) => obj?.[keyName]
+    const softSkillsList = updatedSoftSkills.map((obj) =>
+      !!obj?.[keyName] ? obj?.[keyName] : ""
     );
     postGlobalConfigurations({
       payload: {
@@ -114,7 +136,14 @@ const CaJobsConfigurations = () => {
       },
       //TODO: TO DESIGN THE ERROR LOGIC
       onErrorCallback: (errMessage) => {},
-      onSuccessCallback: () => setPostingSkillInfo(false),
+      onSuccessCallback: () => {
+        showNotification({
+          text: intl.formatMessage({ id: "label.data_saved_successfully" }),
+          type: "success",
+        });
+        setPostingSkillInfo(false);
+        initializeWithPreviousSavedData();
+      },
     });
   };
 
@@ -126,40 +155,49 @@ const CaJobsConfigurations = () => {
   };
 
   return (
-    <ThreeRow
-      topSection={
-        <div className={styles.headerContainer}>
-          <ContentHeader headerText="Global Configurations" />
-        </div>
-      }
-      middleSection={
-        <CaJobsConfigurationsContainer
-          {...{
-            itSkills,
-            setItSkills,
-            setSoftSkills,
-            softSkills,
-            videoTimeLimit,
-            setVideoTimeLimit,
-          }}
-        />
-      }
-      middleSectionStyle={classes.middleSection}
-      bottomSection={
-        <ActionAndCancelButtons
-          actionBtnText={intl.formatMessage({
-            id: "label.save",
-          })}
-          cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-          customActionBtnStyles={styles.saveButton}
-          customContainerStyles={styles.buttonWrapper}
-          isLoading={postingSkillInfo}
-          isActionBtnDisable={isFieldError}
-          onActionBtnClick={() => postProfileSkills({ keyName: "fieldValue" })}
-          onCancelBtnClick={initializeWithPreviousSavedData}
-        />
-      }
-    />
+    <>
+      {notificationContextHolder}
+      <ThreeRow
+        topSection={
+          <div className={styles.headerContainer}>
+            <ContentHeader headerText="Global Configurations" />
+          </div>
+        }
+        middleSection={
+          isLoading ? (
+            <CustomLoader />
+          ) : (
+            <CaJobsConfigurationsContainer
+              {...{
+                itSkills,
+                setItSkills,
+                setSoftSkills,
+                softSkills,
+                videoTimeLimit,
+                setVideoTimeLimit,
+              }}
+            />
+          )
+        }
+        middleSectionStyle={classes.middleSection}
+        bottomSection={
+          <ActionAndCancelButtons
+            actionBtnText={intl.formatMessage({
+              id: "label.save",
+            })}
+            cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+            customActionBtnStyles={styles.saveButton}
+            customContainerStyles={styles.buttonWrapper}
+            isLoading={postingSkillInfo}
+            isActionBtnDisable={isFieldError}
+            onActionBtnClick={() =>
+              postProfileSkills({ keyName: "fieldValue" })
+            }
+            onCancelBtnClick={initializeWithPreviousSavedData}
+          />
+        }
+      />
+    </>
   );
 };
 
