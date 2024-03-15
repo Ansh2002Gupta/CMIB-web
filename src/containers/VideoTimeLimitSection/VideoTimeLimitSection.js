@@ -7,6 +7,10 @@ import { TwoRow } from "../../core/layouts";
 
 import CustomInput from "../../components/CustomInput/CustomInput";
 import useResponsive from "../../core/hooks/useResponsive";
+import {
+  MAX_CHARACTERS_IN_INPUT_FIELD,
+  MIN_CHARACTERS_IN_INPUT_FIELD,
+} from "../../constant/constant";
 import styles from "./VideoTimeLimitSection.module.scss";
 
 const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
@@ -37,12 +41,11 @@ const VideoTimeLimitSection = ({ videoTimeLimit, setVideoTimeLimit }) => {
             </Typography>
             <CustomInput
               controls={true}
-              customInputNumberStyles={styles.inputNumberStyle}
-              max={15}
-              min={0}
-              onChange={(val) => setVideoTimeLimit(val)}
+              min={MIN_CHARACTERS_IN_INPUT_FIELD}
+              max={MAX_CHARACTERS_IN_INPUT_FIELD}
               type="inputNumber"
               value={videoTimeLimit}
+              onChange={(val) => setVideoTimeLimit(val)}
             />
           </div>
         }

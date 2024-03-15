@@ -5,13 +5,15 @@ import PropTypes from "prop-types";
 
 import { ThemeContext } from "core/providers/theme";
 import CustomInput from "../CustomInput/CustomInput";
-import { returnEmptyRow } from "./helpers.js";
+import { handleDuplicateArrayItems } from "../../Utils/handleDuplicateArrayItem.js";
 import { updateArrayItem } from "../../Utils/updateArrayItem.js";
+import { returnEmptyRow } from "./helpers.js";
 import styles from "./MultiRowInput.module.scss";
 
 const MultiRowInput = ({
-  inputFields,
   headerText,
+  inputFields,
+  maxInputLength,
   placeholderText,
   setInputFields,
   valueKeyName,
@@ -32,14 +34,36 @@ const MultiRowInput = ({
     setInputFields(customisedInputArray);
   }, []);
 
+  useEffect(() => {
+    const fieldValuesEnteredSoFar = inputFields?.map((field) =>
+      field?.[valueKeyName]?.trim()
+        ? { id: field?.id, value: field?.[valueKeyName].trim() }
+        : {}
+    );
+    const inputFieldsAfterDuplicacyCheck = handleDuplicateArrayItems({
+      array: inputFields,
+      errorMessage: intl.formatMessage({ id: "label.error.DuplicateFields" }),
+      uniqueArrayItems: fieldValuesEnteredSoFar,
+    });
+    const isDifferent =
+      JSON.stringify(inputFields) !==
+      JSON.stringify(inputFieldsAfterDuplicacyCheck);
+    if (isDifferent) {
+      setInputFields(inputFieldsAfterDuplicacyCheck);
+    }
+  }, [inputFields]);
+
   const handleChange = ({ value, field }) => {
+    value = value?.trim();
+    if (value?.length > maxInputLength) return;
     const updatedInputFields = updateArrayItem({
       array: inputFields,
       keyValuePairObject: {
         [valueKeyName]: value,
-        error: value?.trim()
-          ? ""
-          : intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        error:
+          !value && field?.buttonType?.trim() === "remove"
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
       },
       itemToBeUpdatedId: field?.id,
     });
@@ -117,16 +141,18 @@ const MultiRowInput = ({
 };
 
 MultiRowInput.defaultProps = {
-  inputFields: [],
   headerText: "",
+  inputFields: [],
+  maxInputLength: 100,
   placeholderText: "",
   setinputFields: () => {},
   valueKeyName: "",
 };
 
 MultiRowInput.propTypes = {
-  inputFields: PropTypes.array,
   headerText: PropTypes.string,
+  inputFields: PropTypes.array,
+  maxInputLength: PropTypes.number,
   placeholderText: PropTypes.string,
   setinputFields: PropTypes.func,
   valueKeyName: PropTypes.string,
