@@ -248,6 +248,9 @@ const locale = {
     "Last Date of Registration for Candidates for Small Centres",
   "label.centreCodeColon": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
+  "label.consent.writtenTestDate": "Written/Psychometric Test Date",
+  "label.consent.placeholder.writtenTestDate":
+    "Select Written/Psychometric Test Date",
   "label.centreStartTime": "Centre Start Time",
   "label.centreEndTime": "Centre End Time",
   "label.placeholder.writtenTestFee": " Enter Written/Psychometric Test Fee",
@@ -469,6 +472,8 @@ const locale = {
     "Some query/query(s) have already been marked as answered. Continuing marking for the remaining queries.",
   "label.error.fieldEmpty": "Field cannot be empty.",
   "label.error.overlap": "Please choose different times.",
+  "label.error.startOverlap": "Please choose different start time.",
+  "label.error.endOverlap": "Please choose different end time.",
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
@@ -543,6 +548,37 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.session.consent-marking": "Registration and Consent Marking Schedule",
+  "label.consent.registrationStartDateCompanies": "Company Registration Start",
+  "label.consent.registrationEndDateCompanies": "Company Registration End",
+  "label.consent.registrationStartDateCandidates":
+    "Candidate Registration Start",
+  "label.consent.registrationEndDateCandidates": "Candidate Registration End",
+  "label.consent.startShortlistingbyCompany": "Shortlisting By Company Start",
+  "label.consent.endShortlistingbyCompany": "Shortlisting By Company End",
+  "label.consent.startCondidateConsentmarking":
+    "Consent Marking By Candidate Start",
+  "label.consent.endCondidateConsentmarking":
+    "Consent Marking By Candidate End",
+  "label.consent.placeholder.registrationStartDateCompanies":
+    "Select Company Registration Start Date",
+  "label.consent.placeholder.registrationEndDateCompanies":
+    "Select Company Registration End Date",
+  "label.consent.placeholder.registrationStartDateCandidates":
+    "Select Candidate Registration Start Date",
+  "label.consent.placeholder.registrationEndDateCandidates":
+    "Select Candidate Registration End Date",
+  "label.consent.placeholder.startShortlistingbyCompany":
+    "Select Shortlisting By Company Start Date",
+  "label.consent.placeholder.endShortlistingbyCompany":
+    "Select Shortlisting By Company End Date",
+  "label.consent.placeholder.startCondidateConsentmarking":
+    "Select Consent Marking By Candidate Start Date",
+  "label.consent.placeholder.endCondidateConsentmarking":
+    "Select Consent Marking By Candidate End Date",
+  "label.path.consent-marking": "Registration and Consent Marking Schedule",
+  "label.dates_added_successfully": "Dates Added Successfully",
+  "label.downloadSucess": "Download Successful",
 };
 
 export default locale;

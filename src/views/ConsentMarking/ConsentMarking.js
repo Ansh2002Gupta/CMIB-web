@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router-dom";
 
 import { TwoRow } from "../../core/layouts";
 
 import ConsentMarkingContent from "../../containers/ConsentMarkingContent";
+import ConsentMarkingContentRoundTwo from "../../containers/ConsentMarkingContentRoundTwo";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import HeaderAndTitle from "../../components/HeaderAndTitle";
@@ -11,7 +13,7 @@ import useFetch from "../../core/hooks/useFetch";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
-import { getCurrentActiveTab } from "../../constant/utils";
+import { getCurrentActiveTab, getErrorMessage } from "../../constant/utils";
 import {
   CORE_ROUTE,
   LAST_REGISTRATION_DATES,
@@ -31,6 +33,7 @@ import styles from "./ConsentMarking.module.scss";
 
 const ConsentMarking = () => {
   const intl = useIntl();
+  const location = useLocation();
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
@@ -38,6 +41,7 @@ const ConsentMarking = () => {
   const isEdit = !!(
     currentGlobalSession?.is_editable && currentGlobalSession?.status
   );
+  const hasRoundTwo = location?.pathname.includes("round2");
   const [userProfileDetails] = useContext(UserProfileContext);
   const roundId = urlService.getQueryStringValue(ROUND_ID);
   const [activeTab, setActiveTab] = useState(
@@ -180,10 +184,20 @@ const ConsentMarking = () => {
     if (
       ((activeTab === "3" && consentRoundTwoData) ||
         (activeTab === "2" && consentRoundOneData) ||
-        (activeTab === "1" && lastRegistrationDatesData)) &&
+        (activeTab === "1" && lastRegistrationDatesData) ||
+        hasRoundTwo) &&
       registrationDateData
     ) {
-      return (
+      return hasRoundTwo ? (
+        <ConsentMarkingContentRoundTwo
+          {...{
+            isEdit: !!isEdit,
+            selectedModule: currentlySelectedModuleKey,
+            roundId,
+            regAndConsentData: registrationDateData,
+          }}
+        />
+      ) : (
         <ConsentMarkingContent
           {...{
             activeTab,
@@ -209,20 +223,22 @@ const ConsentMarking = () => {
   }, [userProfileDetails?.selectedModuleItem?.key, activeTab]);
 
   return (
-    <TwoRow
-      className={styles.mainContainer}
-      topSection={
-        <HeaderAndTitle
-          headingLabel={intl.formatMessage({
-            id: "label.registrationConsentSchedule",
-          })}
-          titleLabel={intl.formatMessage({
-            id: "label.consentMarkingScheduleWarning",
-          })}
-        />
-      }
-      bottomSection={renderContent()}
-    />
+    <>
+      <TwoRow
+        className={styles.mainContainer}
+        topSection={
+          <HeaderAndTitle
+            headingLabel={intl.formatMessage({
+              id: "label.registrationConsentSchedule",
+            })}
+            titleLabel={intl.formatMessage({
+              id: "label.consentMarkingScheduleWarning",
+            })}
+          />
+        }
+        bottomSection={renderContent()}
+      />
+    </>
   );
 };
 
