@@ -1,5 +1,5 @@
-import { useIntl } from "react-intl";
 import React, { useContext, useState } from "react";
+import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import dayjs from "dayjs";
 import { Image } from "antd";
@@ -24,7 +24,6 @@ const CandidateSettings = ({
   handleAdd,
   handleRemove,
   handleTableChange,
-
   tableData,
 }) => {
   const intl = useIntl();
@@ -33,8 +32,6 @@ const CandidateSettings = ({
   const [selectedCentres, setSelectedCentres] = useState({});
 
   const handleCentreChange = (value, record, index) => {
-    console.log("record", value, record, index);
-
     setSelectedCentres((prevSelectedCentres) => ({
       ...prevSelectedCentres,
       [index]: value,
@@ -63,7 +60,7 @@ const CandidateSettings = ({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "centre",
-      key: "cetre",
+      key: "centre",
       renderDropdown: {
         visible: true,
         dropdownItems: dropdownItems,
