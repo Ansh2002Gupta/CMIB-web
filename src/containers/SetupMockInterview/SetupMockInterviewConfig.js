@@ -31,7 +31,11 @@ const getSetupMockColumn = (
       title: intl.formatMessage({ id: "label.totalStudentsBooked" }),
       dataIndex: "total_participants_booked",
       key: "total_participants_booked",
-      renderText: { visible: true, textStyles: styles.studentStyles },
+      renderText: {
+        visible: true,
+        textStyles: styles.studentStyles,
+        isNumber: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.actions" }),
