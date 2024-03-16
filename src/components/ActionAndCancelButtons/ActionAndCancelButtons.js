@@ -14,6 +14,7 @@ const ActionAndCancelButtons = ({
   customCancelBtnStyles,
   customContainerStyle,
   isActionBtnDisable,
+  isLoading,
   onActionBtnClick,
   onCancelBtnClick,
 }) => {
@@ -32,9 +33,10 @@ const ActionAndCancelButtons = ({
       }
       rightSection={
         <CustomButton
-          isBtnDisable={isActionBtnDisable}
-          customStyle={[styles.saveBtn, customActionBtnStyles].join(" ")}
           btnText={actionBtnText}
+          customStyle={[styles.saveBtn, customActionBtnStyles].join(" ")}
+          isBtnDisable={isActionBtnDisable}
+          loading={isLoading}
           onClick={onActionBtnClick}
         />
       }
@@ -49,6 +51,7 @@ ActionAndCancelButtons.defaultProps = {
   customCancelBtnStyles: "",
   customContainerStyle: "",
   isActionBtnDisable: false,
+  loading: false,
   onActionBtnClick: () => {},
   onCancelBtnClick: () => {},
 };
@@ -60,6 +63,7 @@ ActionAndCancelButtons.propTypes = {
   customCancelBtnStyles: PropTypes.string,
   customContainerStyle: PropTypes.string,
   isActionBtnDisable: PropTypes.bool,
+  loading: PropTypes.bool,
   onActionBtnClick: PropTypes.func,
   onCancelBtnClick: PropTypes.func,
 };

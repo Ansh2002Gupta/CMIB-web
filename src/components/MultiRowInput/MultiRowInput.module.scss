@@ -13,7 +13,6 @@
 .innerContainerFlexRow {
   display: flex;
   flex-direction: row;
-  align-items: center;
   gap: var(--gapMedium);
 }
 
@@ -21,7 +20,15 @@
   width: var(--fullWidth);
 }
 
+.customInputStyles {
+  font-size: var(--fontSizeSmall);
+  line-height: var(--lineHeightNormal);
+  font-weight: var(--fontWeightMedium);
+}
+
 .imageStyle {
+  position: relative;
+  top: var(--top_10);
   cursor: pointer;
   height: var(--height_24);
   width: var(--width_24);
