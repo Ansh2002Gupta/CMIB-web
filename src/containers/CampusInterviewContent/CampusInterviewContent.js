@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
+import CandidateSettings from "../CandidateSettings/CandidateSettings";
 import CompanySettings from "../CompanySettings";
 import ContentHeader from "../ContentHeader";
 import PaymentSettings from "../PaymentSettings";
+import useCandidateSettings from "../CandidateSettings/Conrollers/useCandidateSettings";
 import useCompanySettings from "../CompanySettings/Conrollers/useCompanySettings";
 import usePaymentSettings from "../PaymentSettings/Conrollers/usePaymentSettings";
 import useResponsive from "../../core/hooks/useResponsive";
@@ -43,6 +45,19 @@ const CampusInterviewContent = () => {
     isButtonDisable: isCompanySettingsInvalid,
   } = useCompanySettings();
 
+  const {
+    errors,
+    formErrors,
+    formFields,
+    getInitialFields,
+    handleAdd,
+    handleInputChange,
+    handleRemove,
+    handleTableChange,
+    isButtonDisable: isCandidateSettingsInvalid,
+    tableData,
+  } = useCandidateSettings();
+
   const onClickCancel = () => {
     navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
   };
@@ -61,7 +76,21 @@ const CampusInterviewContent = () => {
       }
       middleSection={
         <ThreeRow
-          topSection={<></>}
+          topSection={
+            <CandidateSettings
+              {...{
+                formErrors,
+                formFields,
+                getInitialFields,
+                handleInputChange,
+                tableData,
+                handleRemove,
+                handleAdd,
+                errors,
+                handleTableChange,
+              }}
+            />
+          }
           middleSection={
             <CompanySettings
               {...{
@@ -98,7 +127,9 @@ const CampusInterviewContent = () => {
           })}
           cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
           isActionBtnDisable={
-            isPaymentSettingsInvalid() || isCompanySettingsInvalid()
+            isPaymentSettingsInvalid() ||
+            isCompanySettingsInvalid() ||
+            isCandidateSettingsInvalid()
           }
           onActionBtnClick={() => {}}
           onCancelBtnClick={onClickCancel}

@@ -188,7 +188,7 @@ const CustomInput = React.forwardRef(
                 isError ? styles.showError : "",
               ].join(" ")}
             >
-              {errorMessage ? ` * ${errorMessage}` : ""}
+              {errorMessage ? errorMessage : ""}
             </Typography>
           </div>
         )}

@@ -1,5 +1,5 @@
 export const classes = {
   inputStyle: {
-    minHeight: "40px",
+    minHeight: "44px",
   },
 };
