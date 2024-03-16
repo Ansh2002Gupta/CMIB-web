@@ -70,7 +70,7 @@ const CustomInput = React.forwardRef(
         {!!label && (
           <div className={styles.inputLabelContainer}>
             <Typography className={customLabelStyles}>
-              {label}
+              {label}&nbsp;
               {isRequired && <MarkRequired />}
             </Typography>
           </div>
@@ -165,6 +165,7 @@ const CustomInput = React.forwardRef(
               maxLength={maxLength}
               controls={controls}
               precision={precision}
+              type="number"
               className={[
                 styles.inputNumberStyles,
                 customInputNumberStyles,

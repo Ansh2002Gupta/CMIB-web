@@ -175,6 +175,7 @@ const locale = {
   "label.photo": "Photo.jpg",
   "label.networkError": "Network Error!",
   "label.error": "Error!",
+  "label.error.DuplicateFields": "Duplicate Fields!",
   "label.tryAgain": "Try again!",
   "label.addNewUsers": "Add New User",
   "label.userCreatedSuccessfully": "User has been created successfully",
@@ -196,6 +197,7 @@ const locale = {
   "label.companies": "Companies",
   "label.companyName": "Company Name",
   "label.entity": "Entity",
+  "label.global_configurations": "Global Configurations",
   "label.generatePaymentMis": "Generate Payment MIS",
   "label.manageCompanyDetails": "Manage company details",
   "label.phoneNumber": "Phone Number",
@@ -427,8 +429,6 @@ const locale = {
   "label.path.setup-mock-interview": "Setup Mock Interview",
   "label.path.queries": "Queries",
   "label.path.queries-details": "Query Details",
-  "label.path.consent-marking": " Registration and consent marking schedule",
-  "label.session.consent-marking": " Registration and consent marking schedule",
   "label.path.interviewDetails": "Configure Interview Dates",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
@@ -472,6 +472,8 @@ const locale = {
     "Some query/query(s) have already been marked as answered. Continuing marking for the remaining queries.",
   "label.error.fieldEmpty": "Field cannot be empty.",
   "label.error.overlap": "Please choose different times.",
+  "label.error.startOverlap": "Please choose different start time.",
+  "label.error.endOverlap": "Please choose different end time.",
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
@@ -530,6 +532,10 @@ const locale = {
   "label.no_centres_selected_msg":
     "To proceed with the setup, please choose the centres for this round.",
   "label.no_prior_chats_found": "No prior chats found",
+  "label.headerTextItSkills": "IT skills",
+  "label.headerTextSoftSkills": "Soft skills",
+  "label.placeholderItSkills": "Enter IT skills",
+  "label.placeholderSoftSkills": "Enter Soft skills",
   "label.registrationSuccess": "Registration Dates updated Successfully",
   "label.lastRegistrationSuccess":
     "Last Registration Dates updated Successfully",
@@ -546,6 +552,12 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.set_max_video_upload_time_limit":
+    "Setup Maximum Video Upload Time Limit",
+  "label.max_video_upload_time_limit":
+    "Maximum Video Upload Time Limit (seconds)",
+  "label.set_profile_skills": "Set Profile Skills",
+  "label.nqca-placements": "nqca-placements",
   "label.session.consent-marking": "Registration and Consent Marking Schedule",
   "label.consent.registrationStartDateCompanies": "Company Registration Start",
   "label.consent.registrationEndDateCompanies": "Company Registration End",
