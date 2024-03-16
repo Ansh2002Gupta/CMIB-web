@@ -279,7 +279,6 @@ const AddSubscription = () => {
       topSection={
         <ContentHeader
           customContainerStyle={commonStyles.headerBox}
-          //TODO: if isAddSubscription is false then show packageName, else show add subscription.
           headerText={
             (isEditPackage &&
               !isAddSubscription &&
