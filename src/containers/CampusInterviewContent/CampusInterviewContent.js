@@ -23,6 +23,7 @@ const CampusInterviewContent = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const navigate = useNavigate();
+
   const {
     formErrors: PaymentSettingsError,
     formFields: paymentFields,
