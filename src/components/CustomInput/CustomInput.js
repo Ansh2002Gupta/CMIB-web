@@ -70,7 +70,7 @@ const CustomInput = React.forwardRef(
         {!!label && (
           <div className={styles.inputLabelContainer}>
             <Typography className={customLabelStyles}>
-              {label}
+              {label}&nbsp;
               {isRequired && <MarkRequired />}
             </Typography>
           </div>
