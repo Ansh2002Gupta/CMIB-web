@@ -11,48 +11,51 @@
   line-height: var(--lineHeightNormal);
 }
 
-.container{
+.container {
   padding: var(--paddingMedium);
   gap: var(--gapSmall);
   background-color: var(--bodyBg2);
 }
 
-.upperContainer{
+.upperContainer {
   gap: var(--gapMedium);
 }
 
-.bottomSection{
+.bottomSection {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--gapMedium);
 }
 
-.customLabelStyles{
+.customLabelStyles {
   font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
 }
 
-.radioButtonMainContainer{
+.radioButtonMainContainer {
   display: flex;
   flex-direction: column;
   gap: var(--gapSmallMedium);
 }
 
-.radioButtonContainer{
+.radioButtonContainer {
   display: flex;
   align-items: center;
   gap: var(--gapMedium);
   margin-bottom: var(--margin_12);
 }
 
-.customInputStyles{
-  font-weight: var(--fontWeightSmall , 400) !important;
+.customInputStyles {
+  font-weight: var(--fontWeightSmall, 400) !important;
 }
 
-.customInputNumberStyles{
+.customInputNumberStyles {
   display: flex;
   align-items: center;
 }
 
+.editButtonTitle {
+  font-weight: var(--fontWeightMedium);
+}

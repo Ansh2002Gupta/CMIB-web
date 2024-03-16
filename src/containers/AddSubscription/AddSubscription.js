@@ -13,12 +13,15 @@ import SubscriptionDetailsCard from "../../components/SubscriptionDetailsCard/Su
 import RenderDetails from "../../components/RenderDetails/RenderDetails";
 import { VALUE_ONE, VALUE_TWO, VALUE_ZERO } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
-import styles from "./AddSubscription.module.scss";
+import styles from "./addSubscription.module.scss";
+import CustomButton from "../../components/CustomButton";
+import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
 
 const AddSubscription = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const isEdit = true;
+  const [isAddSubscription, setIsAddSubscription] = useState(false);
+  const [isEditPackage, setIsEditPackage] = useState(false);
 
   const [value, setValue] = useState(VALUE_ZERO);
   const [formData, setFormData] = useState({
@@ -50,7 +53,9 @@ const AddSubscription = () => {
                 heading={intl.formatMessage({
                   id: "label.packageName",
                 })}
-                subHeading={"Package 1"}
+                subHeading={
+                  formData.packageName ? formData.packageName : "Package 1"
+                }
                 isMandatory
               />
             }
@@ -59,7 +64,11 @@ const AddSubscription = () => {
                 heading={intl.formatMessage({
                   id: "label.package_validity_period",
                 })}
-                subHeading={"Package 1"}
+                subHeading={
+                  formData.packageValidityPeriod
+                    ? formData.packageValidityPeriod + " " + "Days"
+                    : "30 Days"
+                }
                 isMandatory
               />
             }
@@ -73,7 +82,11 @@ const AddSubscription = () => {
                 heading={intl.formatMessage({
                   id: "label.packageName_descriptions",
                 })}
-                subHeading={"Package 1"}
+                subHeading={
+                  formData.packageDescription
+                    ? formData.packageDescription
+                    : "Package Description"
+                }
               />
             }
             bottomSection={
@@ -81,7 +94,9 @@ const AddSubscription = () => {
                 heading={intl.formatMessage({
                   id: "label.price",
                 })}
-                subHeading={"Package 1"}
+                subHeading={
+                  formData.packagePrice ? formData.packagePrice : "1000 INR"
+                }
                 isMandatory
               />
             }
@@ -96,6 +111,7 @@ const AddSubscription = () => {
                 heading={intl.formatMessage({
                   id: "label.subscription_status",
                 })}
+                //TODO: SET A STATE FOR ACTIVE/INACTIVE SUBSCRIPTION.
                 subHeading={"Active"}
               />
             }
@@ -194,31 +210,33 @@ const AddSubscription = () => {
               />
             }
             rightSection={
-              <div className={styles.radioButtonMainContainer}>
-                <Typography className={styles.customLabelStyles}>
-                  {intl.formatMessage({
-                    id: "label.subscription_status",
-                  })}
-                </Typography>
-                <div className={styles.radioButtonContainer}>
-                  <CustomRadioButton
-                    checked={value === VALUE_ONE}
-                    label={intl.formatMessage({
-                      id: "label.active",
+              !isAddSubscription && (
+                <div className={styles.radioButtonMainContainer}>
+                  <Typography className={styles.customLabelStyles}>
+                    {intl.formatMessage({
+                      id: "label.subscription_status",
                     })}
-                    onChange={handleRadioButton}
-                    value={VALUE_ONE}
-                  />
-                  <CustomRadioButton
-                    checked={value === VALUE_TWO}
-                    label={intl.formatMessage({
-                      id: "label.inactive",
-                    })}
-                    onChange={handleRadioButton}
-                    value={VALUE_TWO}
-                  />
+                  </Typography>
+                  <div className={styles.radioButtonContainer}>
+                    <CustomRadioButton
+                      checked={value === VALUE_ONE}
+                      label={intl.formatMessage({
+                        id: "label.active",
+                      })}
+                      onChange={handleRadioButton}
+                      value={VALUE_ONE}
+                    />
+                    <CustomRadioButton
+                      checked={value === VALUE_TWO}
+                      label={intl.formatMessage({
+                        id: "label.inactive",
+                      })}
+                      onChange={handleRadioButton}
+                      value={VALUE_TWO}
+                    />
+                  </div>
                 </div>
-              </div>
+              )
             }
             isLeftFillSpace
             isMiddleFillSpace
@@ -229,33 +247,60 @@ const AddSubscription = () => {
     );
   };
 
+  const editPackage = () => {
+    setIsAddSubscription(true);
+  };
+
+  const renderEditButton = () => {
+    return (
+      <CustomButton
+        textStyle={styles.editButtonTitle}
+        IconElement={Edit}
+        btnText={intl.formatMessage({ id: "label.edit" })}
+        withWhiteBackground
+        onClick={editPackage}
+      />
+    );
+  };
+
   return (
     <TwoRow
       topSection={
         <ContentHeader
           customContainerStyle={commonStyles.headerBox}
-          headerText={intl.formatMessage({
-            id: "label.path.add-subscriptions",
-          })}
+          //TODO: if isAddSubscription is false then show packageName, else show add subscription.
+          headerText={
+            isAddSubscription
+              ? intl.formatMessage({
+                  id: "label.path.add-subscriptions",
+                })
+              : formData.packageName ||
+                intl.formatMessage({ id: "label.default_package_name" })
+          }
+          rightSection={
+            !isAddSubscription || (isEditPackage && renderEditButton())
+          }
         />
       }
       isBottomFillSpace
       bottomSection={
         <TwoRow
           className={styles.container}
-          isTopFillSpace={isEdit}
+          isTopFillSpace={isAddSubscription}
           topSection={
             <SubscriptionDetailsCard
               heading={intl.formatMessage({
                 id: "label.subscriptions_details",
               })}
               content={
-                isEdit ? renderEditableContent() : renderNonEditableContent()
+                isAddSubscription
+                  ? renderEditableContent()
+                  : renderNonEditableContent()
               }
             />
           }
           bottomSection={
-            isEdit ? (
+            isAddSubscription ? (
               <ActionAndCancelButtons
                 cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
                 actionBtnText={intl.formatMessage({ id: "label.add" })}

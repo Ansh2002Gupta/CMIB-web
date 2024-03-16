@@ -541,6 +541,8 @@ const locale = {
   "label.enterpackagename_discriptions": "Enter Package Discription",
   "label.enterpackagename_valididy_period": "Enter Validity Period",
   "label.enterpackagename_price": "Enter Price",
+  "label.default_package_name": "Package 1",
+  "label.package_validity_period": "Package Validity Period",
 };
 
 export default locale;
