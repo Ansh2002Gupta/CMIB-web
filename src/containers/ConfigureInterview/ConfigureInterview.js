@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
@@ -150,9 +150,12 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
       );
     } else {
       handleError(key, "", index);
-      overlapValidate();
     }
   };
+
+  useEffect(() => {
+    overlapValidate();
+  }, [interviewTable]);
 
   const handleError = (key, error, index) => {
     setErrors((prevTableError) => {
@@ -234,6 +237,22 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
           handleError(
             "end_time",
             intl.formatMessage({ id: "label.error.endOverlap" }),
+            index
+          );
+          return;
+        }
+        if (!item.start_time) {
+          handleError(
+            "start_time",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index
+          );
+          return;
+        }
+        if (!item.end_time) {
+          handleError(
+            "end_time",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
             index
           );
           return;

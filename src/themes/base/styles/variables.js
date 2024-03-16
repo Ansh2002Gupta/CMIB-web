@@ -197,6 +197,7 @@ const variables = {
   height_210: "210px",
   height_240: "240px",
   height_250: "250px",
+  height_280: "280px",
   height_300: "300px",
   height_350: "350px",
   height_400: "400px",
@@ -218,6 +219,7 @@ const variables = {
 
   // Distance for top, left, bottom and right
   distance_85: "85px",
+  top_10: "10px",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
@@ -282,6 +284,7 @@ const variables = {
   gapLarge: "32px",
   gapXLarge: "40px",
   gapXXLarge: "56px",
+  gap_80: "80px",
 
   // margin
   margin_2: "2px",

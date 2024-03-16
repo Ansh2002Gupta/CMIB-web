@@ -2,3 +2,50 @@
   padding-left: 0px;
   padding-right: 0px;
 }
+
+.customHeaderStyling {
+  padding: var(--paddingMedium);
+  padding-bottom: 0px;
+}
+
+.configureCentreContentWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--blueBg);
+  width: var(--fullWidth);
+  padding: var(--paddingMedium);
+}
+
+.tabContainer {
+  margin-top: var(--padding_30);
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: var(--gapSmall);
+  background-color: var(--blueBg);
+  width: var(--fullWidth);
+  margin-top: var(--margin_12);
+  padding: 0px !important;
+  padding-right: var(--padding_20) !important;
+  padding-bottom: var(--padding_20) !important;
+}
+
+.saveButton {
+  width: var(--width_70) !important;
+  padding-top: var(--paddingMediumSmall);
+  padding-bottom: var(--paddingMediumSmall);
+  padding-left: var(--paddingSmall);
+  padding-right: var(--paddingSmall);
+  border-radius: var(--radiusLg);
+  height: var(--height_48) !important;
+  color: var(--whiteText);
+}
+
+.cancelButton {
+  height: var(--height_48) !important;
+}
