@@ -64,6 +64,10 @@ const CampusInterviewContent = () => {
     navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
   };
 
+  const onClickSave = () => {
+    //TODO: API call to save changes
+  };
+
   return (
     <ThreeRow
       className={styles.mainContainer}
@@ -133,7 +137,7 @@ const CampusInterviewContent = () => {
             isCompanySettingsInvalid() ||
             isCandidateSettingsInvalid()
           }
-          onActionBtnClick={() => {}}
+          onActionBtnClick={onClickSave}
           onCancelBtnClick={onClickCancel}
         />
       }
