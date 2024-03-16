@@ -105,7 +105,9 @@ const CaJobsConfigurations = () => {
       payload: {
         it_skill: itSkillsList,
         soft_skill: softSkillsList,
-        video_time_limit: videoTimeLimit,
+        ...(selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY && {
+          video_time_limit: videoTimeLimit,
+        }),
       },
       onErrorCallback: (errMessage) => {
         showNotification({
