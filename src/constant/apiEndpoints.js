@@ -1,5 +1,5 @@
 // API version numbers
-export const API_VERSION_NUMBER = "v1";
+export const API_VERSION_NUMBER = "1.0.0";
 
 // API end-point role
 export const ADMIN_ROUTE = "admin";
