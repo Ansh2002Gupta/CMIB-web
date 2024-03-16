@@ -6,7 +6,11 @@ export const handleDuplicateArrayItems = ({
   return array.map((item) => {
     if (
       uniqueArrayItems.some(
-        (obj) => item?.fieldValue === obj?.value && item?.id !== obj?.id
+        (obj) =>
+          !!item?.fieldValue &&
+          !!obj?.value &&
+          item?.fieldValue?.toLowerCase() === obj?.value.toLowerCase() &&
+          item?.id !== obj?.id
       )
     )
       return { ...item, error: errorMessage };
