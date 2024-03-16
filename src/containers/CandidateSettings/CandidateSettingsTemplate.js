@@ -7,7 +7,10 @@ import CustomInput from "../../components/CustomInput";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import { TwoRow } from "../../core/layouts";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
-import { MAX_REGISTRATION_FEE_LENGTH } from "../../constant/constant";
+import {
+  MAX_REGISTRATION_FEE_LENGTH,
+  TIMER_OF_1_MINUTES,
+} from "../../constant/constant";
 import { classes } from "./CandidateSettings.styles";
 import styles from "./CandidateSettings.module.scss";
 import "./Override.css";
@@ -63,20 +66,17 @@ const CandidateSettingsTemplate = ({
                         />
                       ) : (
                         <CustomInput
+                          controls
                           value={row[columnIndex].value}
                           customLabelStyles={styles.inputLabel}
-                          customInputStyles={styles.input}
+                          customInputNumberStyles={styles.input}
                           customContainerStyles={styles.customContainerStyles}
                           onChange={(val) => {
-                            val.target.value.length <=
-                              MAX_REGISTRATION_FEE_LENGTH &&
-                              (NUMERIC_VALUE_REGEX.test(val.target.value) ||
-                                val.target.value === "") &&
-                              handleInputChange(
-                                val.target.value,
-                                row[columnIndex].label
-                              );
+                            handleInputChange(val, row[columnIndex].label);
                           }}
+                          min={TIMER_OF_1_MINUTES}
+                          max={MAX_REGISTRATION_FEE_LENGTH}
+                          type={"inputNumber"}
                           placeholder={intl.formatMessage({
                             id: `placeholder.${row[columnIndex].headingIntl}`,
                           })}

@@ -165,7 +165,6 @@ const useCandidateSettings = () => {
   const handleSetError = (name, index) => {
     setErrors((prevErrors) => {
       const newErrors = [...prevErrors];
-      console.log({ newErrors });
       if (!newErrors[index]) {
         newErrors[index] = {};
       }
