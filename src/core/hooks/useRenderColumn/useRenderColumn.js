@@ -127,6 +127,7 @@ const useRenderColumn = () => {
       isRequiredTooltip,
       isMoney,
       isYearRange,
+      isNumber,
       mobile,
       isIntl,
       isDataObject,
@@ -195,6 +196,9 @@ const useRenderColumn = () => {
       }
       if (text) {
         return text;
+      }
+      if (isNumber) {
+        return !!text ? text : 0;
       }
       return "-";
     };
