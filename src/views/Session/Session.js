@@ -29,7 +29,7 @@ import {
   NOTIFICATION_TYPES,
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
-  VALID_CONSENT_MARKING_TABS_ID,
+  VALID_SESSION_TABS_ID,
 } from "../../constant/constant";
 import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./session.module.scss";
@@ -44,7 +44,7 @@ function Session() {
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
       urlService?.getQueryStringValue("tab"),
-      VALID_CONSENT_MARKING_TABS_ID
+      VALID_SESSION_TABS_ID
     )
   );
   const { showNotification, notificationContextHolder } = useShowNotification();
