@@ -266,7 +266,9 @@ const ConsentMarkingContent = ({
         updateLastRegistrationDate({
           body: { data: lastRegistrationTableData },
           onSuccessCallback: () => {
-            getRegistrationDate({});
+            setRegistrationDatesData((prev) => {
+              return { ...prev, is_round1_visible: true };
+            });
             showNotification({
               text: intl.formatMessage({ id: "label.lastRegistrationSuccess" }),
               type: NOTIFICATION_TYPES.SUCCESS,
@@ -287,7 +289,9 @@ const ConsentMarkingContent = ({
         updateRoundOneDate({
           body: { data: roundOneTableData },
           onSuccessCallback: () => {
-            getRegistrationDate({});
+            setRegistrationDatesData((prev) => {
+              return { ...prev, is_round2_visible: true };
+            });
             showNotification({
               text: intl.formatMessage({ id: "label.roundOneDatesSuccess" }),
               type: NOTIFICATION_TYPES.SUCCESS,
@@ -308,7 +312,6 @@ const ConsentMarkingContent = ({
         updateRoundTwoDate({
           body: { data: roundTwoTableData },
           onSuccessCallback: () => {
-            getRegistrationDate({});
             showNotification({
               text: intl.formatMessage({ id: "label.roundTwoDatesSuccess" }),
               type: NOTIFICATION_TYPES.SUCCESS,
