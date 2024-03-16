@@ -6,6 +6,7 @@ import { Typography } from "antd";
 import { ThreeColumn, TwoColumn, TwoRow } from "../../core/layouts";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
+import CustomButton from "../../components/CustomButton";
 import CustomRadioButton from "../../components/CustomRadioButton";
 import CustomInput from "../../components/CustomInput";
 import ContentHeader from "../ContentHeader";
@@ -13,15 +14,23 @@ import SubscriptionDetailsCard from "../../components/SubscriptionDetailsCard/Su
 import RenderDetails from "../../components/RenderDetails/RenderDetails";
 import { VALUE_ONE, VALUE_TWO, VALUE_ZERO } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
-import styles from "./addSubscription.module.scss";
-import CustomButton from "../../components/CustomButton";
 import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
+import styles from "./addSubscription.module.scss";
 
 const AddSubscription = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+
+  //TODO: LINKING WITH THE MANAGE SUBSCRIPTION > LISTING
+  /**
+
+   INFO: Manually set
+   *  isAddSubscription->true and isEditPackage->false FOR ADD SUBSCRIPTION
+   * isAddSubscription->false and isEditPackage->true FOR NON-EDITABLE PACKAGE DISCRIPTION
+
+   **/
   const [isAddSubscription, setIsAddSubscription] = useState(false);
-  const [isEditPackage, setIsEditPackage] = useState(false);
+  const [isEditPackage, setIsEditPackage] = useState(true);
 
   const [value, setValue] = useState(VALUE_ZERO);
   const [formData, setFormData] = useState({
@@ -210,7 +219,7 @@ const AddSubscription = () => {
               />
             }
             rightSection={
-              !isAddSubscription && (
+              isEditPackage && (
                 <div className={styles.radioButtonMainContainer}>
                   <Typography className={styles.customLabelStyles}>
                     {intl.formatMessage({
@@ -249,6 +258,7 @@ const AddSubscription = () => {
 
   const editPackage = () => {
     setIsAddSubscription(true);
+    setIsEditPackage(true);
   };
 
   const renderEditButton = () => {
@@ -270,15 +280,22 @@ const AddSubscription = () => {
           customContainerStyle={commonStyles.headerBox}
           //TODO: if isAddSubscription is false then show packageName, else show add subscription.
           headerText={
-            isAddSubscription
-              ? intl.formatMessage({
-                  id: "label.path.add-subscriptions",
-                })
-              : formData.packageName ||
-                intl.formatMessage({ id: "label.default_package_name" })
+            (isEditPackage &&
+              !isAddSubscription &&
+              (formData.packageName ||
+                intl.formatMessage({ id: "label.default_package_name" }))) ||
+            (!isEditPackage &&
+              isAddSubscription &&
+              intl.formatMessage({
+                id: "label.path.add-subscriptions",
+              })) ||
+            `Edit ${
+              formData.packageName ||
+              intl.formatMessage({ id: "label.default_package_name" })
+            }`
           }
           rightSection={
-            !isAddSubscription || (isEditPackage && renderEditButton())
+            (!isAddSubscription || isEditPackage) && renderEditButton()
           }
         />
       }
