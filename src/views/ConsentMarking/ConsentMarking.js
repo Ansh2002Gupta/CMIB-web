@@ -8,6 +8,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import HeaderAndTitle from "../../components/HeaderAndTitle";
 import useFetch from "../../core/hooks/useFetch";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
@@ -46,6 +47,8 @@ const ConsentMarking = () => {
       VALID_CONSENT_MARKING_TABS_ID.threeTab
     )
   );
+
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
@@ -191,10 +194,12 @@ const ConsentMarking = () => {
             consentRoundTwoData,
             currentlySelectedModuleKey,
             isEdit,
+            getRegistrationDate,
             lastRegistrationDatesData,
             roundId,
             registrationDateData,
             setActiveTab,
+            showNotification,
           }}
         />
       );
@@ -221,7 +226,12 @@ const ConsentMarking = () => {
           })}
         />
       }
-      bottomSection={renderContent()}
+      bottomSection={
+        <>
+          {notificationContextHolder}
+          {renderContent()}
+        </>
+      }
     />
   );
 };
