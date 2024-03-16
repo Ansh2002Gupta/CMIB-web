@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
+import { Typography } from "antd";
 
 import { ThreeColumn, TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -12,10 +13,11 @@ import SubscriptionDetailsCard from "../../components/SubscriptionDetailsCard/Su
 import RenderDetails from "../../components/RenderDetails/RenderDetails";
 import { VALUE_ONE, VALUE_TWO, VALUE_ZERO } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
-import styles from "./addSubscription.module.scss";
+import styles from "./AddSubscription.module.scss";
 
 const AddSubscription = () => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const isEdit = true;
 
   const [value, setValue] = useState(VALUE_ZERO);
@@ -31,6 +33,10 @@ const AddSubscription = () => {
 
   const handleInputChange = (value, name) => {
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCancelBtnClick = () => {
+    navigate(-1);
   };
 
   const renderNonEditableContent = () => {
@@ -51,7 +57,7 @@ const AddSubscription = () => {
             bottomSection={
               <RenderDetails
                 heading={intl.formatMessage({
-                  id: "label.package_valididy_period",
+                  id: "label.package_validity_period",
                 })}
                 subHeading={"Package 1"}
                 isMandatory
@@ -65,7 +71,7 @@ const AddSubscription = () => {
             topSection={
               <RenderDetails
                 heading={intl.formatMessage({
-                  id: "label.packageName_discriptions",
+                  id: "label.packageName_descriptions",
                 })}
                 subHeading={"Package 1"}
               />
@@ -132,7 +138,7 @@ const AddSubscription = () => {
               <CustomInput
                 value={formData.packageDescription}
                 label={intl.formatMessage({
-                  id: "label.packageName_discriptions",
+                  id: "label.packageName_descriptions",
                 })}
                 isRequired
                 type="text"
@@ -141,7 +147,7 @@ const AddSubscription = () => {
                   handleInputChange(e.target.value, "packageDescription")
                 }
                 placeholder={intl.formatMessage({
-                  id: "label.packageName_discriptions",
+                  id: "label.packageName_descriptions",
                 })}
                 customInputStyles={styles.customInputStyles}
               />
@@ -228,7 +234,9 @@ const AddSubscription = () => {
       topSection={
         <ContentHeader
           customContainerStyle={commonStyles.headerBox}
-          headerText={intl.formatMessage({ id: "label.path.addSubscriptions" })}
+          headerText={intl.formatMessage({
+            id: "label.path.add-subscriptions",
+          })}
         />
       }
       isBottomFillSpace
@@ -251,6 +259,8 @@ const AddSubscription = () => {
               <ActionAndCancelButtons
                 cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
                 actionBtnText={intl.formatMessage({ id: "label.add" })}
+                onCancelBtnClick={handleCancelBtnClick}
+                onActionBtnClick={() => {}}
               />
             ) : null
           }

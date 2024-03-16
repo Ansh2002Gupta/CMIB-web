@@ -530,10 +530,10 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
-  "label.path.addSubscriptions": "Add Subscriptions",
+  "label.path.add-subscriptions": "Add Subscriptions",
   "label.subscriptions_details": "Subscription Details",
   "label.packageName": "Package Name",
-  "label.packageName_discriptions": "Package Discription",
+  "label.packageName_descriptions": "Package Discription",
   "label.package_valididy_period": "Package Validity Period",
   "label.price": "Price",
   "label.subscription_status": "Subscription Status",
