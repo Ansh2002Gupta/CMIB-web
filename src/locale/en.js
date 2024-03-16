@@ -583,6 +583,7 @@ const locale = {
   "label.select_to_date": "Select to date",
   "label.select_from_time": "Select from time",
   "label.select_to_time": "Select to time",
+  "label.placeholder.select_centre": "Select Center",
 };
 
 export default locale;

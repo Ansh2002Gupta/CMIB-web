@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
+import { Dropdown, Image, Menu, Switch, Tooltip, Typography } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
 import { TwoColumn } from "../../layouts";
 
@@ -32,6 +33,7 @@ const useRenderColumn = () => {
     renderDateTime = {},
     render,
     renderChip = {},
+    renderDropdown = {},
     renderImage = {},
     renderInput = {},
     renderMenu = {},
@@ -366,6 +368,55 @@ const useRenderColumn = () => {
             getRenderYearRange(rowData)
           ) : (
             getRenderText(text)
+          ),
+        };
+      });
+
+    renderDropdown.visible &&
+      (columnObject.render = (value, rowData, index) => {
+        const {
+          dropdownItems = [],
+          onDropdownChange = () => {},
+          dropdownPlaceholder = "",
+          dropdownDisplayText = () => dropdownPlaceholder,
+          dropdownDisabled = false,
+          customdropDownStyles = {},
+          customtextStyles = {},
+        } = renderDropdown;
+
+        const menu = (
+          <Menu onClick={(e) => onDropdownChange(e.key, rowData, index)}>
+            {dropdownItems.map((item) => (
+              <Menu.Item key={item.key}>
+                <Typography className={styles.dropdownMenuItem}>
+                  {item.text}
+                </Typography>
+              </Menu.Item>
+            ))}
+          </Menu>
+        );
+
+        const displayText = dropdownDisplayText(rowData, index);
+
+        return {
+          props: {
+            className: customStyles,
+          },
+          children: (
+            <Dropdown
+              className={customdropDownStyles}
+              overlay={menu}
+              disabled={dropdownDisabled}
+              trigger={["click"]}
+            >
+              <Typography
+                className={customtextStyles}
+                onClick={(e) => e.preventDefault()}
+              >
+                {displayText}
+                <DownOutlined />
+              </Typography>
+            </Dropdown>
           ),
         };
       });

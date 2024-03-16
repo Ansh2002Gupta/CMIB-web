@@ -1,13 +1,19 @@
-import dayjs from "dayjs";
-import React, { useContext } from "react";
-import { ThemeContext } from "core/providers/theme";
 import { useIntl } from "react-intl";
-import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import React, { useContext, useState } from "react";
+import { ThemeContext } from "core/providers/theme";
+import dayjs from "dayjs";
+import { Image } from "antd";
 
 import CandidateSettingsTemplate from "./CandidateSettingsTemplate";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import {
+  compareTwoDayjsDates,
+  handleDisabledEndTime,
+  handleDisabledStartTime,
+  isNotAFutureDate,
+} from "../../constant/utils";
 import styles from "./CandidateSettings.module.scss";
 import { classes } from "./CandidateSettings.styles";
-import { Image } from "antd";
 
 const CandidateSettings = ({
   errors,
@@ -18,11 +24,24 @@ const CandidateSettings = ({
   handleAdd,
   handleRemove,
   handleTableChange,
+
   tableData,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
+  const [selectedCentres, setSelectedCentres] = useState({});
+
+  const handleCentreChange = (value, record, index) => {
+    console.log("record", value, record, index);
+
+    setSelectedCentres((prevSelectedCentres) => ({
+      ...prevSelectedCentres,
+      [index]: value,
+    }));
+
+    // If you need to do more on change, add your logic here
+  };
 
   const fields = getInitialFields(
     formFields?.max_no_of_interview,
@@ -33,20 +52,35 @@ const CandidateSettings = ({
     formFields?.small_centre_end_date
   );
 
+  const dropdownItems = [
+    { key: "1", text: "Centre 1" },
+    { key: "2", text: "Centre 2" },
+    // ... add more items if needed
+  ];
+
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "centre",
-      key: "centre",
-      renderInput: {
-        customSelectInputStyles: styles.customInputStyle,
+      key: "cetre",
+      renderDropdown: {
         visible: true,
-        inputType: "select",
-        inputPlaceholder: intl.formatMessage({
-          id: "label.placeholder.select_centre",
-        }),
-        getInputError: (index) => errors[index].centre,
+        dropdownItems: dropdownItems,
+        onDropdownChange: handleCentreChange,
+        customdropDownStyles: styles.selectCenterContainer,
+        customtextStyles: styles.placeholderStyle,
+        dropdownDisplayText: (record, index) => {
+          const selectedItem = selectedCentres[index]
+            ? dropdownItems.find((item) => item.key === selectedCentres[index])
+            : null;
+          return selectedItem
+            ? selectedItem.text
+            : intl.formatMessage({
+                id: "label.placeholder.select_centre",
+              });
+        },
+        getInputError: (index) => errors[index]?.centre,
       },
     }),
     renderColumn({
@@ -56,7 +90,17 @@ const CandidateSettings = ({
       key: "from_date",
       renderDateTime: {
         customInputStyle: classes.inputStyle,
-        getDisabledTime: (current, record) => {},
+        getDisabledDate: (current, record) => {
+          if (isNotAFutureDate(current)) return true;
+          if (
+            compareTwoDayjsDates({
+              current,
+              date: record?.to_date,
+              checkForFuture: true,
+            })
+          )
+            return true;
+        },
         visible: true,
         type: "date",
         placeholder: intl.formatMessage({
@@ -80,7 +124,17 @@ const CandidateSettings = ({
       key: "to_date",
       renderDateTime: {
         customInputStyle: classes.inputStyle,
-        getDisabledTime: (current, record) => {},
+        getDisabledDate: (current, record) => {
+          if (
+            compareTwoDayjsDates({
+              current,
+              date: record?.from_date,
+              checkForFuture: false,
+            })
+          )
+            return true;
+          if (isNotAFutureDate(current)) return true;
+        },
         visible: true,
         type: "date",
         placeholder: intl.formatMessage({
@@ -104,7 +158,9 @@ const CandidateSettings = ({
       key: "from_time",
       renderDateTime: {
         customInputStyle: classes.inputStyle,
-        getDisabledTime: (current, record) => {},
+        getDisabledTime: (current, record) => {
+          return handleDisabledStartTime(record?.to_time);
+        },
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
@@ -128,7 +184,9 @@ const CandidateSettings = ({
       key: "to_time",
       renderDateTime: {
         customInputStyle: classes.inputStyle,
-        getDisabledTime: (current, record) => {},
+        getDisabledTime: (current, record) => {
+          return handleDisabledEndTime(record?.from_time);
+        },
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
