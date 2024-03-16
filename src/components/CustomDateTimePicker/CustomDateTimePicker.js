@@ -43,7 +43,7 @@ const CustomDateTimePicker = ({
         label && (
           <div className={styles.inputLabelContainer}>
             <Typography className={customLabelStyles}>
-              {label}
+              {label}&nbsp;
               {isRequired && <MarkRequired />}
             </Typography>
           </div>
@@ -97,7 +97,7 @@ const CustomDateTimePicker = ({
               />
             ) : (
               <Typography className={classes.dateText}>
-                {formatDate({ date: value })}
+                {!!value ? formatDate({ date: value }) : "-"}
               </Typography>
             )
           }

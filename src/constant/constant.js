@@ -3,6 +3,7 @@ import {
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   ROUND_TWO_SETUP_CENTERS,
+  ROUND_TWO_CONSENT_MARKING,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
@@ -253,7 +254,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: CONSENT_MARKING,
+    onClickNaviagtion: ROUND_TWO_CONSENT_MARKING,
   },
   {
     id: 3,
@@ -411,4 +412,23 @@ export const PAYMENT_TYPE = {
 export const INTERVIEW_TYPE = [
   { id: 1, label: "Online", value: "online" },
   { id: 2, label: "Offline", value: "offline" },
+];
+
+export const REGISTRATION_DATES = [
+  { id: 1, labeIntl: "startDateCompanies" },
+  { id: 2, labeIntl: "startDateCandidates" },
+  { id: 3, labeIntl: "lastDateBigCentres" },
+  { id: 4, labeIntl: "lastDateSmallCentres" },
+];
+
+export const REGISTRATIONS_DATES_FOR_ROUND_TWO = [
+  { id: 1, labeIntl: "registrationStartDateCompanies" },
+  { id: 2, labeIntl: "registrationEndDateCompanies" },
+  { id: 3, labeIntl: "registrationStartDateCandidates" },
+  { id: 4, labeIntl: "registrationEndDateCandidates" },
+  { id: 5, labeIntl: "startShortlistingbyCompany" },
+  { id: 6, labeIntl: "endShortlistingbyCompany" },
+  { id: 7, labeIntl: "startCondidateConsentmarking" },
+  { id: 8, labeIntl: "endCondidateConsentmarking" },
+  { id: 9, labeIntl: "writtenTestDate" },
 ];
