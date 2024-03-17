@@ -60,7 +60,7 @@ const CandidateSettings = ({
         dropdownPlaceholder: intl.formatMessage({
           id: "label.placeholder.select_centre",
         }),
-        getInputError: (index) => errors[index]?.centre,
+        getDropdownError: (index) => errors[index]?.centre,
       },
     }),
     renderColumn({

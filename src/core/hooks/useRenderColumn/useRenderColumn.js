@@ -376,9 +376,10 @@ const useRenderColumn = () => {
       (columnObject.render = (value, rowData, index) => {
         const {
           dropdownItems = [],
-          onDropdownChange = () => {},
           dropdownPlaceholder = "",
           dropdownDisabled = false,
+          getDropdownError = () => {},
+          onDropdownChange = () => {},
         } = renderDropdown;
 
         return {
@@ -394,6 +395,9 @@ const useRenderColumn = () => {
               }}
               placeholder={dropdownPlaceholder}
               isSelectBoxDisable={dropdownDisabled}
+              errorMessage={getDropdownError(index)}
+              isError={!!getDropdownError(index)}
+              errorInput={!!getDropdownError(index) && styles.errorTimeInput}
             />
           ),
         };
