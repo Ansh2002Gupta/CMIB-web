@@ -540,6 +540,7 @@ const locale = {
   "label.activeInactive": "Active/Inactive",
   "label.inr": "INR",
   "label.days": "Days",
+  "label.searchPackageName": "Search by package name",
 };
 
 export default locale;

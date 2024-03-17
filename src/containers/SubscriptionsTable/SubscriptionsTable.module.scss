@@ -1,7 +1,8 @@
 .mainContainer {
-  padding: var(--paddingNone) var(--paddingMedium) var(--paddingMedium)
+  padding: var(--paddingSmall) var(--paddingMedium) var(--paddingMedium)
     var(--paddingMedium);
   gap: var(--gapSmall);
+  background-color: var(--blueBg);
 }
 
 .customContainerStyles {

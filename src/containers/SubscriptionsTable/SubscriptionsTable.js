@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 
 import DataTable from "../../components/DataTable";
+import SearchableComponent from "../../components/SearchableComponent";
 import getSubscriptionsColumn from "./SubscriptionTableConfig";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { SUBSCRIPTION_DUMMY_DATA } from "../../dummyData";
@@ -15,6 +16,7 @@ const SubscriptionsTable = () => {
   const { getImage } = useContext(ThemeContext);
   const [current, setCurrent] = useState();
   const [pageSize, setPageSize] = useState();
+  const [searchedValue, setSearchedValue] = useState("");
   const { renderColumn } = useRenderColumn();
 
   const goToSubscriptionDetails = () => {};
@@ -30,10 +32,17 @@ const SubscriptionsTable = () => {
 
   const onChangeCurrentPage = () => {};
 
+  const handleOnUserSearch = () => {};
+
   return (
     <TwoRow
       className={styles.mainContainer}
-      topSection={<></>}
+      topSection={
+        <SearchableComponent
+          {...{ searchedValue, handleOnUserSearch }}
+          placeholder={intl.formatMessage({ id: "label.searchPackageName" })}
+        />
+      }
       bottomSection={
         <DataTable
           {...{
