@@ -1,13 +1,19 @@
-import dayjs from "dayjs";
-import React, { useContext } from "react";
-import { ThemeContext } from "core/providers/theme";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
-import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import { ThemeContext } from "core/providers/theme";
+import dayjs from "dayjs";
+import { Image } from "antd";
 
 import CandidateSettingsTemplate from "./CandidateSettingsTemplate";
+import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import {
+  compareTwoDayjsDates,
+  handleDisabledEndTime,
+  handleDisabledStartTime,
+  isNotAFutureDate,
+} from "../../constant/utils";
 import styles from "./CandidateSettings.module.scss";
 import { classes } from "./CandidateSettings.styles";
-import { Image } from "antd";
 
 const CandidateSettings = ({
   errors,
@@ -17,7 +23,7 @@ const CandidateSettings = ({
   handleInputChange,
   handleAdd,
   handleRemove,
-  handleTableChange,
+  handleCandidateDataChange,
   tableData,
 }) => {
   const intl = useIntl();
@@ -33,20 +39,28 @@ const CandidateSettings = ({
     formFields?.small_centre_end_date
   );
 
+  const dropdownItems = [
+    { key: "1", text: "Centre 1", label: "Centre 1", value: "Centre 1" },
+    { key: "2", text: "Centre 2", label: "Centre 2", value: "Centre 2" },
+  ];
+
   const columns = [
     renderColumn({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "centre",
-      key: "centre",
-      renderInput: {
-        customSelectInputStyles: styles.customInputStyle,
+      key: "cetre",
+      renderDropdown: {
         visible: true,
-        inputType: "select",
-        inputPlaceholder: intl.formatMessage({
+        dropdownItems: dropdownItems,
+        onDropdownChange: (val, record, index) =>
+          handleCandidateDataChange(val, "centre", index),
+        customdropDownStyles: styles.selectCenterContainer,
+        customtextStyles: styles.placeholderStyle,
+        dropdownPlaceholder: intl.formatMessage({
           id: "label.placeholder.select_centre",
         }),
-        getInputError: (index) => errors[index].centre,
+        getDropdownError: (index) => errors[index]?.centre,
       },
     }),
     renderColumn({
@@ -56,14 +70,24 @@ const CandidateSettings = ({
       key: "from_date",
       renderDateTime: {
         customInputStyle: classes.inputStyle,
-        getDisabledTime: (current, record) => {},
+        getDisabledDate: (current, record) => {
+          if (isNotAFutureDate(current)) return true;
+          if (
+            compareTwoDayjsDates({
+              current,
+              date: record?.to_date,
+              checkForFuture: true,
+            })
+          )
+            return true;
+        },
         visible: true,
         type: "date",
         placeholder: intl.formatMessage({
           id: "label.select_from_date",
         }),
         onChange: (val, record, index) => {
-          handleTableChange(
+          handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "from_date",
             index
@@ -80,21 +104,31 @@ const CandidateSettings = ({
       key: "to_date",
       renderDateTime: {
         customInputStyle: classes.inputStyle,
-        getDisabledTime: (current, record) => {},
+        getDisabledDate: (current, record) => {
+          if (
+            compareTwoDayjsDates({
+              current,
+              date: record?.from_date,
+              checkForFuture: false,
+            })
+          )
+            return true;
+          if (isNotAFutureDate(current)) return true;
+        },
         visible: true,
         type: "date",
         placeholder: intl.formatMessage({
           id: "label.select_to_date",
         }),
         onChange: (val, record, index) => {
-          handleTableChange(
+          handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "to_date",
             index
           );
         },
         isEditable: true,
-        getError: (index) => errors[index].to_date,
+        getError: (index) => errors[index]?.to_date,
       },
     }),
     renderColumn({
@@ -104,21 +138,23 @@ const CandidateSettings = ({
       key: "from_time",
       renderDateTime: {
         customInputStyle: classes.inputStyle,
-        getDisabledTime: (current, record) => {},
+        getDisabledTime: (current, record) => {
+          return handleDisabledStartTime(record?.to_time);
+        },
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
           id: "label.select_from_time",
         }),
         onChange: (val, record, index) => {
-          handleTableChange(
+          handleCandidateDataChange(
             val ? dayjs(val).format("HH:mm:ss") : "",
             "from_time",
             index
           );
         },
         isEditable: true,
-        getError: (index) => errors[index].from_date,
+        getError: (index) => errors[index]?.from_date,
       },
     }),
     renderColumn({
@@ -128,21 +164,23 @@ const CandidateSettings = ({
       key: "to_time",
       renderDateTime: {
         customInputStyle: classes.inputStyle,
-        getDisabledTime: (current, record) => {},
+        getDisabledTime: (current, record) => {
+          return handleDisabledEndTime(record?.from_time);
+        },
         visible: true,
         type: "time",
         placeholder: intl.formatMessage({
           id: "label.select_to_time",
         }),
         onChange: (val, record, index) => {
-          handleTableChange(
+          handleCandidateDataChange(
             val ? dayjs(val).format("HH:mm:ss") : "",
             "to_time",
             index
           );
         },
         isEditable: true,
-        getError: (index) => errors[index].to_time,
+        getError: (index) => errors[index]?.to_time,
       },
     }),
     {

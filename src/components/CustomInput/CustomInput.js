@@ -20,8 +20,6 @@ const CustomInput = React.forwardRef(
       customInputStyles,
       customLabelStyles,
       customSelectInputStyles,
-      defaultSelectValueArray,
-      defaultSelectValueString,
       disabled,
       errorInput,
       errorMessage,
@@ -64,13 +62,12 @@ const CustomInput = React.forwardRef(
         inputFieldRef?.current?.setSelectionRange(selectionStart, selectionEnd);
       });
     };
-
     return (
       <Base className={[styles.container, customContainerStyles].join(" ")}>
         {!!label && (
           <div className={styles.inputLabelContainer}>
             <Typography className={customLabelStyles}>
-              {label}
+              {label}&nbsp;
               {isRequired && <MarkRequired />}
             </Typography>
           </div>
@@ -96,11 +93,7 @@ const CustomInput = React.forwardRef(
                 });
               }}
               options={selectOptions}
-              defaultValue={
-                isMultiSelect
-                  ? defaultSelectValueArray
-                  : defaultSelectValueString
-              }
+              placeholder={placeholder}
               disabled={isSelectBoxDisable}
             />
           )}
@@ -215,8 +208,6 @@ CustomInput.defaultProps = {
   customInputStyles: "",
   customLabelStyles: "",
   customSelectInputStyles: "",
-  defaultSelectValueArray: [],
-  defaultSelectValueString: "",
   disabled: false,
   errorInput: "",
   errorMessage: "",
@@ -254,8 +245,6 @@ CustomInput.propTypes = {
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   customSelectInputStyles: PropTypes.string,
-  defaultSelectValueArray: PropTypes.array,
-  defaultSelectValueString: PropTypes.string,
   disabled: PropTypes.bool,
   errorInput: PropTypes.string,
   errorMessage: PropTypes.string,

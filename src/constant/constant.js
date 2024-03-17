@@ -197,7 +197,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
-    onClickNaviagtion: ROUND_ONE_SETUP_CENTERS,
+    onClickNavigation: ROUND_ONE_SETUP_CENTERS,
   },
   {
     id: 2,
@@ -205,7 +205,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
     headingIntl: "Setup Mock Interviews",
-    onClickNaviagtion: SETUP_MOCK_INTERVIEW,
+    onClickNavigation: SETUP_MOCK_INTERVIEW,
   },
   {
     id: 3,
@@ -213,7 +213,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
     headingIntl: "Setup Orientation Centres",
-    onClickNaviagtion: ROUND_ONE_ORIENTATION_CENTERS,
+    onClickNavigation: ROUND_ONE_ORIENTATION_CENTERS,
   },
   {
     id: 4,
@@ -221,7 +221,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: CONSENT_MARKING,
+    onClickNavigation: CONSENT_MARKING,
   },
   {
     id: 5,
@@ -229,7 +229,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
-    onClickNaviagtion: CAMPUS_INTERVIEW_SETTINGS,
+    onClickNavigation: CAMPUS_INTERVIEW_SETTINGS,
   },
 ];
 
@@ -240,7 +240,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
-    onClickNaviagtion: ROUND_TWO_SETUP_CENTERS,
+    onClickNavigation: ROUND_TWO_SETUP_CENTERS,
   },
   {
     id: 2,
@@ -248,7 +248,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: CONSENT_MARKING,
+    onClickNavigation: CONSENT_MARKING,
   },
   {
     id: 3,
@@ -256,7 +256,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNavigation: SETUP_CENTERS,
   },
 ];
 

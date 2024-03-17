@@ -73,6 +73,7 @@
 }
 
 .customImageStyle {
+  cursor: pointer;
   padding-top: var(--margin_10);
 }
 
@@ -80,4 +81,19 @@
   flex: 1;
   width: var(--fullWidth);
   height: var(--height_44);
+}
+
+.selectCenterContainer{
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
+  border: var(--borderLight);
+  border-radius: var(--radiusLg);
+  height: var(--height_44) ;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.placeholderStyle{
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
 }

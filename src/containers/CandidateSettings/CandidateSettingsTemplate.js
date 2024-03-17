@@ -2,11 +2,11 @@ import React from "react";
 import dayjs from "dayjs";
 import { Table, Typography } from "antd";
 
+import { TwoRow } from "../../core/layouts";
+
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
-import { TwoRow } from "../../core/layouts";
-import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import {
   MAX_REGISTRATION_FEE_LENGTH,
   TIMER_OF_1_MINUTES,

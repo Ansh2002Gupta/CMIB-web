@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 
+import { ThreeRow } from "../../core/layouts";
+
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import CandidateSettings from "../CandidateSettings/CandidateSettings";
 import CompanySettings from "../CompanySettings";
@@ -11,7 +13,6 @@ import useCandidateSettings from "../CandidateSettings/Conrollers/useCandidateSe
 import useCompanySettings from "../CompanySettings/Conrollers/useCompanySettings";
 import usePaymentSettings from "../PaymentSettings/Conrollers/usePaymentSettings";
 import useResponsive from "../../core/hooks/useResponsive";
-import { ThreeRow } from "../../core/layouts";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SESSION } from "../../routes/routeNames";
 import styles from "./CampusInterviewSettings.module.scss";
@@ -22,6 +23,7 @@ const CampusInterviewContent = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const navigate = useNavigate();
+
   const {
     formErrors: PaymentSettingsError,
     formFields: paymentFields,
@@ -53,13 +55,17 @@ const CampusInterviewContent = () => {
     handleAdd,
     handleInputChange,
     handleRemove,
-    handleTableChange,
+    handleCandidateDataChange,
     isButtonDisable: isCandidateSettingsInvalid,
     tableData,
   } = useCandidateSettings();
 
   const onClickCancel = () => {
     navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
+  };
+
+  const onClickSave = () => {
+    //TODO: API call to save changes
   };
 
   return (
@@ -90,7 +96,7 @@ const CampusInterviewContent = () => {
                 handleRemove,
                 handleAdd,
                 errors,
-                handleTableChange,
+                handleCandidateDataChange,
               }}
             />
           }
@@ -134,7 +140,7 @@ const CampusInterviewContent = () => {
             isCompanySettingsInvalid() ||
             isCandidateSettingsInvalid()
           }
-          onActionBtnClick={() => {}}
+          onActionBtnClick={onClickSave}
           onCancelBtnClick={onClickCancel}
         />
       }
