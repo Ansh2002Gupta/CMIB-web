@@ -55,7 +55,7 @@ const CampusInterviewContent = () => {
     handleAdd,
     handleInputChange,
     handleRemove,
-    handleTableChange,
+    handleCandidateDataChange,
     isButtonDisable: isCandidateSettingsInvalid,
     tableData,
   } = useCandidateSettings();
@@ -93,7 +93,7 @@ const CampusInterviewContent = () => {
                 handleRemove,
                 handleAdd,
                 errors,
-                handleTableChange,
+                handleCandidateDataChange,
               }}
             />
           }

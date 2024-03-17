@@ -38,7 +38,7 @@ const useCandidateSettings = () => {
     }
   };
 
-  const handleTableChange = (value, name, index) => {
+  const handleCandidateDataChange = (value, name, index) => {
     setTableData((prevTableData) => {
       const newTableData = [...prevTableData];
       newTableData[index] = {
@@ -239,7 +239,7 @@ const useCandidateSettings = () => {
     handleRemove,
     handleSetError,
     errors,
-    handleTableChange,
+    handleCandidateDataChange,
   };
 };
 

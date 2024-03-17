@@ -23,7 +23,7 @@ const CandidateSettings = ({
   handleInputChange,
   handleAdd,
   handleRemove,
-  handleTableChange,
+  handleCandidateDataChange,
   tableData,
 }) => {
   const intl = useIntl();
@@ -104,7 +104,7 @@ const CandidateSettings = ({
           id: "label.select_from_date",
         }),
         onChange: (val, record, index) => {
-          handleTableChange(
+          handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "from_date",
             index
@@ -138,7 +138,7 @@ const CandidateSettings = ({
           id: "label.select_to_date",
         }),
         onChange: (val, record, index) => {
-          handleTableChange(
+          handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "to_date",
             index
@@ -164,7 +164,7 @@ const CandidateSettings = ({
           id: "label.select_from_time",
         }),
         onChange: (val, record, index) => {
-          handleTableChange(
+          handleCandidateDataChange(
             val ? dayjs(val).format("HH:mm:ss") : "",
             "from_time",
             index
@@ -190,7 +190,7 @@ const CandidateSettings = ({
           id: "label.select_to_time",
         }),
         onChange: (val, record, index) => {
-          handleTableChange(
+          handleCandidateDataChange(
             val ? dayjs(val).format("HH:mm:ss") : "",
             "to_time",
             index
