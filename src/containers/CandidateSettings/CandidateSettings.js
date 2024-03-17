@@ -29,16 +29,6 @@ const CandidateSettings = ({
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
-  const [selectedCentres, setSelectedCentres] = useState({});
-
-  const handleCentreChange = (value, record, index) => {
-    setSelectedCentres((prevSelectedCentres) => ({
-      ...prevSelectedCentres,
-      [index]: value,
-    }));
-
-    // If you need to do more on change, add your logic here
-  };
 
   const fields = getInitialFields(
     formFields?.max_no_of_interview,
@@ -63,15 +53,13 @@ const CandidateSettings = ({
       renderDropdown: {
         visible: true,
         dropdownItems: dropdownItems,
-        onDropdownChange: handleCentreChange,
+        onDropdownChange: (val, record, index) =>
+          handleCandidateDataChange(val, "centre", index),
         customdropDownStyles: styles.selectCenterContainer,
         customtextStyles: styles.placeholderStyle,
         dropdownPlaceholder: intl.formatMessage({
           id: "label.placeholder.select_centre",
         }),
-        dropdownDisplayText: (record, index) => {
-          return selectedCentres[index];
-        },
         getInputError: (index) => errors[index]?.centre,
       },
     }),

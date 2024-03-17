@@ -378,11 +378,8 @@ const useRenderColumn = () => {
           dropdownItems = [],
           onDropdownChange = () => {},
           dropdownPlaceholder = "",
-          dropdownDisplayText,
           dropdownDisabled = false,
         } = renderDropdown;
-
-        const displayText = dropdownDisplayText(rowData, index);
 
         return {
           props: {
@@ -395,7 +392,6 @@ const useRenderColumn = () => {
               onSelectItem={(val) => {
                 onDropdownChange(val?.target?.value, rowData, index);
               }}
-              value={displayText}
               placeholder={dropdownPlaceholder}
               isSelectBoxDisable={dropdownDisabled}
             />
