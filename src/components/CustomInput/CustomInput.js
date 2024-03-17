@@ -82,9 +82,11 @@ const CustomInput = React.forwardRef(
           {type === "select" && (
             <Select
               mode={isMultiSelect ? "multiple" : ""}
-              className={[styles.selectInput, customSelectInputStyles].join(
-                " "
-              )}
+              className={[
+                styles.selectInput,
+                customSelectInputStyles,
+                isError && errorMessage ? styles.selectBoxError : "",
+              ].join(" ")}
               onChange={(changedValue) => {
                 onSelectItem({
                   target: {

@@ -84,3 +84,11 @@
 .errorInput {
   border: var(--borderError) !important;
 }
+
+.selectBoxError {
+  :global {
+    .ant-select-selector {
+      border: var(--borderError) !important;
+    }
+  }
+}
