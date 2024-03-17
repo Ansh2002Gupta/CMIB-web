@@ -49,6 +49,7 @@
 }
 
 .mainContainer {
+  overflow: auto;
   gap: var(--gapMedium);
   background-color: var(--bodyBg);
   padding: var(--paddingMedium);
