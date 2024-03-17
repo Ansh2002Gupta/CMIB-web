@@ -378,23 +378,9 @@ const useRenderColumn = () => {
           dropdownItems = [],
           onDropdownChange = () => {},
           dropdownPlaceholder = "",
-          dropdownDisplayText = () => dropdownPlaceholder,
+          dropdownDisplayText,
           dropdownDisabled = false,
-          customdropDownStyles = {},
-          customtextStyles = {},
         } = renderDropdown;
-
-        const menu = (
-          <Menu onClick={(e) => onDropdownChange(e.key, rowData, index)}>
-            {dropdownItems.map((item) => (
-              <Menu.Item key={item.key}>
-                <Typography className={styles.dropdownMenuItem}>
-                  {item.text}
-                </Typography>
-              </Menu.Item>
-            ))}
-          </Menu>
-        );
 
         const displayText = dropdownDisplayText(rowData, index);
 
@@ -403,20 +389,16 @@ const useRenderColumn = () => {
             className: customStyles,
           },
           children: (
-            <Dropdown
-              className={customdropDownStyles}
-              overlay={menu}
-              disabled={dropdownDisabled}
-              trigger={["click"]}
-            >
-              <Typography
-                className={customtextStyles}
-                onClick={(e) => e.preventDefault()}
-              >
-                {displayText}
-                <DownOutlined />
-              </Typography>
-            </Dropdown>
+            <CustomInput
+              type="select"
+              selectOptions={dropdownItems}
+              onSelectItem={(val) => {
+                onDropdownChange(val?.target?.value, rowData, index);
+              }}
+              value={displayText}
+              placeholder={dropdownPlaceholder}
+              isSelectBoxDisable={dropdownDisabled}
+            />
           ),
         };
       });

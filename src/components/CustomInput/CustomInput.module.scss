@@ -58,7 +58,11 @@
 }
 
 .selectInput {
-  padding: 0px;
+  height: var(--height_44);
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium) !important;
+  width: var(--fullWidth);
 }
 
 .selectOptionsMobileStyles {

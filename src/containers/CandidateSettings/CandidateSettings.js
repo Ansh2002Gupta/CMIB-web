@@ -50,9 +50,8 @@ const CandidateSettings = ({
   );
 
   const dropdownItems = [
-    { key: "1", text: "Centre 1" },
-    { key: "2", text: "Centre 2" },
-    // ... add more items if needed
+    { key: "1", text: "Centre 1", label: "Centre 1", value: "Centre 1" },
+    { key: "2", text: "Centre 2", label: "Centre 2", value: "Centre 2" },
   ];
 
   const columns = [
@@ -60,22 +59,18 @@ const CandidateSettings = ({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "centre",
-      key: "centre",
+      key: "cetre",
       renderDropdown: {
         visible: true,
         dropdownItems: dropdownItems,
         onDropdownChange: handleCentreChange,
         customdropDownStyles: styles.selectCenterContainer,
         customtextStyles: styles.placeholderStyle,
+        dropdownPlaceholder: intl.formatMessage({
+          id: "label.placeholder.select_centre",
+        }),
         dropdownDisplayText: (record, index) => {
-          const selectedItem = selectedCentres[index]
-            ? dropdownItems.find((item) => item.key === selectedCentres[index])
-            : null;
-          return selectedItem
-            ? selectedItem.text
-            : intl.formatMessage({
-                id: "label.placeholder.select_centre",
-              });
+          return selectedCentres[index];
         },
         getInputError: (index) => errors[index]?.centre,
       },
