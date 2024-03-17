@@ -51,18 +51,6 @@
   }
 }
 
-.mainContainer {
-  background-color: var(--bodyBg);
-  padding: var(--paddingMedium);
-  margin-top: var(--marginLarge);
-  margin-left: var(--marginLarge);
-  margin-right: var(--marginLarge);
-  border-radius: var(--radiusMLg);
-  border: var(--borderLight);
-  gap: var(--gapMedium, 24px);
-  flex: 1;
-}
-
 .redText {
   color: var(--error);
 }

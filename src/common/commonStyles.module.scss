@@ -47,3 +47,13 @@
   border-radius: var(--radiusXLg, 12px);
   background-color: var(--letGrey7, #bfbfbf);
 }
+
+.mainContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  margin-top: var(--marginLarge);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  flex: 1;
+  width: var(--fullWidth);
+}

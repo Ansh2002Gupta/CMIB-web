@@ -11,6 +11,7 @@ import {
   MAX_REGISTRATION_FEE_LENGTH,
   TIMER_OF_1_MINUTES,
 } from "../../constant/constant";
+import commonStyles from "../../common/commonStyles.module.scss";
 import { classes } from "./CandidateSettings.styles";
 import styles from "./CandidateSettings.module.scss";
 import "./Override.css";
@@ -24,7 +25,7 @@ const CandidateSettingsTemplate = ({
   tableData,
 }) => {
   return (
-    <div className={styles.mainContainer}>
+    <div className={commonStyles.mainContainer}>
       <Typography className={styles.heading}>
         {intl.formatMessage({ id: "session.candidateSettings" })}
       </Typography>

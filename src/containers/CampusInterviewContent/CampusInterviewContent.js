@@ -68,7 +68,9 @@ const CampusInterviewContent = () => {
       topSectionClassName={styles.topSectionStyle}
       topSection={
         <ContentHeader
-          customStyles={!responsive?.isMd ? styles.customStyles : ""}
+          customStyles={`${styles.campusInterviewHeader} ${
+            !responsive?.isMd ? styles.customStyles : ""
+          }`}
           headerText={intl.formatMessage({
             id: "label.setCampusInterviewSettings",
           })}
@@ -76,6 +78,7 @@ const CampusInterviewContent = () => {
       }
       middleSection={
         <ThreeRow
+          className={styles.candidateContentSection}
           topSection={
             <CandidateSettings
               {...{

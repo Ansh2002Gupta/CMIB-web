@@ -7,6 +7,7 @@ import SearchableDropDown from "../../components/SearchableDropDown";
 import { TwoRow } from "../../core/layouts";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import { SESSION_PERIOD } from "../../constant/constant";
+import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./CompanySettings.module.scss";
 
 const CompanySettingsTemplate = ({
@@ -20,7 +21,7 @@ const CompanySettingsTemplate = ({
 }) => {
   return (
     <TwoRow
-      className={styles.mainContainer}
+      className={commonStyles.mainContainer}
       topSection={
         <Typography className={styles.heading}>
           {intl.formatMessage({ id: "label.for_company" })}

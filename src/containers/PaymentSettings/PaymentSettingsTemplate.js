@@ -10,6 +10,7 @@ import {
   MAX_REGISTRATION_FEE_LENGTH,
   SESSION_PERIOD,
 } from "../../constant/constant";
+import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./PaymentSettings.module.scss";
 
 const PaymentSettingsTemplate = ({
@@ -23,7 +24,7 @@ const PaymentSettingsTemplate = ({
 }) => {
   return (
     <TwoRow
-      className={styles.mainContainer}
+      className={commonStyles.mainContainer}
       topSection={
         <Typography className={styles.heading}>
           {intl.formatMessage({ id: "session.paymentSettings" })}
