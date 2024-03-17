@@ -31,6 +31,16 @@ const useCandidateSettings = () => {
 
   const handleAdd = (index) => {
     if (validate(index)) {
+      setErrors((prevErrors) => [
+        ...prevErrors,
+        {
+          centre: "",
+          from_date: "",
+          to_date: "",
+          from_time: "",
+          to_time: "",
+        },
+      ]);
       setTableData((prevTableData) => {
         delete prevTableData[index].isAddRow;
         return [...prevTableData, addTableData];

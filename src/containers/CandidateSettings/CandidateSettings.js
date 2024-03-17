@@ -128,7 +128,7 @@ const CandidateSettings = ({
           );
         },
         isEditable: true,
-        getError: (index) => errors[index].to_date,
+        getError: (index) => errors[index]?.to_date,
       },
     }),
     renderColumn({
@@ -154,7 +154,7 @@ const CandidateSettings = ({
           );
         },
         isEditable: true,
-        getError: (index) => errors[index].from_date,
+        getError: (index) => errors[index]?.from_date,
       },
     }),
     renderColumn({
@@ -180,7 +180,7 @@ const CandidateSettings = ({
           );
         },
         isEditable: true,
-        getError: (index) => errors[index].to_time,
+        getError: (index) => errors[index]?.to_time,
       },
     }),
     {
