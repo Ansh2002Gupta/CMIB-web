@@ -50,7 +50,8 @@ const CaJobsConfigurations = () => {
     fetchData({
       queryParamsObject: {},
       onSuccessCallback: (responseFieldValues) => {
-        const { it_skill, soft_skill, video_max_time } = responseFieldValues[0];
+        const { it_skill, soft_skill, video_max_time } =
+          responseFieldValues?.[0] || {};
         previousSavedData.current = {
           previousSavedItSkills: returnFieldObjects({
             fieldValueList: it_skill,
@@ -136,6 +137,7 @@ const CaJobsConfigurations = () => {
     setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
     setVideoTimeLimit(previousSavedData.current.previousSavedVideoTimeLimit);
   };
+
   const renderContent = () => {
     if (isLoading) {
       return <CustomLoader />;
