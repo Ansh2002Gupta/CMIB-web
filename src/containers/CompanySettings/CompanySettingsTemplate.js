@@ -5,7 +5,6 @@ import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
 import SearchableDropDown from "../../components/SearchableDropDown";
 import { TwoRow } from "../../core/layouts";
-import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import { SESSION_PERIOD } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./CompanySettings.module.scss";
@@ -72,14 +71,12 @@ const CompanySettingsTemplate = ({
                     customContainerStyles={styles.customContainerStyles}
                     maxLength={item.rules.maxLength}
                     onChange={(val) => {
-                      const value = item.hasControls ? val : val.target.value;
-                      (NUMERIC_VALUE_REGEX.test(value) || value === "") &&
-                        handleInputChange(value, item.label);
+                      handleInputChange(val, item.label);
                     }}
                     placeholder={intl.formatMessage({
                       id: `session.placeholder.${item.headingIntl}`,
                     })}
-                    isError={formErrors[item.label]}
+                    isError={!!formErrors[item.label]}
                     errorMessage={
                       formErrors[item.label]
                         ? intl.formatMessage({
