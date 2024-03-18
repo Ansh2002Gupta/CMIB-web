@@ -15,7 +15,7 @@ export const MESSAGE_MAX_LENGTH = 5000;
 export const MAX_INPUT_LENGTH = 100;
 export const MIN_INPUT_LENGTH = 0;
 export const MAX_VIDEO_LENGTH = 999;
-export const MIN_VIDEO_LENGTH = 0;
+export const MIN_VIDEO_LENGTH = 1;
 
 export const API_STATUS = {
   IDLE: "idle",
