@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography } from "antd";
+import { capitalize } from "lodash";
 
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
@@ -14,10 +15,78 @@ const CompanySettingsTemplate = ({
   formErrors,
   handleInputChange,
   intl,
+  isEditable,
   onRemoveInterviewType,
   onSelectInterviewType,
   selectedInterviewType,
 }) => {
+  const renderBottomSection = (item) => {
+    if (!isEditable) {
+      if (item.isMultiSelect) {
+        return (
+          <div className={commonStyles.chipMainContainer}>
+            {item?.value?.map((interviewType, index) => (
+              <div className={commonStyles.chipContainer} key={index}>
+                <Typography className={commonStyles.chipText}>
+                  {capitalize(interviewType)}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        );
+      }
+      return <Typography className={styles.valueText}>{item.value}</Typography>;
+    }
+
+    if (item.isMultiSelect) {
+      return (
+        <SearchableDropDown
+          errorMessage={
+            formErrors[item.label]
+              ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+              : ""
+          }
+          isRequiredField={item.rules.isRequired}
+          onSelectItem={onSelectInterviewType}
+          onRemoveItem={onRemoveInterviewType}
+          options={SESSION_PERIOD}
+          selectedOptionsList={selectedInterviewType}
+          placeholderText={intl.formatMessage({
+            id: `session.placeholder.${item.headingIntl}`,
+          })}
+          title={intl.formatMessage({ id: `label.${item.headingIntl}` })}
+        />
+      );
+    }
+
+    return (
+      <CustomInput
+        controls={item.hasControls}
+        type={"inputNumber"}
+        disabled={item.rules.isDisabled}
+        value={item.value}
+        customLabelStyles={styles.inputLabel}
+        customInputNumberStyles={styles.input}
+        customContainerStyles={styles.customContainerStyles}
+        maxLength={item.rules.maxLength}
+        onChange={(val) => {
+          handleInputChange(val, item.label);
+        }}
+        placeholder={intl.formatMessage({
+          id: `session.placeholder.${item.headingIntl}`,
+        })}
+        isError={!!formErrors[item.label]}
+        errorMessage={
+          formErrors[item.label]
+            ? intl.formatMessage({
+                id: `label.error.${formErrors[item.label]}`,
+              })
+            : ""
+        }
+      />
+    );
+  };
+
   return (
     <TwoRow
       className={commonStyles.mainContainer}
@@ -35,7 +104,7 @@ const CompanySettingsTemplate = ({
                 item.isMultiSelect ? styles.gridDropdownItem : styles.gridItem
               }
               topSection={
-                !item.isMultiSelect && (
+                !(isEditable && item.isMultiSelect) && (
                   <Typography className={styles.grayText}>
                     {intl.formatMessage({
                       id: `label.${item.headingIntl}`,
@@ -46,47 +115,7 @@ const CompanySettingsTemplate = ({
                   </Typography>
                 )
               }
-              bottomSection={
-                item.isMultiSelect ? (
-                  <SearchableDropDown
-                    errorMessage={
-                      formErrors[item.label] ? "label.error.fieldEmpty" : ""
-                    }
-                    isRequiredField
-                    onSelectItem={onSelectInterviewType}
-                    onRemoveItem={onRemoveInterviewType}
-                    options={SESSION_PERIOD}
-                    selectedOptionsList={selectedInterviewType}
-                    placeholderText={`session.placeholder.${item.headingIntl}`}
-                    title={`label.${item.headingIntl}`}
-                  />
-                ) : (
-                  <CustomInput
-                    controls={item.hasControls}
-                    type={"inputNumber"}
-                    disabled={item.rules.isDisabled}
-                    value={item.value}
-                    customLabelStyles={styles.inputLabel}
-                    customInputNumberStyles={styles.input}
-                    customContainerStyles={styles.customContainerStyles}
-                    maxLength={item.rules.maxLength}
-                    onChange={(val) => {
-                      handleInputChange(val, item.label);
-                    }}
-                    placeholder={intl.formatMessage({
-                      id: `session.placeholder.${item.headingIntl}`,
-                    })}
-                    isError={!!formErrors[item.label]}
-                    errorMessage={
-                      formErrors[item.label]
-                        ? intl.formatMessage({
-                            id: `label.error.${formErrors[item.label]}`,
-                          })
-                        : ""
-                    }
-                  />
-                )
-              }
+              bottomSection={renderBottomSection(item)}
             />
           ))}
         </CustomGrid>

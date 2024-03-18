@@ -13,6 +13,7 @@ import useCandidateSettings from "../CandidateSettings/Conrollers/useCandidateSe
 import useCompanySettings from "../CompanySettings/Conrollers/useCompanySettings";
 import usePaymentSettings from "../PaymentSettings/Conrollers/usePaymentSettings";
 import useResponsive from "../../core/hooks/useResponsive";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SESSION } from "../../routes/routeNames";
 import styles from "./CampusInterviewSettings.module.scss";
@@ -21,8 +22,13 @@ const CampusInterviewContent = () => {
   const intl = useIntl();
   const responsive = useResponsive();
   const [userProfileDetails] = useContext(UserProfileContext);
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const navigate = useNavigate();
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const isEditable = currentGlobalSession?.is_editable;
 
   const {
     formErrors: PaymentSettingsError,
@@ -88,15 +94,16 @@ const CampusInterviewContent = () => {
           topSection={
             <CandidateSettings
               {...{
+                errors,
                 formErrors,
                 formFields,
                 getInitialFields,
-                handleInputChange,
-                tableData,
-                handleRemove,
                 handleAdd,
-                errors,
                 handleCandidateDataChange,
+                handleInputChange,
+                handleRemove,
+                isEditable,
+                tableData,
               }}
             />
           }
@@ -108,6 +115,7 @@ const CampusInterviewContent = () => {
                 getInitialFields: getCompanyFields,
                 handleInputChange: handleCompanyInputChange,
                 initialFormState,
+                isEditable,
                 onRemoveInterviewType,
                 onSelectInterviewType,
                 selectedInterviewType,
@@ -121,6 +129,7 @@ const CampusInterviewContent = () => {
                 formFields: paymentFields,
                 getInitialFields: getPaymentFields,
                 handleInputChange: handlePaymentInputChange,
+                isEditable,
                 onRemoveCompanyItem,
                 onSelectCompanyItem,
                 selectedCompanyList,
@@ -130,19 +139,21 @@ const CampusInterviewContent = () => {
         />
       }
       bottomSection={
-        <ActionAndCancelButtons
-          actionBtnText={intl.formatMessage({
-            id: "session.saveChanges",
-          })}
-          cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-          isActionBtnDisable={
-            isPaymentSettingsInvalid() ||
-            isCompanySettingsInvalid() ||
-            isCandidateSettingsInvalid()
-          }
-          onActionBtnClick={onClickSave}
-          onCancelBtnClick={onClickCancel}
-        />
+        isEditable && (
+          <ActionAndCancelButtons
+            actionBtnText={intl.formatMessage({
+              id: "session.saveChanges",
+            })}
+            cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+            isActionBtnDisable={
+              isPaymentSettingsInvalid() ||
+              isCompanySettingsInvalid() ||
+              isCandidateSettingsInvalid()
+            }
+            onActionBtnClick={onClickSave}
+            onCancelBtnClick={onClickCancel}
+          />
+        )
       }
     />
   );

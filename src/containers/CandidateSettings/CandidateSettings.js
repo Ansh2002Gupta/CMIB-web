@@ -24,6 +24,7 @@ const CandidateSettings = ({
   handleAdd,
   handleRemove,
   handleCandidateDataChange,
+  isEditable,
   tableData,
 }) => {
   const intl = useIntl();
@@ -44,7 +45,7 @@ const CandidateSettings = ({
     { key: "2", text: "Centre 2", label: "Centre 2", value: "Centre 2" },
   ];
 
-  const columns = [
+  const editConfigurations = [
     renderColumn({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
@@ -205,15 +206,55 @@ const CandidateSettings = ({
     },
   ];
 
+  const viewConfigurations = [
+    renderColumn({
+      title: intl.formatMessage({ id: "label.centre" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "centre",
+      key: "cetre",
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.from_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "from_date",
+      key: "from_date",
+      renderText: { visible: true, isTypeDate: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.to_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "to_date",
+      key: "to_date",
+      renderText: { visible: true, isTypeDate: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.from_time" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "from_time",
+      key: "from_time",
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.to_time" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "to_time",
+      key: "to_time",
+      renderText: { visible: true },
+    }),
+  ];
+
   return (
     <CandidateSettingsTemplate
       {...{
+        editConfigurations,
         fields,
         formErrors,
         handleInputChange,
         intl,
-        columns,
+        isEditable,
         tableData,
+        viewConfigurations,
       }}
     />
   );

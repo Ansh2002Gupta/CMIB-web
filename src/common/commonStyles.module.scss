@@ -64,6 +64,27 @@
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 
+.chipMainContainer {
+  padding-top: var(--marginXSmall);
+  gap: var(--paddingExtraSmall);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.chipContainer {
+  display: flex;
+  align-items: center;
+  background-color: var(--lightBlueBg);
+  border-radius: var(--gapSmall);
+  padding: var(--gapXXSmall) var(--gapSmallMedium);
+}
+
+.chipText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
 @media (max-width: 767px) {
   .customGridStyle {
     grid-template-columns: 1fr;
