@@ -11,7 +11,7 @@ import CustomRadioButton from "../../components/CustomRadioButton";
 import CustomInput from "../../components/CustomInput";
 import ContentHeader from "../ContentHeader";
 import SubscriptionDetailsCard from "../SubscriptionDetailsCard/SubscriptionDetailsCard";
-import RenderDetails from "../../components/RenderDetails/RenderDetails";
+import LabelWithValue from "../../components/LabelWithValue/LabelWithValue";
 import { VALUE_ONE, VALUE_TWO, VALUE_ZERO } from "../../constant/constant";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import { ADD_SUBSCRIPTIONS, SUBSCRIPTIONS } from "../../routes/routeNames";
@@ -64,7 +64,7 @@ const SubscriptionDetails = () => {
           <TwoRow
             className={styles.upperContainer}
             topSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.packageName",
                 })}
@@ -75,7 +75,7 @@ const SubscriptionDetails = () => {
               />
             }
             bottomSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.package_validity_period",
                 })}
@@ -93,7 +93,7 @@ const SubscriptionDetails = () => {
           <TwoRow
             className={styles.upperContainer}
             topSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.packageName_descriptions",
                 })}
@@ -105,7 +105,7 @@ const SubscriptionDetails = () => {
               />
             }
             bottomSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.price",
                 })}
@@ -122,7 +122,7 @@ const SubscriptionDetails = () => {
             className={styles.upperContainer}
             isTopFillSpace
             bottomSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.subscription_status",
                 })}

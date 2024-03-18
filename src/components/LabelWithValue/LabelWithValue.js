@@ -3,7 +3,7 @@ import { Typography } from "antd";
 
 import commonStyles from "../../common/commonStyles.module.scss";
 
-const RenderDetails = ({ heading, subHeading, isMandatory = false }) => {
+const LabelWithValue = ({ heading, subHeading, isMandatory = false }) => {
   return (
     <div>
       <Typography className={commonStyles.commonLabelStyle}>
@@ -17,4 +17,4 @@ const RenderDetails = ({ heading, subHeading, isMandatory = false }) => {
   );
 };
 
-export default RenderDetails;
+export default LabelWithValue;
