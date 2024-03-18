@@ -53,3 +53,9 @@
 .redText {
   color: var(--error);
 }
+
+@media (max-width: 768px) {
+  .customGridStyle {
+    grid-template-columns: 1fr;
+  }
+}

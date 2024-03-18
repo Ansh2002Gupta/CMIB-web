@@ -97,3 +97,9 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }
+
+@media (max-width: 768px) {
+  .customGridStyle {
+    grid-template-columns: 1fr;
+  }
+}
