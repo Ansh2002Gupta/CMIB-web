@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
@@ -10,17 +10,22 @@ import CustomButton from "../../components/CustomButton";
 import CustomRadioButton from "../../components/CustomRadioButton";
 import CustomInput from "../../components/CustomInput";
 import ContentHeader from "../ContentHeader";
-import SubscriptionDetailsCard from "../../components/SubscriptionDetailsCard/SubscriptionDetailsCard";
+import SubscriptionDetailsCard from "../SubscriptionDetailsCard/SubscriptionDetailsCard";
 import RenderDetails from "../../components/RenderDetails/RenderDetails";
 import { VALUE_ONE, VALUE_TWO, VALUE_ZERO } from "../../constant/constant";
-import commonStyles from "../../common/commonStyles.module.scss";
+import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { ADD_SUBSCRIPTIONS, SUBSCRIPTIONS } from "../../routes/routeNames";
 import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
-import styles from "./addSubscription.module.scss";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import commonStyles from "../../common/commonStyles.module.scss";
+import styles from "./SubscriptionDetails.module.scss";
 
-const AddSubscription = () => {
+const SubscriptionDetails = () => {
   const intl = useIntl();
-  const navigate = useNavigate();
-
+  const { navigateScreen: navigate } = useNavigateScreen();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const currentlySelectedModuleKey =
+    userProfileDetails?.selectedModuleItem?.key;
   //TODO: LINKING WITH THE MANAGE SUBSCRIPTION > LISTING
 
   /**
@@ -49,7 +54,7 @@ const AddSubscription = () => {
   };
 
   const handleCancelBtnClick = () => {
-    navigate(-1);
+    navigate(`/${currentlySelectedModuleKey}/${SUBSCRIPTIONS}`);
   };
 
   const renderNonEditableContent = () => {
@@ -64,7 +69,7 @@ const AddSubscription = () => {
                   id: "label.packageName",
                 })}
                 subHeading={
-                  formData.packageName ? formData.packageName : "Package 1"
+                  !!formData.packageName ? formData.packageName : "Package 1"
                 }
                 isMandatory
               />
@@ -282,17 +287,14 @@ const AddSubscription = () => {
           headerText={
             (isEditPackage &&
               !isAddSubscription &&
-              (formData.packageName ||
-                intl.formatMessage({ id: "label.default_package_name" }))) ||
+              // For now we using hardcoded heading When we'll implement API we use that value then
+              intl.formatMessage({ id: "label.default_package_name" })) ||
             (!isEditPackage &&
               isAddSubscription &&
               intl.formatMessage({
                 id: "label.path.add-subscriptions",
               })) ||
-            `Edit ${
-              formData.packageName ||
-              intl.formatMessage({ id: "label.default_package_name" })
-            }`
+            `Edit ${intl.formatMessage({ id: "label.default_package_name" })}`
           }
           rightSection={
             (!isAddSubscription || isEditPackage) && renderEditButton()
@@ -332,4 +334,4 @@ const AddSubscription = () => {
   );
 };
 
-export default AddSubscription;
+export default SubscriptionDetails;
