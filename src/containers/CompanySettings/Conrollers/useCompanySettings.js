@@ -15,6 +15,7 @@ const useCompanySettings = () => {
         headingIntl: "max_no_of_vacancy",
         label: "max_no_of_vacancy",
         value: max_no_of_vacancy,
+        hasControls: true,
         rules: {
           isRequired: true,
           message: "max_no_of_vacancy",

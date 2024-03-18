@@ -63,16 +63,18 @@ const CompanySettingsTemplate = ({
                   />
                 ) : (
                   <CustomInput
+                    controls={item.hasControls}
+                    type={"inputNumber"}
                     disabled={item.rules.isDisabled}
                     value={item.value}
                     customLabelStyles={styles.inputLabel}
-                    customInputStyles={styles.input}
+                    customInputNumberStyles={styles.input}
                     customContainerStyles={styles.customContainerStyles}
                     maxLength={item.rules.maxLength}
                     onChange={(val) => {
-                      (NUMERIC_VALUE_REGEX.test(val.target.value) ||
-                        val.target.value === "") &&
-                        handleInputChange(val.target.value, item.label);
+                      const value = item.hasControls ? val : val.target.value;
+                      (NUMERIC_VALUE_REGEX.test(value) || value === "") &&
+                        handleInputChange(value, item.label);
                     }}
                     placeholder={intl.formatMessage({
                       id: `session.placeholder.${item.headingIntl}`,
