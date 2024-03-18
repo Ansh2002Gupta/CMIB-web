@@ -16,6 +16,7 @@ export const CHANGE_PASSWORD = "/password";
 export const CHECK_OTP_END_POINT = "/two-factor-check";
 export const CORE_COUNTRIES = "core/countries";
 export const CREATE = "/create";
+export const DOWNLOAD = "/download";
 export const DROPDOWN = "/dropdown";
 export const FILES_END_POINT = "/files";
 export const FORGOT_PASSWORD_END_POINT = "/forget-password-otp";

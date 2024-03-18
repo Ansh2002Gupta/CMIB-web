@@ -12,6 +12,7 @@ import { GlobalSessionContext } from "../../globalContext/globalSession/globalSe
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
+import useDownload from "../../core/hooks/useDownload";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
@@ -26,7 +27,9 @@ import {
 } from "../../constant/constant";
 import {
   CORE_ROUTE,
+  DOWNLOAD,
   MOCK_INTERVIEWS,
+  ORIENTATION_CENTRES,
   ROUNDS,
 } from "../../constant/apiEndpoints";
 import { SESSION } from "../../routes/routeNames";
@@ -62,6 +65,14 @@ const SetupMockInterviewContent = () => {
       skipApiCallOnMount: true,
     },
   });
+
+  const {
+    data: downloadData,
+    error: errorWhileDownloadingInterview,
+    isLoading: isDownloadingInterview,
+    initiateDownload,
+  } = useDownload({});
+
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const { showNotification, notificationContextHolder } = useShowNotification();
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
@@ -75,7 +86,36 @@ const SetupMockInterviewContent = () => {
     navigate(`interviewDetails/${centreId}?roundId=${roundId}`, false);
   };
 
+  const downloadInterviewDates = (id) => {
+    initiateDownload({
+      url:
+        CORE_ROUTE +
+        `/${currentlySelectedModuleKey}` +
+        ROUNDS +
+        `/${roundId}` +
+        MOCK_INTERVIEWS +
+        `/${id}` +
+        DOWNLOAD,
+      onSuccessCallback: (response) => {
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.downloadSucess",
+          }),
+          type: NOTIFICATION_TYPES.SUCCESS,
+        });
+      },
+      onErrorCallback: (errorMessage) => {
+        showNotification({
+          text: errorMessage,
+          type: NOTIFICATION_TYPES.ERROR,
+        });
+      },
+    });
+  };
+
   const columns = getSetupMockColumn(
+    downloadInterviewDates,
+    isDownloadingInterview,
     intl,
     isEdit,
     getImage,
