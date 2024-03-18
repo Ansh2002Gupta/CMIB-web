@@ -9,8 +9,8 @@ export const getRegisteredCompanyDetailsColumns = ({
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.module" }),
-      dataIndex: "module",
-      key: "module",
+      dataIndex: "name",
+      key: "name",
       renderText: {
         isCapitalize: true,
         visible: true,
@@ -19,11 +19,11 @@ export const getRegisteredCompanyDetailsColumns = ({
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.approved_not_approved" }),
-      dataIndex: "status",
-      key: "status",
+      dataIndex: "is_approved",
+      key: "is_approved",
       render: (data, rowData) => {
-        const { approved_not_approved } = rowData;
-        const isChecked = approved_not_approved.toLowerCase() === "approved";
+        const { is_approved } = rowData;
+        const isChecked = is_approved === 1;
         return (
           <div className={styles.statusBox}>
             <CustomSwitch

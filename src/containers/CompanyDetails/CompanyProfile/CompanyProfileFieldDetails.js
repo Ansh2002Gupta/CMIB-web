@@ -5,9 +5,7 @@ export const COMPANY_DETAILS_FEILDS = (
   number_of_partner,
   industry_type,
   address,
-  state,
   email,
-  username,
   std_country_code,
   telephone_number
 ) => {
@@ -50,30 +48,18 @@ export const COMPANY_DETAILS_FEILDS = (
     },
     {
       id: 7,
-      headingIntl: "state",
-      label: "state",
-      value: state,
-    },
-    {
-      id: 8,
       headingIntl: "emailId",
       label: "email",
       value: email,
     },
     {
-      id: 9,
-      headingIntl: "userName2",
-      label: "username",
-      value: username,
-    },
-    {
-      id: 10,
+      id: 8,
       headingIntl: "isdCode",
       label: "std_country_code",
       value: std_country_code,
     },
     {
-      id: 11,
+      id: 9,
       headingIntl: "telephoneNumber",
       label: "telephone_number",
       value: telephone_number,

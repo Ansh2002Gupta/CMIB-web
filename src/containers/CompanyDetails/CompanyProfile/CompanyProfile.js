@@ -14,42 +14,68 @@ import {
 import { COMPANY_PROFILE } from "../../../companyDetailsDummyData";
 import styles from "./CompanyProfile.module.scss";
 
-const CompanyProfile = () => {
+const CompanyProfile = ({ companyProfileDetails }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
 
+  // console.log("companyDetails", companyDetails);
+
   // eslint-disable-next-line no-unused-vars
-  const [formData, setFormData] = useState(COMPANY_PROFILE);
+  const [formData, setFormData] = useState(companyProfileDetails);
+
+  const dumm = {
+    id: 16,
+    address: "ADDRESS",
+    approval_date: null,
+    approved: null,
+    approved_by: null,
+    contact_person_designation: null,
+    contact_person_name: null,
+    contact_salutation: null,
+    created_at: "2024-01-19T17:08:33.000000Z",
+    credit_amount: null,
+    deleted_at: null,
+    email: "kashish+12@unthinkable.co",
+    gstin: null,
+    mobile_country_code: null,
+    mobile_number: null,
+    name: "COMPANY_NAME",
+    pan: null,
+    po_number: null,
+    tan: null,
+    type: "deemed export",
+    updated_at: "2024-01-19T17:08:33.000000Z",
+    user_id: null,
+    company_module_access: null,
+  };
 
   const company_details_fields = COMPANY_DETAILS_FEILDS(
-    formData?.name,
-    formData?.entity,
-    formData?.frn_number,
-    formData?.number_of_partner,
-    formData?.industry_type,
-    formData?.address,
-    formData?.state,
-    formData?.email,
-    formData?.username,
-    formData?.std_country_code,
-    formData?.telephone_number
+    formData?.name || "-",
+    formData?.entity || "-",
+    formData?.frn_number || "-",
+    formData?.number_of_partner || "-",
+    formData?.type || "-",
+    formData?.address || "-",
+    formData?.email || "-",
+    formData?.mobile_country_code || "-",
+    formData?.mobile_number || "-"
   );
 
   const contact_personal_information_fields =
     CONTACT_PERSONAL_INFORMATION_FEILDS(
-      formData?.contact_details?.salutation,
-      formData?.contact_details?.name,
-      formData?.contact_details?.designation,
-      formData?.contact_details?.mobile_country_code,
-      formData?.contact_details?.mobile_number,
-      formData?.contact_details?.email
+      formData?.salutation || "-",
+      formData?.name || "-",
+      formData?.designation || "-",
+      formData?.mobile_country_code || "-",
+      formData?.mobile_number || "-",
+      formData?.email || "-"
     );
 
   const other_details = OTHER_DETAILS_FEILDS(
-    formData?.company_details,
-    formData?.website,
-    formData?.nature_of_supplier,
-    formData?.company_type
+    formData?.company_details || "-",
+    formData?.website || "-",
+    formData?.nature_of_supplier || "-",
+    formData?.company_type || "-"
   );
 
   return (

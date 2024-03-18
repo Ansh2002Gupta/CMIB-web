@@ -15,9 +15,9 @@ export const getRegisteredCompanyColumn = ({
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.company_name" }),
-      dataIndex: "company_name",
-      key: "company_name",
-      sortKey: "company_name",
+      dataIndex: "name",
+      key: "name",
+      sortKey: "name",
       renderSorterColumn: true,
       setSortBy: setSortBy,
       columnSortByHandler: handleSorting,
@@ -31,8 +31,8 @@ export const getRegisteredCompanyColumn = ({
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.type" }),
-      dataIndex: "company_type",
-      key: "company_type",
+      dataIndex: "type",
+      key: "type",
       renderText: {
         visible: true,
         textStyles: styles.tableCell,
@@ -40,13 +40,13 @@ export const getRegisteredCompanyColumn = ({
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.approved_not_approved" }),
-      dataIndex: "status",
-      key: "status",
+      dataIndex: "approved",
+      key: "approved",
       render: (data, rowData) => {
-        const { status } = rowData;
+        const { approved } = rowData;
         return (
           <div className={styles.statusBox}>
-            <Typography className={styles.ClassForText}>{status}</Typography>
+            <Typography className={styles.ClassForText}>{approved}</Typography>
           </div>
         );
       },

@@ -12,7 +12,13 @@ import useHandleSearch from "../../../core/hooks/useHandleSearch";
 import { urlService } from "../../../Utils/urlService";
 import { getValidPageNumber, getValidPageSize } from "../../../constant/utils";
 import { PAGINATION_PROPERTIES } from "../../../constant/constant";
-import { registered_companies } from "../dummydata";
+// import { registered_companies } from "../dummydata";
+import useFetch from "../../../core/hooks/useFetch";
+import {
+  ADMIN_ROUTE,
+  REGISTERED_COMPANIES,
+} from "../../../constant/apiEndpoints";
+import { REGISTERED_COMPANY_DETAILS } from "../../../routes/routeNames";
 
 const useRegisteredCompany = () => {
   const intl = useIntl();
@@ -24,11 +30,22 @@ const useRegisteredCompany = () => {
   const [filterArray, setFilterArray] = useState({});
   const [sortFilter, setSortFilter] = useState({});
 
+  const {
+    data: registered_companies,
+    fetchData: fetchCompaniesListing,
+    error: errorCompaniesListing,
+    isError: isErrorCompaniesListing,
+    isLoading: isCompanyListingLoading,
+  } = useFetch({
+    url: ADMIN_ROUTE + REGISTERED_COMPANIES,
+  });
+
   const [current, setCurrent] = useState(
     getValidPageNumber(
       urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
     )
   );
+
   const [pageSize, setPageSize] = useState(
     getValidPageSize(
       urlService.getQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE)
@@ -90,8 +107,11 @@ const useRegisteredCompany = () => {
   ];
 
   const handleClickAssign = () => {};
+
   const handleEyeIcon = (data) => {
     const { id } = data;
+    console.log(`registered-company-details/${id}`);
+
     navigate(`registered-company-details/${id}`);
   };
   const handleSorting = () => {};
@@ -119,6 +139,15 @@ const useRegisteredCompany = () => {
 
   const onChangePageSize = (size) => {
     handleRowsPerPageChange(size);
+    // setCurrent(1);
+    //  const requestedParams = getRequestedQueryParams({
+    //    rowPerPage: size,
+    //    page: 1,
+    //    search: searchedValue,
+    //    currentFilterStatus: filterArray,
+    //    sortDirection: sortFilter?.sortDirection,
+    //    sortField: sortFilter?.sortField,
+    //  });
     // fetchData({ queryParamsObject: requestedParams });
   };
 
@@ -139,6 +168,7 @@ const useRegisteredCompany = () => {
     columns,
     onFilterApply,
     filterArray,
+    isCompanyListingLoading: false,
     setFilterArray,
     filterOptions,
     handleOnUserSearch,

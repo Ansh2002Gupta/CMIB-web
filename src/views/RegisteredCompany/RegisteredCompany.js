@@ -7,6 +7,7 @@ import ContentHeader from "../../containers/ContentHeader";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import useRegisteredCompany from "./controllers/useRegisteredCompany";
 import commonStyles from "../../common/commonStyles.module.scss";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 
 const RegisteredCompany = () => {
   const intl = useIntl();
@@ -20,6 +21,7 @@ const RegisteredCompany = () => {
     onFilterApply,
     columns,
     filterOptions,
+    isCompanyListingLoading,
     filterArray,
     setFilterArray,
     handleOnUserSearch,
@@ -35,6 +37,7 @@ const RegisteredCompany = () => {
           customContainerStyle={commonStyles.headerBox}
         />
       }
+      isBottomFillSpace
       bottomSection={
         <>
           <TableWithSearchAndFilters
@@ -54,7 +57,7 @@ const RegisteredCompany = () => {
               filterArray,
               setFilterArray,
             }}
-            isLoading={false}
+            isLoading={isCompanyListingLoading}
             data={registered_companies?.records}
             currentDataLength={registered_companies?.meta?.total}
           />

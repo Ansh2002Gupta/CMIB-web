@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { useParams } from "react-router-dom";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -9,57 +10,69 @@ import ContentHeader from "../../containers/ContentHeader";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import { getRegisteredCompanyDetailsColumns } from "./RegisteredCompanyDetailsConfig";
 import { modules } from "../../containers/SideMenu/sideMenuItems";
+import useFetch from "../../core/hooks/useFetch";
+import { ADMIN_ROUTE, REGISTERED_COMPANIES } from "../../constant/apiEndpoints";
 import styles from "./RegisteredCompaniesDetails.module.scss";
 import commonStyles from "../../common/commonStyles.module.scss";
-
-const apiData = [
-  {
-    key: "1",
-    module: "ca-jobs",
-    approved_not_approved: "approved",
-  },
-  {
-    key: "2",
-    module: "nqca-placements",
-    approved_not_approved: "unapproved",
-  },
-  {
-    key: "3",
-    module: "control",
-    approved_not_approved: "approved",
-  },
-  {
-    key: "4",
-    module: "career-ascents",
-    approved_not_approved: "unapproved",
-  },
-];
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 
 const RegisteredCompaniesDetails = () => {
   const intl = useIntl();
-  const { renderColumn } = useRenderColumn();
-  const [dataSource, setDataSource] = useState(
-    apiData.map((data) => {
+  // let { id } = useParams();
+  const id = 16;
+
+  const {
+    data: companyDetails,
+    fetchData: fetchCompanyDetails,
+    error: errorCompanyDetails,
+    isError: isErrorCompanyDetails,
+    isLoading: isFetchingCompanyDetails,
+  } = useFetch({
+    url: `${ADMIN_ROUTE}${REGISTERED_COMPANIES}/${id}/details`,
+  });
+
+  const getStructredData = (unstructuredData) => {
+    return unstructuredData.map((data) => {
       const currentModule = modules.find((module) => {
-        if (data.module === module.key) {
+        if (data.name === module.key) {
           return module?.label;
         }
       });
       return {
-        key: data.key,
-        module: currentModule?.label,
-        approved_not_approved: data.approved_not_approved,
+        ...data,
+        name: currentModule?.label,
       };
-    })
-  );
+    });
+  };
+
+  const unstructuredData = companyDetails?.company_module_access || [];
+  const companyAccessibleModule = getStructredData(unstructuredData);
+
+  console.log("companyAccessibleModule", companyAccessibleModule);
+
+  const { renderColumn } = useRenderColumn();
+  // const [dataSource, setDataSource] = useState(
+  //   apiData.map((data) => {
+  //     const currentModule = modules.find((module) => {
+  //       if (data.name === module.key) {
+  //         return module?.label;
+  //       }
+  //     });
+  //     return {
+  //       id: data?.id,
+  //       name: currentModule?.label,
+  //       is_approved: data?.is_approved,
+  //     };
+  //   })
+  // );
 
   const handleSwitchButton = (data) => {
-    const updatedDetails = [...dataSource];
-    updatedDetails[data.key - 1] = {
-      ...updatedDetails[data.key - 1],
-      approved_not_approved: "approved",
-    };
-    setDataSource(updatedDetails);
+    // const updatedDetails = [...dataSource];
+    // updatedDetails[data.id - 1] = {
+    //   ...updatedDetails[data.id - 1],
+    //   is_approved: 1,
+    // };
+    // setDataSource(updatedDetails);
   };
 
   const columns = getRegisteredCompanyDetailsColumns({
@@ -79,21 +92,29 @@ const RegisteredCompaniesDetails = () => {
           customContainerStyle={commonStyles.headerBox}
         />
       }
+      isBottomFillSpace
       bottomSection={
-        <TwoRow
-          className={styles.container}
-          topSection={
-            <CompanyDetailsApprovalCard
-              {...{
-                columns,
-                customTableStyle: styles.tableContainer,
-                dataSource,
-                heading: intl.formatMessage({ id: "label.approval" }),
-              }}
+        <>
+          {isFetchingCompanyDetails && <CustomLoader />}
+          {!isFetchingCompanyDetails && !isErrorCompanyDetails && (
+            <TwoRow
+              className={styles.container}
+              topSection={
+                <CompanyDetailsApprovalCard
+                  {...{
+                    columns,
+                    customTableStyle: styles.tableContainer,
+                    dataSource: companyAccessibleModule,
+                    heading: intl.formatMessage({ id: "label.approval" }),
+                  }}
+                />
+              }
+              bottomSection={
+                <CompanyProfile companyProfileDetails={companyDetails} />
+              }
             />
-          }
-          bottomSection={<CompanyProfile />}
-        />
+          )}
+        </>
       }
     />
   );
