@@ -3,10 +3,6 @@
   width: var(--fullWidth);
 }
 
-.customGridStyle {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-}
-
 .grayText {
   font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeExtraSmall);
@@ -96,10 +92,4 @@
 .placeholderStyle{
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
-}
-
-@media (max-width: 768px) {
-  .customGridStyle {
-    grid-template-columns: 1fr;
-  }
 }

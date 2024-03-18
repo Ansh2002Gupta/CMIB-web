@@ -32,7 +32,7 @@ const CandidateSettingsTemplate = ({
       {fields?.map((row, rowIndex) => (
         <CustomGrid
           key={rowIndex}
-          customStyle={`${styles.customGridStyle} ${styles.row}`}
+          customStyle={`${commonStyles.customGridStyle} ${styles.row}`}
         >
           {row.map((field, columnIndex) => (
             <TwoRow

@@ -28,7 +28,7 @@ const CompanySettingsTemplate = ({
         </Typography>
       }
       bottomSection={
-        <CustomGrid customStyle={styles.customGridStyle}>
+        <CustomGrid customStyle={commonStyles.customGridStyle}>
           {fields?.map((item) => (
             <TwoRow
               key={item.id}

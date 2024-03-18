@@ -3,10 +3,6 @@
   width: var(--fullWidth);
 }
 
-.customGridStyle {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-}
-
 .grayText {
   font-family: var(--fontFamilyRegular);
   font-size: var(--fontSizeExtraSmall);
@@ -52,10 +48,4 @@
 
 .redText {
   color: var(--error);
-}
-
-@media (max-width: 768px) {
-  .customGridStyle {
-    grid-template-columns: 1fr;
-  }
 }
