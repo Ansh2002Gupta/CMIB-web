@@ -16,7 +16,7 @@ import SubscriptionDetailsCard from "../SubscriptionDetailsCard/SubscriptionDeta
 import LabelWithValue from "../../components/LabelWithValue/LabelWithValue";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useFetch from "../../core/hooks/useFetch";
-import { usePost } from "../../core/hooks/useApiRequest";
+import { usePatch, usePost } from "../../core/hooks/useApiRequest";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -45,7 +45,7 @@ const SubscriptionDetails = () => {
   const {
     isLoading: isSubscriptionEditing,
     makeRequest: editSubscriptionData,
-  } = usePost({
+  } = usePatch({
     url: ADMIN_ROUTE + SUBSCRIPTIONS_END_POINT + `/${subscriptionId}`,
   });
   const {
@@ -181,7 +181,7 @@ const SubscriptionDetails = () => {
   const editSubscription = () => {
     if (validate()) {
       editSubscriptionData({
-        body: { ...formData, status: status },
+        body: { status: status },
         onErrorCallback: (errorMessage) => {
           showNotification({
             text: errorMessage,
@@ -283,6 +283,7 @@ const SubscriptionDetails = () => {
             className={styles.upperContainer}
             leftSection={
               <CustomInput
+                disabled={!isAddSubscription && isEditPackage}
                 errorMessage={errors?.name}
                 isError={errors?.name ? true : false}
                 value={formData.name}
@@ -302,6 +303,7 @@ const SubscriptionDetails = () => {
             isRightFillSpace
             rightSection={
               <CustomInput
+                disabled={!isAddSubscription && isEditPackage}
                 errorMessage={errors?.description}
                 isError={errors?.description ? true : false}
                 value={formData?.description}
@@ -327,6 +329,7 @@ const SubscriptionDetails = () => {
             className={styles.bottomSection}
             leftSection={
               <CustomInput
+                disabled={!isAddSubscription && isEditPackage}
                 errorMessage={errors?.validity}
                 isError={errors?.validity ? true : false}
                 controls
@@ -347,6 +350,7 @@ const SubscriptionDetails = () => {
             }
             middleSection={
               <CustomInput
+                disabled={!isAddSubscription && isEditPackage}
                 errorMessage={errors?.price}
                 isError={errors?.price ? true : false}
                 controls
