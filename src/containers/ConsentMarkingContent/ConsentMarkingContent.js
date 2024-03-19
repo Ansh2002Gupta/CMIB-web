@@ -141,6 +141,18 @@ const ConsentMarkingContent = ({
     lastRegistrationInitialData
   );
 
+  useEffect(() => {
+    setRoundOneTableData(roundOneInitialData);
+    setRoundTwoTableData(roundTwoInitialData);
+    setLastRegistrationTableData(lastRegistrationInitialData);
+    setRegistrationDatesData(registrationDateData);
+  }, [
+    roundOneInitialData,
+    roundTwoInitialData,
+    lastRegistrationInitialData,
+    registrationDateData,
+  ]);
+
   const registrationDates = isNqca
     ? NQCA_REGISTRATION_DATE_FIELDS
     : OTHER_MODULES_REGISTRATION_DATE_FIELDS;
@@ -365,17 +377,16 @@ const ConsentMarkingContent = ({
   const handleOnTabSwitch = useCallback((tabId) => {
     setActiveTab(tabId);
   }, []);
-
   useEffect(() => {
     const activeTab = urlService.getQueryStringValue(ACTIVE_TAB);
-    if (registrationDateData?.is_round2_visible) {
+    if (registrationDatesData?.is_round2_visible) {
       if (!VALID_CONSENT_MARKING_TABS_ID?.threeTab?.includes(activeTab)) {
         urlService.setQueryStringValue(ACTIVE_TAB, 1);
         setActiveTab("1");
       }
       return;
     }
-    if (registrationDateData?.is_round1_visible) {
+    if (registrationDatesData?.is_round1_visible) {
       if (!VALID_CONSENT_MARKING_TABS_ID.twoTab.includes(activeTab)) {
         urlService.setQueryStringValue(ACTIVE_TAB, 1);
         setActiveTab("1");
@@ -386,7 +397,7 @@ const ConsentMarkingContent = ({
       urlService.setQueryStringValue(ACTIVE_TAB, 1);
       setActiveTab("1");
     }
-  }, [urlService]);
+  }, [urlService, activeTab]);
 
   return (
     <>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 
 import { compareTwoDayjsDates, isNotAFutureDate } from "../../constant/utils";
@@ -178,57 +179,76 @@ export const useIntitalDataAndError = ({
   consentRoundTwoData,
   lastRegistrationDatesData,
 }) => {
-  const roundOneInitialData = consentRoundOneData?.map((item) => ({
-    ...item,
-    sNo: item.id,
-    centre_name: item.centre_name,
-    company_shortlisting_start_date: item.company_shortlisting_start_date
-      ? item.company_shortlisting_start_date
-      : null,
-    company_shortlisting_end_date: item.company_shortlisting_end_date
-      ? item.company_shortlisting_end_date
-      : null,
-    candidate_consent_marking_start_date:
-      item.candidate_consent_marking_start_date
-        ? item.candidate_consent_marking_start_date
-        : null,
-    candidate_consent_marking_end_date: item.candidate_consent_marking_end_date
-      ? item.candidate_consent_marking_end_date
-      : null,
-  }));
+  const [roundOneData, setRoundOneData] = useState([]);
+  const [roundTwoData, setRoundTwoData] = useState([]);
+  const [lastRegistrationData, setLastRegistrationData] = useState([]);
 
-  const roundTwoInitialData = consentRoundTwoData?.map((item) => ({
-    ...item,
-    id: item.id,
-    centre_name: item.centre_name,
-    company_shortlisting_start_date: item.company_shortlisting_start_date
-      ? item.company_shortlisting_start_date
-      : null,
-    company_shortlisting_end_date: item.company_shortlisting_end_date
-      ? item.company_shortlisting_end_date
-      : null,
-    candidate_consent_marking_start_date:
-      item.candidate_consent_marking_start_date
-        ? item.candidate_consent_marking_start_date
-        : null,
-    candidate_consent_marking_end_date: item.candidate_consent_marking_end_date
-      ? item.candidate_consent_marking_end_date
-      : null,
-  }));
+  useEffect(() => {
+    if (consentRoundOneData) {
+      const transformedData = consentRoundOneData?.map((item) => ({
+        ...item,
+        sNo: item.id,
+        centre_name: item.centre_name,
+        company_shortlisting_start_date: item.company_shortlisting_start_date
+          ? item.company_shortlisting_start_date
+          : null,
+        company_shortlisting_end_date: item.company_shortlisting_end_date
+          ? item.company_shortlisting_end_date
+          : null,
+        candidate_consent_marking_start_date:
+          item.candidate_consent_marking_start_date
+            ? item.candidate_consent_marking_start_date
+            : null,
+        candidate_consent_marking_end_date:
+          item.candidate_consent_marking_end_date
+            ? item.candidate_consent_marking_end_date
+            : null,
+      }));
+      setRoundOneData(transformedData);
+    }
+  }, [consentRoundOneData]);
 
-  const lastRegistrationInitialData = lastRegistrationDatesData?.map(
-    (item) => ({
-      ...item,
-      id: item.id,
-      name: item.name,
-      company_reg_end_date: item.company_reg_end_date
-        ? item.company_reg_end_date
-        : null,
-      psychometric_test_date: item.psychometric_test_date
-        ? item.psychometric_test_date
-        : null,
-    })
-  );
+  useEffect(() => {
+    if (consentRoundTwoData) {
+      const transformedData = consentRoundTwoData?.map((item) => ({
+        ...item,
+        id: item.id,
+        centre_name: item.centre_name,
+        company_shortlisting_start_date: item.company_shortlisting_start_date
+          ? item.company_shortlisting_start_date
+          : null,
+        company_shortlisting_end_date: item.company_shortlisting_end_date
+          ? item.company_shortlisting_end_date
+          : null,
+        candidate_consent_marking_start_date:
+          item.candidate_consent_marking_start_date
+            ? item.candidate_consent_marking_start_date
+            : null,
+        candidate_consent_marking_end_date:
+          item.candidate_consent_marking_end_date
+            ? item.candidate_consent_marking_end_date
+            : null,
+      }));
+      setRoundTwoData(transformedData);
+    }
+  }, [consentRoundTwoData]);
+
+  useEffect(() => {
+    if (lastRegistrationDatesData) {
+      const transformedData = lastRegistrationDatesData?.map((item) => ({
+        ...item,
+        id: item.id,
+        name: item.name,
+        company_reg_end_date: item.company_reg_end_date
+          ? item.company_reg_end_date
+          : null,
+        psychometric_test_date: item.psychometric_test_date
+          ? item.psychometric_test_date
+          : null,
+      }));
+      setLastRegistrationData(transformedData);
+    }
+  }, [lastRegistrationDatesData]);
 
   const roundOneInitialError = consentRoundOneData?.map((item) => ({
     centre_name: "",
@@ -255,9 +275,9 @@ export const useIntitalDataAndError = ({
   );
 
   return {
-    roundOneInitialData,
-    roundTwoInitialData,
-    lastRegistrationInitialData,
+    roundOneInitialData: roundOneData,
+    roundTwoInitialData: roundTwoData,
+    lastRegistrationInitialData: lastRegistrationData,
     roundOneInitialError,
     roundTwoInitialError,
     lastRegistrationInitialError,
