@@ -20,7 +20,6 @@ import {
   NQCA_REGISTRATION_DATE_FIELDS,
   OTHER_MODULES_REGISTRATION_DATE_FIELDS,
 } from "./ConsentMarkingConfig";
-import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
 import { usePut } from "../../core/hooks/useApiRequest";
 import {
@@ -47,13 +46,14 @@ const ConsentMarkingContent = ({
   consentRoundTwoData,
   currentlySelectedModuleKey,
   isEdit,
+  getRegistrationDate,
   lastRegistrationDatesData,
   roundId,
   registrationDateData,
   setActiveTab,
+  showNotification,
 }) => {
   const intl = useIntl();
-  const { showNotification, notificationContextHolder } = useShowNotification();
   const [isRegistrationDateEdit, setIsRegistrationDateEdit] = useState(false);
   const [isTableDateEdit, setIsTableDateEdit] = useState(false);
 
@@ -266,6 +266,9 @@ const ConsentMarkingContent = ({
         updateLastRegistrationDate({
           body: { data: lastRegistrationTableData },
           onSuccessCallback: () => {
+            setRegistrationDatesData((prev) => {
+              return { ...prev, is_round1_visible: true };
+            });
             showNotification({
               text: intl.formatMessage({ id: "label.lastRegistrationSuccess" }),
               type: NOTIFICATION_TYPES.SUCCESS,
@@ -286,6 +289,9 @@ const ConsentMarkingContent = ({
         updateRoundOneDate({
           body: { data: roundOneTableData },
           onSuccessCallback: () => {
+            setRegistrationDatesData((prev) => {
+              return { ...prev, is_round2_visible: true };
+            });
             showNotification({
               text: intl.formatMessage({ id: "label.roundOneDatesSuccess" }),
               type: NOTIFICATION_TYPES.SUCCESS,
@@ -384,7 +390,6 @@ const ConsentMarkingContent = ({
 
   return (
     <>
-      {notificationContextHolder}
       <TwoRow
         className={styles.mainContainer}
         topSection={
