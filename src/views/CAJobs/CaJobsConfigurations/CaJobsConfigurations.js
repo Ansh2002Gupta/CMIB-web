@@ -20,7 +20,12 @@ import {
 import { initialFieldState } from "./constant";
 import { MASTER } from "../../../constant/apiEndpoints";
 import { CONFIGURATIONS } from "../../../routes/routeNames";
-import { MODULE_KEYS, NOTIFICATION_TYPES } from "../../../constant/constant";
+import {
+  MAX_VIDEO_LENGTH,
+  MIN_VIDEO_LENGTH,
+  MODULE_KEYS,
+  NOTIFICATION_TYPES,
+} from "../../../constant/constant";
 import { classes } from "./CaJobsConfigurations.styles";
 import styles from "./CaJobsConfigurations.module.scss";
 
@@ -31,7 +36,7 @@ const CaJobsConfigurations = () => {
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
   const [videoTimeLimit, setVideoTimeLimit] = useState(1);
-  const [videoTimeLimitError, setVideoTimeLimitError] = useState();
+  const [videoTimeLimitError, setVideoTimeLimitError] = useState("");
   const [itSkills, setItSkills] = useState(initialFieldState);
   const [softSkills, setSoftSkills] = useState(initialFieldState);
   const { isLoading: isSavingConfigurations, postGlobalConfigurations } =
@@ -139,7 +144,10 @@ const CaJobsConfigurations = () => {
     setVideoTimeLimit(previousSavedData.current.previousSavedVideoTimeLimit);
   };
   const validate = () => {
-    if (videoTimeLimit > 0 && videoTimeLimit < 1000) {
+    if (
+      videoTimeLimit >= MIN_VIDEO_LENGTH &&
+      videoTimeLimit <= MAX_VIDEO_LENGTH
+    ) {
       setVideoTimeLimitError("");
       return true;
     }
