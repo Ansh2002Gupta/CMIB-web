@@ -66,7 +66,7 @@ const SetupCenterDetails = () => {
   const { centre_code, name } = centreDetailData || {};
 
   useModuleWiseApiCall({
-    isSessionId: sessionId,
+    otherOptions: { sessionId, isApiCallDependentOnSessionId: true },
     initialApiCall: () => {
       if (roundId && centreId) {
         getCentreDetail({});

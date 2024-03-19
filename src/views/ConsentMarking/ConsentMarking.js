@@ -141,8 +141,7 @@ const ConsentMarking = () => {
   });
 
   useModuleWiseApiCall({
-    otherDependencies: activeTab,
-    isSessionId: sessionId,
+    otherOptions: { isApiCallDependentOnSessionId: true, sessionId },
     initialApiCall: () => {
       if (roundId) {
         getAllData();

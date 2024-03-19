@@ -80,7 +80,7 @@ const SetupMockInterviewContent = () => {
   });
 
   useModuleWiseApiCall({
-    isSessionId: sessionId,
+    otherOptions: { isApiCallDependentOnSessionId: true, sessionId },
     initialApiCall: () => {
       if (roundId) {
         fetchData({});

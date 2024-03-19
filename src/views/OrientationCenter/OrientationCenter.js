@@ -123,7 +123,7 @@ const OrientationCenter = () => {
   );
 
   useModuleWiseApiCall({
-    isSessionId: sessionId,
+    otherOptions: { isApiCallDependentOnSessionId: true, sessionId },
     initialApiCall: () => {
       if (roundId) {
         getOrientationCentres({});
@@ -309,12 +309,6 @@ const OrientationCenter = () => {
       const errorText = errorWhileUpdatingCentre?.data?.message;
       return renderError(errorText, errorHeading, handleSaveChanges);
     }
-    // if (!orientationCentres?.length) {
-    //   const noResultText = intl.formatMessage({
-    //     id: "label.orientation_no_result_msg",
-    //   });
-    //   return renderError(noResultText, errorHeading);
-    // }
 
     return (
       <DataTable

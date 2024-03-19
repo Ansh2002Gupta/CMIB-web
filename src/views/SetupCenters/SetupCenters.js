@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Image, Spin, Typography } from "antd";
@@ -43,6 +43,7 @@ import styles from "./SetupCenter.module.scss";
 const SetupCenter = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const location = useLocation();
   const { getImage } = useContext(ThemeContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -58,6 +59,7 @@ const SetupCenter = () => {
   );
 
   const sessionId = globalSessionDetails?.globalSessionId;
+  const hasRoundTwo = location?.pathname.includes("round2");
 
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
@@ -121,7 +123,7 @@ const SetupCenter = () => {
   }, [userProfileDetails?.selectedModuleItem]);
 
   useModuleWiseApiCall({
-    isSessionId: sessionId,
+    otherOptions: { sessionId, isApiCallDependentOnSessionId: true },
     initialApiCall: () => {
       if (roundId) {
         getSetupCentres({});
@@ -220,9 +222,15 @@ const SetupCenter = () => {
       return (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
-            errorText={intl.formatMessage({
-              id: "label.select_centres_error_msg",
-            })}
+            errorText={
+              hasRoundTwo
+                ? intl.formatMessage({
+                    id: "label.select_centres_error_msg_round_two",
+                  })
+                : intl.formatMessage({
+                    id: "label.select_centres_error_msg",
+                  })
+            }
             errorHeading={intl.formatMessage({
               id: "label.error",
             })}
