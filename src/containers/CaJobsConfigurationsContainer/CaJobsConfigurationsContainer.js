@@ -13,9 +13,11 @@ const CaJobsConfigurationsContainer = ({
   selectedModule,
   setItSkills,
   setSoftSkills,
+  setVideoTimeLimitError,
+  setVideoTimeLimit,
   softSkills,
   videoTimeLimit,
-  setVideoTimeLimit,
+  videoTimeLimitError,
 }) => {
   return (
     <div
@@ -28,7 +30,14 @@ const CaJobsConfigurationsContainer = ({
       <TwoRow
         topSection={
           selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY ? (
-            <VideoTimeLimitSection {...{ setVideoTimeLimit, videoTimeLimit }} />
+            <VideoTimeLimitSection
+              {...{
+                setVideoTimeLimit,
+                setVideoTimeLimitError,
+                videoTimeLimit,
+                videoTimeLimitError,
+              }}
+            />
           ) : (
             <></>
           )

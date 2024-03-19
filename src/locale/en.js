@@ -545,6 +545,7 @@ const locale = {
   "label.set_profile_skills": "Set Profile Skills",
   "label.nqca-placements": "nqca-placements",
   "label.downloadSucess": "Download Successful",
+  "label.videolimitError": "Please enter value between 1 to 999",
 };
 
 export default locale;
