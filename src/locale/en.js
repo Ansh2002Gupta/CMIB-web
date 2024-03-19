@@ -530,6 +530,19 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.path.add-subscriptions": "Add Subscriptions",
+  "label.subscriptions_details": "Subscription Details",
+  "label.packageName": "Package Name",
+  "label.packageName_descriptions": "Package Discription",
+  "label.package_valididy_period": "Package Validity Period",
+  "label.price": "Price",
+  "label.subscription_status": "Subscription Status",
+  "label.enterpackagename": "Enter Package Name",
+  "label.enterpackagename_discriptions": "Enter Package Discription",
+  "label.enterpackagename_valididy_period": "Enter Validity Period",
+  "label.enterpackagename_price": "Enter Price",
+  "label.default_package_name": "Package 1",
+  "label.package_validity_period": "Package Validity Period",
 };
 
 export default locale;

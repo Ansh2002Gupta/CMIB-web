@@ -16,6 +16,7 @@ import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
+import SubscriptionDetails from "../containers/SubscriptionDetails/index";
 import EditSession from "../views/EditSession/EditSession";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
@@ -59,6 +60,7 @@ import {
   USER_DETAILS,
   TICKETS,
   TICKETS_VIEW_DETAILS,
+  ADD_SUBSCRIPTIONS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 
@@ -198,6 +200,10 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: SUBSCRIPTIONS + ADD_SUBSCRIPTIONS,
+        element: <SubscriptionDetails />,
       },
     ],
   },

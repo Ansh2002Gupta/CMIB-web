@@ -1,0 +1,61 @@
+.addSubscriptionBtn {
+  display: flex;
+  padding: 12px var(--paddingSmall);
+  justify-content: center;
+  align-items: center;
+  gap: var(--gapXSmall);
+  border-radius: var(--radiusLg);
+  background-color: var(--greenBtnBg);
+  color: var(--textPrimary);
+  font-size: var(--fontSizeSmall);
+  line-height: var(--lineHeightNormal);
+}
+
+.container {
+  padding: var(--paddingMedium);
+  gap: var(--gapSmall);
+  background-color: var(--bodyBg2);
+}
+
+.upperContainer {
+  gap: var(--gapMedium);
+}
+
+.bottomSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gapMedium);
+}
+
+.customLabelStyles {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.radioButtonMainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmallMedium);
+}
+
+.radioButtonContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--gapMedium);
+  margin-bottom: var(--margin_12);
+}
+
+.customInputStyles {
+  font-weight: var(--fontWeightSmall, 400) !important;
+}
+
+.customInputNumberStyles {
+  display: flex;
+  align-items: center;
+}
+
+.editButtonTitle {
+  font-weight: var(--fontWeightMedium);
+}
