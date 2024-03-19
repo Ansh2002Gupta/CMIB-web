@@ -71,3 +71,7 @@
   font-size: var(--fontSizeSmall);
   line-height: var(--lineHeightNormal);
 }
+
+.errorInput {
+  border: var(--borderError) !important;
+}

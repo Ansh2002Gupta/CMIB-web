@@ -589,6 +589,7 @@ const locale = {
   "label.path.consent-marking": "Registration and Consent Marking Schedule",
   "label.dates_added_successfully": "Dates Added Successfully",
   "label.downloadSucess": "Download Successful",
+  "label.videolimitError": "Please enter value between 1 to 999",
 };
 
 export default locale;
