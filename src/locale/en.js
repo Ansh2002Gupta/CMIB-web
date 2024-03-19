@@ -111,7 +111,7 @@ const locale = {
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
   "session.lastDateRegistrationCompanies":
-    "Last date of registration for companies",
+    "Last Date Of Registration For Companies",
   "session.saveChanges": "Save Changes",
   "session.error.sessionName": "Please enter valid session name",
   "session.error.natureOfGoods": "Please enter valid  services/goods",
@@ -311,8 +311,8 @@ const locale = {
     "Select From Date for Candidate",
   "label.placeholder.candidate_consent_marking_end_date":
     "Select To Date for Candidate",
-  "label.company_reg_end_date": "Last date of registration for companies",
-  "label.psychometric_test_date": "Psychometric test/written test date",
+  "label.company_reg_end_date": "Last Date Of Registration For Companies",
+  "label.psychometric_test_date": "Psychometric Test/Written Test Date",
   "label.placeholder.company_reg_end_date": "Select Last Date for registration",
   "label.placeholder.psychometric_test_date":
     "Select To Date for psychometric test",
