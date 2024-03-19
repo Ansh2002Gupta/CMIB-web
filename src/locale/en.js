@@ -528,6 +528,8 @@ const locale = {
   "label.session.setup-mock-interview": "Setup Mock Interview",
   "label.session.setupMockInterview.details": "Configure Interview Dates",
   "label.data_saved_successfully": "Data Saved Successfully.",
+  "label.subscription_saved_successfully": "Subscription Added Successfully.",
+  "label.subscription_edit_successfully": "Subscription Edited Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
   "label.path.add-subscriptions": "Add Subscriptions",

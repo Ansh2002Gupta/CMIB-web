@@ -36,6 +36,7 @@ export const ROUNDS = "/rounds";
 export const SEND_OTP = "/reset-password/request";
 export const SESSIONS = "/sessions";
 export const STATUS = "/status";
+export const SUBSCRIPTIONS_END_POINT = "/subscriptions";
 export const TICKET_LIST = "/tickets";
 export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
 export const USERS_END_POINT = "/users";
