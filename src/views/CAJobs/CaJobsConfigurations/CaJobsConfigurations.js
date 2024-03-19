@@ -30,7 +30,8 @@ const CaJobsConfigurations = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
-  const [videoTimeLimit, setVideoTimeLimit] = useState(0);
+  const [videoTimeLimit, setVideoTimeLimit] = useState(1);
+  const [videoTimeLimitError, setVideoTimeLimitError] = useState();
   const [itSkills, setItSkills] = useState(initialFieldState);
   const [softSkills, setSoftSkills] = useState(initialFieldState);
   const { isLoading: isSavingConfigurations, postGlobalConfigurations } =
@@ -137,6 +138,14 @@ const CaJobsConfigurations = () => {
     setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
     setVideoTimeLimit(previousSavedData.current.previousSavedVideoTimeLimit);
   };
+  const validate = () => {
+    if (videoTimeLimit > 0 && videoTimeLimit < 1000) {
+      setVideoTimeLimitError("");
+      return true;
+    }
+    setVideoTimeLimitError(intl.formatMessage({ id: "label.videolimitError" }));
+    return false;
+  };
 
   const renderContent = () => {
     if (isLoading) {
@@ -168,9 +177,11 @@ const CaJobsConfigurations = () => {
             selectedModule,
             setItSkills,
             setSoftSkills,
+            setVideoTimeLimitError,
+            setVideoTimeLimit,
             softSkills,
             videoTimeLimit,
-            setVideoTimeLimit,
+            videoTimeLimitError,
           }}
         />
       );
@@ -202,14 +213,15 @@ const CaJobsConfigurations = () => {
               customContainerStyles={styles.buttonWrapper}
               isLoading={isSavingConfigurations}
               isActionBtnDisable={
+                !videoTimeLimit ||
                 itSkills.some(
                   (obj) => obj?.error && obj.buttonType !== "add"
                 ) ||
                 softSkills.some((obj) => obj?.error && obj.buttonType !== "add")
               }
-              onActionBtnClick={() =>
-                postProfileSkills({ keyName: "fieldValue" })
-              }
+              onActionBtnClick={() => {
+                if (validate()) postProfileSkills({ keyName: "fieldValue" });
+              }}
               onCancelBtnClick={initializeWithPreviousSavedData}
             />
           ) : (
