@@ -6,6 +6,7 @@ import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../../constant/apiEndpoints";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 
@@ -22,13 +23,14 @@ const useConfigUpdateHandler = () => {
     onSuccessCallback,
     payload,
     roundId,
+    sessionID,
   }) => {
     try {
       setConfigUpdateStatus(API_STATUS.LOADING);
       errorWhileUpdatingConfig && setErrorWhileUpdatingConfig("");
-      const url = `${ADMIN_ROUTE}/${module}${ROUNDS}/${roundId}${CENTRE_END_POINT}/${centreId}`;
+      const url = `${ADMIN_ROUTE}/${module}${ROUNDS}/${roundId}${CENTRE_END_POINT}/${centreId}?session-id=${sessionID}`;
       const res = await Http.put(url, payload, {
-        headers: { "api-version": "1.0.1" },
+        headers: { "api-version": UPDATED_API_VERSION },
       });
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
         setConfigUpdateResult(res?.data);

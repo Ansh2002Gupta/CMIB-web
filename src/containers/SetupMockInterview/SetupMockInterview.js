@@ -31,6 +31,7 @@ import {
   MOCK_INTERVIEWS,
   ORIENTATION_CENTRES,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import { SESSION } from "../../routes/routeNames";
 import { classes } from "./SetupMockInterview.styles";
@@ -71,7 +72,7 @@ const SetupMockInterviewContent = () => {
     otherOptions: {
       skipApiCallOnMount: true,
     },
-    apiOptions: { headers: { "api-version": "1.0.1" } },
+    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
   });
 
   const {

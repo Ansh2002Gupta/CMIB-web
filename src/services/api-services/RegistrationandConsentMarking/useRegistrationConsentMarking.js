@@ -6,6 +6,7 @@ import {
   CORE_ROUTE,
   REGISTRATION_DATES,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../../constant/apiEndpoints";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 
@@ -28,12 +29,15 @@ const useRegistrationAndConsentMarking = () => {
     onSuccessCallback,
     payload,
     roundId,
+    sessionID,
   }) => {
     try {
       setRegAndConsentUpdateStatus(API_STATUS.LOADING);
       errorWhileUpdating && setErrorWhileUpdating("");
-      const url = `${CORE_ROUTE}/${module}${ROUNDS}/${roundId}${REGISTRATION_DATES}`;
-      const res = await Http.put(url, payload);
+      const url = `${CORE_ROUTE}/${module}${ROUNDS}/${roundId}${REGISTRATION_DATES}?session-id=${sessionID}`;
+      const res = await Http.put(url, payload, {
+        headers: { "api-version": UPDATED_API_VERSION },
+      });
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
         setRegAndConfigUpdateResult(res?.data);
         setRegAndConsentUpdateStatus(API_STATUS.SUCCESS);

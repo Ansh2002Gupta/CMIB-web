@@ -7,6 +7,7 @@ import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../../constant/apiEndpoints";
 
 const useUpdateSessionRoundDetailsApi = () => {
@@ -38,7 +39,7 @@ const useUpdateSessionRoundDetailsApi = () => {
         CENTRE_END_POINT +
         `?session-id=${sessionID}`;
       const res = await Http.patch(url, payload, {
-        headers: { "api-version": "1.0.1" },
+        headers: { "api-version": UPDATED_API_VERSION },
       });
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||

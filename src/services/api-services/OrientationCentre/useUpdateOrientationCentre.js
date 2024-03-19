@@ -7,6 +7,7 @@ import {
   CORE_ROUTE,
   ORIENTATION_CENTRES,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../../constant/apiEndpoints";
 
 const useUpdateOrientationCentre = () => {
@@ -30,7 +31,7 @@ const useUpdateOrientationCentre = () => {
       errorWhileUpdatingCentre && setErrorWhileUpdatingCentre("");
       const url = `${CORE_ROUTE}/${module}${ROUNDS}/${roundId}${ORIENTATION_CENTRES}?session-id=${sessionID}`;
       const res = await Http.patch(url, payload, {
-        headers: { "api-version": "1.0.1" },
+        headers: { "api-version": UPDATED_API_VERSION },
       });
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||

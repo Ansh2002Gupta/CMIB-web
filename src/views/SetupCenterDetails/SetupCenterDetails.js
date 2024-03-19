@@ -19,6 +19,7 @@ import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import { ROUND_ID } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
@@ -52,7 +53,7 @@ const SetupCenterDetails = () => {
       CENTRE_END_POINT +
       `/${centreId}?session-id=${sessionID}`,
     otherOptions: { skipApiCallOnMount: true },
-    apiOptions: { headers: { "api-version": "1.0.1" } },
+    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
   });
 
   const intl = useIntl();
@@ -105,6 +106,7 @@ const SetupCenterDetails = () => {
                 isEdit,
                 location,
                 roundId,
+                sessionID,
                 selectedModule: selectedModule?.key,
               }}
             />

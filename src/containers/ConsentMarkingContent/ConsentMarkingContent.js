@@ -1,8 +1,6 @@
-import React, { useCallback, useState, useEffect, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useCallback, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Spin } from "antd";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -32,6 +30,7 @@ import {
   ROUNDS,
   ROUND_ONE,
   ROUND_TWO,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import {
   ACTIVE_TAB,
@@ -53,6 +52,7 @@ const ConsentMarkingContent = ({
   roundId,
   registrationDateData,
   setActiveTab,
+  sessionID,
   showNotification,
 }) => {
   const intl = useIntl();
@@ -68,7 +68,9 @@ const ConsentMarkingContent = ({
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      REGISTRATION_DATES,
+      REGISTRATION_DATES +
+      `?session-id=${sessionID}`,
+    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
   });
 
   const {
@@ -80,7 +82,9 @@ const ConsentMarkingContent = ({
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      LAST_REGISTRATION_DATES,
+      LAST_REGISTRATION_DATES +
+      `?session-id=${sessionID}`,
+    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
   });
   const { makeRequest: updateRoundOneDate, isLoading: isUpdatingRoundOneDate } =
     usePut({
@@ -90,7 +94,9 @@ const ConsentMarkingContent = ({
         ROUNDS +
         `/${roundId}` +
         REGISTRATION_CONSENT +
-        ROUND_ONE,
+        ROUND_ONE +
+        `?session-id=${sessionID}`,
+      apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
     });
   const { makeRequest: updateRoundTwoDate, isLoading: isUpdatingRoundTwoDate } =
     usePut({
@@ -100,7 +106,9 @@ const ConsentMarkingContent = ({
         ROUNDS +
         `/${roundId}` +
         REGISTRATION_CONSENT +
-        ROUND_TWO,
+        ROUND_TWO +
+        `?session-id=${sessionID}`,
+      apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
     });
 
   const [registrationDatesData, setRegistrationDatesData] =

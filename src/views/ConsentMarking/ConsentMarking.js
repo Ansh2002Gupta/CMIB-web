@@ -23,6 +23,7 @@ import {
   ROUNDS,
   ROUND_ONE,
   ROUND_TWO,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import {
   ACTIVE_TAB,
@@ -39,6 +40,8 @@ const ConsentMarking = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
+  const sessionID = globalSessionDetails?.globalSessionId;
+
   const isEdit = !!(
     currentGlobalSession?.is_editable && currentGlobalSession?.status
   );
@@ -67,10 +70,12 @@ const ConsentMarking = () => {
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      REGISTRATION_DATES,
+      REGISTRATION_DATES +
+      `?session-id=${sessionID}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
   });
 
   const {
@@ -84,10 +89,12 @@ const ConsentMarking = () => {
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      LAST_REGISTRATION_DATES,
+      LAST_REGISTRATION_DATES +
+      `?session-id=${sessionID}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
   });
 
   const {
@@ -102,10 +109,12 @@ const ConsentMarking = () => {
       ROUNDS +
       `/${roundId}` +
       REGISTRATION_CONSENT +
-      ROUND_ONE,
+      ROUND_ONE +
+      `?session-id=${sessionID}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
   });
 
   const {
@@ -120,10 +129,12 @@ const ConsentMarking = () => {
       ROUNDS +
       `/${roundId}` +
       REGISTRATION_CONSENT +
-      ROUND_TWO,
+      ROUND_TWO +
+      `?session-id=${sessionID}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
   });
 
   const getAllData = () => {
@@ -198,6 +209,7 @@ const ConsentMarking = () => {
             selectedModule: currentlySelectedModuleKey,
             roundId,
             regAndConsentData: registrationDateData,
+            sessionID,
           }}
         />
       ) : (
@@ -213,6 +225,7 @@ const ConsentMarking = () => {
             roundId,
             registrationDateData,
             setActiveTab,
+            sessionID,
             showNotification,
           }}
         />

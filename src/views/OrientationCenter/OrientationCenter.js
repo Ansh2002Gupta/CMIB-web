@@ -20,6 +20,7 @@ import {
   DOWNLOAD,
   ORIENTATION_CENTRES,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -80,7 +81,7 @@ const OrientationCenter = () => {
       ORIENTATION_CENTRES +
       `?session-id=${sessionID}`,
     otherOptions: { skipApiCallOnMount: true },
-    apiOptions: { headers: { "api-version": "1.0.1" } },
+    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
   });
 
   const downloadSheet = (id) => {
