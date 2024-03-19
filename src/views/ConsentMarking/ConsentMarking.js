@@ -10,6 +10,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import HeaderAndTitle from "../../components/HeaderAndTitle";
 import useFetch from "../../core/hooks/useFetch";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -23,10 +24,13 @@ import {
   ROUNDS,
   ROUND_ONE,
   ROUND_TWO,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import {
   ACTIVE_TAB,
+  API_VERSION_QUERY_PARAM,
   ROUND_ID,
+  SESSION_ID_QUERY_PARAM,
   VALID_CONSENT_MARKING_TABS_ID,
 } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
@@ -39,6 +43,8 @@ const ConsentMarking = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
+  const sessionId = globalSessionDetails?.globalSessionId;
+
   const isEdit = !!(
     currentGlobalSession?.is_editable && currentGlobalSession?.status
   );
@@ -67,10 +73,12 @@ const ConsentMarking = () => {
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      REGISTRATION_DATES,
+      REGISTRATION_DATES +
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const {
@@ -84,10 +92,12 @@ const ConsentMarking = () => {
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      LAST_REGISTRATION_DATES,
+      LAST_REGISTRATION_DATES +
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const {
@@ -102,10 +112,12 @@ const ConsentMarking = () => {
       ROUNDS +
       `/${roundId}` +
       REGISTRATION_CONSENT +
-      ROUND_ONE,
+      ROUND_ONE +
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const {
@@ -120,9 +132,20 @@ const ConsentMarking = () => {
       ROUNDS +
       `/${roundId}` +
       REGISTRATION_CONSENT +
-      ROUND_TWO,
+      ROUND_TWO +
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
+  });
+
+  useModuleWiseApiCall({
+    otherOptions: { isApiCallDependentOnSessionId: true, sessionId },
+    initialApiCall: () => {
+      if (roundId) {
+        getAllData();
+      }
     },
   });
 
@@ -198,6 +221,7 @@ const ConsentMarking = () => {
             selectedModule: currentlySelectedModuleKey,
             roundId,
             regAndConsentData: registrationDateData,
+            sessionId,
           }}
         />
       ) : (
@@ -213,6 +237,7 @@ const ConsentMarking = () => {
             roundId,
             registrationDateData,
             setActiveTab,
+            sessionId,
             showNotification,
           }}
         />
@@ -220,12 +245,6 @@ const ConsentMarking = () => {
     }
     return <></>;
   };
-
-  useEffect(() => {
-    if (currentlySelectedModuleKey) {
-      getAllData();
-    }
-  }, [userProfileDetails?.selectedModuleItem?.key, activeTab]);
 
   return (
     <>

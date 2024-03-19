@@ -9,6 +9,7 @@ import {
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
 
+export const API_VERSION_QUERY_PARAM = "api-version";
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
@@ -18,6 +19,7 @@ export const MAX_INPUT_LENGTH = 100;
 export const MIN_INPUT_LENGTH = 0;
 export const MAX_VIDEO_LENGTH = 999;
 export const MIN_VIDEO_LENGTH = 1;
+export const SESSION_ID_QUERY_PARAM = "session-id";
 
 export const API_STATUS = {
   IDLE: "idle",
