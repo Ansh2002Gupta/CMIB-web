@@ -13,7 +13,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ContentHeader from "../ContentHeader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import SubscriptionDetailsCard from "../../components/SubscriptionDetailsCard/SubscriptionDetailsCard";
-import RenderDetails from "../../components/RenderDetails/RenderDetails";
+import LabelWithValue from "../../components/LabelWithValue/LabelWithValue";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useFetch from "../../core/hooks/useFetch";
 import { usePost } from "../../core/hooks/useApiRequest";
@@ -35,7 +35,7 @@ import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./addSubscription.module.scss";
 
-const AddSubscription = () => {
+const SubscriptionDetails = () => {
   const intl = useIntl();
   const { subscriptionId } = useParams();
   const location = useLocation();
@@ -206,16 +206,16 @@ const AddSubscription = () => {
           <TwoRow
             className={styles.upperContainer}
             topSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.packageName",
                 })}
-                subHeading={formData.name ? formData.name : "-"}
+                subHeading={!!formData.name ? formData.name : "-"}
                 isMandatory
               />
             }
             bottomSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.package_validity_period",
                 })}
@@ -231,7 +231,7 @@ const AddSubscription = () => {
           <TwoRow
             className={styles.upperContainer}
             topSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.packageName_descriptions",
                 })}
@@ -239,7 +239,7 @@ const AddSubscription = () => {
               />
             }
             bottomSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.price",
                 })}
@@ -254,7 +254,7 @@ const AddSubscription = () => {
             className={styles.upperContainer}
             isTopFillSpace
             bottomSection={
-              <RenderDetails
+              <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.subscription_status",
                 })}
@@ -505,4 +505,4 @@ const AddSubscription = () => {
   );
 };
 
-export default AddSubscription;
+export default SubscriptionDetails;

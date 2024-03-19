@@ -1,4 +1,3 @@
-import AddSubscription from "../containers/AddSubscription/AddSubscription";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
@@ -17,6 +16,7 @@ import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
+import SubscriptionDetails from "../containers/SubscriptionDetails/index";
 import EditSession from "../views/EditSession/EditSession";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
@@ -204,7 +204,7 @@ const config = [
       },
       {
         viewPath: SUBSCRIPTIONS + ADD_SUBSCRIPTIONS,
-        element: <AddSubscription />,
+        element: <SubscriptionDetails />,
       },
       {
         viewPath: SUBSCRIPTIONS + SUBSCRIPTIONS_DETAILS,
