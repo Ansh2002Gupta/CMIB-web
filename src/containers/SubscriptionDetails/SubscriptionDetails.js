@@ -76,13 +76,13 @@ const SubscriptionDetails = () => {
           name: "",
           description: "",
           validity: null,
-          amount: null,
+          price: null,
         }
       : {
           name: "sdcds",
           description: "dsfdsf",
           validity: 122,
-          amount: 213123,
+          price: 213123,
         }
   );
 
@@ -126,10 +126,10 @@ const SubscriptionDetails = () => {
       );
       errorCount++;
     }
-    if (!formData?.amount) {
+    if (!formData?.price) {
       handleError(
         intl.formatMessage({ id: "label.error.fieldEmpty" }),
-        "amount"
+        "price"
       );
       errorCount++;
     }
@@ -243,7 +243,7 @@ const SubscriptionDetails = () => {
                 heading={intl.formatMessage({
                   id: "label.price",
                 })}
-                subHeading={formData.amount ? formData.amount : "-"}
+                subHeading={formData?.price ? formData?.price : "-"}
                 isMandatory
               />
             }
@@ -347,17 +347,17 @@ const SubscriptionDetails = () => {
             }
             middleSection={
               <CustomInput
-                errorMessage={errors?.amount}
-                isError={errors?.amount ? true : false}
+                errorMessage={errors?.price}
+                isError={errors?.price ? true : false}
                 controls
-                value={formData.amount}
+                value={formData.price}
                 label={intl.formatMessage({
                   id: "label.price",
                 })}
                 type="inputNumber"
                 isRequired
                 customLabelStyles={styles.customLabelStyles}
-                onChange={(val) => handleInputChange(val, "amount")}
+                onChange={(val) => handleInputChange(val, "price")}
                 placeholder={intl.formatMessage({
                   id: "label.enterpackagename_price",
                 })}
@@ -492,7 +492,7 @@ const SubscriptionDetails = () => {
                   isActionBtnDisable={
                     !formData?.name ||
                     !formData?.description ||
-                    !formData?.amount ||
+                    !formData?.price ||
                     !formData?.validity
                   }
                 />

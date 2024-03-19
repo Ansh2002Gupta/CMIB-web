@@ -19,8 +19,8 @@ const Subscriptions = () => {
     useContext(NotificationContext);
 
   const handleAddSubscription = () => {
-    //navigate(ADD_SUBSCRIPTIONS);
-    navigate(`${"subscription-details"}/${2}`);
+    navigate(ADD_SUBSCRIPTIONS);
+    //navigate(`${"subscription-details"}/${2}`);
   };
 
   useEffect(() => {
