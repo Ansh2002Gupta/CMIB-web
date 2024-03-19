@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
@@ -153,6 +153,10 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
     }
   };
 
+  useEffect(() => {
+    overlapValidate();
+  }, [interviewTable]);
+
   const handleError = (key, error, index) => {
     setErrors((prevTableError) => {
       const newTableError = [...prevTableError];
@@ -223,7 +227,7 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
           errorCount++;
           handleError(
             "start_time",
-            intl.formatMessage({ id: "label.error.overlap" }),
+            intl.formatMessage({ id: "label.error.startOverlap" }),
             index
           );
           return;
@@ -232,11 +236,29 @@ const ConfigureInterview = ({ centreId, interviewData, roundId }) => {
           errorCount++;
           handleError(
             "end_time",
-            intl.formatMessage({ id: "label.error.overlap" }),
+            intl.formatMessage({ id: "label.error.endOverlap" }),
             index
           );
           return;
         }
+        if (!item.start_time) {
+          handleError(
+            "start_time",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index
+          );
+          return;
+        }
+        if (!item.end_time) {
+          handleError(
+            "end_time",
+            intl.formatMessage({ id: "label.error.fieldEmpty" }),
+            index
+          );
+          return;
+        }
+        handleError("end_time", "", index);
+        handleError("start_time", "", index);
       });
     });
     if (errorCount) return false;
