@@ -4,10 +4,11 @@ import { useIntl } from "react-intl";
 import { TwoRow } from "../../core/layouts";
 
 import ContentHeader from "../../containers/ContentHeader";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import useRegisteredCompany from "./controllers/useRegisteredCompany";
 import commonStyles from "../../common/commonStyles.module.scss";
-import CustomLoader from "../../components/CustomLoader/CustomLoader";
+import styles from "./RegisteredCompany.module.scss";
 
 const RegisteredCompany = () => {
   const intl = useIntl();
@@ -21,10 +22,12 @@ const RegisteredCompany = () => {
     onFilterApply,
     columns,
     filterOptions,
-    isCompanyListingLoading,
+    isLoading,
+    isError,
     filterArray,
     setFilterArray,
     handleOnUserSearch,
+    getErrorDetails,
   } = useRegisteredCompany();
   return (
     <TwoRow
@@ -40,27 +43,38 @@ const RegisteredCompany = () => {
       isBottomFillSpace
       bottomSection={
         <>
-          <TableWithSearchAndFilters
-            {...{
-              current,
-              pageSize,
-              searchedValue,
-              filterOptions,
-              handleOnUserSearch,
-              columns,
-              onChangePageSize,
-              onChangeCurrentPage,
-              onFilterApply,
-              placeholder: intl.formatMessage({
-                id: "label.search_by_name_or_registration_no",
-              }),
-              filterArray,
-              setFilterArray,
-            }}
-            isLoading={isCompanyListingLoading}
-            data={registered_companies?.records}
-            currentDataLength={registered_companies?.meta?.total}
-          />
+          {!isError && (
+            <TableWithSearchAndFilters
+              {...{
+                current,
+                pageSize,
+                searchedValue,
+                filterOptions,
+                handleOnUserSearch,
+                columns,
+                onChangePageSize,
+                onChangeCurrentPage,
+                onFilterApply,
+                placeholder: intl.formatMessage({
+                  id: "label.search_by_name_or_registration_no",
+                }),
+                filterArray,
+                setFilterArray,
+              }}
+              isLoading={isLoading}
+              data={registered_companies?.records}
+              currentDataLength={registered_companies?.meta?.total}
+            />
+          )}
+          {isError && !isLoading && (
+            <div className={styles.errorMessageContainer}>
+              <ErrorMessageBox
+                errorHeading={intl.formatMessage({ id: "label.error" })}
+                errorText={getErrorDetails()?.errorMessage}
+                onRetry={() => getErrorDetails()?.onRetry()}
+              />
+            </div>
+          )}
         </>
       }
     />

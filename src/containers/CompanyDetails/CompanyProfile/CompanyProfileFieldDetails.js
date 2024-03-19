@@ -71,7 +71,6 @@ export const CONTACT_PERSONAL_INFORMATION_FEILDS = (
   salutation,
   name,
   designation,
-  mobile_country_code,
   mobile_number,
   email
 ) => {
@@ -98,7 +97,7 @@ export const CONTACT_PERSONAL_INFORMATION_FEILDS = (
       id: 4,
       headingIntl: "mobileNumber",
       label: "mobile_number",
-      value: `${mobile_country_code}-${mobile_number}`,
+      value: mobile_number,
     },
     {
       id: 5,

@@ -10,6 +10,7 @@ export const PLACEMENT_ROUTE = "placement-core";
 // API end-points
 export const ASSIGN = "/assign";
 export const ASSIGNEES = "/assignees";
+export const APPROVE = "/approve";
 export const AUTHENTICATE_OTP_ROUTE = "/reset-password-otp";
 export const CENTRE_END_POINT = "/centres";
 export const CHANGE_PASSWORD = "/password";

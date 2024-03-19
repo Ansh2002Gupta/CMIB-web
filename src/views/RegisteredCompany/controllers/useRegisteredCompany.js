@@ -5,20 +5,27 @@ import * as _ from "lodash";
 import { getRegisteredCompanyColumn } from "../RegisteredCompanyConfig";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import useShowNotification from "../../../core/hooks/useShowNotification";
 import { ThemeContext } from "../../../core/providers/theme";
 import usePagination from "../../../core/hooks/usePagination";
 import useHandleSearch from "../../../core/hooks/useHandleSearch";
 import { urlService } from "../../../Utils/urlService";
-import { getValidPageNumber, getValidPageSize } from "../../../constant/utils";
-import { PAGINATION_PROPERTIES } from "../../../constant/constant";
-// import { registered_companies } from "../dummydata";
+import {
+  getErrorMessage,
+  getValidPageNumber,
+  getValidPageSize,
+} from "../../../constant/utils";
+import {
+  GENERIC_GET_API_FAILED_ERROR_MESSAGE,
+  PAGINATION_PROPERTIES,
+  TYPE,
+} from "../../../constant/constant";
 import useFetch from "../../../core/hooks/useFetch";
 import {
   ADMIN_ROUTE,
+  CORE_ROUTE,
   REGISTERED_COMPANIES,
+  STATUS as APPROVAL_STATUS,
 } from "../../../constant/apiEndpoints";
-import { REGISTERED_COMPANY_DETAILS } from "../../../routes/routeNames";
 
 const useRegisteredCompany = () => {
   const intl = useIntl();
@@ -26,7 +33,6 @@ const useRegisteredCompany = () => {
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
   const [sortBy, setSortBy] = useState("");
-  const { showNotification, notificationContextHolder } = useShowNotification();
   const [filterArray, setFilterArray] = useState({});
   const [sortFilter, setSortFilter] = useState({});
 
@@ -39,6 +45,56 @@ const useRegisteredCompany = () => {
   } = useFetch({
     url: ADMIN_ROUTE + REGISTERED_COMPANIES,
   });
+
+  const {
+    data: status,
+    fetchData: fetchStatusData,
+    error: errorStatus,
+    isError: isErrorStatus,
+    isLoading: isStatusLoading,
+  } = useFetch({
+    url: CORE_ROUTE + APPROVAL_STATUS + `?type=${TYPE}`,
+  });
+
+  const isLoading = isCompanyListingLoading || isStatusLoading;
+  const isError = isErrorCompaniesListing || isErrorStatus;
+  const errorListing = getErrorMessage(errorCompaniesListing);
+  const errorApprovalStatus = getErrorMessage(errorStatus);
+
+  const getErrorDetails = () => {
+    if (isErrorCompaniesListing && isErrorStatus) {
+      let errorMessage = "";
+      if (
+        errorListing === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
+        errorApprovalStatus === GENERIC_GET_API_FAILED_ERROR_MESSAGE
+      ) {
+        errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      } else {
+        errorMessage = `${errorListing} , ${errorApprovalStatus}`;
+      }
+      return {
+        errorMessage,
+        onRetry: () => {
+          fetchStatusData();
+          fetchCompaniesListing({});
+        },
+      };
+    }
+    if (isErrorCompaniesListing)
+      return {
+        errorMessage: errorListing,
+        onRetry: () => fetchCompaniesListing({}),
+      };
+    if (isErrorStatus)
+      return {
+        errorMessage: errorApprovalStatus,
+        onRetry: () => fetchStatusData(),
+      };
+    return {
+      errorMessage: "",
+      onRetry: () => {},
+    };
+  };
 
   const [current, setCurrent] = useState(
     getValidPageNumber(
@@ -67,7 +123,6 @@ const useRegisteredCompany = () => {
       sortDirection,
       sortField,
       status: JSON.stringify(currentFilterStatus?.["1"]),
-      queryType: JSON.stringify(currentFilterStatus?.["2"]),
     };
   };
 
@@ -82,81 +137,98 @@ const useRegisteredCompany = () => {
     sortFilter,
     setCurrent,
     getRequestedQueryParams,
-    fetchData: () => {},
+    fetchData: fetchCompaniesListing,
   });
 
   const handleOnUserSearch = (str) => {
     handleSearch(str);
   };
 
-  const currentActiveTab = "1";
+  const statusOptions = status?.map((status) => ({
+    optionId: status.id,
+    str: status.name,
+  }));
 
   const filterOptions = [
     {
       id: 1,
-      name: "Status",
+      name: intl.formatMessage({ id: "label.approval_status" }),
       isSelected: false,
-      options: [],
-    },
-    {
-      id: 2,
-      name: "Type",
-      isSelected: false,
-      options: [],
+      options: statusOptions,
     },
   ];
 
-  const handleClickAssign = () => {};
-
   const handleEyeIcon = (data) => {
     const { id } = data;
-    console.log(`registered-company-details/${id}`);
-
     navigate(`registered-company-details/${id}`);
   };
-  const handleSorting = () => {};
+  const handleSorting = (sortDetails) => {
+    setCurrent(1);
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+    const requestedParams = getRequestedQueryParams({
+      currentFilterStatus: filterArray,
+      page: 1,
+      search: searchedValue,
+      sortDirection: sortDetails?.sortDirection,
+      sortField: sortDetails?.sortDirection ? sortDetails?.sortField : "",
+    });
+    fetchCompaniesListing({ queryParamsObject: requestedParams });
+    if (sortDetails.sortDirection) {
+      setSortFilter(sortDetails);
+      return;
+    }
+    setSortFilter({ sortDirection: "", sortField: "" });
+  };
 
   const columns = getRegisteredCompanyColumn({
-    type: currentActiveTab,
-    intl,
     getImage,
-    handleClickAssign,
     handleEyeIcon,
-    navigate,
     renderColumn,
-    queriesColumnProperties: {},
-    //   fetchData,
-    paginationAndSearchProperties: {
-      pageSize,
-      current,
-      searchedValue,
-    },
+    intl,
     setSortBy,
     sortBy,
     handleSorting,
-    //   userProfileDetails,
   });
 
   const onChangePageSize = (size) => {
     handleRowsPerPageChange(size);
-    // setCurrent(1);
-    //  const requestedParams = getRequestedQueryParams({
-    //    rowPerPage: size,
-    //    page: 1,
-    //    search: searchedValue,
-    //    currentFilterStatus: filterArray,
-    //    sortDirection: sortFilter?.sortDirection,
-    //    sortField: sortFilter?.sortField,
-    //  });
-    // fetchData({ queryParamsObject: requestedParams });
+    setCurrent(1);
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: size,
+      page: 1,
+      search: searchedValue,
+      currentFilterStatus: filterArray,
+      sortDirection: sortFilter?.sortDirection,
+      sortField: sortFilter?.sortField,
+    });
+    fetchCompaniesListing({ queryParamsObject: requestedParams });
   };
 
   const onChangeCurrentPage = (page) => {
     handlePagePerChange(page);
-    // fetchData({ queryParamsObject: requestedParams });
+    const requestedParams = getRequestedQueryParams({
+      rowPerPage: pageSize,
+      page: page,
+      search: searchedValue,
+      currentFilterStatus: filterArray,
+      sortDirection: sortFilter?.sortDirection,
+      sortField: sortFilter?.sortField,
+    });
+    fetchCompaniesListing({ queryParamsObject: requestedParams });
   };
 
-  const onFilterApply = (filter) => {};
+  const onFilterApply = (currentFilterStatus) => {
+    const requestedParams = getRequestedQueryParams({
+      currentFilterStatus,
+      search: searchedValue,
+      page: 1,
+      sortDirection: sortFilter?.sortDirection,
+      sortField: sortFilter?.sortField,
+    });
+    setCurrent(1);
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+    fetchCompaniesListing({ queryParamsObject: requestedParams });
+  };
 
   return {
     current,
@@ -168,10 +240,12 @@ const useRegisteredCompany = () => {
     columns,
     onFilterApply,
     filterArray,
-    isCompanyListingLoading: false,
+    isLoading,
+    isError,
     setFilterArray,
     filterOptions,
     handleOnUserSearch,
+    getErrorDetails,
   };
 };
 

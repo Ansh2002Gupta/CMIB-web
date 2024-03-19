@@ -9,8 +9,8 @@ export const getRegisteredCompanyDetailsColumns = ({
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.module" }),
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "label",
+      key: "label",
       renderText: {
         isCapitalize: true,
         visible: true,

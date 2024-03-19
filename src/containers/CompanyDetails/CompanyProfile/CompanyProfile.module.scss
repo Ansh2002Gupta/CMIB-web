@@ -27,6 +27,8 @@
 
 .gridItem {
   padding-bottom: var(--paddingMedium);
+  flex-wrap: wrap;
+  line-break: anywhere;
 }
 
 .blackText {
@@ -145,4 +147,11 @@
   .logoName {
     width: var(--fullWidth);
   }
+}
+
+.additionalInformationText{
+  margin-bottom: var(--marginLarge);
+  font-weight: var(--fontWeightMedium); 
+   color: var(--subHeadingColor);
+   font-size: var(--fontSizeNormal);
 }
