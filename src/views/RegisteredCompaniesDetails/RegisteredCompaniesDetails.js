@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { TwoRow } from "../../core/layouts";
 
 import CompanyProfile from "../../containers/CompanyDetails/CompanyProfile";
-import CompanyDetailsApprovalCard from "../../components/CompanyDetailsApprovalCard/CompanyDetailsApprovalCard";
+import CompanyDetailsApprovalCard from "../../containers/CompanyDetailsApprovalCard/CompanyDetailsApprovalCard";
 import ContentHeader from "../../containers/ContentHeader";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
