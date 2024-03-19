@@ -28,6 +28,7 @@ const SetupCenterDetails = () => {
   const { centreId } = useParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const sessionID = globalSessionDetails?.globalSessionId;
 
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
@@ -49,8 +50,9 @@ const SetupCenterDetails = () => {
       ROUNDS +
       `/${roundId}` +
       CENTRE_END_POINT +
-      `/${centreId}`,
+      `/${centreId}?session-id=${sessionID}`,
     otherOptions: { skipApiCallOnMount: true },
+    apiOptions: { headers: { "api-version": "1.0.1" } },
   });
 
   const intl = useIntl();

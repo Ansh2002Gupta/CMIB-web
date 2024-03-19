@@ -47,8 +47,14 @@ const SetupMockInterviewContent = () => {
     useContext(NotificationContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
-
   const roundId = urlService.getQueryStringValue(ROUND_ID);
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const sessionID = globalSessionDetails?.globalSessionId;
+
   const {
     data,
     error: errorWhileFetchingInterview,
@@ -60,10 +66,12 @@ const SetupMockInterviewContent = () => {
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      MOCK_INTERVIEWS,
+      MOCK_INTERVIEWS +
+      `?session-id=${sessionID}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
+    apiOptions: { headers: { "api-version": "1.0.1" } },
   });
 
   const {
@@ -73,11 +81,8 @@ const SetupMockInterviewContent = () => {
     initiateDownload,
   } = useDownload({});
 
-  const [globalSessionDetails] = useContext(GlobalSessionContext);
   const { showNotification, notificationContextHolder } = useShowNotification();
-  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
-    (item) => item.id === globalSessionDetails?.globalSessionId
-  );
+
   const isEdit =
     currentGlobalSession?.is_editable && currentGlobalSession?.status;
 

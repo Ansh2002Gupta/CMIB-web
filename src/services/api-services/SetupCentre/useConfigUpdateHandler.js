@@ -27,7 +27,9 @@ const useConfigUpdateHandler = () => {
       setConfigUpdateStatus(API_STATUS.LOADING);
       errorWhileUpdatingConfig && setErrorWhileUpdatingConfig("");
       const url = `${ADMIN_ROUTE}/${module}${ROUNDS}/${roundId}${CENTRE_END_POINT}/${centreId}`;
-      const res = await Http.put(url, payload);
+      const res = await Http.put(url, payload, {
+        headers: { "api-version": "1.0.1" },
+      });
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
         setConfigUpdateResult(res?.data);
         setConfigUpdateStatus(API_STATUS.SUCCESS);

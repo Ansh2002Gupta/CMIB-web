@@ -22,13 +22,16 @@ const useUpdateOrientationCentre = () => {
     onSuccessCallback,
     payload,
     roundId,
+    sessionID,
   }) => {
     try {
       setUpdatingOrientationCentreStatus(API_STATUS.LOADING);
       setOrientationUpdateResult(null);
       errorWhileUpdatingCentre && setErrorWhileUpdatingCentre("");
-      const url = `${CORE_ROUTE}/${module}${ROUNDS}/${roundId}${ORIENTATION_CENTRES}`;
-      const res = await Http.patch(url, payload);
+      const url = `${CORE_ROUTE}/${module}${ROUNDS}/${roundId}${ORIENTATION_CENTRES}?session-id=${sessionID}`;
+      const res = await Http.patch(url, payload, {
+        headers: { "api-version": "1.0.1" },
+      });
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS

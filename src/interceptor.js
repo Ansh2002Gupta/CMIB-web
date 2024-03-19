@@ -16,7 +16,9 @@ axios.interceptors.request.use(
       };
     }
     // ****** //
-    config.headers["api-version"] = API_VERSION_NUMBER;
+    if (!config.headers["api-version"]) {
+      config.headers["api-version"] = API_VERSION_NUMBER;
+    }
     return config;
   },
   function (error) {

@@ -23,6 +23,7 @@ const useUpdateSessionRoundDetailsApi = () => {
     onErrorCallback,
     payload,
     roundId,
+    sessionID,
     selectedModuleKey,
   }) => {
     try {
@@ -34,8 +35,11 @@ const useUpdateSessionRoundDetailsApi = () => {
         `/${selectedModuleKey}` +
         ROUNDS +
         `/${roundId}` +
-        CENTRE_END_POINT;
-      const res = await Http.patch(url, payload);
+        CENTRE_END_POINT +
+        `?session-id=${sessionID}`;
+      const res = await Http.patch(url, payload, {
+        headers: { "api-version": "1.0.1" },
+      });
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS

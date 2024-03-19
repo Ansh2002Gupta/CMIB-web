@@ -49,6 +49,8 @@ const SetupCenter = () => {
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
 
+  const sessionID = globalSessionDetails?.globalSessionId;
+
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
 
@@ -82,8 +84,10 @@ const SetupCenter = () => {
       `/${selectedModule?.key}` +
       ROUNDS +
       `/${roundId}` +
-      CENTRE_END_POINT,
+      CENTRE_END_POINT +
+      `?session-id=${sessionID}`,
     otherOptions: { skipApiCallOnMount: true },
+    apiOptions: { headers: { "api-version": "1.0.1" } },
   });
 
   useEffect(() => {
@@ -251,6 +255,7 @@ const SetupCenter = () => {
       },
       roundId: roundId,
       selectedModuleKey: selectedModule?.key,
+      sessionID,
     });
   };
 

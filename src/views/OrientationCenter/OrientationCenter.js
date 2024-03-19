@@ -23,7 +23,11 @@ import {
 } from "../../constant/apiEndpoints";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { NOTIFICATION_TYPES, ROUND_ID } from "../../constant/constant";
+import {
+  NOTIFICATION_TYPES,
+  ROUND_ID,
+  SESSION_ID,
+} from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 
 import { classes } from "./OrientationCenter.styles";
@@ -48,6 +52,9 @@ const OrientationCenter = () => {
 
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+
+  const sessionID = globalSessionDetails?.globalSessionId;
+
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [formData, setFormData] = useState([]);
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -70,8 +77,10 @@ const OrientationCenter = () => {
       `/${selectedModule?.key}` +
       ROUNDS +
       `/${roundId}` +
-      ORIENTATION_CENTRES,
+      ORIENTATION_CENTRES +
+      `?session-id=${sessionID}`,
     otherOptions: { skipApiCallOnMount: true },
+    apiOptions: { headers: { "api-version": "1.0.1" } },
   });
 
   const downloadSheet = (id) => {
@@ -256,6 +265,7 @@ const OrientationCenter = () => {
       payload,
       roundId,
       module: selectedModule?.key,
+      sessionID,
     });
   };
 
