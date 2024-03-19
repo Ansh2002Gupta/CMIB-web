@@ -12,7 +12,7 @@ import CustomInput from "../../components/CustomInput";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ContentHeader from "../ContentHeader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
-import SubscriptionDetailsCard from "../../components/SubscriptionDetailsCard/SubscriptionDetailsCard";
+import SubscriptionDetailsCard from "../SubscriptionDetailsCard/SubscriptionDetailsCard";
 import LabelWithValue from "../../components/LabelWithValue/LabelWithValue";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useFetch from "../../core/hooks/useFetch";
@@ -33,7 +33,7 @@ import {
 } from "../../constant/constant";
 import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
 import commonStyles from "../../common/commonStyles.module.scss";
-import styles from "./addSubscription.module.scss";
+import styles from "./SubscriptionDetails.module.scss";
 
 const SubscriptionDetails = () => {
   const intl = useIntl();
