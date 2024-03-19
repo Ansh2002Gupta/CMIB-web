@@ -1,3 +1,4 @@
+import CaJobsConfigurations from "../views/CAJobs/CaJobsConfigurations/CaJobsConfigurations.js";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
@@ -27,6 +28,7 @@ import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
 import QueryDetails from "../views/QueryDetails";
+
 import {
   ADD,
   ADD_NEW_USER_DETAILS,
@@ -35,7 +37,8 @@ import {
   COMPANIES,
   COMPANIES_DETAILS,
   CONFIGURE_CENTRES,
-  CONSENT_MARKING,
+  CONSENT_MARKING_ROUND_ONE,
+  CONSENT_MARKING_ROUND_TWO,
   DASHBOARD,
   DETAILS,
   EDIT_CONFIGURE_CENTRE,
@@ -50,6 +53,7 @@ import {
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   ROUND_TWO_SETUP_CENTERS,
+  ROUND_TWO_CONSENT_MARKING,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -136,7 +140,14 @@ const config = [
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -189,7 +200,7 @@ const config = [
       },
       {
         viewPath: CONFIGURE_CENTRES,
-        element: <ConfigureCentres />,
+        element: <CaJobsConfigurations />,
       },
       {
         viewPath: CONFIGURE_CENTRES + ADD,
@@ -275,7 +286,18 @@ const config = [
         viewPath: SESSION + ROUND_TWO_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + ROUND_TWO_CONSENT_MARKING,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: SESSION + ROUND_ONE_ORIENTATION_CENTERS,
         element: <OrientationCenter />,
@@ -338,7 +360,14 @@ const config = [
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -397,7 +426,14 @@ const config = [
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,

@@ -175,6 +175,7 @@ const locale = {
   "label.photo": "Photo.jpg",
   "label.networkError": "Network Error!",
   "label.error": "Error!",
+  "label.error.DuplicateFields": "Duplicate Fields!",
   "label.tryAgain": "Try again!",
   "label.addNewUsers": "Add New User",
   "label.userCreatedSuccessfully": "User has been created successfully",
@@ -196,6 +197,7 @@ const locale = {
   "label.companies": "Companies",
   "label.companyName": "Company Name",
   "label.entity": "Entity",
+  "label.global_configurations": "Global Configurations",
   "label.generatePaymentMis": "Generate Payment MIS",
   "label.manageCompanyDetails": "Manage company details",
   "label.phoneNumber": "Phone Number",
@@ -238,14 +240,19 @@ const locale = {
     "Registration and Consent Marking Schedule",
   "label.consentMarkingScheduleWarning":
     "*This cannot be edited once this section data is submitted.",
-  "label.consent.startDateCompanies": "Registration Start Date for Companies",
-  "label.consent.startDateCandidates": "Registration Start Date for Candidates",
-  "label.consent.lastDateBigCentres":
+  "label.consent.company_reg_start_date":
+    "Registration Start Date for Companies",
+  "label.consent.candidate_reg_start_date":
+    "Registration Start Date for Candidates",
+  "label.consent.candidate_reg_end_date_bg_centre":
     "Last Date of Registration for Candidates for Big Centres",
-  "label.consent.lastDateSmallCentres":
+  "label.consent.candidate_reg_end_date_sm_centre":
     "Last Date of Registration for Candidates for Small Centres",
   "label.centreCodeColon": "Centre code: ",
   "label.writtenTestFee": "Written/Psychometric Test Fee",
+  "label.consent.writtenTestDate": "Written/Psychometric Test Date",
+  "label.consent.placeholder.writtenTestDate":
+    "Select Written/Psychometric Test Date",
   "label.centreStartTime": "Centre Start Time",
   "label.centreEndTime": "Centre End Time",
   "label.placeholder.writtenTestFee": " Enter Written/Psychometric Test Fee",
@@ -289,26 +296,30 @@ const locale = {
   "label.warning.setupMockInterviews":
     "*This cannot be edited once registration for the students starts.",
   "label.totalStudentsBooked": "Total Students Booked",
-  "label.consent.placeholder.startDateCompanies":
+  "label.consent.placeholder.company_reg_start_date":
     " Select Start Date for Companies",
-  "label.consent.placeholder.startDateCandidates":
+  "label.consent.placeholder.candidate_reg_start_date":
     "Select Start Date for Candidates",
-  "label.consent.placeholder.lastDateBigCentres":
+  "label.consent.placeholder.candidate_reg_end_date_bg_centre":
     "Select Last Date for Big Centres",
-  "label.consent.placeholder.lastDateSmallCentres":
+  "label.consent.placeholder.candidate_reg_end_date_sm_centre":
     " Select Last Date for Small Centres",
-  "label.companyStartDate": "Shortlist By Company Start Date",
-  "label.companyEndDate": "Shortlist By Company end Date",
-  "label.consentFromDate": "Consent From Date for Candidate",
-  "label.consentToDate": "Consent To Date for Candidate",
-  "label.placeholder.companyStartDate": "Select Company Start Date",
-  "label.placeholder.companyEndDate": "Select Company end Date",
-  "label.placeholder.consentFromDate": "Select From Date for Candidate",
-  "label.placeholder.consentToDate": "Select To Date for Candidate",
-  "label.lastRegistrationDate": "Last date of registration for companies",
-  "label.psychometricTestDate": "psychometric test/written test date",
-  "label.placeholder.lastRegistrationDate": "Select Last Date for registration",
-  "label.placeholder.psychometricTestDate":
+  "label.company_shortlisting_start_date": "Shortlist By Company Start Date",
+  "label.company_shortlisting_end_date": "Shortlist By Company End Date",
+  "label.candidate_consent_marking_start_date":
+    "Consent From Date for Candidate",
+  "label.candidate_consent_marking_end_date": "Consent To Date for Candidate",
+  "label.placeholder.company_shortlisting_start_date":
+    "Select Company Start Date",
+  "label.placeholder.company_shortlisting_end_date": "Select Company End Date",
+  "label.placeholder.candidate_consent_marking_start_date":
+    "Select From Date for Candidate",
+  "label.placeholder.candidate_consent_marking_end_date":
+    "Select To Date for Candidate",
+  "label.company_reg_end_date": "Last date of registration for companies",
+  "label.psychometric_test_date": "Psychometric test/written test date",
+  "label.placeholder.company_reg_end_date": "Select Last Date for registration",
+  "label.placeholder.psychometric_test_date":
     "Select To Date for psychometric test",
   "label.controlAccessHeading": " Control Access",
   "label.moduleAccess": "Module Access",
@@ -521,6 +532,15 @@ const locale = {
   "label.no_centres_selected_msg":
     "To proceed with the setup, please choose the centres for this round.",
   "label.no_prior_chats_found": "No prior chats found",
+  "label.headerTextItSkills": "IT skills",
+  "label.headerTextSoftSkills": "Soft skills",
+  "label.placeholderItSkills": "Enter IT skills",
+  "label.placeholderSoftSkills": "Enter Soft skills",
+  "label.registrationSuccess": "Registration Dates updated Successfully",
+  "label.lastRegistrationSuccess":
+    "Last Registration Dates updated Successfully",
+  "label.roundOneDatesSuccess": "Round 1 Dates updated Successfully",
+  "label.roundTwoDatesSuccess": "Round 2 Dates updated Successfully",
   "label.yearBracket": " (year(s))",
   "label.inrBracket": " (INR)",
   "label.session.setup-centers": "Setup Centres",
@@ -532,6 +552,42 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.set_max_video_upload_time_limit":
+    "Setup Maximum Video Upload Time Limit",
+  "label.max_video_upload_time_limit":
+    "Maximum Video Upload Time Limit (seconds)",
+  "label.set_profile_skills": "Set Profile Skills",
+  "label.nqca-placements": "nqca-placements",
+  "label.session.consent-marking": "Registration and Consent Marking Schedule",
+  "label.consent.registrationStartDateCompanies": "Company Registration Start",
+  "label.consent.registrationEndDateCompanies": "Company Registration End",
+  "label.consent.registrationStartDateCandidates":
+    "Candidate Registration Start",
+  "label.consent.registrationEndDateCandidates": "Candidate Registration End",
+  "label.consent.startShortlistingbyCompany": "Shortlisting By Company Start",
+  "label.consent.endShortlistingbyCompany": "Shortlisting By Company End",
+  "label.consent.startCondidateConsentmarking":
+    "Consent Marking By Candidate Start",
+  "label.consent.endCondidateConsentmarking":
+    "Consent Marking By Candidate End",
+  "label.consent.placeholder.registrationStartDateCompanies":
+    "Select Company Registration Start Date",
+  "label.consent.placeholder.registrationEndDateCompanies":
+    "Select Company Registration End Date",
+  "label.consent.placeholder.registrationStartDateCandidates":
+    "Select Candidate Registration Start Date",
+  "label.consent.placeholder.registrationEndDateCandidates":
+    "Select Candidate Registration End Date",
+  "label.consent.placeholder.startShortlistingbyCompany":
+    "Select Shortlisting By Company Start Date",
+  "label.consent.placeholder.endShortlistingbyCompany":
+    "Select Shortlisting By Company End Date",
+  "label.consent.placeholder.startCondidateConsentmarking":
+    "Select Consent Marking By Candidate Start Date",
+  "label.consent.placeholder.endCondidateConsentmarking":
+    "Select Consent Marking By Candidate End Date",
+  "label.path.consent-marking": "Registration and Consent Marking Schedule",
+  "label.dates_added_successfully": "Dates Added Successfully",
   "label.downloadSucess": "Download Successful",
 };
 
