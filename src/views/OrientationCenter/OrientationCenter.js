@@ -25,9 +25,11 @@ import {
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
+  API_STATUS,
+  API_VERSION_QUERY_PARAM,
   NOTIFICATION_TYPES,
   ROUND_ID,
-  SESSION_ID,
+  SESSION_ID_QUERY_PARAM,
 } from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 
@@ -54,7 +56,7 @@ const OrientationCenter = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
 
-  const sessionID = globalSessionDetails?.globalSessionId;
+  const sessionId = globalSessionDetails?.globalSessionId;
 
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [formData, setFormData] = useState([]);
@@ -72,6 +74,7 @@ const OrientationCenter = () => {
     fetchData: getOrientationCentres,
     isLoading: isGettingOrientationCentres,
     isSuccess: fetchCentersSuccessFlag,
+    apiStatus,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -79,9 +82,9 @@ const OrientationCenter = () => {
       ROUNDS +
       `/${roundId}` +
       ORIENTATION_CENTRES +
-      `?session-id=${sessionID}`,
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: { skipApiCallOnMount: true },
-    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const downloadSheet = (id) => {
@@ -120,6 +123,7 @@ const OrientationCenter = () => {
   );
 
   useModuleWiseApiCall({
+    isSessionId: sessionId,
     initialApiCall: () => {
       if (roundId) {
         getOrientationCentres({});
@@ -266,7 +270,7 @@ const OrientationCenter = () => {
       payload,
       roundId,
       module: selectedModule?.key,
-      sessionID,
+      sessionId,
     });
   };
 
@@ -288,8 +292,7 @@ const OrientationCenter = () => {
     const isLoading =
       isGettingOrientationCentres || isUpdatingOrientationCentre;
     const errorHeading = intl.formatMessage({ id: "label.error" });
-
-    if (isLoading) {
+    if (isLoading || apiStatus === API_STATUS.IDLE) {
       return (
         <div className={commonStyles.errorContainer}>
           <Spin size="large" />
@@ -306,12 +309,12 @@ const OrientationCenter = () => {
       const errorText = errorWhileUpdatingCentre?.data?.message;
       return renderError(errorText, errorHeading, handleSaveChanges);
     }
-    if (!orientationCentres?.length) {
-      const noResultText = intl.formatMessage({
-        id: "label.orientation_no_result_msg",
-      });
-      return renderError(noResultText, errorHeading);
-    }
+    // if (!orientationCentres?.length) {
+    //   const noResultText = intl.formatMessage({
+    //     id: "label.orientation_no_result_msg",
+    //   });
+    //   return renderError(noResultText, errorHeading);
+    // }
 
     return (
       <DataTable

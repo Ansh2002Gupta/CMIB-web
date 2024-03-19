@@ -8,7 +8,12 @@ import {
   ROUNDS,
   UPDATED_API_VERSION,
 } from "../../../constant/apiEndpoints";
-import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
+import {
+  API_VERSION_QUERY_PARAM,
+  API_STATUS,
+  SESSION_ID_QUERY_PARAM,
+  STATUS_CODES,
+} from "../../../constant/constant";
 
 const useRegistrationAndConsentMarking = () => {
   const intl = useIntl();
@@ -29,14 +34,14 @@ const useRegistrationAndConsentMarking = () => {
     onSuccessCallback,
     payload,
     roundId,
-    sessionID,
+    sessionId,
   }) => {
     try {
       setRegAndConsentUpdateStatus(API_STATUS.LOADING);
       errorWhileUpdating && setErrorWhileUpdating("");
-      const url = `${CORE_ROUTE}/${module}${ROUNDS}/${roundId}${REGISTRATION_DATES}?session-id=${sessionID}`;
+      const url = `${CORE_ROUTE}/${module}${ROUNDS}/${roundId}${REGISTRATION_DATES}?${SESSION_ID_QUERY_PARAM}=${sessionId}`;
       const res = await Http.put(url, payload, {
-        headers: { "api-version": UPDATED_API_VERSION },
+        headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION },
       });
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
         setRegAndConfigUpdateResult(res?.data);

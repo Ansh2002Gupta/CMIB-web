@@ -37,7 +37,7 @@ const ConsentMarkingContentRoundTwo = ({
   selectedModule,
   roundId,
   regAndConsentData,
-  sessionID,
+  sessionId,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -275,7 +275,7 @@ const ConsentMarkingContentRoundTwo = ({
           });
         },
         roundId,
-        sessionID,
+        sessionId,
       });
     }
   };

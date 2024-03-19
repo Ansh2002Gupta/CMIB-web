@@ -2,7 +2,12 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
-import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
+import {
+  API_VERSION_QUERY_PARAM,
+  API_STATUS,
+  SESSION_ID_QUERY_PARAM,
+  STATUS_CODES,
+} from "../../../constant/constant";
 import {
   CORE_ROUTE,
   ORIENTATION_CENTRES,
@@ -23,15 +28,15 @@ const useUpdateOrientationCentre = () => {
     onSuccessCallback,
     payload,
     roundId,
-    sessionID,
+    sessionId,
   }) => {
     try {
       setUpdatingOrientationCentreStatus(API_STATUS.LOADING);
       setOrientationUpdateResult(null);
       errorWhileUpdatingCentre && setErrorWhileUpdatingCentre("");
-      const url = `${CORE_ROUTE}/${module}${ROUNDS}/${roundId}${ORIENTATION_CENTRES}?session-id=${sessionID}`;
+      const url = `${CORE_ROUTE}/${module}${ROUNDS}/${roundId}${ORIENTATION_CENTRES}?${SESSION_ID_QUERY_PARAM}=${sessionId}`;
       const res = await Http.patch(url, payload, {
-        headers: { "api-version": UPDATED_API_VERSION },
+        headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION },
       });
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||

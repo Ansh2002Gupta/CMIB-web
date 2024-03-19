@@ -32,7 +32,7 @@ const CenterDetailsContent = ({
   isEdit,
   location,
   roundId,
-  sessionID,
+  sessionId,
   selectedModule,
 }) => {
   const intl = useIntl();
@@ -350,7 +350,7 @@ const CenterDetailsContent = ({
         : centreDetailsPayload,
       centreId: centreId,
       roundId: roundId,
-      sessionID,
+      sessionId,
       onSuccessCallback: () => {
         setNotificationStateDispatch(setShowSuccessNotification(true));
         navigateToSetupCentreScreen();

@@ -1,6 +1,7 @@
 import axios from "axios";
-import { API_VERSION_NUMBER } from "./constant/apiEndpoints";
 import { getItem } from "./services/encrypted-storage-service";
+import { API_VERSION_NUMBER } from "./constant/apiEndpoints";
+import { API_VERSION_QUERY_PARAM } from "./constant/constant";
 
 // Add a request interceptor
 axios.interceptors.request.use(
@@ -16,8 +17,8 @@ axios.interceptors.request.use(
       };
     }
     // ****** //
-    if (!config.headers["api-version"]) {
-      config.headers["api-version"] = API_VERSION_NUMBER;
+    if (!config.headers[API_VERSION_QUERY_PARAM]) {
+      config.headers[API_VERSION_QUERY_PARAM] = API_VERSION_NUMBER;
     }
     return config;
   },

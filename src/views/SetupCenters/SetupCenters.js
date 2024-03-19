@@ -28,7 +28,14 @@ import {
   UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import { SESSION } from "../../routes/routeNames";
-import { MODULE_KEYS, PAYMENT_TYPE, ROUND_ID } from "../../constant/constant";
+import {
+  API_STATUS,
+  API_VERSION_QUERY_PARAM,
+  MODULE_KEYS,
+  PAYMENT_TYPE,
+  ROUND_ID,
+  SESSION_ID_QUERY_PARAM,
+} from "../../constant/constant";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
@@ -50,7 +57,7 @@ const SetupCenter = () => {
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
 
-  const sessionID = globalSessionDetails?.globalSessionId;
+  const sessionId = globalSessionDetails?.globalSessionId;
 
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
@@ -79,6 +86,7 @@ const SetupCenter = () => {
     error: errorWhileGettingCentres,
     fetchData: getSetupCentres,
     isLoading: isGettingSetupCentres,
+    apiStatus,
   } = useFetch({
     url:
       ADMIN_ROUTE +
@@ -86,9 +94,9 @@ const SetupCenter = () => {
       ROUNDS +
       `/${roundId}` +
       CENTRE_END_POINT +
-      `?session-id=${sessionID}`,
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: { skipApiCallOnMount: true },
-    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   useEffect(() => {
@@ -113,6 +121,7 @@ const SetupCenter = () => {
   }, [userProfileDetails?.selectedModuleItem]);
 
   useModuleWiseApiCall({
+    isSessionId: sessionId,
     initialApiCall: () => {
       if (roundId) {
         getSetupCentres({});
@@ -199,7 +208,7 @@ const SetupCenter = () => {
         </div>
       );
     }
-    if (isGettingSetupCentres) {
+    if (isGettingSetupCentres || apiStatus === API_STATUS.IDLE) {
       return (
         <div className={styles.loaderContainer}>
           <Spin size="large" />
@@ -256,7 +265,7 @@ const SetupCenter = () => {
       },
       roundId: roundId,
       selectedModuleKey: selectedModule?.key,
-      sessionID,
+      sessionId,
     });
   };
 

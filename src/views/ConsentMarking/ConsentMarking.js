@@ -10,6 +10,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import HeaderAndTitle from "../../components/HeaderAndTitle";
 import useFetch from "../../core/hooks/useFetch";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -27,7 +28,9 @@ import {
 } from "../../constant/apiEndpoints";
 import {
   ACTIVE_TAB,
+  API_VERSION_QUERY_PARAM,
   ROUND_ID,
+  SESSION_ID_QUERY_PARAM,
   VALID_CONSENT_MARKING_TABS_ID,
 } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
@@ -40,7 +43,7 @@ const ConsentMarking = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
-  const sessionID = globalSessionDetails?.globalSessionId;
+  const sessionId = globalSessionDetails?.globalSessionId;
 
   const isEdit = !!(
     currentGlobalSession?.is_editable && currentGlobalSession?.status
@@ -71,11 +74,11 @@ const ConsentMarking = () => {
       ROUNDS +
       `/${roundId}` +
       REGISTRATION_DATES +
-      `?session-id=${sessionID}`,
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
-    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const {
@@ -90,11 +93,11 @@ const ConsentMarking = () => {
       ROUNDS +
       `/${roundId}` +
       LAST_REGISTRATION_DATES +
-      `?session-id=${sessionID}`,
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
-    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const {
@@ -110,11 +113,11 @@ const ConsentMarking = () => {
       `/${roundId}` +
       REGISTRATION_CONSENT +
       ROUND_ONE +
-      `?session-id=${sessionID}`,
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
-    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const {
@@ -130,11 +133,21 @@ const ConsentMarking = () => {
       `/${roundId}` +
       REGISTRATION_CONSENT +
       ROUND_TWO +
-      `?session-id=${sessionID}`,
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
-    apiOptions: { headers: { "api-version": UPDATED_API_VERSION } },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
+  });
+
+  useModuleWiseApiCall({
+    otherDependencies: activeTab,
+    isSessionId: sessionId,
+    initialApiCall: () => {
+      if (roundId) {
+        getAllData();
+      }
+    },
   });
 
   const getAllData = () => {
@@ -209,7 +222,7 @@ const ConsentMarking = () => {
             selectedModule: currentlySelectedModuleKey,
             roundId,
             regAndConsentData: registrationDateData,
-            sessionID,
+            sessionId,
           }}
         />
       ) : (
@@ -225,7 +238,7 @@ const ConsentMarking = () => {
             roundId,
             registrationDateData,
             setActiveTab,
-            sessionID,
+            sessionId,
             showNotification,
           }}
         />
@@ -233,12 +246,6 @@ const ConsentMarking = () => {
     }
     return <></>;
   };
-
-  useEffect(() => {
-    if (currentlySelectedModuleKey) {
-      getAllData();
-    }
-  }, [userProfileDetails?.selectedModuleItem?.key, activeTab]);
 
   return (
     <>

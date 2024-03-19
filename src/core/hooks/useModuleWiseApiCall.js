@@ -5,6 +5,8 @@ import { urlService } from "../../Utils/urlService";
 import { PAGINATION_PROPERTIES } from "../../constant/constant";
 
 const useModuleWiseApiCall = ({
+  otherDependencies = "",
+  isSessionId,
   initialApiCall,
   paginationParams,
   triggerPaginationUpdate,
@@ -20,10 +22,10 @@ const useModuleWiseApiCall = ({
       };
       urlService.setMultipleQueryStringValues(paginationQueryParams);
     }
-    if (selectedModule?.key) {
+    if (selectedModule?.key && isSessionId) {
       initialApiCall();
     }
-  }, [selectedModule?.key]);
+  }, [selectedModule?.key, isSessionId, otherDependencies]);
 };
 
 export default useModuleWiseApiCall;

@@ -8,10 +8,10 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 
 import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { checkForValidNumber } from "../../constant/utils";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
 import { MENU_KEYS, NOTIFICATION_TYPES } from "../../constant/constant";
-import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 
 const EditSessionRound = ({
   intl,
@@ -49,7 +49,7 @@ const EditSessionRound = ({
   const [centresError, setCentresError] = useState(false);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
 
-  const sessionID = globalSessionDetails?.globalSessionId;
+  const sessionId = globalSessionDetails?.globalSessionId;
 
   const { data, isError } = useFetch({
     url: ADMIN_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT,
@@ -198,7 +198,7 @@ const EditSessionRound = ({
             onSuccessCallback: () => onClickCancel(true),
             roundId: roundDetails?.id,
             selectedModuleKey: selectedModule?.key,
-            sessionID,
+            sessionId,
           });
         }
       } else {
@@ -215,7 +215,7 @@ const EditSessionRound = ({
           onSuccessCallback: () => onClickCancel(true),
           roundId: roundDetails?.id,
           selectedModuleKey: selectedModule?.key,
-          sessionID,
+          sessionId,
         });
       }
     }
