@@ -179,12 +179,17 @@ export const useIntitalDataAndError = ({
   consentRoundTwoData,
   lastRegistrationDatesData,
 }) => {
-  const [roundOneData, setRoundOneData] = useState([]);
-  const [roundTwoData, setRoundTwoData] = useState([]);
-  const [lastRegistrationData, setLastRegistrationData] = useState([]);
+  console.log("inside config");
+
+  const [roundOneInitialData, setRoundOneInitialData] = useState([]);
+  const [roundTwoInitialData, setRoundTwoInitialData] = useState([]);
+  const [lastRegistrationInitialData, setLastRegistrationInitialData] =
+    useState([]);
 
   useEffect(() => {
+    console.log("inside consentRoundOneData useEffect");
     if (consentRoundOneData) {
+      console.log("inside if consentRoundOneData");
       const transformedData = consentRoundOneData?.map((item) => ({
         ...item,
         sNo: item.id,
@@ -204,12 +209,14 @@ export const useIntitalDataAndError = ({
             ? item.candidate_consent_marking_end_date
             : null,
       }));
-      setRoundOneData(transformedData);
+      setRoundOneInitialData(transformedData);
     }
   }, [consentRoundOneData]);
 
   useEffect(() => {
+    console.log("inside consentRoundTwoData useEffect");
     if (consentRoundTwoData) {
+      console.log("inside if consentRoundTwoData");
       const transformedData = consentRoundTwoData?.map((item) => ({
         ...item,
         id: item.id,
@@ -229,16 +236,18 @@ export const useIntitalDataAndError = ({
             ? item.candidate_consent_marking_end_date
             : null,
       }));
-      setRoundTwoData(transformedData);
+      setRoundTwoInitialData(transformedData);
     }
   }, [consentRoundTwoData]);
 
   useEffect(() => {
+    console.log("inside lastRegistrationDatesData useEffect");
     if (lastRegistrationDatesData) {
+      console.log("inside if lastRegistrationDatesData");
       const transformedData = lastRegistrationDatesData?.map((item) => ({
         ...item,
         id: item.id,
-        name: item.name,
+        centre_name: item.centre_name,
         company_reg_end_date: item.company_reg_end_date
           ? item.company_reg_end_date
           : null,
@@ -246,7 +255,7 @@ export const useIntitalDataAndError = ({
           ? item.psychometric_test_date
           : null,
       }));
-      setLastRegistrationData(transformedData);
+      setLastRegistrationInitialData(transformedData);
     }
   }, [lastRegistrationDatesData]);
 
@@ -268,16 +277,16 @@ export const useIntitalDataAndError = ({
 
   const lastRegistrationInitialError = lastRegistrationDatesData?.map(
     (item) => ({
-      name: "",
+      centre_name: "",
       company_reg_end_date: "",
       psychometric_test_date: "",
     })
   );
 
   return {
-    roundOneInitialData: roundOneData,
-    roundTwoInitialData: roundTwoData,
-    lastRegistrationInitialData: lastRegistrationData,
+    roundOneInitialData,
+    roundTwoInitialData,
+    lastRegistrationInitialData,
     roundOneInitialError,
     roundTwoInitialError,
     lastRegistrationInitialError,
