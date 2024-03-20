@@ -14,3 +14,11 @@
   justify-content: space-between;
   display: flex;
 }
+
+.box {
+  width: var(--fullWidth);
+  height: var(--fullHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

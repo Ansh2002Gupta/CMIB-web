@@ -8,27 +8,27 @@ const getSubscriptionsColumn = (
 ) => {
   return [
     renderColumn({
-      title: intl.formatMessage({ id: "label.package_name" }),
-      dataIndex: "package_name",
-      key: "package_name",
+      title: intl.formatMessage({ id: "label.packageName" }),
+      dataIndex: "name",
+      key: "name",
       renderText: { isTextBold: true, visible: true, isCapitalize: true },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.package_description" }),
-      dataIndex: "package_description",
-      key: "package_description",
+      title: intl.formatMessage({ id: "label.packageDescription" }),
+      dataIndex: "description",
+      key: "description",
       renderText: { visible: true, textStyles: styles.studentStyles },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.created_by" }),
+      title: intl.formatMessage({ id: "label.createdBy" }),
       dataIndex: "created_by",
       key: "created_by",
       renderText: { visible: true, textStyles: styles.studentStyles },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.package_validity" }),
-      dataIndex: "package_validity",
-      key: "package_validity",
+      title: intl.formatMessage({ id: "label.packageValidity" }),
+      dataIndex: "validity",
+      key: "validity",
       renderText: {
         isDays: true,
         visible: true,

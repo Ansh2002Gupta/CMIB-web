@@ -166,10 +166,15 @@ const useRenderColumn = () => {
     } = renderTitleWithCheckbox;
 
     const getStatusStyles = (status) => {
+      if (status === 1) {
+        return ["statusContainer_active", "statusText_active"];
+      }
+      if (status === 0) {
+        return ["statusContainer_inactive", "statusText_inactive"];
+      }
       if (
         status?.toLowerCase() === "closed" ||
-        status?.toLowerCase() === "answered" ||
-        status?.toLowerCase() === "active"
+        status?.toLowerCase() === "answered"
       ) {
         return ["statusContainer_success", "statusText_success"];
       }
@@ -384,7 +389,13 @@ const useRenderColumn = () => {
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <Chip
-            label={status}
+            label={
+              status === 1
+                ? intl.formatMessage({ id: "label.active" })
+                : status === 0
+                ? intl.formatMessage({ id: "label.inactive" })
+                : status
+            }
             customContainerStyles={[
               styles.chipContainer,
               styles[styleClassForContainer],

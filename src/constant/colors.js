@@ -35,6 +35,7 @@ export const colorPallets = {
   fadedGrey: "grey",
   letGrey7: "#bfbfbf",
   disableColor: "rgba(0, 0, 0, 0.04)",
+  ltGreyBg: "#F1F1F1",
 
   // Black color shades
   black1: "#000833",
