@@ -268,26 +268,6 @@ const ConsentMarking = () => {
         }
       />
     </>
-      <TwoRow
-        className={styles.mainContainer}
-        topSection={
-          <HeaderAndTitle
-            headingLabel={intl.formatMessage({
-              id: "label.registrationConsentSchedule",
-            })}
-            titleLabel={intl.formatMessage({
-              id: "label.consentMarkingScheduleWarning",
-            })}
-          />
-        }
-        bottomSection={
-          <>
-            {notificationContextHolder}
-            {renderContent()}
-          </>
-        }
-      />
-    </>
   );
 };
 
