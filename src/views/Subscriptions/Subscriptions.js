@@ -9,6 +9,7 @@ import ContentHeader from "../../containers/ContentHeader";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
+import { ADD_SUBSCRIPTIONS } from "../../routes/routeNames";
 
 const Subscriptions = () => {
   const intl = useIntl();

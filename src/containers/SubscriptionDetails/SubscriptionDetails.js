@@ -21,6 +21,7 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
+import { urlService } from "../../Utils/urlService";
 import {
   ADMIN_ROUTE,
   SUBSCRIPTIONS_END_POINT,
@@ -34,7 +35,6 @@ import {
 import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./SubscriptionDetails.module.scss";
-import { urlService } from "../../Utils/urlService";
 
 const SubscriptionDetails = () => {
   const intl = useIntl();
@@ -42,6 +42,7 @@ const SubscriptionDetails = () => {
   const location = useLocation();
   const { isLoading: isSubscriptionAdding, makeRequest: addSubscriptionData } =
     usePost({ url: ADMIN_ROUTE + SUBSCRIPTIONS_END_POINT });
+  const isAddSubscription = location.pathname.includes(ADD_SUBSCRIPTIONS);
 
   const {
     isLoading: isSubscriptionEditing,
@@ -57,9 +58,9 @@ const SubscriptionDetails = () => {
     isLoading: isGettingSubscription,
   } = useFetch({
     url: ADMIN_ROUTE + SUBSCRIPTIONS_END_POINT + `/${subscriptionId}`,
+    otherOptions: { skipApiCallOnMount: isAddSubscription },
   });
 
-  const isAddSubscription = location.pathname.includes(ADD_SUBSCRIPTIONS);
   const [isEditPackage, setIsEditPackage] = useState(
     urlService.getQueryStringValue("mode") === "edit"
   );
@@ -238,6 +239,7 @@ const SubscriptionDetails = () => {
             className={styles.upperContainer}
             topSection={
               <LabelWithValue
+                customCommonSubHeadingStyle={styles.capitalize}
                 heading={intl.formatMessage({
                   id: "label.packageName",
                 })}
@@ -251,7 +253,11 @@ const SubscriptionDetails = () => {
                   id: "label.package_validity_period",
                 })}
                 subHeading={
-                  formData.validity ? formData.validity + " " + "Days" : "-"
+                  formData.validity
+                    ? formData.validity +
+                      " " +
+                      intl.formatMessage({ id: "label.days" })
+                    : "-"
                 }
                 isMandatory
               />
@@ -274,7 +280,13 @@ const SubscriptionDetails = () => {
                 heading={intl.formatMessage({
                   id: "label.price",
                 })}
-                subHeading={formData?.price ? formData?.price : "-"}
+                subHeading={
+                  formData?.price
+                    ? formData?.price +
+                      " " +
+                      intl.formatMessage({ id: "label.inr" })
+                    : "-"
+                }
                 isMandatory
               />
             }
@@ -462,6 +474,7 @@ const SubscriptionDetails = () => {
         topSection={
           <ContentHeader
             customContainerStyle={commonStyles.headerBox}
+            customStyles={styles.capitalize}
             headerText={
               (isEditPackage &&
                 !isAddSubscription &&

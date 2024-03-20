@@ -546,6 +546,8 @@ const locale = {
   "label.default_package_name": "Package 1",
   "label.package_validity_period": "Package Validity Period",
   "label.path.subscription-details": "Subscription Details",
+  "label.inr": "INR",
+  "label.days": "Days",
 };
 
 export default locale;
