@@ -20,7 +20,12 @@ import {
 import { initialFieldState } from "./constant";
 import { MASTER } from "../../../constant/apiEndpoints";
 import { CONFIGURATIONS } from "../../../routes/routeNames";
-import { MODULE_KEYS, NOTIFICATION_TYPES } from "../../../constant/constant";
+import {
+  MAX_VIDEO_LENGTH,
+  MIN_VIDEO_LENGTH,
+  MODULE_KEYS,
+  NOTIFICATION_TYPES,
+} from "../../../constant/constant";
 import { classes } from "./CaJobsConfigurations.styles";
 import styles from "./CaJobsConfigurations.module.scss";
 
@@ -30,7 +35,8 @@ const CaJobsConfigurations = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const selectedModule = userProfileDetails?.selectedModuleItem;
 
-  const [videoTimeLimit, setVideoTimeLimit] = useState(0);
+  const [videoTimeLimit, setVideoTimeLimit] = useState(1);
+  const [videoTimeLimitError, setVideoTimeLimitError] = useState("");
   const [itSkills, setItSkills] = useState(initialFieldState);
   const [softSkills, setSoftSkills] = useState(initialFieldState);
   const { isLoading: isSavingConfigurations, postGlobalConfigurations } =
@@ -137,6 +143,17 @@ const CaJobsConfigurations = () => {
     setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
     setVideoTimeLimit(previousSavedData.current.previousSavedVideoTimeLimit);
   };
+  const validate = () => {
+    if (
+      videoTimeLimit >= MIN_VIDEO_LENGTH &&
+      videoTimeLimit <= MAX_VIDEO_LENGTH
+    ) {
+      setVideoTimeLimitError("");
+      return true;
+    }
+    setVideoTimeLimitError(intl.formatMessage({ id: "label.videolimitError" }));
+    return false;
+  };
 
   const renderContent = () => {
     if (isLoading) {
@@ -168,9 +185,11 @@ const CaJobsConfigurations = () => {
             selectedModule,
             setItSkills,
             setSoftSkills,
+            setVideoTimeLimitError,
+            setVideoTimeLimit,
             softSkills,
             videoTimeLimit,
-            setVideoTimeLimit,
+            videoTimeLimitError,
           }}
         />
       );
@@ -202,14 +221,15 @@ const CaJobsConfigurations = () => {
               customContainerStyles={styles.buttonWrapper}
               isLoading={isSavingConfigurations}
               isActionBtnDisable={
+                !videoTimeLimit ||
                 itSkills.some(
                   (obj) => obj?.error && obj.buttonType !== "add"
                 ) ||
                 softSkills.some((obj) => obj?.error && obj.buttonType !== "add")
               }
-              onActionBtnClick={() =>
-                postProfileSkills({ keyName: "fieldValue" })
-              }
+              onActionBtnClick={() => {
+                if (validate()) postProfileSkills({ keyName: "fieldValue" });
+              }}
               onCancelBtnClick={initializeWithPreviousSavedData}
             />
           ) : (
