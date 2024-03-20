@@ -432,6 +432,7 @@ const ConsentMarkingContent = ({
                               isEditable={isRegistrationDateEdit}
                               type="date"
                               isRequired
+                              isSpacedError
                               label={intl.formatMessage({
                                 id: `label.consent.${item?.labeIntl}`,
                               })}

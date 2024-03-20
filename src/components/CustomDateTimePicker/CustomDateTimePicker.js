@@ -27,6 +27,7 @@ const CustomDateTimePicker = ({
   format,
   isEditable,
   isRequired,
+  isSpacedError,
   label,
   onChange,
   placeholder,
@@ -106,7 +107,7 @@ const CustomDateTimePicker = ({
             <Typography
               className={[classes.errorText, customErrorTextStyles].join(" ")}
             >
-              {errorMessage ? `${errorMessage}` : `\u00A0`}
+              {errorMessage ? `${errorMessage}` : isSpacedError ? `\u00A0` : ""}
             </Typography>
           }
         />
@@ -128,6 +129,7 @@ CustomDateTimePicker.defaultProps = {
   format: "hh:mm a",
   isEditable: true,
   isRequired: false,
+  isSpacedError: false,
   label: "",
   onChange: () => {},
   placeholder: "",
@@ -151,6 +153,7 @@ CustomDateTimePicker.propTypes = {
   format: PropTypes.string,
   isEditable: PropTypes.bool,
   isRequired: PropTypes.bool,
+  isSpacedError: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
