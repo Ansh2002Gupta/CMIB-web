@@ -157,6 +157,18 @@ const ConsentMarkingContent = ({
     lastRegistrationInitialData
   );
 
+  useEffect(() => {
+    setRoundOneTableData(roundOneInitialData);
+    setRoundTwoTableData(roundTwoInitialData);
+    setLastRegistrationTableData(lastRegistrationInitialData);
+    setRegistrationDatesData(registrationDateData);
+  }, [
+    roundOneInitialData,
+    roundTwoInitialData,
+    lastRegistrationInitialData,
+    registrationDateData,
+  ]);
+
   const registrationDates = isNqca
     ? NQCA_REGISTRATION_DATE_FIELDS
     : OTHER_MODULES_REGISTRATION_DATE_FIELDS;
@@ -381,17 +393,16 @@ const ConsentMarkingContent = ({
   const handleOnTabSwitch = useCallback((tabId) => {
     setActiveTab(tabId);
   }, []);
-
   useEffect(() => {
     const activeTab = urlService.getQueryStringValue(ACTIVE_TAB);
-    if (registrationDateData?.is_round2_visible) {
+    if (registrationDatesData?.is_round2_visible) {
       if (!VALID_CONSENT_MARKING_TABS_ID?.threeTab?.includes(activeTab)) {
         urlService.setQueryStringValue(ACTIVE_TAB, 1);
         setActiveTab("1");
       }
       return;
     }
-    if (registrationDateData?.is_round1_visible) {
+    if (registrationDatesData?.is_round1_visible) {
       if (!VALID_CONSENT_MARKING_TABS_ID.twoTab.includes(activeTab)) {
         urlService.setQueryStringValue(ACTIVE_TAB, 1);
         setActiveTab("1");
@@ -402,18 +413,18 @@ const ConsentMarkingContent = ({
       urlService.setQueryStringValue(ACTIVE_TAB, 1);
       setActiveTab("1");
     }
-  }, [urlService]);
+  }, [urlService, activeTab]);
 
   return (
     <>
       <TwoRow
         className={styles.mainContainer}
         topSection={
-          <TwoRow
-            topSection={
-              <>
-                {isUpdatingRegistrationDate && <CustomLoader />}
-                {!isUpdatingRegistrationDate && (
+          <>
+            {isUpdatingRegistrationDate && <CustomLoader />}
+            {!isUpdatingRegistrationDate && (
+              <TwoRow
+                topSection={
                   <TwoColumn
                     leftSection={
                       <CustomGrid customStyle={styles.customStyle}>
@@ -437,6 +448,7 @@ const ConsentMarkingContent = ({
                               isEditable={isRegistrationDateEdit}
                               type="date"
                               isRequired
+                              isSpacedError
                               label={intl.formatMessage({
                                 id: `label.consent.${item?.labeIntl}`,
                               })}
@@ -475,35 +487,35 @@ const ConsentMarkingContent = ({
                     }
                     rightSectionStyle={classes.editStyles}
                   />
-                )}
-              </>
-            }
-            bottomSection={
-              isRegistrationDateEdit ? (
-                <ActionAndCancelButtons
-                  customContainerStyle={styles.customContainerStyle}
-                  customActionBtnStyles={styles.button}
-                  customCancelBtnStyles={styles.button}
-                  actionBtnText={intl.formatMessage({
-                    id: "label.saveChanges",
-                  })}
-                  cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-                  onActionBtnClick={handleRegistrationSave}
-                  isActionBtnDisable={
-                    !registrationDatesData?.company_reg_start_date ||
-                    !registrationDatesData?.candidate_reg_start_date ||
-                    !registrationDatesData?.candidate_reg_end_date_bg_centre ||
-                    (isNqca &&
-                      !registrationDatesData?.candidate_reg_end_date_sm_centre)
-                  }
-                  onCancelBtnClick={handleRegistrationCancel}
-                  isctionButtonLoading={isUpdatingRegistrationDate}
-                />
-              ) : (
-                <></>
-              )
-            }
-          />
+                }
+                bottomSection={
+                  isRegistrationDateEdit ? (
+                    <ActionAndCancelButtons
+                      customContainerStyle={styles.customContainerStyle}
+                      customActionBtnStyles={styles.button}
+                      customCancelBtnStyles={styles.button}
+                      actionBtnText={intl.formatMessage({
+                        id: "label.saveChanges",
+                      })}
+                      cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                      onActionBtnClick={handleRegistrationSave}
+                      isActionBtnDisable={
+                        !registrationDatesData?.company_reg_start_date ||
+                        !registrationDatesData?.candidate_reg_start_date ||
+                        !registrationDatesData?.candidate_reg_end_date_bg_centre ||
+                        (isNqca &&
+                          !registrationDatesData?.candidate_reg_end_date_sm_centre)
+                      }
+                      onCancelBtnClick={handleRegistrationCancel}
+                      isctionButtonLoading={isUpdatingRegistrationDate}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
+              />
+            )}
+          </>
         }
         topSectionStyle={classes.topSectionStyle}
         bottomSection={
