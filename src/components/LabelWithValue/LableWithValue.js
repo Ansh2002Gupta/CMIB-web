@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography } from "antd";
+
 import commonStyles from "../../common/commonStyles.module.scss";
 
 const LabelWithValue = ({ heading, subHeading, isMandatory = false }) => {
@@ -15,4 +16,5 @@ const LabelWithValue = ({ heading, subHeading, isMandatory = false }) => {
     </div>
   );
 };
+
 export default LabelWithValue;
