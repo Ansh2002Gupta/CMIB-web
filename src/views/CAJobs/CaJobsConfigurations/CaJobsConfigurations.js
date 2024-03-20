@@ -222,7 +222,6 @@ const CaJobsConfigurations = () => {
               customContainerStyle={styles.buttonWrapper}
               isLoading={isSavingConfigurations}
               isActionBtnDisable={
-                !videoTimeLimit ||
                 itSkills.some(
                   (obj) => obj?.error && obj.buttonType !== "add"
                 ) ||
