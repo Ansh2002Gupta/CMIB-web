@@ -19,6 +19,21 @@ const VideoTimeLimitSection = ({
   const responsive = useResponsive();
   const intl = useIntl();
 
+  const handleChange = (val) => {
+    setVideoTimeLimit(val);
+    if (val === null) {
+      setVideoTimeLimitError(
+        intl.formatMessage({ id: "label.error.fieldEmpty" })
+      );
+      return;
+    }
+    if (val >= MIN_VIDEO_LENGTH && val <= MAX_VIDEO_LENGTH) {
+      setVideoTimeLimitError("");
+      return;
+    }
+    setVideoTimeLimitError(intl.formatMessage({ id: "label.videolimitError" }));
+  };
+
   return (
     <div className={styles.outerContainer}>
       <TwoRow
@@ -44,17 +59,8 @@ const VideoTimeLimitSection = ({
             <CustomInput
               controls={true}
               customInputNumberStyles={styles.inputNumberStyle}
-              onChange={(val) => {
-                if (val === null) {
-                  setVideoTimeLimitError(
-                    intl.formatMessage({ id: "label.error.fieldEmpty" })
-                  );
-                } else {
-                  setVideoTimeLimitError("");
-                }
-
-                setVideoTimeLimit(val);
-              }}
+              onChange={handleChange}
+              maxLength={3}
               type="inputNumber"
               value={videoTimeLimit}
               errorMessage={videoTimeLimitError}

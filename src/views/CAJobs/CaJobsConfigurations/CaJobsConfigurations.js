@@ -139,6 +139,7 @@ const CaJobsConfigurations = () => {
     });
   };
   const initializeWithPreviousSavedData = () => {
+    setVideoTimeLimitError("");
     setItSkills(previousSavedData.current.previousSavedItSkills);
     setSoftSkills(previousSavedData.current.previousSavedSoftSkills);
     setVideoTimeLimit(previousSavedData.current.previousSavedVideoTimeLimit);
