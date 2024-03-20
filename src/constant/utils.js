@@ -366,9 +366,9 @@ export const compareTwoDayjsDates = ({ current, date, checkForFuture }) => {
     return false;
   }
   if (checkForFuture) {
-    return current && current > dayjs(date).startOf("day");
+    return current && current > dayjs(date).subtract(1, "day").startOf("day");
   }
-  return current && current <= dayjs(date).startOf("day");
+  return current && current < dayjs(date).add(1, "day").startOf("day");
 };
 
 export const checkForValidNumber = (number) => {

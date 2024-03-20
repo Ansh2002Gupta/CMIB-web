@@ -30,12 +30,15 @@ import {
   ROUNDS,
   ROUND_ONE,
   ROUND_TWO,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import {
   ACTIVE_TAB,
+  API_VERSION_QUERY_PARAM,
   VALID_CONSENT_MARKING_TABS_ID,
   MODULE_KEYS,
   NOTIFICATION_TYPES,
+  SESSION_ID_QUERY_PARAM,
 } from "../../constant/constant";
 import { classes } from "./ConsentMarkingContent.styles";
 import styles from "./ConsentMarkingContent.module.scss";
@@ -51,6 +54,7 @@ const ConsentMarkingContent = ({
   roundId,
   registrationDateData,
   setActiveTab,
+  sessionId,
   showNotification,
 }) => {
   const intl = useIntl();
@@ -66,7 +70,9 @@ const ConsentMarkingContent = ({
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      REGISTRATION_DATES,
+      REGISTRATION_DATES +
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const {
@@ -78,7 +84,9 @@ const ConsentMarkingContent = ({
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      LAST_REGISTRATION_DATES,
+      LAST_REGISTRATION_DATES +
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
   const { makeRequest: updateRoundOneDate, isLoading: isUpdatingRoundOneDate } =
     usePut({
@@ -88,7 +96,11 @@ const ConsentMarkingContent = ({
         ROUNDS +
         `/${roundId}` +
         REGISTRATION_CONSENT +
-        ROUND_ONE,
+        ROUND_ONE +
+        `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+      apiOptions: {
+        headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION },
+      },
     });
   const { makeRequest: updateRoundTwoDate, isLoading: isUpdatingRoundTwoDate } =
     usePut({
@@ -98,7 +110,11 @@ const ConsentMarkingContent = ({
         ROUNDS +
         `/${roundId}` +
         REGISTRATION_CONSENT +
-        ROUND_TWO,
+        ROUND_TWO +
+        `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
+      apiOptions: {
+        headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION },
+      },
     });
 
   const [registrationDatesData, setRegistrationDatesData] =

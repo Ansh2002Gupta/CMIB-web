@@ -4,15 +4,22 @@ import {
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   ROUND_TWO_SETUP_CENTERS,
+  ROUND_TWO_CONSENT_MARKING,
   SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
 
+export const API_VERSION_QUERY_PARAM = "api-version";
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
 export const SLIDE_BY = 300;
 export const MESSAGE_MAX_LENGTH = 5000;
+export const MAX_INPUT_LENGTH = 100;
+export const MIN_INPUT_LENGTH = 0;
+export const MAX_VIDEO_LENGTH = 999;
+export const MIN_VIDEO_LENGTH = 1;
+export const SESSION_ID_QUERY_PARAM = "session-id";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -23,6 +30,7 @@ export const API_STATUS = {
 
 export const STATUS_CODES = {
   SUCCESS_STATUS: 200,
+  SUCCESS_POST: 201,
   NOT_FOUND: 404,
   UNAUTHORIZED_USER: 401,
 };
@@ -58,12 +66,12 @@ export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 export const VALID_SESSION_TABS_ID = ["1", "2", "3"];
-
 export const VALID_CONSENT_MARKING_TABS_ID = {
   oneTab: ["1"],
   twoTab: ["1", "2"],
   threeTab: ["1", "2", "3"],
 };
+export const VALID_GLOBAL_CONFIGURATIONS_TABS_ID = ["1", "2"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
 export const ACCESS_OPTIONS = [
@@ -254,7 +262,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: CONSENT_MARKING_ROUND_TWO,
+    onClickNaviagtion: ROUND_TWO_CONSENT_MARKING,
   },
   {
     id: 3,
@@ -383,6 +391,7 @@ export const USER_PROFILE_QUERY_PARAMS = "user-profile";
 export const ROUND_ID = "roundId";
 
 export const MIN_SEARCH_TEXT_LENGTH = 2;
+export const MIN_CHARACTERS_IN_INPUT_FIELD = 0;
 
 export const CENTRE_TYPE_ENUM = {
   BIG: "big",
@@ -401,6 +410,7 @@ export const MAX_CTC_LENGTH = 10;
 export const MAX_EXPERIENCE_LENGTH = 2;
 export const MAX_PARTNERS_LENGTH = 3;
 export const MAX_VACANCIES_LENGTH = 4;
+export const MAX_CHARACTERS_IN_INPUT_FIELD = 999;
 
 export const PAYMENT_TYPE = {
   WHOLE: "whole",
@@ -413,3 +423,21 @@ export const INTERVIEW_TYPE = [
 ];
 
 export const NO_BREAK_SPACE = "\u00A0";
+export const REGISTRATION_DATES = [
+  { id: 1, labeIntl: "startDateCompanies" },
+  { id: 2, labeIntl: "startDateCandidates" },
+  { id: 3, labeIntl: "lastDateBigCentres" },
+  { id: 4, labeIntl: "lastDateSmallCentres" },
+];
+
+export const REGISTRATIONS_DATES_FOR_ROUND_TWO = [
+  { id: 1, labeIntl: "registrationStartDateCompanies" },
+  { id: 2, labeIntl: "registrationEndDateCompanies" },
+  { id: 3, labeIntl: "registrationStartDateCandidates" },
+  { id: 4, labeIntl: "registrationEndDateCandidates" },
+  { id: 5, labeIntl: "startShortlistingbyCompany" },
+  { id: 6, labeIntl: "endShortlistingbyCompany" },
+  { id: 7, labeIntl: "startCondidateConsentmarking" },
+  { id: 8, labeIntl: "endCondidateConsentmarking" },
+  { id: 9, labeIntl: "writtenTestDate" },
+];
