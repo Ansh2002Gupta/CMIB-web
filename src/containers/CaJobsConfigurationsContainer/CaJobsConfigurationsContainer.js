@@ -24,7 +24,7 @@ const CaJobsConfigurationsContainer = ({
       className={`${styles.fullWidth} ${
         selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY
           ? styles.outerContainer
-          : ""
+          : styles.otherOutercontainer
       }`}
     >
       <TwoRow
