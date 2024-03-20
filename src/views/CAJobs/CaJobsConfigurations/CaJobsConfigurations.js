@@ -227,9 +227,16 @@ const CaJobsConfigurations = () => {
                 ) ||
                 softSkills.some((obj) => obj?.error && obj.buttonType !== "add")
               }
-              onActionBtnClick={() => {
-                if (validate()) postProfileSkills({ keyName: "fieldValue" });
-              }}
+              onActionBtnClick={
+                selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY
+                  ? () => {
+                      if (validate())
+                        postProfileSkills({ keyName: "fieldValue" });
+                    }
+                  : () => {
+                      postProfileSkills({ keyName: "fieldValue" });
+                    }
+              }
               onCancelBtnClick={initializeWithPreviousSavedData}
             />
           ) : (
