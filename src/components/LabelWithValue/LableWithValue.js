@@ -7,7 +7,7 @@ const LabelWithValue = ({ heading, subHeading, isMandatory = false }) => {
   return (
     <div>
       <Typography className={commonStyles.commonLabelStyle}>
-        {heading}{" "}
+        {heading}
         {isMandatory && <span className={commonStyles.redText}>*</span>}
       </Typography>
       <Typography className={commonStyles.commonSubHeadingStyle}>
