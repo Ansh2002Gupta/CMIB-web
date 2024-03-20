@@ -47,3 +47,19 @@
   border-radius: var(--radiusXLg, 12px);
   background-color: var(--letGrey7, #bfbfbf);
 }
+
+.redText {
+  color: var(--redText);
+}
+
+.commonLabelStyle{
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.commonSubHeadingStyle{
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  margin-top: var(--marginSmall);
+}
