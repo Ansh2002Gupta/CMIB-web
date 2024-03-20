@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-const useCandidateSettings = () => {
+const useCandidateSettings = ({ candidateDetails }) => {
   const addTableData = {
     isAddRow: true,
     centre: "",
@@ -79,12 +79,12 @@ const useCandidateSettings = () => {
   };
 
   const initialFormState = {
-    max_no_of_interview: "",
-    max_no_of_offer: "",
-    big_centre_start_date: null,
-    big_centre_end_date: null,
-    small_centre_start_date: null,
-    small_centre_end_date: null,
+    max_no_of_interview: candidateDetails?.max_no_of_interview || "",
+    max_no_of_offer: candidateDetails?.max_no_of_offer || "",
+    big_centre_start_date: candidateDetails?.big_centre_start_date || null,
+    big_centre_end_date: candidateDetails?.big_centre_end_date || null,
+    small_centre_start_date: candidateDetails?.small_centre_start_date || null,
+    small_centre_end_date: candidateDetails?.small_centre_end_date || null,
   };
 
   const getInitialFields = (

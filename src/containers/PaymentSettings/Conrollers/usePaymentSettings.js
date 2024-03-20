@@ -1,15 +1,15 @@
 import { useState } from "react";
 
-const usePaymentSettings = () => {
+const usePaymentSettings = ({ paymentDetails }) => {
   const [selectedCompanyList, setSelectedCompanyList] = useState([]);
 
   const initialFormState = {
-    cgst: "",
-    sgst: "",
-    igst: "",
-    no_gst: [],
-    discount_rate: "",
-    member_registration_fee: "",
+    cgst: paymentDetails?.cgst || "",
+    sgst: paymentDetails?.sgst || "",
+    igst: paymentDetails?.igst || "",
+    no_gst: paymentDetails?.no_gst || [" ark"],
+    discount_rate: paymentDetails?.discount_rate || "",
+    member_registration_fee: paymentDetails?.member_registration_fee || "",
   };
 
   const getInitialFields = (

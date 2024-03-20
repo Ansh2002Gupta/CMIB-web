@@ -1,5 +1,5 @@
 // API version numbers
-export const API_VERSION_NUMBER = "1.0.0";
+export const API_VERSION_NUMBER = "v1";
 
 // API end-point role
 export const ADMIN_ROUTE = "admin";
@@ -12,6 +12,7 @@ export const ASSIGN = "/assign";
 export const ASSIGNEES = "/assignees";
 export const AUTHENTICATE_OTP_ROUTE = "/reset-password-otp";
 export const CENTRE_END_POINT = "/centres";
+export const CAMPUS_INTERVIEW = "/campus-interviews";
 export const CHANGE_PASSWORD = "/password";
 export const CHECK_OTP_END_POINT = "/two-factor-check";
 export const CORE_COUNTRIES = "core/countries";

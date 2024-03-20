@@ -2,8 +2,19 @@ import { useState } from "react";
 
 import { MAX_EXPERIENCE_LENGTH } from "../../../constant/constant";
 
-const useCompanySettings = () => {
+const useCompanySettings = ({ companyDetails }) => {
   const [selectedInterviewType, setSelectedInterviewType] = useState([]);
+
+  const initialValue = {
+    max_no_of_vacancy: companyDetails?.max_no_of_vacancy || "",
+    multiplier: companyDetails?.multiplier || "",
+    shortlist_students_allowed:
+      companyDetails?.shortlist_students_allowed || "",
+    company_interview_types: companyDetails?.company_interview_types || [
+      "online",
+    ],
+  };
+
   const getInitialFields = (
     max_no_of_vacancy,
     multiplier,
@@ -56,12 +67,7 @@ const useCompanySettings = () => {
     ];
   };
 
-  const [formFields, setFormFields] = useState({
-    max_no_of_vacancy: "",
-    multiplier: "",
-    shortlist_students_allowed: "",
-    company_interview_types: [],
-  });
+  const [formFields, setFormFields] = useState(initialValue);
   const [formErrors, setFormErrors] = useState({});
 
   const onSelectInterviewType = (item, option) => {
