@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
-import { useLocation } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 import { TwoRow } from "../../core/layouts";
 
 import ConsentMarkingContent from "../../containers/ConsentMarkingContent";
-import ConsentMarkingContentRoundTwo from "../../containers/ConsentMarkingContentRoundTwo";
 import ConsentMarkingContentRoundTwo from "../../containers/ConsentMarkingContentRoundTwo";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
@@ -214,8 +212,6 @@ const ConsentMarking = () => {
     if (
       ((activeTab === "3" && consentRoundTwoData) ||
         (activeTab === "2" && consentRoundOneData) ||
-        (activeTab === "1" && lastRegistrationDatesData) ||
-        hasRoundTwo) &&
         (activeTab === "1" && lastRegistrationDatesData) ||
         hasRoundTwo) &&
       registrationDateData
