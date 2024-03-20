@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import { useIntl } from "react-intl";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
 import { ThreeColumn, TwoColumn, TwoRow } from "../../core/layouts";
@@ -34,6 +34,7 @@ import {
 import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./SubscriptionDetails.module.scss";
+import { urlService } from "../../Utils/urlService";
 
 const SubscriptionDetails = () => {
   const intl = useIntl();
@@ -52,16 +53,16 @@ const SubscriptionDetails = () => {
     data: subscriptionData,
     error: subscriptionError,
     fetchData: getSubscriptionData,
-    isError: errorWhileGttingSubscription,
+    isError: isErrorWhileGettingSubscription,
     isLoading: isGettingSubscription,
   } = useFetch({
     url: ADMIN_ROUTE + SUBSCRIPTIONS_END_POINT + `/${subscriptionId}`,
-    otherOptions: {
-      skipApiCallOnMount: true,
-    },
   });
+
   const isAddSubscription = location.pathname.includes(ADD_SUBSCRIPTIONS);
-  const [isEditPackage, setIsEditPackage] = useState(false);
+  const [isEditPackage, setIsEditPackage] = useState(
+    urlService.getQueryStringValue("mode") === "edit"
+  );
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { navigateScreen: navigate } = useNavigateScreen();
   const [, setNotificationStateDispatch] = useContext(NotificationContext);
@@ -79,10 +80,10 @@ const SubscriptionDetails = () => {
           price: null,
         }
       : {
-          name: "sdcds",
-          description: "dsfdsf",
-          validity: 122,
-          price: 213123,
+          name: subscriptionData?.name,
+          description: subscriptionData?.description,
+          validity: subscriptionData?.validity,
+          price: subscriptionData?.price,
         }
   );
 
@@ -95,7 +96,6 @@ const SubscriptionDetails = () => {
   };
 
   const handleRadioButton = (e) => {
-    console.log(e.target.value);
     setStatus(e.target.value);
   };
 
@@ -133,7 +133,7 @@ const SubscriptionDetails = () => {
       );
       errorCount++;
     }
-    if (errorCount) return false;
+    if (!!errorCount) return false;
     else return true;
   };
 
@@ -198,6 +198,37 @@ const SubscriptionDetails = () => {
       });
     }
   };
+
+  useEffect(() => {
+    if (subscriptionData) {
+      setFormData(
+        isAddSubscription
+          ? {
+              name: "",
+              description: "",
+              validity: null,
+              price: null,
+            }
+          : {
+              name: subscriptionData?.name,
+              description: subscriptionData?.description,
+              validity: subscriptionData?.validity,
+              price: subscriptionData?.price,
+            }
+      );
+    }
+    setStatus(subscriptionData?.status);
+  }, [subscriptionData]);
+
+  useEffect(() => {
+    if (
+      urlService.getQueryStringValue("mode") !== "view" &&
+      urlService.getQueryStringValue("mode") !== "edit"
+    ) {
+      urlService.setQueryStringValue("mode", "view");
+      setIsEditPackage(false);
+    }
+  }, [urlService]);
 
   const renderNonEditableContent = () => {
     return (
@@ -285,7 +316,7 @@ const SubscriptionDetails = () => {
               <CustomInput
                 disabled={!isAddSubscription && isEditPackage}
                 errorMessage={errors?.name}
-                isError={errors?.name ? true : false}
+                isError={!!errors?.name}
                 value={formData.name}
                 label={intl.formatMessage({
                   id: "label.packageName",
@@ -305,7 +336,7 @@ const SubscriptionDetails = () => {
               <CustomInput
                 disabled={!isAddSubscription && isEditPackage}
                 errorMessage={errors?.description}
-                isError={errors?.description ? true : false}
+                isError={!!errors?.description}
                 value={formData?.description}
                 label={intl.formatMessage({
                   id: "label.packageName_descriptions",
@@ -331,7 +362,7 @@ const SubscriptionDetails = () => {
               <CustomInput
                 disabled={!isAddSubscription && isEditPackage}
                 errorMessage={errors?.validity}
-                isError={errors?.validity ? true : false}
+                isError={!!errors?.validity}
                 controls
                 type="inputNumber"
                 value={formData.validity}
@@ -352,7 +383,7 @@ const SubscriptionDetails = () => {
               <CustomInput
                 disabled={!isAddSubscription && isEditPackage}
                 errorMessage={errors?.price}
-                isError={errors?.price ? true : false}
+                isError={!!errors?.price}
                 controls
                 value={formData.price}
                 label={intl.formatMessage({
@@ -408,6 +439,7 @@ const SubscriptionDetails = () => {
   };
 
   const editPackage = () => {
+    urlService.setQueryStringValue("mode", "edit");
     setIsEditPackage(true);
   };
 
@@ -466,7 +498,7 @@ const SubscriptionDetails = () => {
                     <CustomLoader />
                   ) : isAddSubscription || isEditPackage ? (
                     renderEditableContent()
-                  ) : errorWhileGttingSubscription ? (
+                  ) : isErrorWhileGettingSubscription ? (
                     <div className={styles.box}>
                       <ErrorMessageBox
                         onRetry={handleTryAgain}

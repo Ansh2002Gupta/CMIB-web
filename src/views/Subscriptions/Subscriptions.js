@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Button } from "antd";
-import { useNavigate } from "react-router-dom";
 
 import TwoRow from "../../core/layouts/TwoRow";
 
@@ -9,18 +9,18 @@ import ContentHeader from "../../containers/ContentHeader";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
-import { ADD_SUBSCRIPTIONS } from "../../routes/routeNames";
 
 const Subscriptions = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { showNotification, notificationContextHolder } = useShowNotification();
   const [notificationState, setNotificationStateDispatch] =
     useContext(NotificationContext);
 
+  const { showNotification, notificationContextHolder } = useShowNotification();
+
   const handleAddSubscription = () => {
     //navigate(ADD_SUBSCRIPTIONS);
-    navigate(`${"subscription-details"}/${2}`);
+    navigate(`${"subscription-details"}/${2}?mode=view`);
   };
 
   useEffect(() => {
