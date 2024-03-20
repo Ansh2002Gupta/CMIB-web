@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { TwoRow } from "../../core/layouts";
 
 import ConsentMarkingContent from "../../containers/ConsentMarkingContent";
+import ConsentMarkingContentRoundTwo from "../../containers/ConsentMarkingContentRoundTwo";
 import ConsentMarkingContentRoundTwo from "../../containers/ConsentMarkingContentRoundTwo";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
@@ -39,6 +41,7 @@ import styles from "./ConsentMarking.module.scss";
 const ConsentMarking = () => {
   const intl = useIntl();
   const location = useLocation();
+  const location = useLocation();
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
@@ -48,6 +51,7 @@ const ConsentMarking = () => {
   const isEdit = !!(
     currentGlobalSession?.is_editable && currentGlobalSession?.status
   );
+  const hasRoundTwo = location?.pathname.includes("round2");
   const hasRoundTwo = location?.pathname.includes("round2");
   const [userProfileDetails] = useContext(UserProfileContext);
   const roundId = urlService.getQueryStringValue(ROUND_ID);
@@ -212,6 +216,8 @@ const ConsentMarking = () => {
         (activeTab === "2" && consentRoundOneData) ||
         (activeTab === "1" && lastRegistrationDatesData) ||
         hasRoundTwo) &&
+        (activeTab === "1" && lastRegistrationDatesData) ||
+        hasRoundTwo) &&
       registrationDateData
     ) {
       return hasRoundTwo ? (
@@ -248,6 +254,26 @@ const ConsentMarking = () => {
 
   return (
     <>
+      <TwoRow
+        className={styles.mainContainer}
+        topSection={
+          <HeaderAndTitle
+            headingLabel={intl.formatMessage({
+              id: "label.registrationConsentSchedule",
+            })}
+            titleLabel={intl.formatMessage({
+              id: "label.consentMarkingScheduleWarning",
+            })}
+          />
+        }
+        bottomSection={
+          <>
+            {notificationContextHolder}
+            {renderContent()}
+          </>
+        }
+      />
+    </>
       <TwoRow
         className={styles.mainContainer}
         topSection={

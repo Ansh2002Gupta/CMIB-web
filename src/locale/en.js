@@ -538,6 +538,10 @@ const locale = {
   "label.headerTextSoftSkills": "Soft skills",
   "label.placeholderItSkills": "Enter IT skills",
   "label.placeholderSoftSkills": "Enter Soft skills",
+  "label.headerTextItSkills": "IT skills",
+  "label.headerTextSoftSkills": "Soft skills",
+  "label.placeholderItSkills": "Enter IT skills",
+  "label.placeholderSoftSkills": "Enter Soft skills",
   "label.registrationSuccess": "Registration Dates updated Successfully",
   "label.lastRegistrationSuccess":
     "Last Registration Dates updated Successfully",
@@ -554,6 +558,12 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.set_max_video_upload_time_limit":
+    "Setup Maximum Video Upload Time Limit",
+  "label.max_video_upload_time_limit":
+    "Maximum Video Upload Time Limit (seconds)",
+  "label.set_profile_skills": "Set Profile Skills",
+  "label.nqca-placements": "nqca-placements",
   "label.set_max_video_upload_time_limit":
     "Setup Maximum Video Upload Time Limit",
   "label.max_video_upload_time_limit":
@@ -591,6 +601,7 @@ const locale = {
   "label.path.consent-marking": "Registration and Consent Marking Schedule",
   "label.dates_added_successfully": "Dates Added Successfully",
   "label.downloadSucess": "Download Successful",
+  "label.videolimitError": "Please enter value between 1 to 999",
 };
 
 export default locale;
