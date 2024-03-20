@@ -103,13 +103,11 @@ const CustomDateTimePicker = ({
             )
           }
           bottomSection={
-            errorMessage && (
-              <Typography
-                className={[classes.errorText, customErrorTextStyles].join(" ")}
-              >
-                {errorMessage ? `${errorMessage}` : ""}
-              </Typography>
-            )
+            <Typography
+              className={[classes.errorText, customErrorTextStyles].join(" ")}
+            >
+              {errorMessage ? `${errorMessage}` : `\u00A0`}
+            </Typography>
           }
         />
       }
