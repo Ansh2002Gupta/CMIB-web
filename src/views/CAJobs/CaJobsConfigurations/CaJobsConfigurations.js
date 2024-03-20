@@ -218,7 +218,7 @@ const CaJobsConfigurations = () => {
               })}
               cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
               customActionBtnStyles={styles.saveButton}
-              customContainerStyles={styles.buttonWrapper}
+              customContainerStyle={styles.buttonWrapper}
               isLoading={isSavingConfigurations}
               isActionBtnDisable={
                 !videoTimeLimit ||

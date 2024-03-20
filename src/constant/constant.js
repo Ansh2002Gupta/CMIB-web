@@ -9,6 +9,7 @@ import {
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
 
+export const API_VERSION_QUERY_PARAM = "api-version";
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
@@ -18,6 +19,7 @@ export const MAX_INPUT_LENGTH = 100;
 export const MIN_INPUT_LENGTH = 0;
 export const MAX_VIDEO_LENGTH = 999;
 export const MIN_VIDEO_LENGTH = 1;
+export const SESSION_ID_QUERY_PARAM = "session-id";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -64,7 +66,6 @@ export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 export const VALID_SESSION_TABS_ID = ["1", "2", "3"];
-
 export const VALID_CONSENT_MARKING_TABS_ID = {
   oneTab: ["1"],
   twoTab: ["1", "2"],

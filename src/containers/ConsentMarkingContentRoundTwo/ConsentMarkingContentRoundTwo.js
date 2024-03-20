@@ -36,6 +36,7 @@ const ConsentMarkingContentRoundTwo = ({
   selectedModule,
   roundId,
   regAndConsentData,
+  sessionId,
 }) => {
   const intl = useIntl();
   const responsive = useResponsive();
@@ -80,9 +81,7 @@ const ConsentMarkingContentRoundTwo = ({
   const [errors, setErrors] = useState([]);
 
   const {
-    errorWhileUpdating,
     updateRegistrationAndConsentMarking,
-    isError,
     isLoading: isUpdatingRegistrationAndConsent,
   } = useRegistrationAndConsentMarking();
 
@@ -273,6 +272,7 @@ const ConsentMarkingContentRoundTwo = ({
           });
         },
         roundId,
+        sessionId,
       });
     }
   };
