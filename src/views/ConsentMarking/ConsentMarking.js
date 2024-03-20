@@ -150,9 +150,7 @@ const ConsentMarking = () => {
   });
 
   const getAllData = () => {
-    if (!registrationDateData) {
-      getRegistrationDate({});
-    }
+    getRegistrationDate({});
 
     if (activeTab === "2") {
       getConsentRoundOne({});
