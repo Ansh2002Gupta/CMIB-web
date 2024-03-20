@@ -62,7 +62,7 @@ const DataTable = ({
           customTableClassName,
           hidePagination && !showTableBorderBottom && "nopagination",
           isHoverEffectRequired ? "customTableHover" : "customTableNoHover",
-          isRowVerticalTop && "tableRowStyle",
+          isRowVerticalTop ? "tableRowStyle" : "",
         ]}
         rowClassName={setRowClassName}
         rowKey="id"

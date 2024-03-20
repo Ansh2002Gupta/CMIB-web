@@ -8,6 +8,7 @@ import { ThemeContext } from "core/providers/theme";
 
 import MarkRequired from "../MarkRequired";
 import { formatDate, formatTime } from "../../constant/utils";
+import { NO_BREAK_SPACE } from "../../constant/constant";
 import classes from "./CustomDateTimePicker.module.scss";
 import { styles } from "./CustomDateTimePicker.styles";
 import "./Override.css";
@@ -107,7 +108,11 @@ const CustomDateTimePicker = ({
             <Typography
               className={[classes.errorText, customErrorTextStyles].join(" ")}
             >
-              {errorMessage ? `${errorMessage}` : isSpacedError ? `\u00A0` : ""}
+              {errorMessage
+                ? `${errorMessage}`
+                : isSpacedError
+                ? NO_BREAK_SPACE
+                : ""}
             </Typography>
           }
         />
