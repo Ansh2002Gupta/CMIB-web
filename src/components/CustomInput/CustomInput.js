@@ -65,6 +65,31 @@ const CustomInput = React.forwardRef(
       });
     };
 
+    const handleInputChange = (newValue) => {
+      if (
+        maxLength &&
+        !isNaN(newValue) &&
+        newValue?.toString()?.length <= maxLength
+      ) {
+        onChange(newValue);
+        return;
+      }
+      onChange(newValue);
+    };
+
+    const handleKeyDown = (e) => {
+      const currentValue = e?.target?.value;
+      const key = e.key;
+      if (
+        maxLength &&
+        !isNaN(key) &&
+        currentValue &&
+        currentValue?.toString()?.length >= maxLength
+      ) {
+        e.preventDefault();
+      }
+    };
+
     return (
       <Base className={[styles.container, customContainerStyles].join(" ")}>
         {!!label && (
@@ -171,10 +196,13 @@ const CustomInput = React.forwardRef(
                 customInputNumberStyles,
                 isError && errorMessage ? errorInput : "",
               ].join(" ")}
+              formatter={(value) => (value !== undefined ? `${value}` : "")}
+              parser={(value) => value.replace(/[^\d]/g, "")} // Allows only digits
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               {...{
                 value,
                 placeholder,
-                onChange,
                 disabled,
                 min,
                 max,
