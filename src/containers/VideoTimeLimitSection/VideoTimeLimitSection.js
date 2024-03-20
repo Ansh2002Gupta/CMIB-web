@@ -21,7 +21,6 @@ const VideoTimeLimitSection = ({
 
   const handleChange = (val) => {
     setVideoTimeLimit(val);
-    console.log(val, "val..");
     if (val === null) {
       setVideoTimeLimitError(
         intl.formatMessage({ id: "label.error.fieldEmpty" })
@@ -34,8 +33,6 @@ const VideoTimeLimitSection = ({
     }
     setVideoTimeLimitError(intl.formatMessage({ id: "label.videolimitError" }));
   };
-
-  console.log(videoTimeLimit, "videoTimeLimit..");
 
   return (
     <div className={styles.outerContainer}>
