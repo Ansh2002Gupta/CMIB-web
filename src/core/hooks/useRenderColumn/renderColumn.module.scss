@@ -19,10 +19,10 @@
 }
 
 .textEllipsis {
-  max-width: 200px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  width: var(--fullWidth);
 }
 
 .centreStatusContainer {
@@ -134,4 +134,10 @@
   border-radius: var(--radiusXLg);
   padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
   width: fit-content;
+}
+
+.customCentreStyles {
+  font-size: var(--fontSizeSmall);
+  color: var(--ltGrey7);
+  font-weight: var(--fontWeightMedium);
 }
