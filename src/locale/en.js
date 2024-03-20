@@ -539,6 +539,7 @@ const locale = {
   "label.path.registered-company-details": "Company Details",
   "label.approval_status": "Approval status",
   "label.balanceCredit": "Balance Credit: ",
+  "label.modules": "Modules",
 };
 
 export default locale;

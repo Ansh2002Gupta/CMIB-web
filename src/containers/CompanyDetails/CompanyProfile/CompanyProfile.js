@@ -94,18 +94,48 @@ const CompanyProfile = ({ companyProfileDetails }) => {
                       key={item.id}
                       className={styles.gridItem}
                       topSection={
-                        <Typography className={styles.grayText}>
-                          {intl.formatMessage({
-                            id: `label.${item.headingIntl}`,
-                          })}
-                          <span className={styles.redText}> *</span>
-                        </Typography>
+                        <>
+                          <Typography className={styles.grayText}>
+                            {intl.formatMessage({
+                              id: `label.${item.headingIntl}`,
+                            })}
+                            <span className={styles.redText}> *</span>
+                          </Typography>
+                        </>
                       }
                       bottomSection={
                         <div className={styles.blackText}>{item.value}</div>
                       }
                     />
                   ))}
+                  {contactDetails?.roles && contactDetails.roles.length > 0 && (
+                    <TwoRow
+                      key="roles"
+                      className={styles.gridItem}
+                      topSection={
+                        <>
+                          <Typography className={styles.grayText}>
+                            {intl.formatMessage({
+                              id: "label.modules",
+                            })}
+                            <span className={styles.redText}> *</span>
+                          </Typography>
+                        </>
+                      }
+                      bottomSection={
+                        <div className={styles.sourceOfInformation}>
+                          {contactDetails.roles.map((role, roleIndex) => (
+                            <Typography
+                              key={index}
+                              className={styles.periodText}
+                            >
+                              {role.name}
+                            </Typography>
+                          ))}
+                        </div>
+                      }
+                    />
+                  )}
                 </CustomGrid>
               }
             />
@@ -184,15 +214,16 @@ const CompanyProfile = ({ companyProfileDetails }) => {
           <div className={styles.logo}>
             <div className={styles.logoBox}>
               <Image
+                className={styles.logoImage}
                 src={
                   companyProfileDetails?.company_logo ??
                   getImage("TempCompanyLogo")
-                } // Company logo is Not comming
+                }
                 preview={false}
               />
             </div>
             <div className={styles.logoName}>
-              {companyProfileDetails?.company_logo}
+              {companyProfileDetails?.company_logo ?? ""}
             </div>
           </div>
         }

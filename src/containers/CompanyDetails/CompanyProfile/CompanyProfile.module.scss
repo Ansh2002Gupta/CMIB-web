@@ -104,7 +104,6 @@
 
 .logoBox {
   display: flex;
-  padding: var(--padding_9);
   width: var(--width_347);
   justify-content: center;
   align-items: center;
@@ -114,6 +113,11 @@
   border-top-right-radius: var(--radiusMd);
   background: var(--lightBlueBg);
   border: var(--borderLight);
+}
+
+.logoImage{
+  max-width: var(--width_347);
+  max-height: var(--height_184);
 }
 
 .logoName {

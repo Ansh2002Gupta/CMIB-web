@@ -14,11 +14,7 @@ import {
   getValidPageNumber,
   getValidPageSize,
 } from "../../../constant/utils";
-import {
-  GENERIC_GET_API_FAILED_ERROR_MESSAGE,
-  PAGINATION_PROPERTIES,
-  TYPE,
-} from "../../../constant/constant";
+import { PAGINATION_PROPERTIES, TYPE } from "../../../constant/constant";
 import useFetch from "../../../core/hooks/useFetch";
 import {
   ADMIN_ROUTE,
@@ -63,6 +59,9 @@ const useRegisteredCompany = () => {
   const isError = isErrorCompaniesListing || isErrorStatus;
   const errorListing = getErrorMessage(errorCompaniesListing);
   const errorApprovalStatus = getErrorMessage(errorStatus);
+  const GENERIC_GET_API_FAILED_ERROR_MESSAGE = intl.formatMessage({
+    id: "label.generalGetApiFailedErrorMessage",
+  });
 
   const getErrorDetails = () => {
     if (isErrorCompaniesListing && isErrorStatus) {
