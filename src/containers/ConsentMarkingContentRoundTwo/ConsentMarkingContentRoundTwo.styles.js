@@ -14,7 +14,4 @@ export const classes = {
   tabBottomSectionStyle: {
     backgroundColor: variables.blueBg,
   },
-  editStyles: {
-    paddingLeft: variables.padding_20,
-  },
 };
