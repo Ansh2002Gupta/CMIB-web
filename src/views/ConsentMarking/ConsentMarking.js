@@ -43,8 +43,6 @@ const ConsentMarking = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
-  const sessionId = globalSessionDetails?.globalSessionId;
-
   const isEdit = !!(
     currentGlobalSession?.is_editable && currentGlobalSession?.status
   );
@@ -221,7 +219,6 @@ const ConsentMarking = () => {
             selectedModule: currentlySelectedModuleKey,
             roundId,
             regAndConsentData: registrationDateData,
-            sessionId,
           }}
         />
       ) : (
@@ -245,6 +242,12 @@ const ConsentMarking = () => {
     }
     return <></>;
   };
+
+  useEffect(() => {
+    if (currentlySelectedModuleKey) {
+      getAllData();
+    }
+  }, [userProfileDetails?.selectedModuleItem?.key, activeTab]);
 
   return (
     <>
