@@ -21,6 +21,7 @@ const DataTable = ({
   customContainerStyles,
   customTableClassName,
   isHoverEffectRequired,
+  isRowVerticalTop,
   hidePagination,
   keytoFindSelectedRow,
   onChangeCurrentPage,
@@ -61,6 +62,7 @@ const DataTable = ({
           customTableClassName,
           hidePagination && !showTableBorderBottom && "nopagination",
           isHoverEffectRequired ? "customTableHover" : "customTableNoHover",
+          isRowVerticalTop && "tableRowStyle",
         ]}
         rowClassName={setRowClassName}
         rowKey="id"
@@ -106,6 +108,7 @@ DataTable.defaultProps = {
   currentDataLength: 0,
   customContainerStyles: "",
   isHoverEffectRequired: true,
+  isRowVerticalTop: true,
   keytoFindSelectedRow: "id",
   hidePagination: false,
   onChangeCurrentPage: () => {},
@@ -122,6 +125,7 @@ DataTable.propTypes = {
   currentDataLength: PropTypes.number,
   customContainerStyles: PropTypes.string,
   isHoverEffectRequired: PropTypes.bool,
+  isRowVerticalTop: PropTypes.bool,
   keytoFindSelectedRow: PropTypes.string,
   hidePagination: PropTypes.bool,
   onChangeCurrentPage: PropTypes.func,
