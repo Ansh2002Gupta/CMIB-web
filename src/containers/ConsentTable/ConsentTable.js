@@ -28,6 +28,7 @@ const ConsentTable = ({
       {...{ columns }}
       currentDataLength={tableData.length}
       customContainerStyles={[styles.table, "customConsentTable"].join(" ")}
+      isRowVerticalTop={false}
       hidePagination
       originalData={tableData}
       showTableBorderBottom={isEdit}

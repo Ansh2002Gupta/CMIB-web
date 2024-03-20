@@ -404,11 +404,11 @@ const ConsentMarkingContent = ({
       <TwoRow
         className={styles.mainContainer}
         topSection={
-          <TwoRow
-            topSection={
-              <>
-                {isUpdatingRegistrationDate && <CustomLoader />}
-                {!isUpdatingRegistrationDate && (
+          <>
+            {isUpdatingRegistrationDate && <CustomLoader />}
+            {!isUpdatingRegistrationDate && (
+              <TwoRow
+                topSection={
                   <TwoColumn
                     leftSection={
                       <CustomGrid customStyle={styles.customStyle}>
@@ -432,6 +432,7 @@ const ConsentMarkingContent = ({
                               isEditable={isRegistrationDateEdit}
                               type="date"
                               isRequired
+                              isSpacedError
                               label={intl.formatMessage({
                                 id: `label.consent.${item?.labeIntl}`,
                               })}
@@ -470,35 +471,35 @@ const ConsentMarkingContent = ({
                     }
                     rightSectionStyle={classes.editStyles}
                   />
-                )}
-              </>
-            }
-            bottomSection={
-              isRegistrationDateEdit ? (
-                <ActionAndCancelButtons
-                  customContainerStyle={styles.customContainerStyle}
-                  customActionBtnStyles={styles.button}
-                  customCancelBtnStyles={styles.button}
-                  actionBtnText={intl.formatMessage({
-                    id: "label.saveChanges",
-                  })}
-                  cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-                  onActionBtnClick={handleRegistrationSave}
-                  isActionBtnDisable={
-                    !registrationDatesData?.company_reg_start_date ||
-                    !registrationDatesData?.candidate_reg_start_date ||
-                    !registrationDatesData?.candidate_reg_end_date_bg_centre ||
-                    (isNqca &&
-                      !registrationDatesData?.candidate_reg_end_date_sm_centre)
-                  }
-                  onCancelBtnClick={handleRegistrationCancel}
-                  isctionButtonLoading={isUpdatingRegistrationDate}
-                />
-              ) : (
-                <></>
-              )
-            }
-          />
+                }
+                bottomSection={
+                  isRegistrationDateEdit ? (
+                    <ActionAndCancelButtons
+                      customContainerStyle={styles.customContainerStyle}
+                      customActionBtnStyles={styles.button}
+                      customCancelBtnStyles={styles.button}
+                      actionBtnText={intl.formatMessage({
+                        id: "label.saveChanges",
+                      })}
+                      cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                      onActionBtnClick={handleRegistrationSave}
+                      isActionBtnDisable={
+                        !registrationDatesData?.company_reg_start_date ||
+                        !registrationDatesData?.candidate_reg_start_date ||
+                        !registrationDatesData?.candidate_reg_end_date_bg_centre ||
+                        (isNqca &&
+                          !registrationDatesData?.candidate_reg_end_date_sm_centre)
+                      }
+                      onCancelBtnClick={handleRegistrationCancel}
+                      isctionButtonLoading={isUpdatingRegistrationDate}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
+              />
+            )}
+          </>
         }
         topSectionStyle={classes.topSectionStyle}
         bottomSection={
