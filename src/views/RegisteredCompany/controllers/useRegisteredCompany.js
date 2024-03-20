@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
 
@@ -44,6 +44,9 @@ const useRegisteredCompany = () => {
     isLoading: isCompanyListingLoading,
   } = useFetch({
     url: ADMIN_ROUTE + REGISTERED_COMPANIES,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const {
@@ -125,6 +128,11 @@ const useRegisteredCompany = () => {
       status: JSON.stringify(currentFilterStatus?.["1"]),
     };
   };
+
+  useEffect(() => {
+    const requestedParams = getRequestedQueryParams({});
+    fetchCompaniesListing({ queryParamsObject: requestedParams });
+  }, []);
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
