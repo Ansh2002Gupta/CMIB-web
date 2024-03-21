@@ -66,6 +66,7 @@ const useConsentTableColumns = (
             getError: (index) => errors[index].company_reg_end_date,
             visible: true,
             isEditable: isEdit,
+            isSpacedError: isEdit,
             type: "date",
             placeholder: intl.formatMessage({
               id: "label.placeholder.company_reg_end_date",
@@ -88,6 +89,7 @@ const useConsentTableColumns = (
             },
             getError: (index) => errors[index].psychometric_test_date,
             isEditable: isEdit,
+            isSpacedError: isEdit,
             visible: true,
             type: "date",
             placeholder: intl.formatMessage({
@@ -139,6 +141,7 @@ const useConsentTableColumns = (
           key: "company_shortlisting_start_date",
           isRequiredField: true,
           renderDateTime: {
+            isSpacedError: isEdit,
             getDisabledDate: (current, record) => {
               return (
                 isNotAFutureDate(current) ||
@@ -185,6 +188,7 @@ const useConsentTableColumns = (
           isRequiredField: true,
           key: "company_shortlisting_end_date",
           renderDateTime: {
+            isSpacedError: isEdit,
             getDisabledDate: (current, record) => {
               return (
                 isNotAFutureDate(current) ||
@@ -232,6 +236,7 @@ const useConsentTableColumns = (
           isRequiredField: true,
           key: "candidate_consent_marking_start_date",
           renderDateTime: {
+            isSpacedError: isEdit,
             getDisabledDate: (current, record) => {
               return (
                 isNotAFutureDate(current) ||
@@ -283,6 +288,7 @@ const useConsentTableColumns = (
           isRequiredField: true,
           key: "candidate_consent_marking_end_date",
           renderDateTime: {
+            isSpacedError: isEdit,
             getDisabledDate: (current, record) => {
               return (
                 isNotAFutureDate(current) ||

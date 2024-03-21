@@ -10,12 +10,11 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import HeaderAndTitle from "../../components/HeaderAndTitle";
 import useFetch from "../../core/hooks/useFetch";
-import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
-import { getCurrentActiveTab, getErrorMessage } from "../../constant/utils";
+import { getCurrentActiveTab } from "../../constant/utils";
 import {
   CORE_ROUTE,
   LAST_REGISTRATION_DATES,
@@ -140,14 +139,11 @@ const ConsentMarking = () => {
     apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
-  useModuleWiseApiCall({
-    otherOptions: { isApiCallDependentOnSessionId: true, sessionId },
-    initialApiCall: () => {
-      if (roundId) {
-        getAllData();
-      }
-    },
-  });
+  useEffect(() => {
+    if (currentlySelectedModuleKey && sessionId) {
+      getAllData();
+    }
+  }, [userProfileDetails?.selectedModuleItem?.key, activeTab, sessionId]);
 
   const getAllData = () => {
     getRegistrationDate({});

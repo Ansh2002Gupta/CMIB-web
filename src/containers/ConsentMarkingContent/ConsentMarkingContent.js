@@ -143,6 +143,8 @@ const ConsentMarkingContent = ({
     lastRegistrationDatesData,
   });
 
+  console.log(lastRegistrationInitialData, "lastRegistrationInitialData..");
+
   const [lastRegistrationError, setLastRegistrationError] = useState(
     lastRegistrationInitialError
   );
