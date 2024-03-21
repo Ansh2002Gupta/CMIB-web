@@ -383,7 +383,7 @@ const PaymentTable = ({
             onChangeCurrentPage,
             onFilterApply,
             placeholder: intl.formatMessage({
-              id: "label.search_by_name_or_registration_no",
+              id: "label.manage_payment_searchbar_placeholder",
             }),
             filterArray,
             setFilterArray,

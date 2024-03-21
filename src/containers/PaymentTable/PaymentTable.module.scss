@@ -42,7 +42,15 @@
 }
 
 .statusContainer_progress {
-  background-color: var(--skyBlue);
+  background-color: var(--statusProgressBlue);
+}
+
+.statusContainer_pending {
+  background-color: var(--lightRedBg);
+}
+
+.statusContainer_refund_progress {
+  background-color: var(--refundProgressBlue);
 }
 
 .statusText_success {
@@ -57,7 +65,17 @@
 
 .statusText_progress {
   font-size: var(--fontSizeExtraSmall);
-  color: var(--darkBlue2);
+  color: var(--statusTextBlue);
+}
+
+.statusText_pending {
+  font-size: var(--fontSizeExtraSmall);
+  color: var(--pendingOrange);
+}
+
+.statusText_refund_progress {
+  font-size: var(--fontSizeExtraSmall);
+  color: var(--textDark);
 }
 
 .errorText {

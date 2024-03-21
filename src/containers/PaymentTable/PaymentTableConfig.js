@@ -1,20 +1,22 @@
 import { Image, Typography } from "antd";
 
-import { isUserAdmin } from "../../constant/utils";
 import { SORT_VALUES } from "../../constant/constant";
 import styles from "./PaymentTable.module.scss";
 
 const getStatusStyles = (status) => {
-  if (
-    status?.toLowerCase() === "closed" ||
-    status?.toLowerCase() === "answered"
-  ) {
+  if (status?.toLowerCase() === "payment completed") {
     return ["statusContainer_success", "statusText_success"];
   }
-  if (status?.toLowerCase() === "pending") {
-    return ["statusContainer_failed", "statusText_failed"];
+  if (status?.toLowerCase() === "payment inprogress") {
+    return ["statusContainer_progress", "statusText_progress"];
   }
-  return ["statusContainer_progress", "statusText_progress"];
+  if (status?.toLowerCase() === "payment pending") {
+    return ["statusContainer_pending", "statusText_pending"];
+  }
+  if (status?.toLowerCase() === "refund inprogress") {
+    return ["statusContainer_refund_progress", "statusText_refund_progress"];
+  }
+  return ["statusContainer_failed", "statusText_failed"];
 };
 
 const handleRefundPayment = () => {};
@@ -32,7 +34,7 @@ export const getPaymentColumn = ({
 }) => {
   return [
     renderColumn({
-      title: intl.formatMessage({ id: "label.createdBy" }),
+      title: intl.formatMessage({ id: "label.company_name" }),
       dataIndex: "created_by",
       key: "created_by",
       sortKey: "created_by",
@@ -48,7 +50,7 @@ export const getPaymentColumn = ({
       renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.role" }),
+      title: intl.formatMessage({ id: "label.payment_mode" }),
       dataIndex: "role",
       key: "role",
       renderText: {
@@ -58,7 +60,7 @@ export const getPaymentColumn = ({
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.queryType" }),
+      title: intl.formatMessage({ id: "label.payment_amount" }),
       dataIndex: "query_type",
       key: "query_type",
       renderText: {
@@ -67,9 +69,18 @@ export const getPaymentColumn = ({
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.createdOn" }),
+      title: intl.formatMessage({ id: "label.payment_date_and_time" }),
       dataIndex: "created_at",
       key: "created_at",
+      renderSorterColumn: true,
+      setSortBy: setSortBy,
+      columnSortByHandler: handleSorting,
+      customIconStyle: [
+        styles[sortBy],
+        sortBy === SORT_VALUES.ASCENDING || sortBy === SORT_VALUES.DESCENDING
+          ? styles.active
+          : "",
+      ],
       renderText: {
         isTypeDate: true,
         visible: true,
@@ -77,7 +88,7 @@ export const getPaymentColumn = ({
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.ticketId" }),
+      title: intl.formatMessage({ id: "label.transaction_id" }),
       dataIndex: "readable_id",
       key: "readable_id",
       renderText: {
@@ -87,7 +98,7 @@ export const getPaymentColumn = ({
       },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.status" }),
+      title: intl.formatMessage({ id: "label.payment_status" }),
       dataIndex: "status",
       key: "status",
       render: (data, rowData) => {

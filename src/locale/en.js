@@ -539,6 +539,10 @@ const locale = {
   "label.payment_amount": "Payment Amount",
   "label.payment_date_and_time": "Payment Date & Time",
   "label.refund_payment": "Refund Payment",
+  "label.transaction_id": "Transaction ID",
+  "label.payment_status": "Payment Status",
+  "label.manage_payment_searchbar_placeholder":
+    "Search by transaction id, company name and payment mode",
 };
 
 export default locale;
