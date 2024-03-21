@@ -223,7 +223,7 @@ const CompanyProfile = ({ companyProfileDetails }) => {
               />
             </div>
             <div className={styles.logoName}>
-              {companyProfileDetails?.company_logo ?? ""}
+              {companyProfileDetails?.company_logo ?? "-"}
             </div>
           </div>
         }
