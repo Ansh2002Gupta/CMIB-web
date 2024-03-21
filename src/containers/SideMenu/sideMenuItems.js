@@ -7,6 +7,7 @@ import {
   SUBSCRIPTIONS,
   QUERIES,
   TICKETS,
+  MANAGE_PAYMENTS,
 } from "../../routes/routeNames";
 import { MODULE_KEYS, MENU_KEYS } from "../../constant/constant";
 import { ReactComponent as Activity } from "../../themes/base/assets/icons/activity.svg";
@@ -71,7 +72,7 @@ const caJobsMenu = [
   },
   {
     label: MENU_KEYS.MANAGE_PAYMENTS,
-    key: "/payments",
+    key: MANAGE_PAYMENTS,
     icon: <Wallet />,
     selectedicon: <SelectedWallet />,
   },

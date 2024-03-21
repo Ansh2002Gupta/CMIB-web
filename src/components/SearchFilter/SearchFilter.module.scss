@@ -26,10 +26,10 @@
   padding: var(--paddingSmall);
   gap: var(--gapXSmall);
   display: flex;
-  min-height: var(--height_48);
   align-items: center;
   justify-content: center;
   border: var(--borderLight);
+  height: var(--height_55) !important;
   &:hover {
     border: var(--borderLight) !important;
   }

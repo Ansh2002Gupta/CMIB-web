@@ -25,6 +25,7 @@ const TableWithSearchAndFilters = ({
   onChangePageSize,
   pageSize,
   placeholder,
+  RightSection,
   searchedValue,
   setFilterArray,
   isLoading,
@@ -36,38 +37,43 @@ const TableWithSearchAndFilters = ({
 
   return (
     <div className={styles.filterAndTableContainer}>
-      <div className={styles.searchBarContainer}>
-        <Input
-          prefix={
-            <Image
-              src={getImage("searchIcon")}
-              className={styles.searchIcon}
-              preview={false}
-            />
-          }
-          placeholder={
-            placeholder ||
-            intl.formatMessage({
-              id: "label.searchByUserNameAndEmail",
-            })
-          }
-          allowClear
-          className={styles.searchBar}
-          value={
-            searchedValue?.trim().length ? searchedValue : searchedValue?.trim()
-          }
-          onChange={(e) => handleOnUserSearch(e.target.value)}
-        />
-        <SearchFilter
-          {...{
-            filterArray,
-            filterPropertiesArray: filterOptions || filterPropertiesArray,
-            onFilterApply,
-            setFilterArray,
-            setShowFilters,
-            showFilters,
-          }}
-        />
+      <div className={styles.filterAndButtonContainer}>
+        <div className={styles.searchBarContainer}>
+          <Input
+            prefix={
+              <Image
+                src={getImage("searchIcon")}
+                className={styles.searchIcon}
+                preview={false}
+              />
+            }
+            placeholder={
+              placeholder ||
+              intl.formatMessage({
+                id: "label.searchByUserNameAndEmail",
+              })
+            }
+            allowClear
+            className={styles.searchBar}
+            value={
+              searchedValue?.trim().length
+                ? searchedValue
+                : searchedValue?.trim()
+            }
+            onChange={(e) => handleOnUserSearch(e.target.value)}
+          />
+          <SearchFilter
+            {...{
+              filterArray,
+              filterPropertiesArray: filterOptions || filterPropertiesArray,
+              onFilterApply,
+              setFilterArray,
+              setShowFilters,
+              showFilters,
+            }}
+          />
+        </div>
+        {RightSection}
       </div>
       {!isLoading ? (
         <DataTable

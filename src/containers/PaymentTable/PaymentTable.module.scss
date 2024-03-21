@@ -1,0 +1,178 @@
+.greyBtnCustomStyles {
+  padding: var(--paddingSmall) var(--paddingMediumSmall);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
+  background-color: var(--blueBg);
+  color: var(--textBold);
+  height: var(--height_44) !important;
+
+  &:hover {
+    background-color: var(--blueBg) !important;
+    border: var(--borderLight) !important;
+    color: var(--textBold) !important;
+  }
+}
+
+.errorContainer {
+  width: var(--fullWidth);
+  height: var(--fullHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statusBox {
+  text-transform: capitalize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radiusXLg);
+  padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
+  width: fit-content;
+}
+
+.statusContainer_success {
+  background-color: var(--lightGreenBg);
+}
+
+.statusContainer_failed {
+  background-color: var(--orangeBg);
+}
+
+.statusContainer_progress {
+  background-color: var(--skyBlue);
+}
+
+.statusText_success {
+  font-size: var(--fontSizeExtraSmall);
+  color: var(--greenText);
+}
+
+.statusText_failed {
+  font-size: var(--fontSizeExtraSmall);
+  color: var(--redText);
+}
+
+.statusText_progress {
+  font-size: var(--fontSizeExtraSmall);
+  color: var(--darkBlue2);
+}
+
+.errorText {
+  color: var(--textBold);
+  font-weight: var(--fontWeightMedium);
+}
+
+.tableCell {
+  min-width: var(--width_100);
+}
+
+input::placeholder {
+  color: var(--inputPlaceHolder) !important;
+}
+
+.columnHeading {
+  color: var(--subHeadingColor) !important;
+  display: flex;
+  gap: var(--gapXSmall);
+  cursor: pointer;
+}
+
+.upside {
+  transform: rotate(180deg);
+}
+
+.downside {
+  transform: rotate(0deg);
+}
+
+.sortintArrawContainer {
+  min-width: var(--width_20);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centerContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.greenText {
+  color: var(--greenBtnBg, #04af55) !important;
+  font-size: var(--fontSizeExtraSmall, 12px) !important;
+  font-weight: var(--fontWeightBold, 600) !important;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.extraWidth {
+  min-width: 180px;
+}
+
+.chipBg {
+  background-color: var(--lightBlueBg, #f2f4fc);
+  border-radius: var(--radiusLg, 8px);
+  padding: 2px 6px 2px 8px;
+}
+
+.chipText {
+  color: var(--textBold, #000833);
+}
+
+.chipContainer {
+  display: flex;
+  gap: var(--gapSmall, 16px);
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+
+.nonClickable {
+  cursor: not-allowed;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.iconBox {
+  min-width: var(--width_120);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrowSytles {
+  margin-bottom: 6px;
+}
+
+.defaultStatusStyles {
+  font-size: var(--fontSizeExtraSmall, 12px);
+  line-height: var(--lineHeightSmall, 18px);
+}
+
+.asc {
+  transform: rotate(0deg);
+}
+
+.desc {
+  transform: rotate(180deg);
+}
+
+.active {
+  background-color: var(--lightGrey3Bg);
+  border-radius: 50%;
+}
+
+.assignIcon {
+  cursor: pointer;
+  vertical-align: unset !important;
+}
+
+.assignIconDisabled {
+  cursor: not-allowed;
+  vertical-align: unset !important;
+}

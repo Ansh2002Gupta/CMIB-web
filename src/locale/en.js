@@ -533,6 +533,12 @@ const locale = {
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
   "label.downloadSucess": "Download Successful",
+  "label.manage_payments": "Manage Payments",
+  "label.download_excel_report": "Download Excel Report",
+  "label.payment_mode": "Payment Mode",
+  "label.payment_amount": "Payment Amount",
+  "label.payment_date_and_time": "Payment Date & Time",
+  "label.refund_payment": "Refund Payment",
 };
 
 export default locale;
