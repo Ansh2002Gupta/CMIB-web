@@ -179,17 +179,13 @@ export const useIntitalDataAndError = ({
   consentRoundTwoData,
   lastRegistrationDatesData,
 }) => {
-  console.log("inside config");
-
   const [roundOneInitialData, setRoundOneInitialData] = useState([]);
   const [roundTwoInitialData, setRoundTwoInitialData] = useState([]);
   const [lastRegistrationInitialData, setLastRegistrationInitialData] =
     useState([]);
 
   useEffect(() => {
-    console.log("inside consentRoundOneData useEffect");
     if (consentRoundOneData) {
-      console.log("inside if consentRoundOneData");
       const transformedData = consentRoundOneData?.map((item) => ({
         ...item,
         sNo: item.id,
@@ -214,9 +210,7 @@ export const useIntitalDataAndError = ({
   }, [consentRoundOneData]);
 
   useEffect(() => {
-    console.log("inside consentRoundTwoData useEffect");
     if (consentRoundTwoData) {
-      console.log("inside if consentRoundTwoData");
       const transformedData = consentRoundTwoData?.map((item) => ({
         ...item,
         id: item.id,
@@ -241,9 +235,7 @@ export const useIntitalDataAndError = ({
   }, [consentRoundTwoData]);
 
   useEffect(() => {
-    console.log("inside lastRegistrationDatesData useEffect");
     if (lastRegistrationDatesData) {
-      console.log("inside if lastRegistrationDatesData");
       const transformedData = lastRegistrationDatesData?.map((item) => ({
         ...item,
         id: item.id,
