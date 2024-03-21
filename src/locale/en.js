@@ -324,7 +324,7 @@ const locale = {
   "label.state": "State",
   "label.isdCode": "ISD/STD Code",
   "label.telephoneNumber": "Telephone Number",
-  "label.contactPersonalInformation": "Contact Personal Information",
+  "label.contactPersonalInformation": "Contact Person Information",
   "label.salutation": "Salutation",
   "label.contactPersonName": "Contact Person Name",
   "label.contactPersonDesignation": "Contact Person Designation",

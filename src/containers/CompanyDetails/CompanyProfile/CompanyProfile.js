@@ -18,15 +18,15 @@ const CompanyProfile = ({ companyProfileDetails }) => {
   const { getImage } = useContext(ThemeContext);
 
   const company_details_fields = COMPANY_DETAILS_FEILDS(
-    companyProfileDetails?.name || "-",
-    companyProfileDetails?.entity || "-",
-    companyProfileDetails?.frn_number || "-",
-    companyProfileDetails?.number_of_partner || "-",
-    companyProfileDetails?.company_type || "-",
-    companyProfileDetails?.address || "-",
-    companyProfileDetails?.email || "-",
-    companyProfileDetails?.std_country_code || "-",
-    companyProfileDetails?.telephone_number || "-"
+    companyProfileDetails?.name || "",
+    companyProfileDetails?.entity || "",
+    companyProfileDetails?.frn_number || "",
+    companyProfileDetails?.number_of_partner || "",
+    companyProfileDetails?.company_type || "",
+    companyProfileDetails?.address || "",
+    companyProfileDetails?.email || "",
+    companyProfileDetails?.std_country_code || "",
+    companyProfileDetails?.telephone_number || ""
   );
 
   const other_details = OTHER_DETAILS_FEILDS(
@@ -47,23 +47,26 @@ const CompanyProfile = ({ companyProfileDetails }) => {
         }
         bottomSection={
           <CustomGrid>
-            {company_details_fields.map((item) => (
-              <TwoRow
-                key={item.id}
-                className={styles.gridItem}
-                topSection={
-                  <Typography className={styles.grayText}>
-                    {intl.formatMessage({
-                      id: `label.${item.headingIntl}`,
-                    })}
-                    <span className={styles.redText}> *</span>
-                  </Typography>
-                }
-                bottomSection={
-                  <div className={styles.blackText}>{item.value}</div>
-                }
-              />
-            ))}
+            {company_details_fields.map(
+              (item) =>
+                !!item.value && (
+                  <TwoRow
+                    key={item.id}
+                    className={styles.gridItem}
+                    topSection={
+                      <Typography className={styles.grayText}>
+                        {intl.formatMessage({
+                          id: `label.${item.headingIntl}`,
+                        })}
+                        <span className={styles.redText}> *</span>
+                      </Typography>
+                    }
+                    bottomSection={
+                      <div className={styles.blackText}>{item.value}</div>
+                    }
+                  />
+                )
+            )}
           </CustomGrid>
         }
       />
@@ -89,25 +92,28 @@ const CompanyProfile = ({ companyProfileDetails }) => {
               }
               bottomSection={
                 <CustomGrid>
-                  {contact_personal_information_fields.map((item) => (
-                    <TwoRow
-                      key={item.id}
-                      className={styles.gridItem}
-                      topSection={
-                        <>
-                          <Typography className={styles.grayText}>
-                            {intl.formatMessage({
-                              id: `label.${item.headingIntl}`,
-                            })}
-                            <span className={styles.redText}> *</span>
-                          </Typography>
-                        </>
-                      }
-                      bottomSection={
-                        <div className={styles.blackText}>{item.value}</div>
-                      }
-                    />
-                  ))}
+                  {contact_personal_information_fields.map(
+                    (item) =>
+                      !!item.value && (
+                        <TwoRow
+                          key={item.id}
+                          className={styles.gridItem}
+                          topSection={
+                            <>
+                              <Typography className={styles.grayText}>
+                                {intl.formatMessage({
+                                  id: `label.${item.headingIntl}`,
+                                })}
+                                <span className={styles.redText}> *</span>
+                              </Typography>
+                            </>
+                          }
+                          bottomSection={
+                            <div className={styles.blackText}>{item.value}</div>
+                          }
+                        />
+                      )
+                  )}
                   {contactDetails?.roles && contactDetails.roles.length > 0 && (
                     <TwoRow
                       key="roles"
@@ -219,11 +225,8 @@ const CompanyProfile = ({ companyProfileDetails }) => {
                   companyProfileDetails?.company_logo ??
                   getImage("TempCompanyLogo")
                 }
-                preview={false}
+                preview
               />
-            </div>
-            <div className={styles.logoName}>
-              {companyProfileDetails?.company_logo ?? "-"}
             </div>
           </div>
         }

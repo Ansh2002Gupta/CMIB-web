@@ -110,10 +110,10 @@
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
-  border-top-left-radius: var(--radiusMd);
-  border-top-right-radius: var(--radiusMd);
+  border-radius: var(--radiusMd);
   background: var(--lightBlueBg);
   border: var(--borderLight);
+   margin-bottom: var(--marginLarge);
 }
 
 .logoImage{
@@ -121,21 +121,6 @@
   max-height: var(--height_184);
 }
 
-.logoName {
-  display: flex;
-  padding: var(--paddingSmall);
-  width: var(--width_347);
-  align-items: flex-end;
-  gap: var(--gapXSmall);
-  border: var(--borderLight);
-  border-top: 0;
-  color: var(--linkColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightBold);
-  border-bottom-left-radius: var(--radiusMd);
-  border-bottom-right-radius: var(--radiusMd);
-  margin-bottom: var(--marginLarge);
-}
 
 @media screen and (max-width: 680px) {
   .periodText {
