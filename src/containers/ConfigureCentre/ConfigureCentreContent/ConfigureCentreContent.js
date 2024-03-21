@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import * as _ from "lodash";
 import { Image, Input, Typography } from "antd";
 
+import CustomButton from "../../../components/CustomButton";
 import CustomLoader from "../../../components/CustomLoader";
 import DataTable from "../../../components/DataTable";
 import ErrorMessageBox from "../../../components/ErrorMessageBox/ErrorMessageBox";
@@ -11,6 +12,7 @@ import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import { ThemeContext } from "core/providers/theme";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
+import useResponsive from "../../../core/hooks/useResponsive";
 import useShowNotification from "../../../core/hooks/useShowNotification";
 import useUpdateCenterDetailsApi from "../../../services/api-services/Centers/useUpdateCenterDetailsApi";
 import { urlService } from "../../../Utils/urlService";
@@ -29,10 +31,13 @@ import {
   getValidSortByValue,
   toggleSorting,
 } from "../../../constant/utils";
+import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/plus icon.svg";
+import { ADD } from "../../../routes/routeNames";
 import styles from "./ConfigureCentreContent.module.scss";
 
 const ConfigureCentreContent = () => {
   const intl = useIntl();
+  const responsive = useResponsive();
   const { renderColumn } = useRenderColumn();
   const { navigateScreen: navigate } = useNavigateScreen();
   const { getImage } = useContext(ThemeContext);
@@ -366,7 +371,25 @@ const ConfigureCentreContent = () => {
               value={searchedValue?.trim()}
               onChange={(e) => handleOnUserSearch(e.target.value)}
             />
+            <CustomButton
+              btnText={
+                responsive?.isSm
+                  ? intl.formatMessage({
+                      id: `label.${
+                        responsive.isMd ? "addNewCentre" : "newCentre"
+                      }`,
+                    })
+                  : ""
+              }
+              IconElement={PlusIcon}
+              iconStyles={styles.btnIconStyles}
+              customStyle={styles.btnCustomStyles}
+              onClick={() => {
+                navigate(ADD);
+              }}
+            />
           </div>
+
           {isSuccess && (
             <DataTable
               {...{
