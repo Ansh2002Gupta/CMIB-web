@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router-dom";
 
@@ -28,6 +28,7 @@ const RegisteredCompaniesDetails = () => {
   const intl = useIntl();
   let { id } = useParams();
   const { showNotification, notificationContextHolder } = useShowNotification();
+  const [companyAccessibleModule, setCompanyAccessibleModule] = useState([]);
 
   const {
     data: companyDetails,
@@ -39,7 +40,16 @@ const RegisteredCompaniesDetails = () => {
     url: `${ADMIN_ROUTE}${REGISTERED_COMPANIES}/${id}`,
   });
 
-  const getStructredData = (unstructuredData) => {
+  useEffect(() => {
+    if (companyDetails && companyDetails.company_module_access) {
+      const structuredData = getStructuredData(
+        companyDetails.company_module_access
+      );
+      setCompanyAccessibleModule(structuredData);
+    }
+  }, [companyDetails]);
+
+  const getStructuredData = (unstructuredData) => {
     return unstructuredData.map((data) => {
       const currentModule = modules.find((module) => {
         if (data.name === module.key) {
@@ -52,10 +62,6 @@ const RegisteredCompaniesDetails = () => {
       };
     });
   };
-
-  const unstructuredData = companyDetails?.company_module_access || [];
-  const companyAccessibleModule = getStructredData(unstructuredData);
-
   const { renderColumn } = useRenderColumn();
 
   const { makeRequest: updateApprovalStatus } = usePatch({
@@ -71,7 +77,15 @@ const RegisteredCompaniesDetails = () => {
     updateApprovalStatus({
       body: payload,
       onSuccessCallback: () => {
-        fetchCompanyDetails({});
+        const updatedAccessibleModule = companyAccessibleModule.map(
+          (module) => {
+            if (module.id === id) {
+              return { ...module, is_approved: 1 };
+            }
+            return module;
+          }
+        );
+        setCompanyAccessibleModule(updatedAccessibleModule);
       },
       onErrorCallback: (errorMsg) => {
         showNotification({
