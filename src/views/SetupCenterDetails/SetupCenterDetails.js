@@ -19,8 +19,13 @@ import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
-import { ROUND_ID } from "../../constant/constant";
+import {
+  API_VERSION_QUERY_PARAM,
+  ROUND_ID,
+  SESSION_ID_QUERY_PARAM,
+} from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 import styles from "./SetupCenterDetails.module.scss";
 
@@ -28,6 +33,7 @@ const SetupCenterDetails = () => {
   const { centreId } = useParams();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+  const sessionId = globalSessionDetails?.globalSessionId;
 
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
@@ -49,8 +55,9 @@ const SetupCenterDetails = () => {
       ROUNDS +
       `/${roundId}` +
       CENTRE_END_POINT +
-      `/${centreId}`,
+      `/${centreId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: { skipApiCallOnMount: true },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const intl = useIntl();
@@ -59,6 +66,7 @@ const SetupCenterDetails = () => {
   const { centre_code, name } = centreDetailData || {};
 
   useModuleWiseApiCall({
+    otherOptions: { sessionId, isApiCallDependentOnSessionId: true },
     initialApiCall: () => {
       if (roundId && centreId) {
         getCentreDetail({});
@@ -103,6 +111,7 @@ const SetupCenterDetails = () => {
                 isEdit,
                 location,
                 roundId,
+                sessionId,
                 selectedModule: selectedModule?.key,
               }}
             />

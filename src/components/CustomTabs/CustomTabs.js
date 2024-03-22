@@ -8,6 +8,7 @@ import styles from "./CustomTabs.module.scss";
 
 const CustomTabs = ({
   activeTab,
+  customTabContainerStyling,
   resetMode,
   setActiveTab,
   tabs,
@@ -28,7 +29,9 @@ const CustomTabs = ({
   };
 
   return (
-    <div className={styles["tab-container"]}>
+    <div
+      className={[styles["tab-container"], customTabContainerStyling].join(" ")}
+    >
       <div className={styles["tab-box"]}>
         {tabs?.map((tab, index) => (
           <Typography
@@ -36,7 +39,7 @@ const CustomTabs = ({
             className={tabClass(tab.key)}
             onClick={() => handleSelectTab(tab.key)}
           >
-            {tab.title}
+            {tab?.title}
           </Typography>
         ))}
       </div>

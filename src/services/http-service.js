@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
-
 export default class Http {
   static async get(_url, apiOptions = {}, handleDiscard = () => {}) {
     const url = `${baseUrl}${_url}`;
@@ -33,10 +32,10 @@ export default class Http {
     }
   }
 
-  static async put(_url, data) {
+  static async put(_url, data, apiOptions = {}) {
     const url = `${baseUrl}${_url}`;
     try {
-      const response = await axios.put(url, data);
+      const response = await axios.put(url, data, { ...apiOptions });
       return response.data;
     } catch (error) {
       throw error;

@@ -1,56 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router-dom";
 
 import ContentHeader from "../../ContentHeader";
-import CustomButton from "../../../components/CustomButton";
-import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
-import useResponsive from "../../../core/hooks/useResponsive";
-import { ReactComponent as PlusIcon } from "../../../themes/base/assets/images/plus icon.svg";
-import { ADD } from "../../../routes/routeNames";
+import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import styles from "./ConfigureCentreHeader.module.scss";
 
-const ConfigureCentreHeader = ({ showButton }) => {
+const ConfigureCentreHeader = ({ customHeaderStyling, tabComponent }) => {
   const intl = useIntl();
-  const responsive = useResponsive();
-  const { navigateScreen: navigate } = useNavigateScreen();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
   const { centreId } = useParams();
 
   return (
-    <div className={styles.headerContainer}>
+    <div className={`${styles.headerContainer} ${customHeaderStyling}`}>
       <ContentHeader
         headerText={intl.formatMessage({
-          id: `label.${
-            showButton
-              ? "configureCentres"
-              : centreId
-              ? "editCentreDetails"
-              : "addNewCentre"
-          }`,
+          id: `label.${"global_configurations"}`,
         })}
-        customStyles={styles.headerResponsiveStyle}
-        rightSection={
-          showButton && (
-            <CustomButton
-              btnText={
-                responsive?.isSm
-                  ? intl.formatMessage({
-                      id: `label.${
-                        responsive.isMd ? "addNewCentre" : "newCentre"
-                      }`,
-                    })
-                  : ""
-              }
-              IconElement={PlusIcon}
-              iconStyles={styles.btnIconStyles}
-              customStyle={styles.btnCustomStyles}
-              onClick={() => {
-                navigate(ADD);
-              }}
-            />
-          )
-        }
+        customStyles={[
+          styles.headerResponsiveStyle,
+          selectedModule?.key ===
+          intl.formatMessage({
+            id: `label.${"nqca-placements"}`,
+          })
+            ? styles.marginBottom
+            : {},
+        ].join(" ")}
       />
+      {selectedModule?.key !==
+        intl.formatMessage({
+          id: `label.${"nqca-placements"}`,
+        }) && tabComponent}
     </div>
   );
 };
