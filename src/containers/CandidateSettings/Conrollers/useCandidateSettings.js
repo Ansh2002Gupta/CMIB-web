@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-const useCandidateSettings = ({ candidateDetails, setData }) => {
+const useCandidateSettings = ({ candidateDetails }) => {
   const addTableData = {
     isAddRow: true,
     centre: "",
@@ -11,19 +11,7 @@ const useCandidateSettings = ({ candidateDetails, setData }) => {
     to_time: null,
   };
 
-  const apiTableData = candidateDetails?.candidate_consent.map((item) => {
-    return {
-      centre: item?.centre_name,
-      from_date: item?.from_date,
-      to_date: item?.to_date,
-      from_time: item?.from_time,
-      to_time: item?.to_time,
-    };
-  });
-
-  const [tableData, setTableData] = useState(
-    !!candidateDetails ? apiTableData : [addTableData]
-  );
+  const [tableData, setTableData] = useState([addTableData]);
   const intl = useIntl();
   const [errors, setErrors] = useState(
     tableData.map(() => ({
@@ -91,12 +79,12 @@ const useCandidateSettings = ({ candidateDetails, setData }) => {
   };
 
   const initialFormState = {
-    max_no_of_interview: candidateDetails?.max_no_of_interview || "",
-    max_no_of_offer: candidateDetails?.max_no_of_offer || "",
-    big_centre_start_date: candidateDetails?.big_centre_start_date || null,
-    big_centre_end_date: candidateDetails?.big_centre_end_date || null,
-    small_centre_start_date: candidateDetails?.small_centre_start_date || null,
-    small_centre_end_date: candidateDetails?.small_centre_end_date || null,
+    max_no_of_interview: "",
+    max_no_of_offer: "",
+    big_centre_start_date: null,
+    big_centre_end_date: null,
+    small_centre_start_date: null,
+    small_centre_end_date: null,
   };
 
   const getInitialFields = (
@@ -183,6 +171,35 @@ const useCandidateSettings = ({ candidateDetails, setData }) => {
 
   const [formFields, setFormFields] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
+
+  const getAPITableData = () => {
+    const data = candidateDetails?.candidate_consent.map((item) => {
+      return {
+        isAddRow: false,
+        centre: item?.centre_name,
+        from_date: item?.from_date,
+        to_date: item?.to_date,
+        from_time: item?.from_time,
+        to_time: item?.to_time,
+      };
+    });
+    return data;
+  };
+
+  useEffect(() => {
+    setFormFields({
+      max_no_of_interview: candidateDetails?.max_interview_allowed_candidate,
+      max_no_of_offer: candidateDetails?.max_offer_accepted_candidate,
+      big_centre_start_date:
+        candidateDetails?.big_center_change_start_date_candidate,
+      big_centre_end_date:
+        candidateDetails?.big_center_change_end_date_candidate,
+      small_centre_start_date:
+        candidateDetails?.small_center_change_start_date_candidate,
+      small_centre_end_date:
+        candidateDetails?.small_center_change_end_date_candidate,
+    });
+  }, [candidateDetails]);
 
   const handleSetError = (name, index) => {
     setErrors((prevErrors) => {

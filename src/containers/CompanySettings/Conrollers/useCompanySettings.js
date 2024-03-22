@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { MAX_EXPERIENCE_LENGTH } from "../../../constant/constant";
 
@@ -6,14 +6,11 @@ const useCompanySettings = ({ companyDetails }) => {
   const [selectedInterviewType, setSelectedInterviewType] = useState([]);
 
   const initialValue = {
-    max_no_of_vacancy: companyDetails?.max_no_vacancy_company || "",
-    multiplier: companyDetails?.multiplier_company || "",
-    shortlist_students_allowed:
-      companyDetails?.shotlist_candidate_allowed_company || "",
-    company_interview_types: companyDetails?.company_interview_types || [],
+    max_no_of_vacancy: "",
+    multiplier: "",
+    shortlist_students_allowed: "",
+    company_interview_types: [],
   };
-
-  // console.log("initialValue", initialValue);
 
   const getInitialFields = (
     max_no_of_vacancy,
@@ -69,6 +66,16 @@ const useCompanySettings = ({ companyDetails }) => {
 
   const [formFields, setFormFields] = useState(initialValue);
   const [formErrors, setFormErrors] = useState({});
+
+  useEffect(() => {
+    setFormFields({
+      max_no_of_vacancy: companyDetails?.max_no_vacancy_company || "",
+      multiplier: companyDetails?.multiplier_company || "",
+      shortlist_students_allowed:
+        companyDetails?.shotlist_candidate_allowed_company || "",
+      company_interview_types: companyDetails?.company_interview_types || [],
+    });
+  }, [companyDetails]);
 
   const onSelectInterviewType = (item, option) => {
     let interview = option?.[0];

@@ -9,6 +9,7 @@ import CandidateSettings from "../CandidateSettings/CandidateSettings";
 import CustomLoader from "../../components/CustomLoader";
 import CompanySettings from "../CompanySettings";
 import ContentHeader from "../ContentHeader";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
 import PaymentSettings from "../PaymentSettings";
 import useCandidateSettings from "../CandidateSettings/Conrollers/useCandidateSettings";
 import useCompanySettings from "../CompanySettings/Conrollers/useCompanySettings";
@@ -16,18 +17,19 @@ import usePaymentSettings from "../PaymentSettings/Conrollers/usePaymentSettings
 import useResponsive from "../../core/hooks/useResponsive";
 import useFetch from "../../core/hooks/useFetch";
 import { usePatch } from "../../core/hooks/useApiRequest";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { urlService } from "../../Utils/urlService";
+import { SESSION } from "../../routes/routeNames";
 import {
   CAMPUS_INTERVIEW,
   CORE_ROUTE,
   ROUNDS,
 } from "../../constant/apiEndpoints";
-import { SESSION } from "../../routes/routeNames";
-import styles from "./CampusInterviewSettings.module.scss";
-import { urlService } from "../../Utils/urlService";
 import { ROUND_ID } from "../../constant/constant";
-import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
+import { getErrorMessage } from "../../constant/utils";
+import styles from "./CampusInterviewSettings.module.scss";
 
 const CampusInterviewContent = () => {
   const intl = useIntl();
@@ -39,17 +41,16 @@ const CampusInterviewContent = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
-  // const isEditable = currentGlobalSession?.is_editable;
-  const isEditable = true;
+  const { showNotification, notificationContextHolder } = useShowNotification();
+  const isEditable = currentGlobalSession?.is_editable;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
 
   const {
     data: campusInterviewData,
-    error: errorWhileGettingCentres,
-    fetchData: getOrientationCentres,
-    isLoading: isGettingOrientationCentres,
-    isSuccess: fetchCentersSuccessFlag,
-    // setData: setCampusInterviewData,
+    error: erroWhileGettinginterviewDetails,
+    fetchData: getCampusInterviewData,
+    isLoading: isLoadingInterviewCampusDetails,
+    isError: isErrorWhileCampusInterviews,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -62,7 +63,7 @@ const CampusInterviewContent = () => {
 
   useEffect(() => {
     if (selectedModule?.key && roundId) {
-      getOrientationCentres({});
+      getCampusInterviewData({});
     }
   }, [selectedModule?.key, roundId]);
 
@@ -77,7 +78,6 @@ const CampusInterviewContent = () => {
     isButtonDisable: isPaymentSettingsInvalid,
   } = usePaymentSettings({
     paymentDetails: campusInterviewData,
-    // setData: setCampusInterviewData,
   });
 
   const {
@@ -92,7 +92,6 @@ const CampusInterviewContent = () => {
     isButtonDisable: isCompanySettingsInvalid,
   } = useCompanySettings({
     companyDetails: campusInterviewData,
-    // setData: setCampusInterviewData,
   });
 
   const {
@@ -108,7 +107,6 @@ const CampusInterviewContent = () => {
     tableData,
   } = useCandidateSettings({
     candidateDetails: campusInterviewData,
-    // setData: setCampusInterviewData,
   });
 
   const onClickCancel = () => {
@@ -128,11 +126,6 @@ const CampusInterviewContent = () => {
   });
 
   const onClickSave = () => {
-    // console.log("paymentFields", paymentFields);
-    // console.log("companySettingsFields", companySettingsFields);
-    // console.log("formFields", formFields);
-    // console.log("tableData", tableData);
-
     const consentData = tableData.map((item, index) => {
       const roundCentreMapping = campusInterviewData?.candidate_consent?.find(
         (consentItem) => consentItem.id === item.centre
@@ -181,105 +174,119 @@ const CampusInterviewContent = () => {
         },
       },
     };
-
-    console.log("pauload", payload);
-
-    // updateCampusInterviewDetails({
-    //   body: payload,
-    //   onSuccessCallback: () => {
-    //     getOrientationCentres({});
-    //   },
-    // });
+    updateCampusInterviewDetails({
+      body: payload,
+      onSuccessCallback: () => {
+        getCampusInterviewData({});
+      },
+      onErrorCallback: (errorMessage) => {
+        showNotification({
+          text: errorMessage,
+          type: "error",
+        });
+      },
+    });
   };
 
   return (
-    <ThreeRow
-      className={styles.mainContainer}
-      topSectionClassName={styles.topSectionStyle}
-      topSection={
-        <ContentHeader
-          customStyles={`${styles.campusInterviewHeader} ${
-            !responsive?.isMd ? styles.customStyles : ""
-          }`}
-          headerText={intl.formatMessage({
-            id: "label.setCampusInterviewSettings",
-          })}
-        />
-      }
-      middleSection={
-        <>
-          {isGettingOrientationCentres && <CustomLoader />}
-          {!isGettingOrientationCentres && !!campusInterviewData && (
-            <ThreeRow
-              className={styles.candidateContentSection}
-              topSection={
-                <CandidateSettings
-                  {...{
-                    errors,
-                    formErrors,
-                    formFields,
-                    getInitialFields,
-                    handleAdd,
-                    handleCandidateDataChange,
-                    handleInputChange,
-                    handleRemove,
-                    isEditable,
-                    campusInterviewData,
-                    tableData,
-                  }}
-                />
-              }
-              middleSection={
-                <CompanySettings
-                  {...{
-                    formErrors: companySettingsError,
-                    formFields: companySettingsFields,
-                    getInitialFields: getCompanyFields,
-                    handleInputChange: handleCompanyInputChange,
-                    initialFormState,
-                    isEditable,
-                    onRemoveInterviewType,
-                    onSelectInterviewType,
-                    selectedInterviewType,
-                  }}
-                />
-              }
-              bottomSection={
-                <PaymentSettings
-                  {...{
-                    formErrors: PaymentSettingsError,
-                    formFields: paymentFields,
-                    getInitialFields: getPaymentFields,
-                    handleInputChange: handlePaymentInputChange,
-                    isEditable,
-                    onRemoveCompanyItem,
-                    onSelectCompanyItem,
-                    selectedCompanyList,
-                  }}
-                />
-              }
-            />
-          )}
-        </>
-      }
-      bottomSection={
-        isEditable && (
-          <ActionAndCancelButtons
-            actionBtnText={intl.formatMessage({
-              id: "session.saveChanges",
+    <>
+      {notificationContextHolder}
+      <ThreeRow
+        className={styles.mainContainer}
+        topSectionClassName={styles.topSectionStyle}
+        topSection={
+          <ContentHeader
+            customStyles={`${styles.campusInterviewHeader} ${
+              !responsive?.isMd ? styles.customStyles : ""
+            }`}
+            headerText={intl.formatMessage({
+              id: "label.setCampusInterviewSettings",
             })}
-            cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-            isActionBtnDisable={
-              isPaymentSettingsInvalid() ||
-              isCompanySettingsInvalid() ||
-              isCandidateSettingsInvalid()
-            }
-            onActionBtnClick={onClickSave}
-            onCancelBtnClick={onClickCancel}
           />
-        )
-      }
-    />
+        }
+        middleSection={
+          <>
+            {isLoadingInterviewCampusDetails && <CustomLoader />}
+            {!isLoadingInterviewCampusDetails && !!campusInterviewData && (
+              <ThreeRow
+                className={styles.candidateContentSection}
+                topSection={
+                  <CandidateSettings
+                    {...{
+                      errors,
+                      formErrors,
+                      formFields,
+                      getInitialFields,
+                      handleAdd,
+                      handleCandidateDataChange,
+                      handleInputChange,
+                      handleRemove,
+                      isEditable,
+                      campusInterviewData,
+                      tableData,
+                    }}
+                  />
+                }
+                middleSection={
+                  <CompanySettings
+                    {...{
+                      formErrors: companySettingsError,
+                      formFields: companySettingsFields,
+                      getInitialFields: getCompanyFields,
+                      handleInputChange: handleCompanyInputChange,
+                      initialFormState,
+                      isEditable,
+                      onRemoveInterviewType,
+                      onSelectInterviewType,
+                      selectedInterviewType,
+                    }}
+                  />
+                }
+                bottomSection={
+                  <PaymentSettings
+                    {...{
+                      formErrors: PaymentSettingsError,
+                      formFields: paymentFields,
+                      getInitialFields: getPaymentFields,
+                      handleInputChange: handlePaymentInputChange,
+                      isEditable,
+                      onRemoveCompanyItem,
+                      onSelectCompanyItem,
+                      selectedCompanyList,
+                    }}
+                  />
+                }
+              />
+            )}
+            {isErrorWhileCampusInterviews &&
+              !isLoadingInterviewCampusDetails && (
+                <ErrorMessageBox
+                  errorHeading={intl.formatMessage({ id: "lable.errors." })}
+                  errorText={getErrorMessage(erroWhileGettinginterviewDetails)}
+                  onRetry={() => getCampusInterviewData({})}
+                />
+              )}
+          </>
+        }
+        bottomSection={
+          (isEditable || !isErrorWhileCampusInterviews) && (
+            <ActionAndCancelButtons
+              actionBtnText={intl.formatMessage({
+                id: "session.saveChanges",
+              })}
+              cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+              isActionBtnDisable={
+                isPaymentSettingsInvalid() ||
+                isCompanySettingsInvalid() ||
+                isCandidateSettingsInvalid()
+              }
+              onActionBtnClick={onClickSave}
+              onCancelBtnClick={onClickCancel}
+            />
+          )
+        }
+      />
+    </>
   );
 };
 

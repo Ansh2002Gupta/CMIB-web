@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 
-const usePaymentSettings = ({ paymentDetails, setData }) => {
+const usePaymentSettings = ({ paymentDetails }) => {
   const [selectedCompanyList, setSelectedCompanyList] = useState([]);
 
   const initialFormState = {
-    cgst: paymentDetails?.cgst || "",
-    sgst: paymentDetails?.sgst || "",
-    igst: paymentDetails?.igst || "",
-    no_gst: paymentDetails?.no_gst || [],
-    discount_rate: paymentDetails?.discount_rate || "",
-    member_registration_fee: paymentDetails?.member_registration_fee || "",
+    cgst: "",
+    sgst: "",
+    igst: "",
+    no_gst: [],
+    discount_rate: "",
+    member_registration_fee: "",
   };
 
   const getInitialFields = (
@@ -92,13 +92,16 @@ const usePaymentSettings = ({ paymentDetails, setData }) => {
   const [formFields, setFormFields] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
 
-  console.log("paymentDetails", paymentDetails);
-
   useEffect(() => {
-    setFormFields(initialFormState);
+    setFormFields({
+      cgst: paymentDetails?.cgst || "",
+      sgst: paymentDetails?.sgst || "",
+      igst: paymentDetails?.igst || "",
+      no_gst: paymentDetails?.no_gst || [],
+      discount_rate: paymentDetails?.disconunt_rate || "",
+      member_registration_fee: paymentDetails?.member_registration_fee || "",
+    });
   }, [paymentDetails]);
-
-  console.log("initialFormState", initialFormState);
 
   const onSelectCompanyItem = (item, option) => {
     let company = option?.[0];
