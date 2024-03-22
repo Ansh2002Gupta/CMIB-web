@@ -8,7 +8,7 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import useRegisteredCompany from "./controllers/useRegisteredCompany";
 import commonStyles from "../../common/commonStyles.module.scss";
-import styles from "./RegisteredCompany.module.scss";
+import styles from "./RegisteredCompaniesList.module.scss";
 
 const RegisteredCompany = () => {
   const intl = useIntl();
@@ -29,6 +29,7 @@ const RegisteredCompany = () => {
     handleOnUserSearch,
     getErrorDetails,
   } = useRegisteredCompany();
+
   return (
     <TwoRow
       topSection={

@@ -1,7 +1,7 @@
 import { Typography } from "antd";
 
 import { SORT_VALUES } from "../../constant/constant";
-import styles from "./RegisteredCompany.module.scss";
+import styles from "./RegisteredCompaniesList.module.scss";
 
 export const getRegisteredCompanyColumn = ({
   getImage,
@@ -46,7 +46,7 @@ export const getRegisteredCompanyColumn = ({
         const { approved } = rowData;
         return (
           <div className={styles.statusBox}>
-            <Typography className={styles.ClassForText}>{approved}</Typography>
+            <Typography className={styles.appovedText}>{approved}</Typography>
           </div>
         );
       },

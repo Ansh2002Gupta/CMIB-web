@@ -15,7 +15,7 @@ import LoginForm from "../views/LoginForm";
 import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
-import RegisteredCompany from "../views/RegisteredCompany/RegisteredCompany";
+import RegisteredCompaniesList from "../views/RegisteredCompaniesList/RegisteredCompaniesList";
 import RegisteredCompaniesDetails from "../views/RegisteredCompaniesDetails/RegisteredCompaniesDetails";
 import Session from "../views/Session";
 import EditSession from "../views/EditSession/EditSession";
@@ -243,7 +243,7 @@ const config = [
       },
       {
         viewPath: REGISTERED_COMPANY,
-        element: <RegisteredCompany />,
+        element: <RegisteredCompaniesList />,
       },
       {
         viewPath: REGISTERED_COMPANY + REGISTERED_COMPANY_DETAILS,

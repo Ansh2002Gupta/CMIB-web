@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
 
-import { getRegisteredCompanyColumn } from "../RegisteredCompanyConfig";
+import { getRegisteredCompanyColumn } from "../registeredCompaniesListConfig";
 import useRenderColumn from "../../../core/hooks/useRenderColumn/useRenderColumn";
 import useNavigateScreen from "../../../core/hooks/useNavigateScreen";
 import { ThemeContext } from "../../../core/providers/theme";

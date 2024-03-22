@@ -99,14 +99,12 @@ const CompanyProfile = ({ companyProfileDetails }) => {
                           key={item.id}
                           className={styles.gridItem}
                           topSection={
-                            <>
-                              <Typography className={styles.grayText}>
-                                {intl.formatMessage({
-                                  id: `label.${item.headingIntl}`,
-                                })}
-                                <span className={styles.redText}> *</span>
-                              </Typography>
-                            </>
+                            <Typography className={styles.grayText}>
+                              {intl.formatMessage({
+                                id: `label.${item.headingIntl}`,
+                              })}
+                              <span className={styles.redText}> *</span>
+                            </Typography>
                           }
                           bottomSection={
                             <div className={styles.blackText}>{item.value}</div>
