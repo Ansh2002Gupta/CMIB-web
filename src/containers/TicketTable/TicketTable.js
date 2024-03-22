@@ -11,15 +11,14 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
+import useHandleSearch from "../../core/hooks/useHandleSearch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
 import { getTicketColumn } from "./TicketTableConfig";
 import { resetListingData } from "../../constant/utils";
-import { validateSearchTextLength } from "../../Utils/validations";
 import {
-  DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
 } from "../../constant/constant";
@@ -30,7 +29,6 @@ import {
   TICKET_LIST,
 } from "../../constant/apiEndpoints";
 import styles from "./TicketTable.module.scss";
-import useHandleSearch from "../../core/hooks/useHandleSearch";
 
 const TicketTable = ({
   current,
