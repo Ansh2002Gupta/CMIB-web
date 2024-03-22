@@ -1,4 +1,4 @@
-export const COMPANY_DETAILS_FEILDS = (
+export const COMPANY_DETAILS_FIELDS = (
   name,
   entity,
   frn_number,
@@ -67,7 +67,7 @@ export const COMPANY_DETAILS_FEILDS = (
   ];
 };
 
-export const CONTACT_PERSONAL_INFORMATION_FEILDS = (
+export const CONTACT_PERSONAL_INFORMATION_FIELDS = (
   salutation,
   name,
   designation,

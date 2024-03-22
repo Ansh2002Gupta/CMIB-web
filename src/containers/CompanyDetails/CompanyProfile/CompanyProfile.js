@@ -7,8 +7,8 @@ import { ThemeContext } from "core/providers/theme";
 
 import CustomGrid from "../../../components/CustomGrid";
 import {
-  COMPANY_DETAILS_FEILDS,
-  CONTACT_PERSONAL_INFORMATION_FEILDS,
+  COMPANY_DETAILS_FIELDS,
+  CONTACT_PERSONAL_INFORMATION_FIELDS,
   OTHER_DETAILS_FEILDS,
 } from "./CompanyProfileFieldDetails";
 import styles from "./CompanyProfile.module.scss";
@@ -17,7 +17,7 @@ const CompanyProfile = ({ companyProfileDetails }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
 
-  const company_details_fields = COMPANY_DETAILS_FEILDS(
+  const company_details_fields = COMPANY_DETAILS_FIELDS(
     companyProfileDetails?.name || "",
     companyProfileDetails?.entity || "",
     companyProfileDetails?.frn_number || "",
@@ -73,7 +73,7 @@ const CompanyProfile = ({ companyProfileDetails }) => {
       {companyProfileDetails?.contact_person_details.map(
         (contactDetails, index) => {
           const contact_personal_information_fields =
-            CONTACT_PERSONAL_INFORMATION_FEILDS(
+            CONTACT_PERSONAL_INFORMATION_FIELDS(
               contactDetails?.salutation || "-",
               contactDetails?.name || "-",
               contactDetails?.designation || "-",
