@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 
+import { urlService } from "../../Utils/urlService";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 
 const usePagination = ({
@@ -13,37 +13,27 @@ const usePagination = ({
   const pageParam = pageQueryParamName || "page";
   const rowPerPageParam = rowPerPageQueryParamName || "rowsPerPage";
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
   const handlePagePerChange = (page) => {
     setCurrent && setCurrent(page);
-    setSearchParams((prev) => {
-      prev.set(pageParam, page);
-      return prev;
-    });
+    urlService.setQueryStringValue(pageParam, page);
   };
 
   const handleRowsPerPageChange = (rowsPerPage) => {
     setPageSize && setPageSize(rowsPerPage);
-    setSearchParams((prev) => {
-      prev.set(rowPerPageParam, rowsPerPage);
-      return prev;
-    });
+    urlService.setQueryStringValue(rowPerPageParam, rowsPerPage);
   };
 
   useEffect(() => {
     if (shouldSetQueryParamsOnMount) {
-      setSearchParams((prev) => {
-        prev.set(pageParam, getValidPageNumber(+searchParams.get(pageParam)));
-        return prev;
-      });
-      setSearchParams((prev) => {
-        prev.set(
-          rowPerPageParam,
-          getValidPageSize(+searchParams.get(rowPerPageParam))
-        );
-        return prev;
-      });
+      const queryParams = {
+        [pageParam]: getValidPageNumber(
+          +urlService.getQueryStringValue(pageParam)
+        ),
+        [rowPerPageParam]: getValidPageSize(
+          +urlService.getQueryStringValue(rowPerPageParam)
+        ),
+      };
+      urlService.setMultipleQueryStringValues(queryParams);
     }
   }, []);
 
