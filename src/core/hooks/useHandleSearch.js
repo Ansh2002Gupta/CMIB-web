@@ -2,8 +2,8 @@ import { useState, useMemo } from "react";
 import _ from "lodash";
 
 import { urlService } from "../../Utils/urlService";
-import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
 import { validateSearchTextLength } from "../../Utils/validations";
+import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
 
 const useHandleSearch = ({
   filterArray,
