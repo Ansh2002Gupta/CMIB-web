@@ -49,7 +49,6 @@ const ConsentMarkingContent = ({
   consentRoundTwoData,
   currentlySelectedModuleKey,
   isEdit,
-  getRegistrationDate,
   lastRegistrationDatesData,
   roundId,
   registrationDateData,
@@ -60,7 +59,6 @@ const ConsentMarkingContent = ({
   const intl = useIntl();
   const [isRegistrationDateEdit, setIsRegistrationDateEdit] = useState(false);
   const [isTableDateEdit, setIsTableDateEdit] = useState(false);
-
   const {
     makeRequest: updateRegistrationDate,
     isLoading: isUpdatingRegistrationDate,
@@ -143,8 +141,6 @@ const ConsentMarkingContent = ({
     lastRegistrationDatesData,
   });
 
-  console.log(lastRegistrationInitialData, "lastRegistrationInitialData..");
-
   const [lastRegistrationError, setLastRegistrationError] = useState(
     lastRegistrationInitialError
   );
@@ -158,6 +154,24 @@ const ConsentMarkingContent = ({
   const [lastRegistrationTableData, setLastRegistrationTableData] = useState(
     lastRegistrationInitialData
   );
+
+  const [lastCompanyRegistrationDate, setLastCompanyRegistrationDate] =
+    useState();
+
+  let min = !!lastRegistrationInitialData.length
+    ? lastRegistrationInitialData[0]?.company_reg_end_date
+    : "";
+
+  useEffect(() => {
+    if (!!lastRegistrationInitialData?.length) {
+      lastRegistrationInitialData.map((item) => {
+        if (min >= item.company_reg_end_date) {
+          min = item.company_reg_end_date;
+        }
+      });
+      setLastCompanyRegistrationDate(min);
+    }
+  }, [min, lastRegistrationTableData]);
 
   useEffect(() => {
     setRoundOneTableData(roundOneInitialData);
@@ -443,7 +457,8 @@ const ConsentMarkingContent = ({
                                 disabledDate(
                                   item.labeIntl,
                                   current,
-                                  registrationDatesData
+                                  registrationDatesData,
+                                  lastCompanyRegistrationDate
                                 )
                               }
                               errorMessage={registrationError[item?.labeIntl]}

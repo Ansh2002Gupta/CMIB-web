@@ -239,7 +239,7 @@ const locale = {
   "label.registrationConsentSchedule":
     "Registration and Consent Marking Schedule",
   "label.consentMarkingScheduleWarning":
-    "*This cannot be edited once this section data is submitted.",
+    "*This section data cannot be edited once registration starts",
   "label.consent.company_reg_start_date":
     "Registration Start Date for Companies",
   "label.consent.candidate_reg_start_date":
