@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router-dom";
 
@@ -58,10 +58,7 @@ const RegisteredCompaniesDetails = () => {
 
   const { renderColumn } = useRenderColumn();
 
-  const {
-    makeRequest: updateApprovalStatus,
-    isLoading: isUpdateApprovalStatus,
-  } = usePatch({
+  const { makeRequest: updateApprovalStatus } = usePatch({
     url: ADMIN_ROUTE + REGISTERED_COMPANIES + `/${id}` + APPROVE,
   });
 
@@ -76,11 +73,10 @@ const RegisteredCompaniesDetails = () => {
       onSuccessCallback: () => {
         fetchCompanyDetails({});
       },
-      onErrorCallback: (ErrorMessage) => {
+      onErrorCallback: (errorMsg) => {
         showNotification({
-          text: ErrorMessage,
+          text: errorMsg?.data?.message,
           type: "error",
-          headingText: intl.formatMessage({ id: "label.errorMessage" }),
         });
       },
     });
