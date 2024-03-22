@@ -21,14 +21,14 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
-import { SESSION } from "../../routes/routeNames";
+import { getErrorMessage } from "../../constant/utils";
+import { ROUND_ID } from "../../constant/constant";
 import {
   CAMPUS_INTERVIEW,
   CORE_ROUTE,
   ROUNDS,
 } from "../../constant/apiEndpoints";
-import { ROUND_ID } from "../../constant/constant";
-import { getErrorMessage } from "../../constant/utils";
+import { SESSION } from "../../routes/routeNames";
 import styles from "./CampusInterviewSettings.module.scss";
 
 const CampusInterviewContent = () => {
