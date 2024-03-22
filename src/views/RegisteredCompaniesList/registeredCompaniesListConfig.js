@@ -27,15 +27,20 @@ export const getRegisteredCompanyColumn = ({
           ? styles.active
           : "",
       ],
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
+      renderText: {
+        isCapitalize: true,
+        textStyles: [styles.tableCell].join(" "),
+        visible: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.type" }),
       dataIndex: "type",
       key: "type",
       renderText: {
-        visible: true,
+        isCapitalize: true,
         textStyles: styles.tableCell,
+        visible: true,
       },
     }),
     renderColumn({
