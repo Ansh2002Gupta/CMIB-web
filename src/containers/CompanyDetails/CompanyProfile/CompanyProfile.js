@@ -86,9 +86,9 @@ const CompanyProfile = ({ companyProfileDetails }) => {
               className={styles.companyDetails}
               topSection={
                 <Typography className={styles.headingText}>
-                  {`${index + 1}. ${intl.formatMessage({
+                  {intl.formatMessage({
                     id: "label.contactPersonalInformation",
-                  })}`}
+                  })}
                 </Typography>
               }
               bottomSection={
