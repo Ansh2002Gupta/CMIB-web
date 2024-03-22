@@ -134,8 +134,7 @@ const SubscriptionDetails = () => {
       );
       errorCount++;
     }
-    if (!!errorCount) return false;
-    else return true;
+    return !errorCount;
   };
 
   const handleInputChange = (value, name) => {
