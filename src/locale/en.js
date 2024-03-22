@@ -687,6 +687,15 @@ const locale = {
   "label.enterpackagename_price": "Enter Price",
   "label.default_package_name": "Package 1",
   "label.package_validity_period": "Package Validity Period",
+  "label.allJobs": "All Jobs",
+  "label.downloadJobList": "Download Jobs List",
+  "label.jobId": "Job ID",
+  "label.designation": "Designation",
+  "label.applicants": "Applicants",
+  "label.active/inactive": "Active/Inactive",
+  "label.view_job_details": "View Job Details",
+  "label.approve": "Approve",
+  "label.designation_or_job_id": "Search by designation or job ID",
 };
 
 export default locale;

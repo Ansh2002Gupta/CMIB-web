@@ -73,6 +73,7 @@ import {
   TICKETS_VIEW_DETAILS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
+import AllJobs from "../views/AllJobs/AllJobs.js";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(

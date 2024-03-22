@@ -182,12 +182,16 @@ const useRenderColumn = () => {
       }
       if (
         status?.toLowerCase() === "closed" ||
-        status?.toLowerCase() === "answered"
+        status?.toLowerCase() === "answered" ||
+        status?.toLowerCase() === "active"
       ) {
         return ["statusContainer_success", "statusText_success"];
       }
       if (status?.toLowerCase() === "pending") {
         return ["statusContainer_failed", "statusText_failed"];
+      }
+      if (status?.toLowerCase() === "inactive") {
+        return ["statusContainer_inactive", "statusText_inactive"];
       }
       return ["statusContainer_progress", "statusText_progress"];
     };
