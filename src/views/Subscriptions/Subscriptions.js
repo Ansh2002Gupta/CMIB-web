@@ -20,7 +20,6 @@ const Subscriptions = () => {
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   const handleAddSubscription = () => {
-    //navigate(ADD_SUBSCRIPTIONS);
     navigate(`${"subscription-details"}/${2}?mode=view`);
   };
 
