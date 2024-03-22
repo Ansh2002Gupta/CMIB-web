@@ -335,7 +335,7 @@ const locale = {
   "label.state": "State",
   "label.isdCode": "ISD/STD Code",
   "label.telephoneNumber": "Telephone Number",
-  "label.contactPersonalInformation": "Contact Personal Information",
+  "label.contactPersonalInformation": "Contact Person Information",
   "label.salutation": "Salutation",
   "label.contactPersonName": "Contact Person Name",
   "label.contactPersonDesignation": "Contact Person Designation",
@@ -554,6 +554,16 @@ const locale = {
   "label.data_saved_successfully": "Data Saved Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.type": "Type",
+  "label.approved_not_approved": "Approved/Not Approved",
+  "label.not_approved": "Not Approved",
+  "label.approved": "Approved",
+  "label.approval": "Approval",
+  "label.path.registered-company": "Registered Companies",
+  "label.path.registered-company-details": "Company Details",
+  "label.approval_status": "Approval status",
+  "label.balanceCredit": "Balance Credit: ",
+  "label.modules": "Modules",
   "label.set_max_video_upload_time_limit":
     "Setup Maximum Video Upload Time Limit",
   "label.max_video_upload_time_limit":

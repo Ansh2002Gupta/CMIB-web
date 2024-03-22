@@ -431,3 +431,11 @@ export const handleDisabledStartTime = (time) => {
     },
   };
 };
+
+export const getValidUrl = (url) => {
+  let link = url.toLowerCase();
+  if (!/^https?:\/\//.test(link) && !/^http?:\/\//.test(link)) {
+    link = `https://${link}`;
+  }
+  return link;
+};

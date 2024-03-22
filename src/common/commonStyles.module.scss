@@ -48,17 +48,38 @@
   background-color: var(--letGrey7, #bfbfbf);
 }
 
+.headerBox {
+  border-top: var(--borderLight);
+  border-bottom: var(--borderLight);
+  width: var(--fullWidth);
+  padding: var(--paddingMedium);
+}
+
+.cardContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  gap: var(--gapMedium);
+}
+
+.headingText {
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
 .redText {
   color: var(--redText);
 }
 
-.commonLabelStyle{
+.commonLabelStyle {
   font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
 }
 
-.commonSubHeadingStyle{
+.commonSubHeadingStyle {
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   margin-top: var(--marginSmall);
