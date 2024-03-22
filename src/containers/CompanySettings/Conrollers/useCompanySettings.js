@@ -6,14 +6,14 @@ const useCompanySettings = ({ companyDetails }) => {
   const [selectedInterviewType, setSelectedInterviewType] = useState([]);
 
   const initialValue = {
-    max_no_of_vacancy: companyDetails?.max_no_of_vacancy || "",
-    multiplier: companyDetails?.multiplier || "",
+    max_no_of_vacancy: companyDetails?.max_no_vacancy_company || "",
+    multiplier: companyDetails?.multiplier_company || "",
     shortlist_students_allowed:
-      companyDetails?.shortlist_students_allowed || "",
-    company_interview_types: companyDetails?.company_interview_types || [
-      "online",
-    ],
+      companyDetails?.shotlist_candidate_allowed_company || "",
+    company_interview_types: companyDetails?.company_interview_types || [],
   };
+
+  // console.log("initialValue", initialValue);
 
   const getInitialFields = (
     max_no_of_vacancy,
@@ -78,6 +78,13 @@ const useCompanySettings = ({ companyDetails }) => {
       setFormErrors({
         ...formErrors,
         ["company_interview_types"]: "",
+      });
+      setFormFields({
+        ...formFields,
+        ["company_interview_types"]: [
+          ...formFields?.company_interview_types,
+          ...item,
+        ],
       });
       setSelectedInterviewType([...selectedInterviewType, interview]);
     }

@@ -185,6 +185,26 @@ export const SESSION_PERIOD = [
   { id: 112, label: "November 2020", value: "November 2020" },
 ];
 
+export const COMPANY_INTERVIEW_TYPE = [
+  {
+    id: 1,
+    label: "Written/Psychometric Test",
+    value: "Written/Psychometric Test",
+  },
+  { id: 2, label: "Interviews", value: "Interviews" },
+  { id: 3, label: "Group Discussion", value: "Group Discussion" },
+];
+
+export const COMPANY_TYPE_OPTIONS = [
+  { id: 1, label: "Exempt", value: "exempt" },
+  { id: 2, label: "Nil Rated", value: "nil rated" },
+  { id: 3, label: "Bill of Supply", value: "bill of supply" },
+  { id: 4, label: "Export", value: "export" },
+  { id: 5, label: "SEZ", value: "sez" },
+  { id: 6, label: "Deemed Export", value: "deemed export" },
+  { id: 7, label: "Taxable", value: "taxable" },
+];
+
 export const CENTRE_TYPE = [
   { id: 1, label: "Small Centre", value: "small" },
   { id: 2, label: "Big Centre", value: "big" },

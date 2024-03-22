@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const usePaymentSettings = ({ paymentDetails }) => {
+const usePaymentSettings = ({ paymentDetails, setData }) => {
   const [selectedCompanyList, setSelectedCompanyList] = useState([]);
 
   const initialFormState = {
     cgst: paymentDetails?.cgst || "",
     sgst: paymentDetails?.sgst || "",
     igst: paymentDetails?.igst || "",
-    no_gst: paymentDetails?.no_gst || [" ark"],
+    no_gst: paymentDetails?.no_gst || [],
     discount_rate: paymentDetails?.discount_rate || "",
     member_registration_fee: paymentDetails?.member_registration_fee || "",
   };
@@ -92,6 +92,14 @@ const usePaymentSettings = ({ paymentDetails }) => {
   const [formFields, setFormFields] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState({});
 
+  console.log("paymentDetails", paymentDetails);
+
+  useEffect(() => {
+    setFormFields(initialFormState);
+  }, [paymentDetails]);
+
+  console.log("initialFormState", initialFormState);
+
   const onSelectCompanyItem = (item, option) => {
     let company = option?.[0];
     if (selectedCompanyList.some((item) => item.id === company.id)) {
@@ -100,6 +108,10 @@ const usePaymentSettings = ({ paymentDetails }) => {
       setFormErrors({
         ...formErrors,
         ["no_gst"]: "",
+      });
+      setFormFields({
+        ...formFields,
+        ["no_gst"]: [...formFields?.no_gst, ...item],
       });
       setSelectedCompanyList([...selectedCompanyList, company]);
     }

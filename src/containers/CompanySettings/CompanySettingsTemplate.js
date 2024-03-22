@@ -6,7 +6,7 @@ import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
 import SearchableDropDown from "../../components/SearchableDropDown";
 import { TwoRow } from "../../core/layouts";
-import { SESSION_PERIOD } from "../../constant/constant";
+import { COMPANY_INTERVIEW_TYPE } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./CompanySettings.module.scss";
 
@@ -49,7 +49,7 @@ const CompanySettingsTemplate = ({
           isRequiredField={item.rules.isRequired}
           onSelectItem={onSelectInterviewType}
           onRemoveItem={onRemoveInterviewType}
-          options={SESSION_PERIOD}
+          options={COMPANY_INTERVIEW_TYPE}
           selectedOptionsList={selectedInterviewType}
           placeholderText={intl.formatMessage({
             id: `session.placeholder.${item.headingIntl}`,

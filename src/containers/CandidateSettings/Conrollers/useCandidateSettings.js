@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-const useCandidateSettings = ({ candidateDetails }) => {
+const useCandidateSettings = ({ candidateDetails, setData }) => {
   const addTableData = {
     isAddRow: true,
     centre: "",
@@ -11,7 +11,19 @@ const useCandidateSettings = ({ candidateDetails }) => {
     to_time: null,
   };
 
-  const [tableData, setTableData] = useState([addTableData]);
+  const apiTableData = candidateDetails?.candidate_consent.map((item) => {
+    return {
+      centre: item?.centre_name,
+      from_date: item?.from_date,
+      to_date: item?.to_date,
+      from_time: item?.from_time,
+      to_time: item?.to_time,
+    };
+  });
+
+  const [tableData, setTableData] = useState(
+    !!candidateDetails ? apiTableData : [addTableData]
+  );
   const intl = useIntl();
   const [errors, setErrors] = useState(
     tableData.map(() => ({

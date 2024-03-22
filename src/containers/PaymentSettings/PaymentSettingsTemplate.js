@@ -9,7 +9,7 @@ import { TwoRow } from "../../core/layouts";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import {
   MAX_REGISTRATION_FEE_LENGTH,
-  SESSION_PERIOD,
+  COMPANY_TYPE_OPTIONS,
 } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./PaymentSettings.module.scss";
@@ -61,7 +61,7 @@ const PaymentSettingsTemplate = ({
           isRequiredField={true}
           onSelectItem={onSelectCompanyItem}
           onRemoveItem={onRemoveCompanyItem}
-          options={SESSION_PERIOD}
+          options={COMPANY_TYPE_OPTIONS}
           selectedOptionsList={selectedCompanyList}
           placeholderText={`session.placeholder.${item.headingIntl}`}
           title={`session.payment.${item.headingIntl}`}

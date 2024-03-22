@@ -25,6 +25,7 @@ const CandidateSettings = ({
   handleRemove,
   handleCandidateDataChange,
   isEditable,
+  campusInterviewData,
   tableData,
 }) => {
   const intl = useIntl();
@@ -40,16 +41,19 @@ const CandidateSettings = ({
     formFields?.small_centre_end_date
   );
 
-  const dropdownItems = [
-    { key: "1", text: "Centre 1", label: "Centre 1", value: "Centre 1" },
-    { key: "2", text: "Centre 2", label: "Centre 2", value: "Centre 2" },
-  ];
+  const dropdownItems = campusInterviewData?.candidate_consent.map((item) => {
+    return {
+      id: item.id,
+      label: item.centre_name,
+      value: item.id,
+    };
+  });
 
   const editConfigurations = [
     renderColumn({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
-      dataIndex: "centre",
+      dataIndex: "center",
       key: "cetre",
       renderDropdown: {
         visible: true,

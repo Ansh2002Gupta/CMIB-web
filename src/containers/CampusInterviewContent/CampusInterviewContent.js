@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 
@@ -6,6 +6,7 @@ import { ThreeRow } from "../../core/layouts";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import CandidateSettings from "../CandidateSettings/CandidateSettings";
+import CustomLoader from "../../components/CustomLoader";
 import CompanySettings from "../CompanySettings";
 import ContentHeader from "../ContentHeader";
 import PaymentSettings from "../PaymentSettings";
@@ -26,6 +27,7 @@ import { SESSION } from "../../routes/routeNames";
 import styles from "./CampusInterviewSettings.module.scss";
 import { urlService } from "../../Utils/urlService";
 import { ROUND_ID } from "../../constant/constant";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 
 const CampusInterviewContent = () => {
   const intl = useIntl();
@@ -42,11 +44,12 @@ const CampusInterviewContent = () => {
   const roundId = urlService.getQueryStringValue(ROUND_ID);
 
   const {
-    data: orientationCentres,
+    data: campusInterviewData,
     error: errorWhileGettingCentres,
     fetchData: getOrientationCentres,
     isLoading: isGettingOrientationCentres,
     isSuccess: fetchCentersSuccessFlag,
+    // setData: setCampusInterviewData,
   } = useFetch({
     url:
       CORE_ROUTE +
@@ -54,42 +57,14 @@ const CampusInterviewContent = () => {
       ROUNDS +
       `/${roundId}` +
       CAMPUS_INTERVIEW,
-    // otherOptions: { skipApiCallOnMount: true },
+    otherOptions: { skipApiCallOnMount: true },
   });
 
-  const dum = {
-    id: 247,
-    ps_round_id: null,
-    max_interview_allowed_candidate: null,
-    max_offer_accepted_candidate: null,
-    big_center_change_start_date_candidate: null,
-    big_center_change_end_date_candidate: null,
-    small_center_change_start_date_candidate: null,
-    small_center_change_end_date_candidate: null,
-    max_no_vacancy_company: null,
-    multiplier_company: null,
-    shotlist_candidate_allowed_company: null,
-    company_interview_types: null,
-    cgst: null,
-    sgst: null,
-    igst: null,
-    no_gst: null,
-    disconunt_rate: null,
-    member_registration_fee: null,
-    shortlist_ratio: null,
-    candidate_consent: [
-      {
-        id: 21,
-        centre_name: "ABCDE",
-        from_date: null,
-        to_date: null,
-        from_time: null,
-        to_time: null,
-      },
-    ],
-  };
-
-  // console.log("orientationCentres", orientationCentres);
+  useEffect(() => {
+    if (selectedModule?.key && roundId) {
+      getOrientationCentres({});
+    }
+  }, [selectedModule?.key, roundId]);
 
   const {
     formErrors: PaymentSettingsError,
@@ -100,7 +75,10 @@ const CampusInterviewContent = () => {
     onSelectCompanyItem,
     selectedCompanyList,
     isButtonDisable: isPaymentSettingsInvalid,
-  } = usePaymentSettings({ paymentDetails: orientationCentres });
+  } = usePaymentSettings({
+    paymentDetails: campusInterviewData,
+    // setData: setCampusInterviewData,
+  });
 
   const {
     formErrors: companySettingsError,
@@ -112,7 +90,10 @@ const CampusInterviewContent = () => {
     onSelectInterviewType,
     selectedInterviewType,
     isButtonDisable: isCompanySettingsInvalid,
-  } = useCompanySettings({ companyDetails: orientationCentres });
+  } = useCompanySettings({
+    companyDetails: campusInterviewData,
+    // setData: setCampusInterviewData,
+  });
 
   const {
     errors,
@@ -125,7 +106,10 @@ const CampusInterviewContent = () => {
     handleCandidateDataChange,
     isButtonDisable: isCandidateSettingsInvalid,
     tableData,
-  } = useCandidateSettings({ candidateDetails: orientationCentres });
+  } = useCandidateSettings({
+    candidateDetails: campusInterviewData,
+    // setData: setCampusInterviewData,
+  });
 
   const onClickCancel = () => {
     navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
@@ -144,15 +128,18 @@ const CampusInterviewContent = () => {
   });
 
   const onClickSave = () => {
-    //TODO: API call to save changes
-    console.log("paymentFields", paymentFields);
-    console.log("companySettingsFields", companySettingsFields);
-    console.log("formFields", formFields);
-    console.log("tableData", tableData);
+    // console.log("paymentFields", paymentFields);
+    // console.log("companySettingsFields", companySettingsFields);
+    // console.log("formFields", formFields);
+    // console.log("tableData", tableData);
+
     const consentData = tableData.map((item, index) => {
+      const roundCentreMapping = campusInterviewData?.candidate_consent?.find(
+        (consentItem) => consentItem.id === item.centre
+      );
       return {
-        id: index + 1,
-        round_centre_mapping_id: index + 1,
+        id: item?.centre,
+        round_centre_mapping_id: roundCentreMapping?.round_centre_mapping_id,
         from_date: item.from_date,
         to_date: item.to_date,
         from_time: item.from_time,
@@ -160,11 +147,9 @@ const CampusInterviewContent = () => {
       };
     });
 
-    console.log("consentData", consentData);
-
     const payload = {
       data: {
-        id: "1",
+        id: campusInterviewData?.id || null,
         ps_round_id: roundId,
         consent: consentData,
         candidate_settings: {
@@ -192,16 +177,19 @@ const CampusInterviewContent = () => {
           igst: paymentFields?.igst,
           no_gst: paymentFields?.no_gst,
           disconunt_rate: paymentFields?.discount_rate,
+          member_registration_fee: paymentFields?.member_registration_fee,
         },
       },
     };
 
-    updateCampusInterviewDetails({
-      body: payload,
-      onSuccessCallback: () => {
-        getOrientationCentres({});
-      },
-    });
+    console.log("pauload", payload);
+
+    // updateCampusInterviewDetails({
+    //   body: payload,
+    //   onSuccessCallback: () => {
+    //     getOrientationCentres({});
+    //   },
+    // });
   };
 
   return (
@@ -219,54 +207,60 @@ const CampusInterviewContent = () => {
         />
       }
       middleSection={
-        <ThreeRow
-          className={styles.candidateContentSection}
-          topSection={
-            <CandidateSettings
-              {...{
-                errors,
-                formErrors,
-                formFields,
-                getInitialFields,
-                handleAdd,
-                handleCandidateDataChange,
-                handleInputChange,
-                handleRemove,
-                isEditable,
-                tableData,
-              }}
+        <>
+          {isGettingOrientationCentres && <CustomLoader />}
+          {!isGettingOrientationCentres && !!campusInterviewData && (
+            <ThreeRow
+              className={styles.candidateContentSection}
+              topSection={
+                <CandidateSettings
+                  {...{
+                    errors,
+                    formErrors,
+                    formFields,
+                    getInitialFields,
+                    handleAdd,
+                    handleCandidateDataChange,
+                    handleInputChange,
+                    handleRemove,
+                    isEditable,
+                    campusInterviewData,
+                    tableData,
+                  }}
+                />
+              }
+              middleSection={
+                <CompanySettings
+                  {...{
+                    formErrors: companySettingsError,
+                    formFields: companySettingsFields,
+                    getInitialFields: getCompanyFields,
+                    handleInputChange: handleCompanyInputChange,
+                    initialFormState,
+                    isEditable,
+                    onRemoveInterviewType,
+                    onSelectInterviewType,
+                    selectedInterviewType,
+                  }}
+                />
+              }
+              bottomSection={
+                <PaymentSettings
+                  {...{
+                    formErrors: PaymentSettingsError,
+                    formFields: paymentFields,
+                    getInitialFields: getPaymentFields,
+                    handleInputChange: handlePaymentInputChange,
+                    isEditable,
+                    onRemoveCompanyItem,
+                    onSelectCompanyItem,
+                    selectedCompanyList,
+                  }}
+                />
+              }
             />
-          }
-          middleSection={
-            <CompanySettings
-              {...{
-                formErrors: companySettingsError,
-                formFields: companySettingsFields,
-                getInitialFields: getCompanyFields,
-                handleInputChange: handleCompanyInputChange,
-                initialFormState,
-                isEditable,
-                onRemoveInterviewType,
-                onSelectInterviewType,
-                selectedInterviewType,
-              }}
-            />
-          }
-          bottomSection={
-            <PaymentSettings
-              {...{
-                formErrors: PaymentSettingsError,
-                formFields: paymentFields,
-                getInitialFields: getPaymentFields,
-                handleInputChange: handlePaymentInputChange,
-                isEditable,
-                onRemoveCompanyItem,
-                onSelectCompanyItem,
-                selectedCompanyList,
-              }}
-            />
-          }
-        />
+          )}
+        </>
       }
       bottomSection={
         isEditable && (
