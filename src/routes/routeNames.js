@@ -38,6 +38,7 @@ export const SETUP_MOCK_INTERVIEW = "setup-mock-interview/";
 export const CAMPUS_INTERVIEW_SETTINGS = "round1/campus-interview-settings/";
 export const SUBSCRIPTIONS = "subscriptions/";
 export const SUBSCRIPTIONS_DETAILS = "subscription-details/:subscriptionId";
+export const JOB_LISTING = "all-jobs/";
 export const TICKETS = "tickets/";
 export const TICKETS_VIEW_DETAILS = "reply/:id";
 export const USER_DETAILS = "details/:userId";
