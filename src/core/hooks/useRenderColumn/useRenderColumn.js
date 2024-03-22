@@ -73,7 +73,6 @@ const useRenderColumn = () => {
       onChange = () => {},
       placeholder = "",
       type,
-      disabledDate = () => {},
     } = renderDateTime;
 
     const {
