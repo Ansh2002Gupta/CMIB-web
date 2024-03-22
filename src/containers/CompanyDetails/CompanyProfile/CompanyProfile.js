@@ -6,6 +6,7 @@ import { TwoRow } from "../../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 
 import CustomGrid from "../../../components/CustomGrid";
+import { getValidUrl } from "../../../constant/utils";
 import {
   COMPANY_DETAILS_FIELDS,
   CONTACT_PERSONAL_INFORMATION_FIELDS,
@@ -171,7 +172,10 @@ const CompanyProfile = ({ companyProfileDetails }) => {
                   }
                   bottomSection={
                     item.id === 2 ? (
-                      <a className={styles.anchor} href={item.value}>
+                      <a
+                        className={styles.anchor}
+                        href={getValidUrl(item.value)}
+                      >
                         {item.value}
                       </a>
                     ) : (
