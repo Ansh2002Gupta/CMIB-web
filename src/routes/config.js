@@ -61,8 +61,10 @@ import {
   USER_DETAILS,
   TICKETS,
   TICKETS_VIEW_DETAILS,
+  JOB_LISTING,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
+import AllJobs from "../views/AllJobs/AllJobs.js";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
@@ -200,6 +202,10 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: JOB_LISTING,
+        element: <AllJobs />,
       },
     ],
   },

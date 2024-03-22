@@ -67,6 +67,10 @@
   background-color: var(--lightGreenBg);
 }
 
+.statusContainer_inactive {
+  background-color: var(--inactiveWhite);
+}
+
 .statusContainer_failed {
   background-color: var(--lightRedBg);
 }
@@ -90,6 +94,10 @@
 
 .statusText_progress {
   color: var(--blueText);
+}
+
+.statusText_inactive {
+  color: var(--textBold);
 }
 
 .chipContainer {

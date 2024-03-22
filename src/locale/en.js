@@ -546,6 +546,15 @@ const locale = {
   "label.nqca-placements": "nqca-placements",
   "label.downloadSucess": "Download Successful",
   "label.videolimitError": "Please enter value between 1 to 999",
+  "label.allJobs": "All Jobs",
+  "label.downloadJobList": "Download Jobs List",
+  "label.jobId": "Job ID",
+  "label.designation": "Designation",
+  "label.applicants": "Applicants",
+  "label.active/inactive": "Active/Inactive",
+  "label.view_job_details": "View Job Details",
+  "label.approve": "Approve",
+  "label.designation_or_job_id": "Search by designation or job ID",
 };
 
 export default locale;
