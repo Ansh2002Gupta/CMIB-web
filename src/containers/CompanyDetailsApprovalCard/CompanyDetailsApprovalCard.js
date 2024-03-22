@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { TwoRow } from "../../core/layouts";
 
 import DataTable from "../../components/DataTable";
+import { HYPHEN } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
 
 const CompanyDetailsApprovalCard = ({
@@ -20,12 +21,16 @@ const CompanyDetailsApprovalCard = ({
         <Typography className={commonStyles.headingText}>{heading}</Typography>
       }
       bottomSection={
-        <DataTable
-          customTableClassName={customTableStyle}
-          columns={columns}
-          originalData={dataSource}
-          hidePagination
-        />
+        !!dataSource.length ? (
+          <DataTable
+            customTableClassName={customTableStyle}
+            columns={columns}
+            originalData={dataSource}
+            hidePagination
+          />
+        ) : (
+          <Typography>{HYPHEN}</Typography>
+        )
       }
     />
   );
