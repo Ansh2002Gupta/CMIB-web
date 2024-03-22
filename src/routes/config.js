@@ -32,6 +32,7 @@ import {
   ADD,
   ADD_NEW_USER_DETAILS,
   ADD_SESSION,
+  ADD_SUBSCRIPTIONS,
   CONFIGURATIONS,
   COMPANIES,
   COMPANIES_DETAILS,
@@ -56,11 +57,11 @@ import {
   SETUP_CENTERS_DETAILS,
   SETUP_MOCK_INTERVIEW,
   SUBSCRIPTIONS,
+  SUBSCRIPTIONS_DETAILS,
   USERS,
   USER_DETAILS,
   TICKETS,
   TICKETS_VIEW_DETAILS,
-  ADD_SUBSCRIPTIONS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 
@@ -203,6 +204,10 @@ const config = [
       },
       {
         viewPath: SUBSCRIPTIONS + ADD_SUBSCRIPTIONS,
+        element: <SubscriptionDetails />,
+      },
+      {
+        viewPath: SUBSCRIPTIONS + SUBSCRIPTIONS_DETAILS,
         element: <SubscriptionDetails />,
       },
     ],

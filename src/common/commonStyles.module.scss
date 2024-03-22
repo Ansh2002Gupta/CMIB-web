@@ -73,14 +73,18 @@
   color: var(--redText);
 }
 
-.commonLabelStyle{
+.commonLabelStyle {
   font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
 }
 
-.commonSubHeadingStyle{
+.commonSubHeadingStyle {
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   margin-top: var(--marginSmall);
+}
+
+.errorInput {
+  border: var(--borderError) !important;
 }

@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
@@ -9,53 +9,226 @@ import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
 import CustomButton from "../../components/CustomButton";
 import CustomRadioButton from "../../components/CustomRadioButton";
 import CustomInput from "../../components/CustomInput";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ContentHeader from "../ContentHeader";
+import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import SubscriptionDetailsCard from "../SubscriptionDetailsCard/SubscriptionDetailsCard";
 import LabelWithValue from "../../components/LabelWithValue/LabelWithValue";
-import { VALUE_ONE, VALUE_TWO, VALUE_ZERO } from "../../constant/constant";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
-import { ADD_SUBSCRIPTIONS, SUBSCRIPTIONS } from "../../routes/routeNames";
-import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
+import useFetch from "../../core/hooks/useFetch";
+import { usePatch, usePost } from "../../core/hooks/useApiRequest";
+import useShowNotification from "../../core/hooks/useShowNotification";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
+import { urlService } from "../../Utils/urlService";
+import {
+  ADMIN_ROUTE,
+  SUBSCRIPTIONS_END_POINT,
+} from "../../constant/apiEndpoints";
+import { ADD_SUBSCRIPTIONS, SUBSCRIPTIONS } from "../../routes/routeNames";
+import {
+  NOTIFICATION_TYPES,
+  VALUE_ONE,
+  VALUE_ZERO,
+} from "../../constant/constant";
+import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./SubscriptionDetails.module.scss";
 
 const SubscriptionDetails = () => {
   const intl = useIntl();
+  const { subscriptionId } = useParams();
+  const location = useLocation();
+  const { isLoading: isSubscriptionAdding, makeRequest: addSubscriptionData } =
+    usePost({ url: ADMIN_ROUTE + SUBSCRIPTIONS_END_POINT });
+  const isAddSubscription = location.pathname.includes(ADD_SUBSCRIPTIONS);
+
+  const {
+    isLoading: isSubscriptionEditing,
+    makeRequest: editSubscriptionData,
+  } = usePatch({
+    url: ADMIN_ROUTE + SUBSCRIPTIONS_END_POINT + `/${subscriptionId}`,
+  });
+  const {
+    data: subscriptionData,
+    error: subscriptionError,
+    fetchData: getSubscriptionData,
+    isError: isErrorWhileGettingSubscription,
+    isLoading: isGettingSubscription,
+  } = useFetch({
+    url: ADMIN_ROUTE + SUBSCRIPTIONS_END_POINT + `/${subscriptionId}`,
+    otherOptions: { skipApiCallOnMount: isAddSubscription },
+  });
+
+  const [isEditPackage, setIsEditPackage] = useState(
+    urlService.getQueryStringValue("mode") === "edit"
+  );
+  const { showNotification, notificationContextHolder } = useShowNotification();
   const { navigateScreen: navigate } = useNavigateScreen();
+  const [, setNotificationStateDispatch] = useContext(NotificationContext);
   const [userProfileDetails] = useContext(UserProfileContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
-  //TODO: LINKING WITH THE MANAGE SUBSCRIPTION > LISTING
 
-  /**
+  const [status, setStatus] = useState(subscriptionData?.status);
+  const [formData, setFormData] = useState(
+    isAddSubscription
+      ? {
+          name: "",
+          description: "",
+          validity: null,
+          price: null,
+        }
+      : {
+          name: subscriptionData?.name,
+          description: subscriptionData?.description,
+          validity: subscriptionData?.validity,
+          price: subscriptionData?.price,
+        }
+  );
 
-   INFO: Manually set
-   *  isAddSubscription->true and isEditPackage->false FOR ADD SUBSCRIPTION
-   * isAddSubscription->false and isEditPackage->true FOR NON-EDITABLE PACKAGE DISCRIPTION
+  const [errors, setErrors] = useState([]);
 
-   **/
-  const [isAddSubscription, setIsAddSubscription] = useState(false);
-  const [isEditPackage, setIsEditPackage] = useState(true);
+  const navigateBackToSubscriptionListing = () => {
+    navigate(`/${currentlySelectedModuleKey}/${SUBSCRIPTIONS}`, {
+      replace: true,
+    });
+  };
 
-  const [value, setValue] = useState(VALUE_ZERO);
-  const [formData, setFormData] = useState({
-    packageName: "",
-    packageDescription: "",
-    packageValidityPeriod: null,
-    packagePrice: null,
-  });
   const handleRadioButton = (e) => {
-    setValue(e.target.value);
+    setStatus(e.target.value);
+  };
+
+  const handleError = (error, name) => {
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
+  };
+
+  const validate = () => {
+    let errorCount = 0;
+    if (!formData?.name) {
+      handleError(intl.formatMessage({ id: "label.error.fieldEmpty" }), "name");
+      errorCount++;
+    }
+    if (!formData?.description) {
+      handleError(
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        "description"
+      );
+      errorCount++;
+    }
+    if (!formData?.validity) {
+      handleError(
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        "validity"
+      );
+      errorCount++;
+    }
+    if (!formData?.price) {
+      handleError(
+        intl.formatMessage({ id: "label.error.fieldEmpty" }),
+        "price"
+      );
+      errorCount++;
+    }
+    return !errorCount;
   };
 
   const handleInputChange = (value, name) => {
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+    if (!value) {
+      handleError(intl.formatMessage({ id: "label.error.fieldEmpty" }), name);
+      return;
+    }
+    handleError("", name);
   };
 
   const handleCancelBtnClick = () => {
-    navigate(`/${currentlySelectedModuleKey}/${SUBSCRIPTIONS}`);
+    navigateBackToSubscriptionListing();
   };
+
+  const addSubscription = () => {
+    if (validate()) {
+      addSubscriptionData({
+        body: formData,
+        onErrorCallback: (errorMessage) => {
+          showNotification({
+            text: errorMessage,
+            type: NOTIFICATION_TYPES.ERROR,
+            headingText: intl.formatMessage({ id: "label.error" }),
+          });
+        },
+        onSuccessCallback: () => {
+          setNotificationStateDispatch(
+            setShowSuccessNotification({ isEdited: false, isAdded: true })
+          );
+          navigateBackToSubscriptionListing();
+        },
+      });
+    }
+  };
+
+  const handleTryAgain = () => {
+    getSubscriptionData({});
+  };
+
+  const editSubscription = () => {
+    if (validate()) {
+      editSubscriptionData({
+        body: { status: status },
+        onErrorCallback: (errorMessage) => {
+          showNotification({
+            text: errorMessage,
+            type: NOTIFICATION_TYPES.ERROR,
+            headingText: intl.formatMessage({ id: "label.error" }),
+          });
+        },
+        onSuccessCallback: () => {
+          setNotificationStateDispatch(
+            setShowSuccessNotification({ isEdited: true, isAdded: false })
+          );
+          navigateBackToSubscriptionListing();
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (subscriptionData) {
+      setFormData(
+        isAddSubscription
+          ? {
+              name: "",
+              description: "",
+              validity: null,
+              price: null,
+            }
+          : {
+              name: subscriptionData?.name,
+              description: subscriptionData?.description,
+              validity: subscriptionData?.validity,
+              price: subscriptionData?.price,
+            }
+      );
+    }
+    setStatus(subscriptionData?.status);
+  }, [subscriptionData]);
+
+  useEffect(() => {
+    if (
+      urlService.getQueryStringValue("mode") !== "view" &&
+      urlService.getQueryStringValue("mode") !== "edit"
+    ) {
+      urlService.setQueryStringValue("mode", "view");
+      setIsEditPackage(false);
+    }
+  }, [urlService]);
 
   const renderNonEditableContent = () => {
     return (
@@ -65,12 +238,11 @@ const SubscriptionDetails = () => {
             className={styles.upperContainer}
             topSection={
               <LabelWithValue
+                customCommonSubHeadingStyle={styles.capitalize}
                 heading={intl.formatMessage({
                   id: "label.packageName",
                 })}
-                subHeading={
-                  !!formData.packageName ? formData.packageName : "Package 1"
-                }
+                subHeading={!!formData.name ? formData.name : "-"}
                 isMandatory
               />
             }
@@ -80,9 +252,11 @@ const SubscriptionDetails = () => {
                   id: "label.package_validity_period",
                 })}
                 subHeading={
-                  formData.packageValidityPeriod
-                    ? formData.packageValidityPeriod + " " + "Days"
-                    : "30 Days"
+                  formData.validity
+                    ? formData.validity +
+                      " " +
+                      intl.formatMessage({ id: "label.days" })
+                    : "-"
                 }
                 isMandatory
               />
@@ -97,11 +271,7 @@ const SubscriptionDetails = () => {
                 heading={intl.formatMessage({
                   id: "label.packageName_descriptions",
                 })}
-                subHeading={
-                  formData.packageDescription
-                    ? formData.packageDescription
-                    : "Package Description"
-                }
+                subHeading={formData.description ? formData.description : "-"}
               />
             }
             bottomSection={
@@ -110,7 +280,11 @@ const SubscriptionDetails = () => {
                   id: "label.price",
                 })}
                 subHeading={
-                  formData.packagePrice ? formData.packagePrice : "1000 INR"
+                  formData?.price
+                    ? formData?.price +
+                      " " +
+                      intl.formatMessage({ id: "label.inr" })
+                    : "-"
                 }
                 isMandatory
               />
@@ -126,8 +300,11 @@ const SubscriptionDetails = () => {
                 heading={intl.formatMessage({
                   id: "label.subscription_status",
                 })}
-                //TODO: SET A STATE FOR ACTIVE/INACTIVE SUBSCRIPTION.
-                subHeading={"Active"}
+                subHeading={
+                  status
+                    ? intl.formatMessage({ id: "label.active" })
+                    : intl.formatMessage({ id: "label.inactive" })
+                }
               />
             }
           />
@@ -148,16 +325,17 @@ const SubscriptionDetails = () => {
             className={styles.upperContainer}
             leftSection={
               <CustomInput
-                value={formData.packageName}
+                disabled={!isAddSubscription && isEditPackage}
+                errorMessage={errors?.name}
+                isError={!!errors?.name}
+                value={formData.name}
                 label={intl.formatMessage({
                   id: "label.packageName",
                 })}
                 isRequired
                 type="text"
                 customLabelStyles={styles.customLabelStyles}
-                onChange={(e) =>
-                  handleInputChange(e.target.value, "packageName")
-                }
+                onChange={(e) => handleInputChange(e.target.value, "name")}
                 placeholder={intl.formatMessage({
                   id: "label.enterpackagename",
                 })}
@@ -167,7 +345,10 @@ const SubscriptionDetails = () => {
             isRightFillSpace
             rightSection={
               <CustomInput
-                value={formData.packageDescription}
+                disabled={!isAddSubscription && isEditPackage}
+                errorMessage={errors?.description}
+                isError={!!errors?.description}
+                value={formData?.description}
                 label={intl.formatMessage({
                   id: "label.packageName_descriptions",
                 })}
@@ -175,7 +356,7 @@ const SubscriptionDetails = () => {
                 type="text"
                 customLabelStyles={styles.customLabelStyles}
                 onChange={(e) =>
-                  handleInputChange(e.target.value, "packageDescription")
+                  handleInputChange(e.target.value, "description")
                 }
                 placeholder={intl.formatMessage({
                   id: "label.packageName_descriptions",
@@ -190,42 +371,48 @@ const SubscriptionDetails = () => {
             className={styles.bottomSection}
             leftSection={
               <CustomInput
+                disabled={!isAddSubscription && isEditPackage}
+                errorMessage={errors?.validity}
+                isError={!!errors?.validity}
                 controls
                 type="inputNumber"
-                value={formData.packageValidityPeriod}
+                value={formData.validity}
                 label={intl.formatMessage({
                   id: "label.package_valididy_period",
                 })}
                 isRequired
                 customLabelStyles={styles.customLabelStyles}
-                onChange={(val) =>
-                  handleInputChange(val, "packageValidityPeriod")
-                }
+                onChange={(val) => handleInputChange(val, "validity")}
                 placeholder={intl.formatMessage({
                   id: "label.enterpackagename_valididy_period",
                 })}
                 customInputNumberStyles={styles.customInputNumberStyles}
+                errorInput={commonStyles.errorInput}
               />
             }
             middleSection={
               <CustomInput
+                disabled={!isAddSubscription && isEditPackage}
+                errorMessage={errors?.price}
+                isError={!!errors?.price}
                 controls
-                value={formData.packagePrice}
+                value={formData.price}
                 label={intl.formatMessage({
                   id: "label.price",
                 })}
                 type="inputNumber"
                 isRequired
                 customLabelStyles={styles.customLabelStyles}
-                onChange={(val) => handleInputChange(val, "packagePrice")}
+                onChange={(val) => handleInputChange(val, "price")}
                 placeholder={intl.formatMessage({
                   id: "label.enterpackagename_price",
                 })}
                 customInputNumberStyles={styles.customInputNumberStyles}
+                errorInput={commonStyles.errorInput}
               />
             }
             rightSection={
-              isEditPackage && (
+              !isAddSubscription && (
                 <div className={styles.radioButtonMainContainer}>
                   <Typography className={styles.customLabelStyles}>
                     {intl.formatMessage({
@@ -234,7 +421,7 @@ const SubscriptionDetails = () => {
                   </Typography>
                   <div className={styles.radioButtonContainer}>
                     <CustomRadioButton
-                      checked={value === VALUE_ONE}
+                      checked={status === VALUE_ONE}
                       label={intl.formatMessage({
                         id: "label.active",
                       })}
@@ -242,12 +429,12 @@ const SubscriptionDetails = () => {
                       value={VALUE_ONE}
                     />
                     <CustomRadioButton
-                      checked={value === VALUE_TWO}
+                      checked={status === VALUE_ZERO}
                       label={intl.formatMessage({
                         id: "label.inactive",
                       })}
                       onChange={handleRadioButton}
-                      value={VALUE_TWO}
+                      value={VALUE_ZERO}
                     />
                   </div>
                 </div>
@@ -263,7 +450,7 @@ const SubscriptionDetails = () => {
   };
 
   const editPackage = () => {
-    setIsAddSubscription(true);
+    urlService.setQueryStringValue("mode", "edit");
     setIsEditPackage(true);
   };
 
@@ -280,57 +467,89 @@ const SubscriptionDetails = () => {
   };
 
   return (
-    <TwoRow
-      topSection={
-        <ContentHeader
-          customContainerStyle={commonStyles.headerBox}
-          headerText={
-            (isEditPackage &&
-              !isAddSubscription &&
-              // For now we using hardcoded heading When we'll implement API we use that value then
-              intl.formatMessage({ id: "label.default_package_name" })) ||
-            (!isEditPackage &&
-              isAddSubscription &&
-              intl.formatMessage({
-                id: "label.path.add-subscriptions",
-              })) ||
-            `Edit ${intl.formatMessage({ id: "label.default_package_name" })}`
-          }
-          rightSection={
-            (!isAddSubscription || isEditPackage) && renderEditButton()
-          }
-        />
-      }
-      isBottomFillSpace
-      bottomSection={
-        <TwoRow
-          className={styles.container}
-          isTopFillSpace={isAddSubscription}
-          topSection={
-            <SubscriptionDetailsCard
-              heading={intl.formatMessage({
-                id: "label.subscriptions_details",
-              })}
-              content={
-                isAddSubscription
-                  ? renderEditableContent()
-                  : renderNonEditableContent()
-              }
-            />
-          }
-          bottomSection={
-            isAddSubscription ? (
-              <ActionAndCancelButtons
-                cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-                actionBtnText={intl.formatMessage({ id: "label.add" })}
-                onCancelBtnClick={handleCancelBtnClick}
-                onActionBtnClick={() => {}}
+    <>
+      {notificationContextHolder}
+      <TwoRow
+        topSection={
+          <ContentHeader
+            customContainerStyle={commonStyles.headerBox}
+            customStyles={styles.capitalize}
+            headerText={
+              (isEditPackage &&
+                !isAddSubscription &&
+                `Edit ${
+                  formData.name ||
+                  intl.formatMessage({ id: "label.default_package_name" })
+                }`) ||
+              (isAddSubscription &&
+                intl.formatMessage({
+                  id: "label.path.add-subscriptions",
+                })) ||
+              formData.name ||
+              intl.formatMessage({ id: "label.default_package_name" })
+            }
+            rightSection={
+              !isEditPackage && !isAddSubscription && renderEditButton()
+            }
+          />
+        }
+        isBottomFillSpace
+        bottomSection={
+          <TwoRow
+            className={styles.container}
+            isTopFillSpace={isAddSubscription}
+            topSection={
+              <SubscriptionDetailsCard
+                heading={intl.formatMessage({
+                  id: "label.subscriptions_details",
+                })}
+                content={
+                  isSubscriptionEditing ||
+                  isSubscriptionAdding ||
+                  isGettingSubscription ? (
+                    <CustomLoader />
+                  ) : isAddSubscription || isEditPackage ? (
+                    renderEditableContent()
+                  ) : isErrorWhileGettingSubscription ? (
+                    <div className={styles.box}>
+                      <ErrorMessageBox
+                        onRetry={handleTryAgain}
+                        errorText={
+                          subscriptionError?.data?.message || subscriptionError
+                        }
+                        errorHeading={intl.formatMessage({ id: "label.error" })}
+                      />
+                    </div>
+                  ) : (
+                    renderNonEditableContent()
+                  )
+                }
               />
-            ) : null
-          }
-        />
-      }
-    />
+            }
+            bottomSection={
+              isAddSubscription || isEditPackage ? (
+                <ActionAndCancelButtons
+                  cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                  actionBtnText={intl.formatMessage({
+                    id: isAddSubscription ? "label.add" : "label.save",
+                  })}
+                  onCancelBtnClick={handleCancelBtnClick}
+                  onActionBtnClick={
+                    isAddSubscription ? addSubscription : editSubscription
+                  }
+                  isActionBtnDisable={
+                    !formData?.name ||
+                    !formData?.description ||
+                    !formData?.price ||
+                    !formData?.validity
+                  }
+                />
+              ) : null
+            }
+          />
+        }
+      />
+    </>
   );
 };
 

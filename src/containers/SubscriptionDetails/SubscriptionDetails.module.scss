@@ -23,7 +23,6 @@
 
 .bottomSection {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   gap: var(--gapMedium);
 }
@@ -58,4 +57,16 @@
 
 .editButtonTitle {
   font-weight: var(--fontWeightMedium);
+}
+
+.box {
+  width: var(--fullWidth);
+  height: var(--fullHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }

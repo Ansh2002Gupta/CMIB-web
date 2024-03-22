@@ -528,6 +528,8 @@ const locale = {
   "label.session.setup-mock-interview": "Setup Mock Interview",
   "label.session.setupMockInterview.details": "Configure Interview Dates",
   "label.data_saved_successfully": "Data Saved Successfully.",
+  "label.subscription_saved_successfully": "Subscription Added Successfully.",
+  "label.subscription_edit_successfully": "Subscription Edited Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
   "label.path.add-subscriptions": "Add Subscriptions",
@@ -543,6 +545,9 @@ const locale = {
   "label.enterpackagename_price": "Enter Price",
   "label.default_package_name": "Package 1",
   "label.package_validity_period": "Package Validity Period",
+  "label.path.subscription-details": "Subscription Details",
+  "label.inr": "INR",
+  "label.days": "Days",
 };
 
 export default locale;
