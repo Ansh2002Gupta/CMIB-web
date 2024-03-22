@@ -82,6 +82,7 @@ const CompanyProfile = ({ companyProfileDetails }) => {
             );
           return (
             <TwoRow
+              key={index}
               className={styles.companyDetails}
               topSection={
                 <Typography className={styles.headingText}>
@@ -117,14 +118,12 @@ const CompanyProfile = ({ companyProfileDetails }) => {
                       key="roles"
                       className={styles.gridItem}
                       topSection={
-                        <>
-                          <Typography className={styles.grayText}>
-                            {intl.formatMessage({
-                              id: "label.modules",
-                            })}
-                            <span className={styles.redText}> *</span>
-                          </Typography>
-                        </>
+                        <Typography className={styles.grayText}>
+                          {intl.formatMessage({
+                            id: "label.modules",
+                          })}
+                          <span className={styles.redText}> *</span>
+                        </Typography>
                       }
                       bottomSection={
                         <div className={styles.sourceOfInformation}>
