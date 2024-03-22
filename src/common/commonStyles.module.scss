@@ -47,3 +47,24 @@
   border-radius: var(--radiusXLg, 12px);
   background-color: var(--letGrey7, #bfbfbf);
 }
+
+.headerBox {
+  border-top: var(--borderLight);
+  border-bottom: var(--borderLight);
+  width: var(--fullWidth);
+  padding: var(--paddingMedium);
+}
+
+.cardContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  gap: var(--gapMedium);
+}
+
+.headingText {
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}

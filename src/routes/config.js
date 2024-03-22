@@ -15,6 +15,8 @@ import LoginForm from "../views/LoginForm";
 import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
+import RegisteredCompaniesList from "../views/RegisteredCompaniesList/RegisteredCompaniesList";
+import RegisteredCompaniesDetails from "../views/RegisteredCompaniesDetails/RegisteredCompaniesDetails";
 import Session from "../views/Session";
 import EditSession from "../views/EditSession/EditSession";
 import SetupCenter from "../views/SetupCenters";
@@ -46,6 +48,8 @@ import {
   OUT_SOURCED,
   QUERIES,
   QUERY_DETAILS,
+  REGISTERED_COMPANY,
+  REGISTERED_COMPANY_DETAILS,
   ROOT,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
@@ -236,6 +240,14 @@ const config = [
       {
         viewPath: TICKETS + TICKETS_VIEW_DETAILS,
         element: <TicketChatScreen />,
+      },
+      {
+        viewPath: REGISTERED_COMPANY,
+        element: <RegisteredCompaniesList />,
+      },
+      {
+        viewPath: REGISTERED_COMPANY + REGISTERED_COMPANY_DETAILS,
+        element: <RegisteredCompaniesDetails />,
       },
     ],
   },

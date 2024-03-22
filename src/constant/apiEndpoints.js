@@ -1,5 +1,5 @@
 // API version numbers
-export const API_VERSION_NUMBER = "v1";
+export const API_VERSION_NUMBER = "1.0.0";
 
 // API end-point role
 export const ADMIN_ROUTE = "admin";
@@ -10,6 +10,7 @@ export const PLACEMENT_ROUTE = "placement-core";
 // API end-points
 export const ASSIGN = "/assign";
 export const ASSIGNEES = "/assignees";
+export const APPROVE = "/approve";
 export const AUTHENTICATE_OTP_ROUTE = "/reset-password-otp";
 export const CENTRE_END_POINT = "/centres";
 export const CHANGE_PASSWORD = "/password";
@@ -31,6 +32,7 @@ export const PROFILE_END_POINT = "/profile";
 export const QUERIES_END_POINT = "/queries";
 export const QUERY_TYPE = "/queries/types";
 export const RESET_ADMIN_PASSWORD = "/reset-password/confirm";
+export const REGISTERED_COMPANIES = "/companies";
 export const ROLES_PERMISSION = "/roles-permissions";
 export const ROUNDS = "/rounds";
 export const SEND_OTP = "/reset-password/request";

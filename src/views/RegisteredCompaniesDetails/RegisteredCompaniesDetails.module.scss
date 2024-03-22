@@ -1,0 +1,16 @@
+.container {
+  padding: var(--paddingMedium);
+  gap: var(--gapSmall);
+  background-color: var(--bodyBg2);
+}
+
+.tableContainer {
+  min-width: var(--width_432);
+}
+
+.errorMessageContainer {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
