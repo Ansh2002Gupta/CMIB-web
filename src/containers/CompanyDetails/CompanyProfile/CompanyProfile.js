@@ -13,6 +13,7 @@ import {
   OTHER_DETAILS_FEILDS,
 } from "./CompanyProfileFieldDetails";
 import styles from "./CompanyProfile.module.scss";
+import { capitalize } from "lodash";
 
 const CompanyProfile = ({ companyProfileDetails }) => {
   const intl = useIntl();
@@ -63,7 +64,11 @@ const CompanyProfile = ({ companyProfileDetails }) => {
                       </Typography>
                     }
                     bottomSection={
-                      <div className={styles.blackText}>{item.value}</div>
+                      <div className={styles.blackText}>
+                        {item.headingIntl === "emailId"
+                          ? item.value
+                          : capitalize(item.value)}
+                      </div>
                     }
                   />
                 )
