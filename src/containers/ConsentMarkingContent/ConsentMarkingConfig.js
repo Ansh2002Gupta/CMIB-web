@@ -14,13 +14,18 @@ const handleError = (key, error, index, setErrors) => {
   });
 };
 
-export const disabledDate = (key, current, registrationDatesData) => {
+export const disabledDate = (
+  key,
+  current,
+  registrationDatesData,
+  lastCompanyRegistrationDate
+) => {
   if (key === "company_reg_start_date") {
     return (
       isNotAFutureDate(current) ||
       compareTwoDayjsDates({
         current: current,
-        date: registrationDatesData["candidate_reg_end_date_bg_centre"],
+        date: lastCompanyRegistrationDate,
         checkForFuture: true,
       }) ||
       compareTwoDayjsDates({
@@ -50,11 +55,6 @@ export const disabledDate = (key, current, registrationDatesData) => {
       isNotAFutureDate(current) ||
       compareTwoDayjsDates({
         current: current,
-        date: registrationDatesData["company_reg_start_date"],
-        checkForFuture: false,
-      }) ||
-      compareTwoDayjsDates({
-        current: current,
         date: registrationDatesData["candidate_reg_start_date"],
         checkForFuture: false,
       }) ||
@@ -66,11 +66,6 @@ export const disabledDate = (key, current, registrationDatesData) => {
     );
   return (
     isNotAFutureDate(current) ||
-    compareTwoDayjsDates({
-      current: current,
-      date: registrationDatesData["company_reg_start_date"],
-      checkForFuture: false,
-    }) ||
     compareTwoDayjsDates({
       current: current,
       date: registrationDatesData["candidate_reg_start_date"],
