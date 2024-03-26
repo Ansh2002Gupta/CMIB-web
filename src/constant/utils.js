@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { capitalize } from "lodash";
 
 import { controlMenu, modules } from "../containers/SideMenu/sideMenuItems";
 import { urlService } from "../Utils/urlService";
@@ -430,7 +431,7 @@ export const formateArrayToArrayOfobject = (paymentTypesData) => {
     return {
       id: index + 1,
       value: item,
-      label: item,
+      label: capitalize(item),
     };
   });
 };

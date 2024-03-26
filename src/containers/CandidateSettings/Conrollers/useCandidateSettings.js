@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 const useCandidateSettings = ({ candidateDetails, isEditable }) => {
   const addTableData = {
     isAddRow: true,
-    centre: "",
+    centre_name: "",
     from_date: null,
     to_date: null,
     from_time: null,
@@ -15,7 +15,7 @@ const useCandidateSettings = ({ candidateDetails, isEditable }) => {
   const intl = useIntl();
   const [errors, setErrors] = useState(
     tableData.map(() => ({
-      centre: "",
+      centre_name: "",
       from_date: "",
       to_date: "",
       from_time: "",
@@ -34,7 +34,7 @@ const useCandidateSettings = ({ candidateDetails, isEditable }) => {
       setErrors((prevErrors) => [
         ...prevErrors,
         {
-          centre: "",
+          centre_name: "",
           from_date: "",
           to_date: "",
           from_time: "",
@@ -173,18 +173,20 @@ const useCandidateSettings = ({ candidateDetails, isEditable }) => {
   const [formErrors, setFormErrors] = useState({});
 
   const getAPITableData = () => {
-    const data = candidateDetails?.candidate_consent.filter((item) => {
-      if (item?.from_date !== null) {
-        return {
-          id: item?.id || "-",
-          centre: item?.centre_name,
-          from_date: item?.from_date,
-          to_date: item?.to_date,
-          from_time: item?.from_time,
-          to_time: item?.to_time,
-        };
-      }
-    });
+    const data = candidateDetails?.candidate_consent
+      .map((item) => {
+        if (item?.from_date !== null) {
+          return {
+            centre_name: item?.id,
+            from_date: item?.from_date,
+            to_date: item?.to_date,
+            from_time: item?.from_time,
+            to_time: item?.to_time,
+          };
+        }
+        return null;
+      })
+      .filter((item) => item !== null);
     return data || [];
   };
 
@@ -238,8 +240,8 @@ const useCandidateSettings = ({ candidateDetails, isEditable }) => {
 
   const validate = (index) => {
     let errorCount = 0;
-    if (!tableData[index]?.centre) {
-      handleSetError("centre", index);
+    if (!tableData[index]?.centre_name) {
+      handleSetError("centre_name", index);
       errorCount += 1;
     }
     if (!tableData[index]?.from_date) {

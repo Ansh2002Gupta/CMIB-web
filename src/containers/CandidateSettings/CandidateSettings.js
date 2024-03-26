@@ -53,19 +53,19 @@ const CandidateSettings = ({
     renderColumn({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
-      dataIndex: "centre",
-      key: "centre",
+      dataIndex: "centre_name",
+      key: "centre_name",
       renderDropdown: {
         visible: true,
         dropdownItems: dropdownItems,
         onDropdownChange: (val, record, index) =>
-          handleCandidateDataChange(val, "centre", index),
+          handleCandidateDataChange(val, "centre_name", index),
         customdropDownStyles: styles.selectCenterContainer,
         customtextStyles: styles.placeholderStyle,
         dropdownPlaceholder: intl.formatMessage({
           id: "label.placeholder.select_centre",
         }),
-        getDropdownError: (index) => errors[index]?.centre,
+        getDropdownError: (index) => errors[index]?.centre_name,
         selectedValue: (record) => {
           return record?.centre_name;
         },
@@ -147,7 +147,7 @@ const CandidateSettings = ({
       renderDateTime: {
         customInputStyle: classes.inputStyle,
         getDisabledTime: (current, record) => {
-          return handleDisabledStartTime(record?.to_time);
+          return handleDisabledStartTime(record?.from_time);
         },
         visible: true,
         type: "time",
@@ -162,7 +162,7 @@ const CandidateSettings = ({
           );
         },
         isEditable: true,
-        getError: (index) => errors[index]?.from_date,
+        getError: (index) => errors[index]?.from_time,
       },
     }),
     renderColumn({
@@ -173,7 +173,7 @@ const CandidateSettings = ({
       renderDateTime: {
         customInputStyle: classes.inputStyle,
         getDisabledTime: (current, record) => {
-          return handleDisabledEndTime(record?.from_time);
+          return handleDisabledEndTime(record?.to_time);
         },
         visible: true,
         type: "time",
@@ -217,8 +217,8 @@ const CandidateSettings = ({
     renderColumn({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
-      dataIndex: "centre",
-      key: "centre",
+      dataIndex: "centre_name",
+      key: "centre_name",
       renderText: { visible: true },
     }),
     renderColumn({

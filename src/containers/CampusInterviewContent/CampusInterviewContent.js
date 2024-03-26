@@ -21,7 +21,7 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
-import { getErrorMessage, getMessageInfo } from "../../constant/utils";
+import { getErrorMessage } from "../../constant/utils";
 import { ROUND_ID } from "../../constant/constant";
 import {
   CAMPUS_INTERVIEW,
@@ -129,10 +129,10 @@ const CampusInterviewContent = () => {
   const onClickSave = () => {
     const consentData = tableData.map((item, index) => {
       const roundCentreMapping = campusInterviewData?.candidate_consent?.find(
-        (consentItem) => consentItem.id === item.centre
+        (consentItem) => consentItem.id === item.centre_name
       );
       return {
-        id: item?.centre,
+        id: item?.centre_name,
         round_centre_mapping_id: roundCentreMapping?.round_centre_mapping_id,
         from_date: item.from_date,
         to_date: item.to_date,
@@ -140,7 +140,6 @@ const CampusInterviewContent = () => {
         to_time: item.to_time,
       };
     });
-
     const payload = {
       data: {
         id: campusInterviewData?.id || null,
@@ -181,8 +180,10 @@ const CampusInterviewContent = () => {
         getCampusInterviewData({});
       },
       onErrorCallback: (errorMessage) => {
+        const errors = errorMessage?.data?.data?.errors;
+        const messages = Object.values(errors).flat();
         showNotification({
-          text: getMessageInfo(errorMessage),
+          text: messages,
           type: "error",
         });
       },
