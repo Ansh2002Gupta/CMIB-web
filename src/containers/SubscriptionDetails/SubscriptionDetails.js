@@ -36,13 +36,13 @@ import { ReactComponent as Edit } from "../../themes/base/assets/images/edit.svg
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./SubscriptionDetails.module.scss";
 
-const SubscriptionDetails = () => {
+const SubscriptionDetails = ({ isAddSubscription }) => {
   const intl = useIntl();
   const { subscriptionId } = useParams();
   const location = useLocation();
   const { isLoading: isSubscriptionAdding, makeRequest: addSubscriptionData } =
     usePost({ url: ADMIN_ROUTE + SUBSCRIPTIONS_END_POINT });
-  const isAddSubscription = location.pathname.includes(ADD_SUBSCRIPTIONS);
+  // const isAddSubscription = location.pathname.includes(ADD_SUBSCRIPTIONS);
 
   const {
     isLoading: isSubscriptionEditing,

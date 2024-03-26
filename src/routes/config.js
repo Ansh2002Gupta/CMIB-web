@@ -219,7 +219,7 @@ const config = [
       },
       {
         viewPath: SUBSCRIPTIONS + ADD_SUBSCRIPTIONS,
-        element: <SubscriptionDetails />,
+        element: <SubscriptionDetails isAddSubscription />,
       },
       {
         viewPath: SUBSCRIPTIONS + SUBSCRIPTIONS_DETAILS,

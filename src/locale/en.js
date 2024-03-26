@@ -558,9 +558,11 @@ const locale = {
     "Interview Date Updated Successfully",
   "label.path.add-subscriptions": "Add Subscriptions",
   "label.subscriptions_details": "Subscription Details",
+  "label.manageSubscriptions": "Manage Subscriptions",
+  "label.addSubscription": "Add Subscription",
   "label.packageName": "Package Name",
-  "label.packageName_descriptions": "Package Discription",
-  "label.package_valididy_period": "Package Validity Period",
+  "label.packageDescription": "Package Description",
+  "label.packageValidity": "Package Validity Period",
   "label.price": "Price",
   "label.subscription_status": "Subscription Status",
   "label.enterpackagename": "Enter Package Name",
@@ -620,6 +622,10 @@ const locale = {
   "label.dates_added_successfully": "Dates Added Successfully",
   "label.downloadSucess": "Download Successful",
   "label.videolimitError": "Please enter value between 1 to 999",
+  "label.activeInactive": "Active/Inactive",
+  "label.searchPackageName": "Search by package name",
+  "label.packageName_descriptions": "Package Discription",
+  "label.package_valididy_period": "Package Validity Period",
 };
 
 export default locale;
