@@ -84,3 +84,7 @@
   font-weight: var(--fontWeightMedium);
   margin-top: var(--marginSmall);
 }
+
+.errorInput {
+  border: var(--borderError) !important;
+}
