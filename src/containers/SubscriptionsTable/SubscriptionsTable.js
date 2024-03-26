@@ -18,6 +18,7 @@ import { validateSearchTextLength } from "../../Utils/validations";
 import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
 import { ADMIN_ROUTE, SUBSCRIPTIONS } from "../../constant/apiEndpoints";
 import styles from "./SubscriptionsTable.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const SubscriptionsTable = () => {
   const intl = useIntl();
@@ -36,6 +37,7 @@ const SubscriptionsTable = () => {
   const [searchedValue, setSearchedValue] = useState(
     urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
+  const navigate = useNavigate();
 
   const { renderColumn } = useRenderColumn();
 
@@ -61,12 +63,22 @@ const SubscriptionsTable = () => {
     };
   };
 
-  const goToSubscriptionDetails = () => {};
+  const editSubscription = (data) => {
+    const subscriptionID = data?.id;
+    navigate(`subscription-details/${subscriptionID}`);
+    urlService.setQueryStringValue("mode", "edit");
+  };
+
+  const viewSubscription = (data) => {
+    const subscriptionID = data?.id;
+    navigate(`subscription-details/${subscriptionID}`);
+  };
 
   const columns = getSubscriptionsColumn(
     intl,
     getImage,
-    goToSubscriptionDetails,
+    viewSubscription,
+    editSubscription,
     renderColumn
   );
 

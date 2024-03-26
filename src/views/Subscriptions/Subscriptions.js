@@ -11,6 +11,7 @@ import SubscriptionsTable from "../../containers/SubscriptionsTable";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
+import { ADD_SUBSCRIPTIONS } from "../../routes/routeNames";
 import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./Subscriptions.module.scss";
 
@@ -25,7 +26,7 @@ const Subscriptions = () => {
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   const handleAddSubscription = () => {
-    navigate(`${"subscription-details"}/${2}?mode=view`);
+    navigate(ADD_SUBSCRIPTIONS);
   };
 
   useEffect(() => {
@@ -47,30 +48,30 @@ const Subscriptions = () => {
 
   return (
     <>
-    {notificationContextHolder}
-    <TwoRow
-      topSection={
-        <ContentHeader
-          customContainerStyle={styles.customContainerStyle}
-          headerText={intl.formatMessage({ id: "label.manageSubscriptions" })}
-          rightSection={
-            <CustomButton
-              customButtonContainerStyle={styles.customButtonContainerStyle}
-              btnText={
-                responsive.isMd
-                  ? intl.formatMessage({
-                      id: "label.addSubscription",
-                    })
-                  : ""
-              }
-              IconElement={PlusIcon}
-              onClick={handleAddSubscription}
-            />
-          }
-        />
-      }
-      bottomSection={<SubscriptionsTable />}
-    />
+      {notificationContextHolder}
+      <TwoRow
+        topSection={
+          <ContentHeader
+            customContainerStyle={styles.customContainerStyle}
+            headerText={intl.formatMessage({ id: "label.manageSubscriptions" })}
+            rightSection={
+              <CustomButton
+                customButtonContainerStyle={styles.customButtonContainerStyle}
+                btnText={
+                  responsive.isMd
+                    ? intl.formatMessage({
+                        id: "label.addSubscription",
+                      })
+                    : ""
+                }
+                IconElement={PlusIcon}
+                onClick={handleAddSubscription}
+              />
+            }
+          />
+        }
+        bottomSection={<SubscriptionsTable />}
+      />
     </>
   );
 };

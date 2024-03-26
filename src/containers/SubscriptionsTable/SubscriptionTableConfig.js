@@ -3,7 +3,8 @@ import styles from "./SubscriptionsTable.module.scss";
 const getSubscriptionsColumn = (
   intl,
   getImage,
-  goToSubscriptionDetails,
+  viewSubscription,
+  editSubscription,
   renderColumn
 ) => {
   return [
@@ -60,8 +61,8 @@ const getSubscriptionsColumn = (
       renderTwoImage: {
         leftAlt: "eye",
         rightAlt: "edit",
-        leftOnClick: (rowData) => {},
-        rightOnClick: (rowData) => goToSubscriptionDetails(rowData),
+        leftOnClick: (rowData) => viewSubscription(rowData),
+        rightOnClick: (rowData) => editSubscription(rowData),
         leftPreview: false,
         rightPreview: false,
         leftSrc: getImage("eye"),
