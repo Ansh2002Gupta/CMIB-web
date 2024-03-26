@@ -7,7 +7,7 @@ import useResponsive from "../../core/hooks/useResponsive";
 
 import CustomButton from "../../components/CustomButton";
 import ContentHeader from "../../containers/ContentHeader";
-import SubscriptionsTable from "../../containers/SubscriptionsTable";
+import SubscriptionsTable from "../../containers/SubscriptionsTable/SubscriptionsTable";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
