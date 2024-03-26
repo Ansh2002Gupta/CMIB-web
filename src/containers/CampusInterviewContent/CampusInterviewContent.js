@@ -270,7 +270,9 @@ const CampusInterviewContent = () => {
           </>
         }
         bottomSection={
-          (isEditable || !isErrorWhileCampusInterviews) && (
+          !isLoadingInterviewCampusDetails &&
+          isEditable &&
+          !isErrorWhileCampusInterviews && (
             <ActionAndCancelButtons
               actionBtnText={intl.formatMessage({
                 id: "session.saveChanges",
@@ -281,6 +283,7 @@ const CampusInterviewContent = () => {
                 isCompanySettingsInvalid() ||
                 isCandidateSettingsInvalid()
               }
+              isLoading={isUpdatingCompausInterviewDetails}
               onActionBtnClick={onClickSave}
               onCancelBtnClick={onClickCancel}
             />

@@ -226,14 +226,14 @@ const CandidateSettings = ({
       customColumnHeading: styles.columnHeading,
       dataIndex: "from_date",
       key: "from_date",
-      renderText: { visible: true, isTypeDate: true },
+      renderText: { visible: true, isTypeDate: false },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.to_date" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "to_date",
       key: "to_date",
-      renderText: { visible: true, isTypeDate: true },
+      renderText: { visible: true, isTypeDate: false },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.from_time" }),
