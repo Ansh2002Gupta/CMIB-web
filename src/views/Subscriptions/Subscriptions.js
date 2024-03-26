@@ -47,29 +47,33 @@ const Subscriptions = () => {
   }, [notificationState?.showSuccessNotification]);
 
   return (
-    <TwoRow
-      topSection={
-        <ContentHeader
-          customContainerStyle={styles.customContainerStyle}
-          headerText={intl.formatMessage({ id: "label.manageSubscriptions" })}
-          rightSection={
-            <CustomButton
-              customButtonContainerStyle={styles.customButtonContainerStyle}
-              btnText={
-                responsive.isMd
-                  ? intl.formatMessage({
-                      id: "label.addSubscription",
-                    })
-                  : ""
-              }
-              IconElement={PlusIcon}
-              onClick={() => handleAddSubscription()}
-            />
-          }
-        />
-      }
-      bottomSection={<SubscriptionsTable />}
-    />
+    <>
+      {notificationContextHolder}
+      <TwoRow
+        topSection={
+          <ContentHeader
+            customContainerStyle={styles.customContainerStyle}
+            headerText={intl.formatMessage({ id: "label.manageSubscriptions" })}
+            rightSection={
+              <CustomButton
+                customButtonContainerStyle={styles.customButtonContainerStyle}
+                btnText={
+                  responsive.isMd
+                    ? intl.formatMessage({
+                        id: "label.addSubscription",
+                      })
+                    : ""
+                }
+                IconElement={PlusIcon}
+                onClick={() => handleAddSubscription()}
+              />
+            }
+          />
+        }
+        bottomSection={<SubscriptionsTable />}
+        bottomSectionClassName={styles.bottomSectionStyles}
+      />
+    </>
   );
 };
 
