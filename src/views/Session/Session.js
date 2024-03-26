@@ -17,6 +17,7 @@ import { NotificationContext } from "../../globalContext/notification/notificati
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   addSessionNotification,
+  setShowSuccessNotification,
   updateSessionNotification,
 } from "../../globalContext/notification/notificationActions";
 import { getCurrentActiveTab } from "../../constant/utils";
@@ -28,7 +29,7 @@ import {
   NOTIFICATION_TYPES,
   ROUND_ONE_CARD_LIST,
   ROUND_TWO_CARD_LIST,
-  VALID_CONSENT_MARKING_TABS_ID,
+  VALID_SESSION_TABS_ID,
 } from "../../constant/constant";
 import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
 import styles from "./session.module.scss";
@@ -43,7 +44,7 @@ function Session() {
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
       urlService?.getQueryStringValue("tab"),
-      VALID_CONSENT_MARKING_TABS_ID
+      VALID_SESSION_TABS_ID
     )
   );
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -89,9 +90,17 @@ function Session() {
       setNotificationStateDispatch(addSessionNotification(false));
       setNotificationStateDispatch(updateSessionNotification(false));
     }
+    if (notificationState?.showSuccessNotification) {
+      showNotification({
+        text: intl.formatMessage({ id: "label.dates_added_successfully" }),
+        type: NOTIFICATION_TYPES.SUCCESS,
+      });
+      setNotificationStateDispatch(setShowSuccessNotification(false));
+    }
   }, [
     notificationState?.addSessionSuccessfully,
     notificationState?.updateSessionSuccesssfully,
+    notificationState?.showSuccessNotification,
   ]);
 
   const tabItems = [
@@ -148,14 +157,21 @@ function Session() {
             children: (
               <SessionRound
                 {...{ currentlySelectedModuleKey }}
-              roundId={
-                (
-                  sessionData?.rounds?.find(
-                    (obj) => obj.round_code === MENU_KEYS.ROUND_2_PLACEMENT
-                  ) || {}
-                ).id
-              }
+                roundId={
+                  (
+                    sessionData?.rounds?.find(
+                      (obj) => obj.round_code === MENU_KEYS.ROUND_2_PLACEMENT
+                    ) || {}
+                  ).id
+                }
                 roundNo={2}
+                roundId={
+                  (
+                    sessionData?.rounds?.find(
+                      (obj) => obj.round_code === "round-2"
+                    ) || {}
+                  ).id
+                }
                 roundList={ROUND_TWO_CARD_LIST}
                 sessionData={sessionData}
                 switchLabel={intl.formatMessage({
