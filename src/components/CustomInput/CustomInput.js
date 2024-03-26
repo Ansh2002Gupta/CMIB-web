@@ -94,6 +94,7 @@ const CustomInput = React.forwardRef(
                   },
                 });
               }}
+              value={value}
               options={selectOptions}
               placeholder={placeholder}
               disabled={isSelectBoxDisable}

@@ -42,7 +42,7 @@ const CampusInterviewContent = () => {
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
   const { showNotification, notificationContextHolder } = useShowNotification();
-  const isEditable = currentGlobalSession?.is_editable;
+  const isEditable = !!currentGlobalSession?.is_editable;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
 
   const {
@@ -107,6 +107,7 @@ const CampusInterviewContent = () => {
     tableData,
   } = useCandidateSettings({
     candidateDetails: campusInterviewData,
+    isEditable,
   });
 
   const onClickCancel = () => {

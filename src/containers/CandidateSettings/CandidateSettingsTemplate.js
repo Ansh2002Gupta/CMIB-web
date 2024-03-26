@@ -8,6 +8,7 @@ import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import {
+  HYPHEN,
   MAX_REGISTRATION_FEE_LENGTH,
   TIMER_OF_1_MINUTES,
 } from "../../constant/constant";
@@ -182,23 +183,27 @@ const CandidateSettingsTemplate = ({
       <Typography className={styles.subHeadingStyle}>
         {intl.formatMessage({ id: "label.allow_consent_for_candidate" })}
       </Typography>
-      <div
-        className={`${
-          isEditable ? styles.editContainer : styles.viewContainer
-        }`}
-      >
-        <Table
-          columns={isEditable ? editConfigurations : viewConfigurations}
-          dataSource={tableData}
-          pagination={false}
-          rowClassName={!isEditable ? styles.rowtext : ""}
-          scroll={{ x: "max-content" }}
-          className={`${isEditable ? "customTable" : ""} ${
-            styles.customContainerStyles
-          } customTableNoHover`}
-          rowKey="id"
-        />
-      </div>
+      {!!tableData.length ? (
+        <div
+          className={`${
+            isEditable ? styles.editContainer : styles.viewContainer
+          }`}
+        >
+          <Table
+            columns={isEditable ? editConfigurations : viewConfigurations}
+            dataSource={tableData}
+            pagination={false}
+            rowClassName={!isEditable ? styles.rowtext : ""}
+            scroll={{ x: "max-content" }}
+            className={`${isEditable ? "customTable" : ""} ${
+              styles.customContainerStyles
+            } customTableNoHover`}
+            rowKey="id"
+          />
+        </div>
+      ) : (
+        <Typography>{HYPHEN}</Typography>
+      )}
     </div>
   );
 };

@@ -13,6 +13,7 @@ export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
 export const SLIDE_BY = 300;
 export const MESSAGE_MAX_LENGTH = 5000;
+export const HYPHEN = "-";
 
 export const API_STATUS = {
   IDLE: "idle",

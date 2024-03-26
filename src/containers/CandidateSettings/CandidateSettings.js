@@ -41,10 +41,10 @@ const CandidateSettings = ({
     formFields?.small_centre_end_date
   );
 
-  const dropdownItems = campusInterviewData?.candidate_consent.map((item) => {
+  const dropdownItems = tableData.map((item) => {
     return {
       id: item.id,
-      label: item.centre_name,
+      label: item.centre,
       value: item.id,
     };
   });
@@ -53,8 +53,8 @@ const CandidateSettings = ({
     renderColumn({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
-      dataIndex: "center",
-      key: "cetre",
+      dataIndex: "centre",
+      key: "centre",
       renderDropdown: {
         visible: true,
         dropdownItems: dropdownItems,
@@ -66,6 +66,7 @@ const CandidateSettings = ({
           id: "label.placeholder.select_centre",
         }),
         getDropdownError: (index) => errors[index]?.centre,
+        selectedValue: (rowData) => rowData.centre,
       },
     }),
     renderColumn({
@@ -99,7 +100,7 @@ const CandidateSettings = ({
           );
         },
         isEditable: true,
-        getError: (index) => errors[index].from_date,
+        getError: (index) => errors[index]?.from_date,
       },
     }),
     renderColumn({
@@ -215,7 +216,7 @@ const CandidateSettings = ({
       title: intl.formatMessage({ id: "label.centre" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "centre",
-      key: "cetre",
+      key: "centre",
       renderText: { visible: true },
     }),
     renderColumn({

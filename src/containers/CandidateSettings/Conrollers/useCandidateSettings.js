@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-const useCandidateSettings = ({ candidateDetails }) => {
+const useCandidateSettings = ({ candidateDetails, isEditable }) => {
   const addTableData = {
     isAddRow: true,
     centre: "",
@@ -175,15 +175,15 @@ const useCandidateSettings = ({ candidateDetails }) => {
   const getAPITableData = () => {
     const data = candidateDetails?.candidate_consent.map((item) => {
       return {
-        isAddRow: false,
-        centre: item?.centre_name,
-        from_date: item?.from_date,
-        to_date: item?.to_date,
-        from_time: item?.from_time,
-        to_time: item?.to_time,
+        id: item?.id || "-",
+        centre: item?.centre_name || "-",
+        from_date: item?.from_date || "-",
+        to_date: item?.to_date || "-",
+        from_time: item?.from_time || "-",
+        to_time: item?.to_time || "-",
       };
     });
-    return data;
+    return data || [];
   };
 
   useEffect(() => {
@@ -199,6 +199,11 @@ const useCandidateSettings = ({ candidateDetails }) => {
       small_centre_end_date:
         candidateDetails?.small_center_change_end_date_candidate,
     });
+    const apiTableData = getAPITableData();
+    const updatedtableData = isEditable
+      ? [...apiTableData, ...[addTableData]]
+      : apiTableData;
+    setTableData(updatedtableData);
   }, [candidateDetails]);
 
   const handleSetError = (name, index) => {

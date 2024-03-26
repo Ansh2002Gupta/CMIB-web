@@ -380,7 +380,9 @@ const useRenderColumn = () => {
           dropdownDisabled = false,
           getDropdownError = () => {},
           onDropdownChange = () => {},
+          selectedValue,
         } = renderDropdown;
+        const defaultValue = selectedValue ? selectedValue(rowData) : "";
 
         return {
           props: {
@@ -398,6 +400,7 @@ const useRenderColumn = () => {
               errorMessage={getDropdownError(index)}
               isError={!!getDropdownError(index)}
               errorInput={!!getDropdownError(index) && styles.errorTimeInput}
+              value={defaultValue}
             />
           ),
         };
