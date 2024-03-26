@@ -35,7 +35,6 @@
 }
 
 .ant-input-number-disabled {
-  background-color: var(--bodyBg) !important;
   color: var(--textBold) !important;
 }
 

@@ -126,6 +126,7 @@ const useRenderColumn = () => {
       isTypeDate,
       textStyles,
       isCapitalize,
+      isDays,
       isRequiredTooltip,
       isMoney,
       isYearRange,
@@ -170,6 +171,12 @@ const useRenderColumn = () => {
     } = renderTitleWithCheckbox;
 
     const getStatusStyles = (status) => {
+      if (status === 1) {
+        return ["statusContainer_active", "statusText_active"];
+      }
+      if (status === 0) {
+        return ["statusContainer_inactive", "statusText_inactive"];
+      }
       if (
         status?.toLowerCase() === "closed" ||
         status?.toLowerCase() === "answered"
@@ -196,7 +203,10 @@ const useRenderColumn = () => {
         return intl.formatMessage({ id: `label.${text}` });
       }
       if (isMoney) {
-        return `${text} INR`;
+        return `${text} ${intl.formatMessage({ id: "label.inr" })}`;
+      }
+      if (isDays) {
+        return `${text} ${intl.formatMessage({ id: "label.days" })}`;
       }
       if (text) {
         return text;
@@ -402,7 +412,13 @@ const useRenderColumn = () => {
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <Chip
-            label={status}
+            label={
+              status === 1
+                ? intl.formatMessage({ id: "label.active" })
+                : status === 0
+                ? intl.formatMessage({ id: "label.inactive" })
+                : status
+            }
             customContainerStyles={[
               styles.chipContainer,
               styles[styleClassForContainer],
