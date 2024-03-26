@@ -234,6 +234,7 @@ const SubscriptionsTable = () => {
                 originalData={subscriptionListingData?.records || []}
               />
             }
+            bottomSectionClassName={styles.bottomSectionStyles}
           />
         )}
     </>
