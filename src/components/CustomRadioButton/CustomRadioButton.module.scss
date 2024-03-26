@@ -6,13 +6,12 @@
   color: var(--subHeadingColor, #616c82);
 }
 
-.label{
+.label {
   color: var(--subHeadingColor);
   font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
 }
-
-.container{
+.container {
   display: flex;
   align-items: center;
 }

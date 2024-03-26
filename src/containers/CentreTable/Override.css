@@ -4,6 +4,10 @@
   border-bottom: none !important;
 }
 
+.tableRowStyle .ant-table-tbody > tr > td{
+  vertical-align: top;
+}
+
 .customTable .ant-table-tbody > tr > td {
   vertical-align: top;
   border-bottom: none !important;
@@ -69,7 +73,5 @@
 .ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
   padding-left: var(--paddingSmall);
 }
-
-
 
 

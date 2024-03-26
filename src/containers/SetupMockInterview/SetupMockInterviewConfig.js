@@ -1,6 +1,8 @@
 import styles from "./SetupMockInterview.module.scss";
 
 const getSetupMockColumn = (
+  downloadInterviewDates,
+  isDownloadingInterview,
   intl,
   isEdit,
   getImage,
@@ -31,16 +33,23 @@ const getSetupMockColumn = (
       title: intl.formatMessage({ id: "label.totalStudentsBooked" }),
       dataIndex: "total_participants_booked",
       key: "total_participants_booked",
-      renderText: { visible: true, textStyles: styles.studentStyles },
+      renderText: {
+        visible: true,
+        textStyles: styles.studentStyles,
+        isNumber: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.actions" }),
       dataIndex: "actions",
       key: "actions",
       renderTwoImage: {
+        leftDisabled: isDownloadingInterview,
         leftAlt: "download",
         rightAlt: "edit",
-        leftOnClick: (rowData) => {},
+        leftOnClick: (rowData) => {
+          downloadInterviewDates(rowData.id);
+        },
         rightOnClick: (rowData) => goToConfigureInterview(rowData, isEdit),
         leftPreview: false,
         rightPreview: false,

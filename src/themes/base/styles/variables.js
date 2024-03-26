@@ -61,6 +61,7 @@ const variables = {
   greenText: colorPallets.green4,
   redText: colorPallets.red1,
   lightGreyText3: colorPallets.ltGrey4,
+  ltGrey7: colorPallets.ltGrey7,
   darkBlue3: colorPallets.darkBlue3,
   ltGrey5: colorPallets.ltGrey5,
   whiteText: colorPallets.white,
@@ -150,6 +151,7 @@ const variables = {
   width_350: "350px",
   width_363: "363px",
   width_400: "400px",
+  width_432: "432px",
   width_500: "500px",
   widthViewPort_16: "16vw",
   widthViewPort_15: "15vw",
@@ -196,6 +198,7 @@ const variables = {
   height_210: "210px",
   height_240: "240px",
   height_250: "250px",
+  height_280: "280px",
   height_300: "300px",
   height_350: "350px",
   height_400: "400px",
@@ -217,6 +220,7 @@ const variables = {
 
   // Distance for top, left, bottom and right
   distance_85: "85px",
+  top_10: "10px",
 
   // Borders
   borderLight: `1px solid ${colorPallets.ltGrey1}`,
@@ -281,6 +285,7 @@ const variables = {
   gapLarge: "32px",
   gapXLarge: "40px",
   gapXXLarge: "56px",
+  gap_80: "80px",
 
   // margin
   margin_2: "2px",
