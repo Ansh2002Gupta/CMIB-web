@@ -81,6 +81,7 @@ const useRenderColumn = () => {
       alternateSrc = "",
       alternateOnClick = () => {},
       customImageStyle = "",
+      imageDisable = false,
       src = "",
       onClick = () => {},
       preview,
@@ -121,6 +122,7 @@ const useRenderColumn = () => {
       isTypeDate,
       textStyles,
       isCapitalize,
+      isDays,
       isRequiredTooltip,
       isMoney,
       isYearRange,
@@ -140,6 +142,8 @@ const useRenderColumn = () => {
     } = renderSwitch;
 
     const {
+      leftDisabled = false,
+      rightDisabled = false,
       leftAlt = "",
       rightAlt = "",
       customTwoImageStyle = "",
@@ -162,6 +166,12 @@ const useRenderColumn = () => {
     } = renderTitleWithCheckbox;
 
     const getStatusStyles = (status) => {
+      if (status === 1) {
+        return ["statusContainer_active", "statusText_active"];
+      }
+      if (status === 0) {
+        return ["statusContainer_inactive", "statusText_inactive"];
+      }
       if (
         status?.toLowerCase() === "closed" ||
         status?.toLowerCase() === "answered"
@@ -188,7 +198,10 @@ const useRenderColumn = () => {
         return intl.formatMessage({ id: `label.${text}` });
       }
       if (isMoney) {
-        return `${text} INR`;
+        return `${text} ${intl.formatMessage({ id: "label.inr" })}`;
+      }
+      if (isDays) {
+        return `${text} ${intl.formatMessage({ id: "label.days" })}`;
       }
       if (text) {
         return text;
@@ -376,7 +389,13 @@ const useRenderColumn = () => {
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <Chip
-            label={status}
+            label={
+              status === 1
+                ? intl.formatMessage({ id: "label.active" })
+                : status === 0
+                ? intl.formatMessage({ id: "label.inactive" })
+                : status
+            }
             customContainerStyles={[
               styles.chipContainer,
               styles[styleClassForContainer],
@@ -420,11 +439,16 @@ const useRenderColumn = () => {
               alt={alt}
               src={rowData?.isAddRow ? alternateSrc : src}
               preview={preview}
-              className={`${customImageStyle} ${styles.editIcon}`}
-              onClick={() =>
-                rowData?.isAddRow
-                  ? alternateOnClick(rowData, index)
-                  : onClick(rowData, index)
+              className={`${customImageStyle} ${
+                imageDisable ? styles.disableIcon : styles.editIcon
+              }`}
+              onClick={
+                !imageDisable
+                  ? () =>
+                      rowData?.isAddRow
+                        ? alternateOnClick(rowData, index)
+                        : onClick(rowData, index)
+                  : () => {}
               }
             />
           ),
@@ -443,8 +467,14 @@ const useRenderColumn = () => {
                   alt={leftAlt}
                   src={leftSrc}
                   preview={leftPreview}
-                  className={`${leftCustomImageStyle} ${styles.editIcon}`}
-                  onClick={leftOnClick ? () => leftOnClick(rowData) : () => {}}
+                  className={`${leftCustomImageStyle} ${
+                    leftDisabled ? styles.disableIcon : styles.editIcon
+                  }`}
+                  onClick={
+                    leftOnClick && !leftDisabled
+                      ? () => leftOnClick(rowData)
+                      : () => {}
+                  }
                 />
               }
               rightSection={
@@ -452,9 +482,13 @@ const useRenderColumn = () => {
                   alt={rightAlt}
                   src={rightSrc}
                   preview={rightPreview}
-                  className={`${rightCustomImageStyle} ${styles.editIcon}`}
+                  className={`${rightCustomImageStyle} ${
+                    rightDisabled ? styles.disableIcon : styles.editIcon
+                  }`}
                   onClick={
-                    rightOnClick ? () => rightOnClick(rowData) : () => {}
+                    rightOnClick && !rightDisabled
+                      ? () => rightOnClick(rowData)
+                      : () => {}
                   }
                 />
               }
