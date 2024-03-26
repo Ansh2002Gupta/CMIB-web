@@ -49,7 +49,20 @@ const SubscriptionsTable = () => {
     isLoading: isGettingSubscriptions,
   } = useFetch({
     url: ADMIN_ROUTE + SUBSCRIPTIONS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+
+  useEffect(() => {
+    getSubscriptionListing({
+      queryParamsObject: getRequestedParams({
+        page: current,
+        search: validateSearchTextLength(searchedValue),
+        size: +pageSize,
+      }),
+    });
+  }, []);
 
   const debounceSearch = useMemo(() => {
     return _.debounce(getSubscriptionListing, DEBOUNCE_TIME);
