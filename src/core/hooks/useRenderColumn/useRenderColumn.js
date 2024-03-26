@@ -380,9 +380,12 @@ const useRenderColumn = () => {
           dropdownDisabled = false,
           getDropdownError = () => {},
           onDropdownChange = () => {},
-          selectedValue,
+          selectedValue = () => {},
         } = renderDropdown;
-        const defaultValue = selectedValue ? selectedValue(rowData) : "";
+
+        const defaultValue = !!selectedValue(rowData)
+          ? selectedValue(rowData)
+          : null;
 
         return {
           props: {

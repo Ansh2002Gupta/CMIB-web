@@ -21,7 +21,7 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
-import { getErrorMessage } from "../../constant/utils";
+import { getErrorMessage, getMessageInfo } from "../../constant/utils";
 import { ROUND_ID } from "../../constant/constant";
 import {
   CAMPUS_INTERVIEW,
@@ -182,7 +182,7 @@ const CampusInterviewContent = () => {
       },
       onErrorCallback: (errorMessage) => {
         showNotification({
-          text: errorMessage,
+          text: getMessageInfo(errorMessage),
           type: "error",
         });
       },

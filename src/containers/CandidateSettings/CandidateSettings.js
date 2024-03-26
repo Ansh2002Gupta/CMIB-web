@@ -41,10 +41,10 @@ const CandidateSettings = ({
     formFields?.small_centre_end_date
   );
 
-  const dropdownItems = tableData.map((item) => {
+  const dropdownItems = campusInterviewData?.candidate_consent?.map((item) => {
     return {
       id: item.id,
-      label: item.centre,
+      label: item.centre_name,
       value: item.id,
     };
   });
@@ -66,7 +66,9 @@ const CandidateSettings = ({
           id: "label.placeholder.select_centre",
         }),
         getDropdownError: (index) => errors[index]?.centre,
-        selectedValue: (rowData) => rowData.centre,
+        selectedValue: (record) => {
+          return record?.centre;
+        },
       },
     }),
     renderColumn({

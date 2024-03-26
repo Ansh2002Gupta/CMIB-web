@@ -200,9 +200,10 @@ const useCandidateSettings = ({ candidateDetails, isEditable }) => {
         candidateDetails?.small_center_change_end_date_candidate,
     });
     const apiTableData = getAPITableData();
-    const updatedtableData = isEditable
-      ? [...apiTableData, ...[addTableData]]
-      : apiTableData;
+    const updatedtableData =
+      candidateDetails?.id !== null
+        ? [...apiTableData, ...[addTableData]]
+        : [addTableData];
     setTableData(updatedtableData);
   }, [candidateDetails]);
 
