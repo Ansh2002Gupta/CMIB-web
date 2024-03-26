@@ -25,13 +25,15 @@ const CompanySettingsTemplate = ({
       if (item.isMultiSelect) {
         return (
           <div className={commonStyles.chipMainContainer}>
-            {item?.value?.map((interviewType, index) => (
-              <div className={commonStyles.chipContainer} key={index}>
-                <Typography className={commonStyles.chipText}>
-                  {capitalize(interviewType)}
-                </Typography>
-              </div>
-            ))}
+            {item?.value?.map((interviewType, index) => {
+              return (
+                <div className={commonStyles.chipContainer} key={index}>
+                  <Typography className={commonStyles.chipText}>
+                    {capitalize(interviewType)}
+                  </Typography>
+                </div>
+              );
+            })}
           </div>
         );
       }
@@ -41,11 +43,7 @@ const CompanySettingsTemplate = ({
     if (item.isMultiSelect) {
       return (
         <SearchableDropDown
-          errorMessage={
-            formErrors[item.label]
-              ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-              : ""
-          }
+          errorMessage={formErrors[item.label] ? "label.error.fieldEmpty" : ""}
           isRequiredField={item.rules.isRequired}
           onSelectItem={onSelectInterviewType}
           onRemoveItem={onRemoveInterviewType}

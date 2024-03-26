@@ -424,3 +424,13 @@ export const compareTwoDayjsDates = ({ current, date, checkForFuture }) => {
   }
   return current && current <= dayjs(date).startOf("day");
 };
+
+export const formateArrayToArrayOfobject = (paymentTypesData) => {
+  return paymentTypesData?.map((item, index) => {
+    return {
+      id: index + 1,
+      value: item,
+      label: item,
+    };
+  });
+};

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { MAX_EXPERIENCE_LENGTH } from "../../../constant/constant";
+import { formateArrayToArrayOfobject } from "../../../constant/utils";
 
 const useCompanySettings = ({ companyDetails }) => {
   const [selectedInterviewType, setSelectedInterviewType] = useState([]);
@@ -75,6 +76,10 @@ const useCompanySettings = ({ companyDetails }) => {
         companyDetails?.shotlist_candidate_allowed_company || "",
       company_interview_types: companyDetails?.company_interview_types || [],
     });
+    const updatedInterviewtypes = formateArrayToArrayOfobject(
+      companyDetails?.company_interview_types
+    );
+    setSelectedInterviewType(updatedInterviewtypes);
   }, [companyDetails]);
 
   const onSelectInterviewType = (item, option) => {

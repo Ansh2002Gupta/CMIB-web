@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formateArrayToArrayOfobject } from "../../../constant/utils";
 
 const usePaymentSettings = ({ paymentDetails }) => {
   const [selectedCompanyList, setSelectedCompanyList] = useState([]);
@@ -101,6 +102,10 @@ const usePaymentSettings = ({ paymentDetails }) => {
       discount_rate: paymentDetails?.disconunt_rate || "",
       member_registration_fee: paymentDetails?.member_registration_fee || "",
     });
+    const updatedCompanyTypes = formateArrayToArrayOfobject(
+      paymentDetails?.no_gst
+    );
+    setSelectedCompanyList(updatedCompanyTypes);
   }, [paymentDetails]);
 
   const onSelectCompanyItem = (item, option) => {

@@ -385,7 +385,6 @@ const useRenderColumn = () => {
           onDropdownChange = () => {},
           selectedValue = () => {},
         } = renderDropdown;
-
         const defaultValue = !!selectedValue(rowData)
           ? selectedValue(rowData)
           : null;

@@ -173,15 +173,17 @@ const useCandidateSettings = ({ candidateDetails, isEditable }) => {
   const [formErrors, setFormErrors] = useState({});
 
   const getAPITableData = () => {
-    const data = candidateDetails?.candidate_consent.map((item) => {
-      return {
-        id: item?.id || "-",
-        centre: item?.centre_name || "-",
-        from_date: item?.from_date || "-",
-        to_date: item?.to_date || "-",
-        from_time: item?.from_time || "-",
-        to_time: item?.to_time || "-",
-      };
+    const data = candidateDetails?.candidate_consent.filter((item) => {
+      if (item?.from_date !== null) {
+        return {
+          id: item?.id || "-",
+          centre: item?.centre_name,
+          from_date: item?.from_date,
+          to_date: item?.to_date,
+          from_time: item?.from_time,
+          to_time: item?.to_time,
+        };
+      }
     });
     return data || [];
   };
@@ -200,10 +202,9 @@ const useCandidateSettings = ({ candidateDetails, isEditable }) => {
         candidateDetails?.small_center_change_end_date_candidate,
     });
     const apiTableData = getAPITableData();
-    const updatedtableData =
-      candidateDetails?.id !== null
-        ? [...apiTableData, ...[addTableData]]
-        : [addTableData];
+    const updatedtableData = isEditable
+      ? [...apiTableData, ...[addTableData]]
+      : [addTableData];
     setTableData(updatedtableData);
   }, [candidateDetails]);
 

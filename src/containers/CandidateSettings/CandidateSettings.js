@@ -67,7 +67,7 @@ const CandidateSettings = ({
         }),
         getDropdownError: (index) => errors[index]?.centre,
         selectedValue: (record) => {
-          return record?.centre;
+          return record?.centre_name;
         },
       },
     }),
