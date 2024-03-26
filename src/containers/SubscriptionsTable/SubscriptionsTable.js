@@ -38,6 +38,7 @@ const SubscriptionsTable = () => {
   );
 
   const { renderColumn } = useRenderColumn();
+
   const {
     data: subscriptionListingData,
     error: subscriptionsListError,
@@ -158,12 +159,6 @@ const SubscriptionsTable = () => {
       [PAGINATION_PROPERTIES.ROW_PER_PAGE]: validPageSize,
     };
     urlService.setMultipleQueryStringValues(defaultQueryParams);
-
-    getSubscriptionListing({
-      queryParamsObject: getRequestedParams({
-        search: validateSearchTextLength(searchedValue),
-      }),
-    });
   }, []);
 
   useEffect(() => {
