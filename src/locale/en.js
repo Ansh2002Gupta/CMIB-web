@@ -189,6 +189,7 @@ const locale = {
   "label.photo": "Photo.jpg",
   "label.networkError": "Network Error!",
   "label.error": "Error!",
+  "label.error.DuplicateFields": "Duplicate Fields!",
   "label.tryAgain": "Try again!",
   "label.addNewUsers": "Add New User",
   "label.userCreatedSuccessfully": "User has been created successfully",
@@ -210,6 +211,7 @@ const locale = {
   "label.companies": "Companies",
   "label.companyName": "Company Name",
   "label.entity": "Entity",
+  "label.global_configurations": "Global Configurations",
   "label.generatePaymentMis": "Generate Payment MIS",
   "label.manageCompanyDetails": "Manage company details",
   "label.phoneNumber": "Phone Number",
@@ -475,6 +477,8 @@ const locale = {
     "Some query/query(s) have already been marked as answered. Continuing marking for the remaining queries.",
   "label.error.fieldEmpty": "Field cannot be empty.",
   "label.error.overlap": "Please choose different times.",
+  "label.error.startOverlap": "Please choose different start time.",
+  "label.error.endOverlap": "Please choose different end time.",
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
@@ -533,6 +537,10 @@ const locale = {
   "label.no_centres_selected_msg":
     "To proceed with the setup, please choose the centres for this round.",
   "label.no_prior_chats_found": "No prior chats found",
+  "label.headerTextItSkills": "IT skills",
+  "label.headerTextSoftSkills": "Soft skills",
+  "label.placeholderItSkills": "Enter IT skills",
+  "label.placeholderSoftSkills": "Enter Soft skills",
   "label.yearBracket": " (year(s))",
   "label.inrBracket": " (INR)",
   "label.session.setup-centers": "Setup Centres",
@@ -546,6 +554,14 @@ const locale = {
   "label.setCampusInterviewSettings": "Set Campus Interview Settings",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.set_max_video_upload_time_limit":
+    "Setup Maximum Video Upload Time Limit",
+  "label.max_video_upload_time_limit":
+    "Maximum Video Upload Time Limit (seconds)",
+  "label.set_profile_skills": "Set Profile Skills",
+  "label.nqca-placements": "nqca-placements",
+  "label.downloadSucess": "Download Successful",
+  "label.videolimitError": "Please enter value between 1 to 999",
   "label.max_no_of_vacancy": "Max. No. of Vacancy",
   "label.multiplier": "Multiplier",
   "label.shortlist_students_allowed":

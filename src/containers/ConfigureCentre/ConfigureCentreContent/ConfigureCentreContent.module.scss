@@ -34,8 +34,8 @@ input::placeholder {
 
 .searchBarContainer {
   display: flex;
-  justify-content: flex-start;
-  gap: var(--gapSmall);
+  height: var(--height_44);
+  justify-content: space-between;
   position: relative;
 }
 
@@ -97,4 +97,12 @@ input::placeholder {
 
 .editIcon {
   cursor: pointer;
+}
+
+.btnCustomStyles {
+  padding: var(--paddingSmall) var(--paddingMediumSmall);
+  border-radius: var(--radiusXLg);
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightSmall) !important;
+  min-height: var(--height_44);
 }
