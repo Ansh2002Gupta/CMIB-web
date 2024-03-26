@@ -15,6 +15,7 @@ import "./Override.css";
 const CustomDateTimePicker = ({
   customContainerStyles,
   customErrorTextStyles,
+  customInputStyle,
   customLabelStyles,
   customTimeStyle,
   dateFormat,
@@ -63,7 +64,7 @@ const CustomDateTimePicker = ({
                     disabled,
                     disabledTime,
                   }}
-                  use12Hours={true}
+                  use12Hours
                   className={[
                     styles.timeInput,
                     customTimeStyle,
@@ -74,6 +75,7 @@ const CustomDateTimePicker = ({
                   onSelect={onChange}
                   popupClassName="noFooterTimePick"
                   needConfirm={false}
+                  style={{ ...styles.inputStyle, ...customInputStyle }}
                 />
               ) : (
                 <Typography className={classes.dateText}>
@@ -93,7 +95,7 @@ const CustomDateTimePicker = ({
                 className={[styles.timeInput, customTimeStyle, errorTimeInput]}
                 suffixIcon={<Image src={getImage("calendar")} />}
                 value={value ? dayjs(value) : null}
-                style={styles.inputStyle}
+                style={{ ...styles.inputStyle, ...customInputStyle }}
               />
             ) : (
               <Typography className={classes.dateText}>
@@ -140,6 +142,7 @@ CustomDateTimePicker.defaultProps = {
 CustomDateTimePicker.propTypes = {
   customContainerStyles: PropTypes.string,
   customErrorTextStyles: PropTypes.string,
+  customInputStyle: PropTypes.object,
   customLabelStyles: PropTypes.string,
   customTimeStyle: PropTypes.string,
   dateFormat: PropTypes.string,

@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { capitalize } from "lodash";
 
 import { controlMenu, modules } from "../containers/SideMenu/sideMenuItems";
 import { urlService } from "../Utils/urlService";
@@ -409,4 +410,28 @@ export const handleDisabledStartTime = (time) => {
       return minutes;
     },
   };
+};
+
+export const isNotAFutureDate = (current) => {
+  return current && current < dayjs().add(1, "day").startOf("day");
+};
+
+export const compareTwoDayjsDates = ({ current, date, checkForFuture }) => {
+  if (!date) {
+    return false;
+  }
+  if (checkForFuture) {
+    return current && current >= dayjs(date).startOf("day");
+  }
+  return current && current <= dayjs(date).startOf("day");
+};
+
+export const formateArrayToArrayOfobject = (paymentTypesData) => {
+  return paymentTypesData?.map((item, index) => {
+    return {
+      id: index + 1,
+      value: item,
+      label: capitalize(item),
+    };
+  });
 };

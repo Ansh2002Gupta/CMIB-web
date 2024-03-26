@@ -17,11 +17,11 @@
   border: none !important;
 }
 .customTableHover .ant-table-tbody > tr:hover > td {
-  background-color: transparent !important; 
+  background-color: transparent !important;
 }
 
 .customTableNoHover .ant-table-tbody > tr:hover > td {
-  background:var(--bodyBg) !important; 
+  background: var(--bodyBg) !important;
   transition: none !important;
 }
 
@@ -31,7 +31,6 @@
 }
 
 .ant-input-number-disabled {
-  background-color: var(--bodyBg) !important;
   color: var(--textBold) !important;
 }
 
@@ -59,21 +58,19 @@
 }
 
 .ant-input-number-handler-wrap {
-  opacity: 1 !important; 
-  visibility: visible !important; 
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.ant-input-number-input-wrap input{
+.ant-input-number-input-wrap input {
   color: var(--textBold) !important;
 }
 
-.ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
+.ant-select-single.ant-select-lg:not(.ant-select-customize-input)
+  .ant-select-selector {
   padding-left: var(--paddingSmall);
 }
 
-.ant-table-tbody > tr > td{
+.ant-table-tbody > tr > td {
   vertical-align: top;
 }
-
-
-
