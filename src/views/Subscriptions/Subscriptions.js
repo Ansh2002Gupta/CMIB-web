@@ -1,18 +1,23 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
-import { Button } from "antd";
 
 import TwoRow from "../../core/layouts/TwoRow";
+import useResponsive from "../../core/hooks/useResponsive";
 
+import CustomButton from "../../components/CustomButton";
 import ContentHeader from "../../containers/ContentHeader";
+import SubscriptionsTable from "../../containers/SubscriptionsTable";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
-import { ADD_SUBSCRIPTIONS } from "../../routes/routeNames";
+import { ReactComponent as PlusIcon } from "../../themes/base/assets/images/plus icon.svg";
+import styles from "./Subscriptions.module.scss";
 
 const Subscriptions = () => {
   const intl = useIntl();
+  const responsive = useResponsive();
+
   const navigate = useNavigate();
   const [notificationState, setNotificationStateDispatch] =
     useContext(NotificationContext);
@@ -42,18 +47,30 @@ const Subscriptions = () => {
 
   return (
     <>
-      {notificationContextHolder}
-      <TwoRow
-        topSection={
-          <ContentHeader
-            headerText="Manage Subscriptions"
-            rightSection={
-              <Button onClick={handleAddSubscription}>Add Subscription</Button>
-            }
-          />
-        }
-        bottomSection={<></>}
-      />
+    {notificationContextHolder}
+    <TwoRow
+      topSection={
+        <ContentHeader
+          customContainerStyle={styles.customContainerStyle}
+          headerText={intl.formatMessage({ id: "label.manageSubscriptions" })}
+          rightSection={
+            <CustomButton
+              customButtonContainerStyle={styles.customButtonContainerStyle}
+              btnText={
+                responsive.isMd
+                  ? intl.formatMessage({
+                      id: "label.addSubscription",
+                    })
+                  : ""
+              }
+              IconElement={PlusIcon}
+              onClick={handleAddSubscription}
+            />
+          }
+        />
+      }
+      bottomSection={<SubscriptionsTable />}
+    />
     </>
   );
 };

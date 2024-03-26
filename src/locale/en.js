@@ -461,6 +461,8 @@ const locale = {
     "Some query/query(s) have already been marked as answered. Continuing marking for the remaining queries.",
   "label.error.fieldEmpty": "Field cannot be empty.",
   "label.error.overlap": "Please choose different times.",
+  "label.error.startOverlap": "Please choose different start time.",
+  "label.error.endOverlap": "Please choose different end time.",
   "label.errorMessage": "Error Message",
   "label.userSuccessfullyAdded": "User Successfully Added",
   "label.userSuccessfullyEdited": "User Successfully Edited",
@@ -548,6 +550,13 @@ const locale = {
   "label.path.subscription-details": "Subscription Details",
   "label.inr": "INR",
   "label.days": "Days",
+  "label.manageSubscriptions": "Manage Subscriptions",
+  "label.addSubscription": "Add Subscription",
+  "label.packageDescription": "Package Description",
+  "label.packageValidity": "Package Validity Period",
+  "label.activeInactive": "Active/Inactive",
+  "label.searchPackageName": "Search by package name",
+  "label.downloadSucess": "Download Successful",
 };
 
 export default locale;
