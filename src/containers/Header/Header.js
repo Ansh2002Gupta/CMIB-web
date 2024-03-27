@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Badge, Button, Space } from "antd";
 import { BellOutlined } from "@ant-design/icons";
 
@@ -13,7 +13,7 @@ import useResponsive from "../../core/hooks/useResponsive";
 import { ReactComponent as MenuIcon } from "../../themes/base/assets/icons/menu.svg";
 import styles from "./header.module.scss";
 
-function HeaderContainer({ openSideMenu, setOpenSideMenu }) {
+function HeaderContainer({ setOpenSideMenu }) {
   const responsive = useResponsive();
   return (
     <>
