@@ -6,8 +6,14 @@ import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../../constant/apiEndpoints";
-import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
+import {
+  API_VERSION_QUERY_PARAM,
+  API_STATUS,
+  SESSION_ID_QUERY_PARAM,
+  STATUS_CODES,
+} from "../../../constant/constant";
 
 const useConfigUpdateHandler = () => {
   const intl = useIntl();
@@ -22,12 +28,15 @@ const useConfigUpdateHandler = () => {
     onSuccessCallback,
     payload,
     roundId,
+    sessionId,
   }) => {
     try {
       setConfigUpdateStatus(API_STATUS.LOADING);
       errorWhileUpdatingConfig && setErrorWhileUpdatingConfig("");
-      const url = `${ADMIN_ROUTE}/${module}${ROUNDS}/${roundId}${CENTRE_END_POINT}/${centreId}`;
-      const res = await Http.put(url, payload);
+      const url = `${ADMIN_ROUTE}/${module}${ROUNDS}/${roundId}${CENTRE_END_POINT}/${centreId}?${SESSION_ID_QUERY_PARAM}=${sessionId}`;
+      const res = await Http.put(url, payload, {
+        headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION },
+      });
       if (res?.code === STATUS_CODES.SUCCESS_STATUS) {
         setConfigUpdateResult(res?.data);
         setConfigUpdateStatus(API_STATUS.SUCCESS);

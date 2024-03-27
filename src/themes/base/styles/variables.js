@@ -34,6 +34,7 @@ const variables = {
   darkBlueBg1: colorPallets.blue9,
   lightGrey: colorPallets.lightGrey,
   disableColor: colorPallets.disableColor,
+  ltGreyBg: colorPallets.ltGreyBg,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -61,6 +62,7 @@ const variables = {
   greenText: colorPallets.green4,
   redText: colorPallets.red1,
   lightGreyText3: colorPallets.ltGrey4,
+  ltGrey7: colorPallets.ltGrey7,
   darkBlue3: colorPallets.darkBlue3,
   ltGrey5: colorPallets.ltGrey5,
   whiteText: colorPallets.white,
@@ -150,6 +152,7 @@ const variables = {
   width_350: "350px",
   width_363: "363px",
   width_400: "400px",
+  width_432: "432px",
   width_500: "500px",
   widthViewPort_16: "16vw",
   widthViewPort_15: "15vw",
