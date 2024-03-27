@@ -13,6 +13,7 @@ const CustomSwitch = ({
   activeText,
   checked,
   customStyle,
+  customTextStyle,
   disabled,
   inActiveText,
   isEditable,
@@ -43,7 +44,9 @@ const CustomSwitch = ({
                 />
               }
               rightSection={
-                <Typography className={styles.blackText}>
+                <Typography
+                  className={[styles.blackText, customTextStyle].join(" ")}
+                >
                   {intl.formatMessage({
                     id: `label.${checked ? activeText : inActiveText}`,
                   })}
@@ -60,7 +63,9 @@ const CustomSwitch = ({
                 />
               }
               bottomSection={
-                <Typography className={styles.blackText}>
+                <Typography
+                  className={[styles.blackText, customTextStyle].join(" ")}
+                >
                   {intl.formatMessage({
                     id: `label.${checked ? activeText : inActiveText}`,
                   })}
@@ -84,6 +89,7 @@ CustomSwitch.defaultProps = {
   activeText: "",
   checked: false,
   customStyle: "",
+  customTextStyle: {},
   disabled: false,
   inActiveText: "",
   isEditable: true,
@@ -96,6 +102,7 @@ CustomSwitch.propTypes = {
   activeText: PropTypes.string,
   checked: PropTypes.bool,
   customStyle: PropTypes.string,
+  customTextStyle: PropTypes.object,
   disabled: PropTypes.bool,
   inActiveText: PropTypes.string,
   isEditable: PropTypes.bool,
