@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
+import { Dropdown, Image, Menu, Switch, Tooltip, Typography } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
 import { TwoColumn, TwoRow } from "../../layouts";
 
@@ -32,6 +33,7 @@ const useRenderColumn = () => {
     renderDateTime = {},
     render,
     renderChip = {},
+    renderDropdown = {},
     renderImage = {},
     renderInput = {},
     renderMenu = {},
@@ -60,6 +62,7 @@ const useRenderColumn = () => {
 
     const {
       customContainerStyles,
+      customInputStyle,
       customTimeStyle,
       defaultValue,
       disabled = false,
@@ -126,6 +129,7 @@ const useRenderColumn = () => {
       isTypeDate,
       textStyles,
       isCapitalize,
+      isDays,
       isRequiredTooltip,
       isMoney,
       isYearRange,
@@ -170,6 +174,12 @@ const useRenderColumn = () => {
     } = renderTitleWithCheckbox;
 
     const getStatusStyles = (status) => {
+      if (status === 1) {
+        return ["statusContainer_active", "statusText_active"];
+      }
+      if (status === 0) {
+        return ["statusContainer_inactive", "statusText_inactive"];
+      }
       if (
         status?.toLowerCase() === "closed" ||
         status?.toLowerCase() === "answered"
@@ -196,7 +206,10 @@ const useRenderColumn = () => {
         return intl.formatMessage({ id: `label.${text}` });
       }
       if (isMoney) {
-        return `${text} INR`;
+        return `${text} ${intl.formatMessage({ id: "label.inr" })}`;
+      }
+      if (isDays) {
+        return `${text} ${intl.formatMessage({ id: "label.days" })}`;
       }
       if (text) {
         return text;
@@ -395,6 +408,42 @@ const useRenderColumn = () => {
         };
       });
 
+    renderDropdown.visible &&
+      (columnObject.render = (value, rowData, index) => {
+        const {
+          dropdownItems = [],
+          dropdownPlaceholder = "",
+          dropdownDisabled = false,
+          getDropdownError = () => {},
+          onDropdownChange = () => {},
+          selectedValue = () => {},
+        } = renderDropdown;
+        const defaultValue = !!selectedValue(rowData)
+          ? selectedValue(rowData)
+          : null;
+
+        return {
+          props: {
+            className: customStyles,
+          },
+          children: (
+            <CustomInput
+              type="select"
+              selectOptions={dropdownItems}
+              onSelectItem={(val) => {
+                onDropdownChange(val?.target?.value, rowData, index);
+              }}
+              placeholder={dropdownPlaceholder}
+              isSelectBoxDisable={dropdownDisabled}
+              errorMessage={getDropdownError(index)}
+              isError={!!getDropdownError(index)}
+              errorInput={!!getDropdownError(index) && styles.errorTimeInput}
+              value={defaultValue}
+            />
+          ),
+        };
+      });
+
     renderChip?.visible &&
       (columnObject.render = (_, rowData) => {
         const { status } = rowData;
@@ -402,7 +451,13 @@ const useRenderColumn = () => {
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <Chip
-            label={status}
+            label={
+              status === 1
+                ? intl.formatMessage({ id: "label.active" })
+                : status === 0
+                ? intl.formatMessage({ id: "label.inactive" })
+                : status
+            }
             customContainerStyles={[
               styles.chipContainer,
               styles[styleClassForContainer],
@@ -558,6 +613,7 @@ const useRenderColumn = () => {
             <CustomDateTimePicker
               {...{
                 customContainerStyles,
+                customInputStyle,
                 customTimeStyle,
                 defaultValue,
                 disabled,

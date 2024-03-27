@@ -59,7 +59,6 @@ const ConsentMarkingContent = ({
   const intl = useIntl();
   const [isRegistrationDateEdit, setIsRegistrationDateEdit] = useState(false);
   const [isTableDateEdit, setIsTableDateEdit] = useState(false);
-
   const {
     makeRequest: updateRegistrationDate,
     isLoading: isUpdatingRegistrationDate,

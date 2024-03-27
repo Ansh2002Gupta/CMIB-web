@@ -27,11 +27,6 @@ export const disabledDate = (
         current: current,
         date: lastCompanyRegistrationDate,
         checkForFuture: true,
-      }) ||
-      compareTwoDayjsDates({
-        current: current,
-        date: registrationDatesData["candidate_reg_end_date_sm_centre"],
-        checkForFuture: true,
       })
     );
   }
@@ -201,6 +196,7 @@ export const useIntitalDataAndError = ({
             : null,
       }));
       setRoundOneInitialData(transformedData);
+      setRoundOneInitialData(transformedData);
     }
   }, [consentRoundOneData]);
 
@@ -226,6 +222,7 @@ export const useIntitalDataAndError = ({
             : null,
       }));
       setRoundTwoInitialData(transformedData);
+      setRoundTwoInitialData(transformedData);
     }
   }, [consentRoundTwoData]);
 
@@ -235,6 +232,7 @@ export const useIntitalDataAndError = ({
         ...item,
         id: item.id,
         centre_name: item.centre_name,
+        centre_name: item.centre_name,
         company_reg_end_date: item.company_reg_end_date
           ? item.company_reg_end_date
           : null,
@@ -242,6 +240,7 @@ export const useIntitalDataAndError = ({
           ? item.psychometric_test_date
           : null,
       }));
+      setLastRegistrationInitialData(transformedData);
       setLastRegistrationInitialData(transformedData);
     }
   }, [lastRegistrationDatesData]);
@@ -265,12 +264,16 @@ export const useIntitalDataAndError = ({
   const lastRegistrationInitialError = lastRegistrationDatesData?.map(
     (item) => ({
       centre_name: "",
+      centre_name: "",
       company_reg_end_date: "",
       psychometric_test_date: "",
     })
   );
 
   return {
+    roundOneInitialData,
+    roundTwoInitialData,
+    lastRegistrationInitialData,
     roundOneInitialData,
     roundTwoInitialData,
     lastRegistrationInitialData,

@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { capitalize } from "lodash";
 
 import { controlMenu, modules } from "../containers/SideMenu/sideMenuItems";
 import { urlService } from "../Utils/urlService";
@@ -430,6 +431,16 @@ export const handleDisabledStartTime = (time) => {
       return minutes;
     },
   };
+};
+
+export const formateArrayToArrayOfobject = (paymentTypesData) => {
+  return paymentTypesData?.map((item, index) => {
+    return {
+      id: index + 1,
+      value: item,
+      label: capitalize(item),
+    };
+  });
 };
 
 export const getValidUrl = (url) => {

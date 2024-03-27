@@ -10,8 +10,7 @@ import { classes } from "./SearchableDropDown.styles";
 import styles from "./SearchableDropDown.module.scss";
 
 const SearchableDropDown = ({
-  isCentreError,
-  isError,
+  errorMessage,
   isRequiredField,
   minLengthToShowTooltip,
   onRemoveItem,
@@ -78,9 +77,9 @@ const SearchableDropDown = ({
             })}
           />
           <div className={styles.selectedItemsContainer}>
-            {isCentreError ? (
+            {errorMessage.length ? (
               <Typography className={styles.errorText}>
-                {intl.formatMessage({ id: "session.centreErrorMsg" })}
+                {`* ${intl.formatMessage({ id: `${errorMessage}` })}`}
               </Typography>
             ) : (
               selectedOptionsList?.map((item, index) => {
@@ -109,8 +108,7 @@ const SearchableDropDown = ({
 };
 
 SearchableDropDown.defaultProps = {
-  isCentreError: false,
-  isError: false,
+  errorMessage: "",
   isRequiredField: false,
   minLengthToShowTooltip: 50,
   onRemoveItem: () => {},
@@ -120,8 +118,7 @@ SearchableDropDown.defaultProps = {
 };
 
 SearchableDropDown.propTypes = {
-  isCentreError: PropTypes.bool,
-  isError: PropTypes.bool,
+  errorMessage: PropTypes.string,
   isRequiredField: PropTypes.bool,
   minLengthToShowTooltip: PropTypes.number,
   onSelectItem: PropTypes.func.isRequired,
