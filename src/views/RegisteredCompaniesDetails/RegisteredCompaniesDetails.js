@@ -64,7 +64,10 @@ const RegisteredCompaniesDetails = () => {
   };
   const { renderColumn } = useRenderColumn();
 
-  const { makeRequest: updateApprovalStatus } = usePatch({
+  const {
+    makeRequest: updateApprovalStatus,
+    isLoading: isUpdatingApprovalStatus,
+  } = usePatch({
     url: ADMIN_ROUTE + REGISTERED_COMPANIES + `/${id}` + APPROVE,
   });
 
@@ -99,6 +102,7 @@ const RegisteredCompaniesDetails = () => {
   const columns = getRegisteredCompanyDetailsColumns({
     handleSwitchButton,
     intl,
+    isUpdatingApprovalStatus,
     renderColumn,
   });
 

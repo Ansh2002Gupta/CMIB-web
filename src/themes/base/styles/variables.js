@@ -260,6 +260,7 @@ const variables = {
   paddingSmall: "16px",
   padding_18: "18px",
   padding_20: "20px",
+  padding_22: "22px",
   paddingMedium: "24px",
   padding_30: "30px",
   paddingLarge: "32px",
