@@ -14,3 +14,19 @@
   justify-content: center;
   align-items: center;
 }
+
+.disabledtext {
+  color: var(--disableLink);
+}
+
+.checkBoxStyle {
+  gap: 0px;
+}
+
+.tableCellStyle {
+  padding: var(--padding_22) var(--paddingMedium) !important;
+}
+
+.statusBox{
+  width: 150px;
+}
