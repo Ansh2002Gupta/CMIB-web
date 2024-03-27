@@ -449,6 +449,7 @@ export const INTERVIEW_TYPE = [
 export const MAX_REGISTRATION_FEE_LENGTH = 10;
 
 export const NO_BREAK_SPACE = "\u00A0";
+
 export const REGISTRATION_DATES = [
   { id: 1, labeIntl: "startDateCompanies" },
   { id: 2, labeIntl: "startDateCandidates" },

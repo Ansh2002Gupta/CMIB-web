@@ -636,7 +636,6 @@ const locale = {
     "Select Consent Marking By Candidate End Date",
   "label.path.consent-marking": "Registration and Consent Marking Schedule",
   "label.dates_added_successfully": "Dates Added Successfully",
-  "label.downloadSucess": "Download Successful",
   "label.videolimitError": "Please enter value between 1 to 999",
   "label.max_no_of_vacancy": "Max. No. of Vacancy",
   "label.multiplier": "Multiplier",
