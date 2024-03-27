@@ -86,12 +86,12 @@ const CustomSwitch = ({
 };
 
 CustomSwitch.defaultProps = {
-  activeText: "approved",
+  activeText: "",
   checked: false,
   customStyle: "",
   customTextStyle: {},
   disabled: false,
-  inActiveText: "not_approved",
+  inActiveText: "",
   isEditable: true,
   isRequired: false,
   label: "",
