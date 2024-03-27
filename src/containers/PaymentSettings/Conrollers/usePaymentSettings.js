@@ -129,6 +129,12 @@ const usePaymentSettings = ({ paymentDetails }) => {
     const updatedCompany = selectedCompanyList?.filter(
       (ele) => ele.id !== item.id
     );
+    const updatedNoGst = formFields.no_gst.filter((ele) => ele !== item.value);
+    setFormFields({
+      ...formFields,
+      ["no_gst"]: updatedNoGst,
+    });
+
     setSelectedCompanyList(updatedCompany);
     if (!updatedCompany.length) {
       setFormErrors({
