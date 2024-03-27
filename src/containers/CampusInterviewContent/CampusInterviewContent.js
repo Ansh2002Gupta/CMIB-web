@@ -22,7 +22,7 @@ import { GlobalSessionContext } from "../../globalContext/globalSession/globalSe
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { urlService } from "../../Utils/urlService";
 import { getErrorMessage } from "../../constant/utils";
-import { ROUND_ID } from "../../constant/constant";
+import { API_STATUS, ROUND_ID } from "../../constant/constant";
 import {
   CAMPUS_INTERVIEW,
   CORE_ROUTE,
@@ -177,14 +177,17 @@ const CampusInterviewContent = () => {
     updateCampusInterviewDetails({
       body: payload,
       onSuccessCallback: () => {
-        getCampusInterviewData({});
+        showNotification({
+          text: intl.formatMessage({ id: "label.data_saved_successfully" }),
+          type: API_STATUS.SUCCESS,
+        });
       },
       onErrorCallback: (errorMessage) => {
-        const errors = errorMessage?.data?.data?.errors;
+        const errors = errorMessage?.errors;
         const messages = Object.values(errors).flat();
         showNotification({
           text: messages,
-          type: "error",
+          type: API_STATUS.ERROR,
         });
       },
     });
