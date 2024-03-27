@@ -4,6 +4,7 @@ import styles from "./RegisteredCompaniesDetails.module.scss";
 export const getRegisteredCompanyDetailsColumns = ({
   handleSwitchButton,
   intl,
+  isUpdatingApprovalStatus,
   renderColumn,
 }) => {
   return [
@@ -14,13 +15,14 @@ export const getRegisteredCompanyDetailsColumns = ({
       renderText: {
         isCapitalize: true,
         visible: true,
-        textStyles: styles.tableCell,
       },
+      customStyles: styles.tableCellStyle,
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.approved_not_approved" }),
       dataIndex: "is_approved",
       key: "is_approved",
+      customStyles: styles.tableCellStyle,
       render: (data, rowData) => {
         const { is_approved } = rowData;
         const isChecked = is_approved === 1;
@@ -30,8 +32,10 @@ export const getRegisteredCompanyDetailsColumns = ({
               activeText={"approved"}
               inActiveText={"not_approved"}
               checked={isChecked}
+              customStyle={styles.checkBoxStyle}
+              customTextStyle={isChecked ? styles.disabledtext : {}}
               onChange={() => handleSwitchButton(rowData)}
-              disabled={isChecked}
+              disabled={isChecked || isUpdatingApprovalStatus}
             />
           </div>
         );
