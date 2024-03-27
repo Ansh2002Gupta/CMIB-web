@@ -1,4 +1,5 @@
 import CaJobsConfigurations from "../views/CAJobs/CaJobsConfigurations/CaJobsConfigurations.js";
+import CampusInterviewSettings from "../views/CampusInterviewSettings";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
@@ -36,6 +37,7 @@ import {
   ADD,
   ADD_NEW_USER_DETAILS,
   ADD_SESSION,
+  CAMPUS_INTERVIEW_SETTINGS,
   ADD_SUBSCRIPTIONS,
   CONFIGURATIONS,
   COMPANIES,
@@ -59,7 +61,6 @@ import {
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   ROUND_TWO_SETUP_CENTERS,
-  ROUND_TWO_CONSENT_MARKING,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -182,6 +183,10 @@ const config = [
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
+      },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
       },
     ],
   },
@@ -318,10 +323,6 @@ const config = [
         element: <ConsentMarking />,
       },
       {
-        viewPath: SESSION + ROUND_TWO_CONSENT_MARKING,
-        element: <ConsentMarking />,
-      },
-      {
         viewPath: SESSION + ROUND_ONE_ORIENTATION_CENTERS,
         element: <OrientationCenter />,
       },
@@ -352,6 +353,10 @@ const config = [
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
+      },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
       },
     ],
   },
@@ -419,6 +424,10 @@ const config = [
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
+      },
     ],
   },
   {
@@ -484,6 +493,10 @@ const config = [
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
+      },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
       },
     ],
   },

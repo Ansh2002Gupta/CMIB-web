@@ -35,6 +35,7 @@ export const ROUND_ONE_ORIENTATION_CENTERS = "round1/orientation-centers/";
 export const ROUND_TWO_CONSENT_MARKING = "round2/consent-marking/";
 export const SETUP_CENTERS_DETAILS = "details/:centreId";
 export const SETUP_MOCK_INTERVIEW = "setup-mock-interview/";
+export const CAMPUS_INTERVIEW_SETTINGS = "round1/campus-interview-settings/";
 export const SUBSCRIPTIONS = "subscriptions/";
 export const SUBSCRIPTIONS_DETAILS = "subscription-details/:subscriptionId";
 export const TICKETS = "tickets/";
