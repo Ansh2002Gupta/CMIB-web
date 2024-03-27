@@ -1,7 +1,8 @@
 import variables from "../../themes/base/styles/variables";
 
-export const styles = {
+export const classes = {
   inputStyle: {
-    minHeight: variables.height_44,
+    flex: 1,
+    height: variables.height_44,
   },
 };

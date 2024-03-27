@@ -20,20 +20,6 @@
   border: var(--borderLight);
 }
 
-.chipContainer {
-  display: flex;
-  align-items: center;
-  background-color: var(--lightBlueBg);
-  border-radius: var(--gapSmall);
-  padding: var(--gapXXSmall) var(--gapSmallMedium);
-}
-
-.chipText {
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
-  color: var(--textBold);
-}
-
 .editIcon {
   width: var(--lineHeightNormal);
   height: var(--lineHeightNormal);
@@ -96,13 +82,6 @@
 
 .redText {
   color: var(--error);
-}
-
-.selectedItemsContainer {
-  padding-top: var(--marginXSmall);
-  gap: var(--paddingExtraSmall);
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .text {
