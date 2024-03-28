@@ -145,7 +145,7 @@ const SubscriptionDetails = ({ isAddSubscription }) => {
       ...prevFormData,
       [name]: value,
     }));
-    if (value === null) {
+    if (value === null || value === "") {
       handleError(intl.formatMessage({ id: "label.error.fieldEmpty" }), name);
       return;
     }
