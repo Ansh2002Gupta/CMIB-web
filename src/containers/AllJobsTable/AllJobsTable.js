@@ -18,7 +18,9 @@ import { getQueryColumn } from "./AllJobsTableConfig";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
 import {
+  ACTIVE_STATUS,
   ADMIN_ROUTE,
+  APPROVAL,
   CORE_ROUTE,
   JOBS,
   QUERY_TYPE,
@@ -30,8 +32,8 @@ import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
-  SORTING_QUERY_PARAMS,
 } from "../../constant/constant";
+import { active_filter_options, approval_filter_options } from "./constants";
 import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./AllJobsTable.module.scss";
@@ -48,13 +50,6 @@ const AllJobsTable = ({
   const { renderColumn } = useRenderColumn();
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
-
-  const [sortDirection, setSortDirection] = useState(
-    urlService.getQueryStringValue(SORTING_QUERY_PARAMS?.SORTED_DIRECTION)
-  );
-  const [sortBy, setSortBy] = useState(
-    urlService.getQueryStringValue(SORTING_QUERY_PARAMS?.SORTED_KEY)
-  );
 
   const [
     selectedQueriesToBeMarkedAsAnswered,
@@ -81,14 +76,8 @@ const AllJobsTable = ({
     errorString = error?.data?.message;
   }
 
-  const { data: approvedNotApproved } = useFetch({
-    url: CORE_ROUTE + QUERY_TYPE,
-  });
-
-  const { data: activeInactive, fetchData: fetchStatusData } = useFetch({
-    url: CORE_ROUTE + STATUS,
-    otherOptions: { skipApiCallOnMount: true },
-  });
+  const approvedNotApproved = approval_filter_options;
+  const activeInactive = active_filter_options;
 
   const debounceSearch = useMemo(() => {
     return _.debounce(fetchData, DEBOUNCE_TIME);
@@ -108,37 +97,18 @@ const AllJobsTable = ({
       allCurrentPageSelectedQueries?.length &&
     allCurrentPageSelectedQueries?.length > 0;
 
-  const getRequestedParams = ({
-    page,
-    perPage,
-    q,
-    updatedFiltersValue,
-    sortField,
-    sortOrder,
-  }) => {
+  const getRequestedParams = ({ page, perPage, q, updatedFiltersValue }) => {
     return {
       perPage: perPage || pageSize,
       page: page || current,
       q: q || "",
       status: JSON.stringify(updatedFiltersValue?.["1"]),
-      queryType: JSON.stringify(updatedFiltersValue?.["2"]),
-      sortDirection: sortOrder,
-      sortField: sortField,
+      approved: JSON.stringify(updatedFiltersValue?.["2"]),
     };
   };
 
-  useEffect(() => {
-    fetchStatusData({
-      queryParamsObject: {
-        type: "status",
-      },
-    });
-  }, []);
-
   const onRetry = () => {
     const requestedParams = getRequestedParams({
-      sortOrder: sortDirection,
-      sortField: sortBy,
       updatedFiltersValue: filterArray,
       q: searchedValue,
     });
@@ -217,36 +187,6 @@ const AllJobsTable = ({
     setSelctedQueriesToBeMarkedAsAnswered((prev) => [...prev, queryId]);
   };
 
-  const handleSorting = ({ sortField, sortDirection }) => {
-    const newSortDirection = sortField === sortBy ? sortDirection : "asc";
-
-    const requestedParams = getRequestedParams({
-      page: 1,
-      sortOrder: newSortDirection,
-      sortField: newSortDirection ? sortField : "",
-      q: searchedValue,
-    });
-
-    setSortBy(newSortDirection ? sortField : "");
-    setSortDirection(newSortDirection);
-
-    newSortDirection &&
-      urlService.setQueryStringValue(
-        SORTING_QUERY_PARAMS.SORTED_DIRECTION,
-        newSortDirection
-      );
-    !newSortDirection &&
-      urlService.removeParam(SORTING_QUERY_PARAMS.SORTED_DIRECTION);
-    sortField &&
-      urlService.setQueryStringValue(
-        SORTING_QUERY_PARAMS.SORTED_KEY,
-        sortField
-      );
-    !newSortDirection &&
-      urlService.removeParam(SORTING_QUERY_PARAMS.SORTED_KEY);
-    fetchData({ queryParamsObject: requestedParams });
-  };
-
   const columns = getQueryColumn({
     intl,
     getImage,
@@ -261,10 +201,6 @@ const AllJobsTable = ({
       handleMarkMutipleQueriesAsAnswered: () =>
         setIsConfirmationModalOpen(true),
     },
-    handleSorting,
-    sortBy: sortDirection,
-    setSortBy: setSortDirection,
-    sortField: sortBy,
     setIsConfirmationModalOpen,
     toggleSelectAllItems,
     areAllItemsSelected,
@@ -308,8 +244,6 @@ const AllJobsTable = ({
       perPage: size,
       page: 1,
       updatedFiltersValue: filterArray,
-      sortOrder: sortDirection,
-      sortField: sortBy,
       q: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
@@ -323,8 +257,6 @@ const AllJobsTable = ({
     );
     const requestedParams = getRequestedParams({
       page: newPageNumber,
-      sortOrder: sortDirection,
-      sortField: sortBy,
       q: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
@@ -341,8 +273,6 @@ const AllJobsTable = ({
     );
     const requestedParams = getRequestedParams({
       updatedFiltersValue,
-      sortOrder: sortDirection,
-      sortField: sortBy,
       page: 1,
       q: searchedValue,
     });
@@ -448,8 +378,6 @@ const AllJobsTable = ({
             page: 1,
             search: searchedValue,
             updatedFiltersValue: filterArray,
-            sortDirection: sortDirection,
-            sortField: sortBy,
           }),
         });
         urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
@@ -463,17 +391,13 @@ const AllJobsTable = ({
     const defaultQueryParams = {
       [PAGINATION_PROPERTIES.CURRENT_PAGE]: current,
       [PAGINATION_PROPERTIES.ROW_PER_PAGE]: pageSize,
-      [SORTING_QUERY_PARAMS.SORTED_DIRECTION]: sortDirection,
-      [SORTING_QUERY_PARAMS.SORTED_KEY]: sortBy,
       [PAGINATION_PROPERTIES.FILTER]: encodeURIComponent(arrayAsString),
       [PAGINATION_PROPERTIES.SEARCH_QUERY]: searchedValue,
     };
     urlService.setMultipleQueryStringValues(defaultQueryParams);
 
     const requestedParams = getRequestedParams({
-      sortOrder: sortDirection,
       updatedFiltersValue: filterArray,
-      sortField: sortBy,
       q: searchedValue,
     });
     fetchData({
