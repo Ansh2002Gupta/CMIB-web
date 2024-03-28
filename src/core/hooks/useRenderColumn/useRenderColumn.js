@@ -125,6 +125,7 @@ const useRenderColumn = () => {
       centreStyles,
       includeDotAfterText,
       isCentre,
+      isBooleanHandlerKey = null,
       isTextBold,
       isTypeDate,
       textStyles,
@@ -182,21 +183,24 @@ const useRenderColumn = () => {
       }
       if (
         status?.toLowerCase() === "closed" ||
-        status?.toLowerCase() === "answered" ||
-        status?.toLowerCase() === "active"
+        status?.toLowerCase() === "answered"
       ) {
         return ["statusContainer_success", "statusText_success"];
       }
       if (status?.toLowerCase() === "pending") {
         return ["statusContainer_failed", "statusText_failed"];
       }
-      if (status?.toLowerCase() === "inactive") {
-        return ["statusContainer_inactive", "statusText_inactive"];
-      }
       return ["statusContainer_progress", "statusText_progress"];
     };
 
     const textRenderFormat = ({ text }) => {
+      if (isBooleanHandlerKey) {
+        return text
+          ? intl.formatMessage({ id: `label.${isBooleanHandlerKey}` })
+          : `Not` +
+              ` ` +
+              intl.formatMessage({ id: `label.${isBooleanHandlerKey}` });
+      }
       if (isDataObject) {
         return text[dataKey] || "-";
       }
@@ -215,7 +219,7 @@ const useRenderColumn = () => {
       if (isDays) {
         return `${text} ${intl.formatMessage({ id: "label.days" })}`;
       }
-      if (text) {
+      if (text || typeof text === "number") {
         return text;
       }
       if (isNumber) {
