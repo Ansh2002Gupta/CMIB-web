@@ -559,6 +559,7 @@ const locale = {
   "label.roundTwoDatesSuccess": "Round 2 Dates updated Successfully",
   "label.yearBracket": " (year(s))",
   "label.inrBracket": " (INR)",
+  "label.daysBracket": " (Day(s))",
   "label.session.setup-centers": "Setup Centres",
   "label.session.setupCenters.details": "Edit centre setup",
   "label.users.details": "User Details",
@@ -679,6 +680,12 @@ const locale = {
   "label.searchPackageName": "Search by package name",
   "label.packageName_descriptions": "Package Discription",
   "label.package_valididy_period": "Package Validity Period",
+  "label.subscription_status": "Subscription Status",
+  "label.enterpackagename": "Enter Package Name",
+  "label.enterpackagename_discriptions": "Enter Package Discription",
+  "label.enterpackagename_price": "Enter Price",
+  "label.default_package_name": "Package 1",
+  "label.package_validity_period": "Package Validity Period",
 };
 
 export default locale;

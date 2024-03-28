@@ -70,3 +70,23 @@
 .capitalize {
   text-transform: capitalize;
 }
+
+.customEditStyle {
+  border: var(--borderLight);
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
+  border-radius: var(--radiusLg);
+}
+
+.customStyle {
+  column-gap: var(--gapMedium);
+  row-gap: var(--gapMedium);
+}
+
+.customStyleTop {
+  column-gap: var(--gapMedium);
+  row-gap: var(--gapMedium);
+}
+
+.gridItem {
+  grid-column: 2 / -1;
+}
