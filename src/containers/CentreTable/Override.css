@@ -36,6 +36,7 @@
 
 .ant-input[disabled] {
   color: var(--textBold) !important;
+  cursor: not-allowed;
 }
 
 .ant-picker-input > input {
