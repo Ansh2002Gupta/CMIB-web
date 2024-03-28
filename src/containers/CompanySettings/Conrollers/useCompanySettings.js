@@ -115,6 +115,14 @@ const useCompanySettings = ({ companyDetails }) => {
     const updatedTypes = selectedInterviewType?.filter(
       (ele) => ele.id !== item.id
     );
+    const updatedNoGst = formFields.company_interview_types.filter(
+      (ele) => ele !== item.value
+    );
+    setFormFields({
+      ...formFields,
+      ["company_interview_types"]: updatedNoGst,
+    });
+
     setSelectedInterviewType(updatedTypes);
     if (!updatedTypes.length) {
       setFormErrors({
