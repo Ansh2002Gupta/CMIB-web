@@ -20,8 +20,6 @@ const CustomInput = React.forwardRef(
       customInputStyles,
       customLabelStyles,
       customSelectInputStyles,
-      defaultSelectValueArray,
-      defaultSelectValueString,
       disabled,
       errorInput,
       errorMessage,
@@ -65,6 +63,30 @@ const CustomInput = React.forwardRef(
       });
     };
 
+    const handleInputChange = (newValue) => {
+      if (
+        maxLength &&
+        !isNaN(newValue) &&
+        newValue?.toString()?.length <= maxLength
+      ) {
+        onChange(newValue);
+        return;
+      }
+      onChange(newValue);
+    };
+
+    const handleKeyDown = (e) => {
+      const currentValue = e?.target?.value;
+      const key = e.key;
+      if (
+        maxLength &&
+        !isNaN(key) &&
+        currentValue &&
+        currentValue?.toString()?.length >= maxLength
+      ) {
+        e.preventDefault();
+      }
+    };
     return (
       <Base className={[styles.container, customContainerStyles].join(" ")}>
         {!!label && (
@@ -83,28 +105,25 @@ const CustomInput = React.forwardRef(
           ref={ref}
         >
           {type === "select" && (
-            <>
-              <Select
-                mode={isMultiSelect ? "multiple" : ""}
-                className={[styles.selectInput, customSelectInputStyles].join(
-                  " "
-                )}
-                onChange={(changedValue) => {
-                  onSelectItem({
-                    target: {
-                      value: changedValue,
-                    },
-                  });
-                }}
-                options={selectOptions}
-                defaultValue={
-                  isMultiSelect
-                    ? defaultSelectValueArray
-                    : defaultSelectValueString
-                }
-                disabled={isSelectBoxDisable}
-              />
-            </>
+            <Select
+              mode={isMultiSelect ? "multiple" : ""}
+              className={[
+                styles.selectInput,
+                customSelectInputStyles,
+                isError && errorMessage ? styles.selectBoxError : "",
+              ].join(" ")}
+              onChange={(changedValue) => {
+                onSelectItem({
+                  target: {
+                    value: changedValue,
+                  },
+                });
+              }}
+              value={value}
+              options={selectOptions}
+              placeholder={placeholder}
+              disabled={isSelectBoxDisable}
+            />
           )}
           {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
             <Input
@@ -165,15 +184,19 @@ const CustomInput = React.forwardRef(
               maxLength={maxLength}
               controls={controls}
               precision={precision}
+              type="number"
               className={[
                 styles.inputNumberStyles,
                 customInputNumberStyles,
                 isError && errorMessage ? errorInput : "",
               ].join(" ")}
+              formatter={(value) => (value !== undefined ? `${value}` : "")}
+              parser={(value) => value.replace(/[^\d]/g, "")} // Allows only digits
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               {...{
                 value,
                 placeholder,
-                onChange,
                 disabled,
                 min,
                 max,
@@ -190,7 +213,7 @@ const CustomInput = React.forwardRef(
                 isError ? styles.showError : "",
               ].join(" ")}
             >
-              {errorMessage ? `${errorMessage}` : ""}
+              {errorMessage ? `${errorMessage}` : " "}
             </Typography>
           </div>
         )}
@@ -217,8 +240,6 @@ CustomInput.defaultProps = {
   customInputStyles: "",
   customLabelStyles: "",
   customSelectInputStyles: "",
-  defaultSelectValueArray: [],
-  defaultSelectValueString: "",
   disabled: false,
   errorInput: "",
   errorMessage: "",
@@ -256,8 +277,6 @@ CustomInput.propTypes = {
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   customSelectInputStyles: PropTypes.string,
-  defaultSelectValueArray: PropTypes.array,
-  defaultSelectValueString: PropTypes.string,
   disabled: PropTypes.bool,
   errorInput: PropTypes.string,
   errorMessage: PropTypes.string,
