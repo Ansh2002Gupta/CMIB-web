@@ -272,7 +272,6 @@ const AllJobsTable = ({
     areSomeItemsSelected,
   });
 
-  // Pagination, search and filter related functions
   const handleOnUserSearch = (str) => {
     setSearchedValue(str);
     if (str?.trim()?.length > 2) {
@@ -351,7 +350,6 @@ const AllJobsTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  // MODAL PROPERTIES
   const getModalProperties = () => {
     if (allQueryAreAlreadyAnswered) {
       return {
