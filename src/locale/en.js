@@ -696,6 +696,9 @@ const locale = {
   "label.view_job_details": "View Job Details",
   "label.approve": "Approve",
   "label.designation_or_job_id": "Search by designation or job ID",
+  "label.approval_by_admin": "Approved/Not Approved By Admin",
+  "label.approved": "Approved",
+  "label.scheduled_interview": "Scheduled Interview",
 };
 
 export default locale;
