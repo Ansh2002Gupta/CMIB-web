@@ -49,8 +49,8 @@ export const getQueryColumn = ({
         styles.columnHeading,
         isTableInSelectAllMode ? styles.greenText : "",
       ].join(" "),
-      dataIndex: "readable_id",
-      key: "readable_id",
+      dataIndex: "job_id",
+      key: "job_id",
       renderTextWithCheckBoxes: {
         visible: true,
         isCheckBoxTextBold: true,
@@ -69,8 +69,8 @@ export const getQueryColumn = ({
         ? ""
         : intl.formatMessage({ id: "label.company_name" }),
       customColumnHeading: [styles.extraWidth, styles.columnHeading].join(" "),
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "company_name",
+      key: "company_name",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
@@ -84,8 +84,8 @@ export const getQueryColumn = ({
             id: "label.designation",
           }),
       customColumnHeading: [styles.extraWidth, styles.columnHeading].join(" "),
-      dataIndex: "type",
-      key: "type",
+      dataIndex: "designation",
+      key: "designation",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
@@ -99,8 +99,23 @@ export const getQueryColumn = ({
             id: "label.applicants",
           }),
       customColumnHeading: styles.columnHeading,
-      dataIndex: "email",
-      key: "email",
+      dataIndex: "number_of_applications",
+      key: "number_of_applications",
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+        isRequiredTooltip: true,
+      },
+    }),
+    renderColumn({
+      title: isTableInSelectAllMode
+        ? ""
+        : intl.formatMessage({
+            id: "label.scheduled_interview",
+          }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "number_of_interviews",
+      key: "number_of_interviews",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
@@ -118,6 +133,22 @@ export const getQueryColumn = ({
       key: "status",
       renderChip: {
         visible: true,
+      },
+    }),
+    renderColumn({
+      title: isTableInSelectAllMode
+        ? ""
+        : intl.formatMessage({
+            id: "label.approval_by_admin",
+          }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "approve",
+      key: "approve",
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+        isRequiredTooltip: true,
+        isBooleanHandlerKey: "approved",
       },
     }),
     renderColumn({

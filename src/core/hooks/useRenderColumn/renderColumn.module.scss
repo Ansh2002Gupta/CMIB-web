@@ -63,12 +63,16 @@
   color: var(--requiredStarColor);
 }
 
-.statusContainer_success {
+.statusContainer_active {
   background-color: var(--lightGreenBg);
 }
 
 .statusContainer_inactive {
-  background-color: var(--inactiveWhite);
+  background-color: var(--ltGreyBg);
+}
+
+.statusContainer_success {
+  background-color: var(--lightGreenBg);
 }
 
 .statusContainer_failed {
@@ -84,6 +88,14 @@
   line-height: 18px;
 }
 
+.statusText_active {
+  color: var(--greenText);
+}
+
+.statusText_inactive {
+  color: var(--textBold);
+}
+
 .statusText_success {
   color: var(--greenText);
 }
@@ -94,10 +106,6 @@
 
 .statusText_progress {
   color: var(--blueText);
-}
-
-.statusText_inactive {
-  color: var(--textBold);
 }
 
 .chipContainer {

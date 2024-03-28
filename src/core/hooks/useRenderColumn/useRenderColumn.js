@@ -118,10 +118,12 @@ const useRenderColumn = () => {
 
     const {
       includeDotAfterText,
+      isBooleanHandlerKey = null,
       isTextBold,
       isTypeDate,
       textStyles,
       isCapitalize,
+      isDays,
       isRequiredTooltip,
       isMoney,
       isYearRange,
@@ -165,23 +167,32 @@ const useRenderColumn = () => {
     } = renderTitleWithCheckbox;
 
     const getStatusStyles = (status) => {
+      if (status === 1) {
+        return ["statusContainer_active", "statusText_active"];
+      }
+      if (status === 0) {
+        return ["statusContainer_inactive", "statusText_inactive"];
+      }
       if (
         status?.toLowerCase() === "closed" ||
-        status?.toLowerCase() === "answered" ||
-        status?.toLowerCase() === "active"
+        status?.toLowerCase() === "answered"
       ) {
         return ["statusContainer_success", "statusText_success"];
       }
       if (status?.toLowerCase() === "pending") {
         return ["statusContainer_failed", "statusText_failed"];
       }
-      if (status?.toLowerCase() === "inactive") {
-        return ["statusContainer_inactive", "statusText_inactive"];
-      }
       return ["statusContainer_progress", "statusText_progress"];
     };
 
     const textRenderFormat = ({ text }) => {
+      if (isBooleanHandlerKey) {
+        return text
+          ? intl.formatMessage({ id: `label.${isBooleanHandlerKey}` })
+          : `Not` +
+              ` ` +
+              intl.formatMessage({ id: `label.${isBooleanHandlerKey}` });
+      }
       if (isDataObject) {
         return text[dataKey] || "-";
       }
@@ -195,9 +206,12 @@ const useRenderColumn = () => {
         return intl.formatMessage({ id: `label.${text}` });
       }
       if (isMoney) {
-        return `${text} INR`;
+        return `${text} ${intl.formatMessage({ id: "label.inr" })}`;
       }
-      if (text) {
+      if (isDays) {
+        return `${text} ${intl.formatMessage({ id: "label.days" })}`;
+      }
+      if (text || typeof text === "number") {
         return text;
       }
       return "-";
@@ -383,7 +397,13 @@ const useRenderColumn = () => {
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <Chip
-            label={status}
+            label={
+              status === 1
+                ? intl.formatMessage({ id: "label.active" })
+                : status === 0
+                ? intl.formatMessage({ id: "label.inactive" })
+                : status
+            }
             customContainerStyles={[
               styles.chipContainer,
               styles[styleClassForContainer],
