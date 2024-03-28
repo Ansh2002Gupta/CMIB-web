@@ -90,11 +90,11 @@ const AllJobsTable = ({
   }
 
   const { data: approvedNotApproved } = useFetch({
-    url: CORE_ROUTE + APPROVAL,
+    url: CORE_ROUTE + QUERY_TYPE,
   });
 
   const { data: activeInactive, fetchData: fetchStatusData } = useFetch({
-    url: CORE_ROUTE + ACTIVE_STATUS,
+    url: CORE_ROUTE + STATUS,
     otherOptions: { skipApiCallOnMount: true },
   });
 
@@ -102,11 +102,11 @@ const AllJobsTable = ({
     return _.debounce(fetchData, DEBOUNCE_TIME);
   }, []);
 
-  let queriesSelectedAndMarkedForAnswer = data?.records?.filter(
-    (item) =>
-      item?.status?.toLowerCase() === "answered" &&
-      selectedQueriesToBeMarkedAsAnswered.includes(item?.id)
-  );
+  let queriesSelectedAndMarkedForAnswer = data?.records?.filter((item) => {
+    console.log("item.status:", item);
+    item?.status === 1 &&
+      selectedQueriesToBeMarkedAsAnswered.includes(item?.id);
+  });
 
   const allCurrentPageSelectedQueries = data?.records?.filter((item) =>
     selectedQueriesToBeMarkedAsAnswered.includes(item?.id)
