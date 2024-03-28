@@ -22,9 +22,11 @@ import {
   ADMIN_ROUTE,
   APPROVAL,
   CORE_ROUTE,
+  JOBS,
   QUERIES_END_POINT,
   QUERY_TYPE,
   STATUS,
+  SUMMARY,
 } from "../../constant/apiEndpoints";
 import { ReactComponent as ArrowDown } from "../../themes/base/assets/images/arrow-down.svg";
 import {
@@ -72,10 +74,16 @@ const AllJobsTable = ({
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkQueriesAsAnswerApi();
 
+  // const { data, error, fetchData, isError, isLoading } = useFetch({
+  //   url: ADMIN_ROUTE + QUERIES_END_POINT,
+  //   otherOptions: { skipApiCallOnMount: true },
+  // });
+
   const { data, error, fetchData, isError, isLoading } = useFetch({
-    url: ADMIN_ROUTE + QUERIES_END_POINT,
+    url: ADMIN_ROUTE + JOBS + SUMMARY,
     otherOptions: { skipApiCallOnMount: true },
   });
+
   let errorString = error;
   if (typeof error === "object") {
     errorString = error?.data?.message;
