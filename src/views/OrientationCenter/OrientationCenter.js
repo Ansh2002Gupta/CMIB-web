@@ -20,10 +20,17 @@ import {
   DOWNLOAD,
   ORIENTATION_CENTRES,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { NOTIFICATION_TYPES, ROUND_ID } from "../../constant/constant";
+import {
+  API_STATUS,
+  API_VERSION_QUERY_PARAM,
+  NOTIFICATION_TYPES,
+  ROUND_ID,
+  SESSION_ID_QUERY_PARAM,
+} from "../../constant/constant";
 import { SESSION } from "../../routes/routeNames";
 
 import { classes } from "./OrientationCenter.styles";
@@ -48,6 +55,9 @@ const OrientationCenter = () => {
 
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
+
+  const sessionId = globalSessionDetails?.globalSessionId;
+
   const selectedModule = userProfileDetails?.selectedModuleItem;
   const [formData, setFormData] = useState([]);
   const { showNotification, notificationContextHolder } = useShowNotification();
@@ -64,14 +74,17 @@ const OrientationCenter = () => {
     fetchData: getOrientationCentres,
     isLoading: isGettingOrientationCentres,
     isSuccess: fetchCentersSuccessFlag,
+    apiStatus,
   } = useFetch({
     url:
       CORE_ROUTE +
       `/${selectedModule?.key}` +
       ROUNDS +
       `/${roundId}` +
-      ORIENTATION_CENTRES,
+      ORIENTATION_CENTRES +
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: { skipApiCallOnMount: true },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   const downloadSheet = (id) => {
@@ -110,6 +123,7 @@ const OrientationCenter = () => {
   );
 
   useModuleWiseApiCall({
+    otherOptions: { isApiCallDependentOnSessionId: true, sessionId },
     initialApiCall: () => {
       if (roundId) {
         getOrientationCentres({});
@@ -191,7 +205,7 @@ const OrientationCenter = () => {
           currentGlobalSession?.is_editable,
         disabled: false,
         placeholder: intl.formatMessage({
-          id: "label.placeholder.consentFromDate",
+          id: "label.placeholder.candidate_consent_marking_start_date",
         }),
         onChange: (val, record) => {
           handleInputChange("schedule_date", val, record.id);
@@ -256,6 +270,7 @@ const OrientationCenter = () => {
       payload,
       roundId,
       module: selectedModule?.key,
+      sessionId,
     });
   };
 
@@ -277,8 +292,7 @@ const OrientationCenter = () => {
     const isLoading =
       isGettingOrientationCentres || isUpdatingOrientationCentre;
     const errorHeading = intl.formatMessage({ id: "label.error" });
-
-    if (isLoading) {
+    if (isLoading || apiStatus === API_STATUS.IDLE) {
       return (
         <div className={commonStyles.errorContainer}>
           <Spin size="large" />
@@ -294,12 +308,6 @@ const OrientationCenter = () => {
     if (errorWhileUpdatingCentre) {
       const errorText = errorWhileUpdatingCentre?.data?.message;
       return renderError(errorText, errorHeading, handleSaveChanges);
-    }
-    if (!orientationCentres?.length) {
-      const noResultText = intl.formatMessage({
-        id: "label.orientation_no_result_msg",
-      });
-      return renderError(noResultText, errorHeading);
     }
 
     return (

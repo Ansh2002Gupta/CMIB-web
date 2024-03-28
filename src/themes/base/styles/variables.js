@@ -61,6 +61,7 @@ const variables = {
   greenText: colorPallets.green4,
   redText: colorPallets.red1,
   lightGreyText3: colorPallets.ltGrey4,
+  ltGrey7: colorPallets.ltGrey7,
   darkBlue3: colorPallets.darkBlue3,
   ltGrey5: colorPallets.ltGrey5,
   whiteText: colorPallets.white,
