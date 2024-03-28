@@ -95,7 +95,6 @@ const AllJobsTable = ({
   }, []);
 
   let queriesSelectedAndMarkedForAnswer = data?.records?.filter((item) => {
-    console.log("item.status:", item);
     item?.status === 1 &&
       selectedQueriesToBeMarkedAsAnswered.includes(item?.id);
   });
