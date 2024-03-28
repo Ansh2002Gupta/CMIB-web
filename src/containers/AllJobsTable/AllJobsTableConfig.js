@@ -1,35 +1,18 @@
-import { Image, Typography } from "antd";
-
-import { SORT_VALUES } from "../../constant/constant";
 import styles from "./AllJobsTable.module.scss";
 
 export const getQueryColumn = ({
   intl,
   getImage,
-  navigate,
   renderColumn,
   queriesColumnProperties = {},
-  handleSorting,
-  setIsConfirmationModalOpen,
   toggleSelectAllItems,
   areAllItemsSelected,
   areSomeItemsSelected,
-  setSortBy,
-  sortBy,
-  sortField,
 }) => {
-  const {
-    isSelectedFromTick,
-    setIsSelectedFromTick,
-    selectedItemsList,
-    toggleSelectedQueriesId,
-    handleMarkMutipleQueriesAsAnswered,
-    setSelectedItemsList,
-  } = queriesColumnProperties;
+  const { isSelectedFromTick, selectedItemsList, toggleSelectedQueriesId } =
+    queriesColumnProperties;
   const isTableInSelectAllMode =
     selectedItemsList?.length !== 0 && !isSelectedFromTick;
-  const sortByName = sortField === "name" ? sortBy : "";
-  const sortByCreatedAt = sortField === "created_at" ? sortBy : "";
 
   const handleMenuItemClick = (rowData, item) => {};
 
