@@ -18,12 +18,9 @@ import { getQueryColumn } from "./AllJobsTableConfig";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
 import {
-  ACTIVE_STATUS,
   ADMIN_ROUTE,
-  APPROVAL,
   CORE_ROUTE,
   JOBS,
-  QUERIES_END_POINT,
   QUERY_TYPE,
   STATUS,
   SUMMARY,
@@ -73,11 +70,6 @@ const AllJobsTable = ({
 
   const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
     useMarkQueriesAsAnswerApi();
-
-  // const { data, error, fetchData, isError, isLoading } = useFetch({
-  //   url: ADMIN_ROUTE + QUERIES_END_POINT,
-  //   otherOptions: { skipApiCallOnMount: true },
-  // });
 
   const { data, error, fetchData, isError, isLoading } = useFetch({
     url: ADMIN_ROUTE + JOBS + SUMMARY,
