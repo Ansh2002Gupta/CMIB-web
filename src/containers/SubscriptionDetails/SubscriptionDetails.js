@@ -4,13 +4,15 @@ import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
 import { ThreeColumn, TwoColumn, TwoRow } from "../../core/layouts";
+import useResponsive from "core/hooks/useResponsive";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons";
-import CustomButton from "../../components/CustomButton";
 import CustomRadioButton from "../../components/CustomRadioButton";
 import CustomInput from "../../components/CustomInput";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
+import CustomGrid from "../../components/CustomGrid/CustomGrid";
 import ContentHeader from "../ContentHeader";
+import EditButton from "../../components/EditButton/EditButton";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import SubscriptionDetailsCard from "../SubscriptionDetailsCard/SubscriptionDetailsCard";
 import LabelWithValue from "../../components/LabelWithValue/LabelWithValue";
@@ -39,6 +41,7 @@ import styles from "./SubscriptionDetails.module.scss";
 const SubscriptionDetails = ({ isAddSubscription }) => {
   const intl = useIntl();
   const { subscriptionId } = useParams();
+  const responsive = useResponsive();
   const location = useLocation();
   const { isLoading: isSubscriptionAdding, makeRequest: addSubscriptionData } =
     usePost({ url: ADMIN_ROUTE + SUBSCRIPTIONS_END_POINT });
@@ -127,7 +130,7 @@ const SubscriptionDetails = ({ isAddSubscription }) => {
       );
       errorCount++;
     }
-    if (!formData?.price) {
+    if (formData?.price === null) {
       handleError(
         intl.formatMessage({ id: "label.error.fieldEmpty" }),
         "price"
@@ -142,7 +145,7 @@ const SubscriptionDetails = ({ isAddSubscription }) => {
       ...prevFormData,
       [name]: value,
     }));
-    if (!value) {
+    if (value === null) {
       handleError(intl.formatMessage({ id: "label.error.fieldEmpty" }), name);
       return;
     }
@@ -225,93 +228,77 @@ const SubscriptionDetails = ({ isAddSubscription }) => {
       urlService.getQueryStringValue("mode") !== "view" &&
       urlService.getQueryStringValue("mode") !== "edit"
     ) {
-      urlService.setQueryStringValue("mode", "view");
-      setIsEditPackage(false);
+      if (!isAddSubscription) {
+        urlService.setQueryStringValue("mode", "view");
+        setIsEditPackage(false);
+      }
     }
   }, [urlService]);
 
   const renderNonEditableContent = () => {
     return (
-      <ThreeColumn
-        leftSection={
-          <TwoRow
-            className={styles.upperContainer}
-            topSection={
-              <LabelWithValue
-                customCommonSubHeadingStyle={styles.capitalize}
-                heading={intl.formatMessage({
-                  id: "label.packageName",
-                })}
-                subHeading={!!formData.name ? formData.name : "-"}
-                isMandatory
-              />
-            }
-            bottomSection={
-              <LabelWithValue
-                heading={intl.formatMessage({
-                  id: "label.package_validity_period",
-                })}
-                subHeading={
-                  formData.validity
-                    ? formData.validity +
-                      " " +
-                      intl.formatMessage({ id: "label.days" })
-                    : "-"
-                }
-                isMandatory
-              />
-            }
-          />
-        }
-        middleSection={
-          <TwoRow
-            className={styles.upperContainer}
-            topSection={
+      <TwoRow
+        className={styles.upperContainer}
+        topSection={
+          <CustomGrid customStyle={styles.customStyleTop}>
+            <LabelWithValue
+              customCommonSubHeadingStyle={styles.capitalize}
+              heading={intl.formatMessage({
+                id: "label.packageName",
+              })}
+              subHeading={!!formData.name ? formData.name : "-"}
+              isMandatory
+            />
+            <div className={responsive.isMd ? styles.gridItem : ""}>
               <LabelWithValue
                 heading={intl.formatMessage({
                   id: "label.packageName_descriptions",
                 })}
                 subHeading={formData.description ? formData.description : "-"}
               />
-            }
-            bottomSection={
-              <LabelWithValue
-                heading={intl.formatMessage({
-                  id: "label.price",
-                })}
-                subHeading={
-                  formData?.price
-                    ? formData?.price +
-                      " " +
-                      intl.formatMessage({ id: "label.inr" })
-                    : "-"
-                }
-                isMandatory
-              />
-            }
-          />
+            </div>
+          </CustomGrid>
         }
-        rightSection={
-          <TwoRow
-            className={styles.upperContainer}
-            isTopFillSpace
-            bottomSection={
-              <LabelWithValue
-                heading={intl.formatMessage({
-                  id: "label.subscription_status",
-                })}
-                subHeading={
-                  status
-                    ? intl.formatMessage({ id: "label.active" })
-                    : intl.formatMessage({ id: "label.inactive" })
-                }
-              />
-            }
-          />
+        bottomSection={
+          <CustomGrid customStyle={styles.customStyle}>
+            <LabelWithValue
+              heading={intl.formatMessage({
+                id: "label.package_validity_period",
+              })}
+              subHeading={
+                formData.validity
+                  ? formData.validity +
+                    " " +
+                    intl.formatMessage({ id: "label.days" })
+                  : "-"
+              }
+              isMandatory
+            />
+            <LabelWithValue
+              heading={intl.formatMessage({
+                id: "label.price",
+              })}
+              subHeading={
+                formData?.price
+                  ? formData?.price +
+                    " " +
+                    intl.formatMessage({ id: "label.inr" })
+                  : "-"
+              }
+              isMandatory
+            />
+            <LabelWithValue
+              heading={intl.formatMessage({
+                id: "label.subscription_status",
+              })}
+              subHeading={
+                status
+                  ? intl.formatMessage({ id: "label.active" })
+                  : intl.formatMessage({ id: "label.inactive" })
+              }
+            />
+          </CustomGrid>
         }
-        isLeftFillSpace
-        isMiddleFillSpace
-        isRightFillSpace
       />
     );
   };
@@ -321,29 +308,25 @@ const SubscriptionDetails = ({ isAddSubscription }) => {
       <TwoRow
         className={styles.upperContainer}
         topSection={
-          <TwoColumn
-            className={styles.upperContainer}
-            leftSection={
-              <CustomInput
-                disabled={!isAddSubscription && isEditPackage}
-                errorMessage={errors?.name}
-                isError={!!errors?.name}
-                value={formData.name}
-                label={intl.formatMessage({
-                  id: "label.packageName",
-                })}
-                isRequired
-                type="text"
-                customLabelStyles={styles.customLabelStyles}
-                onChange={(e) => handleInputChange(e.target.value, "name")}
-                placeholder={intl.formatMessage({
-                  id: "label.enterpackagename",
-                })}
-                customInputStyles={styles.customInputStyles}
-              />
-            }
-            isRightFillSpace
-            rightSection={
+          <CustomGrid customStyle={styles.customStyleTop}>
+            <CustomInput
+              disabled={!isAddSubscription && isEditPackage}
+              errorMessage={errors?.name}
+              isError={!!errors?.name}
+              value={formData.name}
+              label={intl.formatMessage({
+                id: "label.packageName",
+              })}
+              isRequired
+              type="text"
+              customLabelStyles={styles.customLabelStyles}
+              onChange={(e) => handleInputChange(e.target.value, "name")}
+              placeholder={intl.formatMessage({
+                id: "label.enterpackagename",
+              })}
+              customInputStyles={styles.customInputStyles}
+            />
+            <div className={responsive.isMd ? styles.gridItem : ""}>
               <CustomInput
                 disabled={!isAddSubscription && isEditPackage}
                 errorMessage={errors?.description}
@@ -361,89 +344,90 @@ const SubscriptionDetails = ({ isAddSubscription }) => {
                 placeholder={intl.formatMessage({
                   id: "label.packageName_descriptions",
                 })}
+                maxLength={1000}
                 customInputStyles={styles.customInputStyles}
               />
-            }
-          />
+            </div>
+          </CustomGrid>
         }
         bottomSection={
-          <ThreeColumn
-            className={styles.bottomSection}
-            leftSection={
-              <CustomInput
-                disabled={!isAddSubscription && isEditPackage}
-                errorMessage={errors?.validity}
-                isError={!!errors?.validity}
-                controls
-                type="inputNumber"
-                value={formData.validity}
-                label={intl.formatMessage({
+          <CustomGrid customStyle={styles.customStyle}>
+            <CustomInput
+              disabled={!isAddSubscription && isEditPackage}
+              errorMessage={errors?.validity}
+              isError={!!errors?.validity}
+              controls
+              type="inputNumber"
+              value={formData.validity}
+              label={
+                intl.formatMessage({
                   id: "label.package_valididy_period",
-                })}
-                isRequired
-                customLabelStyles={styles.customLabelStyles}
-                onChange={(val) => handleInputChange(val, "validity")}
-                placeholder={intl.formatMessage({
-                  id: "label.enterpackagename_valididy_period",
-                })}
-                customInputNumberStyles={styles.customInputNumberStyles}
-                errorInput={commonStyles.errorInput}
-              />
-            }
-            middleSection={
-              <CustomInput
-                disabled={!isAddSubscription && isEditPackage}
-                errorMessage={errors?.price}
-                isError={!!errors?.price}
-                controls
-                value={formData.price}
-                label={intl.formatMessage({
+                }) +
+                intl.formatMessage({
+                  id: "label.daysBracket",
+                })
+              }
+              isRequired
+              customLabelStyles={styles.customLabelStyles}
+              onChange={(val) => handleInputChange(val, "validity")}
+              placeholder={intl.formatMessage({
+                id: "label.enterpackagename_valididy_period",
+              })}
+              customInputNumberStyles={styles.customInputNumberStyles}
+              errorInput={commonStyles.errorInput}
+            />
+            <CustomInput
+              disabled={!isAddSubscription && isEditPackage}
+              errorMessage={errors?.price}
+              isError={!!errors?.price}
+              controls
+              value={formData.price}
+              label={
+                intl.formatMessage({
                   id: "label.price",
-                })}
-                type="inputNumber"
-                isRequired
-                customLabelStyles={styles.customLabelStyles}
-                onChange={(val) => handleInputChange(val, "price")}
-                placeholder={intl.formatMessage({
-                  id: "label.enterpackagename_price",
-                })}
-                customInputNumberStyles={styles.customInputNumberStyles}
-                errorInput={commonStyles.errorInput}
-              />
-            }
-            rightSection={
-              !isAddSubscription && (
-                <div className={styles.radioButtonMainContainer}>
-                  <Typography className={styles.customLabelStyles}>
-                    {intl.formatMessage({
-                      id: "label.subscription_status",
+                }) +
+                intl.formatMessage({
+                  id: "label.inrBracket",
+                })
+              }
+              type="inputNumber"
+              isRequired
+              customLabelStyles={styles.customLabelStyles}
+              onChange={(val) => handleInputChange(val, "price")}
+              placeholder={intl.formatMessage({
+                id: "label.enterpackagename_price",
+              })}
+              customInputNumberStyles={styles.customInputNumberStyles}
+              errorInput={commonStyles.errorInput}
+            />
+            {!isAddSubscription && (
+              <div className={styles.radioButtonMainContainer}>
+                <Typography className={styles.customLabelStyles}>
+                  {intl.formatMessage({
+                    id: "label.subscription_status",
+                  })}
+                </Typography>
+                <div className={styles.radioButtonContainer}>
+                  <CustomRadioButton
+                    checked={status === VALUE_ONE}
+                    label={intl.formatMessage({
+                      id: "label.active",
                     })}
-                  </Typography>
-                  <div className={styles.radioButtonContainer}>
-                    <CustomRadioButton
-                      checked={status === VALUE_ONE}
-                      label={intl.formatMessage({
-                        id: "label.active",
-                      })}
-                      onChange={handleRadioButton}
-                      value={VALUE_ONE}
-                    />
-                    <CustomRadioButton
-                      checked={status === VALUE_ZERO}
-                      label={intl.formatMessage({
-                        id: "label.inactive",
-                      })}
-                      onChange={handleRadioButton}
-                      value={VALUE_ZERO}
-                    />
-                  </div>
+                    onChange={handleRadioButton}
+                    value={VALUE_ONE}
+                  />
+                  <CustomRadioButton
+                    checked={status === VALUE_ZERO}
+                    label={intl.formatMessage({
+                      id: "label.inactive",
+                    })}
+                    onChange={handleRadioButton}
+                    value={VALUE_ZERO}
+                  />
                 </div>
-              )
-            }
-            isLeftFillSpace
-            isMiddleFillSpace
-            isRightFillSpace
-          />
+              </div>
+            )}
+          </CustomGrid>
         }
       />
     );
@@ -456,12 +440,9 @@ const SubscriptionDetails = ({ isAddSubscription }) => {
 
   const renderEditButton = () => {
     return (
-      <CustomButton
-        textStyle={styles.editButtonTitle}
-        IconElement={Edit}
-        btnText={intl.formatMessage({ id: "label.edit" })}
-        withWhiteBackground
+      <EditButton
         onClick={editPackage}
+        customEditStyle={styles.customEditStyle}
       />
     );
   };
@@ -538,9 +519,12 @@ const SubscriptionDetails = ({ isAddSubscription }) => {
                     isAddSubscription ? addSubscription : editSubscription
                   }
                   isActionBtnDisable={
+                    isSubscriptionEditing ||
+                    isSubscriptionAdding ||
+                    isGettingSubscription ||
                     !formData?.name ||
                     !formData?.description ||
-                    !formData?.price ||
+                    !formData?.price === null ||
                     !formData?.validity
                   }
                 />
