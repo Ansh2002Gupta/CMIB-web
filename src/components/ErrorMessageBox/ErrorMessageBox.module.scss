@@ -53,17 +53,18 @@
   flex: 1 0 0;
   border-radius: var(--radiusLg);
   &:hover {
-    color: var(--black1) !important;
+    background-color: var(--error) !important;
+    color: var(--headerBg) !important;
   }
 }
 
-.btnContainer{
+.btnContainer {
   width: var(--fullWidth);
 }
 
 @media screen and (max-width: 767px) {
   .btn {
-    min-height: var(--height_32);
+    min-height: var(--height_40);
     font-size: var(--fontSizeExtraSmall);
   }
   .errorHeading {

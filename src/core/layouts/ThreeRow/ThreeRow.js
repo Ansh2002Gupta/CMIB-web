@@ -4,14 +4,20 @@ import BaseLayout from "core/layouts/Base";
 import Styles from "./threeRow.module.scss";
 
 function ThreeRow({
-  className,
-  style,
-  topSectionStyle,
-  middleSectionStyle,
-  bottomSectionStyle,
-  topSection,
-  middleSection,
   bottomSection,
+  bottomSectionStyle,
+  bottomSectionClassName,
+  className,
+  isBottomFillSpace,
+  isMiddleFillSpace,
+  isTopFillSpace,
+  middleSection,
+  middleSectionClassName,
+  middleSectionStyle,
+  style,
+  topSection,
+  topSectionClassName,
+  topSectionStyle,
   onClick,
 }) {
   return (
@@ -23,20 +29,23 @@ function ThreeRow({
       {({ Row }) => (
         <>
           <Row
+            isFillSpace={isTopFillSpace}
             style={topSectionStyle}
-            className={Styles["top-section-container"]}
+            className={`${topSectionClassName} ${Styles["top-section-container"]}`}
           >
             {topSection}
           </Row>
           <Row
+            isFillSpace={isMiddleFillSpace}
             style={middleSectionStyle}
-            className={Styles["middle-section-container"]}
+            className={`${middleSectionClassName} ${Styles["middle-section-container"]}`}
           >
             {middleSection}
           </Row>
           <Row
+            isFillSpace={isBottomFillSpace}
             style={bottomSectionStyle}
-            className={Styles["bottom-section-container"]}
+            className={`${bottomSectionClassName} ${Styles["bottom-section-container"]}`}
           >
             {bottomSection}
           </Row>
@@ -47,20 +56,32 @@ function ThreeRow({
 }
 
 ThreeRow.defaultProps = {
-  className: "",
-  style: {},
-  topSectionStyle: {},
-  middleSectionStyle: {},
+  bottomSectionClassName: "",
   bottomSectionStyle: {},
+  className: "",
+  isBottomFillSpace: false,
+  isMiddleFillSpace: false,
+  isTopFillSpace: false,
+  middleSectionStyle: {},
+  middleSectionClassName: "",
+  style: {},
+  topSectionClassName: "",
+  topSectionStyle: {},
   onClick: () => {},
 };
 
 ThreeRow.propTypes = {
-  className: PropTypes.string,
-  style: PropTypes.object,
-  topSectionStyle: PropTypes.object,
-  middleSectionStyle: PropTypes.object,
   bottomSectionStyle: PropTypes.object,
+  bottomSectionClassName: PropTypes.string,
+  className: PropTypes.string,
+  isBottomFillSpace: PropTypes.bool,
+  isMiddleFillSpace: PropTypes.bool,
+  isTopFillSpace: PropTypes.bool,
+  middleSectionStyle: PropTypes.object,
+  middleSectionClassName: PropTypes.string,
+  style: PropTypes.object,
+  topSectionClassName: PropTypes.string,
+  topSectionStyle: PropTypes.object,
   onClick: PropTypes.func,
 };
 

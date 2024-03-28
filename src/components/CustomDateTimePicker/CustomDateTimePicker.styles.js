@@ -1,5 +1,7 @@
+import variables from "../../themes/base/styles/variables";
+
 export const styles = {
   inputStyle: {
-    minHeight: "40px",
+    minHeight: variables.height_44,
   },
 };
