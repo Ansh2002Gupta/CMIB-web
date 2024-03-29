@@ -71,6 +71,7 @@ import {
   USER_DETAILS,
   TICKETS,
   TICKETS_VIEW_DETAILS,
+  JOB_LISTING,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 import AllJobs from "../views/AllJobs/AllJobs.js";
@@ -230,6 +231,10 @@ const config = [
       {
         viewPath: SUBSCRIPTIONS + SUBSCRIPTIONS_DETAILS,
         element: <SubscriptionDetails />,
+      },
+      {
+        viewPath: JOB_LISTING,
+        element: <AllJobs />,
       },
     ],
   },
