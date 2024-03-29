@@ -42,7 +42,6 @@ const AllJobsTable = ({
   const [filterArray, setFilterArray] = useState(
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
@@ -67,7 +66,7 @@ const AllJobsTable = ({
     return {
       perPage: perPage || pageSize,
       page: page || current,
-      q: q || "",
+      search: q || "",
       status: JSON.stringify(updatedFiltersValue?.["1"]),
       approved: JSON.stringify(updatedFiltersValue?.["2"]),
     };
