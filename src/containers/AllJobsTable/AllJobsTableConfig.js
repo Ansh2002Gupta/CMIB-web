@@ -18,39 +18,18 @@ export const getQueryColumn = ({
 
   return [
     renderColumn({
-      renderTitleWithCheckbox: {
-        visible: true,
-        titleWithCheckBoxes: !isTableInSelectAllMode
-          ? intl.formatMessage({ id: "label.jobId" })
-          : intl.formatMessage({ id: "label.selectAll" }),
-        onToggleCheckBox: toggleSelectAllItems,
-        isIntermidiate: areSomeItemsSelected,
-        isChecked: areAllItemsSelected,
-        customCheckBoxStyles: styles.checkBoxContainer,
-      },
-      customColumnHeading: [
-        styles.columnHeading,
-        isTableInSelectAllMode ? styles.greenText : "",
-      ].join(" "),
+      title: intl.formatMessage({ id: "label.jobId" }),
+      customColumnHeading: [styles.extraWidth, styles.columnHeading].join(" "),
       dataIndex: "job_id",
       key: "job_id",
-      renderTextWithCheckBoxes: {
+      renderText: {
         visible: true,
-        isCheckBoxTextBold: true,
-        customCheckBoxContainerStyles: [styles.tableCell, styles.gap_12px].join(
-          " "
-        ),
-        checkBoxList: selectedItemsList,
-        onClickCheckbox: (rowData) => {
-          const { id } = rowData;
-          toggleSelectedQueriesId(id);
-        },
+        textStyles: [styles.tableCell].join(" "),
+        isRequiredTooltip: true,
       },
     }),
     renderColumn({
-      title: isTableInSelectAllMode
-        ? ""
-        : intl.formatMessage({ id: "label.company_name" }),
+      title: intl.formatMessage({ id: "label.company_name" }),
       customColumnHeading: [styles.extraWidth, styles.columnHeading].join(" "),
       dataIndex: "company_name",
       key: "company_name",
@@ -61,11 +40,9 @@ export const getQueryColumn = ({
       },
     }),
     renderColumn({
-      title: isTableInSelectAllMode
-        ? ""
-        : intl.formatMessage({
-            id: "label.designation",
-          }),
+      title: intl.formatMessage({
+        id: "label.designation",
+      }),
       customColumnHeading: [styles.extraWidth, styles.columnHeading].join(" "),
       dataIndex: "designation",
       key: "designation",
@@ -76,41 +53,35 @@ export const getQueryColumn = ({
       },
     }),
     renderColumn({
-      title: isTableInSelectAllMode
-        ? ""
-        : intl.formatMessage({
-            id: "label.applicants",
-          }),
+      title: intl.formatMessage({
+        id: "label.applicants",
+      }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "number_of_applications",
       key: "number_of_applications",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
-        isRequiredTooltip: true,
+        isRequiredTooltip: false,
       },
     }),
     renderColumn({
-      title: isTableInSelectAllMode
-        ? ""
-        : intl.formatMessage({
-            id: "label.scheduled_interview",
-          }),
+      title: intl.formatMessage({
+        id: "label.scheduled_interview",
+      }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "number_of_interviews",
       key: "number_of_interviews",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
-        isRequiredTooltip: true,
+        isRequiredTooltip: false,
       },
     }),
     renderColumn({
-      title: isTableInSelectAllMode
-        ? ""
-        : intl.formatMessage({
-            id: "label.active/inactive",
-          }),
+      title: intl.formatMessage({
+        id: "label.active/inactive",
+      }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "status",
       key: "status",
@@ -119,18 +90,16 @@ export const getQueryColumn = ({
       },
     }),
     renderColumn({
-      title: isTableInSelectAllMode
-        ? ""
-        : intl.formatMessage({
-            id: "label.approval_by_admin",
-          }),
+      title: intl.formatMessage({
+        id: "label.approval_by_admin",
+      }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "approve",
       key: "approve",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
-        isRequiredTooltip: true,
+        isRequiredTooltip: false,
         isBooleanHandlerKey: "approved",
       },
     }),

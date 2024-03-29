@@ -5,8 +5,8 @@ import TwoRow from "../../core/layouts/TwoRow/TwoRow";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
 import { PAGINATION_PROPERTIES } from "../../constant/constant";
-import AllJobsTable from "../../containers/AllJobsTable/AllJobsTable";
 import AllJobsHeader from "../../containers/AllJobsHeader/AllJobsHeader";
+import AllJobsTable from "../../containers/AllJobsTable/AllJobsTable";
 
 const AllJobs = () => {
   const [current, setCurrent] = useState(
