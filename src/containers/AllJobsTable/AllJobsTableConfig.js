@@ -5,9 +5,6 @@ export const getQueryColumn = ({
   getImage,
   renderColumn,
   queriesColumnProperties = {},
-  toggleSelectAllItems,
-  areAllItemsSelected,
-  areSomeItemsSelected,
 }) => {
   const { isSelectedFromTick, selectedItemsList, toggleSelectedQueriesId } =
     queriesColumnProperties;
