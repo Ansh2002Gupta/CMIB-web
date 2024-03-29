@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 
 import { ThreeRow } from "../../core/layouts";
@@ -16,10 +16,11 @@ import useCompanySettings from "../CompanySettings/Conrollers/useCompanySettings
 import usePaymentSettings from "../PaymentSettings/Conrollers/usePaymentSettings";
 import useResponsive from "../../core/hooks/useResponsive";
 import useFetch from "../../core/hooks/useFetch";
-import { usePatch } from "../../core/hooks/useApiRequest";
+import { usePut } from "../../core/hooks/useApiRequest";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { RoundDetailsContext } from "../../globalContext/RoundDetails/roundDetailsProvider";
 import { urlService } from "../../Utils/urlService";
 import { getErrorMessage } from "../../constant/utils";
 import { API_STATUS, ROUND_ID } from "../../constant/constant";
@@ -33,6 +34,7 @@ import styles from "./CampusInterviewSettings.module.scss";
 
 const CampusInterviewContent = () => {
   const intl = useIntl();
+  const location = useLocation();
   const responsive = useResponsive();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
@@ -41,6 +43,9 @@ const CampusInterviewContent = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
+
+  const hasRoundTwo = location?.pathname.includes("round2");
+  const [roundDetailState] = useContext(RoundDetailsContext);
   const { showNotification, notificationContextHolder } = useShowNotification();
   const isEditable = !!currentGlobalSession?.is_editable;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
@@ -84,14 +89,15 @@ const CampusInterviewContent = () => {
     formErrors: companySettingsError,
     formFields: companySettingsFields,
     getInitialFields: getCompanyFields,
+    getRoundTwoInitialFields: getCompanyRoundTwoFields,
     handleInputChange: handleCompanyInputChange,
-    initialFormState,
     onRemoveInterviewType,
     onSelectInterviewType,
     selectedInterviewType,
     isButtonDisable: isCompanySettingsInvalid,
   } = useCompanySettings({
     companyDetails: campusInterviewData,
+    hasRoundTwo,
   });
 
   const {
@@ -99,25 +105,32 @@ const CampusInterviewContent = () => {
     formErrors,
     formFields,
     getInitialFields,
+    getRoundTwoInitialFields,
     handleAdd,
     handleInputChange,
     handleRemove,
     handleCandidateDataChange,
+    selectedCenterTableData,
     isButtonDisable: isCandidateSettingsInvalid,
     tableData,
   } = useCandidateSettings({
     candidateDetails: campusInterviewData,
     isEditable,
+    hasRoundTwo,
   });
 
   const onClickCancel = () => {
-    navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
+    if (hasRoundTwo) {
+      navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=3`);
+    } else {
+      navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
+    }
   };
 
   const {
     makeRequest: updateCampusInterviewDetails,
     isLoading: isUpdatingCompausInterviewDetails,
-  } = usePatch({
+  } = usePut({
     url:
       CORE_ROUTE +
       `/${selectedModule?.key}` +
@@ -126,20 +139,43 @@ const CampusInterviewContent = () => {
       CAMPUS_INTERVIEW,
   });
 
+  const currentCenters = !hasRoundTwo
+    ? roundDetailState?.roundOneCenters
+    : roundDetailState?.roundTwoCenters;
+
   const onClickSave = () => {
-    const consentData = tableData.map((item, index) => {
-      const roundCentreMapping = campusInterviewData?.candidate_consent?.find(
-        (consentItem) => consentItem.id === item.centre_name
-      );
-      return {
-        id: item?.centre_name,
-        round_centre_mapping_id: roundCentreMapping?.round_centre_mapping_id,
-        from_date: item.from_date,
-        to_date: item.to_date,
-        from_time: item.from_time,
-        to_time: item.to_time,
-      };
-    });
+    const consentData = tableData
+      .filter(
+        (item) =>
+          !!item.centre_name ||
+          !!item.from_date ||
+          !!item.to_date ||
+          !!item.from_time ||
+          !!item.to_time
+      )
+      .map((item, index) => {
+        const roundCentreMapping = currentCenters?.find(
+          (consentItem) => consentItem.name === item.centre_name
+        );
+        if (hasRoundTwo) {
+          return {
+            id: item?.id || null,
+            round_centre_mapping_id: roundCentreMapping?.id,
+            from_date: item.from_date,
+            to_date: item.to_date,
+          };
+        } else {
+          return {
+            id: item?.id || null,
+            round_centre_mapping_id: roundCentreMapping?.id,
+            from_date: item.from_date,
+            to_date: item.to_date,
+            from_time: item.from_time,
+            to_time: item.to_time,
+          };
+        }
+      });
+
     const payload = {
       data: {
         id: campusInterviewData?.id || null,
@@ -174,8 +210,31 @@ const CampusInterviewContent = () => {
         },
       },
     };
+
+    const roundTwoPayload = {
+      data: {
+        id: campusInterviewData?.id || null,
+        ps_round_id: roundId,
+        consent: consentData,
+        candidate_settings: {
+          max_interview_allowed_candidate: formFields?.max_no_of_interview,
+          max_offer_accepted_candidate: formFields?.max_no_of_offer,
+          center_change_start_date_candidate:
+            selectedCenterTableData[0]?.big_centre_start_date,
+          center_change_end_date_candidate:
+            selectedCenterTableData[0]?.big_centre_end_date,
+        },
+        company_settings: {
+          max_no_vacancy_company: companySettingsFields?.max_no_of_vacancy,
+          shortlist_ratio: companySettingsFields?.shortlist_ratio,
+          company_interview_types:
+            companySettingsFields?.company_interview_types,
+        },
+      },
+    };
+
     updateCampusInterviewDetails({
-      body: payload,
+      body: hasRoundTwo ? roundTwoPayload : payload,
       onSuccessCallback: () => {
         showNotification({
           text: intl.formatMessage({ id: "label.data_saved_successfully" }),
@@ -183,8 +242,12 @@ const CampusInterviewContent = () => {
         });
       },
       onErrorCallback: (errorMessage) => {
-        const errors = errorMessage?.errors;
-        const messages = Object.values(errors).flat();
+        const errors =
+          errorMessage?.errors ||
+          errorMessage?.data?.data?.errors ||
+          errorMessage?.data?.message ||
+          errorMessage;
+        const messages = Object?.values(errors).flat();
         showNotification({
           text: messages,
           type: API_STATUS.ERROR,
@@ -209,6 +272,7 @@ const CampusInterviewContent = () => {
             })}
           />
         }
+        isMiddleFillSpace={isErrorWhileCampusInterviews}
         middleSection={
           <>
             {isLoadingInterviewCampusDetails && <CustomLoader />}
@@ -222,10 +286,13 @@ const CampusInterviewContent = () => {
                       formErrors,
                       formFields,
                       getInitialFields,
+                      getRoundTwoInitialFields,
                       handleAdd,
+                      hasRoundTwo,
                       handleCandidateDataChange,
                       handleInputChange,
                       handleRemove,
+                      selectedCenterTableData,
                       isEditable,
                       campusInterviewData,
                       tableData,
@@ -238,8 +305,9 @@ const CampusInterviewContent = () => {
                       formErrors: companySettingsError,
                       formFields: companySettingsFields,
                       getInitialFields: getCompanyFields,
+                      getRoundTwoInitialFields: getCompanyRoundTwoFields,
                       handleInputChange: handleCompanyInputChange,
-                      initialFormState,
+                      hasRoundTwo,
                       isEditable,
                       onRemoveInterviewType,
                       onSelectInterviewType,
@@ -248,28 +316,34 @@ const CampusInterviewContent = () => {
                   />
                 }
                 bottomSection={
-                  <PaymentSettings
-                    {...{
-                      formErrors: PaymentSettingsError,
-                      formFields: paymentFields,
-                      getInitialFields: getPaymentFields,
-                      handleInputChange: handlePaymentInputChange,
-                      isEditable,
-                      onRemoveCompanyItem,
-                      onSelectCompanyItem,
-                      selectedCompanyList,
-                    }}
-                  />
+                  !hasRoundTwo && (
+                    <PaymentSettings
+                      {...{
+                        formErrors: PaymentSettingsError,
+                        formFields: paymentFields,
+                        getInitialFields: getPaymentFields,
+                        handleInputChange: handlePaymentInputChange,
+                        isEditable,
+                        onRemoveCompanyItem,
+                        onSelectCompanyItem,
+                        selectedCompanyList,
+                      }}
+                    />
+                  )
                 }
               />
             )}
             {isErrorWhileCampusInterviews &&
               !isLoadingInterviewCampusDetails && (
-                <ErrorMessageBox
-                  errorHeading={intl.formatMessage({ id: "lable.errors." })}
-                  errorText={getErrorMessage(erroWhileGettinginterviewDetails)}
-                  onRetry={() => getCampusInterviewData({})}
-                />
+                <div className={styles.errorContainer}>
+                  <ErrorMessageBox
+                    errorHeading={intl.formatMessage({ id: "label.error" })}
+                    errorText={getErrorMessage(
+                      erroWhileGettinginterviewDetails
+                    )}
+                    onRetry={() => getCampusInterviewData({})}
+                  />
+                </div>
               )}
           </>
         }
@@ -283,9 +357,11 @@ const CampusInterviewContent = () => {
               })}
               cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
               isActionBtnDisable={
-                isPaymentSettingsInvalid() ||
-                isCompanySettingsInvalid() ||
-                isCandidateSettingsInvalid()
+                hasRoundTwo
+                  ? isCompanySettingsInvalid() || isCandidateSettingsInvalid()
+                  : isCompanySettingsInvalid() ||
+                    isCandidateSettingsInvalid() ||
+                    isPaymentSettingsInvalid()
               }
               isLoading={isUpdatingCompausInterviewDetails}
               onActionBtnClick={onClickSave}

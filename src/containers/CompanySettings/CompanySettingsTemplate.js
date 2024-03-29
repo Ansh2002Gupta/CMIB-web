@@ -56,6 +56,33 @@ const CompanySettingsTemplate = ({
         />
       );
     }
+    if (item?.isTextBox) {
+      return (
+        <CustomInput
+          controls={item.hasControls}
+          disabled={item.rules.isDisabled}
+          value={item.value}
+          customLabelStyles={styles.inputLabel}
+          customInputNumberStyles={styles.input}
+          customContainerStyles={styles.customContainerStyles}
+          maxLength={item.rules.maxLength}
+          onChange={(val) => {
+            handleInputChange(val?.target?.value, item.label);
+          }}
+          placeholder={intl.formatMessage({
+            id: `session.placeholder.${item.headingIntl}`,
+          })}
+          isError={!!formErrors[item.label]}
+          errorMessage={
+            formErrors[item.label]
+              ? intl.formatMessage({
+                  id: `label.error.${formErrors[item.label]}`,
+                })
+              : ""
+          }
+        />
+      );
+    }
 
     return (
       <CustomInput

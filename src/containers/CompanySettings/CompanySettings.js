@@ -7,8 +7,9 @@ const CompanySettings = ({
   formErrors,
   formFields,
   getInitialFields,
+  getRoundTwoInitialFields,
   handleInputChange,
-  initialFormState,
+  hasRoundTwo,
   isEditable,
   onRemoveInterviewType,
   onSelectInterviewType,
@@ -16,11 +17,17 @@ const CompanySettings = ({
 }) => {
   const intl = useIntl();
 
-  const fields = getInitialFields(
-    formFields?.max_no_of_vacancy,
-    formFields?.multiplier,
-    formFields?.company_interview_types
-  );
+  const fields = hasRoundTwo
+    ? getRoundTwoInitialFields(
+        formFields?.max_no_of_vacancy,
+        formFields?.shortlist_ratio,
+        formFields?.company_interview_types
+      )
+    : getInitialFields(
+        formFields?.max_no_of_vacancy,
+        formFields?.multiplier,
+        formFields?.company_interview_types
+      );
 
   return (
     <CompanySettingsTemplate
@@ -28,7 +35,7 @@ const CompanySettings = ({
         fields,
         formErrors,
         handleInputChange,
-        initialFormState,
+        hasRoundTwo,
         intl,
         isEditable,
         onRemoveInterviewType,
