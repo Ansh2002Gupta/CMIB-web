@@ -40,6 +40,7 @@ export const CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO =
   "round2/campus-interview-settings/";
 export const SUBSCRIPTIONS = "subscriptions/";
 export const SUBSCRIPTIONS_DETAILS = "subscription-details/:subscriptionId";
+export const JOB_LISTING = "all-jobs/";
 export const TICKETS = "tickets/";
 export const TICKETS_VIEW_DETAILS = "reply/:id";
 export const USER_DETAILS = "details/:userId";
