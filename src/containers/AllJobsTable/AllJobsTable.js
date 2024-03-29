@@ -5,7 +5,6 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
-import Chip from "../../components/Chip/Chip";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import CustomButton from "../../components/CustomButton";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
@@ -13,7 +12,6 @@ import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilter
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
-import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMarkQueriesAsAnswerApi";
 import { getQueryColumn } from "./AllJobsTableConfig";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
@@ -42,20 +40,12 @@ const AllJobsTable = ({
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const [
-    selectedQueriesToBeMarkedAsAnswered,
-    setSelctedQueriesToBeMarkedAsAnswered,
-  ] = useState([]);
   const [filterArray, setFilterArray] = useState(
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const [isSelectedFromTick, setIsSelectedFromTick] = useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
-
-  const { handleMarkQueriesAsAnswered, isLoading: isMarkingQueryAsAnswered } =
-    useMarkQueriesAsAnswerApi();
 
   const { data, error, fetchData, isError, isLoading } = useFetch({
     url: ADMIN_ROUTE + JOBS + SUMMARY,
@@ -73,20 +63,6 @@ const AllJobsTable = ({
   const debounceSearch = useMemo(() => {
     return _.debounce(fetchData, DEBOUNCE_TIME);
   }, []);
-
-  let queriesSelectedAndMarkedForAnswer = data?.records?.filter((item) => {
-    item?.status === 1 &&
-      selectedQueriesToBeMarkedAsAnswered.includes(item?.id);
-  });
-
-  const allCurrentPageSelectedQueries = data?.records?.filter((item) =>
-    selectedQueriesToBeMarkedAsAnswered.includes(item?.id)
-  );
-
-  const allQueryAreAlreadyAnswered =
-    queriesSelectedAndMarkedForAnswer?.length ===
-      allCurrentPageSelectedQueries?.length &&
-    allCurrentPageSelectedQueries?.length > 0;
 
   const getRequestedParams = ({ page, perPage, q, updatedFiltersValue }) => {
     return {
@@ -106,96 +82,11 @@ const AllJobsTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
-  const handleMarkQuery = () => {
-    if (allQueryAreAlreadyAnswered) {
-      setIsConfirmationModalOpen(false);
-      return;
-    }
-    handleMarkQueriesAsAnswered({
-      payload: {
-        query_id: selectedQueriesToBeMarkedAsAnswered,
-      },
-      onSuccessCallback: () => {
-        setIsConfirmationModalOpen(false);
-        setIsSelectedFromTick(false);
-        onRetry();
-        setSelctedQueriesToBeMarkedAsAnswered([]);
-      },
-      onErrorCallback: (errorString) => {
-        setIsConfirmationModalOpen(false);
-        setIsSelectedFromTick(false);
-        showNotification(errorString, "error");
-      },
-    });
-  };
-
-  const checkAreAllQueryOfCurrentPageSelected = (checkFor) => {
-    const currentPageSelectedQueries = data?.records?.filter((query) => {
-      return selectedQueriesToBeMarkedAsAnswered?.includes(query?.id);
-    });
-
-    if (checkFor === "all") {
-      return (
-        currentPageSelectedQueries?.length === data?.records?.length &&
-        data?.records?.length !== 0
-      );
-    }
-
-    if (checkFor === "some") {
-      return (
-        currentPageSelectedQueries?.length !== 0 &&
-        currentPageSelectedQueries?.length !== data?.records?.length
-      );
-    }
-  };
-
-  const areAllItemsSelected = checkAreAllQueryOfCurrentPageSelected("all");
-  const areSomeItemsSelected = checkAreAllQueryOfCurrentPageSelected("some");
-
-  const toggleSelectAllItems = () => {
-    const currentPageIdsArray = data?.records?.map((query) => query?.id);
-    if (areAllItemsSelected) {
-      const updatedData = selectedQueriesToBeMarkedAsAnswered?.filter(
-        (queryId) => !currentPageIdsArray?.includes(queryId)
-      );
-      setSelctedQueriesToBeMarkedAsAnswered(updatedData);
-      return;
-    }
-    setSelctedQueriesToBeMarkedAsAnswered((prev) => [
-      ...prev,
-      ...currentPageIdsArray,
-    ]);
-  };
-
-  const toggleSelectedQueriesId = (queryId) => {
-    if (selectedQueriesToBeMarkedAsAnswered?.includes(queryId)) {
-      const updatedData = selectedQueriesToBeMarkedAsAnswered?.filter(
-        (val) => val !== queryId
-      );
-      setSelctedQueriesToBeMarkedAsAnswered(updatedData);
-      return;
-    }
-    setSelctedQueriesToBeMarkedAsAnswered((prev) => [...prev, queryId]);
-  };
-
   const columns = getQueryColumn({
     intl,
     getImage,
     navigate,
     renderColumn,
-    queriesColumnProperties: {
-      isSelectedFromTick,
-      setIsSelectedFromTick,
-      selectedItemsList: selectedQueriesToBeMarkedAsAnswered,
-      setSelectedItemsList: setSelctedQueriesToBeMarkedAsAnswered,
-      toggleSelectedQueriesId,
-      handleMarkMutipleQueriesAsAnswered: () =>
-        setIsConfirmationModalOpen(true),
-    },
-    setIsConfirmationModalOpen,
-    toggleSelectAllItems,
-    areAllItemsSelected,
-    areSomeItemsSelected,
   });
 
   const handleOnUserSearch = (str) => {
@@ -251,7 +142,6 @@ const AllJobsTable = ({
       q: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
-    setSelctedQueriesToBeMarkedAsAnswered([]);
   };
 
   const handleOnFilterApply = (updatedFiltersValue) => {
@@ -268,66 +158,6 @@ const AllJobsTable = ({
       q: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
-  };
-
-  const getModalProperties = () => {
-    if (allQueryAreAlreadyAnswered) {
-      return {
-        currentModalHeading: "allSelectedQueriesAreAlreadyMarked",
-        actionBtnText: "okay",
-        currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
-        cancelBtnText: "",
-      };
-    }
-    if (queriesSelectedAndMarkedForAnswer?.length) {
-      return {
-        currentModalHeading:
-          "someQueriesAreMarkedAsAnsweredContinueMaringOthers",
-        actionBtnText: "okay",
-        currentModalSubHeading: "followingQueriesAreMarkedAnAnswered",
-        cancelBtnText: "cancel",
-      };
-    }
-
-    return {
-      currentModalHeading: "markQueriesAsAnswered",
-      actionBtnText: "markAsAnswered",
-      currentModalSubHeading: "areYouSureYouWantToMarkQueries",
-      cancelBtnText: "cancel",
-    };
-  };
-
-  let currentModalHeading = getModalProperties()?.currentModalHeading;
-  let actionBtnText = getModalProperties()?.actionBtnText;
-  let currentModalSubHeading = getModalProperties()?.currentModalSubHeading;
-  let cancelBtnText = getModalProperties()?.cancelBtnText
-    ? intl.formatMessage({ id: `label.cancel` })
-    : "";
-  let modalIcon =
-    queriesSelectedAndMarkedForAnswer?.length === 0
-      ? getImage("CircleCheck")
-      : "";
-  let currentModalChildren = (
-    <div className={styles.chipContainer}>
-      {queriesSelectedAndMarkedForAnswer?.map((item, index) => {
-        return (
-          <Chip
-            bgStyles={styles.chipBg}
-            textStyles={styles.chipText}
-            label={item?.readable_id || "-"}
-            key={index}
-          />
-        );
-      })}
-    </div>
-  );
-
-  const handleOnModalCancel = () => {
-    if (isSelectedFromTick) {
-      setSelctedQueriesToBeMarkedAsAnswered([]);
-      setIsSelectedFromTick(false);
-    }
-    setIsConfirmationModalOpen(false);
   };
 
   const approvedNotApprovedOptions = useMemo(() => {
@@ -414,23 +244,6 @@ const AllJobsTable = ({
   return (
     <>
       {notificationContextHolder}
-      {
-        <CustomModal
-          btnText={intl.formatMessage({ id: `label.${actionBtnText}` })}
-          headingText={intl.formatMessage({
-            id: `label.${currentModalHeading}`,
-          })}
-          imgElement={modalIcon}
-          isOpen={isConfirmationModalOpen}
-          onBtnClick={handleMarkQuery}
-          onCancel={handleOnModalCancel}
-          subHeadingText={intl.formatMessage({
-            id: `label.${currentModalSubHeading}`,
-          })}
-          cancelBtnText={cancelBtnText}
-          content={currentModalChildren}
-        />
-      }
       {!isError && (
         <TableWithSearchAndFilters
           {...{
@@ -448,7 +261,6 @@ const AllJobsTable = ({
               id: "label.designation_or_job_id",
             }),
           }}
-          arrayContainingSelectedRow={selectedQueriesToBeMarkedAsAnswered}
           isLoading={isLoading}
           rightSection={renderDownloadBtn()}
           data={data?.records}
