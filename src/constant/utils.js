@@ -427,11 +427,13 @@ export const compareTwoDayjsDates = ({ current, date, checkForFuture }) => {
 };
 
 export const formateArrayToArrayOfobject = (paymentTypesData) => {
-  return paymentTypesData?.map((item, index) => {
-    return {
-      id: index + 1,
-      value: item,
-      label: capitalize(item),
-    };
-  });
+  return (
+    paymentTypesData?.map((item, index) => {
+      return {
+        id: index + 1,
+        value: item,
+        label: capitalize(item),
+      };
+    }) || []
+  );
 };
