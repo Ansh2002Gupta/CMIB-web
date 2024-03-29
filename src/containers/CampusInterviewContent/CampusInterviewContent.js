@@ -159,14 +159,12 @@ const CampusInterviewContent = () => {
         );
         if (hasRoundTwo) {
           return {
-            id: item?.id || null,
             round_centre_mapping_id: roundCentreMapping?.id,
             from_date: item.from_date,
             to_date: item.to_date,
           };
         } else {
           return {
-            id: item?.id || null,
             round_centre_mapping_id: roundCentreMapping?.id,
             from_date: item.from_date,
             to_date: item.to_date,
