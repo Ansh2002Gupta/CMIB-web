@@ -302,9 +302,9 @@ const useCandidateSettings = ({
       setSelectedCenterTableData([
         {
           big_centre_start_date:
-            candidateDetails?.big_center_change_start_date_candidate,
+            candidateDetails?.center_change_start_date_candidate,
           big_centre_end_date:
-            candidateDetails?.big_center_change_end_date_candidate,
+            candidateDetails?.center_change_end_date_candidate,
         },
       ]);
     }
