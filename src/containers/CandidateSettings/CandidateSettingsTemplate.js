@@ -20,13 +20,19 @@ import { compareTwoDayjsDates, isNotAFutureDate } from "../../constant/utils";
 
 const CandidateSettingsTemplate = ({
   editConfigurations,
+  editSelectedCenter,
   fields,
   formErrors,
   handleInputChange,
+  hasRoundTwo,
   intl,
   isEditable,
+  roundTwoEditConfigurations,
+  roundTwoViewConfigurations,
   tableData,
+  selectedCenterTableData,
   viewConfigurations,
+  viewSelectedCenter,
 }) => {
   const getDateValues = (fields) => {
     return fields.reduce((acc, row) => {
@@ -95,6 +101,14 @@ const CandidateSettingsTemplate = ({
 
     return false;
   };
+
+  const columnsConfigurations = isEditable
+    ? hasRoundTwo
+      ? roundTwoEditConfigurations
+      : editConfigurations
+    : hasRoundTwo
+    ? roundTwoViewConfigurations
+    : viewConfigurations;
 
   const renderBottomSection = (field) => {
     if (!isEditable) {
@@ -190,7 +204,7 @@ const CandidateSettingsTemplate = ({
           }`}
         >
           <Table
-            columns={isEditable ? editConfigurations : viewConfigurations}
+            columns={columnsConfigurations}
             dataSource={tableData}
             pagination={false}
             rowClassName={!isEditable ? styles.rowtext : ""}
@@ -203,6 +217,36 @@ const CandidateSettingsTemplate = ({
         </div>
       ) : (
         <Typography>{HYPHEN}</Typography>
+      )}
+      {hasRoundTwo && (
+        <>
+          <Typography className={styles.subHeadingStyle}>
+            {intl.formatMessage({
+              id: "label.allow_candidate_for_selectedcenter",
+            })}
+          </Typography>
+          {!!selectedCenterTableData.length ? (
+            <div
+              className={`${
+                isEditable ? styles.editContainer : styles.viewContainer
+              }`}
+            >
+              <Table
+                columns={isEditable ? editSelectedCenter : viewSelectedCenter}
+                dataSource={selectedCenterTableData}
+                pagination={false}
+                rowClassName={!isEditable ? styles.rowtext : ""}
+                scroll={{ x: "max-content" }}
+                className={`${isEditable ? "customTable" : ""} ${
+                  styles.customContainerStyles
+                } customTableNoHover`}
+                rowKey="id"
+              />
+            </div>
+          ) : (
+            <Typography>{HYPHEN}</Typography>
+          )}
+        </>
       )}
     </div>
   );
