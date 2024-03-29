@@ -17,16 +17,7 @@ import useMarkQueriesAsAnswerApi from "../../services/api-services/Queries/useMa
 import { getQueryColumn } from "./AllJobsTableConfig";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
-import {
-  ACTIVE_STATUS,
-  ADMIN_ROUTE,
-  APPROVAL,
-  CORE_ROUTE,
-  JOBS,
-  QUERY_TYPE,
-  STATUS,
-  SUMMARY,
-} from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, JOBS, SUMMARY } from "../../constant/apiEndpoints";
 import { ReactComponent as ArrowDown } from "../../themes/base/assets/images/arrow-down.svg";
 import {
   DEBOUNCE_TIME,
@@ -265,7 +256,7 @@ const AllJobsTable = ({
 
   const handleOnFilterApply = (updatedFiltersValue) => {
     setCurrent(1);
-    let arrayAsString = JSON.stringify(updatedFiltersValue);
+    let arrayAsString = filterArray?.length ? JSON.stringify(filterArray) : "";
 
     urlService.setQueryStringValue(
       PAGINATION_PROPERTIES.FILTER,
@@ -406,6 +397,8 @@ const AllJobsTable = ({
     });
   }, []);
 
+  const downloadJobsList = (dataToBeDownloaded) => {};
+
   const renderDownloadBtn = () => {
     return (
       <CustomButton
@@ -413,6 +406,7 @@ const AllJobsTable = ({
         IconElement={ArrowDown}
         iconStyles={styles.btnIconStyles}
         customStyle={styles.greyBtnCustomStyles}
+        onClick={() => downloadJobsList(data?.records)}
       />
     );
   };

@@ -176,7 +176,7 @@ const useRenderColumn = () => {
 
     const getStatusStyles = (status) => {
       if (status === 1) {
-        return ["statusContainer_active", "statusText_active"];
+        return ["statusContainer_success", "statusText_success"];
       }
       if (status === 0) {
         return ["statusContainer_inactive", "statusText_inactive"];
@@ -195,11 +195,7 @@ const useRenderColumn = () => {
 
     const textRenderFormat = ({ text }) => {
       if (isBooleanHandlerKey) {
-        return text
-          ? intl.formatMessage({ id: `label.${isBooleanHandlerKey}` })
-          : `Not` +
-              ` ` +
-              intl.formatMessage({ id: `label.${isBooleanHandlerKey}` });
+        return intl.formatMessage({ id: `approve.${text}` });
       }
       if (isDataObject) {
         return text[dataKey] || "-";
