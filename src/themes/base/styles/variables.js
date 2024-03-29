@@ -35,6 +35,7 @@ const variables = {
   lightGrey: colorPallets.lightGrey,
   disableColor: colorPallets.disableColor,
   ltGreyBg: colorPallets.ltGreyBg,
+  inactiveWhite: colorPallets.inactiveWhite,
 
   // Text-colors
   textDefault: colorPallets.black,

@@ -25,6 +25,7 @@ const TableWithSearchAndFilters = ({
   onChangePageSize,
   pageSize,
   placeholder,
+  rightSection,
   searchedValue,
   setFilterArray,
   isLoading,
@@ -36,38 +37,43 @@ const TableWithSearchAndFilters = ({
 
   return (
     <div className={styles.filterAndTableContainer}>
-      <div className={styles.searchBarContainer}>
-        <Input
-          prefix={
-            <Image
-              src={getImage("searchIcon")}
-              className={styles.searchIcon}
-              preview={false}
-            />
-          }
-          placeholder={
-            placeholder ||
-            intl.formatMessage({
-              id: "label.searchByUserNameAndEmail",
-            })
-          }
-          allowClear
-          className={styles.searchBar}
-          value={
-            searchedValue?.trim().length ? searchedValue : searchedValue?.trim()
-          }
-          onChange={(e) => handleOnUserSearch(e.target.value)}
-        />
-        <SearchFilter
-          {...{
-            filterArray,
-            filterPropertiesArray: filterOptions || filterPropertiesArray,
-            onFilterApply,
-            setFilterArray,
-            setShowFilters,
-            showFilters,
-          }}
-        />
+      <div className={styles.filterAndButtonContainer}>
+        <div className={styles.searchBarContainer}>
+          <Input
+            prefix={
+              <Image
+                src={getImage("searchIcon")}
+                className={styles.searchIcon}
+                preview={false}
+              />
+            }
+            placeholder={
+              placeholder ||
+              intl.formatMessage({
+                id: "label.searchByUserNameAndEmail",
+              })
+            }
+            allowClear
+            className={styles.searchBar}
+            value={
+              searchedValue?.trim().length
+                ? searchedValue
+                : searchedValue?.trim()
+            }
+            onChange={(e) => handleOnUserSearch(e.target.value)}
+          />
+          <SearchFilter
+            {...{
+              filterArray,
+              filterPropertiesArray: filterOptions || filterPropertiesArray,
+              onFilterApply,
+              setFilterArray,
+              setShowFilters,
+              showFilters,
+            }}
+          />
+        </div>
+        {rightSection}
       </div>
       {!isLoading ? (
         <DataTable
@@ -101,6 +107,7 @@ TableWithSearchAndFilters.defaultProps = {
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
   onFilterApply: () => {},
+  rightSection: <></>,
   pageSize: DEFAULT_PAGE_SIZE,
   searchedValue: "",
 };
@@ -116,6 +123,7 @@ TableWithSearchAndFilters.propTypes = {
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
   onFilterApply: PropTypes.func,
+  rightSection: PropTypes.element,
   pageSize: PropTypes.number,
   placeholder: PropTypes.string,
   searchedValue: PropTypes.string,
