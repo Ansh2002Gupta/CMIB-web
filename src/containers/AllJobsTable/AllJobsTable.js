@@ -5,7 +5,6 @@ import * as _ from "lodash";
 
 import { ThemeContext } from "core/providers/theme";
 
-import CustomModal from "../../components/CustomModal/CustomModal";
 import CustomButton from "../../components/CustomButton";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
