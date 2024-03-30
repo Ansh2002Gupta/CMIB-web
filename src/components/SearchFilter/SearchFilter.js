@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { ThemeContext } from "core/providers/theme";
-import { Button, Card, Image, Typography } from "antd";
+import { Button, Card, Image, Slider, Typography } from "antd";
 
 import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 import useResponsive from "../../core/hooks/useResponsive";
@@ -26,6 +26,7 @@ const SearchFilter = ({
   const responsive = useResponsive();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [currentFilterStatus, setCurrentFilterStatus] = useState(filterArray);
+  const [experienceRange, setExperienceRange] = useState([2, 4]);
 
   const elementNotConsideredInOutSideClick = useRef();
 
@@ -201,33 +202,74 @@ const SearchFilter = ({
               }
               rightSection={
                 <div>
-                  {filterPropertiesArray[selectedIndex]?.options?.map(
-                    (item, index) => {
-                      return (
-                        <CustomCheckBox
-                          checked={(
-                            currentFilterStatus[
-                              filterPropertiesArray[selectedIndex].id
-                            ] || []
-                          ).includes(item.optionId)}
-                          onChange={() =>
-                            handleOnUpdateAccessFilterStatus(
-                              filterPropertiesArray[selectedIndex].id,
-                              item.optionId
-                            )
-                          }
-                          customStyles={styles.filterSecondLevelOption}
-                        >
-                          <Typography className={styles.filterOptionText}>
-                            {item?.str}{" "}
-                            <span className={styles.textInBrackets}>
-                              {!isNaN(item?.count) ? `(${item?.count})` : ""}
-                            </span>
-                          </Typography>
-                        </CustomCheckBox>
-                      );
-                    }
-                  )}
+                  {filterPropertiesArray[selectedIndex]?.type === "slider" ? (
+                    <div style={{ margin: "16px" }}>
+                      <Typography className={styles.sliderLabel}>
+                        {experienceRange[0]} - {experienceRange[1]} years
+                      </Typography>
+                      <Slider
+                        range
+                        defaultValue={experienceRange} // This sets the default range from 2 to 4 years
+                        min={0} // Minimum value of the slider is 0 years
+                        max={40} // Maximum value of the slider is 40 years
+                        onChange={(value) => {
+                          // Update the state with the new slider value
+                          setExperienceRange(value);
+                        }}
+                        onAfterChange={(value) => {
+                          // Update the filter state with the new slider value when user stops dragging
+                          handleOnUpdateAccessFilterStatus(
+                            filterPropertiesArray[selectedIndex].id,
+                            value
+                          );
+                        }} // This sets the handle color to green
+                        className={styles.range}
+                        trackStyle={{ backgroundColor: "#04AF55" }} // This sets the track color to green
+                        handleStyle={[
+                          { backgroundColor: "#04AF55" },
+                          { backgroundColor: "#04AF55" },
+                        ]}
+                      />
+                      <div className={styles.sliderMarks}>
+                        <Typography className={styles.sliderText}>
+                          0 Yrs
+                        </Typography>
+                        <Typography className={styles.sliderText}>
+                          40 Yrs
+                        </Typography>
+                      </div>
+                    </div>
+                  ) : filterPropertiesArray[selectedIndex]?.options ? (
+                    // Render checkboxes for other options
+                    filterPropertiesArray[selectedIndex].options.map(
+                      (item, index) => {
+                        return (
+                          <CustomCheckBox
+                            key={item.optionId}
+                            checked={(
+                              currentFilterStatus[
+                                filterPropertiesArray[selectedIndex].id
+                              ] || []
+                            ).includes(item.optionId)}
+                            onChange={() =>
+                              handleOnUpdateAccessFilterStatus(
+                                filterPropertiesArray[selectedIndex].id,
+                                item.optionId
+                              )
+                            }
+                            customStyles={styles.filterSecondLevelOption}
+                          >
+                            <Typography className={styles.filterOptionText}>
+                              {item.str}
+                              <span className={styles.textInBrackets}>
+                                {!isNaN(item.count) ? `(${item.count})` : ""}
+                              </span>
+                            </Typography>
+                          </CustomCheckBox>
+                        );
+                      }
+                    )
+                  ) : null}
                 </div>
               }
             />

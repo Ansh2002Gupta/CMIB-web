@@ -421,6 +421,7 @@ const locale = {
   "label.path.dashboard": "Dashboard",
   "label.path.subscriptions": "Subscriptions",
   "label.path.companies": "Companies",
+  "label.path.candidates": "Candidates",
   "label.path.session": "Session",
   "label.path.add-session": "Set up new session",
   "label.path.edit-session": "Edit Session",
@@ -592,6 +593,14 @@ const locale = {
   "label.dates_added_successfully": "Dates Added Successfully",
   "label.downloadSucess": "Download Successful",
   "label.videolimitError": "Please enter value between 1 to 999",
+  "label.downloadCandidatesLists": "Download Candidates Lists",
+  "label.viewCandidatesDetails": "View Candidates Details",
+  "label.manageCandidates": "Manage Candidtates",
+  "label.memberName": "Member Name",
+  "label.memberId": "Member Id",
+  "label.memberEmail": "Member Email",
+  
+
 };
 
 export default locale;

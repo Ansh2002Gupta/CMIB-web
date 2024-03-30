@@ -10,6 +10,7 @@ export const ADD = "add/";
 export const ADD_NEW_USER_DETAILS = "add/";
 export const ADD_SESSION = "add-session/";
 export const CENTRE_DETAILS = "centre-details";
+export const CANDIDATES = "candidates/";
 export const COMPANIES = "companies/";
 export const COMPANIES_DETAILS = "company-details/:companyId";
 export const CONFIGURE_CENTRES = "global-configurations/";
