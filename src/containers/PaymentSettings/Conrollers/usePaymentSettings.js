@@ -134,6 +134,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
       ...formFields,
       ["no_gst"]: updatedNoGst,
     });
+
     setSelectedCompanyList(updatedCompany);
     if (!updatedCompany.length) {
       setFormErrors({
