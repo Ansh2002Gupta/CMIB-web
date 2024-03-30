@@ -70,6 +70,7 @@ const CandidateSettings = ({
       dataIndex: "centre_name",
       key: "centre_name",
       renderDropdown: {
+        customInputStyles: styles.dropdownStyle,
         visible: true,
         dropdownItems: dropdownItems,
         onDropdownChange: (val, record, index) =>

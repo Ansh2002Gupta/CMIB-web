@@ -324,18 +324,25 @@ const useCandidateSettings = ({
   };
 
   const handleInputChange = (value, name) => {
-    setFormFields((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-    let error = false;
-    if (value === null || value === "") {
-      error = true;
+    if (value === 0) {
+      setFormErrors({
+        ...formErrors,
+        [name]: "field_cannot_be_zero",
+      });
+    } else {
+      setFormFields((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+      let error = false;
+      if (value === null || value === "") {
+        error = true;
+      }
+      setFormErrors({
+        ...formErrors,
+        [name]: error ? "fieldEmpty" : "",
+      });
     }
-    setFormErrors({
-      ...formErrors,
-      [name]: error ? "fieldEmpty" : "",
-    });
   };
 
   const validate = (index) => {

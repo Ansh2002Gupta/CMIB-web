@@ -380,6 +380,8 @@ const useRenderColumn = () => {
         const {
           dropdownItems = [],
           dropdownPlaceholder = "",
+          customInputStyles,
+          customStyles,
           dropdownDisabled = false,
           getDropdownError = () => {},
           onDropdownChange = () => {},
@@ -396,6 +398,7 @@ const useRenderColumn = () => {
           children: (
             <CustomInput
               type="select"
+              customSelectInputStyles={customInputStyles}
               selectOptions={dropdownItems}
               onSelectItem={(val) => {
                 onDropdownChange(val?.target?.value, rowData, index);

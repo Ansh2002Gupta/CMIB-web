@@ -147,7 +147,6 @@ const CandidateSettingsTemplate = ({
         customInputNumberStyles={styles.input}
         customContainerStyles={styles.customContainerStyles}
         onChange={(val) => handleInputChange(val, field.label)}
-        min={TIMER_OF_1_MINUTES}
         max={MAX_REGISTRATION_FEE_LENGTH}
         type={"inputNumber"}
         placeholder={intl.formatMessage({

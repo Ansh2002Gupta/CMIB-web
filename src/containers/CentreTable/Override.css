@@ -64,6 +64,7 @@
 
 .ant-input-number-input-wrap input {
   color: var(--textBold) !important;
+  font-weight: inherit;
 }
 
 .ant-select-single.ant-select-lg:not(.ant-select-customize-input)
@@ -73,4 +74,10 @@
 
 .ant-table-tbody > tr > td {
   vertical-align: top;
+}
+
+.ant-select-selection-item {
+  width: 100px;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
 }
