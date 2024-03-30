@@ -20,11 +20,11 @@ import { usePut } from "../../core/hooks/useApiRequest";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { RoundDetailsContext } from "../../globalContext/RoundDetails/roundDetailsProvider";
 import { urlService } from "../../Utils/urlService";
 import { getErrorMessage } from "../../constant/utils";
 import { API_STATUS, ROUND_ID } from "../../constant/constant";
 import {
+  ADMIN_ROUTE,
   CAMPUS_INTERVIEW,
   CORE_ROUTE,
   ROUNDS,
@@ -45,7 +45,6 @@ const CampusInterviewContent = () => {
   );
 
   const hasRoundTwo = location?.pathname.includes("round2");
-  const [roundDetailState] = useContext(RoundDetailsContext);
   const { showNotification, notificationContextHolder } = useShowNotification();
   const isEditable = !!currentGlobalSession?.is_editable;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
@@ -66,11 +65,25 @@ const CampusInterviewContent = () => {
     otherOptions: { skipApiCallOnMount: true },
   });
 
-  useEffect(() => {
+  const {
+    data: roundDetails,
+    isLoading: isRoundDetailsLoading,
+    fetchData: fetchRoundDetails,
+  } = useFetch({
+    url: ADMIN_ROUTE + `/${selectedModule?.key}` + ROUNDS + `/${roundId}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  useEffect(async () => {
     if (selectedModule?.key && roundId) {
-      getCampusInterviewData({});
+      await getCampusInterviewData({});
+      await fetchRoundDetails({});
     }
   }, [selectedModule?.key, roundId]);
+
+  const roundCentres = roundDetails?.centres || [];
 
   const {
     formErrors: PaymentSettingsError,
@@ -139,10 +152,6 @@ const CampusInterviewContent = () => {
       CAMPUS_INTERVIEW,
   });
 
-  const currentCenters = !hasRoundTwo
-    ? roundDetailState?.roundOneCenters
-    : roundDetailState?.roundTwoCenters;
-
   const onClickSave = () => {
     const consentData = tableData
       .filter(
@@ -154,7 +163,7 @@ const CampusInterviewContent = () => {
           !!item.to_time
       )
       .map((item, index) => {
-        const roundCentreMapping = currentCenters?.find(
+        const roundCentreMapping = roundCentres?.find(
           (consentItem) => consentItem.name === item.centre_name
         );
         if (hasRoundTwo) {
@@ -254,6 +263,8 @@ const CampusInterviewContent = () => {
     });
   };
 
+  const isLoading = isRoundDetailsLoading || isLoadingInterviewCampusDetails;
+
   return (
     <>
       {notificationContextHolder}
@@ -273,64 +284,67 @@ const CampusInterviewContent = () => {
         isMiddleFillSpace={isErrorWhileCampusInterviews}
         middleSection={
           <>
-            {isLoadingInterviewCampusDetails && <CustomLoader />}
-            {!isLoadingInterviewCampusDetails && !!campusInterviewData && (
-              <ThreeRow
-                className={styles.candidateContentSection}
-                topSection={
-                  <CandidateSettings
-                    {...{
-                      errors,
-                      formErrors,
-                      formFields,
-                      getInitialFields,
-                      getRoundTwoInitialFields,
-                      handleAdd,
-                      hasRoundTwo,
-                      handleCandidateDataChange,
-                      handleInputChange,
-                      handleRemove,
-                      selectedCenterTableData,
-                      isEditable,
-                      campusInterviewData,
-                      tableData,
-                    }}
-                  />
-                }
-                middleSection={
-                  <CompanySettings
-                    {...{
-                      formErrors: companySettingsError,
-                      formFields: companySettingsFields,
-                      getInitialFields: getCompanyFields,
-                      getRoundTwoInitialFields: getCompanyRoundTwoFields,
-                      handleInputChange: handleCompanyInputChange,
-                      hasRoundTwo,
-                      isEditable,
-                      onRemoveInterviewType,
-                      onSelectInterviewType,
-                      selectedInterviewType,
-                    }}
-                  />
-                }
-                bottomSection={
-                  !hasRoundTwo && (
-                    <PaymentSettings
+            {isLoading && <CustomLoader />}
+            {!isLoadingInterviewCampusDetails &&
+              !isRoundDetailsLoading &&
+              !!campusInterviewData && (
+                <ThreeRow
+                  className={styles.candidateContentSection}
+                  topSection={
+                    <CandidateSettings
                       {...{
-                        formErrors: PaymentSettingsError,
-                        formFields: paymentFields,
-                        getInitialFields: getPaymentFields,
-                        handleInputChange: handlePaymentInputChange,
+                        errors,
+                        formErrors,
+                        formFields,
+                        getInitialFields,
+                        getRoundTwoInitialFields,
+                        handleAdd,
+                        hasRoundTwo,
+                        handleCandidateDataChange,
+                        handleInputChange,
+                        handleRemove,
+                        roundCentres,
+                        selectedCenterTableData,
                         isEditable,
-                        onRemoveCompanyItem,
-                        onSelectCompanyItem,
-                        selectedCompanyList,
+                        campusInterviewData,
+                        tableData,
                       }}
                     />
-                  )
-                }
-              />
-            )}
+                  }
+                  middleSection={
+                    <CompanySettings
+                      {...{
+                        formErrors: companySettingsError,
+                        formFields: companySettingsFields,
+                        getInitialFields: getCompanyFields,
+                        getRoundTwoInitialFields: getCompanyRoundTwoFields,
+                        handleInputChange: handleCompanyInputChange,
+                        hasRoundTwo,
+                        isEditable,
+                        onRemoveInterviewType,
+                        onSelectInterviewType,
+                        selectedInterviewType,
+                      }}
+                    />
+                  }
+                  bottomSection={
+                    !hasRoundTwo && (
+                      <PaymentSettings
+                        {...{
+                          formErrors: PaymentSettingsError,
+                          formFields: paymentFields,
+                          getInitialFields: getPaymentFields,
+                          handleInputChange: handlePaymentInputChange,
+                          isEditable,
+                          onRemoveCompanyItem,
+                          onSelectCompanyItem,
+                          selectedCompanyList,
+                        }}
+                      />
+                    )
+                  }
+                />
+              )}
             {isErrorWhileCampusInterviews &&
               !isLoadingInterviewCampusDetails && (
                 <div className={styles.errorContainer}>
@@ -346,6 +360,7 @@ const CampusInterviewContent = () => {
           </>
         }
         bottomSection={
+          !isRoundDetailsLoading &&
           !isLoadingInterviewCampusDetails &&
           isEditable &&
           !isErrorWhileCampusInterviews && (

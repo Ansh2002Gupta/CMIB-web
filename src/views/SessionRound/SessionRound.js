@@ -16,11 +16,6 @@ import RoundCard from "../../containers/RoundCard";
 import SessionRoundDetails from "../../containers/SessionRoundDetails";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import {
-  setRoundOneCenters,
-  setRoundTwoCenters,
-} from "../../globalContext/RoundDetails/roundDetailsActions";
-import { RoundDetailsContext } from "../../globalContext/RoundDetails/roundDetailsProvider";
 import { urlService } from "../../Utils/urlService";
 import { ADMIN_ROUTE, ROUNDS } from "../../constant/apiEndpoints";
 import { API_STATUS, FORM_STATES, MODULE_KEYS } from "../../constant/constant";
@@ -48,7 +43,6 @@ const SessionRound = ({
   const [currentMode, setCurrentMode] = useState(
     urlService.getQueryStringValue("mode") || FORM_STATES.VIEW_ONLY
   );
-  const [, setRoundDetailsDispatch] = useContext(RoundDetailsContext);
   const [showNoCentreSelectedAlert, setShowNoCentreSelectedAlert] =
     useState(false);
 
@@ -65,15 +59,7 @@ const SessionRound = ({
 
   useEffect(() => {
     if (selectedModule?.key && roundId) {
-      fetchData({
-        onSuccessCallback: (data) => {
-          if (roundNo === 1) {
-            setRoundDetailsDispatch(setRoundOneCenters(data?.centres));
-          } else {
-            setRoundDetailsDispatch(setRoundTwoCenters(data?.centres));
-          }
-        },
-      });
+      fetchData({});
     }
   }, [selectedModule?.key, roundId]);
 
