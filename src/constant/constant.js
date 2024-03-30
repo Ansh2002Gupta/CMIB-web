@@ -1,11 +1,11 @@
 import {
   CAMPUS_INTERVIEW_SETTINGS,
+  CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO,
   CONSENT_MARKING_ROUND_ONE,
   CONSENT_MARKING_ROUND_TWO,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   ROUND_TWO_SETUP_CENTERS,
-  SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
 
@@ -295,7 +295,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
-    onClickNavigation: SETUP_CENTERS,
+    onClickNavigation: CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO,
   },
 ];
 
