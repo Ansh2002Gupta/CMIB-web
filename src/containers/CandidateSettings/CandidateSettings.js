@@ -6,7 +6,6 @@ import { Image } from "antd";
 
 import CandidateSettingsTemplate from "./CandidateSettingsTemplate";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
-import { RoundDetailsContext } from "../../globalContext/RoundDetails/roundDetailsProvider";
 import {
   compareTwoDayjsDates,
   handleDisabledEndTime,
@@ -27,6 +26,7 @@ const CandidateSettings = ({
   handleAdd,
   handleRemove,
   handleCandidateDataChange,
+  roundCentres,
   selectedCenterTableData,
   isEditable,
   tableData,
@@ -34,7 +34,6 @@ const CandidateSettings = ({
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
-  const [roundDetailState] = useContext(RoundDetailsContext);
 
   const fields = hasRoundTwo
     ? getRoundTwoInitialFields(
@@ -50,12 +49,10 @@ const CandidateSettings = ({
         formFields?.small_centre_end_date
       );
 
-  const currentCenters = !hasRoundTwo
-    ? roundDetailState?.roundOneCenters
-    : roundDetailState?.roundTwoCenters;
-
-  const filteredCurrentCenters = currentCenters.filter((currentCenter) =>
-    tableData.every((tableItem) => tableItem.centre_name !== currentCenter.name)
+  const filteredCurrentCenters = roundCentres?.filter((currentCenter) =>
+    tableData.every(
+      (tableItem) => tableItem?.centre_name !== currentCenter?.name
+    )
   );
 
   const dropdownItems = filteredCurrentCenters?.map((item) => {
