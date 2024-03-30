@@ -36,6 +36,8 @@ export const ROUND_TWO_CONSENT_MARKING = "round2/consent-marking/";
 export const SETUP_CENTERS_DETAILS = "details/:centreId";
 export const SETUP_MOCK_INTERVIEW = "setup-mock-interview/";
 export const CAMPUS_INTERVIEW_SETTINGS = "round1/campus-interview-settings/";
+export const CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO =
+  "round2/campus-interview-settings/";
 export const SUBSCRIPTIONS = "subscriptions/";
 export const SUBSCRIPTIONS_DETAILS = "subscription-details/:subscriptionId";
 export const JOB_LISTING = "all-jobs/";

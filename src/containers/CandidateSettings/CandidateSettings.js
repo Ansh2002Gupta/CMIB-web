@@ -20,32 +20,46 @@ const CandidateSettings = ({
   formErrors,
   formFields,
   getInitialFields,
+  getRoundTwoInitialFields,
+  hasRoundTwo,
   handleInputChange,
   handleAdd,
   handleRemove,
   handleCandidateDataChange,
+  roundCentres,
+  selectedCenterTableData,
   isEditable,
-  campusInterviewData,
   tableData,
 }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const { renderColumn } = useRenderColumn();
 
-  const fields = getInitialFields(
-    formFields?.max_no_of_interview,
-    formFields?.max_no_of_offer,
-    formFields?.big_centre_start_date,
-    formFields?.big_centre_end_date,
-    formFields?.small_centre_start_date,
-    formFields?.small_centre_end_date
+  const fields = hasRoundTwo
+    ? getRoundTwoInitialFields(
+        formFields?.max_no_of_interview,
+        formFields?.max_no_of_offer
+      )
+    : getInitialFields(
+        formFields?.max_no_of_interview,
+        formFields?.max_no_of_offer,
+        formFields?.big_centre_start_date,
+        formFields?.big_centre_end_date,
+        formFields?.small_centre_start_date,
+        formFields?.small_centre_end_date
+      );
+
+  const filteredCurrentCenters = roundCentres?.filter((currentCenter) =>
+    tableData.every(
+      (tableItem) => tableItem?.centre_name !== currentCenter?.name
+    )
   );
 
-  const dropdownItems = campusInterviewData?.candidate_consent?.map((item) => {
+  const dropdownItems = filteredCurrentCenters?.map((item) => {
     return {
       id: item.id,
-      label: item.centre_name,
-      value: item.id,
+      label: item.name,
+      value: item.name,
     };
   });
 
@@ -213,6 +227,118 @@ const CandidateSettings = ({
     },
   ];
 
+  const roundTwoEditConfigurations = [
+    renderColumn({
+      title: intl.formatMessage({ id: "label.centre" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "centre_name",
+      key: "centre_name",
+      renderDropdown: {
+        visible: true,
+        dropdownItems: dropdownItems,
+        onDropdownChange: (val, record, index) =>
+          handleCandidateDataChange(val, "centre_name", index),
+        customdropDownStyles: styles.selectCenterContainer,
+        customtextStyles: styles.placeholderStyle,
+        dropdownPlaceholder: intl.formatMessage({
+          id: "label.placeholder.select_centre",
+        }),
+        getDropdownError: (index) => errors[index]?.centre_name,
+        selectedValue: (record) => {
+          return record?.centre_name;
+        },
+      },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.from_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "from_date",
+      key: "from_date",
+      renderDateTime: {
+        customInputStyle: classes.inputStyle,
+        getDisabledDate: (current, record) => {
+          if (isNotAFutureDate(current)) return true;
+          if (
+            compareTwoDayjsDates({
+              current,
+              date: record?.to_date,
+              checkForFuture: true,
+            })
+          )
+            return true;
+        },
+        visible: true,
+        type: "date",
+        placeholder: intl.formatMessage({
+          id: "label.select_from_date",
+        }),
+        onChange: (val, record, index) => {
+          handleCandidateDataChange(
+            val ? dayjs(val).format("YYYY-MM-DD") : "",
+            "from_date",
+            index
+          );
+        },
+        isEditable: true,
+        getError: (index) => errors[index]?.from_date,
+      },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.to_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "to_date",
+      key: "to_date",
+      renderDateTime: {
+        customInputStyle: classes.inputStyle,
+        getDisabledDate: (current, record) => {
+          if (
+            compareTwoDayjsDates({
+              current,
+              date: record?.from_date,
+              checkForFuture: false,
+            })
+          )
+            return true;
+          if (isNotAFutureDate(current)) return true;
+        },
+        visible: true,
+        type: "date",
+        placeholder: intl.formatMessage({
+          id: "label.select_to_date",
+        }),
+        onChange: (val, record, index) => {
+          handleCandidateDataChange(
+            val ? dayjs(val).format("YYYY-MM-DD") : "",
+            "to_date",
+            index
+          );
+        },
+        isEditable: true,
+        getError: (index) => errors[index]?.to_date,
+      },
+    }),
+    {
+      title: " ",
+      dataIndex: "remove",
+      key: "remove",
+      render: (text, record, index) => (
+        <Image
+          className={styles.customImageStyle}
+          src={getImage(record?.isAddRow ? "addCircle" : "minusCircle")}
+          alt="add/remove"
+          preview={false}
+          onClick={() => {
+            if (record?.isAddRow) {
+              handleAdd(index);
+            } else {
+              handleRemove(index);
+            }
+          }}
+        />
+      ),
+    },
+  ];
+
   const viewConfigurations = [
     renderColumn({
       title: intl.formatMessage({ id: "label.centre" }),
@@ -251,17 +377,135 @@ const CandidateSettings = ({
     }),
   ];
 
+  const roundTwoViewConfigurations = [
+    renderColumn({
+      title: intl.formatMessage({ id: "label.centre" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "centre_name",
+      key: "centre_name",
+      renderText: { visible: true },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.from_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "from_date",
+      key: "from_date",
+      renderText: { visible: true, isTypeDate: false },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.to_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "to_date",
+      key: "to_date",
+      renderText: { visible: true, isTypeDate: false },
+    }),
+  ];
+
+  const editSelectedCenter = [
+    renderColumn({
+      title: intl.formatMessage({ id: "label.start_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "big_centre_start_date",
+      key: "big_centre_start_date",
+      renderDateTime: {
+        customInputStyle: classes.inputStyle,
+        getDisabledDate: (current, record) => {
+          if (isNotAFutureDate(current)) return true;
+          if (
+            compareTwoDayjsDates({
+              current,
+              date: record?.big_centre_end_date,
+              checkForFuture: true,
+            })
+          )
+            return true;
+        },
+        visible: true,
+        type: "date",
+        placeholder: intl.formatMessage({
+          id: "label.select_start_date",
+        }),
+        onChange: (val, record, index) => {
+          handleCandidateDataChange(
+            val ? dayjs(val).format("YYYY-MM-DD") : "",
+            "big_centre_start_date",
+            index
+          );
+        },
+        isEditable: true,
+        getError: (index) => errors[index]?.big_centre_start_date,
+      },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.end_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "big_centre_end_date",
+      key: "big_centre_end_date",
+      renderDateTime: {
+        customInputStyle: classes.inputStyle,
+        getDisabledDate: (current, record) => {
+          if (
+            compareTwoDayjsDates({
+              current,
+              date: record?.big_centre_start_date,
+              checkForFuture: false,
+            })
+          )
+            return true;
+          if (isNotAFutureDate(current)) return true;
+        },
+        visible: true,
+        type: "date",
+        placeholder: intl.formatMessage({
+          id: "label.select_end_date",
+        }),
+        onChange: (val, record, index) => {
+          handleCandidateDataChange(
+            val ? dayjs(val).format("YYYY-MM-DD") : "",
+            "big_centre_end_date",
+            index
+          );
+        },
+        isEditable: true,
+        getError: (index) => errors[index]?.big_centre_end_date,
+      },
+    }),
+  ];
+
+  const viewSelectedCenter = [
+    renderColumn({
+      title: intl.formatMessage({ id: "label.start_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "big_centre_start_date",
+      key: "big_centre_start_date",
+      renderText: { visible: true, isTypeDate: false },
+    }),
+    renderColumn({
+      title: intl.formatMessage({ id: "label.end_date" }),
+      customColumnHeading: styles.columnHeading,
+      dataIndex: "big_centre_end_date",
+      key: "big_centre_end_date",
+      renderText: { visible: true, isTypeDate: false },
+    }),
+  ];
+
   return (
     <CandidateSettingsTemplate
       {...{
         editConfigurations,
+        editSelectedCenter,
         fields,
         formErrors,
         handleInputChange,
+        hasRoundTwo,
         intl,
         isEditable,
+        roundTwoEditConfigurations,
+        roundTwoViewConfigurations,
         tableData,
+        selectedCenterTableData,
         viewConfigurations,
+        viewSelectedCenter,
       }}
     />
   );

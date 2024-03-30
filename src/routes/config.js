@@ -38,6 +38,7 @@ import {
   ADD_NEW_USER_DETAILS,
   ADD_SESSION,
   CAMPUS_INTERVIEW_SETTINGS,
+  CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO,
   ADD_SUBSCRIPTIONS,
   CONFIGURATIONS,
   COMPANIES,
@@ -362,6 +363,10 @@ const config = [
       },
       {
         viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
+      },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO,
         element: <CampusInterviewSettings />,
       },
     ],
