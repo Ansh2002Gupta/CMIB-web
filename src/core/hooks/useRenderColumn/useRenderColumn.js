@@ -125,6 +125,7 @@ const useRenderColumn = () => {
       centreStyles,
       includeDotAfterText,
       isCentre,
+      isBooleanHandlerKey = null,
       isTextBold,
       isTypeDate,
       textStyles,
@@ -175,7 +176,7 @@ const useRenderColumn = () => {
 
     const getStatusStyles = (status) => {
       if (status === 1) {
-        return ["statusContainer_active", "statusText_active"];
+        return ["statusContainer_success", "statusText_success"];
       }
       if (status === 0) {
         return ["statusContainer_inactive", "statusText_inactive"];
@@ -193,6 +194,9 @@ const useRenderColumn = () => {
     };
 
     const textRenderFormat = ({ text }) => {
+      if (isBooleanHandlerKey) {
+        return intl.formatMessage({ id: `approve.${text}` });
+      }
       if (isDataObject) {
         return text[dataKey] || "-";
       }
@@ -211,7 +215,7 @@ const useRenderColumn = () => {
       if (isDays) {
         return `${text} ${intl.formatMessage({ id: "label.days" })}`;
       }
-      if (text) {
+      if (text || typeof text === "number") {
         return text;
       }
       if (isNumber) {

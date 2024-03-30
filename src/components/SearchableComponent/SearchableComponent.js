@@ -36,7 +36,7 @@ const SearchableComponent = ({
         placeholder={placeholder}
         allowClear={allowClear}
         className={[styles.searchBar, customSearchBar].join(" ")}
-        value={searchedValue?.trim()}
+        value={searchedValue}
         onChange={(e) => handleOnUserSearch(e.target.value)}
       />
     </div>

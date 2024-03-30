@@ -168,6 +168,13 @@ const SubscriptionsTable = () => {
       if (current > numberOfPages || current <= 0) {
         setCurrent(1);
         urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+        getSubscriptionListing({
+          queryParamsObject: getRequestedParams({
+            page: 1,
+            search: validateSearchTextLength(searchedValue),
+            size: +pageSize,
+          }),
+        });
       }
     }
   }, [subscriptionListingData?.meta?.total]);
