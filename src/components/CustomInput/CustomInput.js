@@ -194,6 +194,7 @@ const CustomInput = React.forwardRef(
               parser={(value) => value.replace(/[^\d]/g, "")} // Allows only digits
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
+              prefix={isPrefixRequired ? prefixElement : null}
               {...{
                 value,
                 placeholder,

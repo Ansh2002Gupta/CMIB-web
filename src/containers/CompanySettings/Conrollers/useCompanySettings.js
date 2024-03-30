@@ -93,12 +93,12 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
       },
       {
         id: 2,
-        isTextBox: true,
+        isPreffix: true,
         headingIntl: "shortlist_ratio",
         label: "shortlist_ratio",
         value: shortlist_ratio,
         rules: {
-          maxLength: MAX_VACANCIES_LENGTH,
+          maxLength: MAX_EXPERIENCE_LENGTH,
           isRequired: true,
           message: "shortlist_ratio",
         },
@@ -196,7 +196,6 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
   };
 
   const handleInputChange = (value, name) => {
-    console.log("value, name", value, name);
     setFormFields((prevFormData) => {
       const newFormData = {
         ...prevFormData,
