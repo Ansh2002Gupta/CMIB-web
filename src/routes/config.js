@@ -64,9 +64,11 @@ import {
   TICKETS,
   TICKETS_VIEW_DETAILS,
   CANDIDATES,
+  CANDIDATES_DETAILS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 import Candidates from "../views/Candidates/Candidates.js";
+import CandidateDetails from "../views/CandidateDetails/CandidateDetails.js";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
@@ -195,6 +197,10 @@ const config = [
       {
         viewPath: CANDIDATES,
         element: <Candidates/>,
+      },
+      {
+        viewPath: CANDIDATES + CANDIDATES_DETAILS,
+        element: <CandidateDetails/>,
       },
       {
         viewPath: COMPANIES,

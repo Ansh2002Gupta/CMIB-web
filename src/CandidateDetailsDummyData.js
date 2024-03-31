@@ -1,0 +1,32 @@
+export const CANDIDATE_PROFILE = {
+  id: 1,
+  name: "Md Shadik",
+  gender: "Male",
+  marital_status: "No",
+  date_of_birth: '02/03/2000',
+  email: 'hailee60@example.org',
+  passport: "Yes",
+  passport_no: "12121212",
+  corresponding_addresss:{
+    address1: 'test address',
+    address2: '',
+    address3: '',
+    country: 'India',
+    state: 'Haryana',
+    city: 'Silokhera',
+    pin_code: '122001',
+    mobile_no: '1122212222',
+    phone_no: '',
+    nationality: 'Indian',
+    mobile_country_code: '+91',
+  },
+  permanent_address:{
+    address1: 'Supaul',
+    address2: '',
+    address3: '',
+    country: 'India',
+    state: 'Bihar',
+    city: 'Supaul',
+    pin_code: '852221',
+  }
+};

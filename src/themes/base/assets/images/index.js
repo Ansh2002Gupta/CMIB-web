@@ -77,6 +77,8 @@ import iconProfileAddDisabled from "./iconProfileAddDisabled.svg";
 import disableEdit from "../icons/disableEdit.svg";
 import moreIcon from "./more.svg";
 import arrowDownNoCircle from "./arrow-down-no-circle.svg"
+import brifCase from "./briefcase.svg"
+
 
 
 const images = {
@@ -159,6 +161,7 @@ const images = {
   disableEdit,
   moreIcon,
   arrowDownNoCircle,
+  brifCase
 };
 
 export default images;

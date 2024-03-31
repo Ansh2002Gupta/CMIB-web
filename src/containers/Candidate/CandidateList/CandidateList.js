@@ -45,9 +45,10 @@ const CandidateContent = () => {
   );
 
   const goToCandidateDetailsPage = (data) => {
+    console.log(data);
     // TODO: navigate to the details page after details page is created.
     const candidateId = data?.id;
-    navigate(`candidate-details/${candidateId}`);
+    navigate(`candidates-details/${candidateId}`);
   };
 
   const onHandleCandidateStatus = (data) => {
