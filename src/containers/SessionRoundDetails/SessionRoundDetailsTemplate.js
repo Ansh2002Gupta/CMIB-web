@@ -13,6 +13,7 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import { ReactComponent as AddIcon } from "../../themes/base/assets/images/plus icon.svg";
 import { MODULE_KEYS } from "../../constant/constant";
 import { classes } from "./SessionRoundDetails.styles";
+import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./SessionRoundDetails.module.scss";
 
 const SessionRoundDetailsTemplate = ({
@@ -162,14 +163,14 @@ const SessionRoundDetailsTemplate = ({
                           </Typography>
                         }
                         bottomSection={
-                          <div className={styles.selectedItemsContainer}>
+                          <div className={commonStyles.chipMainContainer}>
                             {centreList?.map((item, index) => {
                               return (
                                 <div
-                                  className={styles.chipContainer}
+                                  className={commonStyles.chipContainer}
                                   key={index}
                                 >
-                                  <Typography className={styles.chipText}>
+                                  <Typography className={commonStyles.chipText}>
                                     {capitalize(item?.name)}
                                   </Typography>
                                 </div>

@@ -19,9 +19,6 @@ const TicketListing = () => {
       urlService.getQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE)
     )
   );
-  const [searchedValue, setSearchedValue] = useState(
-    urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
-  );
 
   return (
     <TwoRow
@@ -34,8 +31,6 @@ const TicketListing = () => {
             pageSize,
             setCurrent,
             setPageSize,
-            searchedValue,
-            setSearchedValue,
           }}
         />
       }

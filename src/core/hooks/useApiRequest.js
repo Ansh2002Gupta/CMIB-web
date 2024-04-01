@@ -65,7 +65,7 @@ const useApiRequest = ({ method, url, apiOptions = {}, otherOptions = {} }) => {
       );
       onErrorCallback &&
         onErrorCallback(
-          intl.formatMessage({ id: "label.generalGetApiFailedErrorMessage" })
+          err?.response?.data?.message || GENERIC_API_FAILED_ERROR_MESSAGE
         );
     }
   };

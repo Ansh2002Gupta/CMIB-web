@@ -8,7 +8,6 @@ import { TwoRow, TwoColumn, Base } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useShowNotification from "../../core/hooks/useShowNotification";
-import useResponsive from "core/hooks/useResponsive";
 
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import CustomGrid from "../../components/CustomGrid";
@@ -55,7 +54,6 @@ const SessionDetails = ({
   sessionError,
 }) => {
   const intl = useIntl();
-  const responsive = useResponsive();
   const { getImage } = useContext(ThemeContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const [userProfileDetails] = useContext(UserProfileContext);
