@@ -20,8 +20,6 @@ const CustomInput = React.forwardRef(
       customInputStyles,
       customLabelStyles,
       customSelectInputStyles,
-      defaultSelectValueArray,
-      defaultSelectValueString,
       disabled,
       errorInput,
       errorMessage,
@@ -89,7 +87,6 @@ const CustomInput = React.forwardRef(
         e.preventDefault();
       }
     };
-
     return (
       <Base className={[styles.container, customContainerStyles].join(" ")}>
         {!!label && (
@@ -108,28 +105,25 @@ const CustomInput = React.forwardRef(
           ref={ref}
         >
           {type === "select" && (
-            <>
-              <Select
-                mode={isMultiSelect ? "multiple" : ""}
-                className={[styles.selectInput, customSelectInputStyles].join(
-                  " "
-                )}
-                onChange={(changedValue) => {
-                  onSelectItem({
-                    target: {
-                      value: changedValue,
-                    },
-                  });
-                }}
-                options={selectOptions}
-                defaultValue={
-                  isMultiSelect
-                    ? defaultSelectValueArray
-                    : defaultSelectValueString
-                }
-                disabled={isSelectBoxDisable}
-              />
-            </>
+            <Select
+              mode={isMultiSelect ? "multiple" : ""}
+              className={[
+                styles.selectInput,
+                customSelectInputStyles,
+                isError && errorMessage ? styles.selectBoxError : "",
+              ].join(" ")}
+              onChange={(changedValue) => {
+                onSelectItem({
+                  target: {
+                    value: changedValue,
+                  },
+                });
+              }}
+              value={value}
+              options={selectOptions}
+              placeholder={placeholder}
+              disabled={isSelectBoxDisable}
+            />
           )}
           {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
             <Input
@@ -200,6 +194,7 @@ const CustomInput = React.forwardRef(
               parser={(value) => value.replace(/[^\d]/g, "")} // Allows only digits
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
+              prefix={isPrefixRequired ? prefixElement : null}
               {...{
                 value,
                 placeholder,
@@ -246,8 +241,6 @@ CustomInput.defaultProps = {
   customInputStyles: "",
   customLabelStyles: "",
   customSelectInputStyles: "",
-  defaultSelectValueArray: [],
-  defaultSelectValueString: "",
   disabled: false,
   errorInput: "",
   errorMessage: "",
@@ -285,8 +278,6 @@ CustomInput.propTypes = {
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   customSelectInputStyles: PropTypes.string,
-  defaultSelectValueArray: PropTypes.array,
-  defaultSelectValueString: PropTypes.string,
   disabled: PropTypes.bool,
   errorInput: PropTypes.string,
   errorMessage: PropTypes.string,

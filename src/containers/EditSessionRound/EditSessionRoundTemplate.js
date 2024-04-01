@@ -68,8 +68,7 @@ const EditSessionRoundTemplate = ({
               }
               rightSection={
                 <SearchableDropDown
-                  isCentreError={centresError}
-                  isError={isError}
+                  errorMessage={centresError ? "session.centreErrorMsg" : ""}
                   isRequiredField={true}
                   onSelectItem={handleSelectCentre}
                   onRemoveItem={handleDeselectCentre}
