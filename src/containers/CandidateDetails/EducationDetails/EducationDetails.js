@@ -11,7 +11,7 @@ import {
   EDUCATION_DETAILS_FIELD4,
 } from "./EducationDetailsFieldsDetails";
 import { EDUCATION_DETAIL } from "../../../CandidateDetailsDummyData";
-import FieldsSectionWithDivider from "../../../components/FieldsSectionWithDivider/FieldsSectionWithDivider";
+import FieldsSectionWithDivider from "../../../components/FieldsSectionWithDivider";
 
 const EducationDetails = () => {
   const intl = useIntl();
