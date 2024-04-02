@@ -696,6 +696,8 @@ const locale = {
   "label.enterpackagename_price": "Enter Price",
   "label.default_package_name": "Package 1",
   "label.package_validity_period": "Package Validity Period",
+  "label.downloadSucess": "Download Successful",
+  "label.orientationUpdate": "Orientation Updated Successfully",
   "label.allJobs": "All Jobs",
   "label.downloadJobList": "Download Jobs List",
   "label.jobId": "Job ID",
