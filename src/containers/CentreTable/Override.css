@@ -9,7 +9,6 @@
 }
 
 .customTable .ant-table-tbody > tr > td {
-  vertical-align: top;
   border-bottom: none !important;
   padding-top: var(--paddingNone) !important;
   padding-bottom: var(--paddingMediumSmall) !important;
