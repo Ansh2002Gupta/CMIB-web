@@ -3,10 +3,8 @@ import { useIntl } from "react-intl";
 
 import { TwoRow } from "core/layouts";
 
-import CompanyHeader from "../../containers/CompanyDetails/CompanyHeader";
-import CompanyRound from "../CompanyRound";
 import CustomTabs from "../../components/CustomTabs";
-import { COMPANY_ROUND_ONE, COMPANY_ROUND_TWO } from "../../constant/constant";
+import { CANDIDATES_EDUCATION_DETAILS } from "../../constant/constant";
 import variables from "../../themes/base/styles/variables";
 import styles from "./CandidateDetails.module.scss";
 import CandidateHeader from "../../containers/CandidateDetails/CandidateHeader/CandidateHeader";
@@ -26,32 +24,32 @@ function CandidateDetails() {
     {
       key: "2",
       title: intl.formatMessage({ id: "label.menu.educationDetails" }),
-      children: <CandidateTab tabList={COMPANY_ROUND_TWO} />,
+      children: <CandidateTab tabList={CANDIDATES_EDUCATION_DETAILS} />,
     },
     {
       key: "3",
       title: intl.formatMessage({ id: "label.menu.membershipsDetails" }),
-      children: <CandidateTab/>,
+      children: <></>,
     },
     {
       key: "4",
       title: intl.formatMessage({ id: "label.menu.workExperience" }),
-      children: <CandidateTab/>,
+      children: <></>,
     },
     {
       key: "5",
       title: intl.formatMessage({ id: "label.menu.skillTraining" }),
-      children: <CandidateTab />,
+      children: <></>,
     },
     {
       key: "6",
       title: intl.formatMessage({ id: "label.menu.activities" }),
-      children: <CandidateTab />,
+      children: <></>,
     },
     {
       key: "7",
       title: intl.formatMessage({ id: "label.menu.jobPreference" }),
-      children: <CandidateTab />,
+      children: <></>,
     },
   ];
 

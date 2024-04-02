@@ -7,6 +7,7 @@ import {
   SUBSCRIPTIONS,
   QUERIES,
   TICKETS,
+  CANDIDATES,
 } from "../../routes/routeNames";
 import { MODULE_KEYS, MENU_KEYS } from "../../constant/constant";
 import { ReactComponent as Activity } from "../../themes/base/assets/icons/activity.svg";
@@ -77,7 +78,7 @@ const caJobsMenu = [
   },
   {
     label: MENU_KEYS.MANAGE_CANDIDATES,
-    key: "/candidates",
+    key: CANDIDATES,
     icon: <People />,
     selectedicon: <SelectedPeople />,
   },

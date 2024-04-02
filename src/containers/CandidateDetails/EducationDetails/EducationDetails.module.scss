@@ -1,0 +1,65 @@
+
+  .divider {
+    grid-column: 1 / -1; // This ensures the <hr> spans all columns of the grid
+    border: none;
+    height: 1px;
+    background-color: #d9d9d9; // Use your desired color for the divider
+    margin: 20px 0; // Adjust spacing as needed
+  }
+  
+  .fullWidth {
+    width: 100%;
+  }
+  
+  .mainContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gapSmall);
+    width: var(--fullWidth);
+  }
+  
+  .educationDetails {
+    background-color: var(--bodyBg);
+    padding: var(--paddingMedium);
+    padding-bottom: 0;
+    border-radius: var(--radiusMLg);
+    border: var(--borderLight);
+    gap: var(--gapMedium);
+  }
+  
+  .headingText {
+    font-size: var(--fontSizeNormal);
+    font-weight: var(--fontWeightBold);
+    color: var(--textBold);
+  }
+  
+  .gridItem {
+    padding-bottom: var(--paddingMedium);
+  }
+  
+  .blackText {
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--textBold);
+  }
+  
+  .grayText {
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--subHeadingColor);
+    padding-bottom: var(--paddingExtraSmall);
+  }
+  
+  .redText {
+    color: var(--error);
+  }
+  
+  .fullWidthItem {
+    grid-column: 1 / -1;
+  }
+  
+  .anchor {
+    color: var(--linkColor);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+  }

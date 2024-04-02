@@ -5,22 +5,28 @@ import { TwoRow } from "../../core/layouts";
 
 import ContentSlider from "../../components/ContentSlider/ContentSlider";
 import styles from "./CandidateTab.module.scss";
-import CompanyProfile from "../../containers/CompanyDetails/CompanyProfile";
-import JobDetails from "../../containers/CompanyDetails/JobDetails";
+import EducationDetails from "../../containers/CandidateDetails/EducationDetails";
+import Exams from "../../containers/CandidateDetails/Exams";
 
 const CandidateTab = ({ tabList = [] }) => {
   const [activeCandidateTab, setActiveCandidateTab] = useState("1");
 
   const tabItems = [
     {
-      key: "2",
-      children: <JobDetails />,
+      key: "1",
+      children: <EducationDetails />,
     },
-    // Add more tabs if needed
+    {
+      key: "2",
+      children: <Exams />,
+    },
+    {
+      key: "3",
+      children: <></>,
+    },
   ];
 
   useEffect(() => {
-    // Set active tab to the first one if tabList is empty
     if (!tabList.length) {
       setActiveCandidateTab(tabItems[0].key);
     }
@@ -28,7 +34,6 @@ const CandidateTab = ({ tabList = [] }) => {
 
   const handleSelectTab = (key) => {
     setActiveCandidateTab(key);
-    // Perform other necessary actions when tab is selected
   };
 
   const activeTabChildren = tabItems.find(

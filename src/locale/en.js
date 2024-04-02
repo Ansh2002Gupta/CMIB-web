@@ -423,7 +423,9 @@ const locale = {
   "label.path.companies": "Companies",
   "label.jobProfileCompetion": " of job profile has been completed by the Member.",
   "label.viewAppliedJobs": "View Applied Jobs",
+  "label.searchByMemberNameEmailAndId": "Search by member name, ID and email",
   "label.path.candidates": "Candidates",
+  "label.path.candidates-details": "candidates-details",
   "label.menu.personalDetails": "Personal Details",
   "label.menu.educationDetails": "Education Details",
   "label.menu.membershipsDetails": "Memberships Details",
@@ -627,8 +629,18 @@ const locale = {
   "label.memberName": "Member Name",
   "label.memberId": "Member Id",
   "label.memberEmail": "Member Email",
-  
-
+  "label.name_of_examination": "Name of Examination",
+  "label.board_university": "Board/University",
+  "label.marks_in_per": "Marks (in %)",
+  "label.rank_medal": "Rank / Medal",
+  "label.educationDetails": "Education Details",
+  "label.graduation": "Graduation",  
+  "label.post_graduation": "Post Graduation",  
+  "label.caFoundation": "CA Foundation/PE-I/CPT",
+  "label.caInter": "CA Inter/PE-II/IPCC",
+  "label.caFinal": "CA Final Exam",
+  "label.month": "Month",
+  "label.foundation_attempt_count": "Foundation Attempt Count",
 };
 
 export default locale;

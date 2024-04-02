@@ -239,177 +239,99 @@ export const COMPANIES_FILTER_DATA = [
   },
 ];
 
-export const CANDIDATE_FILTER_DATA = [
-  {
-    id: 1,
-    name: "Complete Profiles",
-    isSelected: false,
-    options: [
-      { optionId: 1, str: "Yes" },
-      { optionId: 2, str: "No" },
-    ],
-  },
-  {
-    id: 2,
-    name: "State",
-    isSelected: false,
-  },
-  {
-    id: 3,
-    name: "Experience",
-    isSelected: false,
-    type: 'slider', // Add a type property to indicate this filter uses a slider
-    min: 0, // Minimum value for the slider
-    max: 30, // Maximum value for the slider
-    defaultValue: [0, 30], // Default range for the slider
-    options: [
-      { optionId: 1, str: "" },
-    ],
-  },
-  {
-    id: 4,
-    name: "Current Salary",
-    isSelected: false,
-  },
-  {
-    id: 5,
-    name: "Expected Annual Salary",
-    isSelected: false,
-  },
-  {
-    id: 6,
-    name: "Functional Areas",
-    isSelected: false,
-  },
-  {
-    id: 7,
-    name: "IT Skills",
-    isSelected: false,
-  },
-  {
-    id: 8,
-    name: "Soft Skills",
-    isSelected: false,
-  },
-  {
-    id: 9,
-    name: "Education",
-    isSelected: false,
-  },
-  {
-    id: 10,
-    name: "Gender",
-    isSelected: false,
-  },
-  {
-    id: 11,
-    name: "Marital Status",
-    isSelected: false,
-  },
-  {
-    id: 12,
-    name: "Category",
-    isSelected: false,
-  },
-  {
-    id: 13,
-    name: "Age",
-    isSelected: false,
-  },
-  {
-    id: 14,
-    name: "Posting",
-    isSelected: false,
-    options: [
-      { optionId: 1, str: "Transferable Post Acceptable" },
-      { optionId: 2, str: "Posting Anywhere in India" },
-      { optionId: 3, str: "Posting Outside India" },
-    ],
-  },
-  {
-    id: 15,
-    name: "Language",
-    isSelected: false,
-  },
-];
 
 export const CANDIDATE_DUMMY_DATA = [
   {
-    id: '1',
-    name: 'John Doe',
-    email: 'johndoe@example.com',
+    id: "1",
+    name: "John Doe",
+    email: "johndoe@example.com",
+    member_id: "NRO0123456"
   },
   {
-    id: '2',
-    name: 'Jane Smith',
-    email: 'janesmith@example.com',
+    id: "2",
+    name: "Jane Smith",
+    email: "janesmith@example.com",
+    member_id: "NRO0123457"
   },
   {
-    id: '3',
-    name: 'William Johnson',
-    email: 'williamjohnson@example.com',
+    id: "3",
+    name: "William Johnson",
+    email: "williamjohnson@example.com",
+    member_id: "NRO0123458"
   },
   {
-    id: '4',
-    name: 'Emma Williams',
-    email: 'emmawilliams@example.com',
+    id: "4",
+    name: "Emma Williams",
+    email: "emmawilliams@example.com",
+    member_id: "NRO0123459"
   },
   {
-    id: '5',
-    name: 'Olivia Brown',
-    email: 'oliviabrown@example.com',
+    id: "5",
+    name: "Olivia Brown",
+    email: "oliviabrown@example.com",
+    member_id: "NRO0123460"
   },
   {
-    id: '6',
-    name: 'Michael Davis',
-    email: 'michaeldavis@example.com',
+    id: "6",
+    name: "Michael Davis",
+    email: "michaeldavis@example.com",
+    member_id: "NRO0123461"
   },
   {
-    id: '7',
-    name: 'Emily Garcia',
-    email: 'emilygarcia@example.com',
+    id: "7",
+    name: "Emily Garcia",
+    email: "emilygarcia@example.com",
+    member_id: "NRO0123462"
   },
   {
-    id: '8',
-    name: 'James Wilson',
-    email: 'jameswilson@example.com',
+    id: "8",
+    name: "James Wilson",
+    email: "jameswilson@example.com",
+    member_id: "NRO0123463"
   },
   {
-    id: '9',
-    name: 'Charlotte Miller',
-    email: 'charlottemiller@example.com',
+    id: "9",
+    name: "Charlotte Miller",
+    email: "charlottemiller@example.com",
+    member_id: "NRO0123464"
   },
   {
-    id: '10',
-    name: 'Benjamin Moore',
-    email: 'benjaminmoore@example.com',
+    id: "10",
+    name: "Benjamin Moore",
+    email: "benjaminmoore@example.com",
+    member_id: "NRO0123465"
   },
   {
-    id: '11',
-    name: 'Sophia Taylor',
-    email: 'sophiataylor@example.com',
+    id: "11",
+    name: "Sophia Taylor",
+    email: "sophiataylor@example.com",
+    member_id: "NRO0123466"
   },
   {
-    id: '12',
-    name: 'Lucas Anderson',
-    email: 'lucasanderson@example.com',
+    id: "12",
+    name: "Lucas Anderson",
+    email: "lucasanderson@example.com",
+    member_id: "NRO0123467"
   },
   {
-    id: '13',
-    name: 'Harper Thomas',
-    email: 'harperthomas@example.com',
+    id: "13",
+    name: "Harper Thomas",
+    email: "harperthomas@example.com",
+    member_id: "NRO0123468"
   },
   {
-    id: '14',
-    name: 'Mason Jackson',
-    email: 'masonjackson@example.com',
+    id: "14",
+    name: "Mason Jackson",
+    email: "masonjackson@example.com",
+    member_id: "NRO0123469"
   },
   {
-    id: '15',
-    name: 'Evelyn White',
-    email: 'evelynwhite@example.com',
-  },
-];
+    id: "15",
+    name: "Evelyn White",
+    email: "evelynwhite@example.com",
+    member_id: "NRO0123470"
+  }
+]
 
 export const SESSION_DETAILS = {
   name: "Jadyn Bartoletti",

@@ -52,6 +52,8 @@ export const USERS_END_POINT = "/users";
 export const VERIFY_OTP = "/otp/verify";
 export const REPLIES = "/replies";
 export const CLOSE = "/close";
+export const MEMBERS_END_POINT = '/members'
+export const CANDIDATE_DETAILS = 'candidates-details'
 
 // Query
 export const MARK_AS_ANSWER_END_POINT = "/answer";
