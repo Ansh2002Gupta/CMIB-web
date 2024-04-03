@@ -27,8 +27,7 @@ import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./sideMenu.module.scss";
 
 const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
-  const visitWebsiteUrl = (process.env.REACT_APP_CMS_URI =
-    "https://cmib.cloudzmall.com");
+  const visitWebsiteUrl = process.env.REACT_APP_CMS_URI;
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails, globalSessionDispatch] =
