@@ -595,6 +595,7 @@ const locale = {
   "label.manageCompanies": "Manage Companies",
   "label.approvedCompanyName": "Approved Company Name",
   "label.searchByCompanyUsername": "Search by company name, username",
+  "label.viewCompanyDetails": "View Company Details",
 };
 
 export default locale;

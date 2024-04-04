@@ -82,7 +82,7 @@ const ManageCompaniesTable = () => {
     };
   };
 
-  const viewCompanyDetails = (data) => {
+  const goToCompanyDetailsPage = (data) => {
     const subscriptionID = data?.id;
     navigate(`subscription-details/${subscriptionID}`);
   };
@@ -90,7 +90,7 @@ const ManageCompaniesTable = () => {
   const columns = getCompaniesColumn(
     intl,
     getImage,
-    viewCompanyDetails,
+    goToCompanyDetailsPage,
     renderColumn
   );
 

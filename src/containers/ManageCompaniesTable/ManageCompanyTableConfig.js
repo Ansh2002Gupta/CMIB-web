@@ -1,7 +1,7 @@
 const getCompaniesColumn = (
   intl,
   getImage,
-  viewCompanyDetails,
+  goToCompanyDetailsPage,
   renderColumn
 ) => {
   return [
@@ -22,6 +22,22 @@ const getCompaniesColumn = (
       dataIndex: "entity",
       key: "entity",
       renderText: { visible: true },
+    }),
+    renderColumn({
+      dataIndex: "more",
+      key: "more",
+      renderMenu: {
+        items: [
+          {
+            key: 1,
+            label: intl.formatMessage({ id: "label.viewCompanyDetails" }),
+          },
+        ],
+        onMenuClick: (rowData) => goToCompanyDetailsPage(rowData),
+        menuPreview: false,
+        menuSrc: getImage("more"),
+        visible: true,
+      },
     }),
   ];
 };
