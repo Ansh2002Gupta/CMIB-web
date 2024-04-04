@@ -35,12 +35,12 @@
 }
 
 .ant-input-number-disabled {
-  background-color: var(--bodyBg) !important;
   color: var(--textBold) !important;
 }
 
 .ant-input[disabled] {
   color: var(--textBold) !important;
+  cursor: not-allowed;
 }
 
 .ant-picker-input > input {

@@ -17,6 +17,7 @@ import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
+import SubscriptionDetails from "../containers/SubscriptionDetails/index";
 import EditSession from "../views/EditSession/EditSession";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
@@ -33,6 +34,7 @@ import {
   ADD,
   ADD_NEW_USER_DETAILS,
   ADD_SESSION,
+  ADD_SUBSCRIPTIONS,
   CONFIGURATIONS,
   COMPANIES,
   COMPANIES_DETAILS,
@@ -59,6 +61,7 @@ import {
   SETUP_CENTERS_DETAILS,
   SETUP_MOCK_INTERVIEW,
   SUBSCRIPTIONS,
+  SUBSCRIPTIONS_DETAILS,
   USERS,
   USER_DETAILS,
   TICKETS,
@@ -209,6 +212,14 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: SUBSCRIPTIONS + ADD_SUBSCRIPTIONS,
+        element: <SubscriptionDetails isAddSubscription />,
+      },
+      {
+        viewPath: SUBSCRIPTIONS + SUBSCRIPTIONS_DETAILS,
+        element: <SubscriptionDetails />,
       },
     ],
   },
