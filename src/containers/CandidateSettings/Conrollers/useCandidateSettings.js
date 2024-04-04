@@ -83,7 +83,7 @@ const useCandidateSettings = ({
     }
   };
 
-  const handleCandidateDataChange = (value, name, index) => {
+  const handleCandidateDataChange = (value, name, index, isRequired) => {
     if (name === "big_centre_end_date" || name === "big_centre_start_date") {
       setSelectedCenterTableData((prevTableData) => {
         const newTableData = [...prevTableData];
@@ -103,25 +103,26 @@ const useCandidateSettings = ({
         return newTableData;
       });
     }
-
-    if (value === null || value === "") {
-      setErrors((prevErrors) => {
-        const newErrors = [...prevErrors];
-        newErrors[index] = {
-          ...newErrors[index],
-          [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
-        };
-        return newErrors;
-      });
-    } else {
-      setErrors((prevErrors) => {
-        const newErrors = [...prevErrors];
-        newErrors[index] = {
-          ...newErrors[index],
-          [name]: "",
-        };
-        return newErrors;
-      });
+    if (isRequired) {
+      if (value === null || value === "") {
+        setErrors((prevErrors) => {
+          const newErrors = [...prevErrors];
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: intl.formatMessage({ id: "label.error.fieldEmpty" }),
+          };
+          return newErrors;
+        });
+      } else {
+        setErrors((prevErrors) => {
+          const newErrors = [...prevErrors];
+          newErrors[index] = {
+            ...newErrors[index],
+            [name]: "",
+          };
+          return newErrors;
+        });
+      }
     }
   };
 
@@ -178,7 +179,6 @@ const useCandidateSettings = ({
           value: big_centre_start_date,
           isDateTimePicker: true,
           rules: {
-            isRequired: true,
             message: "big_centre_start_date",
           },
         },
@@ -189,7 +189,6 @@ const useCandidateSettings = ({
           value: big_centre_end_date,
           isDateTimePicker: true,
           rules: {
-            isRequired: true,
             message: "big_centre_end_date",
           },
         },
@@ -202,7 +201,6 @@ const useCandidateSettings = ({
           value: small_centre_start_date,
           isDateTimePicker: true,
           rules: {
-            isRequired: true,
             message: "small_centre_start_date",
           },
         },
@@ -213,7 +211,6 @@ const useCandidateSettings = ({
           value: small_centre_end_date,
           isDateTimePicker: true,
           rules: {
-            isRequired: true,
             message: "small_centre_end_date",
           },
         },
@@ -296,7 +293,7 @@ const useCandidateSettings = ({
     const apiTableData = getAPITableData();
     const updatedtableData = isEditable
       ? [...apiTableData, ...[addTableData]]
-      : [addTableData];
+      : apiTableData;
     setTableData(updatedtableData);
     if (hasRoundTwo) {
       setSelectedCenterTableData([
@@ -371,23 +368,7 @@ const useCandidateSettings = ({
   };
 
   const isButtonDisable = () => {
-    if (hasRoundTwo) {
-      return (
-        !formFields?.max_no_of_interview ||
-        !formFields?.max_no_of_offer ||
-        selectedCenterTableData.some(
-          (item) => !item?.big_centre_start_date || !item?.big_centre_end_date
-        )
-      );
-    }
-    return (
-      !formFields?.max_no_of_interview ||
-      !formFields?.max_no_of_offer ||
-      !formFields?.big_centre_start_date ||
-      !formFields?.big_centre_end_date ||
-      !formFields?.small_centre_start_date ||
-      !formFields?.small_centre_end_date
-    );
+    return !formFields?.max_no_of_interview || !formFields?.max_no_of_offer;
   };
 
   return {
