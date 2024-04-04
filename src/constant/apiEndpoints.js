@@ -13,6 +13,7 @@ export const PLACEMENT_ROUTE = "placement-core";
 export const CAJOBS_ROUTE = "ca-jobs";
 
 // API end-points
+export const APPROVED = "/approved";
 export const ASSIGN = "/assign";
 export const ASSIGNEES = "/assignees";
 export const AUTHENTICATE_OTP_ROUTE = "/reset-password-otp";
