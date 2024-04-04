@@ -74,7 +74,7 @@ const CandidateSettings = ({
         visible: true,
         dropdownItems: dropdownItems,
         onDropdownChange: (val, record, index) =>
-          handleCandidateDataChange(val, "centre_name", index),
+          handleCandidateDataChange(val, "centre_name", index, true),
         customdropDownStyles: styles.selectCenterContainer,
         customtextStyles: styles.placeholderStyle,
         dropdownPlaceholder: intl.formatMessage({
@@ -113,7 +113,8 @@ const CandidateSettings = ({
           handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "from_date",
-            index
+            index,
+            true
           );
         },
         isEditable: true,
@@ -147,7 +148,8 @@ const CandidateSettings = ({
           handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "to_date",
-            index
+            index,
+            true
           );
         },
         isEditable: true,
@@ -173,7 +175,8 @@ const CandidateSettings = ({
           handleCandidateDataChange(
             val ? dayjs(val).format("HH:mm:ss") : "",
             "from_time",
-            index
+            index,
+            true
           );
         },
         isEditable: true,
@@ -199,7 +202,8 @@ const CandidateSettings = ({
           handleCandidateDataChange(
             val ? dayjs(val).format("HH:mm:ss") : "",
             "to_time",
-            index
+            index,
+            true
           );
         },
         isEditable: true,
@@ -237,8 +241,9 @@ const CandidateSettings = ({
       renderDropdown: {
         visible: true,
         dropdownItems: dropdownItems,
+        customInputStyles: styles.dropdownStyle,
         onDropdownChange: (val, record, index) =>
-          handleCandidateDataChange(val, "centre_name", index),
+          handleCandidateDataChange(val, "centre_name", index, true),
         customdropDownStyles: styles.selectCenterContainer,
         customtextStyles: styles.placeholderStyle,
         dropdownPlaceholder: intl.formatMessage({
@@ -277,7 +282,8 @@ const CandidateSettings = ({
           handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "from_date",
-            index
+            index,
+            true
           );
         },
         isEditable: true,
@@ -311,7 +317,8 @@ const CandidateSettings = ({
           handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "to_date",
-            index
+            index,
+            true
           );
         },
         isEditable: true,
@@ -430,7 +437,8 @@ const CandidateSettings = ({
           handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "big_centre_start_date",
-            index
+            index,
+            false
           );
         },
         isEditable: true,
@@ -464,7 +472,8 @@ const CandidateSettings = ({
           handleCandidateDataChange(
             val ? dayjs(val).format("YYYY-MM-DD") : "",
             "big_centre_end_date",
-            index
+            index,
+            false
           );
         },
         isEditable: true,
