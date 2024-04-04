@@ -22,3 +22,16 @@
   justify-content: center;
   align-items: center;
 }
+
+.asc {
+  transform: rotate(0deg);
+}
+
+.desc {
+  transform: rotate(180deg);
+}
+
+.active {
+  background-color: var(--lightGrey3Bg);
+  border-radius: 50%;
+}

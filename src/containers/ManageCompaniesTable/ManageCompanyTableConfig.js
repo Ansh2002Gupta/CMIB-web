@@ -1,14 +1,30 @@
-const getCompaniesColumn = (
+import styles from "./ManageCompiesTable.module.scss";
+import { SORT_VALUES } from "../../constant/constant";
+
+const getCompaniesColumn = ({
   intl,
   getImage,
   goToCompanyDetailsPage,
-  renderColumn
-) => {
+  handleSorting,
+  setSortBy,
+  sortBy,
+  renderColumn,
+}) => {
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.approvedCompanyName" }),
       dataIndex: "name",
       key: "name",
+      sortKey: "name",
+      setSortBy: setSortBy,
+      columnSortByHandler: handleSorting,
+      customIconStyle: [
+        styles[sortBy],
+        sortBy === SORT_VALUES.ASCENDING || sortBy === SORT_VALUES.DESCENDING
+          ? styles.active
+          : "",
+      ],
+      renderSorterColumn: true,
       renderText: { isTextBold: true, visible: true, isCapitalize: true },
     }),
     renderColumn({

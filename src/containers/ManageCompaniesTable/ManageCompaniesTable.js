@@ -29,6 +29,8 @@ const ManageCompaniesTable = () => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const [currentDataLength, setCurrentDataLength] = useState(0);
+  const [sortBy, setSortBy] = useState("");
+  const [sortFilter, setSortFilter] = useState({});
   const [current, setCurrent] = useState(
     getValidPageNumber(
       urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
@@ -66,6 +68,8 @@ const ManageCompaniesTable = () => {
         page: current,
         search: validateSearchTextLength(searchedValue),
         size: +pageSize,
+        sortDirection: sortFilter?.sortDirection,
+        sortField: sortFilter?.sortField,
       }),
     });
   }, []);
@@ -74,25 +78,53 @@ const ManageCompaniesTable = () => {
     return _.debounce(getCompanyListing, DEBOUNCE_TIME);
   }, []);
 
-  const getRequestedParams = ({ page, search, size }) => {
+  const handleSorting = (sortDetails) => {
+    setCurrent(1);
+    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
+    const requestedParams = getRequestedParams({
+      page: 1,
+      search: searchedValue,
+      sortDirection: sortDetails?.sortDirection,
+      sortField: sortDetails?.sortDirection ? sortDetails?.sortField : "",
+    });
+    getCompanyListing({ queryParamsObject: requestedParams });
+    if (sortDetails.sortDirection) {
+      setSortFilter(sortDetails);
+      return;
+    }
+    setSortFilter({ sortDirection: "", sortField: "" });
+  };
+
+  const getRequestedParams = ({
+    page,
+    search,
+    size,
+    sortDirection,
+    sortField,
+  }) => {
     return {
       perPage: size || pageSize,
       page: page || current,
       name: search || "",
+      sortDirection,
+      sortField,
     };
   };
 
   const goToCompanyDetailsPage = (data) => {
-    const subscriptionID = data?.id;
-    navigate(`subscription-details/${subscriptionID}`);
+    const companyId = data?.id;
+    navigate(`company-details/${companyId}`);
   };
 
-  const columns = getCompaniesColumn(
+  const columns = getCompaniesColumn({
     intl,
     getImage,
     goToCompanyDetailsPage,
-    renderColumn
-  );
+    handleSorting,
+    setSortBy,
+    sortBy,
+    renderColumn,
+  });
 
   const onChangePageSize = (size) => {
     setPageSize(Number(size));
@@ -104,6 +136,8 @@ const ManageCompaniesTable = () => {
         page: 1,
         search: validateSearchTextLength(searchedValue),
         size: +size,
+        sortDirection: sortFilter?.sortDirection,
+        sortField: sortFilter?.sortField,
       }),
     });
   };
@@ -119,6 +153,8 @@ const ManageCompaniesTable = () => {
       queryParamsObject: getRequestedParams({
         page: newPageNumber,
         search: validateSearchTextLength(searchedValue),
+        sortDirection: sortFilter?.sortDirection,
+        sortField: sortFilter?.sortField,
       }),
     });
   };
@@ -130,6 +166,8 @@ const ManageCompaniesTable = () => {
         queryParamsObject: getRequestedParams({
           page: 1,
           search: validateSearchTextLength(str),
+          sortDirection: sortFilter?.sortDirection,
+          sortField: sortFilter?.sortField,
         }),
       });
       urlService.setQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
@@ -156,6 +194,8 @@ const ManageCompaniesTable = () => {
     getCompanyListing({
       queryParamsObject: getRequestedParams({
         search: validateSearchTextLength(searchedValue),
+        sortDirection: sortFilter?.sortDirection,
+        sortField: sortFilter?.sortField,
       }),
     });
   };
@@ -172,6 +212,8 @@ const ManageCompaniesTable = () => {
             page: 1,
             search: validateSearchTextLength(searchedValue),
             size: +pageSize,
+            sortDirection: sortFilter?.sortDirection,
+            sortField: sortFilter?.sortField,
           }),
         });
       }
