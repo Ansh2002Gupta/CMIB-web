@@ -241,6 +241,7 @@ const CandidateSettings = ({
       renderDropdown: {
         visible: true,
         dropdownItems: dropdownItems,
+        customInputStyles: styles.dropdownStyle,
         onDropdownChange: (val, record, index) =>
           handleCandidateDataChange(val, "centre_name", index, true),
         customdropDownStyles: styles.selectCenterContainer,
