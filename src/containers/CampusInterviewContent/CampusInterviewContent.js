@@ -78,10 +78,22 @@ const CampusInterviewContent = () => {
 
   useEffect(async () => {
     if (selectedModule?.key && roundId) {
-      await getCampusInterviewData({});
       await fetchRoundDetails({});
+      await getCampusInterviewData({});
     }
   }, [selectedModule?.key, roundId]);
+
+  useEffect(() => {
+    if (roundDetails?.placement_session_id) {
+      if (roundDetails?.placement_session_id !== currentGlobalSession?.id) {
+        if (hasRoundTwo) {
+          navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=3`);
+        } else {
+          navigate(`/${selectedModule?.key}/${SESSION}?mode=view&tab=2`);
+        }
+      }
+    }
+  }, [currentGlobalSession]);
 
   const roundCentres = roundDetails?.centres || [];
 
