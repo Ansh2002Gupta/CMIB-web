@@ -35,6 +35,7 @@ const variables = {
   lightGrey: colorPallets.lightGrey,
   disableColor: colorPallets.disableColor,
   ltGreyBg: colorPallets.ltGreyBg,
+  inactiveWhite: colorPallets.inactiveWhite,
 
   // Text-colors
   textDefault: colorPallets.black,
@@ -152,6 +153,7 @@ const variables = {
   width_350: "350px",
   width_363: "363px",
   width_400: "400px",
+  width_432: "432px",
   width_500: "500px",
   widthViewPort_16: "16vw",
   widthViewPort_15: "15vw",
@@ -260,6 +262,7 @@ const variables = {
   paddingSmall: "16px",
   padding_18: "18px",
   padding_20: "20px",
+  padding_22: "22px",
   paddingMedium: "24px",
   padding_30: "30px",
   paddingLarge: "32px",

@@ -9,7 +9,6 @@
 }
 
 .customTable .ant-table-tbody > tr > td {
-  vertical-align: top;
   border-bottom: none !important;
   padding-top: var(--paddingNone) !important;
   padding-bottom: var(--paddingMediumSmall) !important;
@@ -21,11 +20,11 @@
   border: none !important;
 }
 .customTableHover .ant-table-tbody > tr:hover > td {
-  background-color: transparent !important; 
+  background-color: transparent !important;
 }
 
 .customTableNoHover .ant-table-tbody > tr:hover > td {
-  background:var(--bodyBg) !important; 
+  background: var(--bodyBg) !important;
   transition: none !important;
 }
 
@@ -63,16 +62,26 @@
 }
 
 .ant-input-number-handler-wrap {
-  opacity: 1 !important; 
-  visibility: visible !important; 
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.ant-input-number-input-wrap input{
+.ant-input-number-input-wrap input {
   color: var(--textBold) !important;
+  font-weight: inherit;
 }
 
-.ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
+.ant-select-single.ant-select-lg:not(.ant-select-customize-input)
+  .ant-select-selector {
   padding-left: var(--paddingSmall);
 }
 
+.ant-table-tbody > tr > td {
+  vertical-align: top;
+}
 
+.ant-select-selection-item {
+  width: 100px;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+}

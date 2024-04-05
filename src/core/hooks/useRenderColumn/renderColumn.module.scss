@@ -63,7 +63,11 @@
   color: var(--requiredStarColor);
 }
 
-.statusContainer_active {
+.statusContainer_inactive {
+  background-color: var(--ltGreyBg);
+}
+
+.statusContainer_success {
   background-color: var(--lightGreenBg);
 }
 
@@ -86,10 +90,6 @@
 .defaultStatusStyles {
   font-size: 12px;
   line-height: 18px;
-}
-
-.statusText_active {
-  color: var(--greenText);
 }
 
 .statusText_inactive {
