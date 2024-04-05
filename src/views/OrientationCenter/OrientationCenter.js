@@ -271,6 +271,20 @@ const OrientationCenter = () => {
       roundId,
       module: selectedModule?.key,
       sessionId,
+      onSuccessCallback: () => {
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.orientationUpdate",
+          }),
+          type: NOTIFICATION_TYPES.SUCCESS,
+        });
+      },
+      onErrorCallback: (errorMessage) => {
+        showNotification({
+          text: errorMessage,
+          type: NOTIFICATION_TYPES.ERROR,
+        });
+      },
     });
   };
 
@@ -313,6 +327,7 @@ const OrientationCenter = () => {
     return (
       <DataTable
         columns={columns}
+        isRowVerticalTop={false}
         hidePagination
         showTableBorderBottom
         currentDataLength={formData?.length}
