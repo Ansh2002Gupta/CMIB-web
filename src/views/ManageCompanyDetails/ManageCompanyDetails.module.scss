@@ -1,0 +1,25 @@
+.customStyles {
+  justify-content: space-between;
+  font-size: var(--fontSizeXlargeMedium);
+}
+
+.customContainerStyle {
+  border-top: var(--borderLight);
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium) var(--gap_26);
+}
+
+.mainContainer {
+  gap: var(--gapSmall);
+}
+
+.ButtonCustomContainerStyle {
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
+  border-radius: var(--radiusLg);
+}
+
+.customButtonContainerStyle {
+  background-color: "red";
+}

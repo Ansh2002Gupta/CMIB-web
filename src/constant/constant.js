@@ -71,6 +71,7 @@ export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 export const VALID_SESSION_TABS_ID = ["1", "2", "3"];
+export const VALID_COMPANIES_TABS_ID = ["1", "2"];
 export const VALID_CONSENT_MARKING_TABS_ID = {
   oneTab: ["1"],
   twoTab: ["1", "2"],
