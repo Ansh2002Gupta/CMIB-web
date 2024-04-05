@@ -55,6 +55,7 @@ export const SESSIONS = "/sessions";
 export const STATUS = "/status";
 export const SUBSCRIPTIONS_END_POINT = "/subscriptions";
 export const SUBSCRIPTIONS = "/subscriptions";
+export const SUBSCRIPTIONS_DETAILS = "subscription-details/:subscriptionId";
 export const SUMMARY = "/summary";
 export const TICKET_LIST = "/tickets";
 export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
