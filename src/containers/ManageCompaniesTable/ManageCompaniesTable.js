@@ -23,7 +23,6 @@ import {
 } from "../../constant/apiEndpoints";
 import styles from "./ManageCompiesTable.module.scss";
 import { useNavigate } from "react-router-dom";
-import { COMPANIES_LIST } from "../../dummyData";
 
 const ManageCompaniesTable = () => {
   const intl = useIntl();
@@ -55,8 +54,7 @@ const ManageCompaniesTable = () => {
     isError: isErrorWhileGettingCompanies,
     isLoading: isGettingCompanies,
   } = useFetch({
-    // url: ADMIN_ROUTE + MANAGE + "/" + COMPANY_ROUTE,
-    url: ADMIN_ROUTE + "/subscriptions",
+    url: ADMIN_ROUTE + MANAGE + "/" + COMPANY_ROUTE,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -106,8 +104,8 @@ const ManageCompaniesTable = () => {
       perPage: size || pageSize,
       page: page || current,
       name: search || "",
-      sortDirection,
-      sortField,
+      sortOrder: sortDirection,
+      sortBy: sortField,
     };
   };
 
@@ -201,8 +199,8 @@ const ManageCompaniesTable = () => {
   };
 
   useEffect(() => {
-    if (COMPANIES_LIST?.meta) {
-      const { total } = COMPANIES_LIST?.meta;
+    if (companyListingData?.meta) {
+      const { total } = companyListingData?.meta;
       const numberOfPages = Math.ceil(total / pageSize);
       if (current > numberOfPages || current <= 0) {
         setCurrent(1);
@@ -218,7 +216,7 @@ const ManageCompaniesTable = () => {
         });
       }
     }
-  }, [COMPANIES_LIST?.meta?.total]);
+  }, [companyListingData?.meta?.total]);
 
   useEffect(() => {
     const validPageSize = getValidPageSize(
@@ -252,7 +250,7 @@ const ManageCompaniesTable = () => {
           />
         </div>
       )}
-      {COMPANIES_LIST &&
+      {companyListingData &&
         !isGettingCompanies &&
         !isErrorWhileGettingCompanies && (
           <TwoRow
@@ -275,9 +273,9 @@ const ManageCompaniesTable = () => {
                   onChangePageSize,
                   onChangeCurrentPage,
                 }}
-                currentDataLength={COMPANIES_LIST?.meta?.total}
+                currentDataLength={companyListingData?.meta?.total}
                 customContainerStyles={styles.customContainerStyles}
-                originalData={COMPANIES_LIST?.records || []}
+                originalData={companyListingData?.records || []}
               />
             }
           />
