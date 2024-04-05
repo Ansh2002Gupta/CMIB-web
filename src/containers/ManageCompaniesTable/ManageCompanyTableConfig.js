@@ -34,7 +34,7 @@ const getCompaniesColumn = ({
       renderText: { visible: true },
     }),
     renderColumn({
-      title: intl.formatMessage({ id: "label.password" }),
+      title: intl.formatMessage({ id: "label.entity" }),
       dataIndex: "entity",
       key: "entity",
       renderText: { visible: true },
