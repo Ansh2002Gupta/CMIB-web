@@ -14,6 +14,7 @@ import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
+import ManageCompanies from "../views/ManageCompanies/ManageCompanies.js";
 import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
@@ -207,7 +208,7 @@ const config = [
       },
       {
         viewPath: COMPANIES,
-        element: <Companies />,
+        element: <ManageCompanies />,
       },
       {
         viewPath: COMPANIES + COMPANIES_DETAILS,

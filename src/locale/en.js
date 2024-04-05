@@ -689,12 +689,6 @@ const locale = {
   "label.searchPackageName": "Search by package name",
   "label.packageName_descriptions": "Package Discription",
   "label.package_valididy_period": "Package Validity Period",
-  "label.subscription_status": "Subscription Status",
-  "label.enterpackagename": "Enter Package Name",
-  "label.enterpackagename_discriptions": "Enter Package Discription",
-  "label.enterpackagename_price": "Enter Price",
-  "label.default_package_name": "Package 1",
-  "label.package_validity_period": "Package Validity Period",
   "label.downloadSucess": "Download Successful",
   "label.orientationUpdate": "Orientation Updated Successfully",
   "label.allJobs": "All Jobs",
@@ -710,6 +704,10 @@ const locale = {
   "label.scheduled_interview": "Scheduled Interview",
   "approve.0": "Not Approved",
   "approve.1": "Approved",
+  "label.manageCompanies": "Manage Companies",
+  "label.approvedCompanyName": "Approved Company Name",
+  "label.searchByCompanyUsername": "Search by company name, username",
+  "label.viewCompanyDetails": "View Company Details",
 };
 
 export default locale;
