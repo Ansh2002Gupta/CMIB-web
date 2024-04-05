@@ -7,7 +7,7 @@ import { TwoColumn } from "../../core/layouts";
 
 import styles from "./EditButton.module.scss";
 
-const EditButton = ({ customEditStyle, onClick, disable }) => {
+const EditButton = ({ customEditStyle, onClick, disable, label }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
 
@@ -27,7 +27,7 @@ const EditButton = ({ customEditStyle, onClick, disable }) => {
       }
       rightSection={
         <Typography className={disable ? styles.grayText : styles.blackText}>
-          {intl.formatMessage({ id: "session.edit" })}
+          {label || intl.formatMessage({ id: "session.edit" })}
         </Typography>
       }
     />
