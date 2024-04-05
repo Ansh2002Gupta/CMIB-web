@@ -28,6 +28,7 @@ import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import UserDetails from "../views/UserDetails";
 import QueryDetails from "../views/QueryDetails";
+import JobDetails from "../views/AllJobDetails";
 
 import {
   ADD,
@@ -62,6 +63,7 @@ import {
   TICKETS,
   TICKETS_VIEW_DETAILS,
   JOB_LISTING,
+  JOB_DETAILS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 import AllJobs from "../views/AllJobs/AllJobs.js";
@@ -206,6 +208,10 @@ const config = [
       {
         viewPath: JOB_LISTING,
         element: <AllJobs />,
+      },
+      {
+        viewPath: JOB_LISTING + JOB_DETAILS,
+        element: <JobDetails />,
       },
     ],
   },

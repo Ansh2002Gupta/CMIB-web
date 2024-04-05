@@ -80,11 +80,17 @@ const AllJobsTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
+  const handleMenuItems = (rowData, item) => {
+    const jobId = rowData?.id;
+    navigate(`job-details/${jobId}`);
+  };
+
   const columns = getQueryColumn({
     intl,
     getImage,
     navigate,
     renderColumn,
+    handleMenuItems,
   });
 
   const handleOnUserSearch = (str) => {

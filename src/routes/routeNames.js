@@ -32,6 +32,7 @@ export const SETUP_CENTERS_DETAILS = "details/:centreId";
 export const SETUP_MOCK_INTERVIEW = "setup-mock-interview/";
 export const SUBSCRIPTIONS = "subscriptions/";
 export const JOB_LISTING = "all-jobs/";
+export const JOB_DETAILS = "job-details/:jobId"
 export const TICKETS = "tickets/";
 export const TICKETS_VIEW_DETAILS = "reply/:id";
 export const USER_DETAILS = "details/:userId";

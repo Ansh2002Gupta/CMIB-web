@@ -5,13 +5,16 @@ export const getQueryColumn = ({
   getImage,
   renderColumn,
   queriesColumnProperties = {},
+  handleMenuItems,
 }) => {
   const { isSelectedFromTick, selectedItemsList, toggleSelectedQueriesId } =
     queriesColumnProperties;
   const isTableInSelectAllMode =
     selectedItemsList?.length !== 0 && !isSelectedFromTick;
 
-  const handleMenuItemClick = (rowData, item) => {};
+  const handleMenuItemClick = (rowData, item) => {
+    handleMenuItems(rowData, item);
+  };
 
   return [
     renderColumn({

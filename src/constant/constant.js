@@ -285,6 +285,11 @@ export const COMPANY_ROUND_TWO = [
   "Consent Marking And Interview Process",
 ];
 
+export const ALL_JOB_DETAILS = [
+  "Job Details",
+  "Questionnaire",
+];
+
 export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
