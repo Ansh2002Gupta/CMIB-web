@@ -704,6 +704,10 @@ const locale = {
   "label.scheduled_interview": "Scheduled Interview",
   "approve.0": "Not Approved",
   "approve.1": "Approved",
+  "label.manageCompanies": "Manage Companies",
+  "label.approvedCompanyName": "Approved Company Name",
+  "label.searchByCompanyUsername": "Search by company name, username",
+  "label.viewCompanyDetails": "View Company Details",
 };
 
 export default locale;
