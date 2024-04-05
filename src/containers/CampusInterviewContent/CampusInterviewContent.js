@@ -264,8 +264,9 @@ const CampusInterviewContent = () => {
         const errors =
           errorMessage?.errors ||
           errorMessage?.data?.data?.errors ||
-          errorMessage?.data?.message;
-        const messages = Object.values(errors).flat();
+          errorMessage?.data?.message ||
+          errorMessage;
+        const messages = Object?.values(errors).flat();
         showNotification({
           text: messages,
           type: API_STATUS.ERROR,
