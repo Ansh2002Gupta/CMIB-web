@@ -17,9 +17,9 @@ import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
 import {
-  APPROVED,
   ADMIN_ROUTE,
   COMPANY_ROUTE,
+  MANAGE,
 } from "../../constant/apiEndpoints";
 import styles from "./ManageCompiesTable.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +55,7 @@ const ManageCompaniesTable = () => {
     isError: isErrorWhileGettingCompanies,
     isLoading: isGettingCompanies,
   } = useFetch({
-    // url: ADMIN_ROUTE + "/" + COMPANY_ROUTE + APPROVED,
+    // url: ADMIN_ROUTE + MANAGE + "/" + COMPANY_ROUTE,
     url: ADMIN_ROUTE + "/subscriptions",
     otherOptions: {
       skipApiCallOnMount: true,
