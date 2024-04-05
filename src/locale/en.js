@@ -421,6 +421,8 @@ const locale = {
   "label.path.queries": "Queries",
   "label.path.queries-details": "Query Details",
   "label.path.interviewDetails": "Configure Interview Dates",
+  "label.path.all-jobs": "All Jobs",
+  "label.path.job-details": "Job Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
@@ -578,6 +580,18 @@ const locale = {
   "label.maximumExperience": "maximumExperience",
   "label.nationality": "Nationality",
   "label.jobLocation": "Job Location",
+  "label.genderPreferances": "Gender Preference",
+  "label.categoryPreferances": "Category Preference",
+  "label.essential_qualification": "Essential Qualification",
+  "label.desired_qualification": "Desired Qualification",
+  "label.jobOpeningDate": "Job Opening Date",
+  "label.jobClosingDate": "Job Closing Date",
+  "label.salaryNegotiable": "Salary Negotiable",
+  "label.maximumSalaryAnnualCTC": "Minimum Salary (Annual CTC)",
+  "label.maximumSalary": "Maximum Salary",
+  "label.disabiltyPercentage": "Disabilty %",
+  "label.typeOfDisabilty": "Type of Disability",
+  "label.contractualPeriod": "Contract Period",
 };
 
 export default locale;

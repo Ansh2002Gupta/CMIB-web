@@ -11,21 +11,20 @@
   padding-bottom: 0;
   border-radius: var(--radiusMLg);
   border: var(--borderLight);
-  gap: var(--gapMedium);
 }
 
 .jobDetailsCard {
   background-color: var(--bodyBg);
-  padding: var(--paddingMedium);
+  padding: var(--paddingSmall);
   border-radius: var(--radiusMLg);
   border: var(--borderLight);
   gap: var(--gapMedium);
+  width: var(--fullWidth);
 }
 
 .functionAreasContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--gapMedium);
 }
 
 .jobSummaryContainer {
@@ -35,15 +34,10 @@
   width: var(--fullWidth);
 }
 
-.companyLogo {
-  @extend .companyDetails;
-  overflow: hidden;
-}
-
 .headingText {
-  font-size: var(--fontSizeNormal);
-  font-weight: var(--fontWeightBold);
-  color: var(--textBold);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
 }
 
 .gridItem {
@@ -54,27 +48,17 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--textBold);
+  line-height: var(--lineHeightNormal);
 }
 
 .grayText {
-  font-size: var(--fontSizeSmall);
+  font-size: var(--fontSizeExtraSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--subHeadingColor);
-  padding-bottom: var(--paddingExtraSmall);
 }
 
 .redText {
   color: var(--error);
-}
-
-.fullWidthItem {
-  grid-column: 1 / -1;
-}
-
-.anchor {
-  color: var(--linkColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
 }
 
 .sourceOfInformation {
@@ -95,60 +79,6 @@
   margin-top: var(--marginXXSmall);
   background-color: var(--lightBlueBg);
   border-radius: var(--radiusMLg);
-}
-
-.passwordDetails {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: var(--fullWidth);
-}
-
-.customIcon {
-  margin-bottom: var(--marginXSmall);
-  height: var(--xSmallHeight) !important;
-  width: var(--xSmallWidth) !important;
-}
-
-.logo {
-  width: var(--fullWidth);
-}
-
-.logoText {
-  color: var(--subHeadingColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
-  padding-top: var(--paddingExtraSmall);
-}
-
-.logoBox {
-  display: flex;
-  padding: var(--padding_9);
-  width: var(--width_347);
-  justify-content: center;
-  align-items: center;
-  flex: 1 0 0;
-  align-self: stretch;
-  border-top-left-radius: var(--radiusMd);
-  border-top-right-radius: var(--radiusMd);
-  background: var(--lightBlueBg);
-  border: var(--borderLight);
-}
-
-.logoName {
-  display: flex;
-  padding: var(--paddingSmall);
-  width: var(--width_347);
-  align-items: flex-end;
-  gap: var(--gapXSmall);
-  border: var(--borderLight);
-  border-top: 0;
-  color: var(--linkColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightBold);
-  border-bottom-left-radius: var(--radiusMd);
-  border-bottom-right-radius: var(--radiusMd);
-  margin-bottom: var(--marginLarge);
 }
 
 @media screen and (max-width: 680px) {

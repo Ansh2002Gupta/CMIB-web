@@ -9,7 +9,7 @@ import Questionnaire from "../../containers/AllJobDetails/Questionnaire";
 import { urlService } from "../../Utils/urlService";
 import styles from "./JobDetails.module.scss";
 
-const CompanyRound = ({ roundList, jobDetails }) => {
+const JobDetailsTab = ({ roundList, jobDetails }) => {
   const [activeCompanyTab, setActiveCompanyTab] = useState("1");
 
   const tabItems = [
@@ -19,7 +19,7 @@ const CompanyRound = ({ roundList, jobDetails }) => {
     },
     {
       key: "2",
-      children: <Questionnaire />,
+      children: <Questionnaire questionnaires={jobDetails?.questionnaires} />,
     },
   ];
 
@@ -72,12 +72,12 @@ const CompanyRound = ({ roundList, jobDetails }) => {
   );
 };
 
-CompanyRound.defaultProps = {
+JobDetailsTab.defaultProps = {
   roundList: [],
 };
 
-CompanyRound.propTypes = {
+JobDetailsTab.propTypes = {
   roundList: PropTypes.array,
 };
 
-export default CompanyRound;
+export default JobDetailsTab;

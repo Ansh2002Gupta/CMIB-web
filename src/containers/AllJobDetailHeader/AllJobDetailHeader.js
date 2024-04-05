@@ -10,7 +10,7 @@ import { COMPANY_STATUS } from "../../companyDetailsDummyData";
 import { classes } from "./AllJobDetailHeader.styles";
 import styles from "./AllJobDetailHeader.module.scss";
 
-function CompanyHeader() {
+function AllJobDetailHeaderView({designation}) {
   const intl = useIntl();
   const responsive = useResponsive();
 
@@ -20,7 +20,7 @@ function CompanyHeader() {
       topSection={
         <ContentHeader
           customStyles={!responsive?.isMd ? styles.customStyles : ""}
-          headerText={intl.formatMessage({ id: "label.appdynamics" })}
+          headerText={designation}
           rightSection={
             <div className={styles.headerRightSection}>
               <TwoColumn
@@ -47,4 +47,4 @@ function CompanyHeader() {
   );
 }
 
-export default CompanyHeader;
+export default AllJobDetailHeaderView;

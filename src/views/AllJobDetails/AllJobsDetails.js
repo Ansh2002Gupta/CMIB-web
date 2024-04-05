@@ -10,11 +10,10 @@ import { ALL_JOB_DETAILS } from "../../constant/constant";
 import variables from "../../themes/base/styles/variables";
 import styles from "./AllJobDetails.module.scss";
 import { useParams } from "react-router-dom";
-import {
-  COMPANY_ROUTE,
-  JOBS,
-} from "../../constant/apiEndpoints";
+import { COMPANY_ROUTE, JOBS } from "../../constant/apiEndpoints";
 import useFetch from "../../core/hooks/useFetch";
+import CustomLoader from "../../components/CustomLoader";
+import ErrorMessageBox from "../../components/ErrorMessageBox";
 
 function AllJobDetails() {
   const intl = useIntl();
@@ -25,14 +24,12 @@ function AllJobDetails() {
   const {
     data: jobDetails,
     error,
-    fetchData,
     isError,
     isLoading,
+    fetchData,
   } = useFetch({
     url: COMPANY_ROUTE + JOBS + `/${jobId}`,
   });
-
-  console.log(jobDetails, "jobDetails");
 
   const tabItems = [
     {
@@ -45,39 +42,58 @@ function AllJobDetails() {
     {
       key: "2",
       title: intl.formatMessage({ id: "label.applicants" }),
-      children: <JobDetails roundList={ALL_JOB_DETAILS} />,
+      children: <div>Applicants</div>,
     },
     {
       key: "3",
       title: intl.formatMessage({ id: "label.scheduled_interviews" }),
-      children: <JobDetails roundList={ALL_JOB_DETAILS} />,
+      children: <div>Scheduled Interviews</div>,
     },
   ];
 
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
   return (
-    <TwoRow
-      className={styles.mainContainer}
-      topSection={
-        <TwoRow
-          className={styles.topSectionStyle}
-          topSection={<AllJobsDetailHeader />}
-          bottomSection={
-            <CustomTabs
-              tabs={tabItems}
-              activeTab={activeTab}
-              setActiveTab={setActiveTab}
+    <>
+      {!isLoading && isError && (
+        <div className={styles.erroContainerBox}>
+          <ErrorMessageBox
+            errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
+            errorText={error?.data?.message}
+            onRetry={()=>fetchData({})}
+          />
+        </div>
+      )}
+      {isLoading ? (
+        <CustomLoader />
+      ) : (
+        <>
+          {!isError ? (
+            <TwoRow
+              className={styles.mainContainer}
+              topSection={
+                <TwoRow
+                  className={styles.topSectionStyle}
+                  topSection={<AllJobsDetailHeader designation={jobDetails?.designation} />}
+                  bottomSection={
+                    <CustomTabs
+                      tabs={tabItems}
+                      activeTab={activeTab}
+                      setActiveTab={setActiveTab}
+                    />
+                  }
+                />
+              }
+              bottomSection={!!activeTabChildren && activeTabChildren.children}
+              bottomSectionStyle={{
+                padding: variables.fontSizeXlargeMedium,
+                width: "100%",
+              }}
             />
-          }
-        />
-      }
-      bottomSection={!!activeTabChildren && activeTabChildren.children}
-      bottomSectionStyle={{
-        padding: variables.fontSizeXlargeMedium,
-        width: "100%",
-      }}
-    />
+          ) : null}
+        </>
+      )}
+    </>
   );
 }
 

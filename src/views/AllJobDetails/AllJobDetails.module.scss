@@ -10,3 +10,10 @@
 .mainContainer {
   background-color: var(--blueBg);
 }
+
+.erroContainerBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
