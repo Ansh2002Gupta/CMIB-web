@@ -13,6 +13,7 @@ export const PLACEMENT_ROUTE = "placement-core";
 export const CAJOBS_ROUTE = "ca-jobs";
 
 // API end-points
+export const APPROVED = "/approved";
 export const ASSIGN = "/assign";
 export const ASSIGNEES = "/assignees";
 export const AUTHENTICATE_OTP_ROUTE = "/reset-password-otp";
@@ -33,6 +34,7 @@ export const LAST_REGISTRATION_DATES = "/last-registration-dates";
 export const INTERVIEW_DATES = "/interview-dates";
 export const LOGIN_END_POINT = "/login";
 export const LOGOUT_END_POINT = "/logout";
+export const MANAGE = "/manage";
 export const MASTER = "/master";
 export const MOCK_INTERVIEWS = "/mock-interviews";
 export const ORIENTATION_CENTRES = "/orientation-centres";

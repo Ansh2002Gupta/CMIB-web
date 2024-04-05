@@ -592,6 +592,10 @@ const locale = {
   "label.dates_added_successfully": "Dates Added Successfully",
   "label.downloadSucess": "Download Successful",
   "label.videolimitError": "Please enter value between 1 to 999",
+  "label.manageCompanies": "Manage Companies",
+  "label.approvedCompanyName": "Approved Company Name",
+  "label.searchByCompanyUsername": "Search by company name, username",
+  "label.viewCompanyDetails": "View Company Details",
 };
 
 export default locale;
