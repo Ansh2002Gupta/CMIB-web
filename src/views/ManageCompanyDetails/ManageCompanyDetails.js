@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { ThreeRow, TwoRow } from "../../core/layouts";
+import { TwoRow } from "../../core/layouts";
 
 import useResponsive from "core/hooks/useResponsive";
-import EditButton from "../../components/EditButton/EditButton";
 import ContentHeader from "../../containers/ContentHeader/ContentHeader";
 import CompanyDetailsCa from "../../containers/CompanyDetailsCa";
 import PostedJobsCa from "../../containers/PostedJobsCa";

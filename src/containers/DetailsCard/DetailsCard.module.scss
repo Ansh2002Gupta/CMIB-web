@@ -27,3 +27,10 @@
   grid-template-columns: unset;
   background-color: "red";
 }
+.logoStyle {
+  padding-top: var(--marginMedium);
+}
+
+.gridItem {
+  grid-column: 1 / -1;
+}

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Image, Typography } from "antd";
 
 import { TwoRow } from "../../core/layouts";
+import { ThemeContext } from "core/providers/theme";
 
 import CustomGrid from "../../components/CustomGrid";
+import Chip from "../../components/Chip/Chip";
 import MarkRequired from "../../components/MarkRequired";
 import { classes } from "./DetailsCard.styles";
 import styles from "./DetailsCard.module.scss";
@@ -18,8 +20,7 @@ const DetailsCard = ({
   headerText,
 }) => {
   const intl = useIntl();
-
-  console.log(isSingleComponent, "isSingleComponent..");
+  const { getImage } = useContext(ThemeContext);
 
   return (
     <TwoRow
@@ -41,24 +42,33 @@ const DetailsCard = ({
           {details?.map((item) => {
             return (
               <TwoRow
+                className={item.fullWidth && styles.gridItem}
                 topSection={
-                  <Typography
-                    className={[
-                      styles.customLabelStyles,
-                      customLabelStyles,
-                    ].join(" ")}
-                  >
-                    {intl.formatMessage({ id: item?.label })}&nbsp;
-                    {item?.isMandatory && <MarkRequired />}
-                  </Typography>
+                  item?.label ? (
+                    <Typography
+                      className={[
+                        styles.customLabelStyles,
+                        customLabelStyles,
+                      ].join(" ")}
+                    >
+                      {intl.formatMessage({ id: item?.label })}&nbsp;
+                      {item?.isMandatory && <MarkRequired />}
+                    </Typography>
+                  ) : (
+                    <></>
+                  )
                 }
                 bottomSection={
                   item?.isImage ? (
                     <Image
-                      src={item?.value}
+                      src={
+                        item.value
+                          ? item?.value
+                          : getImage("company_placeholder")
+                      }
                       preview={false}
-                      width={24}
-                      height={24}
+                      width={340}
+                      height={240}
                       className={styles.logoStyle}
                       alt={"company_logo"}
                     />

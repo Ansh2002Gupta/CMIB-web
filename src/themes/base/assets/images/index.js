@@ -75,6 +75,7 @@ import disabledArrow from "./disabled arrow.svg";
 import iconProfileAdd from "./iconProfileAdd.svg";
 import iconProfileAddDisabled from "./iconProfileAddDisabled.svg";
 import disableEdit from "../icons/disableEdit.svg";
+import company_placeholder from "../images/company_placeholder.svg";
 
 const images = {
   activeSend,
@@ -154,6 +155,7 @@ const images = {
   iconProfileAdd,
   iconProfileAddDisabled,
   disableEdit,
+  company_placeholder,
 };
 
 export default images;

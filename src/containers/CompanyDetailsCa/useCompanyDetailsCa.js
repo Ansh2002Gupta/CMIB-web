@@ -108,6 +108,7 @@ const other_details = () => [
     isMandatory: true,
     label: "label.shortProfileOfTheCompany",
     placeholder: "label.shortProfileOfTheCompany",
+    fullWidth: true,
   },
   {
     key: "website",
@@ -132,7 +133,6 @@ const source_of_information = () => [
   {
     key: "source",
     isMandatory: true,
-    label: "label.source",
     placeholder: "label.source",
   },
 ];
@@ -148,6 +148,12 @@ const company_logo = () => [
 
 const addValueOnField = ({ state, details, isEditable }) => {
   return details.map((item) => {
+    if (item?.isImage) {
+      return {
+        ...item,
+        value: state?.[item?.key],
+      };
+    }
     return {
       ...item,
       value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
