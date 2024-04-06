@@ -6,7 +6,6 @@ export const classes = {
     borderBottom: variables.borderLight,
     backgroundColor: variables.bodyBg,
   },
-
   tabContainerDetails: {
     backgroundColor: variables.blueBg,
     flex: 1,
