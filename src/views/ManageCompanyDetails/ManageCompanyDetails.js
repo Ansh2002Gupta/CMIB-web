@@ -71,7 +71,6 @@ const ManageCompanyDetails = () => {
             </div>
           }
           bottomSection={!!activeTabChildren && activeTabChildren.children}
-          bottomSectionStyle={classes.bottomSectionStyle}
         />
       }
       bottomSectionStyle={classes.tabContainerDetails}
