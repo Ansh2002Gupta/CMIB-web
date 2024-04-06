@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { TwoRow } from "../../core/layouts";
 
+import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import DetailsCard from "../DetailsCard";
 import EditButton from "../../components/EditButton/EditButton";
@@ -17,7 +18,7 @@ import styles from "./CompanyDetailsCa.module.scss";
 const CompanyDetailsCa = () => {
   const intl = useIntl();
   const { companyId } = useParams();
-  const isEditable = false;
+  const [isEditable, setIsEditable] = useState(false);
   const {
     data,
     error: errorWhileGettingCompanyData,
@@ -26,6 +27,14 @@ const CompanyDetailsCa = () => {
   } = useFetch({
     url: ADMIN_ROUTE + REGISTERED_COMPANIES + "/" + companyId,
   });
+
+  const onChangeValue = (key, value) => {
+    console.log(key, "key..", value, "value..");
+    setState((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
 
   const getData = (data) =>
     data && Object.keys(data)?.length
@@ -58,6 +67,8 @@ const CompanyDetailsCa = () => {
 
   const [state, setState] = useState(getData(data));
 
+  console.log(state, "state...");
+
   useEffect(() => {
     setState(getData(data));
   }, [data]);
@@ -77,6 +88,8 @@ const CompanyDetailsCa = () => {
     getCompanyData({});
   };
 
+  const onClickSave = () => {};
+
   return (
     <>
       {isGettingCompanyData ? (
@@ -95,12 +108,19 @@ const CompanyDetailsCa = () => {
         <TwoRow
           style={classes.mainSectionStyle}
           topSection={
-            <div>
-              <EditButton
-                label={intl.formatMessage({ id: "label.editCompanyDetails" })}
-                customEditStyle={styles.ButtonCustomContainerStyle}
-              />
-            </div>
+            isEditable ? (
+              <></>
+            ) : (
+              <div>
+                <EditButton
+                  label={intl.formatMessage({ id: "label.editCompanyDetails" })}
+                  customEditStyle={styles.ButtonCustomContainerStyle}
+                  onClick={() => {
+                    setIsEditable(true);
+                  }}
+                />
+              </div>
+            )
           }
           topSectionStyle={classes.topSectionStyle}
           bottomSection={
@@ -110,28 +130,53 @@ const CompanyDetailsCa = () => {
                   id: "label.companyDetails",
                 })}
                 details={company_details_data}
+                isEditable={isEditable}
+                onChangeValue={onChangeValue}
               />
               <DetailsCard
                 headerText={intl.formatMessage({
                   id: "label.contactPersonalInformation",
                 })}
                 details={contact_person_details_data}
+                isEditable={isEditable}
+                onChangeValue={onChangeValue}
               />
               <DetailsCard
                 headerText={intl.formatMessage({ id: "label.otherDetails" })}
                 details={other_details_data}
+                isEditable={isEditable}
+                onChangeValue={onChangeValue}
               />
               <DetailsCard
                 headerText={intl.formatMessage({
                   id: "label.sourceOfInformation",
                 })}
                 details={source_of_information_data}
+                isEditable={isEditable}
+                onChangeValue={onChangeValue}
               />
               <DetailsCard
                 headerText={intl.formatMessage({ id: "label.companyLogo" })}
                 details={company_logo_data}
                 isSingleComponent
+                isEditable={isEditable}
+                onChangeValue={onChangeValue}
               />
+              {isEditable && (
+                <ActionAndCancelButtons
+                  actionBtnText={intl.formatMessage({
+                    id: "session.saveChanges",
+                  })}
+                  cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                  isActionBtnDisable={false}
+                  isLoading={false}
+                  onActionBtnClick={onClickSave}
+                  onCancelBtnClick={() => {
+                    setState(getData(data));
+                    setIsEditable(false);
+                  }}
+                />
+              )}
             </div>
           }
         />

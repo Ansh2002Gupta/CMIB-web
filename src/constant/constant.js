@@ -469,3 +469,8 @@ export const REGISTRATIONS_DATES_FOR_ROUND_TWO = [
   { id: 8, labeIntl: "endCondidateConsentmarking" },
   { id: 9, labeIntl: "writtenTestDate" },
 ];
+
+export const SALUTATION_OPTIONS = [
+  { id: 1, label: "Mr.", value: "Mr." },
+  { id: 2, label: "Mrs.", value: "Mrs." },
+];

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { SALUTATION_OPTIONS } from "../../constant/constant";
 const company_details = () => [
   {
     key: "company_name",
@@ -25,6 +26,8 @@ const company_details = () => [
     isMandatory: true,
     label: "label.numberOfPartner",
     placeholder: "label.numberOfPartner",
+    type: "inputNumber",
+    controls: true,
   },
   {
     key: "current_industry",
@@ -38,6 +41,8 @@ const company_details = () => [
     isMandatory: true,
     label: "label.addressOfCorrespondance",
     placeholder: "label.addressOfCorrespondance",
+    type: "textArea",
+    rows: 3,
   },
   {
     key: "company_state",
@@ -76,6 +81,8 @@ const contact_person_details = () => [
     isMandatory: true,
     label: "label.salutation",
     placeholder: "label.salutation",
+    type: "select",
+    selectOptions: SALUTATION_OPTIONS,
   },
   {
     key: "contact_person_name",
@@ -109,12 +116,15 @@ const other_details = () => [
     label: "label.shortProfileOfTheCompany",
     placeholder: "label.shortProfileOfTheCompany",
     fullWidth: true,
+    type: "textArea",
+    rows: 2,
   },
   {
     key: "website",
     isMandatory: true,
     label: "label.website",
     placeholder: "label.website",
+    isWebsite: true,
   },
   {
     key: "nature_of_supplier",
@@ -133,7 +143,8 @@ const source_of_information = () => [
   {
     key: "source",
     isMandatory: true,
-    placeholder: "label.source",
+    isArray: true,
+    isCheckBoxList: true,
   },
 ];
 
