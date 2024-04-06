@@ -50,7 +50,7 @@ const ManageCompanyDetails = () => {
         />
       }
       bottomSection={
-        <ThreeRow
+        <TwoRow
           className={styles.mainContainer}
           topSection={
             <CustomTabs
@@ -61,15 +61,6 @@ const ManageCompanyDetails = () => {
             />
           }
           topSectionStyle={classes.customTabContainer}
-          middleSectionStyle={classes.middleSectionStyle}
-          middleSection={
-            <div>
-              <EditButton
-                label={intl.formatMessage({ id: "label.editCompanyDetails" })}
-                customEditStyle={styles.ButtonCustomContainerStyle}
-              />
-            </div>
-          }
           bottomSection={!!activeTabChildren && activeTabChildren.children}
         />
       }
