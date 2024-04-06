@@ -526,7 +526,7 @@ const useRenderColumn = () => {
             key: item.key,
             label: (
               <div
-                onClick={onMenuClick ? () => onMenuClick(rowData) : () => {}}
+                onClick={onMenuClick ? () => onMenuClick(rowData, item) : () => {}}
                 className={styles.dropdownMenuItem}
               >
                 {item.label}

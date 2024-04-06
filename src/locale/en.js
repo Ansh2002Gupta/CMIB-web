@@ -592,6 +592,19 @@ const locale = {
   "label.disabiltyPercentage": "Disabilty %",
   "label.typeOfDisabilty": "Type of Disability",
   "label.contractualPeriod": "Contract Period",
+  "label.search_by_applicant_id_or_name": "Search by applicant name or ID",
+  "label.applicantName": "Applicant Name",
+  "label.applicantId": "Applicant ID",
+  "label.interviewType": "Interview Type",
+  "label.primaryInterviewDate": "Primary Interview Date",
+  "label.primaryInterviewTime": "Primary Interview Time",
+  "label.viewInterviewDetails": "View Interview Details",
+  "label.offerJob": "Offer Job",
+  "label.interviewDetails": "Interview Details",
+  "label.primaryInterviewSchedule": "Primary Interview Schedule",
+  "label.alternateInterviewSchedule": "Alternate Interview Schedule",
+  "label.date": "Date",
+  "label.time": "Time",
 };
 
 export default locale;

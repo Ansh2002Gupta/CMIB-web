@@ -14,6 +14,8 @@ import { COMPANY_ROUTE, JOBS } from "../../constant/apiEndpoints";
 import useFetch from "../../core/hooks/useFetch";
 import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
+import ApplicantListing from "../ApplicantsListing";
+import ScheduledInterviewListing from "../ScheduledInterviewListing";
 
 function AllJobDetails() {
   const intl = useIntl();
@@ -42,12 +44,12 @@ function AllJobDetails() {
     {
       key: "2",
       title: intl.formatMessage({ id: "label.applicants" }),
-      children: <div>Applicants</div>,
+      children: <ApplicantListing jobId={jobId} />,
     },
     {
       key: "3",
       title: intl.formatMessage({ id: "label.scheduled_interviews" }),
-      children: <div>Scheduled Interviews</div>,
+      children: <ScheduledInterviewListing jobId={jobId} />,
     },
   ];
 
@@ -86,7 +88,6 @@ function AllJobDetails() {
               }
               bottomSection={!!activeTabChildren && activeTabChildren.children}
               bottomSectionStyle={{
-                padding: variables.fontSizeXlargeMedium,
                 width: "100%",
               }}
             />
