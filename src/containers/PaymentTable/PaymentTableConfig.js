@@ -23,21 +23,18 @@ const handleRefundPayment = () => {};
 
 export const getPaymentColumn = ({
   getImage,
-  handleClickAssign,
-  handleTicketIcon,
   handleSorting,
   intl,
   renderColumn,
   setSortBy,
   sortBy,
-  userProfileDetails,
 }) => {
   return [
     renderColumn({
       title: intl.formatMessage({ id: "label.company_name" }),
-      dataIndex: "created_by",
-      key: "created_by",
-      sortKey: "created_by",
+      dataIndex: "company_name",
+      key: "company_name",
+      sortKey: "company_name",
       renderSorterColumn: true,
       setSortBy: setSortBy,
       columnSortByHandler: handleSorting,
@@ -47,25 +44,34 @@ export const getPaymentColumn = ({
           ? styles.active
           : "",
       ],
-      renderText: { visible: true, textStyles: [styles.tableCell].join(" ") },
+      renderText: {
+        visible: true,
+        textStyles: [styles.tableCell].join(" "),
+        isDataObject: true,
+        dataKey: "company_name",
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.payment_mode" }),
-      dataIndex: "role",
-      key: "role",
+      dataIndex: "payment_mode",
+      key: "payment_mode",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
         isCapitalize: true,
+        isDataObject: true,
+        dataKey: "company_name",
       },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.payment_amount" }),
-      dataIndex: "query_type",
-      key: "query_type",
+      dataIndex: "payment_amt",
+      key: "payment_amt",
       renderText: {
         visible: true,
         textStyles: styles.tableCell,
+        isDataObject: true,
+        dataKey: "company_name",
       },
     }),
     renderColumn({
@@ -85,26 +91,30 @@ export const getPaymentColumn = ({
         isTypeDate: true,
         visible: true,
         textStyles: [styles.tableCell].join(" "),
+        isDataObject: true,
+        dataKey: "company_name",
       },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.transaction_id" }),
-      dataIndex: "readable_id",
-      key: "readable_id",
+      dataIndex: "txn_id",
+      key: "txn_id",
       renderText: {
         isTextBold: true,
         visible: true,
         textStyles: [styles.tableCell].join(" "),
+        isDataObject: true,
+        dataKey: "company_name",
       },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.payment_status" }),
-      dataIndex: "status",
-      key: "status",
+      dataIndex: "payment_status",
+      key: "payment_status",
       render: (data, rowData) => {
-        const { status } = rowData;
-        const styleClassForContainer = getStatusStyles(status)[0];
-        const styleClassForText = getStatusStyles(status)[1];
+        const { payment_status } = rowData;
+        const styleClassForContainer = getStatusStyles(payment_status)[0];
+        const styleClassForText = getStatusStyles(payment_status)[1];
         return (
           <div
             className={[styles.statusBox, styles[styleClassForContainer]].join(
@@ -112,7 +122,7 @@ export const getPaymentColumn = ({
             )}
           >
             <Typography className={styles[styleClassForText]}>
-              {status}
+              {payment_status}
             </Typography>
           </div>
         );

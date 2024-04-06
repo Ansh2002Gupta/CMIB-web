@@ -6,6 +6,7 @@ export const ADMIN_ROUTE = "admin";
 export const COMPANY_ROUTE = "company";
 export const CORE_ROUTE = "core";
 export const PLACEMENT_ROUTE = "placement-core";
+export const CA_JOBS = "/ca-jobs";
 
 // API end-points
 export const ASSIGN = "/assign";
@@ -45,6 +46,7 @@ export const USERS_END_POINT = "/users";
 export const VERIFY_OTP = "/otp/verify";
 export const REPLIES = "/replies";
 export const CLOSE = "/close";
+export const PAYMENT = "/payments";
 
 // Query
 export const MARK_AS_ANSWER_END_POINT = "/answer";

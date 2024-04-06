@@ -367,7 +367,7 @@ const useRenderColumn = () => {
           ) : isYearRange ? (
             getRenderYearRange(rowData)
           ) : (
-            getRenderText(text)
+            getRenderText(isDataObject ? rowData : text)
           ),
         };
       });

@@ -25,11 +25,13 @@ import {
   PAGINATION_PROPERTIES,
 } from "../../constant/constant";
 import {
+  ADMIN_ROUTE,
+  CA_JOBS,
   COMPANY,
   CORE_ROUTE,
+  PAYMENT,
   PAYMENT_MODES,
   STATUS,
-  TICKET_LIST,
 } from "../../constant/apiEndpoints";
 import { ReactComponent as ArrowDown } from "../../themes/base/assets/images/arrow-down.svg";
 import styles from "./PaymentTable.module.scss";
@@ -56,7 +58,7 @@ const PaymentTable = ({
 
   const [userProfileDetails] = useContext(UserProfileContext);
   const { data, error, fetchData, isError, isLoading, setData } = useFetch({
-    url: CORE_ROUTE + TICKET_LIST,
+    url: ADMIN_ROUTE + CA_JOBS + PAYMENT,
     otherOptions: { skipApiCallOnMount: true },
   });
 
