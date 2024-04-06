@@ -6,6 +6,8 @@ import { ThreeRow, TwoRow } from "../../core/layouts";
 import useResponsive from "core/hooks/useResponsive";
 import EditButton from "../../components/EditButton/EditButton";
 import ContentHeader from "../../containers/ContentHeader/ContentHeader";
+import CompanyDetailsCa from "../../containers/CompanyDetailsCa";
+import PostedJobsCa from "../../containers/PostedJobsCa";
 import CustomTabs from "../../components/CustomTabs";
 import { getCurrentActiveTab } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
@@ -28,12 +30,12 @@ const ManageCompanyDetails = () => {
     {
       key: "1",
       title: intl.formatMessage({ id: "label.companyDetails" }),
-      children: <div>companyDetails</div>,
+      children: <CompanyDetailsCa />,
     },
     {
       key: "2",
       title: intl.formatMessage({ id: "label.postedJobs" }),
-      children: <div>postedJobs</div>,
+      children: <PostedJobsCa />,
     },
   ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
