@@ -10,10 +10,15 @@ import DetailsCard from "../DetailsCard";
 import EditButton from "../../components/EditButton/EditButton";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
-import { usePost } from "../../core/hooks/useApiRequest";
+import { usePut } from "../../core/hooks/useApiRequest";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { useCompanyDetailsCa } from "./useCompanyDetailsCa";
-import { ADMIN_ROUTE, REGISTERED_COMPANIES } from "../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  COMPANY_ROUTE,
+  PROFILE_END_POINT,
+  REGISTERED_COMPANIES,
+} from "../../constant/apiEndpoints";
 import { NOTIFICATION_TYPES } from "../../constant/constant";
 import { classes } from "./CompanyDetailsCa.styles";
 import styles from "./CompanyDetailsCa.module.scss";
@@ -31,9 +36,10 @@ const CompanyDetailsCa = () => {
     url: ADMIN_ROUTE + REGISTERED_COMPANIES + "/" + companyId,
   });
 
-  const { isLoading: isCompanyEditing, makeRequest: editCompanyData } = usePost(
-    { url: ADMIN_ROUTE + REGISTERED_COMPANIES + "/" + companyId }
-  );
+  const { isLoading: isCompanyEditing, makeRequest: editCompanyData } = usePut({
+    url:
+      ADMIN_ROUTE + "/" + COMPANY_ROUTE + PROFILE_END_POINT + "/" + companyId,
+  });
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
