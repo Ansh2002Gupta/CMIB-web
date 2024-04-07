@@ -452,3 +452,7 @@ export const getValidUrl = (url) => {
   }
   return link;
 };
+
+export const isValueEmpty = (value) => {
+  return value === null || value === undefined || value === "";
+};

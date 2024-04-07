@@ -23,6 +23,7 @@ const DetailsCard = ({
   isEditable,
   details,
   headerText,
+  onBlur,
   onChangeValue,
 }) => {
   const intl = useIntl();
@@ -133,12 +134,17 @@ const DetailsCard = ({
     }
     return (
       <CustomInput
+        errorMessage={item?.error}
+        isError={item.error ? true : false}
         customContainerStyles={item.fullWidth && styles.gridItem}
         key={item.key}
         placeholder={intl.formatMessage({ id: item?.placeholder })}
         label={item?.label && intl.formatMessage({ id: item?.label })}
         isRequired={item?.isMandatory}
         value={item?.value}
+        onBlur={() => {
+          onBlur(item?.key);
+        }}
         onChange={(val) => {
           item?.type === "inputNumber"
             ? onChangeValue(item?.key, val)

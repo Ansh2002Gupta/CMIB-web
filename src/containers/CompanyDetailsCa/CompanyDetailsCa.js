@@ -83,8 +83,14 @@ const CompanyDetailsCa = () => {
     company_details_data,
     company_logo_data,
     contact_person_details_data,
+    isValidAllFields,
     source_of_information_data,
     other_details_data,
+    handleCompany_detailBlur,
+    handleContact_person_detailBlur,
+    handleOther_detailBlur,
+    handleSource_of_informationBlur,
+    handleCompany_logoBlur,
   } = useCompanyDetailsCa({
     state,
     isEditable,
@@ -135,7 +141,6 @@ const CompanyDetailsCa = () => {
           type: NOTIFICATION_TYPES.ERROR,
           headingText: intl.formatMessage({ id: "label.errorMessage" }),
         });
-        setIsModalOpen(false);
       },
     });
   };
@@ -188,6 +193,7 @@ const CompanyDetailsCa = () => {
                   details={company_details_data}
                   isEditable={isEditable}
                   onChangeValue={onChangeValue}
+                  onBlur={handleCompany_detailBlur}
                 />
                 <DetailsCard
                   headerText={intl.formatMessage({
@@ -196,12 +202,14 @@ const CompanyDetailsCa = () => {
                   details={contact_person_details_data}
                   isEditable={isEditable}
                   onChangeValue={onChangeValue}
+                  onBlur={handleContact_person_detailBlur}
                 />
                 <DetailsCard
                   headerText={intl.formatMessage({ id: "label.otherDetails" })}
                   details={other_details_data}
                   isEditable={isEditable}
                   onChangeValue={onChangeValue}
+                  onBlur={handleOther_detailBlur}
                 />
                 <DetailsCard
                   headerText={intl.formatMessage({
@@ -210,6 +218,7 @@ const CompanyDetailsCa = () => {
                   details={source_of_information_data}
                   isEditable={isEditable}
                   onChangeValue={onChangeValue}
+                  onBlur={handleSource_of_informationBlur}
                 />
                 <DetailsCard
                   headerText={intl.formatMessage({ id: "label.companyLogo" })}
@@ -217,6 +226,7 @@ const CompanyDetailsCa = () => {
                   isSingleComponent
                   isEditable={isEditable}
                   onChangeValue={onChangeValue}
+                  onBlur={handleCompany_logoBlur}
                 />
                 {isEditable && (
                   <ActionAndCancelButtons
@@ -224,7 +234,7 @@ const CompanyDetailsCa = () => {
                       id: "session.saveChanges",
                     })}
                     cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-                    isActionBtnDisable={isCompanyEditing}
+                    isActionBtnDisable={isCompanyEditing || isValidAllFields}
                     isLoading={isCompanyEditing}
                     onActionBtnClick={onClickSave}
                     onCancelBtnClick={() => {

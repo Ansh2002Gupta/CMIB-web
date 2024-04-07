@@ -12,10 +12,8 @@ const CheckBoxListComponent = ({
   handleSelectBox,
 }) => {
   const handleSelect = (val) => {
-    if (val.includes(slectedBox)) {
-      const updatedData = selectedOptionArray.filter(
-        (selectedId) => selectedId !== id
-      );
+    if (slectedBox.includes(val)) {
+      const updatedData = slectedBox.filter((item) => item !== val);
       handleSelectBox(updatedData);
     } else {
       handleSelectBox([...slectedBox, val]);
