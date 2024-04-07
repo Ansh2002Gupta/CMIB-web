@@ -57,8 +57,10 @@ const PaymentTable = ({
   const [sortFilter, setSortFilter] = useState({});
 
   const [userProfileDetails] = useContext(UserProfileContext);
+  const selectedModule = userProfileDetails?.selectedModuleItem;
+
   const { data, error, fetchData, isError, isLoading, setData } = useFetch({
-    url: ADMIN_ROUTE + CA_JOBS + PAYMENT,
+    url: ADMIN_ROUTE + `/${selectedModule?.key}` + PAYMENT,
     otherOptions: { skipApiCallOnMount: true },
   });
 

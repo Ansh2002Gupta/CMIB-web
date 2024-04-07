@@ -6,7 +6,6 @@ export const ADMIN_ROUTE = "admin";
 export const COMPANY_ROUTE = "company";
 export const CORE_ROUTE = "core";
 export const PLACEMENT_ROUTE = "placement-core";
-export const CA_JOBS = "/ca-jobs";
 
 // API end-points
 export const ASSIGN = "/assign";
