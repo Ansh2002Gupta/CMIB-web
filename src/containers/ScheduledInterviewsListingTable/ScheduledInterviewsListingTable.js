@@ -14,7 +14,11 @@ import useFetch from "../../core/hooks/useFetch";
 import { getQueryColumn } from "./ScheduledInterviewsListingConfig";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
-import { ADMIN_ROUTE, JOB, JOBS, SCHEDULED_INTERVIEW, SUMMARY } from "../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  JOBS,
+  SCHEDULED_INTERVIEW,
+} from "../../constant/apiEndpoints";
 import { ReactComponent as ArrowDown } from "../../themes/base/assets/images/arrow-down.svg";
 import {
   DEBOUNCE_TIME,
@@ -25,8 +29,6 @@ import { active_filter_options, approval_filter_options } from "./constants";
 import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./ScheduledInterviewsListingTable.module.scss";
-import CustomModal from "../../components/CustomModal";
-import CommonModal from "../../components/CommonModal";
 
 const ScheduledInterViewsTable = ({
   jobId,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { TwoRow } from "core/layouts";
@@ -7,7 +7,6 @@ import AllJobsDetailHeader from "../../containers/AllJobDetailHeader/AllJobDetai
 import JobDetails from "../JobDetails";
 import CustomTabs from "../../components/CustomTabs";
 import { ALL_JOB_DETAILS } from "../../constant/constant";
-import variables from "../../themes/base/styles/variables";
 import styles from "./AllJobDetails.module.scss";
 import { useParams } from "react-router-dom";
 import { COMPANY_ROUTE, JOBS } from "../../constant/apiEndpoints";
@@ -16,12 +15,18 @@ import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import ApplicantListing from "../ApplicantsListing";
 import ScheduledInterviewListing from "../ScheduledInterviewListing";
+import { urlService } from "../../Utils/urlService";
 
 function AllJobDetails() {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState("1");
 
   const { jobId } = useParams();
+  const activeTabFromUrl = urlService.getQueryStringValue("tab");
+
+  useEffect(() => {
+    setActiveTab(activeTabFromUrl);
+  }, [activeTabFromUrl]);
 
   const {
     data: jobDetails,
@@ -53,6 +58,16 @@ function AllJobDetails() {
     },
   ];
 
+  useEffect(() => {
+    const tabQueryParam = urlService.getQueryStringValue("tab");
+    if (tabItems.some((tab) => tab.key === tabQueryParam)) {
+      setActiveTab(tabQueryParam);
+    } else {
+      setActiveTab(tabItems[0].key);
+      urlService.setQueryStringValue("tab", tabItems[0].key);
+    }
+  }, [activeTab]);
+
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
   return (
@@ -62,7 +77,7 @@ function AllJobDetails() {
           <ErrorMessageBox
             errorHeading={intl.formatMessage({ id: "label.errorMessage" })}
             errorText={error?.data?.message}
-            onRetry={()=>fetchData({})}
+            onRetry={() => fetchData({})}
           />
         </div>
       )}
@@ -76,7 +91,11 @@ function AllJobDetails() {
               topSection={
                 <TwoRow
                   className={styles.topSectionStyle}
-                  topSection={<AllJobsDetailHeader designation={jobDetails?.designation} />}
+                  topSection={
+                    <AllJobsDetailHeader
+                      designation={jobDetails?.designation}
+                    />
+                  }
                   bottomSection={
                     <CustomTabs
                       tabs={tabItems}

@@ -605,6 +605,7 @@ const locale = {
   "label.alternateInterviewSchedule": "Alternate Interview Schedule",
   "label.date": "Date",
   "label.time": "Time",
+  "label.noQuestionnairesAreFound": "No questionnaires are found"
 };
 
 export default locale;

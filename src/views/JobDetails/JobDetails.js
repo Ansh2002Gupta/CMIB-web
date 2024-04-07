@@ -25,16 +25,16 @@ const JobDetailsTab = ({ roundList, jobDetails }) => {
 
   const handleSelectTab = (idx) => {
     setActiveCompanyTab();
-    urlService.setQueryStringValue("company-tab", idx);
+    urlService.setQueryStringValue("job-detail-tab", idx);
   };
 
   useEffect(() => {
-    const tabQueryParam = urlService.getQueryStringValue("company-tab");
+    const tabQueryParam = urlService.getQueryStringValue("job-detail-tab");
     if (tabItems.some((tab) => tab.key === tabQueryParam)) {
       setActiveCompanyTab(tabQueryParam);
     } else {
       setActiveCompanyTab(tabItems[0].key);
-      urlService.setQueryStringValue("company-tab", tabItems[0].key);
+      urlService.setQueryStringValue("job-detail-tab", tabItems[0].key);
     }
   }, [activeCompanyTab]);
 
