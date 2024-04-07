@@ -38,3 +38,15 @@
 .gridItem {
   grid-column: 1 / -1;
 }
+
+.customChipContainerStyles {
+  background-color: var(--snow);
+}
+
+.chipContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--gapXSmall);
+}

@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 
+import CheckBoxListComponent from "../../components/CheckBoxListComponent";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
 import Chip from "../../components/Chip/Chip";
@@ -27,6 +28,8 @@ const DetailsCard = ({
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const [deletedImage, setDeletedImage] = useState([]);
+
+  console.log(details, "details..");
 
   const renderView = (item) => {
     return (
@@ -57,6 +60,19 @@ const DetailsCard = ({
               className={styles.logoStyle}
               alt={"company_logo"}
             />
+          ) : item.isArray && item?.value !== "--" ? (
+            <div className={styles.chipContainer}>
+              {item?.value?.map((e) => {
+                return (
+                  <div>
+                    <Chip
+                      label={e}
+                      customContainerStyles={styles.customChipContainerStyles}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           ) : (
             <Typography
               className={[styles.customValueStyles, customValueStyles].join(
@@ -93,8 +109,17 @@ const DetailsCard = ({
       }
     };
 
-    if (item?.isArray) {
-      return <div key={item?.key}>hi</div>;
+    if (item?.isCheckBoxList) {
+      return (
+        <CheckBoxListComponent
+          customContainerStyles={styles.gridItem}
+          slectedBox={item?.value}
+          options={item.options}
+          handleSelectBox={(val) => {
+            onChangeValue(item.key, val);
+          }}
+        />
+      );
     }
     if (item?.isImage) {
       return (

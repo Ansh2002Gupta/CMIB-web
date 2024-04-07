@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { SALUTATION_OPTIONS } from "../../constant/constant";
+import {
+  SALUTATION_OPTIONS,
+  SOURCE_OF_INFORM_ICAI_OPTIONS,
+} from "../../constant/constant";
 const company_details = () => [
   {
     key: "company_name",
@@ -145,6 +148,8 @@ const source_of_information = () => [
     isMandatory: true,
     isArray: true,
     isCheckBoxList: true,
+    options: SOURCE_OF_INFORM_ICAI_OPTIONS,
+    fullWidth: true,
   },
 ];
 
@@ -163,6 +168,15 @@ const addValueOnField = ({ state, details, isEditable }) => {
       return {
         ...item,
         value: state?.[item?.key],
+      };
+    }
+    if (item?.isArray) {
+      return {
+        ...item,
+        value:
+          !isEditable && !(state?.[item?.key]?.length > 0)
+            ? "--"
+            : state?.[item?.key],
       };
     }
     return {

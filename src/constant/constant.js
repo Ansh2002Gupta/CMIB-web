@@ -474,3 +474,12 @@ export const SALUTATION_OPTIONS = [
   { id: 1, label: "Mr.", value: "Mr." },
   { id: 2, label: "Mrs.", value: "Mrs." },
 ];
+
+export const SOURCE_OF_INFORM_ICAI_OPTIONS = [
+  "Email from CPABI",
+  "Based on previous participation",
+  "Campus",
+  "Telephonic Call from ICAI Officials",
+  "Programme brochure from ICAI",
+  "Advertisement in the Chartered Accountant Journal",
+];
