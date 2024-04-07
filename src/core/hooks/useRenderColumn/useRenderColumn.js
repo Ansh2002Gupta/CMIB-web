@@ -132,6 +132,7 @@ const useRenderColumn = () => {
       isCapitalize,
       isDays,
       isRequiredTooltip,
+      isTextLink,
       isMoney,
       isYearRange,
       isNumber,
@@ -232,6 +233,7 @@ const useRenderColumn = () => {
             isTextBold ? styles.boldText : "",
             styles.textEllipsis,
             isCapitalize ? styles.capitalize : "",
+            isTextLink ? styles.linkStyles : "",
           ].join(" ")}
         >
           {textRenderFormat({ text: text })}
@@ -247,6 +249,7 @@ const useRenderColumn = () => {
             isTextBold ? styles.boldText : "",
             styles.textEllipsis,
             isCapitalize ? styles.capitalize : "",
+            isTextLink ? styles.linkStyles : "",
           ].join(" ")}
         >
           {data?.use_more_experience
@@ -392,6 +395,7 @@ const useRenderColumn = () => {
                 isTextBold ? styles.boldText : "",
                 styles.textEllipsis,
                 isCapitalize ? styles.capitalize : "",
+                isTextLink ? styles.linkStyles : "",
               ].join(" ")}
             >
               {`${

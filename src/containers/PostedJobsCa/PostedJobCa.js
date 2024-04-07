@@ -9,18 +9,14 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import SearchableComponent from "../../components/SearchableComponent";
-import getCompaniesColumn from "./PostedJobsConfig";
+import getJobsColumn from "./PostedJobsConfig";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
 import { urlService } from "../../Utils/urlService";
 import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
-import {
-  ADMIN_ROUTE,
-  COMPANY_ROUTE,
-  MANAGE,
-} from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, JOBS, SUMMARY } from "../../constant/apiEndpoints";
 import styles from "./PostedJobsCa.module.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -28,8 +24,6 @@ const PostedJobsCa = () => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const [currentDataLength, setCurrentDataLength] = useState(0);
-  const [sortBy, setSortBy] = useState("");
-  const [sortFilter, setSortFilter] = useState({});
   const [current, setCurrent] = useState(
     getValidPageNumber(
       urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
@@ -48,79 +42,49 @@ const PostedJobsCa = () => {
   const { renderColumn } = useRenderColumn();
 
   const {
-    data: companyListingData,
-    error: companyListError,
-    fetchData: getCompanyListing,
-    isError: isErrorWhileGettingCompanies,
-    isLoading: isGettingCompanies,
+    data: jobListingData,
+    error: jobListError,
+    fetchData: getJobListing,
+    isError: isErrorWhileGettingJobs,
+    isLoading: isGettingJobs,
   } = useFetch({
-    url: ADMIN_ROUTE + MANAGE + "/" + COMPANY_ROUTE,
+    url: ADMIN_ROUTE + JOBS + SUMMARY,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
 
   useEffect(() => {
-    getCompanyListing({
+    getJobListing({
       queryParamsObject: getRequestedParams({
         page: current,
         search: validateSearchTextLength(searchedValue),
         size: +pageSize,
-        sortDirection: sortFilter?.sortDirection,
-        sortField: sortFilter?.sortField,
       }),
     });
   }, []);
 
   const debounceSearch = useMemo(() => {
-    return _.debounce(getCompanyListing, DEBOUNCE_TIME);
+    return _.debounce(getJobListing, DEBOUNCE_TIME);
   }, []);
 
-  const handleSorting = (sortDetails) => {
-    setCurrent(1);
-    urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-    const requestedParams = getRequestedParams({
-      page: 1,
-      search: searchedValue,
-      sortDirection: sortDetails?.sortDirection,
-      sortField: sortDetails?.sortDirection ? sortDetails?.sortField : "",
-    });
-    getCompanyListing({ queryParamsObject: requestedParams });
-    if (sortDetails.sortDirection) {
-      setSortFilter(sortDetails);
-      return;
-    }
-    setSortFilter({ sortDirection: "", sortField: "" });
-  };
-
-  const getRequestedParams = ({
-    page,
-    search,
-    size,
-    sortDirection,
-    sortField,
-  }) => {
+  const getRequestedParams = ({ page, search, size }) => {
     return {
       perPage: size || pageSize,
       page: page || current,
-      name: search || "",
-      sortOrder: sortDirection,
-      sortBy: sortField,
+      search: search || "",
     };
   };
 
-  const goToCompanyDetailsPage = (data) => {
-    const companyId = data?.id;
-    navigate(`company-details/${companyId}`);
+  const goToJobDetailsPage = (data) => {
+    const jobId = data?.id;
+    navigate(`posted-job-details/${jobId}`);
   };
 
-  const columns = getCompaniesColumn({
+  const columns = getJobsColumn({
     intl,
     getImage,
-    goToCompanyDetailsPage,
-    handleSorting,
-    setSortBy,
-    sortBy,
+    goToJobDetailsPage,
     renderColumn,
   });
 
@@ -129,13 +93,11 @@ const PostedJobsCa = () => {
     setCurrent(1);
     urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
     urlService.setQueryStringValue(PAGINATION_PROPERTIES.ROW_PER_PAGE, size);
-    getCompanyListing({
+    getJobListing({
       queryParamsObject: getRequestedParams({
         page: 1,
         search: validateSearchTextLength(searchedValue),
         size: +size,
-        sortDirection: sortFilter?.sortDirection,
-        sortField: sortFilter?.sortField,
       }),
     });
   };
@@ -147,12 +109,10 @@ const PostedJobsCa = () => {
       newPageNumber
     );
 
-    getCompanyListing({
+    getJobListing({
       queryParamsObject: getRequestedParams({
         page: newPageNumber,
         search: validateSearchTextLength(searchedValue),
-        sortDirection: sortFilter?.sortDirection,
-        sortField: sortFilter?.sortField,
       }),
     });
   };
@@ -164,8 +124,6 @@ const PostedJobsCa = () => {
         queryParamsObject: getRequestedParams({
           page: 1,
           search: validateSearchTextLength(str),
-          sortDirection: sortFilter?.sortDirection,
-          sortField: sortFilter?.sortField,
         }),
       });
       urlService.setQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
@@ -189,34 +147,30 @@ const PostedJobsCa = () => {
   };
 
   const handleTryAgain = () => {
-    getCompanyListing({
+    getJobListing({
       queryParamsObject: getRequestedParams({
         search: validateSearchTextLength(searchedValue),
-        sortDirection: sortFilter?.sortDirection,
-        sortField: sortFilter?.sortField,
       }),
     });
   };
 
   useEffect(() => {
-    if (companyListingData?.meta) {
-      const { total } = companyListingData?.meta;
+    if (jobListingData?.meta) {
+      const { total } = jobListingData?.meta;
       const numberOfPages = Math.ceil(total / pageSize);
       if (current > numberOfPages || current <= 0) {
         setCurrent(1);
         urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-        getCompanyListing({
+        getJobListing({
           queryParamsObject: getRequestedParams({
             page: 1,
             search: validateSearchTextLength(searchedValue),
             size: +pageSize,
-            sortDirection: sortFilter?.sortDirection,
-            sortField: sortFilter?.sortField,
           }),
         });
       }
     }
-  }, [companyListingData?.meta?.total]);
+  }, [jobListingData?.meta?.total]);
 
   useEffect(() => {
     const validPageSize = getValidPageSize(
@@ -240,46 +194,44 @@ const PostedJobsCa = () => {
 
   return (
     <>
-      {isGettingCompanies && <CustomLoader />}
-      {isErrorWhileGettingCompanies && (
+      {isGettingJobs && <CustomLoader />}
+      {isErrorWhileGettingJobs && (
         <div className={styles.box}>
           <ErrorMessageBox
             onRetry={handleTryAgain}
-            errorText={companyListError?.data?.message || companyListError}
+            errorText={jobListError?.data?.message || jobListError}
             errorHeading={intl.formatMessage({ id: "label.error" })}
           />
         </div>
       )}
-      {companyListingData &&
-        !isGettingCompanies &&
-        !isErrorWhileGettingCompanies && (
-          <TwoRow
-            className={styles.mainContainer}
-            topSection={
-              <SearchableComponent
-                {...{ searchedValue, handleOnUserSearch }}
-                placeholder={intl.formatMessage({
-                  id: "label.searchByCompanyUsername",
-                })}
-              />
-            }
-            bottomSection={
-              <DataTable
-                {...{
-                  columns,
-                  pageSize,
-                  current,
-                  currentDataLength,
-                  onChangePageSize,
-                  onChangeCurrentPage,
-                }}
-                currentDataLength={companyListingData?.meta?.total}
-                customContainerStyles={styles.customContainerStyles}
-                originalData={companyListingData?.records || []}
-              />
-            }
-          />
-        )}
+      {jobListingData && !isGettingJobs && !isErrorWhileGettingJobs && (
+        <TwoRow
+          className={styles.mainContainer}
+          topSection={
+            <SearchableComponent
+              {...{ searchedValue, handleOnUserSearch }}
+              placeholder={intl.formatMessage({
+                id: "label.designation_or_job_id",
+              })}
+            />
+          }
+          bottomSection={
+            <DataTable
+              {...{
+                columns,
+                pageSize,
+                current,
+                currentDataLength,
+                onChangePageSize,
+                onChangeCurrentPage,
+              }}
+              currentDataLength={jobListingData?.meta?.total}
+              customContainerStyles={styles.customContainerStyles}
+              originalData={jobListingData?.records || []}
+            />
+          }
+        />
+      )}
     </>
   );
 };
