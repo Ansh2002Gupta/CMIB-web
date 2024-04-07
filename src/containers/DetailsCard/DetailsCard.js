@@ -29,8 +29,6 @@ const DetailsCard = ({
   const { getImage } = useContext(ThemeContext);
   const [deletedImage, setDeletedImage] = useState([]);
 
-  console.log(details, "details..");
-
   const renderView = (item) => {
     return (
       <TwoRow

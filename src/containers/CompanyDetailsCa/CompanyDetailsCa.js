@@ -38,7 +38,6 @@ const CompanyDetailsCa = () => {
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   const onChangeValue = (key, value) => {
-    console.log(key, "key..", value, "value..");
     setState((prev) => ({
       ...prev,
       [key]: value,
