@@ -1,0 +1,22 @@
+.modalContainerStyle {
+  padding: var(--paddingMedium, 24px);
+  gap: var(--gapLarge, 32px);
+}
+
+.crossIcon {
+  cursor: pointer;
+}
+
+.headerText {
+  font-size: var(--fontSizeXlarge, 20px);
+  color: var(--textBold);
+  font-weight: var(--fontWeightBold, 600);
+}
+
+.errorContainer {
+  width: var(--fullWidth, 100%);
+  height: var(--fullHeight, 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

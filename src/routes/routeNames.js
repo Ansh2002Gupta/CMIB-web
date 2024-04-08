@@ -22,7 +22,6 @@ export const DETAILS = "details/:centreId";
 export const INTERVIEW_DETAILS = "interviewDetails/:centreId";
 export const EDIT_CONFIGURE_CENTRE = "centre-details/:centreId";
 export const EDIT_SESSION = "edit-session/";
-export const POSTED_JOB_DETAILS = "posted-job-details/:jobId";
 export const ORIENTATION_CENTERS = "orientation-centers";
 export const QUERIES = "queries/";
 export const QUERY_DETAILS = "queries-details/:queryId";
