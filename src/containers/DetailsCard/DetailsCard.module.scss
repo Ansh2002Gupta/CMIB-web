@@ -1,6 +1,3 @@
-.mainContainer {
-}
-
 .customStyle {
   row-gap: var(--gapSmall);
 }
@@ -49,4 +46,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: var(--gapXSmall);
+}
+
+.capitalize {
+  text-transform: capitalize;
 }

@@ -599,6 +599,7 @@ const locale = {
   "label.approval": "Approval",
   "label.path.registered-company": "Registered Companies",
   "label.path.registered-company-details": "Company Details",
+  "label.path.company-details": "Company Details",
   "label.approval_status": "Approval status",
   "label.balanceCredit": "Balance Credit: ",
   "label.modules": "Modules",

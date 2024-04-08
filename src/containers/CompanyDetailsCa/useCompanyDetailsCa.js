@@ -19,6 +19,7 @@ const company_details = () => [
         return "This Field is required";
       }
     },
+    isCapitalize: true,
   },
   {
     key: "company_entity",
@@ -79,6 +80,7 @@ const company_details = () => [
         return "This Field is required";
       }
     },
+    isCapitalize: true,
   },
   {
     key: "company_state",
@@ -90,6 +92,7 @@ const company_details = () => [
         return "This Field is required";
       }
     },
+    isCapitalize: true,
   },
   {
     key: "company_email",
@@ -163,6 +166,7 @@ const contact_person_details = () => [
         return "This Field is required";
       }
     },
+    isCapitalize: true,
   },
   {
     key: "contact_person_designation",
@@ -174,6 +178,7 @@ const contact_person_details = () => [
         return "This Field is required";
       }
     },
+    isCapitalize: true,
   },
   {
     key: "contact_mobile_number",
@@ -212,6 +217,7 @@ const other_details = () => [
         return "This Field is required";
       }
     },
+    isCapitalize: true,
   },
   {
     key: "website",
@@ -246,6 +252,7 @@ const other_details = () => [
         return "This Field is required";
       }
     },
+    isCapitalize: true,
   },
 ];
 const source_of_information = () => [

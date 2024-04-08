@@ -226,14 +226,16 @@ const CompanyDetailsCa = () => {
                   onChangeValue={onChangeValue}
                   onBlur={handleSource_of_informationBlur}
                 />
-                <DetailsCard
-                  headerText={intl.formatMessage({ id: "label.companyLogo" })}
-                  details={company_logo_data}
-                  isSingleComponent
-                  isEditable={isEditable}
-                  onChangeValue={onChangeValue}
-                  onBlur={handleCompany_logoBlur}
-                />
+                {(isEditable || state?.company_logo_image) && (
+                  <DetailsCard
+                    headerText={intl.formatMessage({ id: "label.companyLogo" })}
+                    details={company_logo_data}
+                    isSingleComponent
+                    isEditable={isEditable}
+                    onChangeValue={onChangeValue}
+                    onBlur={handleCompany_logoBlur}
+                  />
+                )}
                 {isEditable && (
                   <ActionAndCancelButtons
                     actionBtnText={intl.formatMessage({
