@@ -7,6 +7,7 @@ const company_details = () => [
     isMandatory: true,
     label: "label.companyName",
     placeholder: "label.companyName",
+    isCapitalize: true,
   },
   {
     key: "company_entity",
@@ -38,12 +39,14 @@ const company_details = () => [
     isMandatory: true,
     label: "label.addressOfCorrespondance",
     placeholder: "label.addressOfCorrespondance",
+    isCapitalize: true,
   },
   {
     key: "company_state",
     isMandatory: true,
     label: "label.state",
     placeholder: "label.state",
+    isCapitalize: true,
   },
   {
     key: "company_email",
@@ -82,12 +85,14 @@ const contact_person_details = () => [
     isMandatory: true,
     label: "label.contactPersonName",
     placeholder: "label.contactPersonName",
+    isCapitalize: true,
   },
   {
     key: "contact_person_designation",
     isMandatory: true,
     label: "label.contactPersonDesignation",
     placeholder: "label.contactPersonDesignation",
+    isCapitalize: true,
   },
   {
     key: "contact_mobile_number",
@@ -109,12 +114,14 @@ const other_details = () => [
     label: "label.shortProfileOfTheCompany",
     placeholder: "label.shortProfileOfTheCompany",
     fullWidth: true,
+    isCapitalize: true,
   },
   {
     key: "website",
     isMandatory: true,
     label: "label.website",
     placeholder: "label.website",
+    isWebsite: true,
   },
   {
     key: "nature_of_supplier",
@@ -127,6 +134,7 @@ const other_details = () => [
     isMandatory: true,
     label: "label.companyType",
     placeholder: "label.companyType",
+    isCapitalize: true,
   },
 ];
 const source_of_information = () => [

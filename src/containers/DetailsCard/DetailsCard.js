@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Image, Typography } from "antd";
+import { FormattedMessage } from "react-intl";
 
 import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
@@ -77,9 +78,25 @@ const DetailsCard = ({
                       className={[
                         styles.customValueStyles,
                         customValueStyles,
+                        item?.isCapitalize && styles.capitalize,
                       ].join(" ")}
                     >
-                      {item?.value}
+                      {item?.isWebsite ? (
+                        <a
+                          href={item?.value}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={classes.linkStyles}
+                        >
+                          <FormattedMessage
+                            id={item?.value}
+                            defaultMessage={item?.value}
+                          />
+                          &nbsp;
+                        </a>
+                      ) : (
+                        item?.value
+                      )}
                     </Typography>
                   )
                 }

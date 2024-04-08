@@ -8,4 +8,8 @@ export const classes = {
     padding: variables.paddingMedium,
     gap: variables.gapMedium,
   },
+  linkStyles: {
+    color: variables.linkColor,
+    textDecoration: "underline",
+  },
 };

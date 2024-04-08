@@ -127,11 +127,13 @@ const CompanyDetailsCa = () => {
                 })}
                 details={source_of_information_data}
               />
-              <DetailsCard
-                headerText={intl.formatMessage({ id: "label.companyLogo" })}
-                details={company_logo_data}
-                isSingleComponent
-              />
+              {state?.company_logo_image && (
+                <DetailsCard
+                  headerText={intl.formatMessage({ id: "label.companyLogo" })}
+                  details={company_logo_data}
+                  isSingleComponent
+                />
+              )}
             </div>
           }
         />
