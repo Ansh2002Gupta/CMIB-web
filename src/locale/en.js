@@ -716,6 +716,8 @@ const locale = {
   "label.postedJobs": "Posted Jobs",
   "label.editCompanyDetails": "Edit Company Details",
   "label.contactPersonalInformation": "Contact Personal Information",
+  "label.scheduledInterviews": "Scheduled Interviews",
+  "label.approvedNotapprovedAdmin": "Approved/Not Approved by admin",
 };
 
 export default locale;
