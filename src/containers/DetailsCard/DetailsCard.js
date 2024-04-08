@@ -157,6 +157,7 @@ const DetailsCard = ({
           onChangeValue(item?.key, val.target.value);
         }}
         customInputNumberStyles={styles.customInputNumberStyles}
+        customInputStyles={styles.customInputStyles}
         type={item?.type}
         controls={item?.controls}
         selectOptions={item?.selectOptions}

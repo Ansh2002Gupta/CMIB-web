@@ -167,7 +167,7 @@ const CompanyDetailsCa = () => {
           />
         </div>
       ) : (
-        data &&
+        !!data &&
         !isGettingCompanyData &&
         !errorWhileGettingCompanyData && (
           <TwoRow

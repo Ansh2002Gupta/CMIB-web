@@ -8,7 +8,7 @@ import {
   SOURCE_OF_INFORM_ICAI_OPTIONS,
 } from "../../constant/constant";
 
-const company_details = () => [
+const company_details = ({ intl }) => [
   {
     key: "company_name",
     isMandatory: true,
@@ -16,7 +16,7 @@ const company_details = () => [
     placeholder: "label.companyName",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
     isCapitalize: true,
@@ -26,11 +26,7 @@ const company_details = () => [
     isMandatory: true,
     label: "label.entity",
     placeholder: "label.entity",
-    validate: (value) => {
-      if (!value) {
-        return "This Field is required";
-      }
-    },
+    validate: (value) => {},
   },
   {
     key: "comapny_frn",
@@ -39,7 +35,7 @@ const company_details = () => [
     placeholder: "label.firmRegistrationNo",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
@@ -52,7 +48,7 @@ const company_details = () => [
     controls: true,
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
@@ -63,7 +59,7 @@ const company_details = () => [
     placeholder: "label.currentIndustry",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
@@ -77,7 +73,7 @@ const company_details = () => [
     rows: 3,
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
     isCapitalize: true,
@@ -89,7 +85,7 @@ const company_details = () => [
     placeholder: "label.state",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
     isCapitalize: true,
@@ -101,10 +97,10 @@ const company_details = () => [
     placeholder: "label.emailId",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
       if (!EMAIL_REGEX.test(value)) {
-        return "Enter Correct Email Format";
+        return intl.formatMessage({ id: "label.invalidEmail" });
       }
     },
   },
@@ -115,7 +111,7 @@ const company_details = () => [
     placeholder: "label.userName2",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
@@ -126,7 +122,7 @@ const company_details = () => [
     placeholder: "label.isdCode",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
@@ -137,12 +133,12 @@ const company_details = () => [
     placeholder: "label.telephoneNumber",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
 ];
-const contact_person_details = () => [
+const contact_person_details = ({ intl }) => [
   {
     key: "salutation",
     isMandatory: true,
@@ -152,7 +148,7 @@ const contact_person_details = () => [
     selectOptions: SALUTATION_OPTIONS,
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
@@ -163,7 +159,7 @@ const contact_person_details = () => [
     placeholder: "label.contactPersonName",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
     isCapitalize: true,
@@ -175,7 +171,7 @@ const contact_person_details = () => [
     placeholder: "label.contactPersonDesignation",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
     isCapitalize: true,
@@ -187,7 +183,7 @@ const contact_person_details = () => [
     placeholder: "label.mobileNumber",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
@@ -198,12 +194,12 @@ const contact_person_details = () => [
     placeholder: "label.emailId",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
 ];
-const other_details = () => [
+const other_details = ({ intl }) => [
   {
     key: "short_profile_company",
     isMandatory: true,
@@ -214,7 +210,7 @@ const other_details = () => [
     rows: 2,
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
     isCapitalize: true,
@@ -227,7 +223,7 @@ const other_details = () => [
     isWebsite: true,
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
@@ -238,7 +234,7 @@ const other_details = () => [
     placeholder: "label.natureOfSupplier",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
   },
@@ -249,13 +245,13 @@ const other_details = () => [
     placeholder: "label.companyType",
     validate: (value) => {
       if (!value) {
-        return "This Field is required";
+        return intl.formatMessage({ id: "label.fieldRequired" });
       }
     },
     isCapitalize: true,
   },
 ];
-const source_of_information = () => [
+const source_of_information = ({ intl }) => [
   {
     key: "source",
     isArray: true,
@@ -265,7 +261,7 @@ const source_of_information = () => [
   },
 ];
 
-const company_logo = () => [
+const company_logo = ({ intl }) => [
   {
     key: "company_logo_image",
     label: "label.companyIciaMessage",
@@ -300,14 +296,19 @@ const addValueOnField = ({ state, details, isEditable }) => {
 
 export const useCompanyDetailsCa = ({ state, isEditable }) => {
   const intl = useIntl();
-  const [company_details_state, setCompany_details_state] =
-    useState(company_details);
+  const [company_details_state, setCompany_details_state] = useState(
+    company_details({ intl })
+  );
   const [contact_person_details_state, setContact_person_details_state] =
-    useState(contact_person_details);
-  const [other_details_state, setOther_details_state] = useState(other_details);
+    useState(contact_person_details({ intl }));
+  const [other_details_state, setOther_details_state] = useState(
+    other_details({ intl })
+  );
   const [source_of_information_state, setSource_of_information_state] =
-    useState(source_of_information);
-  const [company_logo_state, setCompany_logo_state] = useState(company_logo);
+    useState(source_of_information({ intl }));
+  const [company_logo_state, setCompany_logo_state] = useState(
+    company_logo({ intl })
+  );
 
   const validateOnBlur = ({ state, details, key, index, intl }) => {
     const value = state[key];

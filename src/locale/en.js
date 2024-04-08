@@ -717,6 +717,7 @@ const locale = {
   "label.editCompanyDetails": "Edit Company Details",
   "label.contactPersonalInformation": "Contact Personal Information",
   "label.company_update_success": "Company Details Updated Successfully",
+  "label.fieldRequired": "This Field is required",
 };
 
 export default locale;

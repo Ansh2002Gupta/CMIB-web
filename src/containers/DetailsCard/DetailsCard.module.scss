@@ -29,8 +29,29 @@
 }
 
 .customInputNumberStyles {
-  padding-top: 5px;
-  color: red !important;
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  padding: 8px 4px;
+  height: var(--height_44);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: var(--inputPlaceHolder) !important;
+  }
+}
+.customInputStyles {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  height: var(--height_44);
+  font-weight: 400;
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: var(--v) !important;
+  }
 }
 
 .gridItem {
