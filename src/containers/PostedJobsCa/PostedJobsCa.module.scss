@@ -5,6 +5,24 @@
   background-color: var(--blueBg);
 }
 
+.filterContainer {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--gapSmall);
+  position: relative;
+  flex: 1;
+}
+.customSearchBar {
+  border-radius: var(--radiusLg);
+  width: var(--fullWidth);
+}
+
+@media screen and (max-width: 511px) {
+  .filterContainer {
+    flex-direction: column;
+  }
+}
+
 .customContainerStyles {
   border-radius: var(--radiusMLg);
   overflow: hidden;

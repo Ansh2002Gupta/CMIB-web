@@ -9,11 +9,16 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import SearchableComponent from "../../components/SearchableComponent";
+import SearchFilter from "../../components/SearchFilter";
 import getJobsColumn from "./PostedJobsConfig";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
 import { urlService } from "../../Utils/urlService";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import {
+  getValidPageNumber,
+  getValidPageSize,
+  getValidFilter,
+} from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
 import { ADMIN_ROUTE, JOBS, SUMMARY } from "../../constant/apiEndpoints";
@@ -24,6 +29,11 @@ const PostedJobsCa = () => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const [currentDataLength, setCurrentDataLength] = useState(0);
+  const [showFilters, setShowFilters] = useState(false);
+
+  const [filterArray, setFilterArray] = useState(
+    getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
+  );
   const [current, setCurrent] = useState(
     getValidPageNumber(
       urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
@@ -60,6 +70,8 @@ const PostedJobsCa = () => {
         page: current,
         search: validateSearchTextLength(searchedValue),
         size: +pageSize,
+        status: filterArray["status"],
+        approved: filterArray["approved"],
       }),
     });
   }, []);
@@ -68,12 +80,29 @@ const PostedJobsCa = () => {
     return _.debounce(getJobListing, DEBOUNCE_TIME);
   }, []);
 
-  const getRequestedParams = ({ page, search, size }) => {
+  const getRequestedParams = ({ page, search, size, status, approved }) => {
     return {
       perPage: size || pageSize,
       page: page || current,
       search: search || "",
+      status: status || [],
+      approved: approved || [],
     };
+  };
+
+  const onFilterApply = (currentFilterStatus) => {
+    setFilterArray(currentFilterStatus);
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.FILTER,
+      encodeURIComponent(JSON.stringify(currentFilterStatus))
+    );
+    getJobListing({
+      queryParamsObject: getRequestedParams({
+        search: validateSearchTextLength(searchedValue),
+        status: currentFilterStatus["status"],
+        approved: currentFilterStatus["approved"],
+      }),
+    });
   };
 
   const goToJobDetailsPage = (data) => {
@@ -98,6 +127,8 @@ const PostedJobsCa = () => {
         page: 1,
         search: validateSearchTextLength(searchedValue),
         size: +size,
+        status: filterArray["status"],
+        approved: filterArray["approved"],
       }),
     });
   };
@@ -113,6 +144,8 @@ const PostedJobsCa = () => {
       queryParamsObject: getRequestedParams({
         page: newPageNumber,
         search: validateSearchTextLength(searchedValue),
+        status: filterArray["status"],
+        approved: filterArray["approved"],
       }),
     });
   };
@@ -124,6 +157,8 @@ const PostedJobsCa = () => {
         queryParamsObject: getRequestedParams({
           page: 1,
           search: validateSearchTextLength(str),
+          status: filterArray["status"],
+          approved: filterArray["approved"],
         }),
       });
       urlService.setQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
@@ -138,6 +173,8 @@ const PostedJobsCa = () => {
         queryParamsObject: getRequestedParams({
           page: 1,
           search: "",
+          status: filterArray["status"],
+          approved: filterArray["approved"],
         }),
       });
       urlService.removeParam(PAGINATION_PROPERTIES.SEARCH_QUERY);
@@ -150,6 +187,8 @@ const PostedJobsCa = () => {
     getJobListing({
       queryParamsObject: getRequestedParams({
         search: validateSearchTextLength(searchedValue),
+        status: filterArray["status"],
+        approved: filterArray["approved"],
       }),
     });
   };
@@ -166,6 +205,8 @@ const PostedJobsCa = () => {
             page: 1,
             search: validateSearchTextLength(searchedValue),
             size: +pageSize,
+            status: filterArray["status"],
+            approved: filterArray["approved"],
           }),
         });
       }
@@ -192,6 +233,39 @@ const PostedJobsCa = () => {
     };
   }, []);
 
+  const filterPropertiesArray = [
+    {
+      id: "status",
+      name: intl.formatMessage({ id: "label.activeInactive" }),
+      isSelected: false,
+      options: [
+        {
+          optionId: 1,
+          str: intl.formatMessage({ id: "label.active" }),
+        },
+        {
+          optionId: 0,
+          str: intl.formatMessage({ id: "label.inactive" }),
+        },
+      ],
+    },
+    {
+      id: "approved",
+      name: intl.formatMessage({ id: "label.approved_not_approved" }),
+      isSelected: false,
+      options: [
+        {
+          optionId: 1,
+          str: intl.formatMessage({ id: "label.approved" }),
+        },
+        {
+          optionId: 0,
+          str: intl.formatMessage({ id: "label.not_approved" }),
+        },
+      ],
+    },
+  ];
+
   return (
     <>
       {isGettingJobs && <CustomLoader />}
@@ -208,12 +282,26 @@ const PostedJobsCa = () => {
         <TwoRow
           className={styles.mainContainer}
           topSection={
-            <SearchableComponent
-              {...{ searchedValue, handleOnUserSearch }}
-              placeholder={intl.formatMessage({
-                id: "label.designation_or_job_id",
-              })}
-            />
+            <div className={styles.filterContainer}>
+              <SearchableComponent
+                customSearchBar={styles.customSearchBar}
+                {...{ searchedValue, handleOnUserSearch }}
+                placeholder={intl.formatMessage({
+                  id: "label.designation_or_job_id",
+                })}
+              />
+              <div style={{ flex: 1 }}>
+                <SearchFilter
+                  {...{
+                    filterPropertiesArray,
+                    filterArray,
+                    showFilters,
+                    onFilterApply,
+                    setShowFilters,
+                  }}
+                />
+              </div>
+            </div>
           }
           bottomSection={
             <DataTable
