@@ -30,6 +30,7 @@
 
 .customInputNumberStyles {
   padding-top: 5px;
+  color: red !important;
 }
 
 .gridItem {
@@ -50,4 +51,10 @@
 
 .capitalize {
   text-transform: capitalize;
+}
+
+.customLabelStyles {
+  color: var(--inputPlaceHolder);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
 }

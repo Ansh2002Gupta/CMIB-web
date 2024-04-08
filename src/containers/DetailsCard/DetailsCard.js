@@ -74,9 +74,11 @@ const DetailsCard = ({
             </div>
           ) : (
             <Typography
-              className={[styles.customValueStyles, customValueStyles].join(
-                " "
-              )}
+              className={[
+                styles.customValueStyles,
+                customValueStyles,
+                item?.isCapitalize && styles.capitalize,
+              ].join(" ")}
             >
               {item?.isWebsite ? (
                 <a
@@ -137,6 +139,7 @@ const DetailsCard = ({
         errorMessage={item?.error}
         isError={item.error ? true : false}
         customContainerStyles={item.fullWidth && styles.gridItem}
+        customLabelStyles={styles.customLabelStyles}
         key={item.key}
         placeholder={intl.formatMessage({ id: item?.placeholder })}
         label={item?.label && intl.formatMessage({ id: item?.label })}
