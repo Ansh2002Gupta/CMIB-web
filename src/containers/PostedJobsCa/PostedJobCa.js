@@ -13,6 +13,7 @@ import SearchFilter from "../../components/SearchFilter";
 import getJobsColumn from "./PostedJobsConfig";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
+import { usePatch } from "../../core/hooks/useApiRequest";
 import { urlService } from "../../Utils/urlService";
 import {
   getValidPageNumber,
@@ -21,7 +22,13 @@ import {
 } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
-import { ADMIN_ROUTE, JOBS, SUMMARY } from "../../constant/apiEndpoints";
+import {
+  APPROVE,
+  ADMIN_ROUTE,
+  CHANGE_STATUS,
+  JOBS,
+  SUMMARY,
+} from "../../constant/apiEndpoints";
 import styles from "./PostedJobsCa.module.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -57,12 +64,21 @@ const PostedJobsCa = () => {
     fetchData: getJobListing,
     isError: isErrorWhileGettingJobs,
     isLoading: isGettingJobs,
+    setData: setJobListingData,
   } = useFetch({
     url: ADMIN_ROUTE + JOBS + SUMMARY,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
+
+  const { makeRequest: changeStatus, isLoading: isStatusChanging } = usePatch(
+    {}
+  );
+
+  const { makeRequest: handleApproveJob, isLoading: isJobApproving } = usePatch(
+    {}
+  );
 
   useEffect(() => {
     getJobListing({
@@ -105,16 +121,53 @@ const PostedJobsCa = () => {
     });
   };
 
+  const onMenuClick = (data, item) => {
+    if (item === 1) {
+      goToJobDetailsPage(data);
+    }
+    if (item === 2) {
+      handleApproveJob({
+        overrideUrl: ADMIN_ROUTE + JOBS + `/${data?.id}` + APPROVE,
+        onSuccessCallback: setJobListingData({
+          ...jobListingData,
+          records: jobListingData.records.map((record) =>
+            record.id === data?.id
+              ? { ...record, approve: data?.approve ? 0 : 1 }
+              : record
+          ),
+        }),
+      });
+    }
+  };
+
   const goToJobDetailsPage = (data) => {
     const jobId = data?.id;
     navigate(`posted-job-details/${jobId}`);
   };
 
+  const onHandleJobStatus = (data) => {
+    changeStatus({
+      overrideUrl: ADMIN_ROUTE + JOBS + `/${data?.id}` + CHANGE_STATUS,
+      onSuccessCallback: () => {
+        setJobListingData({
+          ...jobListingData,
+          records: jobListingData.records.map((record) =>
+            record.id === data?.id
+              ? { ...record, status: !data?.status }
+              : record
+          ),
+        });
+      },
+    });
+  };
+
   const columns = getJobsColumn({
     intl,
+    isStatusChanging,
     getImage,
-    goToJobDetailsPage,
+    onMenuClick,
     renderColumn,
+    onHandleJobStatus,
   });
 
   const onChangePageSize = (size) => {

@@ -108,6 +108,7 @@ const useRenderColumn = () => {
 
     const {
       items = [],
+      isConditionalMenu = false,
       menuSrc = "",
       onMenuClick = () => {},
       menuPreview,
@@ -590,19 +591,41 @@ const useRenderColumn = () => {
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {
-        const menuItems = {
-          items: items.map((item) => ({
-            key: item.key,
-            label: (
-              <div
-                onClick={onMenuClick ? () => onMenuClick(rowData) : () => {}}
-                className={styles.dropdownMenuItem}
-              >
-                {item.label}
-              </div>
-            ),
-          })),
-        };
+        const menuItems = isConditionalMenu
+          ? {
+              items: items(rowData).map((item) => ({
+                key: item.key,
+                label: (
+                  <div
+                    onClick={
+                      onMenuClick
+                        ? () => onMenuClick(rowData, item.key)
+                        : () => {}
+                    }
+                    className={styles.dropdownMenuItem}
+                  >
+                    {item.label}
+                  </div>
+                ),
+              })),
+            }
+          : {
+              items: items.map((item) => ({
+                key: item.key,
+                label: (
+                  <div
+                    onClick={
+                      onMenuClick
+                        ? () => onMenuClick(rowData, item.key)
+                        : () => {}
+                    }
+                    className={styles.dropdownMenuItem}
+                  >
+                    {item.label}
+                  </div>
+                ),
+              })),
+            };
         return (
           <Dropdown menu={menuItems} trigger={[triggerType || "click"]}>
             <Image

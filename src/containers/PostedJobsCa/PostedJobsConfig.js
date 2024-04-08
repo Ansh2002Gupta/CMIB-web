@@ -1,11 +1,10 @@
-import styles from "./PostedJobsCa.module.scss";
-import { SORT_VALUES } from "../../constant/constant";
-
 const getJobsColumn = ({
   intl,
+  isStatusChanging,
   getImage,
-  goToJobDetailsPage,
+  onMenuClick,
   renderColumn,
+  onHandleJobStatus,
 }) => {
   return [
     renderColumn({
@@ -32,14 +31,19 @@ const getJobsColumn = ({
       key: "number_of_interviews",
       renderText: { isTextLink: true, visible: true },
     }),
+
     renderColumn({
-      title: intl.formatMessage({ id: "label.activeInactive" }),
+      title: intl.formatMessage({ id: "label.status" }),
       dataIndex: "status",
       key: "status",
-      renderChip: {
+      renderSwitch: {
+        dataKeyName: "status",
+        switchToggleHandler: (data) => onHandleJobStatus(data),
         visible: true,
+        checkIsSwitchEditable: (data) => !isStatusChanging,
       },
     }),
+
     renderColumn({
       title: intl.formatMessage({ id: "label.activeInactive" }),
       dataIndex: "approve",
@@ -53,17 +57,22 @@ const getJobsColumn = ({
       dataIndex: "more",
       key: "more",
       renderMenu: {
-        items: [
-          {
-            key: 1,
-            label: intl.formatMessage({ id: "label.view_job_details" }),
-          },
-          {
-            key: 2,
-            label: intl.formatMessage({ id: "label.approve" }),
-          },
-        ],
-        onMenuClick: (rowData) => goToJobDetailsPage(rowData),
+        isConditionalMenu: true,
+        items: (rowData) => {
+          return [
+            {
+              key: 1,
+              label: intl.formatMessage({ id: "label.view_job_details" }),
+            },
+            !rowData?.approve
+              ? {
+                  key: 2,
+                  label: intl.formatMessage({ id: "label.approve" }),
+                }
+              : null,
+          ].filter(Boolean);
+        },
+        onMenuClick: (rowData, item) => onMenuClick(rowData, item),
         menuPreview: false,
         menuSrc: getImage("more"),
         visible: true,
