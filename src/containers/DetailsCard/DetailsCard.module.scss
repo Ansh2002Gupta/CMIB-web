@@ -1,0 +1,37 @@
+.customStyle {
+  row-gap: var(--gapSmall);
+}
+
+.customLabelStyles {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--inputPlaceHolder);
+}
+
+.customValueStyles {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.customHeaderStyles {
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.singleGrid {
+  grid-template-columns: unset;
+  background-color: "red";
+}
+.logoStyle {
+  padding-top: var(--marginMedium);
+}
+
+.gridItem {
+  grid-column: 1 / -1;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}

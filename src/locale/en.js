@@ -599,6 +599,7 @@ const locale = {
   "label.approval": "Approval",
   "label.path.registered-company": "Registered Companies",
   "label.path.registered-company-details": "Company Details",
+  "label.path.company-details": "Company Details",
   "label.approval_status": "Approval status",
   "label.balanceCredit": "Balance Credit: ",
   "label.modules": "Modules",
@@ -639,6 +640,10 @@ const locale = {
   "label.path.consent-marking": "Registration and Consent Marking Schedule",
   "label.dates_added_successfully": "Dates Added Successfully",
   "label.videolimitError": "Please enter value between 1 to 999",
+  "label.manageCompanies": "Manage Companies",
+  "label.approvedCompanyName": "Approved Company Name",
+  "label.searchByCompanyUsername": "Search by company name, username",
+  "label.viewCompanyDetails": "View Company Details",
   "label.max_no_of_vacancy": "Max. No. of Vacancy",
   "label.multiplier": "Multiplier",
   "label.shortlist_students_allowed":
@@ -710,6 +715,7 @@ const locale = {
   "label.viewCompanyDetails": "View Company Details",
   "label.postedJobs": "Posted Jobs",
   "label.editCompanyDetails": "Edit Company Details",
+  "label.contactPersonalInformation": "Contact Personal Information",
 };
 
 export default locale;

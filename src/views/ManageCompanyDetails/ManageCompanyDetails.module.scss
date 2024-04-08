@@ -11,15 +11,5 @@
 
 .mainContainer {
   gap: var(--gapSmall);
-}
-
-.ButtonCustomContainerStyle {
-  border: var(--borderLight);
-  background-color: var(--bodyBg);
-  padding: var(--paddingMediumSmall) var(--paddingSmall);
-  border-radius: var(--radiusLg);
-}
-
-.customButtonContainerStyle {
-  background-color: "red";
+  padding-bottom: var(--paddingMedium);
 }

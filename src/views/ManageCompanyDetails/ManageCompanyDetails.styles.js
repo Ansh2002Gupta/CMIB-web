@@ -6,10 +6,6 @@ export const classes = {
     borderBottom: variables.borderLight,
     backgroundColor: variables.bodyBg,
   },
-  middleSectionStyle: {
-    justifyContent: "flex-end",
-    paddingRight: variables.paddingMedium,
-  },
   tabContainerDetails: {
     backgroundColor: variables.blueBg,
     flex: 1,
