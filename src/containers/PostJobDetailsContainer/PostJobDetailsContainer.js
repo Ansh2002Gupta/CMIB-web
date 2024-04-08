@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Image, Typography } from "antd";
 
@@ -9,6 +9,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import DetailsCard from "../DetailsCard/DetailsCard";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
+import { usePostJobDetails } from "./usePostJobDetails";
 import { ADMIN_ROUTE, JOBS } from "../../constant/apiEndpoints";
 import { classes } from "./PostedJobDetails.styles";
 import styles from "./PostJobDetailsContainer.module.scss";
@@ -23,6 +24,38 @@ const PostJobDetailsContainer = ({ jobId, setIsModalOpen }) => {
     fetchData: getJobDetails,
   } = useFetch({
     url: ADMIN_ROUTE + JOBS + `/${jobId}`,
+  });
+
+  const getData = (data) =>
+    data && Object.keys(data)?.length
+      ? {
+          company_name: data?.company_name,
+          approved: data?.approved,
+          jobId: data?.jobId, //
+          summary: data?.summary,
+          detail: data?.detail,
+          type: data?.type?.name,
+          is_urgent: data?.is_urgent,
+          industry: data?.industry,
+          min_experience: data?.min_experience,
+          max_experience: data?.max_experience,
+          designation: data?.designation,
+          location: data?.location,
+          functional_areas: data?.functional_areas,
+          nationality: data?.nationality,
+          company_details: data?.company_details, //
+        }
+      : {};
+
+  const [state, setState] = useState(getData(jobDetails));
+
+  useEffect(() => {
+    setState(getData(jobDetails));
+  }, [jobDetails]);
+
+  const { job_details_data } = usePostJobDetails({
+    state,
+    isEditable: false,
   });
 
   const onRetry = () => {
@@ -74,7 +107,12 @@ const PostJobDetailsContainer = ({ jobId, setIsModalOpen }) => {
             ) : (
               !!jobDetails &&
               !isGettingJobDetails &&
-              !errorWhileGettingJobs && <div>hi</div>
+              !errorWhileGettingJobs && (
+                <DetailsCard
+                  details={job_details_data}
+                  customMainStyles={classes.customMainStyles}
+                />
+              )
             )
           }
         />

@@ -719,6 +719,17 @@ const locale = {
   "label.scheduledInterviews": "Scheduled Interviews",
   "label.approvedNotapprovedAdmin": "Approved/Not Approved by admin",
   "label.postedJobDetails": "Posted Job Details",
+  "label.approvedByAdmin": "Approved by Admin",
+  "label.jobSummary": "Job Summary",
+  "label.jobDetails": "Job Details",
+  "label.jobType": "Job Type",
+  "label.urgentJob": "Urgent Job",
+  "label.industry": "Industry",
+  "label.minimumExperience": "Minimum Experience",
+  "label.maximumExperience": "Maximum Experience",
+  "label.nationality": "Nationality",
+  "label.jobLocation": "Job Location",
+  "label.functionalAreas": "Functional Areas",
 };
 
 export default locale;

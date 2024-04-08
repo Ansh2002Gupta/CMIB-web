@@ -15,6 +15,7 @@ import { useIntl } from "react-intl";
 const DetailsCard = ({
   customHeaderStyles,
   customLabelStyles,
+  customMainStyles,
   customValueStyles,
   isSingleComponent,
   details,
@@ -25,13 +26,17 @@ const DetailsCard = ({
 
   return (
     <TwoRow
-      style={classes.mainStyle}
+      style={{ ...classes.mainStyle, ...customMainStyles }}
       topSection={
-        <Typography
-          className={[styles.customHeaderStyles, customHeaderStyles].join(" ")}
-        >
-          {headerText}
-        </Typography>
+        headerText && (
+          <Typography
+            className={[styles.customHeaderStyles, customHeaderStyles].join(
+              " "
+            )}
+          >
+            {headerText}
+          </Typography>
+        )
       }
       bottomSection={
         <CustomGrid
