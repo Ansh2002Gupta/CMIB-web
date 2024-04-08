@@ -1,16 +1,14 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { Switch, Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "core/layouts";
 
 import ContentHeader from "../../containers/ContentHeader";
 import useResponsive from "core/hooks/useResponsive";
-import { COMPANY_STATUS } from "../../companyDetailsDummyData";
-import { classes } from "./AllJobDetailHeader.styles";
 import styles from "./AllJobDetailHeader.module.scss";
+import CustomSwitch from '../../components/CustomSwitch'
 
-function AllJobDetailHeaderView({designation}) {
+function AllJobDetailHeaderView({designation, changeJobStatus, isActive}) {
   const intl = useIntl();
   const responsive = useResponsive();
 
@@ -26,16 +24,7 @@ function AllJobDetailHeaderView({designation}) {
               <TwoColumn
                 className={styles.statusContainer}
                 leftSection={
-                  <Switch style={classes.switchBackground} checked={true} />
-                }
-                rightSection={
-                  <Typography className={styles.blackText}>
-                    {intl.formatMessage({
-                      id: `label.${
-                        COMPANY_STATUS.status ? "active" : "inactive"
-                      }`,
-                    })}
-                  </Typography>
+                  <CustomSwitch checked={isActive} onChange={changeJobStatus} activeText="active" inActiveText="inactive"   />
                 }
               />
             </div>

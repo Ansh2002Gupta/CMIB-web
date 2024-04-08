@@ -106,20 +106,30 @@ export const getQueryColumn = ({
     renderColumn({
       dataIndex: "more",
       key: "more",
-      renderMenu: {
-        items: [
-          {
-            key: 1,
-            label: intl.formatMessage({ id: "label.view_job_details" }),
-          },
-          {
-            key: 2,
-            label: intl.formatMessage({ id: "label.approve" }),
-          },
-        ],
-        onMenuClick: (rowData, item) => handleMenuItemClick(rowData, item),
-        menuPreview: false,
-        menuSrc: getImage("more"),
+      renderActions: {
+        customActionPairs: (rowData) => {
+          if (rowData.approve) {
+            return [
+              {
+                key: 1,
+                label: intl.formatMessage({ id: "label.view_job_details" }),
+              },
+            ];
+          }
+          return [
+            {
+              key: 1,
+              label: intl.formatMessage({ id: "label.view_job_details" }),
+            },
+            {
+              key: 2,
+              label: intl.formatMessage({ id: "label.approve" }),
+            },
+          ];
+        },
+        onActionClick: (rowData, item) => handleMenuItemClick(rowData, item),
+        actionPreview: false,
+        actionSrc: getImage("more"),
         visible: true,
       },
     }),

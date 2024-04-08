@@ -29,6 +29,9 @@ import { active_filter_options, approval_filter_options } from "./constants";
 import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./ScheduledInterviewsListingTable.module.scss";
+import ScheduleInterviewDetailsView from "../SchduledInterviewDetail/SchduledInterviewDetail";
+import CommonModal from "../../components/CommonModal";
+import useFetchInterviewDetailApi from "../../services/api-services/AllJob/useFetchInterviewDetailApi";
 
 const ScheduledInterViewsTable = ({
   jobId,
@@ -44,9 +47,14 @@ const ScheduledInterViewsTable = ({
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
 
+  const VIEW_INTERVIEW_DETAILS = "View Interview Details";
+
   const [filterArray, setFilterArray] = useState(
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
+
+  const [openInterviewDetailModal, setOpenInterviewDetailModal] =
+    useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
@@ -54,6 +62,12 @@ const ScheduledInterViewsTable = ({
     url: ADMIN_ROUTE + JOBS + `/${jobId}` + SCHEDULED_INTERVIEW,
     otherOptions: { skipApiCallOnMount: true },
   });
+
+  const {
+    fetchInterviewDetail,
+    isLoading: isLoadingFetchInterviewDetails,
+    interviewDetailData,
+  } = useFetchInterviewDetailApi();
 
   let errorString = error;
   if (typeof error === "object") {
@@ -86,8 +100,14 @@ const ScheduledInterViewsTable = ({
   };
 
   const handleMenuItems = (rowData, item) => {
-    // const jobId = rowData?.id;
-    // navigate(`job-details/${jobId}`);
+    if (item.label === VIEW_INTERVIEW_DETAILS) {
+      fetchInterviewDetail(
+        rowData.id,
+        () => setOpenInterviewDetailModal(true),
+        (errorMessage) =>
+          showNotification({ text: errorMessage, type: "error" })
+      );
+    }
   };
 
   const columns = getQueryColumn({
@@ -253,6 +273,16 @@ const ScheduledInterViewsTable = ({
   return (
     <>
       {notificationContextHolder}
+      <CommonModal
+        isOpen={openInterviewDetailModal}
+        width={1184}
+        closeIcon={true}
+        onCancel={() => setOpenInterviewDetailModal(false)}
+      >
+        <ScheduleInterviewDetailsView
+          interviewDetailData={interviewDetailData}
+        />
+      </CommonModal>
       {!isError && (
         <TableWithSearchAndFilters
           {...{
@@ -267,7 +297,7 @@ const ScheduledInterViewsTable = ({
             onChangeCurrentPage,
             onChangePageSize,
             placeholder: intl.formatMessage({
-              id: "label.designation_or_job_id",
+              id: "label.search_by_applicant_id_or_name",
             }),
           }}
           isLoading={isLoading}

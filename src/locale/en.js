@@ -605,7 +605,13 @@ const locale = {
   "label.alternateInterviewSchedule": "Alternate Interview Schedule",
   "label.date": "Date",
   "label.time": "Time",
-  "label.noQuestionnairesAreFound": "No questionnaires are found"
+  "label.noQuestionnairesAreFound": "No questionnaires are found",
+  "label.meetingLink": "Link",
+  "label.venueAddress": "Address",
+  "label.inactiveJob": "Inactive Job",
+  "label.inactiveJobConfirmation": "Are you sure that you want to inactive this job?",
+  "label.yes": "Yes",
+  "label.no": "No",
 };
 
 export default locale;

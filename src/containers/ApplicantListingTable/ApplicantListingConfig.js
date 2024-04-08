@@ -51,24 +51,25 @@ export const getQueryColumn = ({
       },
     }),
     renderColumn({
-        dataIndex: "more",
-        key: "more",
-        renderMenu: {
-          items: [
-            {
-              key: 1,
-              label: intl.formatMessage({ id: "label.view_job_details" }),
-            },
-            {
-              key: 2,
-              label: intl.formatMessage({ id: "label.approve" }),
-            },
-          ],
-          onMenuClick: (rowData, item) => handleMenuItemClick(rowData, item),
-          menuPreview: false,
-          menuSrc: getImage("more"),
-          visible: true,
+      dataIndex: "more",
+      key: "more",
+      renderActions: {
+        customActionPairs: (rowData) => {
+          if (rowData?.action) {
+            const actionList = rowData?.action?.map((item, index) => {
+              return  {
+                key: index,
+                label: item,
+              }              
+            })
+            return actionList;
+          }
         },
-      }),
+        onActionClick: (rowData, item) => handleMenuItemClick(rowData, item),
+        actionPreview: false,
+        actionSrc: getImage("more"),
+        visible: true,
+      },
+    }),
   ];
 };

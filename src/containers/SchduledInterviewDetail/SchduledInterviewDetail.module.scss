@@ -1,0 +1,65 @@
+.mainContainer {
+    gap: var(--gapSmall, 16px);
+    padding: var(--paddingMedium, 24px);
+  }
+
+  .gridItem {
+    padding-bottom: var(--paddingMedium);
+  }
+
+  .headingText {
+    font-size: var(--fontSizeExtraSmall, 12px);
+    font-weight: var(--fontWeightMedium, 500);
+    color: var(--subHeadingColor, #616C82);
+  }
+
+  .modalHeadingText{
+    font-size: var(--fontSizeXlarge, 20px);
+    font-weight: var(--fontWeightMedium, 600);
+    color: var(--textBold, "#000833");
+    margin-bottom: var(--margin_32, 32px);
+  }
+
+  .redText {
+    color: var(--error);
+  }
+
+  .blackText {
+    font-size: var(--fontSizeSmall, 14px);
+    font-weight: var(--fontWeightMedium, 500);
+    color: var(--textBold, "#000833");
+    line-height: var(--lineHeightNormal, "20px");
+    text-transform: capitalize;
+  }
+  
+  .scheduleInterviewDetails {
+    background-color: var(--bodyBg);
+    margin: var(--paddingMedium);
+  }
+
+  .headingContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .applicantDetailContainer{
+    flex: 1;
+    display: flex;
+    flex-direction: row; 
+    width: var(--fullWidth);
+  }
+
+  .borderBottom {
+    height: 1px;
+    background-color: var(--bulletPoint, #CCD0E5);
+    margin-top: var( --marginLarge ,24px);
+    margin-bottom: var( --marginLarge ,24px);
+  }
+  .primaryScheduledcontainer {
+    flex: 1;
+  }
+  .customGridStyle {
+    gap: var(--gapSmall, 16px);
+  }
+  

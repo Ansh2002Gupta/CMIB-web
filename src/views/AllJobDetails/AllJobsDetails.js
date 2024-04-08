@@ -9,20 +9,26 @@ import CustomTabs from "../../components/CustomTabs";
 import { ALL_JOB_DETAILS } from "../../constant/constant";
 import styles from "./AllJobDetails.module.scss";
 import { useParams } from "react-router-dom";
-import { ADMIN_ROUTE, JOBS } from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, CHANGE_STATUS, JOBS } from "../../constant/apiEndpoints";
 import useFetch from "../../core/hooks/useFetch";
 import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import ApplicantListing from "../ApplicantsListing";
 import ScheduledInterviewListing from "../ScheduledInterviewListing";
 import { urlService } from "../../Utils/urlService";
+import { usePatch } from "../../core/hooks/useApiRequest";
+import useShowNotification from "../../core/hooks/useShowNotification";
+import InactiveJobConfirmationModal from "../../containers/InactiveJobConfirmationModal";
+import CommonModal from "../../components/CommonModal";
 
 function AllJobDetails() {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState("1");
+  const [showInactiveJobModal, setShowInactiveJobModal] = useState(false);
 
   const { jobId } = useParams();
   const activeTabFromUrl = urlService.getQueryStringValue("tab");
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   useEffect(() => {
     setActiveTab(activeTabFromUrl);
@@ -34,9 +40,36 @@ function AllJobDetails() {
     isError,
     isLoading,
     fetchData,
+    setData,
   } = useFetch({
     url: ADMIN_ROUTE + JOBS + `/${jobId}`,
   });
+
+  const {
+    isLoading: isLoadingJobStatusChange,
+    isSuccess: isSuccessJobStatusChange,
+    isError: isErrorJobStatusChange,
+    error: jobStatusChangeError,
+    makeRequest,
+  } = usePatch({ url: ADMIN_ROUTE + JOBS + `/${jobId}` + CHANGE_STATUS });
+
+  useEffect(() => {
+    if (isSuccessJobStatusChange) {
+      setData({
+        ...jobDetails,
+        status: !jobDetails.status,
+      });
+    }
+  }, [isSuccessJobStatusChange]);
+
+  useEffect(() => {
+    if (isErrorJobStatusChange) {
+      showNotification({
+        text: jobStatusChangeError?.data?.message,
+        type: "error",
+      });
+    }
+  }, [isErrorJobStatusChange]);
 
   const tabItems = [
     {
@@ -70,8 +103,32 @@ function AllJobDetails() {
 
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
+  const onClickYes =  () => {
+    makeRequest({})
+    setShowInactiveJobModal(false)
+  }
+
+  const changeJobStatus = () => {
+    if (!!jobDetails?.status) {
+      setShowInactiveJobModal(true)
+    } else {
+      makeRequest({})
+    }
+  }
+
   return (
     <>
+      {notificationContextHolder}
+      {
+        <CommonModal isOpen={showInactiveJobModal} width={500}>
+          <InactiveJobConfirmationModal
+            heading={intl.formatMessage({ id: "label.inactiveJob" })}
+            subHeadingText={intl.formatMessage({ id: "label.inactiveJobConfirmation" })}
+            onClickYes={onClickYes}
+            onClickNo={() => setShowInactiveJobModal(false)}
+          />
+        </CommonModal>
+      }
       {!isLoading && isError && (
         <div className={styles.erroContainerBox}>
           <ErrorMessageBox
@@ -94,6 +151,8 @@ function AllJobDetails() {
                   topSection={
                     <AllJobsDetailHeader
                       designation={jobDetails?.designation}
+                      changeJobStatus={changeJobStatus}
+                      isActive={!!jobDetails?.status}
                     />
                   }
                   bottomSection={
