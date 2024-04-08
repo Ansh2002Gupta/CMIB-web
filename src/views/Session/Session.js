@@ -90,6 +90,14 @@ function Session() {
       setNotificationStateDispatch(addSessionNotification(false));
       setNotificationStateDispatch(updateSessionNotification(false));
     }
+    if (notificationState?.showSuccessNotification?.isEdited) {
+      showNotification({
+        text: intl.formatMessage({ id: "label.data_saved_successfully" }),
+        type: NOTIFICATION_TYPES.SUCCESS,
+      });
+      setNotificationStateDispatch(setShowSuccessNotification(false));
+      return;
+    }
     if (notificationState?.showSuccessNotification) {
       showNotification({
         text: intl.formatMessage({ id: "label.dates_added_successfully" }),
