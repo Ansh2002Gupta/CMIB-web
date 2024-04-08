@@ -44,6 +44,22 @@ const PostJobDetailsContainer = ({ jobId, setIsModalOpen }) => {
           functional_areas: data?.functional_areas,
           nationality: data?.nationality,
           company_details: data?.company_details, //
+          website: data?.website, //
+          company_type: data?.company_type, //
+          gender_preference: data?.gender_preference?.label,
+          category_preference: data?.category_preference,
+          essential_qualification: data?.essential_qualification,
+          desired_qualification: data?.desired_qualification,
+          opening_date: data?.opening_date,
+          closing_date: data?.closing_date,
+          is_salary_negotiable: data?.is_salary_negotiable,
+          min_salary: data?.min_salary,
+          max_salary: data?.max_salary,
+          vacancy: data?.vacancy,
+          mode: data?.mode,
+          flexi_hours: data?.flexi_hours,
+          service_type: data?.service_type,
+          status: data?.status,
         }
       : {};
 

@@ -11,6 +11,7 @@ import CustomInput from "../../components/CustomInput";
 import Chip from "../../components/Chip/Chip";
 import FileUpload from "../../components/FileUpload/FileUpload";
 import MarkRequired from "../../components/MarkRequired";
+import { formatDate } from "../../constant/utils";
 import { classes } from "./DetailsCard.styles";
 import styles from "./DetailsCard.module.scss";
 import { useIntl } from "react-intl";
@@ -35,7 +36,11 @@ const DetailsCard = ({
     return (
       <TwoRow
         key={item.key}
-        className={item.fullWidth && styles.gridItem}
+        className={[
+          item.fullWidth && styles.gridItem,
+          item?.remainWidth && styles.remainWidth,
+          styles.viewItemStyle,
+        ].join(" ")}
         topSection={
           item?.label ? (
             <Typography
@@ -66,7 +71,9 @@ const DetailsCard = ({
                 return (
                   <div>
                     <Chip
-                      label={e}
+                      label={
+                        item?.isObject ? e.name : item?.isLocation ? e.city : e
+                      }
                       customContainerStyles={styles.customChipContainerStyles}
                     />
                   </div>
@@ -94,6 +101,18 @@ const DetailsCard = ({
                   />
                   &nbsp;
                 </a>
+              ) : item?.isToggle ? (
+                intl.formatMessage({ id: `toggle.${item?.value}` })
+              ) : item?.isStatus ? (
+                intl.formatMessage({ id: `toggle.${item?.value}` })
+              ) : item?.isDate ? (
+                formatDate(item?.value)
+              ) : item.isYear ? (
+                `${item?.value} ${
+                  item?.value === 1
+                    ? intl.formatMessage({ id: "label.year" })
+                    : intl.formatMessage({ id: "label.years" })
+                }`
               ) : (
                 item?.value
               )}
