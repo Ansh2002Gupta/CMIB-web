@@ -730,6 +730,8 @@ const locale = {
   "label.nationality": "Nationality",
   "label.jobLocation": "Job Location",
   "label.functionalAreas": "Functional Areas",
+  "label.company_update_success": "Company Details Updated Successfully",
+  "label.fieldRequired": "This Field is required",
 };
 
 export default locale;

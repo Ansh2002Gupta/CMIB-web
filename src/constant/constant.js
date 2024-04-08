@@ -186,6 +186,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
   SEARCH_QUERY: "search-query",
   FILTER: "filter",
+  MODE: "mode",
 };
 
 //TODO:need to implement it using api
@@ -468,4 +469,18 @@ export const REGISTRATIONS_DATES_FOR_ROUND_TWO = [
   { id: 7, labeIntl: "startCondidateConsentmarking" },
   { id: 8, labeIntl: "endCondidateConsentmarking" },
   { id: 9, labeIntl: "writtenTestDate" },
+];
+
+export const SALUTATION_OPTIONS = [
+  { id: 1, label: "Mr.", value: "Mr." },
+  { id: 2, label: "Mrs.", value: "Mrs." },
+];
+
+export const SOURCE_OF_INFORM_ICAI_OPTIONS = [
+  "Email from CPABI",
+  "Based on previous participation",
+  "Campus",
+  "Telephonic Call from ICAI Officials",
+  "Programme brochure from ICAI",
+  "Advertisement in the Chartered Accountant Journal",
 ];

@@ -28,10 +28,54 @@
   padding-top: var(--marginMedium, 16px);
 }
 
+.customInputNumberStyles {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  padding: 8px 4px;
+  height: var(--height_44);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: var(--inputPlaceHolder) !important;
+  }
+}
+.customInputStyles {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  height: var(--height_44);
+  font-weight: 400;
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: var(--v) !important;
+  }
+}
+
 .gridItem {
   grid-column: 1 / -1;
 }
 
+.customChipContainerStyles {
+  background-color: var(--snow);
+}
+
+.chipContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--gapXSmall);
+}
+
 .capitalize {
   text-transform: capitalize;
+}
+
+.customLabelStyles {
+  color: var(--inputPlaceHolder);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
 }
