@@ -186,6 +186,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
   SEARCH_QUERY: "search-query",
   FILTER: "filter",
+  MODE: "mode",
 };
 
 //TODO:need to implement it using api

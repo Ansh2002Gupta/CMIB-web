@@ -11,22 +11,31 @@ import EditButton from "../../components/EditButton/EditButton";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import useFetch from "../../core/hooks/useFetch";
 import { usePut } from "../../core/hooks/useApiRequest";
+import { urlService } from "../../Utils/urlService";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { useCompanyDetailsCa } from "./useCompanyDetailsCa";
+import { getValidMode } from "../../Utils/validation";
 import {
   ADMIN_ROUTE,
   COMPANY_ROUTE,
   PROFILE_END_POINT,
   REGISTERED_COMPANIES,
 } from "../../constant/apiEndpoints";
-import { NOTIFICATION_TYPES } from "../../constant/constant";
+import {
+  FORM_STATES,
+  NOTIFICATION_TYPES,
+  PAGINATION_PROPERTIES,
+} from "../../constant/constant";
 import { classes } from "./CompanyDetailsCa.styles";
 import styles from "./CompanyDetailsCa.module.scss";
 
 const CompanyDetailsCa = () => {
   const intl = useIntl();
   const { companyId } = useParams();
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditable, setIsEditable] = useState(
+    getValidMode(urlService.getQueryStringValue(PAGINATION_PROPERTIES.MODE)) ===
+      FORM_STATES?.EDITABLE
+  );
   const {
     data,
     error: errorWhileGettingCompanyData,
@@ -84,6 +93,13 @@ const CompanyDetailsCa = () => {
   useEffect(() => {
     setState(getData(data));
   }, [data]);
+
+  useEffect(() => {
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.MODE,
+      getValidMode(urlService.getQueryStringValue(PAGINATION_PROPERTIES.MODE))
+    );
+  }, [urlService]);
 
   const {
     company_details_data,
@@ -184,6 +200,10 @@ const CompanyDetailsCa = () => {
                     customEditStyle={styles.ButtonCustomContainerStyle}
                     onClick={() => {
                       setIsEditable(true);
+                      urlService.setQueryStringValue(
+                        PAGINATION_PROPERTIES.MODE,
+                        FORM_STATES?.EDITABLE
+                      );
                     }}
                   />
                 </div>
@@ -248,6 +268,10 @@ const CompanyDetailsCa = () => {
                     onCancelBtnClick={() => {
                       setState(getData(data));
                       setIsEditable(false);
+                      urlService.setQueryStringValue(
+                        PAGINATION_PROPERTIES.MODE,
+                        FORM_STATES?.EDITABLE
+                      );
                     }}
                   />
                 )}
