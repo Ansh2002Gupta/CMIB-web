@@ -4,8 +4,11 @@
   border-bottom: none !important;
 }
 
-.customTable .ant-table-tbody > tr > td {
+.tableRowStyle .ant-table-tbody > tr > td{
   vertical-align: top;
+}
+
+.customTable .ant-table-tbody > tr > td {
   border-bottom: none !important;
   padding-top: var(--paddingNone) !important;
   padding-bottom: var(--paddingMediumSmall) !important;
@@ -36,6 +39,7 @@
 
 .ant-input[disabled] {
   color: var(--textBold) !important;
+  cursor: not-allowed;
 }
 
 .ant-picker-input > input {

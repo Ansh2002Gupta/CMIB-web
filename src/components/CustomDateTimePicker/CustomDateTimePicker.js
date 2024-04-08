@@ -8,6 +8,7 @@ import { ThemeContext } from "core/providers/theme";
 
 import MarkRequired from "../MarkRequired";
 import { formatDate, formatTime } from "../../constant/utils";
+import { NO_BREAK_SPACE } from "../../constant/constant";
 import classes from "./CustomDateTimePicker.module.scss";
 import { styles } from "./CustomDateTimePicker.styles";
 import "./Override.css";
@@ -28,12 +29,14 @@ const CustomDateTimePicker = ({
   format,
   isEditable,
   isRequired,
+  isSpacedError,
   label,
   onChange,
   placeholder,
   type,
   use12Hours,
   value,
+  useExactDate,
 }) => {
   const { getImage } = useContext(ThemeContext);
 
@@ -99,18 +102,20 @@ const CustomDateTimePicker = ({
               />
             ) : (
               <Typography className={classes.dateText}>
-                {formatDate({ date: value })}
+                {formatDate({ date: value, useExactDate: true })}
               </Typography>
             )
           }
           bottomSection={
-            errorMessage && (
-              <Typography
-                className={[classes.errorText, customErrorTextStyles].join(" ")}
-              >
-                {errorMessage ? `${errorMessage}` : ""}
-              </Typography>
-            )
+            <Typography
+              className={[classes.errorText, customErrorTextStyles].join(" ")}
+            >
+              {errorMessage
+                ? `${errorMessage}`
+                : isSpacedError
+                ? NO_BREAK_SPACE
+                : ""}
+            </Typography>
           }
         />
       }
@@ -131,6 +136,7 @@ CustomDateTimePicker.defaultProps = {
   format: "hh:mm a",
   isEditable: true,
   isRequired: false,
+  isSpacedError: false,
   label: "",
   onChange: () => {},
   placeholder: "",
@@ -155,6 +161,7 @@ CustomDateTimePicker.propTypes = {
   format: PropTypes.string,
   isEditable: PropTypes.bool,
   isRequired: PropTypes.bool,
+  isSpacedError: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,

@@ -219,18 +219,24 @@ const CaJobsConfigurations = () => {
               })}
               cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
               customActionBtnStyles={styles.saveButton}
-              customContainerStyles={styles.buttonWrapper}
+              customContainerStyle={styles.buttonWrapper}
               isLoading={isSavingConfigurations}
               isActionBtnDisable={
-                !videoTimeLimit ||
                 itSkills.some(
                   (obj) => obj?.error && obj.buttonType !== "add"
                 ) ||
                 softSkills.some((obj) => obj?.error && obj.buttonType !== "add")
               }
-              onActionBtnClick={() => {
-                if (validate()) postProfileSkills({ keyName: "fieldValue" });
-              }}
+              onActionBtnClick={
+                selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY
+                  ? () => {
+                      if (validate())
+                        postProfileSkills({ keyName: "fieldValue" });
+                    }
+                  : () => {
+                      postProfileSkills({ keyName: "fieldValue" });
+                    }
+              }
               onCancelBtnClick={initializeWithPreviousSavedData}
             />
           ) : (

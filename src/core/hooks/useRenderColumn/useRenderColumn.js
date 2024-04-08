@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { Dropdown, Image, Menu, Switch, Tooltip, Typography } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
-import { TwoColumn } from "../../layouts";
+import { TwoColumn, TwoRow } from "../../layouts";
 
 import AutoPlaceComplete from "../../../components/AutoPlaceComplete";
 import Chip from "../../../components/Chip/Chip";
@@ -73,10 +73,12 @@ const useRenderColumn = () => {
       getError = () => {},
       isEditable = true,
       isRequired = false,
+      isSpacedError = false,
       onChange = () => {},
       placeholder = "",
       type,
       disabledDate = () => {},
+      useExactDate,
     } = renderDateTime;
 
     const {
@@ -120,14 +122,19 @@ const useRenderColumn = () => {
     } = renderTextWithCheckBoxes;
 
     const {
+      centreStyles,
       includeDotAfterText,
+      isCentre,
+      isBooleanHandlerKey = null,
       isTextBold,
       isTypeDate,
       textStyles,
       isCapitalize,
+      isDays,
       isRequiredTooltip,
       isMoney,
       isYearRange,
+      isNumber,
       mobile,
       isIntl,
       isDataObject,
@@ -168,6 +175,12 @@ const useRenderColumn = () => {
     } = renderTitleWithCheckbox;
 
     const getStatusStyles = (status) => {
+      if (status === 1) {
+        return ["statusContainer_success", "statusText_success"];
+      }
+      if (status === 0) {
+        return ["statusContainer_inactive", "statusText_inactive"];
+      }
       if (
         status?.toLowerCase() === "closed" ||
         status?.toLowerCase() === "answered"
@@ -181,6 +194,9 @@ const useRenderColumn = () => {
     };
 
     const textRenderFormat = ({ text }) => {
+      if (isBooleanHandlerKey) {
+        return intl.formatMessage({ id: `approve.${text}` });
+      }
       if (isDataObject) {
         return text[dataKey] || "-";
       }
@@ -194,10 +210,16 @@ const useRenderColumn = () => {
         return intl.formatMessage({ id: `label.${text}` });
       }
       if (isMoney) {
-        return `${text} INR`;
+        return `${text} ${intl.formatMessage({ id: "label.inr" })}`;
       }
-      if (text) {
+      if (isDays) {
+        return `${text} ${intl.formatMessage({ id: "label.days" })}`;
+      }
+      if (text || typeof text === "number") {
         return text;
+      }
+      if (isNumber) {
+        return !!text ? text : 0;
       }
       return "-";
     };
@@ -240,6 +262,19 @@ const useRenderColumn = () => {
                     : "label.years",
               })}`}
         </p>
+      );
+    };
+
+    const getRenderCentre = (data) => {
+      return (
+        <TwoRow
+          topSection={getRenderText(data?.centre_name)}
+          bottomSection={
+            <p className={[centreStyles, styles.customCentreStyles].join(" ")}>
+              {intl.formatMessage({ id: `label.${data?.centre_size}` })}
+            </p>
+          }
+        />
       );
     };
 
@@ -369,6 +404,8 @@ const useRenderColumn = () => {
             <Tooltip title={text}>{getRenderText(text)}</Tooltip>
           ) : isYearRange ? (
             getRenderYearRange(rowData)
+          ) : isCentre ? (
+            getRenderCentre(rowData)
           ) : (
             getRenderText(text)
           ),
@@ -421,7 +458,13 @@ const useRenderColumn = () => {
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <Chip
-            label={status}
+            label={
+              status === 1
+                ? intl.formatMessage({ id: "label.active" })
+                : status === 0
+                ? intl.formatMessage({ id: "label.inactive" })
+                : status
+            }
             customContainerStyles={[
               styles.chipContainer,
               styles[styleClassForContainer],
@@ -584,9 +627,11 @@ const useRenderColumn = () => {
                 format,
                 isEditable,
                 isRequired,
+                isSpacedError,
                 type,
                 placeholder,
                 value,
+                useExactDate,
               }}
               errorTimeInput={
                 ((record?.isAddRow && errorMessage) || getError(index)) &&

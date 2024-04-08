@@ -19,10 +19,10 @@
 }
 
 .textEllipsis {
-  max-width: 200px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  width: var(--fullWidth);
 }
 
 .centreStatusContainer {
@@ -63,6 +63,18 @@
   color: var(--requiredStarColor);
 }
 
+.statusContainer_inactive {
+  background-color: var(--ltGreyBg);
+}
+
+.statusContainer_success {
+  background-color: var(--lightGreenBg);
+}
+
+.statusContainer_inactive {
+  background-color: var(--ltGreyBg);
+}
+
 .statusContainer_success {
   background-color: var(--lightGreenBg);
 }
@@ -78,6 +90,10 @@
 .defaultStatusStyles {
   font-size: 12px;
   line-height: 18px;
+}
+
+.statusText_inactive {
+  color: var(--textBold);
 }
 
 .statusText_success {
@@ -134,4 +150,10 @@
   border-radius: var(--radiusXLg);
   padding: var(--paddingXXXSmall) var(--paddingExtraSmall);
   width: fit-content;
+}
+
+.customCentreStyles {
+  font-size: var(--fontSizeSmall);
+  color: var(--ltGrey7);
+  font-weight: var(--fontWeightMedium);
 }

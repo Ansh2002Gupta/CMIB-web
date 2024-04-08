@@ -32,10 +32,10 @@ export default class Http {
     }
   }
 
-  static async put(_url, data) {
+  static async put(_url, data, apiOptions = {}) {
     const url = `${baseUrl}${_url}`;
     try {
-      const response = await axios.put(url, data);
+      const response = await axios.put(url, data, { ...apiOptions });
       return response.data;
     } catch (error) {
       throw error;
