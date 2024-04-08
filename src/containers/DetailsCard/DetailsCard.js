@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
+import useResponsive from "core/hooks/useResponsive";
 
 import CheckBoxListComponent from "../../components/CheckBoxListComponent";
 import CustomGrid from "../../components/CustomGrid";
@@ -31,6 +32,7 @@ const DetailsCard = ({
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const [deletedImage, setDeletedImage] = useState([]);
+  const responsive = useResponsive();
 
   const renderView = (item) => {
     return (
@@ -38,7 +40,7 @@ const DetailsCard = ({
         key={item.key}
         className={[
           item.fullWidth && styles.gridItem,
-          item?.remainWidth && styles.remainWidth,
+          item?.remainWidth && responsive?.isMd && styles.remainWidth,
           styles.viewItemStyle,
         ].join(" ")}
         topSection={
