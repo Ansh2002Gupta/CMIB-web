@@ -9,7 +9,7 @@ import CustomTabs from "../../components/CustomTabs";
 import { ALL_JOB_DETAILS } from "../../constant/constant";
 import styles from "./AllJobDetails.module.scss";
 import { useParams } from "react-router-dom";
-import { COMPANY_ROUTE, JOBS } from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, JOBS } from "../../constant/apiEndpoints";
 import useFetch from "../../core/hooks/useFetch";
 import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
@@ -35,7 +35,7 @@ function AllJobDetails() {
     isLoading,
     fetchData,
   } = useFetch({
-    url: COMPANY_ROUTE + JOBS + `/${jobId}`,
+    url: ADMIN_ROUTE + JOBS + `/${jobId}`,
   });
 
   const tabItems = [
