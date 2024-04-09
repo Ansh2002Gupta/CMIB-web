@@ -170,9 +170,9 @@ const locale = {
   "setupCentres.perCentre": "Per Centre",
   "setupCentres.wholePlacementDrive": "For Whole Placement Drive",
   "setupCentres.editPaymentType": "Edit Payment Type",
-  "setupCentres.participationFees": "Participation Fees",
-  "setupCentres.enterParticipationFees": "Enter Participation Fees",
-  "setupCentres.feesError": "Please enter valid participation fees",
+  "setupCentres.participationFees": "Participation Fees (INR)",
+  "setupCentres.enterParticipationFees": "Enter Participation Fees (INR)",
+  "setupCentres.feesError": "Please enter valid participation fees (INR)",
   "setupCentres.paymentTypeNote":
     "*If you change the payment type then the data of interview dates for all centres will be lost and you have to fill it again.",
   "label.dragNdrop": "Drag & drop files or",
