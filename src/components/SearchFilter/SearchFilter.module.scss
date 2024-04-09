@@ -183,34 +183,6 @@
   color: var(--bodyBg, #fff);
 }
 
-.sliderContainer {
-  position: relative;
-}
-
-.sliderMarks {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px; 
-
-  .sliderText {
-    font-family: sans-serif;
-    font-weight: 500;
-    font-style: 14px;
-    line-height: 20px;
-    text-align: right;
-    color: #616c82;
-  }
-}
-
-.sliderLabel {
-  font-family: sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  text-align: center;
-  color: #000833;
-}
-
 @media screen and (max-width: 900px) and (min-width: 510px) {
   .cardParentContainer {
     left: -100px;

@@ -12,6 +12,7 @@ import CustomCheckBox from "../CustomCheckBox";
 import useOutSideClick from "../../core/hooks/useOutSideClick";
 import { classes } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
+import CustomSlider from "../CustomSlider";
 
 const SearchFilter = ({
   filterArray,
@@ -203,44 +204,22 @@ const SearchFilter = ({
               rightSection={
                 <div>
                   {filterPropertiesArray[selectedIndex]?.type === "slider" ? (
-                    <div style={{ margin: "16px" }}>
-                      <Typography className={styles.sliderLabel}>
-                        {experienceRange[0]} - {experienceRange[1]} years
-                      </Typography>
-                      <Slider
-                        range
-                        defaultValue={experienceRange} // This sets the default range from 2 to 4 years
-                        min={0} // Minimum value of the slider is 0 years
-                        max={40} // Maximum value of the slider is 40 years
-                        onChange={(value) => {
-                          // Update the state with the new slider value
-                          setExperienceRange(value);
-                        }}
-                        onAfterChange={(value) => {
-                          // Update the filter state with the new slider value when user stops dragging
-                          handleOnUpdateAccessFilterStatus(
-                            filterPropertiesArray[selectedIndex].id,
-                            value
-                          );
-                        }} // This sets the handle color to green
-                        className={styles.range}
-                        trackStyle={{ backgroundColor: "#04AF55" }} // This sets the track color to green
-                        handleStyle={[
-                          { backgroundColor: "#04AF55" },
-                          { backgroundColor: "#04AF55" },
-                        ]}
-                      />
-                      <div className={styles.sliderMarks}>
-                        <Typography className={styles.sliderText}>
-                          0 Yrs
-                        </Typography>
-                        <Typography className={styles.sliderText}>
-                          40 Yrs
-                        </Typography>
-                      </div>
-                    </div>
+                    <CustomSlider
+                      min={0}
+                      max={40}
+                      defaultValue={experienceRange}
+                      onChange={(value) => {
+                        setExperienceRange(value);
+                      }}
+                      onAfterChange={(value) => {
+                        handleOnUpdateAccessFilterStatus(
+                          filterPropertiesArray[selectedIndex].id,
+                          value
+                        );
+                      }}
+                      range={true}
+                    />
                   ) : filterPropertiesArray[selectedIndex]?.options ? (
-                    // Render checkboxes for other options
                     filterPropertiesArray[selectedIndex].options.map(
                       (item, index) => {
                         return (

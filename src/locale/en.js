@@ -641,6 +641,7 @@ const locale = {
   "label.caFinal": "CA Final Exam",
   "label.month": "Month",
   "label.foundation_attempt_count": "Foundation Attempt Count",
+  "label.short.years": "Yrs",
 };
 
 export default locale;
