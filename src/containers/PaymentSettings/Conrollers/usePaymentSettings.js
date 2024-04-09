@@ -133,6 +133,9 @@ const usePaymentSettings = ({ paymentDetails }) => {
   };
 
   const onRemoveCompanyItem = (item) => {
+    if (!can_edit_payment) {
+      return;
+    }
     const updatedCompany = selectedCompanyList?.filter(
       (ele) => ele.id !== item.id
     );

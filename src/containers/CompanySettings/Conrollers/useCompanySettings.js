@@ -179,6 +179,9 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
   };
 
   const onRemoveInterviewType = (item) => {
+    if (!can_edit_company) {
+      return;
+    }
     const updatedTypes = selectedInterviewType?.filter(
       (ele) => ele.id !== item.id
     );
