@@ -11,6 +11,7 @@ import styles from "./SearchableDropDown.module.scss";
 
 const SearchableDropDown = ({
   errorMessage,
+  disabled,
   isRequiredField,
   minLengthToShowTooltip,
   onRemoveItem,
@@ -46,6 +47,7 @@ const SearchableDropDown = ({
             value={null}
             optionLabelProp="label"
             options={options}
+            disabled={disabled}
             optionRender={(option) => (
               <TwoColumn
                 className={styles.dropDownItem}
@@ -109,6 +111,7 @@ const SearchableDropDown = ({
 
 SearchableDropDown.defaultProps = {
   errorMessage: "",
+  disabled: false,
   isRequiredField: false,
   minLengthToShowTooltip: 50,
   onRemoveItem: () => {},
@@ -119,6 +122,7 @@ SearchableDropDown.defaultProps = {
 
 SearchableDropDown.propTypes = {
   errorMessage: PropTypes.string,
+  disabled: PropTypes.bool,
   isRequiredField: PropTypes.bool,
   minLengthToShowTooltip: PropTypes.number,
   onSelectItem: PropTypes.func.isRequired,

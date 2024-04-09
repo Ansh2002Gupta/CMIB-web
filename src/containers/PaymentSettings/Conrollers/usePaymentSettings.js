@@ -3,6 +3,7 @@ import { formateArrayToArrayOfobject } from "../../../constant/utils";
 
 const usePaymentSettings = ({ paymentDetails }) => {
   const [selectedCompanyList, setSelectedCompanyList] = useState([]);
+  const can_edit_payment = paymentDetails?.can_edit?.can_edit_payment;
 
   const initialFormState = {
     cgst: "",
@@ -31,6 +32,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
           isPercentage: true,
           isRequired: true,
           message: "cgst",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -42,6 +44,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
           isPercentage: true,
           isRequired: true,
           message: "sgst",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -53,6 +56,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
           isPercentage: true,
           isRequired: true,
           message: "igst",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -64,6 +68,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
         rules: {
           isRequired: true,
           message: "noGst",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -75,6 +80,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
           isPercentage: true,
           isRequired: true,
           message: "discountRate",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -85,6 +91,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
         rules: {
           isRequired: true,
           message: "memberRegistrationFee",
+          isDisabled: !can_edit_payment,
         },
       },
     ];

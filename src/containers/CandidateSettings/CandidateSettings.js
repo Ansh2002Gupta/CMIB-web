@@ -29,6 +29,8 @@ const CandidateSettings = ({
   roundCentres,
   selectedCenterTableData,
   isEditable,
+  isStartDateEditable,
+  isEndDateEditable,
   tableData,
 }) => {
   const intl = useIntl();
@@ -437,6 +439,7 @@ const CandidateSettings = ({
             return true;
         },
         visible: true,
+        disabled: !isStartDateEditable,
         type: "date",
         placeholder: intl.formatMessage({
           id: "label.select_start_date",
@@ -485,6 +488,7 @@ const CandidateSettings = ({
           );
         },
         isEditable: true,
+        disabled: !isEndDateEditable,
         getError: (index) => errors[index]?.big_centre_end_date,
       },
     }),
