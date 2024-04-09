@@ -31,8 +31,8 @@ export const getQueryColumn = ({
     renderColumn({
       title: "Application Id",
       customColumnHeading: [styles.extraWidth, styles.columnHeading].join(" "),
-      dataIndex: "applicantion_id",
-      key: "applicantion_id",
+      dataIndex: "applicant_id",
+      key: "applicant_id",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
