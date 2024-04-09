@@ -9,6 +9,7 @@ import useResponsive from "core/hooks/useResponsive";
 import CheckBoxListComponent from "../../components/CheckBoxListComponent";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
+import CustomTextEditor from "../../components/CustomTextEditor";
 import Chip from "../../components/Chip/Chip";
 import FileUpload from "../../components/FileUpload/FileUpload";
 import MarkRequired from "../../components/MarkRequired";
@@ -66,6 +67,13 @@ const DetailsCard = ({
               height={240}
               className={styles.logoStyle}
               alt={"company_logo"}
+            />
+          ) : item?.isHtmlElement ? (
+            <CustomTextEditor
+              value={item?.value}
+              disabled
+              quillContainerStyle={classes.quillContainerStyle}
+              quilStyle={classes.quilStyle}
             />
           ) : item.isArray && item?.value !== "--" ? (
             <div className={styles.chipContainer}>

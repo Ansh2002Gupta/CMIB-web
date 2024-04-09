@@ -35,6 +35,7 @@ const job_details = () => [
     placeholder: "label.jobDetails",
     isCapitalize: true,
     fullWidth: true,
+    isHtmlElement: true,
   },
   {
     key: "type",
@@ -212,7 +213,7 @@ const job_details = () => [
 
 const addValueOnField = ({ state, details, isEditable }) => {
   return details.map((item) => {
-    if (item?.isImage || item?.isToggle || item?.isStatus) {
+    if (item?.isImage || item?.isToggle || item?.isStatus || item?.isYear) {
       return {
         ...item,
         value: state?.[item?.key],

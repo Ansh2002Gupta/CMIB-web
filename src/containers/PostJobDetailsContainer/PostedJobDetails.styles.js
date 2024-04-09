@@ -5,7 +5,7 @@ export const classes = {
   customMainStyles: {
     borderWidth: 0,
     padding: 0,
-    maxHeight: "80vh",
+    maxHeight: variables.height_85vh,
     borderRadius: 0,
   },
 };
