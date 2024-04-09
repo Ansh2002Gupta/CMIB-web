@@ -174,7 +174,7 @@ const SessionRound = ({
                           onClick={() => {
                             if (roundDetails?.centres?.length) {
                               navigate(
-                                `${item.onClickNaviagtion}?roundId=${roundId}`
+                                `${item.onClickNavigation}?roundId=${roundId}`
                               );
                             } else {
                               toggleShowErrorMsg();

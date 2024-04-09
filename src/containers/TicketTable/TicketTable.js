@@ -11,15 +11,14 @@ import ErrorMessageBox from "../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
+import useHandleSearch from "../../core/hooks/useHandleSearch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
 import { getTicketColumn } from "./TicketTableConfig";
 import { resetListingData } from "../../constant/utils";
-import { validateSearchTextLength } from "../../Utils/validations";
 import {
-  DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
   PAGINATION_PROPERTIES,
 } from "../../constant/constant";
@@ -37,8 +36,6 @@ const TicketTable = ({
   pageSize,
   setCurrent,
   setPageSize,
-  searchedValue,
-  setSearchedValue,
 }) => {
   const intl = useIntl();
   const { renderColumn } = useRenderColumn();
@@ -69,10 +66,6 @@ const TicketTable = ({
   if (typeof error === "object") {
     errorString = error?.data?.message;
   }
-
-  const debounceSearch = useMemo(() => {
-    return _.debounce(fetchData, DEBOUNCE_TIME);
-  }, []);
 
   const queryTypeOptions = useMemo(() => {
     return queryTypes?.map((queryType) => ({
@@ -117,38 +110,16 @@ const TicketTable = ({
     };
   };
 
+  const { handleSearch, searchedValue } = useHandleSearch({
+    filterArray,
+    sortFilter,
+    setCurrent,
+    getRequestedQueryParams,
+    fetchData,
+  });
+
   const handleOnUserSearch = (str) => {
-    setCurrent(1);
-    setSearchedValue(str);
-    if (str?.trim()?.length > 2) {
-      debounceSearch({
-        queryParamsObject: getRequestedQueryParams({
-          page: 1,
-          search: validateSearchTextLength(str),
-          currentFilterStatus: filterArray,
-          sortDirection: sortFilter?.sortDirection,
-          sortField: sortFilter?.sortField,
-        }),
-      });
-      urlService.setQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
-      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-    }
-    if (
-      !str?.trim() &&
-      urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY)
-    ) {
-      debounceSearch({
-        queryParamsObject: getRequestedQueryParams({
-          page: 1,
-          search: "",
-          currentFilterStatus: filterArray,
-          sortDirection: sortFilter?.sortDirection,
-          sortField: sortFilter?.sortField,
-        }),
-      });
-      urlService.removeParam(PAGINATION_PROPERTIES.SEARCH_QUERY);
-      urlService.setQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE, 1);
-    }
+    handleSearch(str);
   };
 
   const handleSorting = (sortDetails) => {
@@ -385,8 +356,6 @@ TicketTable.defaultProps = {
   setCurrent: () => {},
   setPageSize: () => {},
   ticketListingProps: {},
-  searchedValue: "",
-  setSearchedValue: () => {},
 };
 
 TicketTable.propTypes = {
@@ -397,8 +366,6 @@ TicketTable.propTypes = {
   setCurrent: PropTypes.func,
   setPageSize: PropTypes.func,
   ticketListingProps: PropTypes.object,
-  searchedValue: PropTypes.string,
-  setSearchedValue: PropTypes.func,
 };
 
 export default TicketTable;

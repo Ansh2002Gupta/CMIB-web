@@ -108,10 +108,17 @@ const locale = {
   "session.placeholder.hsnCode": "Enter HSN Code/ SAC ",
   "session.placeholder.bankACNumber": "Enter Bank A/C Number",
   "session.placeholder.ifscCode": "Enter IFSC Code",
+  "session.placeholder.cgst": "Enter CGST / Taxes (in %)",
+  "session.placeholder.sgst": "Enter SGST / Taxes (in %)",
+  "session.placeholder.igst": "Enter IGST / Taxes (in %)",
+  "session.placeholder.noGst": "Select company type",
+  "session.placeholder.discountRate": "Enter discount rate (in %)",
+  "session.placeholder.memberRegistrationFee":
+    "Enter member registration fee (INR)",
   "session.roundOne": "Round 1",
   "session.roundTwo": "Round 2",
   "session.lastDateRegistrationCompanies":
-    "Last date of registration for companies",
+    "Last Date Of Registration For Companies",
   "session.saveChanges": "Save Changes",
   "session.error.sessionName": "Please enter valid session name",
   "session.error.natureOfGoods": "Please enter valid  services/goods",
@@ -142,6 +149,14 @@ const locale = {
   "session.setUpRoundTwo": "Set Up Round 2",
   "session.addRoundTwoDetails": "Add Round 2 Details",
   "session.centreErrorMsg": "Please select alteast one centre.",
+  "session.paymentSettings": "Payment Settings",
+  "session.forCandidateAndCompany": "For Candidate & Company",
+  "session.payment.cgst": "CGST / Taxes (in %)",
+  "session.payment.sgst": "SGST / Taxes (in %)",
+  "session.payment.igst": "IGST / Taxes (in %)",
+  "session.payment.noGst": "No GST For",
+  "session.payment.discountRate": "Discount Rate (in %)",
+  "session.payment.memberRegistrationFee": "Member Registration Fee (INR)",
   "label.viewProfile": "View Profile",
   "label.myProfile": "My Profile",
   "label.changePassword": "Change Password",
@@ -239,40 +254,46 @@ const locale = {
   "label.registrationConsentSchedule":
     "Registration and Consent Marking Schedule",
   "label.consentMarkingScheduleWarning":
-    "*This cannot be edited once this section data is submitted.",
-  "label.consent.startDateCompanies": "Registration Start Date for Companies",
-  "label.consent.startDateCandidates": "Registration Start Date for Candidates",
-  "label.consent.lastDateBigCentres":
+    "*This section data cannot be edited once registration starts",
+  "label.consent.company_reg_start_date":
+    "Registration Start Date for Companies",
+  "label.consent.candidate_reg_start_date":
+    "Registration Start Date for Candidates",
+  "label.consent.candidate_reg_end_date_bg_centre":
     "Last Date of Registration for Candidates for Big Centres",
-  "label.consent.lastDateSmallCentres":
+  "label.consent.candidate_reg_end_date_sm_centre":
     "Last Date of Registration for Candidates for Small Centres",
   "label.centreCodeColon": "Centre code: ",
-  "label.writtenTestFee": "Written/Psychometric Test Fee",
+  "label.writtenTestFee": "Written/Psychometric Test Fee (INR)",
+  "label.consent.writtenTestDate": "Written/Psychometric Test Date",
+  "label.consent.placeholder.writtenTestDate":
+    "Select Written/Psychometric Test Date",
   "label.centreStartTime": "Centre Start Time",
   "label.centreEndTime": "Centre End Time",
-  "label.placeholder.writtenTestFee": " Enter Written/Psychometric Test Fee",
+  "label.placeholder.writtenTestFee":
+    " Enter Written/Psychometric Test Fee (INR)",
   "label.placeholder.centreStartTime": "Select Centre Start Time",
   "label.placeholder.centreEndTime": " Select Centre End Time",
   "label.configureInterviewDates": "Configure Interview Dates",
   "centre.schedule_date": "Schedule Date",
-  "centre.participationFee": "Participation Fee",
+  "centre.participationFee": "Participation Fee (INR)",
   "centre.uptoPartners": "Upto Partners",
-  "centre.firmFee": "Firm Fee",
+  "centre.firmFee": "Firm Fee (INR)",
   "centre.norm1": "Norm 1",
   "centre.norm2": "Norm 2",
   "centre.norm2MinVacancy": "Norm 2 Min Vacancy",
   "centre.onlineOffline": "Online/Offline",
   "centre.scheduleDate": "Schedule Date",
   "centre.placeholder.selectDate": "Select date",
-  "centre.placeholder.enterFee": "Enter fee",
+  "centre.placeholder.enterFee": "Enter fee (INR)",
   "centre.placeholder.enterpartner": "Enter Partner",
   "centre.placeholder.enterNorm1": "Enter norm 1",
   "centre.placeholder.enterNorm2": "Enter norm 2",
   "centre.placeholder.enterVacancy": "Enter vacancy",
   "centre.placeholder.selectOnlineOffline": "Select online/offline",
   "centre.error.selectDate": "Enter valid date",
-  "centre.error.enterParticipationFee": "Enter fee",
-  "centre.error.enterFirmFee": "Enter fee",
+  "centre.error.enterParticipationFee": "Enter fee (INR)",
+  "centre.error.enterFirmFee": "Enter fee (INR)",
   "centre.error.enterpartner": "Enter Partner",
   "centre.error.enterNorm1": "Enter Norm 1",
   "centre.error.enterNorm2": "Enter Norm 2",
@@ -291,26 +312,30 @@ const locale = {
   "label.warning.setupMockInterviews":
     "*This cannot be edited once registration for the students starts.",
   "label.totalStudentsBooked": "Total Students Booked",
-  "label.consent.placeholder.startDateCompanies":
+  "label.consent.placeholder.company_reg_start_date":
     " Select Start Date for Companies",
-  "label.consent.placeholder.startDateCandidates":
+  "label.consent.placeholder.candidate_reg_start_date":
     "Select Start Date for Candidates",
-  "label.consent.placeholder.lastDateBigCentres":
+  "label.consent.placeholder.candidate_reg_end_date_bg_centre":
     "Select Last Date for Big Centres",
-  "label.consent.placeholder.lastDateSmallCentres":
+  "label.consent.placeholder.candidate_reg_end_date_sm_centre":
     " Select Last Date for Small Centres",
-  "label.companyStartDate": "Shortlist By Company Start Date",
-  "label.companyEndDate": "Shortlist By Company end Date",
-  "label.consentFromDate": "Consent From Date for Candidate",
-  "label.consentToDate": "Consent To Date for Candidate",
-  "label.placeholder.companyStartDate": "Select Company Start Date",
-  "label.placeholder.companyEndDate": "Select Company end Date",
-  "label.placeholder.consentFromDate": "Select From Date for Candidate",
-  "label.placeholder.consentToDate": "Select To Date for Candidate",
-  "label.lastRegistrationDate": "Last date of registration for companies",
-  "label.psychometricTestDate": "psychometric test/written test date",
-  "label.placeholder.lastRegistrationDate": "Select Last Date for registration",
-  "label.placeholder.psychometricTestDate":
+  "label.company_shortlisting_start_date": "Shortlist By Company Start Date",
+  "label.company_shortlisting_end_date": "Shortlist By Company End Date",
+  "label.candidate_consent_marking_start_date":
+    "Consent From Date for Candidate",
+  "label.candidate_consent_marking_end_date": "Consent To Date for Candidate",
+  "label.placeholder.company_shortlisting_start_date":
+    "Select Company Start Date",
+  "label.placeholder.company_shortlisting_end_date": "Select Company End Date",
+  "label.placeholder.candidate_consent_marking_start_date":
+    "Select From Date for Candidate",
+  "label.placeholder.candidate_consent_marking_end_date":
+    "Select To Date for Candidate",
+  "label.company_reg_end_date": "Last Date Of Registration For Companies",
+  "label.psychometric_test_date": "Psychometric Test/Written Test Date",
+  "label.placeholder.company_reg_end_date": "Select Last Date for registration",
+  "label.placeholder.psychometric_test_date":
     "Select To Date for psychometric test",
   "label.controlAccessHeading": " Control Access",
   "label.moduleAccess": "Module Access",
@@ -326,7 +351,7 @@ const locale = {
   "label.state": "State",
   "label.isdCode": "ISD/STD Code",
   "label.telephoneNumber": "Telephone Number",
-  "label.contactPersonalInformation": "Contact Personal Information",
+  "label.contactPersonalInformation": "Contact Person Information",
   "label.salutation": "Salutation",
   "label.contactPersonName": "Contact Person Name",
   "label.contactPersonDesignation": "Contact Person Designation",
@@ -462,6 +487,7 @@ const locale = {
   "label.someQueriesAreMarkedAsAnsweredContinueMaringOthers":
     "Some query/query(s) have already been marked as answered. Continuing marking for the remaining queries.",
   "label.error.fieldEmpty": "Field cannot be empty.",
+  "label.error.field_cannot_be_zero": "Field cannot be zero.",
   "label.error.overlap": "Please choose different times.",
   "label.error.startOverlap": "Please choose different start time.",
   "label.error.endOverlap": "Please choose different end time.",
@@ -515,6 +541,8 @@ const locale = {
   "label.to": "To",
   "label.select_centres_error_msg":
     "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
+  "label.select_centres_error_msg_round_two":
+    "Please select centres corresponding to Round 2 from the previous screen to update centre settings here.",
   "label.orientation_no_result_msg":
     "Please select centres corresponding to Round 1 from the previous screen to update centre settings here.",
   "label.path.orientation-centers": "Orientation Centres",
@@ -527,8 +555,14 @@ const locale = {
   "label.headerTextSoftSkills": "Soft skills",
   "label.placeholderItSkills": "Enter IT skills",
   "label.placeholderSoftSkills": "Enter Soft skills",
+  "label.registrationSuccess": "Registration Dates updated Successfully",
+  "label.lastRegistrationSuccess":
+    "Last Registration Dates updated Successfully",
+  "label.roundOneDatesSuccess": "Round 1 Dates updated Successfully",
+  "label.roundTwoDatesSuccess": "Round 2 Dates updated Successfully",
   "label.yearBracket": " (year(s))",
   "label.inrBracket": " (INR)",
+  "label.daysBracket": " (Day(s))",
   "label.session.setup-centers": "Setup Centres",
   "label.session.setupCenters.details": "Edit centre setup",
   "label.users.details": "User Details",
@@ -536,16 +570,129 @@ const locale = {
   "label.session.setup-mock-interview": "Setup Mock Interview",
   "label.session.setupMockInterview.details": "Configure Interview Dates",
   "label.data_saved_successfully": "Data Saved Successfully.",
+  "label.path.campus-interview-settings": "Campus Interview Settings",
+  "label.setCampusInterviewSettings": "Set Campus Interview Settings",
+  "label.subscription_saved_successfully": "Subscription Added Successfully.",
+  "label.subscription_edit_successfully": "Subscription Edited Successfully.",
   "label.updateInterviewDateSuccessfully":
     "Interview Date Updated Successfully",
+  "label.path.add-subscriptions": "Add Subscriptions",
+  "label.subscriptions_details": "Subscription Details",
+  "label.manageSubscriptions": "Manage Subscriptions",
+  "label.addSubscription": "Add Subscription",
+  "label.packageName": "Package Name",
+  "label.packageDescription": "Package Description",
+  "label.packageValidity": "Package Validity Period",
+  "label.price": "Price",
+  "label.subscription_status": "Subscription Status",
+  "label.enterpackagename": "Enter Package Name",
+  "label.enterpackagename_discriptions": "Enter Package Discription",
+  "label.enterpackagename_valididy_period": "Enter Validity Period",
+  "label.enterpackagename_price": "Enter Price",
+  "label.default_package_name": "Package 1",
+  "label.package_validity_period": "Package Validity Period",
+  "label.path.subscription-details": "Subscription Details",
+  "label.inr": "INR",
+  "label.days": "Days",
+  "label.type": "Type",
+  "label.approved_not_approved": "Approved/Not Approved",
+  "label.not_approved": "Not Approved",
+  "label.approved": "Approved",
+  "label.approval": "Approval",
+  "label.path.registered-company": "Registered Companies",
+  "label.path.registered-company-details": "Company Details",
+  "label.approval_status": "Approval status",
+  "label.balanceCredit": "Balance Credit: ",
+  "label.modules": "Modules",
   "label.set_max_video_upload_time_limit":
     "Setup Maximum Video Upload Time Limit",
   "label.max_video_upload_time_limit":
     "Maximum Video Upload Time Limit (seconds)",
   "label.set_profile_skills": "Set Profile Skills",
   "label.nqca-placements": "nqca-placements",
-  "label.downloadSucess": "Download Successful",
+  "label.session.consent-marking": "Registration and Consent Marking Schedule",
+  "label.consent.registrationStartDateCompanies": "Company Registration Start",
+  "label.consent.registrationEndDateCompanies": "Company Registration End",
+  "label.consent.registrationStartDateCandidates":
+    "Candidate Registration Start",
+  "label.consent.registrationEndDateCandidates": "Candidate Registration End",
+  "label.consent.startShortlistingbyCompany": "Shortlisting By Company Start",
+  "label.consent.endShortlistingbyCompany": "Shortlisting By Company End",
+  "label.consent.startCondidateConsentmarking":
+    "Consent Marking By Candidate Start",
+  "label.consent.endCondidateConsentmarking":
+    "Consent Marking By Candidate End",
+  "label.consent.placeholder.registrationStartDateCompanies":
+    "Select Company Registration Start Date",
+  "label.consent.placeholder.registrationEndDateCompanies":
+    "Select Company Registration End Date",
+  "label.consent.placeholder.registrationStartDateCandidates":
+    "Select Candidate Registration Start Date",
+  "label.consent.placeholder.registrationEndDateCandidates":
+    "Select Candidate Registration End Date",
+  "label.consent.placeholder.startShortlistingbyCompany":
+    "Select Shortlisting By Company Start Date",
+  "label.consent.placeholder.endShortlistingbyCompany":
+    "Select Shortlisting By Company End Date",
+  "label.consent.placeholder.startCondidateConsentmarking":
+    "Select Consent Marking By Candidate Start Date",
+  "label.consent.placeholder.endCondidateConsentmarking":
+    "Select Consent Marking By Candidate End Date",
+  "label.path.consent-marking": "Registration and Consent Marking Schedule",
+  "label.dates_added_successfully": "Dates Added Successfully",
   "label.videolimitError": "Please enter value between 1 to 999",
+  "label.max_no_of_vacancy": "Max. No. of Vacancy",
+  "label.multiplier": "Multiplier",
+  "label.shortlist_students_allowed":
+    "Shortlist Students Allowed (Max. No. of Vacancy * Multiplier)",
+  "label.company_interview_types": "Company Interview Types",
+  "label.for_company": "For Company",
+  "session.placeholder.max_no_of_vacancy": "Enter max. no. of vacancy",
+  "session.placeholder.multiplier": "Enter multiplier",
+  "session.placeholder.shortlist_students_allowed":
+    "Max. no. of vacancy * multiplier",
+  "session.placeholder.company_interview_types": "Select interview types",
+  "session.candidateSettings": "For Candidate",
+  "label.max_no_of_interview": "Max. No. of Interview Allowed to a Candidate",
+  "label.max_no_of_offer": "Max. No. of Offer can be Accepted by a Candidate",
+  "label.big_centre_start_date": "Big Centre Change Start Date",
+  "label.big_centre_end_date": "Big Centre Change End Date",
+  "label.small_centre_start_date": "Small Centre Change Start Date",
+  "label.small_centre_end_date": "Small Centre Change End Date",
+  "placeholder.max_no_of_interview":
+    "Enter max. no. of interview allowed to a candidate",
+  "placeholder.max_no_of_offer":
+    "Enter max. no. of offer can be accepted by a candidate",
+  "placeholder.big_centre_start_date": "Enter big centre change start date",
+  "placeholder.big_centre_end_date": "Enter big centre change end date",
+  "placeholder.small_centre_start_date": "Enter small centre change start date",
+  "placeholder.small_centre_end_date": "Enter small centre change end date",
+  "label.allow_consent_for_candidate":
+    "Allow consent for candidate to choose company again coming at their selected",
+  "label.centre": "Centre",
+  "label.from_date": "From Date",
+  "label.to_date": "To Date",
+  "label.from_time": "From Time",
+  "label.to_time": "To Time",
+  "label.select_from_date": "Select from date",
+  "label.select_to_date": "Select to date",
+  "label.select_from_time": "Select from time",
+  "label.select_to_time": "Select to time",
+  "label.placeholder.select_centre": "Select centre",
+  "label.shortlist_ratio": "Vacancy :Max No. of Shortlisting ratio 1:x",
+  "session.placeholder.shortlist_ratio": "Enter max no. of Shortlisting",
+  "label.allow_candidate_for_selectedcenter":
+    "Allow candidates to change selected centre",
+  "label.select_start_date": "Select start date",
+  "label.select_end_date": "Select end date",
+  "label.start_date": "Start Date",
+  "label.end_date": "End Date",
+  "label.activeInactive": "Active/Inactive",
+  "label.searchPackageName": "Search by package name",
+  "label.packageName_descriptions": "Package Discription",
+  "label.package_valididy_period": "Package Validity Period",
+  "label.downloadSucess": "Download Successful",
+  "label.orientationUpdate": "Orientation Updated Successfully",
   "label.allJobs": "All Jobs",
   "label.downloadJobList": "Download Jobs List",
   "label.jobId": "Job ID",
@@ -559,6 +706,10 @@ const locale = {
   "label.scheduled_interview": "Scheduled Interview",
   "approve.0": "Not Approved",
   "approve.1": "Approved",
+  "label.manageCompanies": "Manage Companies",
+  "label.approvedCompanyName": "Approved Company Name",
+  "label.searchByCompanyUsername": "Search by company name, username",
+  "label.viewCompanyDetails": "View Company Details",
 };
 
 export default locale;

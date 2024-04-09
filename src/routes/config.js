@@ -1,4 +1,5 @@
 import CaJobsConfigurations from "../views/CAJobs/CaJobsConfigurations/CaJobsConfigurations.js";
+import CampusInterviewSettings from "../views/CampusInterviewSettings";
 import Companies from "../views/Companies";
 import CompaniesDetails from "../views/CompaniesDetails";
 import Configurations from "../views/Configurations/Configurations";
@@ -13,10 +14,14 @@ import ForgotPassword from "../views/ForgotPassword/ForgotPassword";
 import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
+import ManageCompanies from "../views/ManageCompanies/ManageCompanies.js";
 import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
+import RegisteredCompaniesList from "../views/RegisteredCompaniesList/RegisteredCompaniesList";
+import RegisteredCompaniesDetails from "../views/RegisteredCompaniesDetails/RegisteredCompaniesDetails";
 import Session from "../views/Session";
+import SubscriptionDetails from "../containers/SubscriptionDetails/index";
 import EditSession from "../views/EditSession/EditSession";
 import SetupCenter from "../views/SetupCenters";
 import Subscriptions from "../views/Subscriptions/Subscriptions";
@@ -33,11 +38,15 @@ import {
   ADD,
   ADD_NEW_USER_DETAILS,
   ADD_SESSION,
+  CAMPUS_INTERVIEW_SETTINGS,
+  CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO,
+  ADD_SUBSCRIPTIONS,
   CONFIGURATIONS,
   COMPANIES,
   COMPANIES_DETAILS,
   CONFIGURE_CENTRES,
-  CONSENT_MARKING,
+  CONSENT_MARKING_ROUND_ONE,
+  CONSENT_MARKING_ROUND_TWO,
   DASHBOARD,
   DETAILS,
   EDIT_CONFIGURE_CENTRE,
@@ -48,6 +57,8 @@ import {
   OUT_SOURCED,
   QUERIES,
   QUERY_DETAILS,
+  REGISTERED_COMPANY,
+  REGISTERED_COMPANY_DETAILS,
   ROOT,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
@@ -57,6 +68,7 @@ import {
   SETUP_CENTERS_DETAILS,
   SETUP_MOCK_INTERVIEW,
   SUBSCRIPTIONS,
+  SUBSCRIPTIONS_DETAILS,
   USERS,
   USER_DETAILS,
   TICKETS,
@@ -140,7 +152,14 @@ const config = [
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -169,6 +188,10 @@ const config = [
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
+      },
     ],
   },
   {
@@ -185,7 +208,7 @@ const config = [
       },
       {
         viewPath: COMPANIES,
-        element: <Companies />,
+        element: <ManageCompanies />,
       },
       {
         viewPath: COMPANIES + COMPANIES_DETAILS,
@@ -202,6 +225,14 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: SUBSCRIPTIONS + ADD_SUBSCRIPTIONS,
+        element: <SubscriptionDetails isAddSubscription />,
+      },
+      {
+        viewPath: SUBSCRIPTIONS + SUBSCRIPTIONS_DETAILS,
+        element: <SubscriptionDetails />,
       },
       {
         viewPath: JOB_LISTING,
@@ -245,6 +276,14 @@ const config = [
         viewPath: TICKETS + TICKETS_VIEW_DETAILS,
         element: <TicketChatScreen />,
       },
+      {
+        viewPath: REGISTERED_COMPANY,
+        element: <RegisteredCompaniesList />,
+      },
+      {
+        viewPath: REGISTERED_COMPANY + REGISTERED_COMPANY_DETAILS,
+        element: <RegisteredCompaniesDetails />,
+      },
     ],
   },
   {
@@ -283,7 +322,14 @@ const config = [
         viewPath: SESSION + ROUND_TWO_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: SESSION + ROUND_ONE_ORIENTATION_CENTERS,
         element: <OrientationCenter />,
@@ -316,6 +362,14 @@ const config = [
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
       },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
+      },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO,
+        element: <CampusInterviewSettings />,
+      },
     ],
   },
   {
@@ -346,7 +400,14 @@ const config = [
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -374,6 +435,10 @@ const config = [
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
+      },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
       },
     ],
   },
@@ -405,7 +470,14 @@ const config = [
         viewPath: SESSION + ROUND_ONE_SETUP_CENTERS + SETUP_CENTERS_DETAILS,
         element: <SetupCenterDetails />,
       },
-      { viewPath: SESSION + CONSENT_MARKING, element: <ConsentMarking /> },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_ONE,
+        element: <ConsentMarking />,
+      },
+      {
+        viewPath: SESSION + CONSENT_MARKING_ROUND_TWO,
+        element: <ConsentMarking />,
+      },
       {
         viewPath: COMPANIES,
         element: <Companies />,
@@ -433,6 +505,10 @@ const config = [
       {
         viewPath: SESSION + SETUP_MOCK_INTERVIEW + INTERVIEW_DETAILS,
         element: <ConfigureInterviewDates />,
+      },
+      {
+        viewPath: SESSION + CAMPUS_INTERVIEW_SETTINGS,
+        element: <CampusInterviewSettings />,
       },
     ],
   },

@@ -1,13 +1,11 @@
-export const COMPANY_DETAILS_FEILDS = (
+export const COMPANY_DETAILS_FIELDS = (
   name,
   entity,
   frn_number,
   number_of_partner,
   industry_type,
   address,
-  state,
   email,
-  username,
   std_country_code,
   telephone_number
 ) => {
@@ -50,30 +48,18 @@ export const COMPANY_DETAILS_FEILDS = (
     },
     {
       id: 7,
-      headingIntl: "state",
-      label: "state",
-      value: state,
-    },
-    {
-      id: 8,
       headingIntl: "emailId",
       label: "email",
       value: email,
     },
     {
-      id: 9,
-      headingIntl: "userName2",
-      label: "username",
-      value: username,
-    },
-    {
-      id: 10,
+      id: 8,
       headingIntl: "isdCode",
       label: "std_country_code",
       value: std_country_code,
     },
     {
-      id: 11,
+      id: 9,
       headingIntl: "telephoneNumber",
       label: "telephone_number",
       value: telephone_number,
@@ -81,11 +67,10 @@ export const COMPANY_DETAILS_FEILDS = (
   ];
 };
 
-export const CONTACT_PERSONAL_INFORMATION_FEILDS = (
+export const CONTACT_PERSONAL_INFORMATION_FIELDS = (
   salutation,
   name,
   designation,
-  mobile_country_code,
   mobile_number,
   email
 ) => {
@@ -112,7 +97,7 @@ export const CONTACT_PERSONAL_INFORMATION_FEILDS = (
       id: 4,
       headingIntl: "mobileNumber",
       label: "mobile_number",
-      value: `${mobile_country_code}-${mobile_number}`,
+      value: mobile_number,
     },
     {
       id: 5,

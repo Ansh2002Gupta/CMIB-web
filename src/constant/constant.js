@@ -1,21 +1,30 @@
 import {
-  CONSENT_MARKING,
+  CAMPUS_INTERVIEW_SETTINGS,
+  CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO,
+  CONSENT_MARKING_ROUND_ONE,
+  CONSENT_MARKING_ROUND_TWO,
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   ROUND_TWO_SETUP_CENTERS,
-  SETUP_CENTERS,
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
 
+export const API_VERSION_QUERY_PARAM = "api-version";
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
 export const TIMER_OF_1_MINUTES = 1;
 export const SLIDE_BY = 300;
 export const MESSAGE_MAX_LENGTH = 5000;
+export const VALUE_ZERO = 0;
+export const VALUE_ONE = 1;
+export const VALUE_TWO = 2;
+export const TYPE = "company";
+export const HYPHEN = "-";
 export const MAX_INPUT_LENGTH = 100;
 export const MIN_INPUT_LENGTH = 0;
 export const MAX_VIDEO_LENGTH = 999;
 export const MIN_VIDEO_LENGTH = 1;
+export const SESSION_ID_QUERY_PARAM = "session-id";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -61,7 +70,12 @@ export const ROW_PER_PAGE_OPTIONS = [
 export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
-export const VALID_CONSENT_MARKING_TABS_ID = ["1", "2", "3"];
+export const VALID_SESSION_TABS_ID = ["1", "2", "3"];
+export const VALID_CONSENT_MARKING_TABS_ID = {
+  oneTab: ["1"],
+  twoTab: ["1", "2"],
+  threeTab: ["1", "2", "3"],
+};
 export const VALID_GLOBAL_CONFIGURATIONS_TABS_ID = ["1", "2"];
 
 // TODO: Need to remove it once the new custom multi-select is integrated.
@@ -190,6 +204,26 @@ export const SESSION_PERIOD = [
   { id: 112, label: "November 2020", value: "November 2020" },
 ];
 
+export const COMPANY_INTERVIEW_TYPE = [
+  {
+    id: 1,
+    label: "Written/Psychometric Test",
+    value: "Written/Psychometric Test",
+  },
+  { id: 2, label: "Interviews", value: "Interviews" },
+  { id: 3, label: "Group Discussion", value: "Group Discussion" },
+];
+
+export const COMPANY_TYPE_OPTIONS = [
+  { id: 1, label: "Exempt", value: "exempt" },
+  { id: 2, label: "Nil Rated", value: "nil rated" },
+  { id: 3, label: "Bill of Supply", value: "bill of supply" },
+  { id: 4, label: "Export", value: "export" },
+  { id: 5, label: "SEZ", value: "sez" },
+  { id: 6, label: "Deemed Export", value: "deemed export" },
+  { id: 7, label: "Taxable", value: "taxable" },
+];
+
 export const CENTRE_TYPE = [
   { id: 1, label: "Small Centre", value: "small" },
   { id: 2, label: "Big Centre", value: "big" },
@@ -202,7 +236,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
-    onClickNaviagtion: ROUND_ONE_SETUP_CENTERS,
+    onClickNavigation: ROUND_ONE_SETUP_CENTERS,
   },
   {
     id: 2,
@@ -210,7 +244,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Hone skills with simulated scenarios. Boost confidence through valuable practice.",
     headingIntl: "Setup Mock Interviews",
-    onClickNaviagtion: SETUP_MOCK_INTERVIEW,
+    onClickNavigation: SETUP_MOCK_INTERVIEW,
   },
   {
     id: 3,
@@ -218,7 +252,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Foster smooth transitions. Create welcoming spaces with essential information.",
     headingIntl: "Setup Orientation Centres",
-    onClickNaviagtion: ROUND_ONE_ORIENTATION_CENTERS,
+    onClickNavigation: ROUND_ONE_ORIENTATION_CENTERS,
   },
   {
     id: 4,
@@ -226,7 +260,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: CONSENT_MARKING,
+    onClickNavigation: CONSENT_MARKING_ROUND_ONE,
   },
   {
     id: 5,
@@ -234,7 +268,7 @@ export const ROUND_ONE_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
-    onClickNaviagtion: ROUND_ONE_SETUP_CENTERS,
+    onClickNavigation: CAMPUS_INTERVIEW_SETTINGS,
   },
 ];
 
@@ -245,7 +279,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Streamline interview center management. Customize locations and logistics effortlessly.",
     headingIntl: "Setup Centres",
-    onClickNaviagtion: ROUND_TWO_SETUP_CENTERS,
+    onClickNavigation: ROUND_TWO_SETUP_CENTERS,
   },
   {
     id: 2,
@@ -253,7 +287,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Simplify onboarding. Gather participant info and ensure consent compliance.",
     headingIntl: "Registration and Consent Marking Schedule",
-    onClickNaviagtion: CONSENT_MARKING,
+    onClickNavigation: CONSENT_MARKING_ROUND_TWO,
   },
   {
     id: 3,
@@ -261,7 +295,7 @@ export const ROUND_TWO_CARD_LIST = [
     headingDescription:
       "Tailor campus interviews effortlessly. Customize preferences with an intuitive interface.",
     headingIntl: "Campus Interview Settings",
-    onClickNaviagtion: SETUP_CENTERS,
+    onClickNavigation: CAMPUS_INTERVIEW_SETTINGS_ROUND_TWO,
   },
 ];
 
@@ -411,4 +445,26 @@ export const PAYMENT_TYPE = {
 export const INTERVIEW_TYPE = [
   { id: 1, label: "Online", value: "online" },
   { id: 2, label: "Offline", value: "offline" },
+];
+export const MAX_REGISTRATION_FEE_LENGTH = 10;
+
+export const NO_BREAK_SPACE = "\u00A0";
+
+export const REGISTRATION_DATES = [
+  { id: 1, labeIntl: "startDateCompanies" },
+  { id: 2, labeIntl: "startDateCandidates" },
+  { id: 3, labeIntl: "lastDateBigCentres" },
+  { id: 4, labeIntl: "lastDateSmallCentres" },
+];
+
+export const REGISTRATIONS_DATES_FOR_ROUND_TWO = [
+  { id: 1, labeIntl: "registrationStartDateCompanies" },
+  { id: 2, labeIntl: "registrationEndDateCompanies" },
+  { id: 3, labeIntl: "registrationStartDateCandidates" },
+  { id: 4, labeIntl: "registrationEndDateCandidates" },
+  { id: 5, labeIntl: "startShortlistingbyCompany" },
+  { id: 6, labeIntl: "endShortlistingbyCompany" },
+  { id: 7, labeIntl: "startCondidateConsentmarking" },
+  { id: 8, labeIntl: "endCondidateConsentmarking" },
+  { id: 9, labeIntl: "writtenTestDate" },
 ];
