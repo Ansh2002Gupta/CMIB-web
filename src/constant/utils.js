@@ -461,11 +461,11 @@ export const transformedOptions = (options) =>
   options?.map((option) => ({
     id: option.id,
     label: option.name,
-    value: option.name,
+    value: option.slug,
   }));
 
 export const transformedOptionsStates = (options) =>
   options?.map((option) => ({
     label: option.name,
-    value: option.name,
+    value: option.state_code,
   }));

@@ -68,7 +68,7 @@ const CompanyDetailsCa = () => {
           company_partners: data?.number_of_partners,
           current_industry: data?.current_industry,
           correspondance_address: data?.address,
-          company_state: data?.state, //
+          company_state: data?.state, //this has to replace with state_code
           company_email: data?.email,
           company_std: data?.std_country_code,
           company_telephone: data?.telephone_number,
@@ -132,7 +132,7 @@ const CompanyDetailsCa = () => {
       number_of_partners: state?.company_partners,
       current_industry: state?.current_industry,
       address: state?.correspondance_address,
-      state: state?.company_state, //
+      state_code: state?.company_state,
       email: state?.company_email,
       std_country_code: state?.company_std,
       telephone_number: state?.company_telephone,
@@ -150,7 +150,6 @@ const CompanyDetailsCa = () => {
       company_type: state?.company_type,
       source_of_information: state?.source,
       company_logo: state?.company_logo_image,
-      state_code: "IN-AS",
     };
     editCompanyData({
       body: payload,
