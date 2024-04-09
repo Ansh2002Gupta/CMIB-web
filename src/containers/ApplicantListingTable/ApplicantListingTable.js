@@ -60,7 +60,7 @@ const ApplicantListingTable = ({
   const { changeJobStatus, isLoading: isApproveJobLoading } =
     useChangeJobStatusApi();
 
-
+    // TODO: There was earlier api dependency for this Task will do in next PR.
     // const handleActions = (currentAction, item) => {
     //   const screens = {
     //     "Download Profile & Resume": () => {},
@@ -150,6 +150,7 @@ const ApplicantListingTable = ({
   };
 
   const handleMenuItems = (rowData, item) => {
+    // TODO: There was earlier api dependency for this Task will do in next PR.
     // changeJobStatus(
     //   rowData?.id,
     //   { status: 2 },
@@ -263,18 +264,7 @@ const ApplicantListingTable = ({
   }, [activeInactive]);
 
   const filterOptions = [
-    // {
-    //   id: 1,
-    //   name: "Active/Inactive",
-    //   isSelected: false,
-    //   options: activeInactiveOptions,
-    // },
-    // {
-    //   id: 2,
-    //   name: "Approved/Not Approved",
-    //   isSelected: false,
-    //   options: approvedNotApprovedOptions,
-    // },
+    // TODO:
   ];
 
   const resetQueryListingData = (ticketsResult) => {

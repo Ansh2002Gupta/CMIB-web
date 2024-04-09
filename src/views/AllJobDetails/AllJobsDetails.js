@@ -104,7 +104,9 @@ function AllJobDetails() {
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
 
   const onClickYes =  () => {
-    makeRequest({})
+    if (!isLoadingJobStatusChange) {
+      makeRequest({})
+    }
     setShowInactiveJobModal(false)
   }
 
@@ -112,7 +114,9 @@ function AllJobDetails() {
     if (!!jobDetails?.status) {
       setShowInactiveJobModal(true)
     } else {
-      makeRequest({})
+      if (!isLoadingJobStatusChange) {
+        makeRequest({})
+      }
     }
   }
 

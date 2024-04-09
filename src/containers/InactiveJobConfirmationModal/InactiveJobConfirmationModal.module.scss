@@ -76,10 +76,6 @@
     gap: var(--gapXSmall, 8px);
     flex: 1 0 0;
     border-radius: var(--radiusLg, 8px);
-    &:hover {
-      background-color: var(--error, #D93400) !important;
-      color: var(--headerBg, #f5f5f5) !important;
-    }
   }
   
   .btnContainer {
