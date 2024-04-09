@@ -56,7 +56,7 @@ const CustomTextEditor = (props) => {
   };
 
   return (
-    <div>
+    <div style={styles.CustomTextEditorContainer}>
       <div style={styles.labelContainer}>
         <Typography
           style={{...styles.label, ...customLabelStyle}}
