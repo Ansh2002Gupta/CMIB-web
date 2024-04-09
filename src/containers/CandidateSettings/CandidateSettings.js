@@ -360,14 +360,14 @@ const CandidateSettings = ({
       customColumnHeading: styles.columnHeading,
       dataIndex: "from_date",
       key: "from_date",
-      renderText: { visible: true, isTypeDate: false },
+      renderText: { visible: true, isTypeDate: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.to_date" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "to_date",
       key: "to_date",
-      renderText: { visible: true, isTypeDate: false },
+      renderText: { visible: true, isTypeDate: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.from_time" }),
@@ -398,14 +398,14 @@ const CandidateSettings = ({
       customColumnHeading: styles.columnHeading,
       dataIndex: "from_date",
       key: "from_date",
-      renderText: { visible: true, isTypeDate: false },
+      renderText: { visible: true, isTypeDate: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.to_date" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "to_date",
       key: "to_date",
-      renderText: { visible: true, isTypeDate: false },
+      renderText: { visible: true, isTypeDate: true },
     }),
   ];
 
@@ -488,14 +488,14 @@ const CandidateSettings = ({
       customColumnHeading: styles.columnHeading,
       dataIndex: "big_centre_start_date",
       key: "big_centre_start_date",
-      renderText: { visible: true, isTypeDate: false },
+      renderText: { visible: true, isTypeDate: true },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.end_date" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "big_centre_end_date",
       key: "big_centre_end_date",
-      renderText: { visible: true, isTypeDate: false },
+      renderText: { visible: true, isTypeDate: true },
     }),
   ];
 
