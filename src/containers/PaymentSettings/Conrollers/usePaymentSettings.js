@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { formateArrayToArrayOfobject } from "../../../constant/utils";
 
-const usePaymentSettings = ({ paymentDetails, can_edit_payment }) => {
+const usePaymentSettings = ({ paymentDetails }) => {
   const [selectedCompanyList, setSelectedCompanyList] = useState([]);
+  const can_edit_payment = paymentDetails?.can_edit?.can_edit_payment;
 
   const initialFormState = {
     cgst: "",

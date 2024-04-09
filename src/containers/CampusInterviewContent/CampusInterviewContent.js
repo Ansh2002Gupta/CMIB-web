@@ -101,17 +101,6 @@ const CampusInterviewContent = () => {
 
   const roundCentres = roundDetails?.centres || [];
 
-  const can_edit_company = false;
-  const can_edit_payment = false;
-  const can_edit_max_interview_allowed = false;
-  const can_edit_candidate_max_offer_accepted = false;
-  const can_edit_candidate_big_center_change_start_date = false;
-  const can_edit_candidate_big_center_change_end_date = false;
-  const can_edit_candidate_small_center_change_start_date = false;
-  const can_edit_candidate_small_center_change_end_date = false;
-  const can_edit_candidate_center_change_start_date = false;
-  const can_edit_candidate_center_change_end_date = false;
-
   const {
     formErrors: PaymentSettingsError,
     formFields: paymentFields,
@@ -123,7 +112,6 @@ const CampusInterviewContent = () => {
     isButtonDisable: isPaymentSettingsInvalid,
   } = usePaymentSettings({
     paymentDetails: campusInterviewData,
-    can_edit_payment,
   });
 
   const {
@@ -139,7 +127,6 @@ const CampusInterviewContent = () => {
   } = useCompanySettings({
     companyDetails: campusInterviewData,
     hasRoundTwo,
-    can_edit_company,
   });
 
   const {
@@ -153,6 +140,8 @@ const CampusInterviewContent = () => {
     handleRemove,
     handleCandidateDataChange,
     selectedCenterTableData,
+    isStartDateEditable,
+    isEndDateEditable,
     isButtonDisable: isCandidateSettingsInvalid,
     tableData,
     handleValidation,
@@ -160,12 +149,6 @@ const CampusInterviewContent = () => {
     candidateDetails: campusInterviewData,
     isEditable,
     hasRoundTwo,
-    can_edit_max_interview_allowed,
-    can_edit_candidate_max_offer_accepted,
-    can_edit_candidate_big_center_change_start_date,
-    can_edit_candidate_big_center_change_end_date,
-    can_edit_candidate_small_center_change_start_date,
-    can_edit_candidate_small_center_change_end_date,
   });
 
   const onClickCancel = () => {
@@ -345,10 +328,8 @@ const CampusInterviewContent = () => {
                         roundCentres,
                         selectedCenterTableData,
                         isEditable,
-                        isStartDateEditable:
-                          can_edit_candidate_center_change_start_date,
-                        isEndDateEditable:
-                          can_edit_candidate_center_change_end_date,
+                        isStartDateEditable,
+                        isEndDateEditable,
                         campusInterviewData,
                         tableData,
                       }}

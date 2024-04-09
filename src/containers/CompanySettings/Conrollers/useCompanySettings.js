@@ -3,12 +3,9 @@ import { useEffect, useState } from "react";
 import { MAX_EXPERIENCE_LENGTH } from "../../../constant/constant";
 import { formateArrayToArrayOfobject } from "../../../constant/utils";
 
-const useCompanySettings = ({
-  companyDetails,
-  hasRoundTwo,
-  can_edit_company,
-}) => {
+const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
   const [selectedInterviewType, setSelectedInterviewType] = useState([]);
+  const can_edit_company = companyDetails?.can_edit?.can_edit_company;
 
   const initialValue = {
     max_no_of_vacancy: "",

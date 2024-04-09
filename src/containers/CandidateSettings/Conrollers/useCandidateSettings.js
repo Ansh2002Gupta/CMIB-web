@@ -5,13 +5,25 @@ const useCandidateSettings = ({
   candidateDetails,
   isEditable,
   hasRoundTwo,
-  can_edit_max_interview_allowed,
-  can_edit_candidate_max_offer_accepted,
-  can_edit_candidate_big_center_change_start_date,
-  can_edit_candidate_big_center_change_end_date,
-  can_edit_candidate_small_center_change_start_date,
-  can_edit_candidate_small_center_change_end_date,
 }) => {
+  const can_edit_max_interview_allowed =
+    candidateDetails?.can_edit?.can_edit_max_interview_allowed;
+  const can_edit_candidate_max_offer_accepted =
+    candidateDetails?.can_edit?.can_edit_candidate_max_offer_accepted;
+  const can_edit_candidate_big_center_change_start_date =
+    candidateDetails?.can_edit?.can_edit_candidate_big_center_change_start_date;
+  const can_edit_candidate_big_center_change_end_date =
+    candidateDetails?.can_edit?.can_edit_candidate_big_center_change_end_date;
+  const can_edit_candidate_small_center_change_start_date =
+    candidateDetails?.can_edit
+      ?.can_edit_candidate_small_center_change_start_date;
+  const can_edit_candidate_small_center_change_end_date =
+    candidateDetails?.can_edit?.can_edit_candidate_small_center_change_end_date;
+  const isStartDateEditable =
+    candidateDetails?.can_edit?.can_edit_candidate_center_change_start_date;
+  const isEndDateEditable =
+    candidateDetails?.can_edit?.can_edit_candidate_center_change_end_date;
+
   const addTableData = {
     isAddRow: true,
     centre_name: "",
@@ -456,6 +468,8 @@ const useCandidateSettings = ({
     handleInputChange,
     initialFormState,
     isButtonDisable,
+    isStartDateEditable,
+    isEndDateEditable,
     tableData,
     setTableData,
     handleAdd,
