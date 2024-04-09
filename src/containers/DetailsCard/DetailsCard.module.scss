@@ -3,7 +3,7 @@
 }
 
 .customLabelStyles {
-  font-size: var(--fontSizeExtraSmall);
+  font-size: var(--fontSizeExtraSmall) !important;
   font-weight: var(--fontWeightMedium);
   color: var(--inputPlaceHolder);
 }

@@ -1,4 +1,6 @@
 import React from "react";
+import { Typography } from "antd";
+
 import { TwoColumn } from "../../core/layouts";
 
 import CustomCheckBox from "../CustomCheckBox/CustomCheckBox";
@@ -9,15 +11,15 @@ import styles from "./CheckBoxListComponent.module.scss";
 const CheckBoxListComponent = ({
   customContainerStyles,
   options,
-  slectedBox,
+  selectedBox,
   handleSelectBox,
 }) => {
   const handleSelect = (val) => {
-    if (slectedBox.includes(val)) {
-      const updatedData = slectedBox.filter((item) => item !== val);
+    if (selectedBox.includes(val)) {
+      const updatedData = selectedBox.filter((item) => item !== val);
       handleSelectBox(updatedData);
     } else {
-      handleSelectBox([...slectedBox, val]);
+      handleSelectBox([...selectedBox, val]);
     }
   };
   return (
@@ -27,18 +29,20 @@ const CheckBoxListComponent = ({
       )}
     >
       <CustomGrid customStyle={styles.gridContainer}>
-        {options.map((item) => {
+        {options.map((item, index) => {
           return (
             <TwoColumn
+              key={index}
               leftSection={
                 <CustomCheckBox
-                  checked={slectedBox && slectedBox.includes(item)}
+                  checked={selectedBox && selectedBox.includes(item)}
                   onChange={() => handleSelect(item)}
                 />
               }
-              rightSection={item}
-              rightSectionStyle={classes.rightSectionStyle} //Use rightSectionClassName, i have added in style for demonstration
-              style={classes.mainStyles} // add
+              rightSection={
+                <Typography className={styles.checkBoxText}>{item}</Typography>
+              }
+              rightSectionStyle={classes.rightSectionStyle}
             />
           );
         })}

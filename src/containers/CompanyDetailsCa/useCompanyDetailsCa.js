@@ -66,6 +66,7 @@ const company_details = ({ intl, industryData, stateData }) => [
     placeholder: "label.numberOfPartner",
     type: "inputNumber",
     controls: true,
+    maxLength: 3,
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });

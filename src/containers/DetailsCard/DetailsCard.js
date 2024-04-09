@@ -117,7 +117,7 @@ const DetailsCard = ({
       return (
         <CheckBoxListComponent
           customContainerStyles={styles.gridItem}
-          slectedBox={item?.value}
+          selectedBox={item?.value}
           options={item.options}
           handleSelectBox={(val) => {
             onChangeValue(item.key, val);
@@ -203,6 +203,7 @@ const DetailsCard = ({
         controls={item?.controls}
         selectOptions={item?.selectOptions}
         rows={item?.rows}
+        maxLength={item.maxLength}
       />
     );
   };
