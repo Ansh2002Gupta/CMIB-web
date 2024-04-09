@@ -11,6 +11,7 @@ import CustomInput from "../../components/CustomInput";
 import Chip from "../../components/Chip/Chip";
 import FileUpload from "../../components/FileUpload/FileUpload";
 import MarkRequired from "../../components/MarkRequired";
+import PhoneInput from "../../components/PhoneInput/PhoneInput";
 import { classes } from "./DetailsCard.styles";
 import styles from "./DetailsCard.module.scss";
 import { useIntl } from "react-intl";
@@ -18,6 +19,8 @@ import { useIntl } from "react-intl";
 const DetailsCard = ({
   customHeaderStyles,
   customLabelStyles,
+  customPhoneInputStyles,
+  customPhoneSelectStyles,
   customValueStyles,
   isSingleComponent,
   isEditable,
@@ -134,10 +137,46 @@ const DetailsCard = ({
         />
       );
     }
+    if (item?.isPhone) {
+      console.log(item?.selectOptions, "item?.selectOptions..");
+      return (
+        <PhoneInput
+          errorMessage={item?.error}
+          isError={!!item?.error}
+          label={item?.label && intl.formatMessage({ id: item?.label })}
+          isRequired={item?.isMandatory}
+          value={item?.value}
+          mobilePrefix={item?.countryValue}
+          disabled={item?.isDisabled}
+          customInputStyles={[
+            styles.text,
+            styles.input,
+            customPhoneInputStyles,
+          ].join(" ")}
+          customSelectInputStyles={[
+            styles.selectInput,
+            customPhoneSelectStyles,
+          ].join(" ")}
+          customLabelStyles={styles.customLabelStyles}
+          onChange={(val) => {
+            onChangeValue(item?.key, val);
+          }}
+          selectOptions={item?.selectOptions}
+          defaultSelectValueString="+91"
+          onSelectItem={(val) =>
+            onChangeValue(item?.countryKey, val.target.value)
+          }
+          placeholder={intl.formatMessage({ id: item?.placeholder })}
+          onBlur={() => {
+            onBlur(item?.key);
+          }}
+        />
+      );
+    }
     return (
       <CustomInput
         errorMessage={item?.error}
-        isError={item.error ? true : false}
+        isError={!!item?.error}
         customContainerStyles={item.fullWidth && styles.gridItem}
         customLabelStyles={styles.customLabelStyles}
         key={item.key}

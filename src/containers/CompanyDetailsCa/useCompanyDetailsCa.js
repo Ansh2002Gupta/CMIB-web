@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 
 import useFetch from "../../core/hooks/useFetch";
 import {
+  CORE_COUNTRIES,
   CORE_ROUTE,
   INDUSTRY_TYPES,
   STATES,
@@ -161,7 +162,7 @@ const company_details = ({ intl, industryData, stateData }) => [
     },
   },
 ];
-const contact_person_details = ({ intl }) => [
+const contact_person_details = ({ intl, countryData }) => [
   {
     key: "salutation",
     isMandatory: true,
@@ -201,9 +202,12 @@ const contact_person_details = ({ intl }) => [
   },
   {
     key: "contact_mobile_number",
+    countryKey: "contact_mobile_country_code",
     isMandatory: true,
     label: "label.mobileNumber",
     placeholder: "label.mobileNumber",
+    isPhone: true,
+    selectOptions: countryData,
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });
@@ -314,6 +318,13 @@ const addValueOnField = ({ state, details, isEditable }) => {
             : state?.[item?.key],
       };
     }
+    if (item?.isPhone) {
+      return {
+        ...item,
+        value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+        countryValue: state[item?.countryKey],
+      };
+    }
     return {
       ...item,
       value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
@@ -329,11 +340,14 @@ export const useCompanyDetailsCa = ({ state, isEditable }) => {
   const { data: stateData, isLoading: isGettingState } = useFetch({
     url: CORE_ROUTE + STATES,
   });
+  const { data: countryData, isLoading: isGettingCountry } = useFetch({
+    url: CORE_COUNTRIES,
+  });
   const [company_details_state, setCompany_details_state] = useState(
     company_details({ intl, industryData, stateData })
   );
   const [contact_person_details_state, setContact_person_details_state] =
-    useState(contact_person_details({ intl }));
+    useState(contact_person_details({ intl, countryData }));
   const [other_details_state, setOther_details_state] = useState(
     other_details({ intl })
   );
@@ -347,7 +361,10 @@ export const useCompanyDetailsCa = ({ state, isEditable }) => {
     setCompany_details_state(
       company_details({ intl, industryData, stateData })
     );
-  }, [industryData, stateData]);
+    setContact_person_details_state(
+      contact_person_details({ intl, countryData })
+    );
+  }, [industryData, stateData, countryData]);
 
   const validateOnBlur = ({ state, details, key, index, intl }) => {
     const value = state[key];
@@ -467,7 +484,7 @@ export const useCompanyDetailsCa = ({ state, isEditable }) => {
     handleOther_detailBlur,
     handleSource_of_informationBlur,
     handleCompany_logoBlur,
-    isLoading: isGettingIndustry || isGettingState,
+    isLoading: isGettingIndustry || isGettingState || isGettingCountry,
     isValidAllFields: checkMandatoryFields(),
   };
 };

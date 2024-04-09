@@ -78,6 +78,8 @@ const CompanyDetailsCa = () => {
           contact_person_designation:
             data?.contact_person_details[0]?.designation,
           contact_mobile_number: data?.contact_person_details[0]?.mobile,
+          contact_mobile_country_code:
+            data?.contact_person_details[0]?.mobile_country_code,
           contact_email: data?.contact_person_details[0]?.email,
           short_profile_company: data?.company_details,
           website: data?.website,
@@ -142,6 +144,7 @@ const CompanyDetailsCa = () => {
         { designation: state?.contact_person_designation },
         { mobile: state?.contact_mobile_number },
         { email: state?.contact_email },
+        { mobile_country_code: state?.contact_mobile_country_code },
       ],
       company_details: state?.short_profile_company,
       website: state?.website,

@@ -79,3 +79,26 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
 }
+
+.text {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.input {
+  display: flex;
+  padding: 12px var(--paddingSmall);
+  align-items: center;
+  gap: var(--gapXSmall);
+  align-self: stretch;
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background: var(--bodyBg);
+  font-weight: var(--fontWeightMedium, 500) !important;
+}
+
+.selectInput {
+  padding: 0px;
+  min-height: var(--height_44);
+}
