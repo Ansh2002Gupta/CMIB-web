@@ -374,14 +374,22 @@ const CandidateSettings = ({
       customColumnHeading: styles.columnHeading,
       dataIndex: "from_time",
       key: "from_time",
-      renderText: { visible: true },
+      renderText: {
+        visible: true,
+        isTypeTime: true,
+        isTimeInHoursMinuteSecondFormat: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.to_time" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "to_time",
       key: "to_time",
-      renderText: { visible: true },
+      renderText: {
+        visible: true,
+        isTypeTime: true,
+        isTimeInHoursMinuteSecondFormat: true,
+      },
     }),
   ];
 

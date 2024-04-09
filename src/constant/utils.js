@@ -26,9 +26,19 @@ export const formatDate = ({
   return dayjs(new Date()).format(dateFormat);
 };
 
-export const formatTime = ({ time, timeFormat = "h:mm A" }) => {
+export const formatTime = ({
+  time,
+  timeFormat = "h:mm A",
+  usePassedTime = false,
+  isTimeInHoursMinuteSecondFormat,
+}) => {
   if (time) {
-    return dayjs(time).format(timeFormat);
+    if (isTimeInHoursMinuteSecondFormat)
+      return dayjs(time, "hh:mm:ss").format(timeFormat);
+    else return dayjs(time).format(timeFormat);
+  }
+  if (usePassedTime) {
+    return "-";
   }
   return dayjs().format(timeFormat);
 };

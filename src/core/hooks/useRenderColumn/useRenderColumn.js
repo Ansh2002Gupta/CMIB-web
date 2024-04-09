@@ -11,7 +11,7 @@ import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import CustomInput from "../../../components/CustomInput";
 import { ThemeContext } from "core/providers/theme";
-import { formatDate, toggleSorting } from "../../../constant/utils";
+import { formatDate, formatTime, toggleSorting } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 
@@ -126,7 +126,9 @@ const useRenderColumn = () => {
       isCentre,
       isBooleanHandlerKey = null,
       isTextBold,
+      isTimeInHoursMinuteSecondFormat,
       isTypeDate,
+      isTypeTime,
       textStyles,
       isCapitalize,
       isDays,
@@ -201,6 +203,13 @@ const useRenderColumn = () => {
       }
       if (isTypeDate) {
         return formatDate({ date: text });
+      }
+      if (isTypeTime) {
+        return formatTime({
+          time: text,
+          usePassedTime: true,
+          isTimeInHoursMinuteSecondFormat,
+        });
       }
       if (includeDotAfterText) {
         return `${text} .`;

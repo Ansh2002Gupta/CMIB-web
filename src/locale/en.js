@@ -155,7 +155,7 @@ const locale = {
   "session.payment.igst": "IGST / Taxes (in %)",
   "session.payment.noGst": "No GST For",
   "session.payment.discountRate": "Discount Rate (in %)",
-  "session.payment.memberRegistrationFee": "Member Registration Fee",
+  "session.payment.memberRegistrationFee": "Member Registration Fee (INR)",
   "label.viewProfile": "View Profile",
   "label.myProfile": "My Profile",
   "label.changePassword": "Change Password",
