@@ -128,12 +128,14 @@ const DetailsCard = ({
     if (item?.isImage) {
       return (
         <FileUpload
+          customContaierStyles={styles.customContaierStyles}
           isFormEditable={true}
           isNotAddable={true}
           userProfilePic={item?.value}
           updateUserData={handleUploadImage}
           deletedImage={deletedImage}
           setDeletedImage={setDeletedImage}
+          subHeading={intl.formatMessage({ id: item?.label })}
         />
       );
     }

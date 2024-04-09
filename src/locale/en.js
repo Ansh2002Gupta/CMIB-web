@@ -719,6 +719,8 @@ const locale = {
   "label.company_update_success": "Company Details Updated Successfully",
   "label.fieldRequired": "This Field is required",
   "label.stdPlaceholder": "eg 91",
+  "label.photo_text": "Photo",
+  "label.profilePhoto": "Profile Photo",
 };
 
 export default locale;

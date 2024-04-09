@@ -297,6 +297,8 @@ const UserDetailsContent = ({
                     ? viewUserData?.profile_photo
                     : userData?.profile_photo
                 }
+                heading={intl.formatMessage({ id: "label.profilePhoto" })}
+                subHeading={intl.formatMessage({ id: "label.photo_text" })}
                 isNotAddable
               />
             </div>

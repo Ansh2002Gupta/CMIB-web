@@ -15,6 +15,7 @@ import styles from "./FileUpload.module.scss";
 import "./override.css";
 
 const FileUpload = ({
+  customContaierStyles,
   heading,
   isFormEditable,
   isNotAddable,
@@ -87,10 +88,16 @@ const FileUpload = ({
   };
 
   return (
-    <Base className={styles.container}>
-      <Typography className={styles.headingText}>{heading}</Typography>
+    <Base className={[styles.container, customContaierStyles].join(" ")}>
+      {!!heading && (
+        <Typography className={styles.headingText}>{heading}</Typography>
+      )}
       <div className={styles.uploadBottomContainer}>
-        <Typography className={styles.subHeadingText}>{subHeading}</Typography>
+        {!!subHeading && (
+          <Typography className={styles.subHeadingText}>
+            {subHeading}
+          </Typography>
+        )}
         {notificationContextHolder}
         {userProfilePic || !isFormEditable ? (
           <UserImage
@@ -133,10 +140,10 @@ const FileUpload = ({
 };
 
 FileUpload.defaultProps = {
-  heading: "Profile Photo",
+  heading: "",
   isFormEditable: false,
   name: "",
-  subHeading: "Photo",
+  subHeading: "",
   updateUserData: () => {},
   userProfilePic: "",
   userImageName: "",
