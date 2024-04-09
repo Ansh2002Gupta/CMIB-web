@@ -70,7 +70,6 @@ const CompanyDetailsCa = () => {
           correspondance_address: data?.address,
           company_state: data?.state, //
           company_email: data?.email,
-          company_username: data?.user_name, //
           company_std: data?.std_country_code,
           company_telephone: data?.telephone_number,
           salutation: data?.contact_person_details[0]?.salutation,
@@ -135,7 +134,6 @@ const CompanyDetailsCa = () => {
       address: state?.correspondance_address,
       state: state?.company_state, //
       email: state?.company_email,
-      user_name: state?.company_username, //
       std_country_code: state?.company_std,
       telephone_number: state?.company_telephone,
       contact_person_details: [
@@ -152,6 +150,7 @@ const CompanyDetailsCa = () => {
       company_type: state?.company_type,
       source_of_information: state?.source,
       company_logo: state?.company_logo_image,
+      state_code: "IN-AS",
     };
     editCompanyData({
       body: payload,

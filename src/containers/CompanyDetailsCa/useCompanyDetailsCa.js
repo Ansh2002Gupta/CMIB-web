@@ -129,17 +129,6 @@ const company_details = ({ intl, industryData, stateData }) => [
     },
   },
   {
-    key: "company_username",
-    isMandatory: true,
-    label: "label.userName2",
-    placeholder: "label.userName2",
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
-    },
-  },
-  {
     key: "company_std",
     isMandatory: true,
     label: "label.isdCode",
