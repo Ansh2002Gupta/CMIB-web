@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
-import {
-  MAX_EXPERIENCE_LENGTH,
-  MAX_VACANCIES_LENGTH,
-} from "../../../constant/constant";
+import { MAX_EXPERIENCE_LENGTH } from "../../../constant/constant";
 import { formateArrayToArrayOfobject } from "../../../constant/utils";
 
-const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
+const useCompanySettings = ({
+  companyDetails,
+  hasRoundTwo,
+  can_edit_company,
+}) => {
   const [selectedInterviewType, setSelectedInterviewType] = useState([]);
 
   const initialValue = {
@@ -35,6 +36,7 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
         value: max_no_of_vacancy,
         hasControls: true,
         rules: {
+          isDisabled: !can_edit_company,
           isRequired: true,
           message: "max_no_of_vacancy",
         },
@@ -45,6 +47,7 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
         label: "multiplier",
         value: multiplier,
         rules: {
+          isDisabled: !can_edit_company,
           maxLength: MAX_EXPERIENCE_LENGTH,
           isRequired: true,
           message: "multiplier",
@@ -67,6 +70,7 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
         label: "company_interview_types",
         value: company_interview_types,
         rules: {
+          isDisabled: !can_edit_company,
           isRequired: true,
           message: "company_interview_types",
         },
@@ -88,6 +92,7 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
         hasControls: true,
         rules: {
           isRequired: true,
+          isDisabled: !can_edit_company,
           message: "max_no_of_vacancy",
         },
       },
@@ -98,6 +103,7 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
         label: "shortlist_ratio",
         value: shortlist_ratio,
         rules: {
+          isDisabled: !can_edit_company,
           maxLength: MAX_EXPERIENCE_LENGTH,
           isRequired: true,
           message: "shortlist_ratio",
@@ -111,6 +117,7 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
         label: "company_interview_types",
         value: company_interview_types,
         rules: {
+          isDisabled: !can_edit_company,
           isRequired: true,
           message: "company_interview_types",
         },

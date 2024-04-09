@@ -5,6 +5,12 @@ const useCandidateSettings = ({
   candidateDetails,
   isEditable,
   hasRoundTwo,
+  can_edit_max_interview_allowed,
+  can_edit_candidate_max_offer_accepted,
+  can_edit_candidate_big_center_change_start_date,
+  can_edit_candidate_big_center_change_end_date,
+  can_edit_candidate_small_center_change_start_date,
+  can_edit_candidate_small_center_change_end_date,
 }) => {
   const addTableData = {
     isAddRow: true,
@@ -156,6 +162,7 @@ const useCandidateSettings = ({
           label: "max_no_of_interview",
           value: max_no_of_interview,
           rules: {
+            isDisabled: !can_edit_max_interview_allowed,
             isRequired: true,
             message: "max_no_of_interview",
           },
@@ -166,6 +173,7 @@ const useCandidateSettings = ({
           label: "max_no_of_offer",
           value: max_no_of_offer,
           rules: {
+            isDisabled: !can_edit_candidate_max_offer_accepted,
             isRequired: true,
             message: "max_no_of_offer",
           },
@@ -179,6 +187,7 @@ const useCandidateSettings = ({
           value: big_centre_start_date,
           isDateTimePicker: true,
           rules: {
+            isDisabled: !can_edit_candidate_big_center_change_start_date,
             message: "big_centre_start_date",
           },
         },
@@ -189,6 +198,7 @@ const useCandidateSettings = ({
           value: big_centre_end_date,
           isDateTimePicker: true,
           rules: {
+            isDisabled: !can_edit_candidate_big_center_change_end_date,
             message: "big_centre_end_date",
           },
         },
@@ -201,6 +211,7 @@ const useCandidateSettings = ({
           value: small_centre_start_date,
           isDateTimePicker: true,
           rules: {
+            isDisabled: !can_edit_candidate_small_center_change_start_date,
             message: "small_centre_start_date",
           },
         },
@@ -211,6 +222,7 @@ const useCandidateSettings = ({
           value: small_centre_end_date,
           isDateTimePicker: true,
           rules: {
+            isDisabled: !can_edit_candidate_small_center_change_end_date,
             message: "small_centre_end_date",
           },
         },
@@ -228,6 +240,7 @@ const useCandidateSettings = ({
           value: max_no_of_interview,
           rules: {
             isRequired: true,
+            isDisabled: !can_edit_max_interview_allowed,
             message: "max_no_of_interview",
           },
         },
@@ -238,6 +251,7 @@ const useCandidateSettings = ({
           value: max_no_of_offer,
           rules: {
             isRequired: true,
+            isDisabled: !can_edit_candidate_max_offer_accepted,
             message: "max_no_of_offer",
           },
         },
@@ -368,53 +382,59 @@ const useCandidateSettings = ({
   };
 
   const handleValidation = () => {
-    let isValid;
-    let newErrors;
-    if (hasRoundTwo) {
-      isValid = !tableData.some(
-        (item) => !item.centre_name || !item.from_date || !item.to_date
-      );
-      if (!isValid) {
-        newErrors = tableData.map((item) => ({
-          centre_name: !item.centre_name
-            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-            : "",
-          from_date: !item.from_date
-            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-            : "",
-          to_date: !item.to_date
-            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-            : "",
-        }));
-      }
-    } else {
-      isValid = !tableData.some(
-        (item) =>
-          !item.centre_name ||
-          !item.from_date ||
-          !item.to_date ||
-          !item.from_time ||
-          !item.to_time
-      );
-      if (!isValid) {
-        newErrors = tableData.map((item) => ({
-          centre_name: !item.centre_name
-            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-            : "",
-          from_date: !item.from_date
-            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-            : "",
-          to_date: !item.to_date
-            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-            : "",
-          from_time: !item.from_time
-            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-            : "",
-          to_time: !item.to_time
-            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
-            : "",
-        }));
-      }
+    let isValid = true;
+    let newErrors = [];
+
+    // Helper function to determine if an item is partially filled
+    const isPartiallyFilled = (item) => {
+      const fields = hasRoundTwo
+        ? [item.centre_name, item.from_date, item.to_date]
+        : [
+            item.centre_name,
+            item.from_date,
+            item.to_date,
+            item.from_time,
+            item.to_time,
+          ];
+      const filledFields = fields.filter((field) => field);
+      return filledFields.length > 0 && filledFields.length < fields.length;
+    };
+
+    // Check if any item is partially filled
+    const anyPartiallyFilled = tableData.some(isPartiallyFilled);
+
+    if (anyPartiallyFilled) {
+      newErrors = tableData.map((item) => {
+        if (isPartiallyFilled(item)) {
+          return {
+            centre_name: !item.centre_name
+              ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+              : "",
+            from_date: !item.from_date
+              ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+              : "",
+            to_date: !item.to_date
+              ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+              : "",
+            from_time:
+              !item.from_time && !hasRoundTwo
+                ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+                : "",
+            to_time:
+              !item.to_time && !hasRoundTwo
+                ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+                : "",
+          };
+        }
+        return {
+          centre_name: "",
+          from_date: "",
+          to_date: "",
+          from_time: "",
+          to_time: "",
+        };
+      });
+      isValid = false;
     }
 
     if (!isValid) {

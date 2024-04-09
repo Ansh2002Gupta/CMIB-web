@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { formateArrayToArrayOfobject } from "../../../constant/utils";
 
-const usePaymentSettings = ({ paymentDetails }) => {
+const usePaymentSettings = ({ paymentDetails, can_edit_payment }) => {
   const [selectedCompanyList, setSelectedCompanyList] = useState([]);
 
   const initialFormState = {
@@ -31,6 +31,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
           isPercentage: true,
           isRequired: true,
           message: "cgst",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -42,6 +43,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
           isPercentage: true,
           isRequired: true,
           message: "sgst",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -53,6 +55,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
           isPercentage: true,
           isRequired: true,
           message: "igst",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -64,6 +67,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
         rules: {
           isRequired: true,
           message: "noGst",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -75,6 +79,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
           isPercentage: true,
           isRequired: true,
           message: "discountRate",
+          isDisabled: !can_edit_payment,
         },
       },
       {
@@ -85,6 +90,7 @@ const usePaymentSettings = ({ paymentDetails }) => {
         rules: {
           isRequired: true,
           message: "memberRegistrationFee",
+          isDisabled: !can_edit_payment,
         },
       },
     ];
