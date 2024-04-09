@@ -142,6 +142,7 @@ const CampusInterviewContent = () => {
     selectedCenterTableData,
     isButtonDisable: isCandidateSettingsInvalid,
     tableData,
+    handleValidation,
   } = useCandidateSettings({
     candidateDetails: campusInterviewData,
     isEditable,
@@ -169,6 +170,9 @@ const CampusInterviewContent = () => {
   });
 
   const onClickSave = () => {
+    const valid = handleValidation();
+    if (!valid) return;
+
     const consentData = tableData
       .filter(
         (item) =>
