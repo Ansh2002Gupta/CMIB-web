@@ -27,6 +27,7 @@ import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./sideMenu.module.scss";
 
 const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
+  const visitWebsiteUrl = process.env.REACT_APP_CMS_URI;
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [globalSessionDetails, globalSessionDispatch] =
@@ -204,7 +205,7 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
                       )}
                       expandIcon={<></>}
                       openKeys={accessibleModules?.map((module) => module?.key)}
-                      onSelect={handleOnClickMenuItem}
+                      onClick={handleOnClickMenuItem}
                       selectedKeys={selectedKey}
                     />
                   )}
@@ -221,6 +222,9 @@ const SideMenu = ({ logo, setIsModalOpen, setOpenSideMenu }) => {
             className={styles.sideMenuBottomSection}
             align="center"
             direction="horizontal"
+            onClick={() => {
+              window.location.href = visitWebsiteUrl;
+            }}
           >
             <Button
               className={styles.visitContainer}

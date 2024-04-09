@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { Image, Typography } from "antd";
 
@@ -6,50 +6,36 @@ import { TwoRow } from "../../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
 
 import CustomGrid from "../../../components/CustomGrid";
+import { getValidUrl } from "../../../constant/utils";
 import {
-  COMPANY_DETAILS_FEILDS,
-  CONTACT_PERSONAL_INFORMATION_FEILDS,
+  COMPANY_DETAILS_FIELDS,
+  CONTACT_PERSONAL_INFORMATION_FIELDS,
   OTHER_DETAILS_FEILDS,
 } from "./CompanyProfileFieldDetails";
-import { COMPANY_PROFILE } from "../../../companyDetailsDummyData";
 import styles from "./CompanyProfile.module.scss";
+import { capitalize } from "lodash";
 
-const CompanyProfile = () => {
+const CompanyProfile = ({ companyProfileDetails }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
 
-  // eslint-disable-next-line no-unused-vars
-  const [formData, setFormData] = useState(COMPANY_PROFILE);
-
-  const company_details_fields = COMPANY_DETAILS_FEILDS(
-    formData?.name,
-    formData?.entity,
-    formData?.frn_number,
-    formData?.number_of_partner,
-    formData?.industry_type,
-    formData?.address,
-    formData?.state,
-    formData?.email,
-    formData?.username,
-    formData?.std_country_code,
-    formData?.telephone_number
+  const company_details_fields = COMPANY_DETAILS_FIELDS(
+    companyProfileDetails?.name || "",
+    companyProfileDetails?.entity || "",
+    companyProfileDetails?.frn_number || "",
+    companyProfileDetails?.number_of_partner || "",
+    companyProfileDetails?.company_type || "",
+    companyProfileDetails?.address || "",
+    companyProfileDetails?.email || "",
+    companyProfileDetails?.std_country_code || "",
+    companyProfileDetails?.telephone_number || ""
   );
 
-  const contact_personal_information_fields =
-    CONTACT_PERSONAL_INFORMATION_FEILDS(
-      formData?.contact_details?.salutation,
-      formData?.contact_details?.name,
-      formData?.contact_details?.designation,
-      formData?.contact_details?.mobile_country_code,
-      formData?.contact_details?.mobile_number,
-      formData?.contact_details?.email
-    );
-
   const other_details = OTHER_DETAILS_FEILDS(
-    formData?.company_details,
-    formData?.website,
-    formData?.nature_of_supplier,
-    formData?.company_type
+    companyProfileDetails?.company_details || "-",
+    companyProfileDetails?.website || "-",
+    companyProfileDetails?.nature_of_supplier || "-",
+    companyProfileDetails?.company_type || "-"
   );
 
   return (
@@ -63,55 +49,109 @@ const CompanyProfile = () => {
         }
         bottomSection={
           <CustomGrid>
-            {company_details_fields.map((item) => (
-              <TwoRow
-                key={item.id}
-                className={styles.gridItem}
-                topSection={
-                  <Typography className={styles.grayText}>
-                    {intl.formatMessage({
-                      id: `label.${item.headingIntl}`,
-                    })}
-                    <span className={styles.redText}> *</span>
-                  </Typography>
-                }
-                bottomSection={
-                  <div className={styles.blackText}>{item.value}</div>
-                }
-              />
-            ))}
+            {company_details_fields.map(
+              (item) =>
+                !!item.value && (
+                  <TwoRow
+                    key={item.id}
+                    className={styles.gridItem}
+                    topSection={
+                      <Typography className={styles.grayText}>
+                        {intl.formatMessage({
+                          id: `label.${item.headingIntl}`,
+                        })}
+                        <span className={styles.redText}> *</span>
+                      </Typography>
+                    }
+                    bottomSection={
+                      <div className={styles.blackText}>
+                        {item.headingIntl === "emailId"
+                          ? item.value
+                          : capitalize(item.value)}
+                      </div>
+                    }
+                  />
+                )
+            )}
           </CustomGrid>
         }
       />
-      <TwoRow
-        className={styles.companyDetails}
-        topSection={
-          <Typography className={styles.headingText}>
-            {intl.formatMessage({ id: "label.contactPersonalInformation" })}
-          </Typography>
+      {companyProfileDetails?.contact_person_details.map(
+        (contactDetails, index) => {
+          const contact_personal_information_fields =
+            CONTACT_PERSONAL_INFORMATION_FIELDS(
+              contactDetails?.salutation || "-",
+              contactDetails?.name || "-",
+              contactDetails?.designation || "-",
+              contactDetails?.mobile || "-",
+              contactDetails?.email || "-"
+            );
+          return (
+            <TwoRow
+              key={index}
+              className={styles.companyDetails}
+              topSection={
+                <Typography className={styles.headingText}>
+                  {intl.formatMessage({
+                    id: "label.contactPersonalInformation",
+                  })}
+                </Typography>
+              }
+              bottomSection={
+                <CustomGrid>
+                  {contact_personal_information_fields.map(
+                    (item) =>
+                      !!item.value && (
+                        <TwoRow
+                          key={item.id}
+                          className={styles.gridItem}
+                          topSection={
+                            <Typography className={styles.grayText}>
+                              {intl.formatMessage({
+                                id: `label.${item.headingIntl}`,
+                              })}
+                              <span className={styles.redText}> *</span>
+                            </Typography>
+                          }
+                          bottomSection={
+                            <div className={styles.blackText}>{item.value}</div>
+                          }
+                        />
+                      )
+                  )}
+                  {contactDetails?.roles && contactDetails.roles.length > 0 && (
+                    <TwoRow
+                      key="roles"
+                      className={styles.gridItem}
+                      topSection={
+                        <Typography className={styles.grayText}>
+                          {intl.formatMessage({
+                            id: "label.modules",
+                          })}
+                          <span className={styles.redText}> *</span>
+                        </Typography>
+                      }
+                      bottomSection={
+                        <div className={styles.sourceOfInformation}>
+                          {contactDetails.roles.map((role, roleIndex) => (
+                            <Typography
+                              key={index}
+                              className={styles.periodText}
+                            >
+                              {role.name}
+                            </Typography>
+                          ))}
+                        </div>
+                      }
+                    />
+                  )}
+                </CustomGrid>
+              }
+            />
+          );
         }
-        bottomSection={
-          <CustomGrid>
-            {contact_personal_information_fields.map((item) => (
-              <TwoRow
-                key={item.id}
-                className={styles.gridItem}
-                topSection={
-                  <Typography className={styles.grayText}>
-                    {intl.formatMessage({
-                      id: `label.${item.headingIntl}`,
-                    })}
-                    <span className={styles.redText}> *</span>
-                  </Typography>
-                }
-                bottomSection={
-                  <div className={styles.blackText}>{item.value}</div>
-                }
-              />
-            ))}
-          </CustomGrid>
-        }
-      />
+      )}
+
       <TwoRow
         className={styles.companyDetails}
         topSection={
@@ -137,7 +177,10 @@ const CompanyProfile = () => {
                   }
                   bottomSection={
                     item.id === 2 ? (
-                      <a className={styles.anchor} href={item.value}>
+                      <a
+                        className={styles.anchor}
+                        href={getValidUrl(item.value)}
+                      >
                         {item.value}
                       </a>
                     ) : (
@@ -159,7 +202,7 @@ const CompanyProfile = () => {
         }
         bottomSection={
           <div className={styles.sourceOfInformation}>
-            {formData?.source_of_information?.map((val, index) => (
+            {companyProfileDetails?.source_of_information?.map((val, index) => (
               <Typography key={index} className={styles.periodText}>
                 {val}
               </Typography>
@@ -183,14 +226,25 @@ const CompanyProfile = () => {
           <div className={styles.logo}>
             <div className={styles.logoBox}>
               <Image
-                src={formData.company_logo ?? getImage("TempCompanyLogo")}
-                preview={false}
+                className={styles.logoImage}
+                src={
+                  companyProfileDetails?.company_logo ??
+                  getImage("TempCompanyLogo")
+                }
+                preview
               />
             </div>
-            <div className={styles.logoName}>{formData?.logo_name}</div>
           </div>
         }
       />
+      <div className={styles.companyDetails}>
+        <Typography className={styles.additionalInformationText}>
+          {intl.formatMessage({ id: "label.balanceCredit" })}
+          <span className={styles.headingText}>
+            {companyProfileDetails?.credit_amount ?? 0}
+          </span>
+        </Typography>
+      </div>
     </div>
   );
 };

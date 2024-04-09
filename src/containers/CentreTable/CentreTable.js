@@ -640,7 +640,7 @@ const CentreTable = ({
         scroll={{ x: "max-content" }}
         className={`${isEdit ? "customTable" : ""} ${
           styles.table
-        } customTableNoHover`}
+        } customTableNoHover tableRowStyle`}
         rowKey="id"
       />
     </div>

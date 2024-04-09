@@ -2,11 +2,17 @@ import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Http from "../../http-service";
-import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
+import {
+  API_VERSION_QUERY_PARAM,
+  API_STATUS,
+  SESSION_ID_QUERY_PARAM,
+  STATUS_CODES,
+} from "../../../constant/constant";
 import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../../constant/apiEndpoints";
 
 const useUpdateSessionRoundDetailsApi = () => {
@@ -23,6 +29,7 @@ const useUpdateSessionRoundDetailsApi = () => {
     onErrorCallback,
     payload,
     roundId,
+    sessionId,
     selectedModuleKey,
   }) => {
     try {
@@ -34,8 +41,11 @@ const useUpdateSessionRoundDetailsApi = () => {
         `/${selectedModuleKey}` +
         ROUNDS +
         `/${roundId}` +
-        CENTRE_END_POINT;
-      const res = await Http.patch(url, payload);
+        CENTRE_END_POINT +
+        `?${SESSION_ID_QUERY_PARAM}=${sessionId}`;
+      const res = await Http.patch(url, payload, {
+        headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION },
+      });
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS

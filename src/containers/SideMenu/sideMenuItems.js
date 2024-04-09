@@ -2,6 +2,7 @@ import {
   COMPANIES,
   CONFIGURE_CENTRES,
   DASHBOARD,
+  REGISTERED_COMPANY,
   SESSION,
   USERS,
   SUBSCRIPTIONS,
@@ -140,7 +141,7 @@ export const controlMenu = [
   },
   {
     label: MENU_KEYS.REGISTERED_COMPANIES,
-    key: "/register-companies",
+    key: REGISTERED_COMPANY,
     icon: <Companies />,
     selectedicon: <SelectedCompanies />,
   },

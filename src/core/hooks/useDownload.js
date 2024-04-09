@@ -51,9 +51,9 @@ const useDownload = ({
       }
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);
-      setError(err?.response || GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setError(err?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE);
       onErrorCallback &&
-        onErrorCallback(err?.response || GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+        onErrorCallback(err?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     }
   };
 

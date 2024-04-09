@@ -1,0 +1,114 @@
+.customContainerStyles {
+  flex: 1;
+  width: var(--fullWidth);
+}
+
+.grayText {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.gridItem {
+  padding-bottom: var(--paddingMedium);
+  gap: var(--gapXXSmall);
+}
+
+.gridDropdownItem {
+  padding-bottom: var(--paddingMedium);
+}
+
+.heading {
+  color: var(--textDark);
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  padding-bottom: var(--gapMedium, 24px);
+}
+
+.inputLabel {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.input {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  padding-top: var(--paddingExtraSmall);
+  padding-bottom: var(--paddingExtraSmall);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: var(--textBold) !important;
+  }
+}
+
+.redText {
+  color: var(--error);
+}
+
+.subHeadingStyle {
+  color: var(--textDark);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  padding-top: var(--paddingExtraSmall);
+}
+
+.editContainer {
+  margin-top: var(--paddingSmall);
+}
+
+.columnHeading {
+  color: var(--subHeadingColor) !important;
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: 500;
+  min-width: 150px;
+}
+
+.customImageStyle {
+  cursor: pointer;
+  padding-top: var(--margin_10);
+}
+
+.customInputStyle {
+  flex: 1;
+  width: var(--fullWidth);
+  height: var(--height_44);
+}
+
+.selectCenterContainer{
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
+  border: var(--borderLight);
+  border-radius: var(--radiusLg);
+  height: var(--height_44) ;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.placeholderStyle{
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.rowtext {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.viewContainer {
+  width: var(--fullWidth);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  overflow: hidden;
+  margin-top: var(--paddingSmall);
+}
+
+.dropdownStyle{
+    min-width: 150px;
+}
+
