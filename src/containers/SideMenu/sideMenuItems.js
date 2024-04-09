@@ -90,7 +90,7 @@ const caJobsMenu = [
   },
   {
     label: MENU_KEYS.ALL_JOBS,
-    key: "/all-jobs",
+    key: "all-jobs/",
     icon: <Briefcase />,
     selectedicon: <SelectedBriefcase />,
   },

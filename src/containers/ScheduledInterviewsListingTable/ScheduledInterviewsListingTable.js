@@ -11,10 +11,14 @@ import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilter
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
-import { getQueryColumn } from "./AllJobsTableConfig";
+import { getQueryColumn } from "./ScheduledInterviewsListingConfig";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
-import { ADMIN_ROUTE, JOBS, SUMMARY } from "../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  JOBS,
+  SCHEDULED_INTERVIEW,
+} from "../../constant/apiEndpoints";
 import { ReactComponent as ArrowDown } from "../../themes/base/assets/images/arrow-down.svg";
 import {
   DEBOUNCE_TIME,
@@ -24,10 +28,13 @@ import {
 import { active_filter_options, approval_filter_options } from "./constants";
 import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
-import styles from "./AllJobsTable.module.scss";
-import useApproveJobApi from "../../services/api-services/AllJob/useApproveJobApi";
+import styles from "./ScheduledInterviewsListingTable.module.scss";
+import ScheduleInterviewDetailsView from "../SchduledInterviewDetail/SchduledInterviewDetail";
+import CommonModal from "../../components/CommonModal";
+import useFetchInterviewDetailApi from "../../services/api-services/AllJob/useFetchInterviewDetailApi";
 
-const AllJobsTable = ({
+const ScheduledInterViewsTable = ({
+  jobId,
   current,
   pageSize,
   setCurrent,
@@ -40,18 +47,27 @@ const AllJobsTable = ({
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
 
+  const VIEW_INTERVIEW_DETAILS = "View Interview Details";
+
   const [filterArray, setFilterArray] = useState(
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
 
+  const [openInterviewDetailModal, setOpenInterviewDetailModal] =
+    useState(false);
+
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const { data, error, fetchData, isError, isLoading, setData } = useFetch({
-    url: ADMIN_ROUTE + JOBS + SUMMARY,
+  const { data, error, fetchData, isError, isLoading } = useFetch({
+    url: ADMIN_ROUTE + JOBS + `/${jobId}` + SCHEDULED_INTERVIEW,
     otherOptions: { skipApiCallOnMount: true },
   });
 
-  const { approveJob, isLoading: isApproveJobLoading } = useApproveJobApi();
+  const {
+    fetchInterviewDetail,
+    isLoading: isLoadingFetchInterviewDetails,
+    interviewDetailData,
+  } = useFetchInterviewDetailApi();
 
   let errorString = error;
   if (typeof error === "object") {
@@ -84,26 +100,13 @@ const AllJobsTable = ({
   };
 
   const handleMenuItems = (rowData, item) => {
-    if (item.label === "Approve") {
-      approveJob(
-        rowData?.id,
-        () => {
-          setData({
-            ...data,
-            records: data.records.map((record) =>
-              record.id === rowData?.id
-                ? { ...record, approve: 1 }
-                : record
-            ),
-          });
-        },
-        (errorMessage) => {
-          showNotification({ text: errorMessage, type: "error" });
-        }
+    if (item.label === VIEW_INTERVIEW_DETAILS) {
+      fetchInterviewDetail(
+        rowData.id,
+        () => setOpenInterviewDetailModal(true),
+        (errorMessage) =>
+          showNotification({ text: errorMessage, type: "error" })
       );
-    } else {
-      const jobId = rowData?.id;
-      navigate(`job-details/${jobId}`);
     }
   };
 
@@ -201,18 +204,7 @@ const AllJobsTable = ({
   }, [activeInactive]);
 
   const filterOptions = [
-    {
-      id: 1,
-      name: "Active/Inactive",
-      isSelected: false,
-      options: activeInactiveOptions,
-    },
-    {
-      id: 2,
-      name: "Approved/Not Approved",
-      isSelected: false,
-      options: approvedNotApprovedOptions,
-    },
+   /// TODO:
   ];
 
   const resetQueryListingData = (ticketsResult) => {
@@ -270,6 +262,16 @@ const AllJobsTable = ({
   return (
     <>
       {notificationContextHolder}
+      <CommonModal
+        isOpen={openInterviewDetailModal}
+        width={1184}
+        closeIcon={true}
+        onCancel={() => setOpenInterviewDetailModal(false)}
+      >
+        <ScheduleInterviewDetailsView
+          interviewDetailData={interviewDetailData}
+        />
+      </CommonModal>
       {!isError && (
         <TableWithSearchAndFilters
           {...{
@@ -284,7 +286,7 @@ const AllJobsTable = ({
             onChangeCurrentPage,
             onChangePageSize,
             placeholder: intl.formatMessage({
-              id: "label.designation_or_job_id",
+              id: "label.search_by_applicant_id_or_name",
             }),
           }}
           isLoading={isLoading}
@@ -309,7 +311,7 @@ const AllJobsTable = ({
   );
 };
 
-AllJobsTable.defaultProps = {
+ScheduledInterViewsTable.defaultProps = {
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
   setCurrent: () => {},
@@ -319,7 +321,7 @@ AllJobsTable.defaultProps = {
   setSearchedValue: () => {},
 };
 
-AllJobsTable.propTypes = {
+ScheduledInterViewsTable.propTypes = {
   current: PropTypes.number,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
@@ -330,4 +332,4 @@ AllJobsTable.propTypes = {
   setSearchedValue: PropTypes.func,
 };
 
-export default AllJobsTable;
+export default ScheduledInterViewsTable;
