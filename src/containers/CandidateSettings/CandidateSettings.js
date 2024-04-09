@@ -164,7 +164,7 @@ const CandidateSettings = ({
       renderDateTime: {
         customInputStyle: classes.inputStyle,
         getDisabledTime: (current, record) => {
-          return handleDisabledStartTime(record?.from_time);
+          return handleDisabledStartTime(record?.to_time);
         },
         visible: true,
         type: "time",
@@ -191,7 +191,7 @@ const CandidateSettings = ({
       renderDateTime: {
         customInputStyle: classes.inputStyle,
         getDisabledTime: (current, record) => {
-          return handleDisabledEndTime(record?.to_time);
+          return handleDisabledEndTime(record?.from_time);
         },
         visible: true,
         type: "time",
