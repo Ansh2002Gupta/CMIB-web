@@ -31,8 +31,8 @@ export const getQueryColumn = ({
     renderColumn({
       title: "Application Id",
       customColumnHeading: [styles.extraWidth, styles.columnHeading].join(" "),
-      dataIndex: "applicant_id",
-      key: "applicant_id",
+      dataIndex: "applicantion_id",
+      key: "applicantion_id",
       renderText: {
         visible: true,
         textStyles: [styles.tableCell].join(" "),
@@ -59,7 +59,7 @@ export const getQueryColumn = ({
             const actionList = rowData?.action?.map((item, index) => {
               return  {
                 key: index,
-                label: item,
+                label: item.name,
               }              
             })
             return actionList;
