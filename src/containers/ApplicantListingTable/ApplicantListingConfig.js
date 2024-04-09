@@ -59,7 +59,7 @@ export const getQueryColumn = ({
             const actionList = rowData?.action?.map((item, index) => {
               return  {
                 key: index,
-                label: item.name,
+                label: item?.name,
               }              
             })
             return actionList;
