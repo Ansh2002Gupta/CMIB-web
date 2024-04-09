@@ -46,6 +46,7 @@ const CompanySettingsTemplate = ({
           errorMessage={formErrors[item.label] ? "label.error.fieldEmpty" : ""}
           isRequiredField={item.rules.isRequired}
           onSelectItem={onSelectInterviewType}
+          disabled={item.rules.isDisabled}
           onRemoveItem={onRemoveInterviewType}
           options={COMPANY_INTERVIEW_TYPE}
           selectedOptionsList={selectedInterviewType}
