@@ -140,6 +140,8 @@ const CampusInterviewContent = () => {
     handleRemove,
     handleCandidateDataChange,
     selectedCenterTableData,
+    isStartDateEditable,
+    isEndDateEditable,
     isButtonDisable: isCandidateSettingsInvalid,
     tableData,
     handleValidation,
@@ -326,6 +328,8 @@ const CampusInterviewContent = () => {
                         roundCentres,
                         selectedCenterTableData,
                         isEditable,
+                        isStartDateEditable,
+                        isEndDateEditable,
                         campusInterviewData,
                         tableData,
                       }}
