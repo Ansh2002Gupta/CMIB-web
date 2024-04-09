@@ -22,9 +22,9 @@ const FieldsSectionWithDivider = ({ fields }) => {
 
   return (
     <CustomGrid>
-      {fields.map((fields, index) => (
+      {fields.map((field, index) => (
         <React.Fragment key={index}>
-          {renderFields(fields)}
+          {renderFields(field)}
           {index < fields.length - 1 && renderDivider()}
         </React.Fragment>
       ))}
