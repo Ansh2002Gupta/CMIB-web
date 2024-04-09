@@ -105,6 +105,7 @@ const CompanyDetailsCa = () => {
     company_details_data,
     company_logo_data,
     contact_person_details_data,
+    isLoading: isGettingOptions,
     isValidAllFields,
     source_of_information_data,
     other_details_data,
@@ -170,7 +171,7 @@ const CompanyDetailsCa = () => {
   return (
     <>
       {notificationContextHolder}
-      {isGettingCompanyData ? (
+      {isGettingCompanyData || isGettingOptions ? (
         <CustomLoader />
       ) : errorWhileGettingCompanyData ? (
         <div className={styles.errorContainer}>

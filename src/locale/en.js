@@ -718,6 +718,7 @@ const locale = {
   "label.contactPersonalInformation": "Contact Personal Information",
   "label.company_update_success": "Company Details Updated Successfully",
   "label.fieldRequired": "This Field is required",
+  "label.stdPlaceholder": "eg 91",
 };
 
 export default locale;
