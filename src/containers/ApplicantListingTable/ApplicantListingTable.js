@@ -31,6 +31,7 @@ import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./ApplicantListingTable.module.scss";
 import useChangeJobStatusApi from "../../services/api-services/AllJob/useChangeApplicantJobStatusApi";
+import ScheduleInterviewModal from "../ScheduleInterviewModal/ScheduleInterviewModal";
 
 const ApplicantListingTable = ({
   jobId,
@@ -49,6 +50,7 @@ const ApplicantListingTable = ({
   const [filterArray, setFilterArray] = useState(
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
+  const [openScheduleModal, setOpenScheduleModal] = useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
@@ -64,7 +66,7 @@ const ApplicantListingTable = ({
     // const handleActions = (currentAction, item) => {
     //   const screens = {
     //     "Download Profile & Resume": () => {},
-    //     "View Details": () => {},
+    //     "view_details": () => {},
     //     "View Interview Details": () => {},
     //       // navigate(
     //       //   `/${currentModule}/${navigations.JOB_APPLICANTS}/${jobId}/applicant-details/${showCurrentPopupmessage}`
@@ -72,28 +74,28 @@ const ApplicantListingTable = ({
     //     "Shortlist Candidate": () => {
     //       changeJobStatus({
     //         body: {
-    //           status: 3, // we have to pass the status id to make a api call for applicant status change
+    //           status: 3,
     //         },
     //       });
     //     },
     //     "Reject Candidate": () => {
     //       changeJobStatus({
     //         body: {
-    //           status: 2, // we have to pass the status id to make a api call for applicant status change
+    //           status: 2, 
     //         },
     //       });
     //     },
     //     "Reject After Interview": () => {
     //       changeJobStatus({
     //         body: {
-    //           status: , // we have to pass the status id to make a api call for applicant status change
+    //           status: , 
     //         },
     //       });
     //     },
     //     "Schedule Interview": () => {
     //       changeJobStatus({
     //         body: {
-    //           status: 5, // we have to pass the status id to make a api call for applicant status change
+    //           status: 5, 
     //         },
     //       });
     //     },
@@ -101,14 +103,14 @@ const ApplicantListingTable = ({
     //     "Offer Job": () => {
     //       changeJobStatus({
     //         body: {
-    //           status: 6, // we have to pass the status id to make a api call for applicant status change
+    //           status: 6, 
     //         },
     //       });
     //     },
     //     "Respond to Job Offer": () => {
     //       changeJobStatus({
     //         body: {
-    //           status: , // we have to pass the status id to make a api call for applicant status change
+    //           status: , 
     //         },
     //       });
     //     },
@@ -150,6 +152,8 @@ const ApplicantListingTable = ({
   };
 
   const handleMenuItems = (rowData, item) => {
+    // setOpenScheduleModal(true) // testing
+    navigate(`applicant-details/${rowData?.id}`);
     // changeJobStatus(
     //   rowData?.id,
     //   { status: 2 },
@@ -331,6 +335,7 @@ const ApplicantListingTable = ({
   return (
     <>
       {notificationContextHolder}
+      {<ScheduleInterviewModal isOpen={openScheduleModal} handleCloseModal={()=> setOpenScheduleModal(false)} />}
       {!isError && (
         <TableWithSearchAndFilters
           {...{
