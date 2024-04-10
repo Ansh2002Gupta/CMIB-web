@@ -6,6 +6,8 @@ import { formateArrayToArrayOfobject } from "../../../constant/utils";
 const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
   const [selectedInterviewType, setSelectedInterviewType] = useState([]);
   const can_edit_company = companyDetails?.can_edit?.can_edit_company;
+  const can_edit_company_shortliting_ratio =
+    companyDetails?.can_edit?.can_edit_company_shortliting_ratio;
 
   const initialValue = {
     max_no_of_vacancy: "",
@@ -100,7 +102,7 @@ const useCompanySettings = ({ companyDetails, hasRoundTwo }) => {
         label: "shortlist_ratio",
         value: shortlist_ratio,
         rules: {
-          isDisabled: !can_edit_company,
+          isDisabled: !can_edit_company_shortliting_ratio,
           maxLength: MAX_EXPERIENCE_LENGTH,
           isRequired: true,
           message: "shortlist_ratio",
