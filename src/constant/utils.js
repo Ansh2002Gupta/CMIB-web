@@ -456,3 +456,23 @@ export const getValidUrl = (url) => {
 export const isValueEmpty = (value) => {
   return value === null || value === undefined || value === "";
 };
+
+export const transformedOptions = (options) =>
+  options?.map((option) => ({
+    id: option.id,
+    label: option.name,
+    value: option.id,
+  }));
+
+export const transformedOptionsStates = (options) =>
+  options?.map((option, index) => ({
+    id: index,
+    label: option.name,
+    value: option.state_code,
+  }));
+
+export const urlToName = (url) => {
+  const imageParts = url?.split("/");
+  const imageName = imageParts?.pop();
+  return imageName;
+};

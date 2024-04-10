@@ -367,6 +367,63 @@ const useCandidateSettings = ({
     return errorCount <= 0;
   };
 
+  const handleValidation = () => {
+    let isValid;
+    let newErrors;
+    if (hasRoundTwo) {
+      isValid = !tableData.some(
+        (item) => !item.centre_name || !item.from_date || !item.to_date
+      );
+      if (!isValid) {
+        newErrors = tableData.map((item) => ({
+          centre_name: !item.centre_name
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
+          from_date: !item.from_date
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
+          to_date: !item.to_date
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
+        }));
+      }
+    } else {
+      isValid = !tableData.some(
+        (item) =>
+          !item.centre_name ||
+          !item.from_date ||
+          !item.to_date ||
+          !item.from_time ||
+          !item.to_time
+      );
+      if (!isValid) {
+        newErrors = tableData.map((item) => ({
+          centre_name: !item.centre_name
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
+          from_date: !item.from_date
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
+          to_date: !item.to_date
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
+          from_time: !item.from_time
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
+          to_time: !item.to_time
+            ? intl.formatMessage({ id: "label.error.fieldEmpty" })
+            : "",
+        }));
+      }
+    }
+
+    if (!isValid) {
+      setErrors(newErrors);
+    }
+
+    return isValid;
+  };
+
   const isButtonDisable = () => {
     return !formFields?.max_no_of_interview || !formFields?.max_no_of_offer;
   };
@@ -383,6 +440,7 @@ const useCandidateSettings = ({
     setTableData,
     handleAdd,
     handleRemove,
+    handleValidation,
     handleSetError,
     selectedCenterTableData,
     errors,

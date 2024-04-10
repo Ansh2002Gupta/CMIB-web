@@ -3,7 +3,7 @@
 }
 
 .customLabelStyles {
-  font-size: var(--fontSizeExtraSmall, 12px);
+  font-size: var(--fontSizeExtraSmall, 12px) !important;
   font-weight: var(--fontWeightMedium, 500);
   color: var(--inputPlaceHolder, #616c82);
 }
@@ -85,4 +85,33 @@
 
 .viewItemStyle {
   gap: var(--gapXSmall, 8px);
+}
+
+.text {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.input {
+  display: flex;
+  padding: 12px var(--paddingSmall);
+  align-items: center;
+  gap: var(--gapXSmall);
+  align-self: stretch;
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background: var(--bodyBg);
+  font-weight: var(--fontWeightMedium, 500) !important;
+}
+
+.selectInput {
+  padding: 0px;
+  min-height: var(--height_44);
+}
+
+.customContaierStyles {
+  border-width: 0;
+  padding: 0;
+  border-radius: 0;
 }

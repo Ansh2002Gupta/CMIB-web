@@ -14,6 +14,7 @@ import Chip from "../../components/Chip/Chip";
 import FileUpload from "../../components/FileUpload/FileUpload";
 import MarkRequired from "../../components/MarkRequired";
 import { formatDate } from "../../constant/utils";
+import PhoneInput from "../../components/PhoneInput/PhoneInput";
 import { classes } from "./DetailsCard.styles";
 import styles from "./DetailsCard.module.scss";
 import { useIntl } from "react-intl";
@@ -22,6 +23,8 @@ const DetailsCard = ({
   customHeaderStyles,
   customLabelStyles,
   customMainStyles,
+  customPhoneInputStyles,
+  customPhoneSelectStyles,
   customValueStyles,
   isSingleComponent,
   isEditable,
@@ -138,13 +141,16 @@ const DetailsCard = ({
       if (key === "profile_photo_url") {
         onChangeValue(item?.key, url);
       }
+      if (key === "profile_photo") {
+        onChangeValue(item?.keyName, url);
+      }
     };
 
     if (item?.isCheckBoxList) {
       return (
         <CheckBoxListComponent
           customContainerStyles={styles.gridItem}
-          slectedBox={item?.value}
+          selectedBox={item?.value}
           options={item.options}
           handleSelectBox={(val) => {
             onChangeValue(item.key, val);
@@ -155,19 +161,57 @@ const DetailsCard = ({
     if (item?.isImage) {
       return (
         <FileUpload
+          customContaierStyles={styles.customContaierStyles}
+          isCompany={item?.isCompany}
           isFormEditable={true}
           isNotAddable={true}
           userProfilePic={item?.value}
           updateUserData={handleUploadImage}
           deletedImage={deletedImage}
           setDeletedImage={setDeletedImage}
+          subHeading={intl.formatMessage({ id: item?.label })}
+        />
+      );
+    }
+    if (item?.isPhone) {
+      return (
+        <PhoneInput
+          errorMessage={item?.error}
+          isError={!!item?.error}
+          label={item?.label && intl.formatMessage({ id: item?.label })}
+          isRequired={item?.isMandatory}
+          value={item?.value}
+          mobilePrefix={item?.countryValue}
+          disabled={item?.isDisabled}
+          customInputStyles={[
+            styles.text,
+            styles.input,
+            customPhoneInputStyles,
+          ].join(" ")}
+          customSelectInputStyles={[
+            styles.selectInput,
+            customPhoneSelectStyles,
+          ].join(" ")}
+          customLabelStyles={styles.customLabelStyles}
+          onChange={(val) => {
+            onChangeValue(item?.key, val);
+          }}
+          selectOptions={item?.selectOptions}
+          defaultSelectValueString="+91"
+          onSelectItem={(val) =>
+            onChangeValue(item?.countryKey, val.target.value)
+          }
+          placeholder={intl.formatMessage({ id: item?.placeholder })}
+          onBlur={() => {
+            onBlur(item?.key);
+          }}
         />
       );
     }
     return (
       <CustomInput
         errorMessage={item?.error}
-        isError={item.error ? true : false}
+        isError={!!item?.error}
         customContainerStyles={item.fullWidth && styles.gridItem}
         customLabelStyles={styles.customLabelStyles}
         key={item.key}
@@ -192,6 +236,7 @@ const DetailsCard = ({
         controls={item?.controls}
         selectOptions={item?.selectOptions}
         rows={item?.rows}
+        maxLength={item.maxLength}
       />
     );
   };

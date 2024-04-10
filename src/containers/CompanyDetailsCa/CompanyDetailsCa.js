@@ -14,6 +14,7 @@ import { usePut } from "../../core/hooks/useApiRequest";
 import { urlService } from "../../Utils/urlService";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { useCompanyDetailsCa } from "./useCompanyDetailsCa";
+import { isValueEmpty, urlToName } from "../../constant/utils";
 import { getValidMode } from "../../Utils/validation";
 import {
   ADMIN_ROUTE,
@@ -66,18 +67,21 @@ const CompanyDetailsCa = () => {
           company_entity: data?.entity,
           comapny_frn: data?.frn_number,
           company_partners: data?.number_of_partners,
-          current_industry: data?.current_industry,
+          current_industry: data?.industry_type,
           correspondance_address: data?.address,
-          company_state: data?.state, //
+          company_logo_name: "",
+          company_state: data?.state, //this has to replace with state_code
           company_email: data?.email,
-          company_username: data?.user_name, //
           company_std: data?.std_country_code,
           company_telephone: data?.telephone_number,
+          contact_person_id: data?.contact_person_details[0]?.id,
           salutation: data?.contact_person_details[0]?.salutation,
           contact_person_name: data?.contact_person_details[0]?.name,
           contact_person_designation:
             data?.contact_person_details[0]?.designation,
           contact_mobile_number: data?.contact_person_details[0]?.mobile,
+          contact_mobile_country_code:
+            data?.contact_person_details[0]?.mobile_country_code,
           contact_email: data?.contact_person_details[0]?.email,
           short_profile_company: data?.company_details,
           website: data?.website,
@@ -89,7 +93,6 @@ const CompanyDetailsCa = () => {
       : {};
 
   const [state, setState] = useState(getData(data));
-
   useEffect(() => {
     setState(getData(data));
   }, [data]);
@@ -105,6 +108,7 @@ const CompanyDetailsCa = () => {
     company_details_data,
     company_logo_data,
     contact_person_details_data,
+    isLoading: isGettingOptions,
     isValidAllFields,
     source_of_information_data,
     other_details_data,
@@ -128,26 +132,33 @@ const CompanyDetailsCa = () => {
       entity: state?.company_entity,
       frn_number: state?.comapny_frn,
       number_of_partners: state?.company_partners,
-      current_industry: state?.current_industry,
+      industry_type_id: state?.current_industry?.id || state?.current_industry,
       address: state?.correspondance_address,
-      state: state?.company_state, //
+      state: state?.company_state?.code || state?.company_state,
       email: state?.company_email,
-      user_name: state?.company_username, //
       std_country_code: state?.company_std,
       telephone_number: state?.company_telephone,
-      contact_person_details: [
-        { salutation: state?.salutation },
-        { name: state?.contact_person_name },
-        { designation: state?.contact_person_designation },
-        { mobile: state?.contact_mobile_number },
-        { email: state?.contact_email },
+      contact_details: [
+        {
+          id: state?.contact_person_id,
+          salutation: state?.salutation,
+          name: state?.contact_person_name,
+          designation: state?.contact_person_designation,
+          mobile_number: state?.contact_mobile_number,
+          email: state?.contact_email,
+          mobile_country_code: state?.contact_mobile_country_code,
+          status: "1", //This will be remove once it will be fixed from bacend
+        },
       ],
+
       company_details: state?.short_profile_company,
       website: state?.website,
       nature_of_suppliers: state?.nature_of_supplier,
-      company_type: state?.company_type,
+      type: state?.company_type,
       source_of_information: state?.source,
-      company_logo: state?.company_logo_image,
+      company_logo: isValueEmpty(state?.company_logo_name)
+        ? urlToName(state?.company_logo_image)
+        : state?.company_logo_name,
     };
     editCompanyData({
       body: payload,
@@ -156,6 +167,11 @@ const CompanyDetailsCa = () => {
           text: intl.formatMessage({ id: "label.company_update_success" }),
           type: NOTIFICATION_TYPES.SUCCESS,
         });
+        setIsEditable(false);
+        urlService.setQueryStringValue(
+          PAGINATION_PROPERTIES.MODE,
+          FORM_STATES?.VIEW_ONLY
+        );
       },
       onErrorCallback: (errMessage) => {
         showNotification({
@@ -170,7 +186,7 @@ const CompanyDetailsCa = () => {
   return (
     <>
       {notificationContextHolder}
-      {isGettingCompanyData ? (
+      {isGettingCompanyData || isGettingOptions ? (
         <CustomLoader />
       ) : errorWhileGettingCompanyData ? (
         <div className={styles.errorContainer}>
@@ -270,7 +286,7 @@ const CompanyDetailsCa = () => {
                       setIsEditable(false);
                       urlService.setQueryStringValue(
                         PAGINATION_PROPERTIES.MODE,
-                        FORM_STATES?.EDITABLE
+                        FORM_STATES?.VIEW_ONLY
                       );
                     }}
                   />

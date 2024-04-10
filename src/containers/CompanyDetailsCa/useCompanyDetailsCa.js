@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import useFetch from "../../core/hooks/useFetch";
+import {
+  CORE_COUNTRIES,
+  CORE_ROUTE,
+  INDUSTRY_TYPES,
+  STATES,
+} from "../../constant/apiEndpoints";
 import { isValueEmpty } from "../../constant/utils";
 import { EMAIL_REGEX } from "../../constant/regex";
 import {
+  COMPANY_TYPE_OPTIONS,
+  ENTITY_OPTIONS,
+  NATURE_OF_SUPPLIER_OPTIONS,
   SALUTATION_OPTIONS,
   SOURCE_OF_INFORM_ICAI_OPTIONS,
 } from "../../constant/constant";
+import {
+  transformedOptions,
+  transformedOptionsStates,
+} from "../../constant/utils";
 
-const company_details = ({ intl }) => [
+const company_details = ({ intl, industryData, stateData }) => [
   {
     key: "company_name",
     isMandatory: true,
@@ -26,7 +40,13 @@ const company_details = ({ intl }) => [
     isMandatory: true,
     label: "label.entity",
     placeholder: "label.entity",
-    validate: (value) => {},
+    type: "select",
+    selectOptions: ENTITY_OPTIONS,
+    validate: (value) => {
+      if (!value) {
+        return intl.formatMessage({ id: "label.fieldRequired" });
+      }
+    },
   },
   {
     key: "comapny_frn",
@@ -46,6 +66,7 @@ const company_details = ({ intl }) => [
     placeholder: "label.numberOfPartner",
     type: "inputNumber",
     controls: true,
+    maxLength: 3,
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });
@@ -57,6 +78,9 @@ const company_details = ({ intl }) => [
     isMandatory: true,
     label: "label.currentIndustry",
     placeholder: "label.currentIndustry",
+    isoptionObject: true,
+    type: "select",
+    selectOptions: transformedOptions(industryData),
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });
@@ -83,6 +107,9 @@ const company_details = ({ intl }) => [
     isMandatory: true,
     label: "label.state",
     placeholder: "label.state",
+    isState: true,
+    type: "select",
+    selectOptions: transformedOptionsStates(stateData),
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });
@@ -105,21 +132,10 @@ const company_details = ({ intl }) => [
     },
   },
   {
-    key: "company_username",
-    isMandatory: true,
-    label: "label.userName2",
-    placeholder: "label.userName2",
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
-    },
-  },
-  {
     key: "company_std",
     isMandatory: true,
     label: "label.isdCode",
-    placeholder: "label.isdCode",
+    placeholder: "label.stdPlaceholder",
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });
@@ -138,7 +154,7 @@ const company_details = ({ intl }) => [
     },
   },
 ];
-const contact_person_details = ({ intl }) => [
+const contact_person_details = ({ intl, countryData }) => [
   {
     key: "salutation",
     isMandatory: true,
@@ -178,9 +194,12 @@ const contact_person_details = ({ intl }) => [
   },
   {
     key: "contact_mobile_number",
+    countryKey: "contact_mobile_country_code",
     isMandatory: true,
     label: "label.mobileNumber",
     placeholder: "label.mobileNumber",
+    isPhone: true,
+    selectOptions: countryData,
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });
@@ -232,6 +251,8 @@ const other_details = ({ intl }) => [
     isMandatory: true,
     label: "label.natureOfSupplier",
     placeholder: "label.natureOfSupplier",
+    type: "select",
+    selectOptions: NATURE_OF_SUPPLIER_OPTIONS,
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });
@@ -243,6 +264,8 @@ const other_details = ({ intl }) => [
     isMandatory: true,
     label: "label.companyType",
     placeholder: "label.companyType",
+    type: "select",
+    selectOptions: COMPANY_TYPE_OPTIONS,
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });
@@ -264,9 +287,11 @@ const source_of_information = ({ intl }) => [
 const company_logo = ({ intl }) => [
   {
     key: "company_logo_image",
+    keyName: "company_logo_name",
     label: "label.companyIciaMessage",
     placeholder: "label.companyIciaMessage",
     isImage: true,
+    isCompany: true,
   },
 ];
 
@@ -276,6 +301,7 @@ const addValueOnField = ({ state, details, isEditable }) => {
       return {
         ...item,
         value: state?.[item?.key],
+        valueName: state?.[item?.keyName],
       };
     }
     if (item?.isArray) {
@@ -287,6 +313,35 @@ const addValueOnField = ({ state, details, isEditable }) => {
             : state?.[item?.key],
       };
     }
+    if (item?.isPhone) {
+      return {
+        ...item,
+        value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+        countryValue: state[item?.countryKey],
+      };
+    }
+    if (item?.isState) {
+      return {
+        ...item,
+        value: !isEditable
+          ? !state?.[item?.key]
+            ? "--"
+            : state?.[item?.key]?.name || state?.[item?.key]
+          : state?.[item?.key]?.code || state?.[item?.key],
+        countryValue: state[item?.countryKey],
+      };
+    }
+    if (item?.isoptionObject) {
+      return {
+        ...item,
+        value: !isEditable
+          ? !state?.[item?.key]
+            ? "--"
+            : state?.[item?.key]?.name || state?.[item?.key]
+          : state?.[item?.key]?.id || state?.[item?.key],
+        countryValue: state[item?.countryKey],
+      };
+    }
     return {
       ...item,
       value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
@@ -296,11 +351,21 @@ const addValueOnField = ({ state, details, isEditable }) => {
 
 export const useCompanyDetailsCa = ({ state, isEditable }) => {
   const intl = useIntl();
+  const { data: industryData, isLoading: isGettingIndustry } = useFetch({
+    url: CORE_ROUTE + INDUSTRY_TYPES,
+  });
+  const { data: stateData, isLoading: isGettingState } = useFetch({
+    url: CORE_ROUTE + STATES,
+  });
+
+  const { data: countryData, isLoading: isGettingCountry } = useFetch({
+    url: CORE_COUNTRIES,
+  });
   const [company_details_state, setCompany_details_state] = useState(
-    company_details({ intl })
+    company_details({ intl, industryData, stateData })
   );
   const [contact_person_details_state, setContact_person_details_state] =
-    useState(contact_person_details({ intl }));
+    useState(contact_person_details({ intl, countryData }));
   const [other_details_state, setOther_details_state] = useState(
     other_details({ intl })
   );
@@ -309,6 +374,15 @@ export const useCompanyDetailsCa = ({ state, isEditable }) => {
   const [company_logo_state, setCompany_logo_state] = useState(
     company_logo({ intl })
   );
+
+  useEffect(() => {
+    setCompany_details_state(
+      company_details({ intl, industryData, stateData })
+    );
+    setContact_person_details_state(
+      contact_person_details({ intl, countryData })
+    );
+  }, [industryData, stateData, countryData]);
 
   const validateOnBlur = ({ state, details, key, index, intl }) => {
     const value = state[key];
@@ -428,6 +502,7 @@ export const useCompanyDetailsCa = ({ state, isEditable }) => {
     handleOther_detailBlur,
     handleSource_of_informationBlur,
     handleCompany_logoBlur,
+    isLoading: isGettingIndustry || isGettingState || isGettingCountry,
     isValidAllFields: checkMandatoryFields(),
   };
 };

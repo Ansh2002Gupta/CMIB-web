@@ -750,6 +750,9 @@ const locale = {
   "status.1": "Active",
   "toggle.0": "No",
   "toggle.1": "Yes",
+  "label.stdPlaceholder": "eg 91",
+  "label.photo_text": "Photo",
+  "label.profilePhoto": "Profile Photo",
 };
 
 export default locale;

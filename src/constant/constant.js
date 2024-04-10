@@ -544,13 +544,32 @@ export const REGISTRATIONS_DATES_FOR_ROUND_TWO = [
   { id: 9, labeIntl: "writtenTestDate" },
 ];
 
+export const ENTITY_OPTIONS = [
+  { id: 1, label: "Corporate", value: "Corporate" },
+  { id: 2, label: "Non-Corporate", value: "Non-corporate" },
+  {
+    id: 3,
+    label: "Firm of Chartered Accountants",
+    value: "Firm of chartered accountants",
+  },
+  { id: 4, vlabel: "PSU", value: "PSU" },
+];
+
 export const SALUTATION_OPTIONS = [
   { id: 1, label: "Mr.", value: "Mr." },
-  { id: 2, label: "Mrs.", value: "Mrs." },
+  { id: 2, label: "Ms.", value: "Ms." },
+  { id: 3, label: "Dr.", value: "Dr." },
+];
+
+export const NATURE_OF_SUPPLIER_OPTIONS = [
+  { id: 1, label: "Registered", value: "Registered" },
+  { id: 2, label: "Unregistered", value: "Unregistered" },
+  { id: 3, label: "Composition Supplier", value: "Composition Supplier" },
+  { id: 4, label: "UIN Holder", value: "UIN Holder" },
 ];
 
 export const SOURCE_OF_INFORM_ICAI_OPTIONS = [
-  "Email from CPABI",
+  "Email from CMIB",
   "Based on previous participation",
   "Campus",
   "Telephonic Call from ICAI Officials",
