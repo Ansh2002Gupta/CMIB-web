@@ -32,6 +32,9 @@ import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./ApplicantListingTable.module.scss";
 import useChangeJobStatusApi from "../../services/api-services/AllJob/useChangeApplicantJobStatusApi";
 import ScheduleInterviewModal from "../ScheduleInterviewModal/ScheduleInterviewModal";
+import ScheduleInterviewDetailsView from "../SchduledInterviewDetail/SchduledInterviewDetail";
+import CommonModal from "../../components/CommonModal";
+import useFetchInterviewDetailApi from "../../services/api-services/AllJob/useFetchInterviewDetailApi";
 
 const ApplicantListingTable = ({
   jobId,
@@ -52,6 +55,8 @@ const ApplicantListingTable = ({
   );
   const [openScheduleModal, setOpenScheduleModal] = useState(false);
   const [applicantId, setApplicantId] = useState("");
+  const [openInterviewDetailModal, setOpenInterviewDetailModal] =
+    useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
@@ -62,6 +67,12 @@ const ApplicantListingTable = ({
 
   const { changeJobStatus, isLoading: isApproveJobLoading } =
     useChangeJobStatusApi();
+  
+    const {
+      fetchInterviewDetail,
+      isLoading: isLoadingFetchInterviewDetails,
+      interviewDetailData,
+    } = useFetchInterviewDetailApi();
 
   const refetchTableData = () => {
     const queryParams = {
@@ -82,10 +93,15 @@ const ApplicantListingTable = ({
         // TODO
       },
       view_details: () => {
-        navigate(`applicant-details/${rowData?.id}`);
+        navigate(`applicant-details/${rowData?.user_id}`);
       },
       view_interview_details: () => {
-        // TODO
+        fetchInterviewDetail(
+          rowData?.interview_id,
+          () => setOpenInterviewDetailModal(true),
+          (errorMessage) =>
+            showNotification({ text: errorMessage, type: "error" })
+        );
       },
       shortlist_candidate: () => {
         changeJobStatus(
@@ -349,6 +365,16 @@ const ApplicantListingTable = ({
           handleScheduledInterviewCallback={handleScheduledInterviewCallback}
         />
       }
+      <CommonModal
+        isOpen={openInterviewDetailModal}
+        width={1184}
+        closeIcon={true}
+        onCancel={() => setOpenInterviewDetailModal(false)}
+      >
+        <ScheduleInterviewDetailsView
+          interviewDetailData={interviewDetailData}
+        />
+      </CommonModal>
       {!isError && (
         <TableWithSearchAndFilters
           {...{
