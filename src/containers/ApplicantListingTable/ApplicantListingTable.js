@@ -11,10 +11,15 @@ import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilter
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
-import { getQueryColumn } from "./AllJobsTableConfig";
+import { getQueryColumn } from "./ApplicantListingConfig";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
-import { ADMIN_ROUTE, JOBS, SUMMARY } from "../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  APPLICANTS,
+  JOB,
+  JOBS,
+} from "../../constant/apiEndpoints";
 import { ReactComponent as ArrowDown } from "../../themes/base/assets/images/arrow-down.svg";
 import {
   DEBOUNCE_TIME,
@@ -24,10 +29,11 @@ import {
 import { active_filter_options, approval_filter_options } from "./constants";
 import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
-import styles from "./AllJobsTable.module.scss";
-import useApproveJobApi from "../../services/api-services/AllJob/useApproveJobApi";
+import styles from "./ApplicantListingTable.module.scss";
+import useChangeJobStatusApi from "../../services/api-services/AllJob/useChangeApplicantJobStatusApi";
 
-const AllJobsTable = ({
+const ApplicantListingTable = ({
+  jobId,
   current,
   pageSize,
   setCurrent,
@@ -47,11 +53,71 @@ const AllJobsTable = ({
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   const { data, error, fetchData, isError, isLoading, setData } = useFetch({
-    url: ADMIN_ROUTE + JOBS + SUMMARY,
+    url: ADMIN_ROUTE + JOB + `/${jobId}` + APPLICANTS,
     otherOptions: { skipApiCallOnMount: true },
   });
 
-  const { approveJob, isLoading: isApproveJobLoading } = useApproveJobApi();
+  const { changeJobStatus, isLoading: isApproveJobLoading } =
+    useChangeJobStatusApi();
+
+    // TODO: There was earlier api dependency for this Task will do in next PR.
+    // const handleActions = (currentAction, item) => {
+    //   const screens = {
+    //     "Download Profile & Resume": () => {},
+    //     "View Details": () => {},
+    //     "View Interview Details": () => {},
+    //       // navigate(
+    //       //   `/${currentModule}/${navigations.JOB_APPLICANTS}/${jobId}/applicant-details/${showCurrentPopupmessage}`
+    //       // ),
+    //     "Shortlist Candidate": () => {
+    //       changeJobStatus({
+    //         body: {
+    //           status: 3, // we have to pass the status id to make a api call for applicant status change
+    //         },
+    //       });
+    //     },
+    //     "Reject Candidate": () => {
+    //       changeJobStatus({
+    //         body: {
+    //           status: 2, // we have to pass the status id to make a api call for applicant status change
+    //         },
+    //       });
+    //     },
+    //     "Reject After Interview": () => {
+    //       changeJobStatus({
+    //         body: {
+    //           status: , // we have to pass the status id to make a api call for applicant status change
+    //         },
+    //       });
+    //     },
+    //     "Schedule Interview": () => {
+    //       changeJobStatus({
+    //         body: {
+    //           status: 5, // we have to pass the status id to make a api call for applicant status change
+    //         },
+    //       });
+    //     },
+    //     "Select Interview Time": () => {},
+    //     "Offer Job": () => {
+    //       changeJobStatus({
+    //         body: {
+    //           status: 6, // we have to pass the status id to make a api call for applicant status change
+    //         },
+    //       });
+    //     },
+    //     "Respond to Job Offer": () => {
+    //       changeJobStatus({
+    //         body: {
+    //           status: , // we have to pass the status id to make a api call for applicant status change
+    //         },
+    //       });
+    //     },
+    //   };
+    //   const action = screens[currentAction];
+    //   if (action) {
+    //     action();
+    //   }
+    // };
 
   let errorString = error;
   if (typeof error === "object") {
@@ -84,27 +150,24 @@ const AllJobsTable = ({
   };
 
   const handleMenuItems = (rowData, item) => {
-    if (item.label === "Approve") {
-      approveJob(
-        rowData?.id,
-        () => {
-          setData({
-            ...data,
-            records: data.records.map((record) =>
-              record.id === rowData?.id
-                ? { ...record, approve: 1 }
-                : record
-            ),
-          });
-        },
-        (errorMessage) => {
-          showNotification({ text: errorMessage, type: "error" });
-        }
-      );
-    } else {
-      const jobId = rowData?.id;
-      navigate(`job-details/${jobId}`);
-    }
+    // TODO: There was earlier api dependency for this Task will do in next PR.
+    // changeJobStatus(
+    //   rowData?.id,
+    //   { status: 2 },
+    //   () => {
+    //     // setData({
+    //     //   ...data,
+    //     //   records: data.records.map((record) =>
+    //     //     record.id === rowData?.id
+    //     //       ? { ...record, approve: 1 }
+    //     //       : record
+    //     //   ),
+    //     // });
+    //   },
+    //   (errorMessage) => {
+    //     showNotification({ text: errorMessage, type: "error" });
+    //   }
+    // );
   };
 
   const columns = getQueryColumn({
@@ -201,18 +264,7 @@ const AllJobsTable = ({
   }, [activeInactive]);
 
   const filterOptions = [
-    {
-      id: 1,
-      name: "Active/Inactive",
-      isSelected: false,
-      options: activeInactiveOptions,
-    },
-    {
-      id: 2,
-      name: "Approved/Not Approved",
-      isSelected: false,
-      options: approvedNotApprovedOptions,
-    },
+    // TODO:
   ];
 
   const resetQueryListingData = (ticketsResult) => {
@@ -248,7 +300,6 @@ const AllJobsTable = ({
       q: searchedValue,
     });
     fetchData({
-      queryParamsObject: requestedParams,
       onSuccessCallback: resetQueryListingData,
     });
   }, []);
@@ -284,7 +335,7 @@ const AllJobsTable = ({
             onChangeCurrentPage,
             onChangePageSize,
             placeholder: intl.formatMessage({
-              id: "label.designation_or_job_id",
+              id: "label.search_by_applicant_id_or_name",
             }),
           }}
           isLoading={isLoading}
@@ -309,7 +360,7 @@ const AllJobsTable = ({
   );
 };
 
-AllJobsTable.defaultProps = {
+ApplicantListingTable.defaultProps = {
   pageSize: DEFAULT_PAGE_SIZE,
   queryListingProps: {},
   setCurrent: () => {},
@@ -319,7 +370,7 @@ AllJobsTable.defaultProps = {
   setSearchedValue: () => {},
 };
 
-AllJobsTable.propTypes = {
+ApplicantListingTable.propTypes = {
   current: PropTypes.number,
   pageSize: PropTypes.number,
   queryListingProps: PropTypes.object,
@@ -330,4 +381,4 @@ AllJobsTable.propTypes = {
   setSearchedValue: PropTypes.func,
 };
 
-export default AllJobsTable;
+export default ApplicantListingTable;

@@ -36,6 +36,7 @@ const useRenderColumn = () => {
     renderImage = {},
     renderInput = {},
     renderMenu = {},
+    renderActions = {},
     renderSorterColumn,
     renderText = {},
     renderTextWithCheckBoxes = {},
@@ -112,6 +113,14 @@ const useRenderColumn = () => {
       menuPreview,
       triggerType = "",
     } = renderMenu;
+
+    const {
+      actionSrc = "",
+      onActionClick = () => {},
+      actionPreview,
+      actionTriggerType = "",
+      customActionPairs = () => {},
+    } = renderActions
 
     const {
       onClickCheckbox = () => {},
@@ -599,7 +608,7 @@ const useRenderColumn = () => {
             key: item.key,
             label: (
               <div
-                onClick={onMenuClick ? () => onMenuClick(rowData) : () => {}}
+                onClick={onMenuClick ? () => onMenuClick(rowData, item) : () => {}}
                 className={styles.dropdownMenuItem}
               >
                 {item.label}
@@ -613,6 +622,32 @@ const useRenderColumn = () => {
               src={menuSrc}
               className={styles.moreIcon}
               preview={menuPreview}
+            />
+          </Dropdown>
+        );
+      });
+
+      renderActions.visible &&
+      (columnObject.render = (_, rowData) => {
+        const menuItems = {
+          items: customActionPairs(rowData)?.map((item, index) => ({
+            key: index,
+            label: (
+              <div
+                onClick={onActionClick ? () => onActionClick(rowData, item) : () => {}}
+                className={styles.dropdownMenuItem}
+              >
+                {item.label}
+              </div>
+            ),
+          })),
+        };
+        return (
+          <Dropdown menu={menuItems} trigger={[actionTriggerType || "click"]}>
+            <Image
+              src={actionSrc}
+              className={styles.moreIcon}
+              preview={actionPreview}
             />
           </Dropdown>
         );
