@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center;
   gap: var(--gapXSmall, 8px);
-  min-height: var(--btnHeight, 56px);
+  min-height: var(--height_44, 44px);
   color: var(--textBold);
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
@@ -25,6 +25,7 @@
 .saveBtn {
   font-size: var(--fontSizeSmall, 14px);
   font-weight: var(--fontWeightMedium, 500);
+  min-height: var(--height_44, 44px);
   background-color: var(--greenBtnBg, #04af55);
   border: none !important;
   &:hover {

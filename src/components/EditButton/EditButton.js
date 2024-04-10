@@ -7,14 +7,17 @@ import { TwoColumn } from "../../core/layouts";
 
 import styles from "./EditButton.module.scss";
 
-const EditButton = ({ onClick, disable }) => {
+const EditButton = ({ customEditStyle, onClick, disable }) => {
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
 
   return (
     <TwoColumn
       onClick={!disable ? onClick : () => {}}
-      className={disable ? styles.disabledEditContainer : styles.editContainer}
+      className={[
+        disable ? styles.disabledEditContainer : styles.editContainer,
+        customEditStyle,
+      ].join(" ")}
       leftSection={
         <Image
           src={getImage(disable ? "disableEdit" : "editDark")}

@@ -2,6 +2,7 @@ import {
   COMPANIES,
   CONFIGURE_CENTRES,
   DASHBOARD,
+  REGISTERED_COMPANY,
   SESSION,
   USERS,
   SUBSCRIPTIONS,
@@ -90,7 +91,7 @@ const caJobsMenu = [
   },
   {
     label: MENU_KEYS.ALL_JOBS,
-    key: "/all-jobs",
+    key: "all-jobs/",
     icon: <Briefcase />,
     selectedicon: <SelectedBriefcase />,
   },
@@ -141,7 +142,7 @@ export const controlMenu = [
   },
   {
     label: MENU_KEYS.REGISTERED_COMPANIES,
-    key: "/register-companies",
+    key: REGISTERED_COMPANY,
     icon: <Companies />,
     selectedicon: <SelectedCompanies />,
   },

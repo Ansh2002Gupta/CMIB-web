@@ -7,7 +7,7 @@ function DashboardView() {
   return (
     <TwoRow
       topSection={<ContentHeader headerText="Dashboard" />}
-      bottomSection={<>subheading</>}
+      bottomSection={<></>}
     />
   );
 }

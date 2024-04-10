@@ -1,0 +1,3 @@
+import ScheduledInterviewsListingTable from './ScheduledInterviewsListingTable'
+
+export default ScheduledInterviewsListingTable
