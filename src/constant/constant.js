@@ -319,6 +319,11 @@ export const COMPANY_ROUND_TWO = [
   "Consent Marking And Interview Process",
 ];
 
+export const CANDIDATES_EDUCATION_DETAILS = [
+  "Education Details",
+  "Exams",
+  "Other Courses",
+]
 export const ALL_JOB_DETAILS = [
   "Job Details",
   "Questionnaire",
