@@ -423,6 +423,7 @@ const locale = {
   "label.path.interviewDetails": "Configure Interview Dates",
   "label.path.all-jobs": "All Jobs",
   "label.path.job-details": "Job Details",
+  "label.path.applicant-details": "Applicant Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
@@ -612,6 +613,19 @@ const locale = {
   "label.inactiveJobConfirmation": "Are you sure that you want to inactive this job?",
   "label.yes": "Yes",
   "label.no": "No",
+  "label.scheduleInterview": "Schedule Interview",
+  "label.faceToFace": "Face To Face",
+  "label.telephonic": "Telephonic",
+  "label.remote": "Remote",
+  "label.placeholder.link": "Link",
+  "label.placeholder.enterAddress": "Enter Address",
+  "label.address": "Address",
+  "label.placeholder.date": "Select Date",
+  "label.placeholder.time": "Select Time",
+  "label.field_cannot_be_empty": "Field cannot be empty",
+  "label.schedule": "Schedule",
+  "label.InterviewScheduledSuccessfully": "Interview Scheduled Successfully",
+  "label.updatedAt": "Updated At",
 };
 
 export default locale;
