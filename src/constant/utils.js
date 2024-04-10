@@ -461,7 +461,7 @@ export const transformedOptions = (options) =>
   options?.map((option) => ({
     id: option.id,
     label: option.name,
-    value: option.slug,
+    value: option.id,
   }));
 
 export const transformedOptionsStates = (options) =>
@@ -470,3 +470,9 @@ export const transformedOptionsStates = (options) =>
     label: option.name,
     value: option.state_code,
   }));
+
+export const urlToName = (url) => {
+  const imageParts = url?.split("/");
+  const imageName = imageParts?.pop();
+  return imageName;
+};

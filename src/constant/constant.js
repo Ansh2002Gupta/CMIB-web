@@ -496,7 +496,7 @@ export const NATURE_OF_SUPPLIER_OPTIONS = [
 ];
 
 export const SOURCE_OF_INFORM_ICAI_OPTIONS = [
-  "Email from CPABI",
+  "Email from CMIB",
   "Based on previous participation",
   "Campus",
   "Telephonic Call from ICAI Officials",

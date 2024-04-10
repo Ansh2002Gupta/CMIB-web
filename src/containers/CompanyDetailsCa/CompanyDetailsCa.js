@@ -14,6 +14,7 @@ import { usePut } from "../../core/hooks/useApiRequest";
 import { urlService } from "../../Utils/urlService";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { useCompanyDetailsCa } from "./useCompanyDetailsCa";
+import { isValueEmpty, urlToName } from "../../constant/utils";
 import { getValidMode } from "../../Utils/validation";
 import {
   ADMIN_ROUTE,
@@ -66,8 +67,9 @@ const CompanyDetailsCa = () => {
           company_entity: data?.entity,
           comapny_frn: data?.frn_number,
           company_partners: data?.number_of_partners,
-          current_industry: data?.current_industry,
+          current_industry: data?.industry_type,
           correspondance_address: data?.address,
+          company_logo_name: "",
           company_state: data?.state, //this has to replace with state_code
           company_email: data?.email,
           company_std: data?.std_country_code,
@@ -91,7 +93,6 @@ const CompanyDetailsCa = () => {
       : {};
 
   const [state, setState] = useState(getData(data));
-
   useEffect(() => {
     setState(getData(data));
   }, [data]);
@@ -131,7 +132,7 @@ const CompanyDetailsCa = () => {
       entity: state?.company_entity,
       frn_number: state?.comapny_frn,
       number_of_partners: state?.company_partners,
-      current_industry: state?.current_industry,
+      industry_type_id: state?.current_industry?.id || state?.current_industry,
       address: state?.correspondance_address,
       state: state?.company_state?.code || state?.company_state,
       email: state?.company_email,
@@ -146,16 +147,18 @@ const CompanyDetailsCa = () => {
           mobile_number: state?.contact_mobile_number,
           email: state?.contact_email,
           mobile_country_code: state?.contact_mobile_country_code,
-          status: "1",
+          status: "1", //This will be remove once it will be fixed from bacend
         },
       ],
 
       company_details: state?.short_profile_company,
       website: state?.website,
       nature_of_suppliers: state?.nature_of_supplier,
-      company_type: state?.company_type,
+      type: state?.company_type,
       source_of_information: state?.source,
-      company_logo: state?.company_logo_image,
+      company_logo: isValueEmpty(state?.company_logo_name)
+        ? urlToName(state?.company_logo_image)
+        : state?.company_logo_name,
     };
     editCompanyData({
       body: payload,

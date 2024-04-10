@@ -19,6 +19,7 @@ const FileUpload = ({
   heading,
   isFormEditable,
   isNotAddable,
+  isCompany = false,
   name,
   subHeading,
   updateUserData,
@@ -29,8 +30,8 @@ const FileUpload = ({
 }) => {
   const intl = useIntl();
   const { showNotification, notificationContextHolder } = useShowNotification();
-  const { handleUploadImage } = useUploadImageApi();
-  const { handleDeleteImage } = useDeleteImageApi();
+  const { handleUploadImage } = useUploadImageApi({ isCompany: isCompany });
+  const { handleDeleteImage } = useDeleteImageApi({ isCompany: isCompany });
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];

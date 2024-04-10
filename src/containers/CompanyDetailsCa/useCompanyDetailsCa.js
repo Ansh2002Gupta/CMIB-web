@@ -78,6 +78,7 @@ const company_details = ({ intl, industryData, stateData }) => [
     isMandatory: true,
     label: "label.currentIndustry",
     placeholder: "label.currentIndustry",
+    isoptionObject: true,
     type: "select",
     selectOptions: transformedOptions(industryData),
     validate: (value) => {
@@ -286,9 +287,11 @@ const source_of_information = ({ intl }) => [
 const company_logo = ({ intl }) => [
   {
     key: "company_logo_image",
+    keyName: "company_logo_name",
     label: "label.companyIciaMessage",
     placeholder: "label.companyIciaMessage",
     isImage: true,
+    isCompany: true,
   },
 ];
 
@@ -298,6 +301,7 @@ const addValueOnField = ({ state, details, isEditable }) => {
       return {
         ...item,
         value: state?.[item?.key],
+        valueName: state?.[item?.keyName],
       };
     }
     if (item?.isArray) {
@@ -324,6 +328,17 @@ const addValueOnField = ({ state, details, isEditable }) => {
             ? "--"
             : state?.[item?.key]?.name || state?.[item?.key]
           : state?.[item?.key]?.code || state?.[item?.key],
+        countryValue: state[item?.countryKey],
+      };
+    }
+    if (item?.isoptionObject) {
+      return {
+        ...item,
+        value: !isEditable
+          ? !state?.[item?.key]
+            ? "--"
+            : state?.[item?.key]?.name || state?.[item?.key]
+          : state?.[item?.key]?.id || state?.[item?.key],
         countryValue: state[item?.countryKey],
       };
     }

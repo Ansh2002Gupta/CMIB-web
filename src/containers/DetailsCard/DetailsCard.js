@@ -111,6 +111,9 @@ const DetailsCard = ({
       if (key === "profile_photo_url") {
         onChangeValue(item?.key, url);
       }
+      if (key === "profile_photo") {
+        onChangeValue(item?.keyName, url);
+      }
     };
 
     if (item?.isCheckBoxList) {
@@ -129,6 +132,7 @@ const DetailsCard = ({
       return (
         <FileUpload
           customContaierStyles={styles.customContaierStyles}
+          isCompany={item?.isCompany}
           isFormEditable={true}
           isNotAddable={true}
           userProfilePic={item?.value}
@@ -140,7 +144,6 @@ const DetailsCard = ({
       );
     }
     if (item?.isPhone) {
-      console.log(item?.selectOptions, "item?.selectOptions..");
       return (
         <PhoneInput
           errorMessage={item?.error}
