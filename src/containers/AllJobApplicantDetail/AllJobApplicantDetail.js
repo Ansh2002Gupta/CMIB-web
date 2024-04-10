@@ -8,7 +8,7 @@ import { formatDate } from "../../constant/utils";
 import { useParams } from "react-router-dom";
 import ContentHeader from "../ContentHeader";
 import CustomButton from "../../components/CustomButton";
-import { ReactComponent as calendar } from "../../themes/base/assets/images/calendar.svg";
+import { ReactComponent as calendar } from "../../themes/base/assets/images/whiteCalender.svg";
 import useFetch from "../../core/hooks/useFetch";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import CustomLoader from "../../components/CustomLoader";

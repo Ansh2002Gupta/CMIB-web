@@ -13,7 +13,7 @@ import { NOTIFICATION_TYPES, SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../..
 import dayjs from "dayjs";
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import { formateDateandTime } from "../../constant/utils";
-import { usePost } from "../../core/hooks/useApiRequest";
+import { usePost, usePut } from "../../core/hooks/useApiRequest";
 import {
   ADMIN_ROUTE,
   APPLICANTS,
@@ -108,6 +108,17 @@ const ScheduleInterviewModal = ({ applicantId, isOpen, handleCloseModal, handleS
     url: ADMIN_ROUTE + JOBS + APPLICANTS + INTERVIEW,
   });
 
+  const interview_id = 1;
+
+  const {
+    isLoading: isUpdatingInterview,
+    makeRequest: updatatingInterview,
+    error: errorWhileUpdatingInterview,
+    setError: setErrorWhileUpdatingInterview,
+  } = usePut({
+    url: ADMIN_ROUTE + JOBS + APPLICANTS + INTERVIEW + `${interview_id}`,
+  });
+
   const handleScheduleInterview = () => {
     const primaryType = getAPIInterViewType(primaryInterviewType);
     const alternatePrimaryType = getAPIInterViewType(secondaryInterviewType);
@@ -153,7 +164,7 @@ const ScheduleInterviewModal = ({ applicantId, isOpen, handleCloseModal, handleS
   const isScheduleButtonDisabled = () => {
     const interviewKey = getInterViewType(primaryInterviewType)
     const isEmpty = !Object.values(error[interviewKey]).every(x => x === null || x === '');
-    const isFieldEmpty = Object.values(primaryDetails[interviewKey]).every(x => x === null || x === '');
+    const isFieldEmpty = Object.values(primaryDetails[interviewKey]).some(x => x === null || x === '');
     return isEmpty || isFieldEmpty
   }
 
