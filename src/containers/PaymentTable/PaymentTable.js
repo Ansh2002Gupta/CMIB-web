@@ -13,6 +13,7 @@ import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilter
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
+import { usePost } from "../../core/hooks/useApiRequest";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
@@ -26,11 +27,10 @@ import {
 } from "../../constant/constant";
 import {
   ADMIN_ROUTE,
-  CA_JOBS,
-  COMPANY,
   CORE_ROUTE,
+  DOWNLOAD,
   PAYMENT,
-  PAYMENT_MODES,
+  REFUND,
   STATUS,
 } from "../../constant/apiEndpoints";
 import { ReactComponent as ArrowDown } from "../../themes/base/assets/images/arrow-down.svg";
@@ -64,17 +64,72 @@ const PaymentTable = ({
     otherOptions: { skipApiCallOnMount: true },
   });
 
-  const { data: status } = useFetch({
+  const {
+    data: excelReport,
+    error: errorWhenDownloadingExcelReport,
+    fetchData: fetchExcelReport,
+    isLoading: isDownloadingExcelReport,
+    setData: setExcelReport,
+  } = useFetch({
+    url: ADMIN_ROUTE + `/${selectedModule?.key}` + PAYMENT + DOWNLOAD,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+
+  const { data: status, fetchData: getStatus } = useFetch({
     url: CORE_ROUTE + STATUS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
-  const { data: paymentModes } = useFetch({
-    url: CORE_ROUTE + PAYMENT_MODES,
+  const { data: paymentModes, fetchData: getPaymentModes } = useFetch({
+    url: CORE_ROUTE + STATUS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
-  const { data: company } = useFetch({
-    url: CORE_ROUTE + COMPANY,
+  const { data: company, fetchData: getCompany } = useFetch({
+    url: CORE_ROUTE + STATUS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+
+  const {
+    makeRequest: refundPayment,
+    isLoading: isRefundingPayment,
+    isError: didRefundPaymentFail,
+    error: refundPaymentError,
+    isSuccess: isRefundPaymentSuccess,
+  } = usePost({
+    url: ADMIN_ROUTE + `/${selectedModule?.key}` + PAYMENT,
+  });
+
+  const handleRefundPayment = (rowData) => {
+    refundPayment({
+      overrideUrl:
+        ADMIN_ROUTE +
+        `/${selectedModule?.key}` +
+        PAYMENT +
+        `/${rowData?.id}` +
+        REFUND,
+      onErrorCallback: () => {
+        showNotification({
+          text: refundPaymentError,
+          type: "error",
+          headingText: intl.formatMessage({ id: "label.errorMessage" }),
+        });
+      },
+      onSuccessCallback: () => {
+        showNotification({
+          text: intl.formatMessage({ id: "label.refund_successful" }),
+          type: "success",
+          headingText: intl.formatMessage({ id: "label.success" }),
+        });
+      },
+    });
+  };
 
   let errorString = error;
   if (typeof error === "object") {
@@ -130,8 +185,9 @@ const PaymentTable = ({
       q: search?.trim() || "",
       sortDirection,
       sortField,
-      status: JSON.stringify(currentFilterStatus?.["1"]),
-      queryType: JSON.stringify(currentFilterStatus?.["2"]),
+      status: currentFilterStatus?.["1"],
+      mode: currentFilterStatus?.["2"],
+      company: currentFilterStatus?.["3"],
     };
   };
 
@@ -191,6 +247,7 @@ const PaymentTable = ({
     type: currentActiveTab,
     intl,
     getImage,
+    handleRefundPayment,
     handleClickAssign,
     handleTicketIcon,
     navigate,
@@ -261,25 +318,38 @@ const PaymentTable = ({
       sortField: sortFilter?.sortField,
     });
 
-    fetchData({
-      queryParamsObject: requestedParams,
-      onSuccessCallback: (ticketsResult) => {
-        resetListingData({
-          listData: ticketsResult,
-          currentPage: current,
-          fetchDataCallback: () =>
-            fetchData({
-              queryParamsObject: getRequestedQueryParams({
-                page: 1,
-                search: searchedValue,
-                currentFilterStatus: filterArray,
-                sortDirection: sortFilter?.sortDirection,
-                sortField: sortFilter?.sortField,
+    !!selectedModule?.key &&
+      fetchData({
+        queryParamsObject: requestedParams,
+        onSuccessCallback: (ticketsResult) => {
+          resetListingData({
+            listData: ticketsResult,
+            currentPage: current,
+            fetchDataCallback: () =>
+              fetchData({
+                queryParamsObject: getRequestedQueryParams({
+                  page: 1,
+                  search: searchedValue,
+                  currentFilterStatus: filterArray,
+                  sortDirection: sortFilter?.sortDirection,
+                  sortField: sortFilter?.sortField,
+                }),
               }),
-            }),
-          setCurrent,
-        });
-      },
+            setCurrent,
+          });
+        },
+      });
+  }, [selectedModule?.key]);
+
+  useEffect(() => {
+    getStatus({
+      queryParamsObject: { type: "payment-status" },
+    });
+    getPaymentModes({
+      queryParamsObject: { type: "txn-mode" },
+    });
+    getCompany({
+      queryParamsObject: { type: "company-name" },
     });
   }, []);
 
@@ -349,6 +419,35 @@ const PaymentTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
+  const downloadExcelReport = () => {
+    const currentPage = urlService.getQueryStringValue(
+      PAGINATION_PROPERTIES.CURRENT_PAGE
+    );
+    const row_per_page = urlService.getQueryStringValue(
+      PAGINATION_PROPERTIES.ROW_PER_PAGE
+    );
+    const requestedParams = getRequestedQueryParams({
+      currentFilterStatus: filterArray,
+      page: currentPage,
+      search: searchedValue,
+      rowPerPage: row_per_page,
+      sortDirection: sortFilter?.sortDirection,
+      sortField: sortFilter?.sortField,
+    });
+    fetchExcelReport({
+      queryParamsObject: requestedParams,
+      onErrorCallback: () => {
+        showNotification({
+          text:
+            errorWhenDownloadingExcelReport ||
+            intl.formatMessage({ id: "label.errorOccured" }),
+          type: "error",
+          headingText: intl.formatMessage({ id: "label.errorMessage" }),
+        });
+      },
+    });
+  };
+
   const renderDownloadExcelButton = () => {
     return (
       <CustomButton
@@ -356,6 +455,9 @@ const PaymentTable = ({
         IconElement={ArrowDown}
         iconStyles={styles.btnIconStyles}
         customStyle={styles.greyBtnCustomStyles}
+        onClick={() => downloadExcelReport()}
+        loading={isDownloadingExcelReport}
+        isBtnDisable={isDownloadingExcelReport}
       />
     );
   };

@@ -46,6 +46,7 @@ export const VERIFY_OTP = "/otp/verify";
 export const REPLIES = "/replies";
 export const CLOSE = "/close";
 export const PAYMENT = "/payments";
+export const REFUND = "/refund";
 
 // Query
 export const MARK_AS_ANSWER_END_POINT = "/answer";

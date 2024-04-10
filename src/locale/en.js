@@ -284,7 +284,7 @@ const locale = {
   "label.progress": "Progress",
   "label.answered": "Answered",
   "label.markAnswered": "Mark Answered",
-  "label.errorOccured": "Error Occured",
+  "label.errorOccured": "Some Error Occured",
   "label.session.setupMockInterviews": "Setup Mock Interviews",
   "label.warning.setupMockInterviews":
     "*This cannot be edited once registration for the students starts.",
@@ -543,6 +543,9 @@ const locale = {
   "label.payment_status": "Payment Status",
   "label.manage_payment_searchbar_placeholder":
     "Search by transaction id, company name and payment mode",
+  "label.success": "Success!",
+  "label.error_while_refund": "Some error occured in refund!",
+  "label.refund_successful": "Refund Successful",
 };
 
 export default locale;

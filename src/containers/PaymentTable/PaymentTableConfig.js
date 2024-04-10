@@ -4,13 +4,16 @@ import { SORT_VALUES } from "../../constant/constant";
 import styles from "./PaymentTable.module.scss";
 
 const getStatusStyles = (status) => {
-  if (status?.toLowerCase() === "payment completed") {
+  if (
+    status?.toLowerCase() === "success" ||
+    status?.toLowerCase() === "refunded"
+  ) {
     return ["statusContainer_success", "statusText_success"];
   }
-  if (status?.toLowerCase() === "payment inprogress") {
+  if (status?.toLowerCase() === "inprogress") {
     return ["statusContainer_progress", "statusText_progress"];
   }
-  if (status?.toLowerCase() === "payment pending") {
+  if (status?.toLowerCase() === "pending") {
     return ["statusContainer_pending", "statusText_pending"];
   }
   if (status?.toLowerCase() === "refund inprogress") {
@@ -19,11 +22,10 @@ const getStatusStyles = (status) => {
   return ["statusContainer_failed", "statusText_failed"];
 };
 
-const handleRefundPayment = () => {};
-
 export const getPaymentColumn = ({
   getImage,
   handleSorting,
+  handleRefundPayment,
   intl,
   renderColumn,
   setSortBy,
@@ -60,7 +62,7 @@ export const getPaymentColumn = ({
         textStyles: [styles.tableCell].join(" "),
         isCapitalize: true,
         isDataObject: true,
-        dataKey: "company_name",
+        dataKey: "payment_mode",
       },
     }),
     renderColumn({
@@ -71,7 +73,7 @@ export const getPaymentColumn = ({
         visible: true,
         textStyles: styles.tableCell,
         isDataObject: true,
-        dataKey: "company_name",
+        dataKey: "payment_amt",
       },
     }),
     renderColumn({
@@ -91,8 +93,7 @@ export const getPaymentColumn = ({
         isTypeDate: true,
         visible: true,
         textStyles: [styles.tableCell].join(" "),
-        isDataObject: true,
-        dataKey: "company_name",
+        dataKey: "created_at",
       },
     }),
     renderColumn({
@@ -104,7 +105,7 @@ export const getPaymentColumn = ({
         visible: true,
         textStyles: [styles.tableCell].join(" "),
         isDataObject: true,
-        dataKey: "company_name",
+        dataKey: "txn_id",
       },
     }),
     renderColumn({
