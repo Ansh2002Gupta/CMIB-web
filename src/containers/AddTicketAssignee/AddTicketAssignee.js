@@ -14,6 +14,7 @@ import useTicketAssignApi from "../../services/api-services/Ticket/useTicketAssi
 import {
   ASSIGNEES,
   CORE_ROUTE,
+  MAX_RECORDS_COUNT,
   TICKET_LIST,
 } from "../../constant/apiEndpoints";
 import styles from "./AddTicketAssignee.module.scss";
@@ -31,7 +32,7 @@ const AddTicketAssignee = ({
   const { getImage } = useContext(ThemeContext);
   const [selectedValue, setSelectedValue] = useState(assigned_to);
   const { data, error, isLoading } = useFetch({
-    url: CORE_ROUTE + TICKET_LIST + ASSIGNEES,
+    url: `${CORE_ROUTE}${TICKET_LIST}${ASSIGNEES}?perPage=${MAX_RECORDS_COUNT}`,
   });
   useEffect(() => {
     setSelectedValue(assigned_to);

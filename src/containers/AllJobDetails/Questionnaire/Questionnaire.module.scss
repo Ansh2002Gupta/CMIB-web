@@ -1,0 +1,35 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gapSmall);
+    width: var(--fullWidth);
+  }
+
+  .QuestionnaireContainer {
+    background-color: var(--bodyBg);
+    padding: var(--paddingMedium);
+    border-radius: var(--radiusMLg);
+    border: var(--borderLight);
+    gap: var(--gapXSmall);
+  }
+  .questionOptionsContainer{
+    margin-top: var(--marginSmall);
+    
+  }
+  .questionOptionsWrapper{
+    gap: var(--gapXSmall);
+    display: flex;
+    flex-direction: row;
+  }
+  .grayHeadingText{
+    font-size: var(--fontSizeExtraSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--subHeadingColor);
+  }
+
+  .blackText {
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--textBold);
+    line-height: var(--lineHeightNormal);
+  }

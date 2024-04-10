@@ -1,0 +1,3 @@
+import ScheduledInterviewListing from './ScheduledinterviewListing'
+
+export default ScheduledInterviewListing

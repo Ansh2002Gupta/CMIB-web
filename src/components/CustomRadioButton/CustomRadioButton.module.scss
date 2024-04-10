@@ -5,3 +5,13 @@
 .disableButton {
   color: var(--subHeadingColor, #616c82);
 }
+
+.label {
+  color: var(--subHeadingColor);
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+}
+.container {
+  display: flex;
+  align-items: center;
+}

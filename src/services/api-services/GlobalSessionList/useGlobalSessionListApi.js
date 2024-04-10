@@ -12,6 +12,7 @@ import {
 import {
   CORE_ROUTE,
   GLOBAL_SESSION_LIST,
+  MAX_RECORDS_COUNT,
 } from "../../../constant/apiEndpoints";
 import { SESSION_KEY, STATUS_CODES } from "../../../constant/constant";
 
@@ -25,7 +26,8 @@ const useGlobalSessionListApi = () => {
         CORE_ROUTE +
         `/${selectedModule}` +
         GLOBAL_SESSION_LIST +
-        "?perPage=9999";
+        "?perPage=" +
+        MAX_RECORDS_COUNT;
       globalSessionDispatch(setIsGettingGlobalSessionList(true));
       const res = await Http.get(url);
       globalSessionDispatch(setIsGettingGlobalSessionList(false));
