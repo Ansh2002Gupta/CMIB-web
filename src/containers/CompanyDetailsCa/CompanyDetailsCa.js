@@ -72,6 +72,7 @@ const CompanyDetailsCa = () => {
           company_email: data?.email,
           company_std: data?.std_country_code,
           company_telephone: data?.telephone_number,
+          contact_person_id: data?.contact_person_details[0]?.id,
           salutation: data?.contact_person_details[0]?.salutation,
           contact_person_name: data?.contact_person_details[0]?.name,
           contact_person_designation:
@@ -136,14 +137,19 @@ const CompanyDetailsCa = () => {
       email: state?.company_email,
       std_country_code: state?.company_std,
       telephone_number: state?.company_telephone,
-      contact_person_details: [
-        { salutation: state?.salutation },
-        { name: state?.contact_person_name },
-        { designation: state?.contact_person_designation },
-        { mobile: state?.contact_mobile_number },
-        { email: state?.contact_email },
-        { mobile_country_code: state?.contact_mobile_country_code },
+      contact_details: [
+        {
+          id: state?.contact_person_id,
+          salutation: state?.salutation,
+          name: state?.contact_person_name,
+          designation: state?.contact_person_designation,
+          mobile_number: state?.contact_mobile_number,
+          email: state?.contact_email,
+          mobile_country_code: state?.contact_mobile_country_code,
+          status: "1",
+        },
       ],
+
       company_details: state?.short_profile_company,
       website: state?.website,
       nature_of_suppliers: state?.nature_of_supplier,
@@ -158,6 +164,11 @@ const CompanyDetailsCa = () => {
           text: intl.formatMessage({ id: "label.company_update_success" }),
           type: NOTIFICATION_TYPES.SUCCESS,
         });
+        setIsEditable(false);
+        urlService.setQueryStringValue(
+          PAGINATION_PROPERTIES.MODE,
+          FORM_STATES?.VIEW_ONLY
+        );
       },
       onErrorCallback: (errMessage) => {
         showNotification({
@@ -272,7 +283,7 @@ const CompanyDetailsCa = () => {
                       setIsEditable(false);
                       urlService.setQueryStringValue(
                         PAGINATION_PROPERTIES.MODE,
-                        FORM_STATES?.EDITABLE
+                        FORM_STATES?.VIEW_ONLY
                       );
                     }}
                   />
