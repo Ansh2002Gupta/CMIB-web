@@ -1,0 +1,111 @@
+.topSectionWithFRN {
+  width: var(--fullWidth);
+}
+
+.bottomSection {
+  padding: var(--paddingMediumSmall);
+}
+
+.customStyles {
+  justify-content: space-between;
+  font-size: var(--fontSizeXlargeMedium);
+}
+
+.buttonStyles {
+  padding: 0px var(--paddingExtraSmall);
+  font-size: var(--fontSizeSmall);
+}
+
+.headerRightSection {
+  display: flex;
+  align-items: center;
+  gap: var(--gapMedium);
+}
+
+.statusContainer {
+  gap: var(--gapXSmall);
+  align-items: center;
+}
+
+.textStyle {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--bodyBg);
+}
+
+.blackText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.blackBoldText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.btnIconStyles {
+  width: var(--width_24) !important;
+}
+
+.grayText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.greyBtnCustomStyles {
+  padding: var(--paddingSmall) var(--paddingMediumSmall);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
+  background-color: var(--bodyBg) !important;
+  color: var(--textBold);
+  min-width: var(--width_20);
+
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    border: var(--borderLight) !important;
+    color: var(--textBold) !important;
+  }
+}
+
+.greySmallBtnCustomStyles {
+  padding: var(--paddingSmall) var(--paddingMediumSmall);
+  border-radius: var(--radiusXLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg) !important;
+  min-width: var(--width_40);
+  min-height: var(--height_40);
+
+  &:hover {
+    background-color: var(--bodyBg) !important;
+    border: var(--borderLight) !important;
+  }
+}
+
+.jobCompletionRate {
+  max-width: 411px;
+  height: 44px;
+  background-color: #F2F4FC;
+  padding: 8px 12px 8px 12px;
+  gap: 8px;
+  border-radius: 8px 0px 0px 0px;
+  opacity: 0px;
+}
+
+@media (max-width: 500px) {
+  .headerRightSection {
+    gap: var(--gapXSmall);
+  }
+
+  .customStyles {
+    font-size: var(--fontSizeXlarge);
+  }
+
+  .statusContainer {
+    gap: var(--gapXXSmall);
+  }
+}

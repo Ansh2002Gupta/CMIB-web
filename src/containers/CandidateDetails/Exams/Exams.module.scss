@@ -1,0 +1,52 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmall);
+  width: var(--fullWidth);
+}
+
+.examsDetails {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  padding-bottom: 0;
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  gap: var(--gapMedium);
+}
+
+.headingText {
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.gridItem {
+  padding-bottom: var(--paddingMedium);
+}
+
+.blackText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+}
+
+.grayText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+  padding-bottom: var(--paddingExtraSmall);
+}
+
+.redText {
+  color: var(--error);
+}
+
+.fullWidthItem {
+  grid-column: 1 / -1;
+}
+
+.anchor {
+  color: var(--linkColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}

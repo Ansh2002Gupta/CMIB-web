@@ -294,6 +294,12 @@ export const COMPANY_ROUND_TWO = [
   "Consent Marking And Interview Process",
 ];
 
+export const CANDIDATES_EDUCATION_DETAILS = [
+  "Education Details",
+  "Exams",
+  "Other Courses",
+]
+
 export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
