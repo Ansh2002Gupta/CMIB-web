@@ -36,10 +36,10 @@ const CustomTabs = ({
         {tabs?.map((tab, index) => (
           <Typography
             key={tab.key}
-            className={tabClass(tab.key, index)}
+            className={tabClass(tab.key)}
             onClick={() => handleSelectTab(tab.key)}
           >
-            {tab.title}
+            {tab?.title}
           </Typography>
         ))}
       </div>

@@ -106,7 +106,7 @@ const JobDetailsView = ({ jobDetails }) => {
               </CustomGrid>
             }
             bottomSection={
-              <div className="styles.jobSummaryContainer">
+              <div className={styles.jobSummaryContainer}>
                 {renderJobDetailText("job_summary", jobDetails?.summary, true)}
                 <CustomTextEditor
                   disabled

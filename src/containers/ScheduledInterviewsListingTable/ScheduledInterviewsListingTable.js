@@ -204,18 +204,7 @@ const ScheduledInterViewsTable = ({
   }, [activeInactive]);
 
   const filterOptions = [
-    // {
-    //   id: 1,
-    //   name: "Active/Inactive",
-    //   isSelected: false,
-    //   options: activeInactiveOptions,
-    // },
-    // {
-    //   id: 2,
-    //   name: "Approved/Not Approved",
-    //   isSelected: false,
-    //   options: approvedNotApprovedOptions,
-    // },
+   /// TODO:
   ];
 
   const resetQueryListingData = (ticketsResult) => {

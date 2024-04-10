@@ -1,0 +1,13 @@
+.customContainerStyle {
+  padding: var(--paddingMedium);
+  border-top: var(--borderLight);
+  border-bottom: var(--borderLight);
+}
+
+.customButtonContainerStyle {
+  min-width: var(--width_50);
+}
+
+.bottomSectionStyles {
+  flex: 1;
+}

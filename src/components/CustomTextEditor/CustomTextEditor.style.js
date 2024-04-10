@@ -4,9 +4,13 @@ const styles = {
   quillContainer: {
     marginBottom: 24,
   },
+  CustomTextEditorContainer: {
+    flex: 1,
+  },
   quillStyling: {
     backgroundColor: colorPallets.white1,
     borderRadius: 15,
+    flex: 1,
   },
   toolbarStyle: {
     backgroundColor: colorPallets.ltGrey1,

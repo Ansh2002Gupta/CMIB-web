@@ -12,7 +12,7 @@ const ActionAndCancelButtons = ({
   cancelBtnText,
   customActionBtnStyles,
   customCancelBtnStyles,
-  customContainerStyles,
+  customContainerStyle,
   isActionBtnDisable,
   isLoading,
   onActionBtnClick,
@@ -20,7 +20,7 @@ const ActionAndCancelButtons = ({
 }) => {
   return (
     <TwoColumn
-      className={[styles.saveAndCancelBtnContainer, customContainerStyles].join(
+      className={[styles.saveAndCancelBtnContainer, customContainerStyle].join(
         " "
       )}
       leftSection={
@@ -49,6 +49,7 @@ ActionAndCancelButtons.defaultProps = {
   cancelBtnText: "",
   customActionBtnStyles: "",
   customCancelBtnStyles: "",
+  customContainerStyle: "",
   isActionBtnDisable: false,
   loading: false,
   onActionBtnClick: () => {},
@@ -60,6 +61,7 @@ ActionAndCancelButtons.propTypes = {
   cancelBtnText: PropTypes.string,
   customActionBtnStyles: PropTypes.string,
   customCancelBtnStyles: PropTypes.string,
+  customContainerStyle: PropTypes.string,
   isActionBtnDisable: PropTypes.bool,
   loading: PropTypes.bool,
   onActionBtnClick: PropTypes.func,
