@@ -777,6 +777,7 @@ const locale = {
   "label.approvedCompanyName": "Approved Company Name",
   "label.searchByCompanyUsername": "Search by company name, username",
   "label.viewCompanyDetails": "View Company Details",
+  "label.downloadResumeAndProfile": "Download Profile & Resume",
 };
 
 export default locale;
