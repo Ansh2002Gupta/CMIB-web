@@ -31,7 +31,7 @@ const PostJobDetailsContainer = ({ jobId, setIsModalOpen }) => {
       ? {
           company_name: data?.company_name,
           approved: data?.approved,
-          jobId: data?.jobId, //
+          jobId: data?.job_id,
           summary: data?.summary,
           detail: data?.detail,
           type: data?.type?.name,
@@ -43,9 +43,9 @@ const PostJobDetailsContainer = ({ jobId, setIsModalOpen }) => {
           location: data?.location,
           functional_areas: data?.functional_areas,
           nationality: data?.nationality,
-          company_details: data?.company_details, //
-          website: data?.website, //
-          company_type: data?.company_type, //
+          company_details: data?.company_detail,
+          website: data?.website,
+          company_type: data?.company_type,
           gender_preference: data?.gender_preference?.label,
           category_preference: data?.category_preference,
           essential_qualification: data?.essential_qualification,
