@@ -465,7 +465,8 @@ export const transformedOptions = (options) =>
   }));
 
 export const transformedOptionsStates = (options) =>
-  options?.map((option) => ({
+  options?.map((option, index) => ({
+    id: index,
     label: option.name,
     value: option.state_code,
   }));

@@ -132,7 +132,7 @@ const CompanyDetailsCa = () => {
       number_of_partners: state?.company_partners,
       current_industry: state?.current_industry,
       address: state?.correspondance_address,
-      state_code: state?.company_state,
+      state: state?.company_state?.code || state?.company_state,
       email: state?.company_email,
       std_country_code: state?.company_std,
       telephone_number: state?.company_telephone,

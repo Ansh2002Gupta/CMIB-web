@@ -106,6 +106,7 @@ const company_details = ({ intl, industryData, stateData }) => [
     isMandatory: true,
     label: "label.state",
     placeholder: "label.state",
+    isState: true,
     type: "select",
     selectOptions: transformedOptionsStates(stateData),
     validate: (value) => {
@@ -315,6 +316,17 @@ const addValueOnField = ({ state, details, isEditable }) => {
         countryValue: state[item?.countryKey],
       };
     }
+    if (item?.isState) {
+      return {
+        ...item,
+        value: !isEditable
+          ? !state?.[item?.key]
+            ? "--"
+            : state?.[item?.key]?.name || state?.[item?.key]
+          : state?.[item?.key]?.code || state?.[item?.key],
+        countryValue: state[item?.countryKey],
+      };
+    }
     return {
       ...item,
       value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
@@ -330,6 +342,7 @@ export const useCompanyDetailsCa = ({ state, isEditable }) => {
   const { data: stateData, isLoading: isGettingState } = useFetch({
     url: CORE_ROUTE + STATES,
   });
+
   const { data: countryData, isLoading: isGettingCountry } = useFetch({
     url: CORE_COUNTRIES,
   });
