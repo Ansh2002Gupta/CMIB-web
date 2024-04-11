@@ -5,11 +5,12 @@ import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 import {
   ADMIN_ROUTE,
+  COMPANY_ROUTE,
   CORE_ROUTE,
   FILES_END_POINT,
 } from "../../../constant/apiEndpoints";
 
-const useUploadImageApi = () => {
+const useUploadImageApi = ({ isCompany }) => {
   const intl = useIntl();
   const [imageUploadApiStatus, setImageUploadApiStatus] = useState(
     API_STATUS.IDLE
@@ -26,7 +27,11 @@ const useUploadImageApi = () => {
       setImageUploadApiStatus(API_STATUS.LOADING);
       setImageUploadData(null);
       errorWhileUploadingImage && setErrorWhileUploadingImage("");
-      const url = CORE_ROUTE + "/" + ADMIN_ROUTE + FILES_END_POINT;
+      const url =
+        CORE_ROUTE +
+        "/" +
+        (isCompany ? COMPANY_ROUTE : ADMIN_ROUTE) +
+        FILES_END_POINT;
       const formData = new FormData();
       formData.append("file", file);
       const res = await Http.post(url, formData);

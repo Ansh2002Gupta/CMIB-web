@@ -9,6 +9,79 @@ import {
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
 
+export const ATTACHMENT_TYPE = ["link", "image"];
+export const COLOR = [
+  "#000000",
+  "#e60000",
+  "#ff9900",
+  "#ffff00",
+  "#008a00",
+  "#0066cc",
+  "#9933ff",
+  "#ffffff",
+  "#facccc",
+  "#ffebcc",
+  "#ffffcc",
+  "#cce8cc",
+  "#cce0f5",
+  "#ebd6ff",
+  "#bbbbbb",
+  "#f06666",
+  "#ffc266",
+  "#ffff66",
+  "#66b966",
+  "#66a3e0",
+  "#c285ff",
+  "#888888",
+  "#a10000",
+  "#b26b00",
+  "#b2b200",
+  "#006100",
+  "#0047b2",
+  "#6b24b2",
+  "#444444",
+  "#5c0000",
+  "#663d00",
+  "#666600",
+  "#003700",
+  "#002966",
+  "#3d1466",
+  "custom-color",
+];
+export const FORMAT = [
+  "header",
+  "height",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "color",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "align",
+  "size",
+];
+export const LIST_OPTION = [
+  { list: "ordered" },
+  { list: "bullet" },
+  { indent: "-1" },
+  { indent: "+1" },
+  { align: [] },
+];
+export const LIST_TYPE = [{ list: "ordered" }, { list: "bullet" }];
+export const SIZE = ["small", false, "large", "huge"];
+export const TEXT_FORMATS = [
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+];
+
 export const API_VERSION_QUERY_PARAM = "api-version";
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
@@ -186,6 +259,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
   SEARCH_QUERY: "search-query",
   FILTER: "filter",
+  MODE: "mode",
 };
 
 //TODO:need to implement it using api
@@ -468,4 +542,37 @@ export const REGISTRATIONS_DATES_FOR_ROUND_TWO = [
   { id: 7, labeIntl: "startCondidateConsentmarking" },
   { id: 8, labeIntl: "endCondidateConsentmarking" },
   { id: 9, labeIntl: "writtenTestDate" },
+];
+
+export const ENTITY_OPTIONS = [
+  { id: 1, label: "Corporate", value: "Corporate" },
+  { id: 2, label: "Non-Corporate", value: "Non-corporate" },
+  {
+    id: 3,
+    label: "Firm of Chartered Accountants",
+    value: "Firm of chartered accountants",
+  },
+  { id: 4, vlabel: "PSU", value: "PSU" },
+];
+
+export const SALUTATION_OPTIONS = [
+  { id: 1, label: "Mr.", value: "Mr." },
+  { id: 2, label: "Ms.", value: "Ms." },
+  { id: 3, label: "Dr.", value: "Dr." },
+];
+
+export const NATURE_OF_SUPPLIER_OPTIONS = [
+  { id: 1, label: "Registered", value: "Registered" },
+  { id: 2, label: "Unregistered", value: "Unregistered" },
+  { id: 3, label: "Composition Supplier", value: "Composition Supplier" },
+  { id: 4, label: "UIN Holder", value: "UIN Holder" },
+];
+
+export const SOURCE_OF_INFORM_ICAI_OPTIONS = [
+  "Email from CMIB",
+  "Based on previous participation",
+  "Campus",
+  "Telephonic Call from ICAI Officials",
+  "Programme brochure from ICAI",
+  "Advertisement in the Chartered Accountant Journal",
 ];
