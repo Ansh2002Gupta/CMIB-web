@@ -716,6 +716,11 @@ const locale = {
   "label.postedJobs": "Posted Jobs",
   "label.editCompanyDetails": "Edit Company Details",
   "label.contactPersonalInformation": "Contact Personal Information",
+  "label.company_update_success": "Company Details Updated Successfully",
+  "label.fieldRequired": "This Field is required",
+  "label.stdPlaceholder": "eg 91",
+  "label.photo_text": "Photo",
+  "label.profilePhoto": "Profile Photo",
 };
 
 export default locale;

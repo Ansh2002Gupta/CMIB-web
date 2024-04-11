@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
-import { Dropdown, Image, Menu, Switch, Tooltip, Typography } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
 import { TwoColumn, TwoRow } from "../../layouts";
 
