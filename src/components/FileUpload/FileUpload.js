@@ -15,9 +15,11 @@ import styles from "./FileUpload.module.scss";
 import "./override.css";
 
 const FileUpload = ({
+  customContaierStyles,
   heading,
   isFormEditable,
   isNotAddable,
+  isCompany = false,
   name,
   subHeading,
   updateUserData,
@@ -28,8 +30,8 @@ const FileUpload = ({
 }) => {
   const intl = useIntl();
   const { showNotification, notificationContextHolder } = useShowNotification();
-  const { handleUploadImage } = useUploadImageApi();
-  const { handleDeleteImage } = useDeleteImageApi();
+  const { handleUploadImage } = useUploadImageApi({ isCompany: isCompany });
+  const { handleDeleteImage } = useDeleteImageApi({ isCompany: isCompany });
 
   const beforeUpload = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -87,10 +89,16 @@ const FileUpload = ({
   };
 
   return (
-    <Base className={styles.container}>
-      <Typography className={styles.headingText}>{heading}</Typography>
+    <Base className={[styles.container, customContaierStyles].join(" ")}>
+      {!!heading && (
+        <Typography className={styles.headingText}>{heading}</Typography>
+      )}
       <div className={styles.uploadBottomContainer}>
-        <Typography className={styles.subHeadingText}>{subHeading}</Typography>
+        {!!subHeading && (
+          <Typography className={styles.subHeadingText}>
+            {subHeading}
+          </Typography>
+        )}
         {notificationContextHolder}
         {userProfilePic || !isFormEditable ? (
           <UserImage
@@ -133,10 +141,10 @@ const FileUpload = ({
 };
 
 FileUpload.defaultProps = {
-  heading: "Profile Photo",
+  heading: "",
   isFormEditable: false,
   name: "",
-  subHeading: "Photo",
+  subHeading: "",
   updateUserData: () => {},
   userProfilePic: "",
   userImageName: "",

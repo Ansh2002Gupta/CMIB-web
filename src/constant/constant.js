@@ -71,6 +71,7 @@ export const VALID_ROW_PER_OPTIONS = [10, 20, 30, 40];
 
 export const VALID_CONTACT_US_TABS_ID = ["1", "2"];
 export const VALID_SESSION_TABS_ID = ["1", "2", "3"];
+export const VALID_COMPANIES_TABS_ID = ["1", "2"];
 export const VALID_CONSENT_MARKING_TABS_ID = {
   oneTab: ["1"],
   twoTab: ["1", "2"],
@@ -185,6 +186,7 @@ export const PAGINATION_PROPERTIES = {
   ROW_PER_PAGE: "row-per-page",
   SEARCH_QUERY: "search-query",
   FILTER: "filter",
+  MODE: "mode",
 };
 
 //TODO:need to implement it using api
@@ -319,10 +321,12 @@ export const COMPANY_ROUND_TWO = [
   "Consent Marking And Interview Process",
 ];
 
-export const ALL_JOB_DETAILS = [
-  "Job Details",
-  "Questionnaire",
+export const CANDIDATES_EDUCATION_DETAILS = [
+  "Education Details",
+  "Exams",
+  "Other Courses",
 ];
+export const ALL_JOB_DETAILS = ["Job Details", "Questionnaire"];
 
 export const CONTROL_MODULE_ID = 1;
 
@@ -550,4 +554,37 @@ export const REGISTRATIONS_DATES_FOR_ROUND_TWO = [
   { id: 7, labeIntl: "startCondidateConsentmarking" },
   { id: 8, labeIntl: "endCondidateConsentmarking" },
   { id: 9, labeIntl: "writtenTestDate" },
+];
+
+export const ENTITY_OPTIONS = [
+  { id: 1, label: "Corporate", value: "Corporate" },
+  { id: 2, label: "Non-Corporate", value: "Non-corporate" },
+  {
+    id: 3,
+    label: "Firm of Chartered Accountants",
+    value: "Firm of chartered accountants",
+  },
+  { id: 4, vlabel: "PSU", value: "PSU" },
+];
+
+export const SALUTATION_OPTIONS = [
+  { id: 1, label: "Mr.", value: "Mr." },
+  { id: 2, label: "Ms.", value: "Ms." },
+  { id: 3, label: "Dr.", value: "Dr." },
+];
+
+export const NATURE_OF_SUPPLIER_OPTIONS = [
+  { id: 1, label: "Registered", value: "Registered" },
+  { id: 2, label: "Unregistered", value: "Unregistered" },
+  { id: 3, label: "Composition Supplier", value: "Composition Supplier" },
+  { id: 4, label: "UIN Holder", value: "UIN Holder" },
+];
+
+export const SOURCE_OF_INFORM_ICAI_OPTIONS = [
+  "Email from CMIB",
+  "Based on previous participation",
+  "Campus",
+  "Telephonic Call from ICAI Officials",
+  "Programme brochure from ICAI",
+  "Advertisement in the Chartered Accountant Journal",
 ];

@@ -239,6 +239,100 @@ export const COMPANIES_FILTER_DATA = [
   },
 ];
 
+
+export const CANDIDATE_DUMMY_DATA = [
+  {
+    id: "1",
+    name: "John Doe",
+    email: "johndoe@example.com",
+    member_id: "NRO0123456"
+  },
+  {
+    id: "2",
+    name: "Jane Smith",
+    email: "janesmith@example.com",
+    member_id: "NRO0123457"
+  },
+  {
+    id: "3",
+    name: "William Johnson",
+    email: "williamjohnson@example.com",
+    member_id: "NRO0123458"
+  },
+  {
+    id: "4",
+    name: "Emma Williams",
+    email: "emmawilliams@example.com",
+    member_id: "NRO0123459"
+  },
+  {
+    id: "5",
+    name: "Olivia Brown",
+    email: "oliviabrown@example.com",
+    member_id: "NRO0123460"
+  },
+  {
+    id: "6",
+    name: "Michael Davis",
+    email: "michaeldavis@example.com",
+    member_id: "NRO0123461"
+  },
+  {
+    id: "7",
+    name: "Emily Garcia",
+    email: "emilygarcia@example.com",
+    member_id: "NRO0123462"
+  },
+  {
+    id: "8",
+    name: "James Wilson",
+    email: "jameswilson@example.com",
+    member_id: "NRO0123463"
+  },
+  {
+    id: "9",
+    name: "Charlotte Miller",
+    email: "charlottemiller@example.com",
+    member_id: "NRO0123464"
+  },
+  {
+    id: "10",
+    name: "Benjamin Moore",
+    email: "benjaminmoore@example.com",
+    member_id: "NRO0123465"
+  },
+  {
+    id: "11",
+    name: "Sophia Taylor",
+    email: "sophiataylor@example.com",
+    member_id: "NRO0123466"
+  },
+  {
+    id: "12",
+    name: "Lucas Anderson",
+    email: "lucasanderson@example.com",
+    member_id: "NRO0123467"
+  },
+  {
+    id: "13",
+    name: "Harper Thomas",
+    email: "harperthomas@example.com",
+    member_id: "NRO0123468"
+  },
+  {
+    id: "14",
+    name: "Mason Jackson",
+    email: "masonjackson@example.com",
+    member_id: "NRO0123469"
+  },
+  {
+    id: "15",
+    name: "Evelyn White",
+    email: "evelynwhite@example.com",
+    member_id: "NRO0123470"
+  }
+]
+
 export const SESSION_DETAILS = {
   name: "Jadyn Bartoletti",
   session_start_date: "2023-12-19T05:11:46.000000Z",
