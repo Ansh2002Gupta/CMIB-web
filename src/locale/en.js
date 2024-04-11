@@ -600,6 +600,7 @@ const locale = {
   "label.approval": "Approval",
   "label.path.registered-company": "Registered Companies",
   "label.path.registered-company-details": "Company Details",
+  "label.path.company-details": "Company Details",
   "label.approval_status": "Approval status",
   "label.balanceCredit": "Balance Credit: ",
   "label.modules": "Modules",
@@ -718,6 +719,11 @@ const locale = {
   "label.contactPersonalInformation": "Contact Personal Information",
   "label.scheduledInterviews": "Scheduled Interviews",
   "label.approvedNotapprovedAdmin": "Approved/Not Approved by admin",
+  "label.company_update_success": "Company Details Updated Successfully",
+  "label.fieldRequired": "This Field is required",
+  "label.stdPlaceholder": "eg 91",
+  "label.photo_text": "Photo",
+  "label.profilePhoto": "Profile Photo",
 };
 
 export default locale;

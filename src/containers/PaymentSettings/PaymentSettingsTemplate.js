@@ -52,7 +52,7 @@ const PaymentSettingsTemplate = ({
           </div>
         );
       }
-      return <Typography>{item.value}</Typography>;
+      return <Typography className={styles.valueText}>{item.value}</Typography>;
     }
     if (item.isMultiSelect) {
       return (
