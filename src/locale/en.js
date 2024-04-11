@@ -444,6 +444,7 @@ const locale = {
   "label.path.queries": "Queries",
   "label.path.queries-details": "Query Details",
   "label.path.interviewDetails": "Configure Interview Dates",
+  "label.path.company-details": "Comapny Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
@@ -716,6 +717,8 @@ const locale = {
   "label.postedJobs": "Posted Jobs",
   "label.editCompanyDetails": "Edit Company Details",
   "label.contactPersonalInformation": "Contact Personal Information",
+  "label.scheduledInterviews": "Scheduled Interviews",
+  "label.approvedNotapprovedAdmin": "Approved/Not Approved by admin",
   "label.company_update_success": "Company Details Updated Successfully",
   "label.fieldRequired": "This Field is required",
   "label.stdPlaceholder": "eg 91",

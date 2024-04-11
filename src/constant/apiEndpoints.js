@@ -22,6 +22,7 @@ export const CENTRE_END_POINT = "/centres";
 export const CAMPUS_INTERVIEW = "/campus-interviews";
 export const CHANGE_PASSWORD = "/password";
 export const CHECK_OTP_END_POINT = "/two-factor-check";
+export const CHANGE_STATUS = "/change-status";
 export const CONFIGURATIONS = "/configurations";
 export const CORE_COUNTRIES = "core/countries";
 export const CREATE = "/create";

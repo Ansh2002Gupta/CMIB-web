@@ -107,6 +107,7 @@ const useRenderColumn = () => {
 
     const {
       items = [],
+      isConditionalMenu = false,
       menuSrc = "",
       onMenuClick = () => {},
       menuPreview,
@@ -131,6 +132,7 @@ const useRenderColumn = () => {
       isCapitalize,
       isDays,
       isRequiredTooltip,
+      isTextLink,
       isMoney,
       isYearRange,
       isNumber,
@@ -231,6 +233,7 @@ const useRenderColumn = () => {
             isTextBold ? styles.boldText : "",
             styles.textEllipsis,
             isCapitalize ? styles.capitalize : "",
+            isTextLink ? styles.linkStyles : "",
           ].join(" ")}
         >
           {textRenderFormat({ text: text })}
@@ -246,6 +249,7 @@ const useRenderColumn = () => {
             isTextBold ? styles.boldText : "",
             styles.textEllipsis,
             isCapitalize ? styles.capitalize : "",
+            isTextLink ? styles.linkStyles : "",
           ].join(" ")}
         >
           {data?.use_more_experience
@@ -391,6 +395,7 @@ const useRenderColumn = () => {
                 isTextBold ? styles.boldText : "",
                 styles.textEllipsis,
                 isCapitalize ? styles.capitalize : "",
+                isTextLink ? styles.linkStyles : "",
               ].join(" ")}
             >
               {`${
@@ -585,19 +590,41 @@ const useRenderColumn = () => {
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {
-        const menuItems = {
-          items: items.map((item) => ({
-            key: item.key,
-            label: (
-              <div
-                onClick={onMenuClick ? () => onMenuClick(rowData) : () => {}}
-                className={styles.dropdownMenuItem}
-              >
-                {item.label}
-              </div>
-            ),
-          })),
-        };
+        const menuItems = isConditionalMenu
+          ? {
+              items: items(rowData).map((item) => ({
+                key: item.key,
+                label: (
+                  <div
+                    onClick={
+                      onMenuClick
+                        ? () => onMenuClick(rowData, item.key)
+                        : () => {}
+                    }
+                    className={styles.dropdownMenuItem}
+                  >
+                    {item.label}
+                  </div>
+                ),
+              })),
+            }
+          : {
+              items: items.map((item) => ({
+                key: item.key,
+                label: (
+                  <div
+                    onClick={
+                      onMenuClick
+                        ? () => onMenuClick(rowData, item.key)
+                        : () => {}
+                    }
+                    className={styles.dropdownMenuItem}
+                  >
+                    {item.label}
+                  </div>
+                ),
+              })),
+            };
         return (
           <Dropdown menu={menuItems} trigger={[triggerType || "click"]}>
             <Image
