@@ -782,7 +782,7 @@ const locale = {
   "label.urgentJob": "Urgent Job",
   "label.industry": "Industry",
   "label.minimumExperience": "Minimum Experience",
-  "label.maximumExperience": "maximumExperience",
+  "label.maximumExperience": "Maximum Experience",
   "label.nationality": "Nationality",
   "label.jobLocation": "Job Location",
   "label.genderPreferances": "Gender Preference",
