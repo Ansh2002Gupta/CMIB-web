@@ -30,21 +30,18 @@ import {
 import { classes } from "./CompanyDetailsCa.styles";
 import styles from "./CompanyDetailsCa.module.scss";
 
-const CompanyDetailsCa = () => {
+const CompanyDetailsCa = ({
+  data,
+  errorWhileGettingCompanyData,
+  isGettingCompanyData,
+  getCompanyData,
+}) => {
   const intl = useIntl();
   const { companyId } = useParams();
   const [isEditable, setIsEditable] = useState(
     getValidMode(urlService.getQueryStringValue(PAGINATION_PROPERTIES.MODE)) ===
       FORM_STATES?.EDITABLE
   );
-  const {
-    data,
-    error: errorWhileGettingCompanyData,
-    isLoading: isGettingCompanyData,
-    fetchData: getCompanyData,
-  } = useFetch({
-    url: ADMIN_ROUTE + REGISTERED_COMPANIES + "/" + companyId,
-  });
 
   const { isLoading: isCompanyEditing, makeRequest: editCompanyData } = usePut({
     url:
