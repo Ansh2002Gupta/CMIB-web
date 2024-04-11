@@ -1,0 +1,27 @@
+.sliderContainer {
+  position: relative;
+}
+
+.sliderMarks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--margin_12);
+
+  .sliderText {
+    font-family: var(--fontFamilyRegular);
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    line-height: var(--lineHeightNormal);
+    text-align: right;
+    color: var(--inputPlaceHolder);
+  }
+}
+
+.sliderLabel {
+  font-family: var(--fontFamilyRegular);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  line-height: var(--lineHeightNormal);
+  text-align: center;
+  color: var(--inputText);
+}

@@ -15,6 +15,7 @@ import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
 import ManageCompanies from "../views/ManageCompanies/ManageCompanies.js";
+import ManageCompanyDetails from "../views/ManageCompanyDetails/ManageCompanyDetails.js";
 import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
@@ -77,9 +78,13 @@ import {
   TICKETS_VIEW_DETAILS,
   JOB_LISTING,
   JOB_DETAILS,
+  CANDIDATES,
+  CANDIDATES_DETAILS,
   APPLICANTS_DETAILS,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
+import Candidates from "../views/Candidates/Candidates.js";
+import CandidateDetails from "../views/CandidateDetails/CandidateDetails.js";
 import AllJobs from "../views/AllJobs/AllJobs.js";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -211,12 +216,20 @@ const config = [
         element: <Subscriptions />,
       },
       {
+        viewPath: CANDIDATES,
+        element: <Candidates/>,
+      },
+      {
+        viewPath: CANDIDATES + CANDIDATES_DETAILS,
+        element: <CandidateDetails/>,
+      },
+      {
         viewPath: COMPANIES,
         element: <ManageCompanies />,
       },
       {
         viewPath: COMPANIES + COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
+        element: <ManageCompanyDetails />,
       },
       {
         viewPath: CONFIGURE_CENTRES,

@@ -21,6 +21,7 @@
   }
   .disabled > .ql-toolbar.ql-snow {
     display: none;
+    border-width: 0;
   }
   .disabled > .ql-container.ql-snow {
     border: none;

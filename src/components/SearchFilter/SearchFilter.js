@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { ThemeContext } from "core/providers/theme";
-import { Button, Card, Image, Typography } from "antd";
+import { Button, Card, Image, Slider, Typography } from "antd";
 
 import TwoColumn from "../../core/layouts/TwoColumn/TwoColumn";
 import useResponsive from "../../core/hooks/useResponsive";
@@ -12,6 +12,7 @@ import CustomCheckBox from "../CustomCheckBox";
 import useOutSideClick from "../../core/hooks/useOutSideClick";
 import { classes } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
+import CustomSlider from "../CustomSlider";
 
 const SearchFilter = ({
   filterArray,
@@ -26,6 +27,7 @@ const SearchFilter = ({
   const responsive = useResponsive();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [currentFilterStatus, setCurrentFilterStatus] = useState(filterArray);
+  const [experienceRange, setExperienceRange] = useState([2, 4]);
 
   const elementNotConsideredInOutSideClick = useRef();
 
@@ -201,33 +203,52 @@ const SearchFilter = ({
               }
               rightSection={
                 <div>
-                  {filterPropertiesArray[selectedIndex]?.options?.map(
-                    (item, index) => {
-                      return (
-                        <CustomCheckBox
-                          checked={(
-                            currentFilterStatus[
-                              filterPropertiesArray[selectedIndex].id
-                            ] || []
-                          ).includes(item.optionId)}
-                          onChange={() =>
-                            handleOnUpdateAccessFilterStatus(
-                              filterPropertiesArray[selectedIndex].id,
-                              item.optionId
-                            )
-                          }
-                          customStyles={styles.filterSecondLevelOption}
-                        >
-                          <Typography className={styles.filterOptionText}>
-                            {item?.str}{" "}
-                            <span className={styles.textInBrackets}>
-                              {!isNaN(item?.count) ? `(${item?.count})` : ""}
-                            </span>
-                          </Typography>
-                        </CustomCheckBox>
-                      );
-                    }
-                  )}
+                  {filterPropertiesArray[selectedIndex]?.type === "slider" ? (
+                    <CustomSlider
+                      min={0}
+                      max={40}
+                      defaultValue={experienceRange}
+                      onChange={(value) => {
+                        setExperienceRange(value);
+                      }}
+                      onAfterChange={(value) => {
+                        handleOnUpdateAccessFilterStatus(
+                          filterPropertiesArray[selectedIndex].id,
+                          value
+                        );
+                      }}
+                      range={true}
+                    />
+                  ) : filterPropertiesArray[selectedIndex]?.options ? (
+                    filterPropertiesArray[selectedIndex].options.map(
+                      (item, index) => {
+                        return (
+                          <CustomCheckBox
+                            key={item.optionId}
+                            checked={(
+                              currentFilterStatus[
+                                filterPropertiesArray[selectedIndex].id
+                              ] || []
+                            ).includes(item.optionId)}
+                            onChange={() =>
+                              handleOnUpdateAccessFilterStatus(
+                                filterPropertiesArray[selectedIndex].id,
+                                item.optionId
+                              )
+                            }
+                            customStyles={styles.filterSecondLevelOption}
+                          >
+                            <Typography className={styles.filterOptionText}>
+                              {item.str}
+                              <span className={styles.textInBrackets}>
+                                {!isNaN(item.count) ? `(${item.count})` : ""}
+                              </span>
+                            </Typography>
+                          </CustomCheckBox>
+                        );
+                      }
+                    )
+                  ) : null}
                 </div>
               }
             />
@@ -269,7 +290,7 @@ SearchFilter.defaultProps = {
 };
 
 SearchFilter.propTypes = {
-  filterArray: PropTypes.array,
+  filterArray: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   filterPropertiesArray: PropTypes.array,
   handleApllyFilter: PropTypes.func,
   setFilterArray: PropTypes.func,

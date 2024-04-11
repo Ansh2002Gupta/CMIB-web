@@ -5,11 +5,12 @@ import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constant/constant";
 import {
   ADMIN_ROUTE,
+  COMPANY_ROUTE,
   CORE_ROUTE,
   FILES_END_POINT,
 } from "../../../constant/apiEndpoints";
 
-const useDeleteImageApi = () => {
+const useDeleteImageApi = ({ isCompany }) => {
   const intl = useIntl();
   const [imageDeleteApiStatus, setImageDeleteApiStatus] = useState(
     API_STATUS.IDLE
@@ -27,7 +28,9 @@ const useDeleteImageApi = () => {
       setImageDeleteData(null);
       errorWhileDeletingImage && setErrorWhileDeletingImage("");
       const url =
-        CORE_ROUTE + "/" + ADMIN_ROUTE + FILES_END_POINT + "/" + fileName;
+        CORE_ROUTE + "/" + isCompany
+          ? COMPANY_ROUTE
+          : ADMIN_ROUTE + FILES_END_POINT + "/" + fileName;
       const res = await Http.delete(url);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setImageDeleteApiStatus(API_STATUS.SUCCESS);

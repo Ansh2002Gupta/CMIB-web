@@ -20,6 +20,7 @@ input::placeholder {
   width: var(--width_30Per);
   min-height: var(--minBtnHeight);
   border-radius: var(--radiusXLg);
+  border: var(--borderLight);
   input {
     color: var(--inputText) !important;
     font-size: var(--fontSizeSmall) !important;
