@@ -13,7 +13,7 @@ import CustomTextEditor from "../../components/CustomTextEditor";
 import Chip from "../../components/Chip/Chip";
 import FileUpload from "../../components/FileUpload/FileUpload";
 import MarkRequired from "../../components/MarkRequired";
-import { formatDate } from "../../constant/utils";
+import { formatDate, getValidUrl } from "../../constant/utils";
 import PhoneInput from "../../components/PhoneInput/PhoneInput";
 import { classes } from "./DetailsCard.styles";
 import styles from "./DetailsCard.module.scss";
@@ -102,7 +102,7 @@ const DetailsCard = ({
             >
               {item?.isWebsite ? (
                 <a
-                  href={item?.value}
+                  href={getValidUrl(item?.value)}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={classes.linkStyles}
