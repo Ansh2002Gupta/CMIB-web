@@ -13,6 +13,7 @@ export const CENTRE_DETAILS = "centre-details";
 export const COMPANIES = "companies/";
 export const COMPANIES_DETAILS = "company-details/:companyId";
 export const CONFIGURE_CENTRES = "global-configurations/";
+export const MANAGE_PAYMENTS = "manage-payments/";
 export const CONSENT_MARKING = "consent-marking";
 export const CONTACT_US = "contact-us/";
 export const DASHBOARD = "dashboard/";

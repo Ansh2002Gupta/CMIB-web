@@ -14,6 +14,7 @@ import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
 import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
+import PaymentListing from "../views/PaymentListing/PaymentListing";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import Session from "../views/Session";
 import EditSession from "../views/EditSession/EditSession";
@@ -43,6 +44,7 @@ import {
   FORGOT_PASSWORD,
   INTERVIEW_DETAILS,
   LOGIN,
+  MANAGE_PAYMENTS,
   OUT_SOURCED,
   QUERIES,
   QUERY_DETAILS,
@@ -198,6 +200,10 @@ const config = [
       {
         viewPath: CONFIGURE_CENTRES + EDIT_CONFIGURE_CENTRE,
         element: <ConfigureCentreView />,
+      },
+      {
+        viewPath: MANAGE_PAYMENTS,
+        element: <PaymentListing />,
       },
     ],
   },

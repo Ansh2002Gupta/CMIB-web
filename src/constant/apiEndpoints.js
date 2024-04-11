@@ -37,12 +37,16 @@ export const ROUNDS = "/rounds";
 export const SEND_OTP = "/reset-password/request";
 export const SESSIONS = "/sessions";
 export const STATUS = "/status";
+export const COMPANY = "/company";
+export const PAYMENT_MODES = "/payment_modes";
 export const TICKET_LIST = "/tickets";
 export const UPDATE_CENTER_DETAILS_END_POINT = "/update";
 export const USERS_END_POINT = "/users";
 export const VERIFY_OTP = "/otp/verify";
 export const REPLIES = "/replies";
 export const CLOSE = "/close";
+export const PAYMENT = "/payments";
+export const REFUND = "/refund";
 
 // Query
 export const MARK_AS_ANSWER_END_POINT = "/answer";
