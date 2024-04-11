@@ -15,6 +15,7 @@ import HeaderContentWithFooter from "../pages/HeaderContentWithFooter";
 import Home from "../pages/Home";
 import LoginForm from "../views/LoginForm";
 import ManageCompanies from "../views/ManageCompanies/ManageCompanies.js";
+import ManageCompanyDetails from "../views/ManageCompanyDetails/ManageCompanyDetails.js";
 import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
@@ -226,7 +227,7 @@ const config = [
       },
       {
         viewPath: COMPANIES + COMPANIES_DETAILS,
-        element: <CompaniesDetails />,
+        element: <ManageCompanyDetails />,
       },
       {
         viewPath: CONFIGURE_CENTRES,

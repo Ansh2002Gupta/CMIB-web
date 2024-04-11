@@ -290,7 +290,7 @@ SearchFilter.defaultProps = {
 };
 
 SearchFilter.propTypes = {
-  filterArray: PropTypes.array,
+  filterArray: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   filterPropertiesArray: PropTypes.array,
   handleApllyFilter: PropTypes.func,
   setFilterArray: PropTypes.func,

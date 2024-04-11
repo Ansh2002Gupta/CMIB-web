@@ -56,15 +56,13 @@ const CustomTextEditor = (props) => {
   };
 
   return (
-    <div style={styles.CustomTextEditorContainer}>
+    <div style={styles.mainContainer}>
       <div style={styles.labelContainer}>
-        <Typography
-          style={{...styles.label, ...customLabelStyle}}
-        >
+        <Typography style={{ ...styles.label, ...customLabelStyle }}>
           {label}
         </Typography>
         {isMandatory && (
-          <Typography style={{...styles.label, ...styles.starStyle}}>
+          <Typography style={{ ...styles.label, ...styles.starStyle }}>
             {"*"}
           </Typography>
         )}
@@ -84,9 +82,7 @@ const CustomTextEditor = (props) => {
         />
       </div>
       {!!errorMessage && (
-        <Typography
-          style={[styles.errorMsg, customErrorStyle]}
-        >
+        <Typography style={[styles.errorMsg, customErrorStyle]}>
           {errorMessage}
         </Typography>
       )}

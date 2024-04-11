@@ -1,11 +1,11 @@
 import { colorPallets } from "../../constant/colors";
 
 const styles = {
+  mainContainer: {
+    flex: 1,
+  },
   quillContainer: {
     marginBottom: 24,
-  },
-  CustomTextEditorContainer: {
-    flex: 1,
   },
   quillStyling: {
     backgroundColor: colorPallets.white1,
@@ -63,6 +63,6 @@ const styles = {
     color: colorPallets.errorRed,
     lineHeight: 18,
   },
-}
+};
 
 export default styles;

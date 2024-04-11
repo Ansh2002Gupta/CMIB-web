@@ -37,7 +37,7 @@
   color: var(--inputText) !important;
   font-size: var(--fontSizeNormal);
   font-weight: var(--fontWeightMedium, 500) !important;
-
+  border: var(--borderLight);
   &::placeholder {
     color: var(--inputPlaceHolder) !important;
   }
