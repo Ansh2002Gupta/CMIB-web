@@ -20,17 +20,18 @@ const BreadCrumbs = () => {
     segments.pop();
   }
   const pathSegments = segments.slice(2, -1);
+  const pathSegmentsUpdated = pathSegments.filter(item => isNaN(item) || item.trim() === '');
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const breadcrumbItems = pathSegments
+  const breadcrumbItems = pathSegmentsUpdated
     .map((item, index) => {
-      const isLastItem = index === pathSegments.length - 1;
+      const isLastItem = index === pathSegmentsUpdated.length - 1;
       const itemName = intl.formatMessage({
-        id: getLabelForPath({ isEdit, path: item, pathSegments }),
+        id: getLabelForPath({ isEdit, path: item, pathSegmentsUpdated }),
       });
 
       const onClick = !isLastItem
-        ? () => navigate(index - (pathSegments.length - 1))
+        ? () => navigate(index - (pathSegmentsUpdated.length - 1))
         : () => {};
 
       return (
@@ -43,7 +44,7 @@ const BreadCrumbs = () => {
         </Breadcrumb.Item>
       );
     })
-    .filter(() => pathSegments.length > 1);
+    .filter(() => pathSegmentsUpdated.length > 1);
 
   return (
     <div className={styles.mainContainer}>

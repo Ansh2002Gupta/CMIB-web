@@ -31,6 +31,10 @@ import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./ApplicantListingTable.module.scss";
 import useChangeJobStatusApi from "../../services/api-services/AllJob/useChangeApplicantJobStatusApi";
+import ScheduleInterviewModal from "../ScheduleInterviewModal/ScheduleInterviewModal";
+import ScheduleInterviewDetailsView from "../SchduledInterviewDetail/SchduledInterviewDetail";
+import CommonModal from "../../components/CommonModal";
+import useFetchInterviewDetailApi from "../../services/api-services/AllJob/useFetchInterviewDetailApi";
 
 const ApplicantListingTable = ({
   jobId,
@@ -49,6 +53,10 @@ const ApplicantListingTable = ({
   const [filterArray, setFilterArray] = useState(
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
+  const [openScheduleModal, setOpenScheduleModal] = useState(false);
+  const [applicantId, setApplicantId] = useState("");
+  const [openInterviewDetailModal, setOpenInterviewDetailModal] =
+    useState(false);
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
@@ -60,64 +68,109 @@ const ApplicantListingTable = ({
   const { changeJobStatus, isLoading: isApproveJobLoading } =
     useChangeJobStatusApi();
 
-    // TODO: There was earlier api dependency for this Task will do in next PR.
-    // const handleActions = (currentAction, item) => {
-    //   const screens = {
-    //     "Download Profile & Resume": () => {},
-    //     "View Details": () => {},
-    //     "View Interview Details": () => {},
-    //       // navigate(
-    //       //   `/${currentModule}/${navigations.JOB_APPLICANTS}/${jobId}/applicant-details/${showCurrentPopupmessage}`
-    //       // ),
-    //     "Shortlist Candidate": () => {
-    //       changeJobStatus({
-    //         body: {
-    //           status: 3, // we have to pass the status id to make a api call for applicant status change
-    //         },
-    //       });
-    //     },
-    //     "Reject Candidate": () => {
-    //       changeJobStatus({
-    //         body: {
-    //           status: 2, // we have to pass the status id to make a api call for applicant status change
-    //         },
-    //       });
-    //     },
-    //     "Reject After Interview": () => {
-    //       changeJobStatus({
-    //         body: {
-    //           status: , // we have to pass the status id to make a api call for applicant status change
-    //         },
-    //       });
-    //     },
-    //     "Schedule Interview": () => {
-    //       changeJobStatus({
-    //         body: {
-    //           status: 5, // we have to pass the status id to make a api call for applicant status change
-    //         },
-    //       });
-    //     },
-    //     "Select Interview Time": () => {},
-    //     "Offer Job": () => {
-    //       changeJobStatus({
-    //         body: {
-    //           status: 6, // we have to pass the status id to make a api call for applicant status change
-    //         },
-    //       });
-    //     },
-    //     "Respond to Job Offer": () => {
-    //       changeJobStatus({
-    //         body: {
-    //           status: , // we have to pass the status id to make a api call for applicant status change
-    //         },
-    //       });
-    //     },
-    //   };
-    //   const action = screens[currentAction];
-    //   if (action) {
-    //     action();
-    //   }
-    // };
+  const {
+    fetchInterviewDetail,
+    isLoading: isLoadingFetchInterviewDetails,
+    interviewDetailData,
+  } = useFetchInterviewDetailApi();
+
+  const refetchTableData = () => {
+    const queryParams = {
+      [PAGINATION_PROPERTIES.ROW_PER_PAGE]: pageSize,
+      [PAGINATION_PROPERTIES.CURRENT_PAGE]: current,
+    };
+    urlService.setQueryStringValue(queryParams);
+    const requestedParams = getRequestedParams({
+      page: current,
+      q: searchedValue,
+    });
+    fetchData({ queryParamsObject: requestedParams });
+  };
+
+  const handleActions = (currentAction, rowData) => {
+    const screens = {
+      download_profile_resume: () => {
+        // TODO: Need api for download resume and profile
+      },
+      view_details: () => {
+        navigate(`applicant-details/${rowData?.user_id}`);
+      },
+      view_interview_details: () => {
+        fetchInterviewDetail(
+          rowData?.interview_id,
+          () => setOpenInterviewDetailModal(true),
+          (errorMessage) =>
+            showNotification({ text: errorMessage, type: "error" })
+        );
+      },
+      shortlist_candidate: () => {
+        changeJobStatus(
+          rowData?.id,
+          { status: 3 },
+          () => {
+            refetchTableData();
+          },
+          (errorMessage) => {
+            showNotification({ text: errorMessage, type: "error" });
+          }
+        );
+      },
+      reject_candidate: () => {
+        changeJobStatus(
+          rowData?.id,
+          { status: 2 },
+          () => {
+            refetchTableData();
+          },
+          (errorMessage) => {
+            showNotification({ text: errorMessage, type: "error" });
+          }
+        );
+      },
+      reject_after_interview: () => {
+        changeJobStatus(
+          rowData?.id,
+          { status: 2 },
+          () => {
+            refetchTableData();
+          },
+          (errorMessage) => {
+            showNotification({ text: errorMessage, type: "error" });
+          }
+        );
+      },
+      schedule_interview: () => {
+        setApplicantId(rowData?.id);
+        setOpenScheduleModal(true);
+      },
+      offer_job: () => {
+        changeJobStatus(
+          rowData?.id,
+          { status: 6 },
+          () => {
+            refetchTableData();
+          },
+          (errorMessage) => {
+            showNotification({ text: errorMessage, type: "error" });
+          }
+        );
+      },
+      select_interview_time: () => {
+        // Not for admin
+      },
+      respond_to_offer: () => {
+        // not for admin
+      },
+    };
+    const action = screens[currentAction] ? screens[currentAction] : () => {};
+    if (action) {
+      action();
+    }
+  };
+
+  const handleScheduledInterviewCallback = (applicantId) => {
+    refetchTableData();
+  };
 
   let errorString = error;
   if (typeof error === "object") {
@@ -150,24 +203,7 @@ const ApplicantListingTable = ({
   };
 
   const handleMenuItems = (rowData, item) => {
-    // TODO: There was earlier api dependency for this Task will do in next PR.
-    // changeJobStatus(
-    //   rowData?.id,
-    //   { status: 2 },
-    //   () => {
-    //     // setData({
-    //     //   ...data,
-    //     //   records: data.records.map((record) =>
-    //     //     record.id === rowData?.id
-    //     //       ? { ...record, approve: 1 }
-    //     //       : record
-    //     //   ),
-    //     // });
-    //   },
-    //   (errorMessage) => {
-    //     showNotification({ text: errorMessage, type: "error" });
-    //   }
-    // );
+    handleActions(item?.id, rowData);
   };
 
   const columns = getQueryColumn({
@@ -264,7 +300,7 @@ const ApplicantListingTable = ({
   }, [activeInactive]);
 
   const filterOptions = [
-    // TODO:
+    // TODO: Need to implement filter
   ];
 
   const resetQueryListingData = (ticketsResult) => {
@@ -321,6 +357,26 @@ const ApplicantListingTable = ({
   return (
     <>
       {notificationContextHolder}
+      {openScheduleModal ? (
+        <ScheduleInterviewModal
+          applicantId={applicantId}
+          isOpen={openScheduleModal}
+          handleCloseModal={() => setOpenScheduleModal(false)}
+          handleScheduledInterviewCallback={handleScheduledInterviewCallback}
+        />
+      ) : null}
+      {openInterviewDetailModal ? (
+        <CommonModal
+          isOpen={openInterviewDetailModal}
+          width={1184}
+          closeIcon={true}
+          onCancel={() => setOpenInterviewDetailModal(false)}
+        >
+          <ScheduleInterviewDetailsView
+            interviewDetailData={interviewDetailData}
+          />
+        </CommonModal>
+      ) : null}
       {!isError && (
         <TableWithSearchAndFilters
           {...{

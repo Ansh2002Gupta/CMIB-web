@@ -445,6 +445,10 @@ export const MAX_EXPERIENCE_LENGTH = 2;
 export const MAX_PARTNERS_LENGTH = 3;
 export const MAX_VACANCIES_LENGTH = 4;
 export const MAX_CHARACTERS_IN_INPUT_FIELD = 999;
+export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
+
+export const SHORTLISTED = "Shortlisted";
+export const INTERVIEW_SCHEDULED = "Interview Scheduled"
 
 export const PAYMENT_TYPE = {
   WHOLE: "whole",
