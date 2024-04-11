@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { useParams } from "react-router-dom";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -8,33 +9,53 @@ import ContentHeader from "../../containers/ContentHeader/ContentHeader";
 import CompanyDetailsCa from "../../containers/CompanyDetailsCa";
 import PostedJobsCa from "../../containers/PostedJobsCa";
 import CustomTabs from "../../components/CustomTabs";
+import useFetch from "../../core/hooks/useFetch";
 import { getCurrentActiveTab } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
 import { VALID_COMPANIES_TABS_ID } from "../../constant/constant";
+import { ADMIN_ROUTE, REGISTERED_COMPANIES } from "../../constant/apiEndpoints";
 import { classes } from "./ManageCompanyDetails.styles";
 import styles from "./ManageCompanyDetails.module.scss";
 
 const ManageCompanyDetails = () => {
   const intl = useIntl();
   const responsive = useResponsive();
+  const { companyId } = useParams();
   const [activeTab, setActiveTab] = useState(
     getCurrentActiveTab(
       urlService?.getQueryStringValue("tab"),
       VALID_COMPANIES_TABS_ID
     )
   );
-  const companyName = "Company Name";
+
+  const {
+    data,
+    error: errorWhileGettingCompanyData,
+    isLoading: isGettingCompanyData,
+    fetchData: getCompanyData,
+  } = useFetch({
+    url: ADMIN_ROUTE + REGISTERED_COMPANIES + "/" + companyId,
+  });
 
   const tabItems = [
     {
       key: "1",
       title: intl.formatMessage({ id: "label.companyDetails" }),
-      children: <CompanyDetailsCa />,
+      children: (
+        <CompanyDetailsCa
+          {...{
+            data,
+            errorWhileGettingCompanyData,
+            isGettingCompanyData,
+            getCompanyData,
+          }}
+        />
+      ),
     },
     {
       key: "2",
       title: intl.formatMessage({ id: "label.postedJobs" }),
-      children: <PostedJobsCa />,
+      children: <PostedJobsCa {...{ companyId }} />,
     },
   ];
   const activeTabChildren = tabItems.find((tab) => tab.key === activeTab);
@@ -44,7 +65,7 @@ const ManageCompanyDetails = () => {
       topSection={
         <ContentHeader
           customStyles={!responsive?.isMd ? styles.customStyles : ""}
-          headerText={companyName}
+          headerText={data?.name}
           customContainerStyle={styles.customContainerStyle}
         />
       }
