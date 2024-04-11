@@ -1,0 +1,71 @@
+.headerContainer {
+  padding: var(--paddingMedium);
+  width: var(--fullWidth);
+}
+
+
+@media screen and (max-width: 1535px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeXXlarge);
+  }
+
+  .btnCustomStyles {
+    font-size: var(--fontSizeExtraSmall);
+  }
+}
+
+.btnIconStyles {
+  width: var(--width_24) !important;
+}
+
+.verticalLine {
+  height: 20px;
+  width: 1px;
+  background-color: var(--greyBg);
+}
+
+.applicantDetailContainer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--gapSmall);
+}
+
+.headingText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+  line-height: var(--lineHeightNormal);
+}
+
+.detailText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+  line-height: var(--lineHeightNormal);
+  text-transform: capitalize;
+  padding-left: var(--paddingXXSmall);
+}
+.applicantShortDetailContainer {
+  gap: var(--gapXXSmall);
+}
+
+@media screen and (max-width: 767px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeXlargeMedium);
+  }
+
+  .btnCustomStyles {
+    min-height: var(--height_44);
+  }
+}
+
+@media screen and (max-width: 363px) {
+  .headerResponsiveStyle {
+    font-size: var(--fontSizeLarge);
+  }
+
+  .btnCustomStyles {
+    padding: var(--paddingExtraSmall) var(--paddingMediumSmall);
+  }
+}
+  

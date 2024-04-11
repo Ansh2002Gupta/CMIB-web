@@ -7,15 +7,15 @@
 
 .inputLabelContainer {
   display: flex;
-  gap: var(--gapXXSmall);
+  gap: var(--gapXXSmall, 4px);
   padding-bottom: 4px;
 }
 
 .errorText {
-  color: var(--error);
-  font-weight: var(--fontWeightMedium);
-  font-size: var(--fontSizeExtraSmall);
-  margin-top: var(--marginXXSmall);
+  color: var(--error, #D93400);
+  font-weight: var(--fontWeightMedium, 500);
+  font-size: var(--fontSizeExtraSmall, 12px);
+  margin-top: var(--marginXXSmall, 4px);
   opacity: 0;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .messageText {
-  margin-top: var(--marginSmall);
+  margin-top: var(--marginSmall, 8px);
 }
 
 .formContainer {
@@ -32,14 +32,14 @@
 }
 
 .inputField {
-  min-height: var(--height_44) !important;
+  min-height: var(--height_44, 44px) !important;
   min-width: 100%;
-  color: var(--inputText) !important;
-  font-size: var(--fontSizeNormal);
+  color: var(--inputText, #000833) !important;
+  font-size: var(--fontSizeNormal, 16px);
   font-weight: var(--fontWeightMedium, 500) !important;
-  border: var(--borderLight);
+  border: var(--borderLight, 1px solid #ccd0e5);
   &::placeholder {
-    color: var(--inputPlaceHolder) !important;
+    color: var(--inputPlaceHolder, #616C82) !important;
   }
 }
 
@@ -53,8 +53,8 @@
 
 .mobile {
   display: flex;
-  gap: var(--gapXSmall);
-  background-color: var(--bodyBg);
+  gap: var(--gapXSmall, 8px);
+  background-color: var(--bodyBg, #ffffff);
 }
 
 .selectInput {
@@ -70,19 +70,19 @@
 }
 
 .inputNumberStyles {
-  min-height: var(--height_44);
+  min-height: var(--height_44, 44px);
   min-width: 100%;
-  color: var(--inputText) !important;
-  font-size: var(--fontSizeNormal);
-  font-weight: var(--fontWeightMedium);
-  border: var(--borderLight);
+  color: var(--inputText, #000833) !important;
+  font-size: var(--fontSizeNormal, 16px);
+  font-weight: var(--fontWeightMedium, 500);
+  border: var(--borderLight, 1px solid #ccd0e5);
   &::placeholder {
-    color: var(--inputPlaceHolder) !important;
+    color: var(--inputPlaceHolder, #616C82) !important;
   }
 }
 
 .errorInput {
-  border: var(--borderError) !important;
+  border: var(--borderError, 1px solid #D93400) !important;
 }
 
 .selectBoxError {

@@ -11,6 +11,7 @@ import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
 import checkIconWhite from "./check-white.svg";
 import calendar from "./calendar.svg";
+import whiteCalender from "./whiteCalender.svg";
 import clock from "./clock.svg";
 import cancel from "./cancel.svg";
 import CircleCheck from "./CircleCheck.svg";
@@ -162,6 +163,7 @@ const images = {
   moreIcon,
   arrowDownNoCircle,
   brifCase,
+  whiteCalender,
 };
 
 export default images;
