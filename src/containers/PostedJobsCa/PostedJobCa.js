@@ -364,7 +364,7 @@ const PostedJobsCa = () => {
                   id: "label.designation_or_job_id",
                 })}
               />
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 2 }}>
                 <SearchFilter
                   {...{
                     filterPropertiesArray,
