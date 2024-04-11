@@ -39,6 +39,7 @@ export const INTERVIEW_DATES = "/interview-dates";
 export const JOBS = "/jobs";
 export const JOB = "/job";
 export const APPLICANTS = "/applicants";
+export const APPLICANT = "/applicant";
 export const INTERVIEW = "/interview";
 export const SCHEDULED_INTERVIEW = "/schedule-interview";
 export const LOGIN_END_POINT = "/login";

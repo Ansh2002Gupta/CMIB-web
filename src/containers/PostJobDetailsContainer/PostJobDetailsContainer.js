@@ -42,7 +42,7 @@ const PostJobDetailsContainer = ({ jobId, setIsModalOpen }) => {
           designation: data?.designation,
           location: data?.location,
           functional_areas: data?.functional_areas,
-          nationality: data?.nationality,
+          nationality: data?.nationality?.name || data?.nationality,
           company_details: data?.company_detail,
           website: data?.website,
           company_type: data?.company_type,
