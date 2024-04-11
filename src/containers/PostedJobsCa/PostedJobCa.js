@@ -34,13 +34,11 @@ import {
   ADMIN_ROUTE,
   CHANGE_STATUS,
   JOBS,
-  SUMMARY,
+  REGISTERED_COMPANIES,
 } from "../../constant/apiEndpoints";
 import styles from "./PostedJobsCa.module.scss";
-import { useNavigate } from "react-router-dom";
-import { Typography } from "antd";
 
-const PostedJobsCa = () => {
+const PostedJobsCa = ({ companyId }) => {
   const intl = useIntl();
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { getImage } = useContext(ThemeContext);
@@ -65,7 +63,6 @@ const PostedJobsCa = () => {
   const [searchedValue, setSearchedValue] = useState(
     urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
-  const navigate = useNavigate();
 
   const { renderColumn } = useRenderColumn();
 
@@ -77,7 +74,7 @@ const PostedJobsCa = () => {
     isLoading: isGettingJobs,
     setData: setJobListingData,
   } = useFetch({
-    url: ADMIN_ROUTE + JOBS + SUMMARY,
+    url: ADMIN_ROUTE + REGISTERED_COMPANIES + `/${companyId}` + JOBS,
     otherOptions: {
       skipApiCallOnMount: true,
     },
