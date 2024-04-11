@@ -5,9 +5,11 @@ import * as _ from "lodash";
 import { ThemeContext } from "core/providers/theme";
 import { TwoRow } from "../../core/layouts";
 
+import CommonModal from "../../components/CommonModal";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
+import PostJobDetailsContainer from "../PostJobDetailsContainer";
 import SearchableComponent from "../../components/SearchableComponent";
 import SearchFilter from "../../components/SearchFilter";
 import getJobsColumn from "./PostedJobsConfig";
@@ -36,12 +38,15 @@ import {
 } from "../../constant/apiEndpoints";
 import styles from "./PostedJobsCa.module.scss";
 import { useNavigate } from "react-router-dom";
+import { Typography } from "antd";
 
 const PostedJobsCa = () => {
   const intl = useIntl();
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { getImage } = useContext(ThemeContext);
   const [currentDataLength, setCurrentDataLength] = useState(0);
+  const [postedJobModal, setPostedJobModal] = useState(false);
+  const [jobId, setJobId] = useState();
   const [showFilters, setShowFilters] = useState(false);
 
   const [filterArray, setFilterArray] = useState(
@@ -129,7 +134,8 @@ const PostedJobsCa = () => {
 
   const onMenuClick = (data, item) => {
     if (item === 1) {
-      goToJobDetailsPage(data);
+      setPostedJobModal(true);
+      setJobId(data?.id);
     }
     if (item === 2) {
       handleApproveJob({
@@ -151,11 +157,6 @@ const PostedJobsCa = () => {
         },
       });
     }
-  };
-
-  const goToJobDetailsPage = (data) => {
-    const jobId = data?.id;
-    navigate(`posted-job-details/${jobId}`);
   };
 
   const onHandleJobStatus = (data) => {
@@ -341,6 +342,14 @@ const PostedJobsCa = () => {
 
   return (
     <>
+      {
+        <CommonModal isOpen={postedJobModal} width={1200}>
+          <PostJobDetailsContainer
+            jobId={jobId}
+            setIsModalOpen={setPostedJobModal}
+          />
+        </CommonModal>
+      }
       {notificationContextHolder}
       {isGettingJobs && <CustomLoader />}
       {isErrorWhileGettingJobs && (

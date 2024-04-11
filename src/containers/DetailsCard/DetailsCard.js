@@ -4,13 +4,16 @@ import { FormattedMessage } from "react-intl";
 
 import { TwoRow } from "../../core/layouts";
 import { ThemeContext } from "core/providers/theme";
+import useResponsive from "core/hooks/useResponsive";
 
 import CheckBoxListComponent from "../../components/CheckBoxListComponent";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
+import CustomTextEditor from "../../components/CustomTextEditor";
 import Chip from "../../components/Chip/Chip";
 import FileUpload from "../../components/FileUpload/FileUpload";
 import MarkRequired from "../../components/MarkRequired";
+import { formatDate } from "../../constant/utils";
 import PhoneInput from "../../components/PhoneInput/PhoneInput";
 import { classes } from "./DetailsCard.styles";
 import styles from "./DetailsCard.module.scss";
@@ -19,6 +22,7 @@ import { useIntl } from "react-intl";
 const DetailsCard = ({
   customHeaderStyles,
   customLabelStyles,
+  customMainStyles,
   customPhoneInputStyles,
   customPhoneSelectStyles,
   customValueStyles,
@@ -32,12 +36,17 @@ const DetailsCard = ({
   const intl = useIntl();
   const { getImage } = useContext(ThemeContext);
   const [deletedImage, setDeletedImage] = useState([]);
+  const responsive = useResponsive();
 
   const renderView = (item) => {
     return (
       <TwoRow
         key={item.key}
-        className={item.fullWidth && styles.gridItem}
+        className={[
+          item.fullWidth && styles.gridItem,
+          item?.remainWidth && responsive?.isMd && styles.remainWidth,
+          styles.viewItemStyle,
+        ].join(" ")}
         topSection={
           item?.label ? (
             <Typography
@@ -61,13 +70,22 @@ const DetailsCard = ({
               className={styles.logoStyle}
               alt={"company_logo"}
             />
+          ) : item?.isHtmlElement ? (
+            <CustomTextEditor
+              value={item?.value}
+              disabled
+              quillContainerStyle={classes.quillContainerStyle}
+              quilStyle={classes.quilStyle}
+            />
           ) : item.isArray && item?.value !== "--" ? (
             <div className={styles.chipContainer}>
               {item?.value?.map((e) => {
                 return (
                   <div>
                     <Chip
-                      label={e}
+                      label={
+                        item?.isObject ? e.name : item?.isLocation ? e.city : e
+                      }
                       customContainerStyles={styles.customChipContainerStyles}
                     />
                   </div>
@@ -95,6 +113,18 @@ const DetailsCard = ({
                   />
                   &nbsp;
                 </a>
+              ) : item?.isToggle ? (
+                intl.formatMessage({ id: `toggle.${item?.value}` })
+              ) : item?.isStatus ? (
+                intl.formatMessage({ id: `toggle.${item?.value}` })
+              ) : item?.isDate ? (
+                formatDate(item?.value)
+              ) : item.isYear ? (
+                `${item?.value} ${
+                  item?.value === 1
+                    ? intl.formatMessage({ id: "label.year" })
+                    : intl.formatMessage({ id: "label.years" })
+                }`
               ) : (
                 item?.value
               )}
@@ -212,13 +242,17 @@ const DetailsCard = ({
 
   return (
     <TwoRow
-      style={classes.mainStyle}
+      style={{ ...classes.mainStyle, ...customMainStyles }}
       topSection={
-        <Typography
-          className={[styles.customHeaderStyles, customHeaderStyles].join(" ")}
-        >
-          {headerText}
-        </Typography>
+        headerText && (
+          <Typography
+            className={[styles.customHeaderStyles, customHeaderStyles].join(
+              " "
+            )}
+          >
+            {headerText}
+          </Typography>
+        )
       }
       bottomSection={
         <CustomGrid

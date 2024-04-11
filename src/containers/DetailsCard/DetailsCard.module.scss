@@ -1,31 +1,30 @@
 .customStyle {
-  row-gap: var(--gapSmall);
+  row-gap: var(--gapSmall, 16px);
 }
 
 .customLabelStyles {
-  font-size: var(--fontSizeExtraSmall) !important;
-  font-weight: var(--fontWeightMedium);
-  color: var(--inputPlaceHolder);
+  font-size: var(--fontSizeExtraSmall, 12px) !important;
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--inputPlaceHolder, #616c82);
 }
 
 .customValueStyles {
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
-  color: var(--textBold);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--textBold, #000833);
 }
 
 .customHeaderStyles {
-  font-size: var(--fontSizeNormal);
-  font-weight: var(--fontWeightBold);
-  color: var(--textBold);
+  font-size: var(--fontSizeNormal, 16px);
+  font-weight: var(--fontWeightBold, 600);
+  color: var(--textBold, #000833);
 }
 
 .singleGrid {
   grid-template-columns: unset;
-  background-color: "red";
 }
 .logoStyle {
-  padding-top: var(--marginMedium);
+  padding-top: var(--marginMedium, 16px);
 }
 
 .customInputNumberStyles {
@@ -58,8 +57,12 @@
   grid-column: 1 / -1;
 }
 
+.remainWidth {
+  grid-column: 2 / -1;
+}
+
 .customChipContainerStyles {
-  background-color: var(--snow);
+  background-color: var(--snow, #f2f4fc);
 }
 
 .chipContainer {
@@ -67,7 +70,7 @@
   flex: 1;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: var(--gapXSmall);
+  gap: var(--gapXSmall, 8px);
 }
 
 .capitalize {
@@ -75,9 +78,13 @@
 }
 
 .customLabelStyles {
-  color: var(--inputPlaceHolder);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
+  color: var(--inputPlaceHolder, #616c82);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+}
+
+.viewItemStyle {
+  gap: var(--gapXSmall, 8px);
 }
 
 .text {

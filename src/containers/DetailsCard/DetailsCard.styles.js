@@ -12,4 +12,15 @@ export const classes = {
     color: variables.linkColor,
     textDecoration: "underline",
   },
+  quillContainerStyle: {
+    flex: 1,
+    display: "flex",
+    backgroundColor: variables.bodyBg,
+  },
+  quilStyle: {
+    flex: 1,
+    border: variables.borderLight,
+    borderRadius: variables.radiusLg,
+    backgroundColor: variables.bodyBg,
+  },
 };

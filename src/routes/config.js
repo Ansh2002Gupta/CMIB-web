@@ -64,7 +64,6 @@ import {
   ROUND_ONE_ORIENTATION_CENTERS,
   ROUND_ONE_SETUP_CENTERS,
   ROUND_TWO_SETUP_CENTERS,
-  POSTED_JOB_DETAILS,
   SESSION,
   SETUP_CENTERS,
   SETUP_CENTERS_DETAILS,
@@ -214,10 +213,6 @@ const config = [
       },
       {
         viewPath: COMPANIES + COMPANIES_DETAILS,
-        element: <ManageCompanyDetails />,
-      },
-      {
-        viewPath: COMPANIES + COMPANIES_DETAILS + POSTED_JOB_DETAILS,
         element: <ManageCompanyDetails />,
       },
       {
