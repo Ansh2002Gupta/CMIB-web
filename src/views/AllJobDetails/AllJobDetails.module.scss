@@ -1,0 +1,19 @@
+.topSectionStyle {
+  padding-top: var(--paddingMedium);
+  padding-left: var(--paddingMedium);
+  padding-right: var(--paddingMedium);
+  border-bottom: var(--borderLight);
+  background-color: var(--bodyBg);
+  gap: var(--gapMedium);
+}
+
+.mainContainer {
+  background-color: var(--blueBg);
+}
+
+.erroContainerBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}

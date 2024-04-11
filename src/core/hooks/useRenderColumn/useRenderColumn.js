@@ -11,7 +11,7 @@ import CustomCheckBox from "../../../components/CustomCheckBox/CustomCheckBox";
 import CustomDateTimePicker from "../../../components/CustomDateTimePicker";
 import CustomInput from "../../../components/CustomInput";
 import { ThemeContext } from "core/providers/theme";
-import { formatDate, toggleSorting } from "../../../constant/utils";
+import { formatDate, formatTime, toggleSorting } from "../../../constant/utils";
 import styles from "./renderColumn.module.scss";
 import "./Override.css";
 
@@ -36,6 +36,7 @@ const useRenderColumn = () => {
     renderImage = {},
     renderInput = {},
     renderMenu = {},
+    renderActions = {},
     renderSorterColumn,
     renderText = {},
     renderTextWithCheckBoxes = {},
@@ -115,6 +116,14 @@ const useRenderColumn = () => {
     } = renderMenu;
 
     const {
+      actionSrc = "",
+      onActionClick = () => {},
+      actionPreview,
+      actionTriggerType = "",
+      customActionPairs = () => {},
+    } = renderActions;
+
+    const {
       onClickCheckbox = () => {},
       customCheckBoxContainerStyles = "",
       checkBoxList = [],
@@ -127,7 +136,9 @@ const useRenderColumn = () => {
       isCentre,
       isBooleanHandlerKey = null,
       isTextBold,
+      isTimeInHoursMinuteSecondFormat,
       isTypeDate,
+      isTypeTime,
       textStyles,
       isCapitalize,
       isDays,
@@ -203,6 +214,13 @@ const useRenderColumn = () => {
       }
       if (isTypeDate) {
         return formatDate({ date: text });
+      }
+      if (isTypeTime) {
+        return formatTime({
+          time: text,
+          usePassedTime: true,
+          isTimeInHoursMinuteSecondFormat,
+        });
       }
       if (includeDotAfterText) {
         return `${text} .`;
@@ -631,6 +649,34 @@ const useRenderColumn = () => {
               src={menuSrc}
               className={styles.moreIcon}
               preview={menuPreview}
+            />
+          </Dropdown>
+        );
+      });
+
+    renderActions.visible &&
+      (columnObject.render = (_, rowData) => {
+        const menuItems = {
+          items: customActionPairs(rowData)?.map((item, index) => ({
+            key: index,
+            label: (
+              <div
+                onClick={
+                  onActionClick ? () => onActionClick(rowData, item) : () => {}
+                }
+                className={styles.dropdownMenuItem}
+              >
+                {item.label}
+              </div>
+            ),
+          })),
+        };
+        return (
+          <Dropdown menu={menuItems} trigger={[actionTriggerType || "click"]}>
+            <Image
+              src={actionSrc}
+              className={styles.moreIcon}
+              preview={actionPreview}
             />
           </Dropdown>
         );

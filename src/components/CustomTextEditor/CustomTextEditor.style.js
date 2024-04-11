@@ -8,8 +8,9 @@ const styles = {
     marginBottom: 24,
   },
   quillStyling: {
-    backgroundColor: colorPallets.red1,
+    backgroundColor: colorPallets.white1,
     borderRadius: 15,
+    flex: 1,
   },
   toolbarStyle: {
     backgroundColor: colorPallets.ltGrey1,

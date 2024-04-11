@@ -37,6 +37,10 @@ export const INDUSTRY_TYPES = "/industry-types";
 export const LAST_REGISTRATION_DATES = "/last-registration-dates";
 export const INTERVIEW_DATES = "/interview-dates";
 export const JOBS = "/jobs";
+export const JOB = "/job";
+export const APPLICANTS = "/applicants";
+export const INTERVIEW = "/interview";
+export const SCHEDULED_INTERVIEW = "/schedule-interview";
 export const LOGIN_END_POINT = "/login";
 export const LOGOUT_END_POINT = "/logout";
 export const MANAGE = "/manage";
@@ -68,6 +72,9 @@ export const USERS_END_POINT = "/users";
 export const VERIFY_OTP = "/otp/verify";
 export const REPLIES = "/replies";
 export const CLOSE = "/close";
+export const MEMBERS_END_POINT = '/members';
+export const CANDIDATE_DETAILS = 'candidates-details';
+export const CHANGE_STATUS = "/change-status";
 
 // Query
 export const MARK_AS_ANSWER_END_POINT = "/answer";

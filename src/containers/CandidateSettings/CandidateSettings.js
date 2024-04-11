@@ -29,6 +29,8 @@ const CandidateSettings = ({
   roundCentres,
   selectedCenterTableData,
   isEditable,
+  isStartDateEditable,
+  isEndDateEditable,
   tableData,
 }) => {
   const intl = useIntl();
@@ -164,7 +166,7 @@ const CandidateSettings = ({
       renderDateTime: {
         customInputStyle: classes.inputStyle,
         getDisabledTime: (current, record) => {
-          return handleDisabledStartTime(record?.from_time);
+          return handleDisabledStartTime(record?.to_time);
         },
         visible: true,
         type: "time",
@@ -191,7 +193,7 @@ const CandidateSettings = ({
       renderDateTime: {
         customInputStyle: classes.inputStyle,
         getDisabledTime: (current, record) => {
-          return handleDisabledEndTime(record?.to_time);
+          return handleDisabledEndTime(record?.from_time);
         },
         visible: true,
         type: "time",
@@ -374,14 +376,22 @@ const CandidateSettings = ({
       customColumnHeading: styles.columnHeading,
       dataIndex: "from_time",
       key: "from_time",
-      renderText: { visible: true },
+      renderText: {
+        visible: true,
+        isTypeTime: true,
+        isTimeInHoursMinuteSecondFormat: true,
+      },
     }),
     renderColumn({
       title: intl.formatMessage({ id: "label.to_time" }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "to_time",
       key: "to_time",
-      renderText: { visible: true },
+      renderText: {
+        visible: true,
+        isTypeTime: true,
+        isTimeInHoursMinuteSecondFormat: true,
+      },
     }),
   ];
 
@@ -429,6 +439,7 @@ const CandidateSettings = ({
             return true;
         },
         visible: true,
+        disabled: !isStartDateEditable,
         type: "date",
         placeholder: intl.formatMessage({
           id: "label.select_start_date",
@@ -477,6 +488,7 @@ const CandidateSettings = ({
           );
         },
         isEditable: true,
+        disabled: !isEndDateEditable,
         getError: (index) => errors[index]?.big_centre_end_date,
       },
     }),

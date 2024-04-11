@@ -25,6 +25,7 @@ import { active_filter_options, approval_filter_options } from "./constants";
 import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./AllJobsTable.module.scss";
+import useApproveJobApi from "../../services/api-services/AllJob/useApproveJobApi";
 
 const AllJobsTable = ({
   current,
@@ -45,10 +46,12 @@ const AllJobsTable = ({
 
   const { showNotification, notificationContextHolder } = useShowNotification();
 
-  const { data, error, fetchData, isError, isLoading } = useFetch({
+  const { data, error, fetchData, isError, isLoading, setData } = useFetch({
     url: ADMIN_ROUTE + JOBS + SUMMARY,
     otherOptions: { skipApiCallOnMount: true },
   });
+
+  const { approveJob, isLoading: isApproveJobLoading } = useApproveJobApi();
 
   let errorString = error;
   if (typeof error === "object") {
@@ -80,11 +83,36 @@ const AllJobsTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
+  const handleMenuItems = (rowData, item) => {
+    if (item.label === "Approve") {
+      approveJob(
+        rowData?.id,
+        () => {
+          setData({
+            ...data,
+            records: data.records.map((record) =>
+              record.id === rowData?.id
+                ? { ...record, approve: 1 }
+                : record
+            ),
+          });
+        },
+        (errorMessage) => {
+          showNotification({ text: errorMessage, type: "error" });
+        }
+      );
+    } else {
+      const jobId = rowData?.id;
+      navigate(`job-details/${jobId}`);
+    }
+  };
+
   const columns = getQueryColumn({
     intl,
     getImage,
     navigate,
     renderColumn,
+    handleMenuItems,
   });
 
   const handleOnUserSearch = (str) => {
