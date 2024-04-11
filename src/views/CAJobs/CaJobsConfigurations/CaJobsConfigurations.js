@@ -101,12 +101,14 @@ const CaJobsConfigurations = () => {
       valueKeyName: keyName,
       actionKeyName: "buttonType",
     });
-    const itSkillsList = updatedItSkills.map((obj) =>
+    const itSkillsKeyNameList = updatedItSkills.map((obj) =>
       !!obj?.[keyName] ? obj?.[keyName] : ""
     );
-    const softSkillsList = updatedSoftSkills.map((obj) =>
+    const softSkillsKeyNameList = updatedSoftSkills.map((obj) =>
       !!obj?.[keyName] ? obj?.[keyName] : ""
     );
+    const itSkillsList = itSkillsKeyNameList.filter((element) => !!element);
+    const softSkillsList = softSkillsKeyNameList.filter((element) => !!element);
 
     postGlobalConfigurations({
       payload: {
