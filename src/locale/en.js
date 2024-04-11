@@ -761,6 +761,7 @@ const locale = {
   "label.yes": "Yes",
   "label.no": "No",
   "label.scheduleInterview": "Schedule Interview",
+  "label.updateScheduleInterview": "Update Schedule Interview",
   "label.faceToFace": "Face To Face",
   "label.telephonic": "Telephonic",
   "label.remote": "Remote",

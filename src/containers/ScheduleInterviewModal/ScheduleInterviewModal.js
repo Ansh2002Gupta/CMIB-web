@@ -9,7 +9,10 @@ import { interview_type } from "./ScheduleInterviewFields";
 import CustomRadioButton from "../../components/CustomRadioButton";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
 import CustomInput from "../../components/CustomInput";
-import { NOTIFICATION_TYPES, SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../constant/constant";
+import {
+  NOTIFICATION_TYPES,
+  SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH,
+} from "../../constant/constant";
 import dayjs from "dayjs";
 import ActionAndCancelButtons from "../../components/ActionAndCancelButtons/ActionAndCancelButtons";
 import { formateDateandTime } from "../../constant/utils";
@@ -33,6 +36,17 @@ const getInterViewType = (interviewType) => {
   return type;
 };
 
+const getInterViewSelectedType = (interviewType) => {
+  const type =
+    interviewType === "Face-To-Face"
+      ? 0
+      : interviewType === "Telephonic"
+      ? 1
+      : 2;
+
+  return type;
+};
+
 const getAPIInterViewType = (interviewType) => {
   const type =
     interviewType === 0
@@ -44,10 +58,28 @@ const getAPIInterViewType = (interviewType) => {
   return type;
 };
 
-const ScheduleInterviewModal = ({ applicantId, isOpen, handleCloseModal, handleScheduledInterviewCallback }) => {
+const ScheduleInterviewModal = ({
+  applicantId,
+  interviewId,
+  isOpen,
+  handleCloseModal,
+  handleScheduledInterviewCallback,
+  interviewDetailData,
+}) => {
   const intl = useIntl();
-  const [primaryInterviewType, setPrimaryInterviewType] = useState(0);
-  const [secondaryInterviewType, setSecondaryInterviewType] = useState(0);
+  const primaryScheduleDate = interviewDetailData?.primary_schedule ? new Date(interviewDetailData?.primary_schedule): new Date();
+  const alternateScheduleDate = interviewDetailData?.alternate_schedule ? new Date(
+    interviewDetailData?.alternate_schedule
+  ) : new Date();
+
+  const [primaryInterviewType, setPrimaryInterviewType] = useState(
+    interviewId ? getInterViewSelectedType(interviewDetailData?.type) : 0
+  );
+  const [secondaryInterviewType, setSecondaryInterviewType] = useState(
+    interviewId
+      ? getInterViewSelectedType(interviewDetailData?.alternate_type)
+      : 0
+  );
   const [error, setError] = useState({
     face_to_face: {
       address: "",
@@ -97,26 +129,74 @@ const ScheduleInterviewModal = ({ applicantId, isOpen, handleCloseModal, handleS
     },
   });
 
+  useEffect(() => {
+    if (interviewId) {
+      console.log('jhbjhbcj');
+      const primary_data = {
+        face_to_face: {
+          address: interviewDetailData?.venue_address,
+          date: dayjs(primaryScheduleDate),
+          time: dayjs(alternateScheduleDate),
+        },
+        telephonic: {
+          date: dayjs(primaryScheduleDate),
+          time: dayjs(alternateScheduleDate),
+        },
+        remote: {
+          link: interviewDetailData?.remote_meeting_link,
+          date: dayjs(primaryScheduleDate),
+          time: dayjs(alternateScheduleDate),
+        },
+      };
+      const alternate_data = {
+        face_to_face: {
+          address: interviewDetailData?.alternate_venue_address,
+          date: dayjs(alternateScheduleDate),
+          time: dayjs(alternateScheduleDate),
+        },
+        telephonic: {
+          date: dayjs(alternateScheduleDate),
+          time: dayjs(alternateScheduleDate),
+        },
+        remote: {
+          link: interviewDetailData?.alternate_remote_meeting_link,
+          date: dayjs(alternateScheduleDate),
+          time: dayjs(alternateScheduleDate),
+        },
+      };
+      const interviewKey = getInterViewType(primaryInterviewType);
+      const interviewKeyAlternate = getInterViewType(secondaryInterviewType);
+      setPrimaryDetails((prevDetails) => ({
+        ...prevDetails,
+        [interviewKey]: {
+          ...prevDetails[interviewKey],
+          ...primary_data[interviewKey],
+        },
+      }));
+      setAlternateDetails((prevDetails) => ({
+        ...prevDetails,
+        [interviewKeyAlternate]: {
+          ...prevDetails[interviewKeyAlternate],
+          ...alternate_data[interviewKeyAlternate],
+        },
+      }));
+    }
+  }, [interviewId, interviewDetailData]);
+
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   const {
     isLoading: isScheduleInterviewLoading,
     makeRequest: scheduleInterviewRequest,
-    error: errorWhileSchedulingInterview,
-    isError: isErrorWhileSchedulingInterview
   } = usePost({
     url: ADMIN_ROUTE + JOBS + APPLICANTS + INTERVIEW,
   });
 
-  const interview_id = 1;
-
   const {
     isLoading: isUpdatingInterview,
     makeRequest: updatatingInterview,
-    error: errorWhileUpdatingInterview,
-    setError: setErrorWhileUpdatingInterview,
   } = usePut({
-    url: ADMIN_ROUTE + JOBS + APPLICANTS + INTERVIEW + `${interview_id}`,
+    url: ADMIN_ROUTE + JOBS + APPLICANTS + INTERVIEW + `/${interviewId}`,
   });
 
   const handleScheduleInterview = () => {
@@ -136,6 +216,35 @@ const ScheduleInterviewModal = ({ applicantId, isOpen, handleCloseModal, handleS
       alternateDetails[alternate_type].time
     );
 
+    if (interviewId) {
+      updatatingInterview({
+        body: {
+          applicant_id: applicantId,
+          type: primaryType,
+          alternate_type: alternatePrimaryType,
+          venue_address: primaryDetails[type].address,
+          alternate_venue_address: alternateDetails[alternate_type].address,
+          primary_schedule,
+          alternate_schedule,
+          remote_meeting_link: primaryDetails[type].link,
+          alternate_remote_meeting_link: alternateDetails[alternate_type].link,
+        },
+        onSuccessCallback: () => {
+          handleScheduledInterviewCallback(applicantId);
+          showNotification({
+            text: intl.formatMessage({
+              id: "label.InterviewScheduledSuccessfully",
+            }),
+            type: NOTIFICATION_TYPES.SUCCESS,
+          });
+          handleCloseModal();
+        },
+        onErrorCallback: (errorMessage) => {
+          console.log(errorMessage)
+          showNotification({ text: errorMessage || errorMessage?.data?.message, type: "error" });
+        },
+      })
+    } else {
     scheduleInterviewRequest({
       body: {
         applicant_id: applicantId,
@@ -149,24 +258,32 @@ const ScheduleInterviewModal = ({ applicantId, isOpen, handleCloseModal, handleS
         alternate_remote_meeting_link: alternateDetails[alternate_type].link,
       },
       onSuccessCallback: () => {
-        handleScheduledInterviewCallback(applicantId)
-        showNotification({ text: intl.formatMessage({
+        handleScheduledInterviewCallback(applicantId);
+        showNotification({
+          text: intl.formatMessage({
             id: "label.InterviewScheduledSuccessfully",
-          }), type: NOTIFICATION_TYPES.SUCCESS});
+          }),
+          type: NOTIFICATION_TYPES.SUCCESS,
+        });
         handleCloseModal();
       },
-      onErrorCallback :(errorMessage)=>{
+      onErrorCallback: (errorMessage) => {
         showNotification({ text: errorMessage?.data?.message, type: "error" });
-      }
+      },
     });
+  }
   };
 
   const isScheduleButtonDisabled = () => {
-    const interviewKey = getInterViewType(primaryInterviewType)
-    const isEmpty = !Object.values(error[interviewKey]).every(x => x === null || x === '');
-    const isFieldEmpty = Object.values(primaryDetails[interviewKey]).some(x => x === null || x === '');
-    return isEmpty || isFieldEmpty
-  }
+    const interviewKey = getInterViewType(primaryInterviewType);
+    const isEmpty = !Object.values(error[interviewKey]).every(
+      (x) => x === null || x === ""
+    );
+    const isFieldEmpty = Object.values(primaryDetails[interviewKey]).some(
+      (x) => x === null || x === ""
+    );
+    return isEmpty || isFieldEmpty;
+  };
 
   const handleValueChange = (
     details,
@@ -278,7 +395,7 @@ const ScheduleInterviewModal = ({ applicantId, isOpen, handleCloseModal, handleS
                 details,
                 setDetails,
                 `${interviewKey}.date`,
-                momentValue ? dayjs(momentValue).format("DD/MM/YYYY") : "",
+                momentValue ? dayjs(momentValue) : "",
                 isPrimary
               );
             }}
@@ -286,9 +403,7 @@ const ScheduleInterviewModal = ({ applicantId, isOpen, handleCloseModal, handleS
               id: "label.placeholder.date",
             })}
             value={
-              details.date
-                ? dayjs(details?.date).format("DD/MM/YYYY")
-                : null
+              details.date && dayjs(details?.date, "DD/MM/YYYY")
             }
             {...primaryDateProps}
           />
@@ -485,18 +600,18 @@ const ScheduleInterviewModal = ({ applicantId, isOpen, handleCloseModal, handleS
                   )}
                   <div className={styles.ActionAndCancelButtonContainer}>
                     <ActionAndCancelButtons
-                        customActionBtnStyles={styles.customActionBtnStyles}
-                        customCancelBtnStyles={styles.customCancelBtnStyles}
-                        actionBtnText={intl.formatMessage({
+                      customActionBtnStyles={styles.customActionBtnStyles}
+                      customCancelBtnStyles={styles.customCancelBtnStyles}
+                      actionBtnText={intl.formatMessage({
                         id: "label.schedule",
-                        })}
-                        cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
-                        onActionBtnClick={handleScheduleInterview}
-                        isActionBtnDisable={
-                          isScheduleButtonDisabled() || isScheduleInterviewLoading
-                        }
-                        onCancelBtnClick={handleCloseModal}
-                        isctionButtonLoading={isScheduleInterviewLoading}
+                      })}
+                      cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
+                      onActionBtnClick={handleScheduleInterview}
+                      isActionBtnDisable={
+                        isScheduleButtonDisabled() || isScheduleInterviewLoading || isUpdatingInterview
+                      }
+                      onCancelBtnClick={handleCloseModal}
+                      isctionButtonLoading={isScheduleInterviewLoading}
                     />
                   </div>
                 </div>

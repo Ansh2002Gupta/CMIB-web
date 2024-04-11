@@ -18,11 +18,14 @@ import {
   APPLICANT,
   JOBS,
 } from "../../constant/apiEndpoints";
+import useFetchInterviewDetailApi from "../../services/api-services/AllJob/useFetchInterviewDetailApi";
+import useShowNotification from "../../core/hooks/useShowNotification";
 
-const AllJobApplicantDetailModal = () => {
+const AllJobApplicantDetailView = () => {
   const intl = useIntl();
-  const { applicantId, jobId } = useParams();
+  const { userId, jobId } = useParams();
   const [openScheduleModal, setOpenScheduleModal] = useState(false);
+  const { showNotification, notificationContextHolder } = useShowNotification();
 
   const {
     data: applicantDetails,
@@ -31,22 +34,49 @@ const AllJobApplicantDetailModal = () => {
     isLoading,
     fetchData,
   } = useFetch({
-    url: ADMIN_ROUTE + JOBS + `/${jobId}` + APPLICANT + `/${applicantId}`,
+    url: ADMIN_ROUTE + JOBS + `/${jobId}` + APPLICANT + `/${userId}`,
   });
+
+  const {
+    fetchInterviewDetail,
+    isLoading: isLoadingFetchInterviewDetails,
+    interviewDetailData,
+  } = useFetchInterviewDetailApi();
+
+  console.log(interviewDetailData);
 
 
   const handleScheduledInterviewCallback = () => {
+    fetchData({})
+  }
 
+  const applicantShortDetails = applicantDetails && applicantDetails?.length > 0 ? applicantDetails[0] : {}
+  const updatedAt = new Date(applicantShortDetails?.updated_at)
+  const isScheduleInterviewVisible = applicantShortDetails?.status === "Shortlisted" || applicantShortDetails?.status === "Interview Scheduled"
+
+  const openScheduledInterviewModal = () => {
+    if (applicantShortDetails?.interview_id) {
+      fetchInterviewDetail(
+        applicantShortDetails?.interview_id,
+        () => {},
+        (errorMessage) =>
+          showNotification({ text: errorMessage, type: "error" })
+      );
+    }
+    setOpenScheduleModal(true)
   }
 
   return (
     <div className={styles.headerContainer}>
+      {notificationContextHolder}
       {
         <ScheduleInterviewModal
-          applicantId={applicantId}
+          applicantId={applicantShortDetails?.id}
+          interviewId={applicantShortDetails?.interview_id}
           isOpen={openScheduleModal}
           handleCloseModal={() => setOpenScheduleModal(false)}
           handleScheduledInterviewCallback={handleScheduledInterviewCallback}
+          interviewDetailData={interviewDetailData}
         />
       }
       {!isLoading && isError && (
@@ -69,15 +99,19 @@ const AllJobApplicantDetailModal = () => {
                   headerText={intl.formatMessage({ id: "label.companies" })}
                   customStyles={styles.headerResponsiveStyle}
                   rightSection={
+                    <>
+                    {isScheduleInterviewVisible ?
                     <CustomButton
                       btnText={intl.formatMessage({
-                        id: "label.scheduleInterview",
+                        id: `label.${applicantShortDetails?.interview_id ?  'updateScheduleInterview' : 'scheduleInterview' }`,
                       })}
                       IconElement={calendar}
                       iconStyles={styles.btnIconStyles}
                       customStyle={styles.btnCustomStyles}
-                      onClick={()=> setOpenScheduleModal(true)}
-                    />
+                      onClick={()=> openScheduledInterviewModal()}
+                    /> : null
+                  }
+                    </>
                   }
                 />
               }
@@ -88,12 +122,12 @@ const AllJobApplicantDetailModal = () => {
                     <div className={styles.applicantDetailContainer}>
                       <Typography className={styles.headingText}>
                         {intl.formatMessage({ id: "label.applicantName" })}:
-                        <span className={styles.detailText}>Amulya Kohli</span>
+                        <span className={styles.detailText}>{applicantShortDetails ? applicantShortDetails?.name : "-"}</span>
                       </Typography>
                       <div className={styles.verticalLine}></div>
                       <Typography className={styles.headingText}>
                         {intl.formatMessage({ id: "label.applicantId" })}:
-                        <span className={styles.detailText}>Amulya Kohli</span>
+                        <span className={styles.detailText}>{applicantShortDetails?.applicant_id ? applicantShortDetails?.applicant_id : "-"}</span>
                       </Typography>
                     </div>
                   }
@@ -101,12 +135,12 @@ const AllJobApplicantDetailModal = () => {
                     <div className={styles.applicantDetailContainer}>
                       <Typography className={styles.headingText}>
                         {intl.formatMessage({ id: "label.updatedAt" })}:
-                        <span className={styles.detailText}>Amulya Kohli</span>
+                        <span className={styles.detailText}>{formatDate(updatedAt)}</span>
                       </Typography>
                       <div className={styles.verticalLine}></div>
                       <Typography className={styles.headingText}>
                         {intl.formatMessage({ id: "label.status" })}:
-                        <span className={styles.detailText}>Amulya Kohli</span>
+                        <span className={styles.detailText}>{applicantShortDetails?.status ? applicantShortDetails?.status : "-"}</span>
                       </Typography>
                     </div>
                   }
@@ -120,4 +154,4 @@ const AllJobApplicantDetailModal = () => {
   );
 };
 
-export default AllJobApplicantDetailModal;
+export default AllJobApplicantDetailView;
