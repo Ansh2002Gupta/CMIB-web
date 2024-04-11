@@ -65,7 +65,6 @@ const DetailsCard = ({
           item?.isImage ? (
             <Image
               src={item.value ? item?.value : getImage("company_placeholder")}
-              preview={false}
               width={340}
               height={240}
               className={styles.logoStyle}

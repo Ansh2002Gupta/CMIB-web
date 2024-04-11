@@ -32,6 +32,7 @@ const CheckBoxListComponent = ({
         {options.map((item, index) => {
           return (
             <TwoColumn
+              style={classes.mainStyles}
               key={index}
               leftSection={
                 <CustomCheckBox

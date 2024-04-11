@@ -14,6 +14,7 @@ import SearchableComponent from "../../components/SearchableComponent";
 import SearchFilter from "../../components/SearchFilter";
 import getJobsColumn from "./PostedJobsConfig";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import useFetch from "../../core/hooks/useFetch";
 import { usePatch } from "../../core/hooks/useApiRequest";
 import { urlService } from "../../Utils/urlService";
@@ -23,7 +24,11 @@ import {
   getValidFilter,
 } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
-import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
+import {
+  DEBOUNCE_TIME,
+  NOTIFICATION_TYPES,
+  PAGINATION_PROPERTIES,
+} from "../../constant/constant";
 import {
   APPROVE,
   ADMIN_ROUTE,
@@ -37,6 +42,7 @@ import { Typography } from "antd";
 
 const PostedJobsCa = () => {
   const intl = useIntl();
+  const { showNotification, notificationContextHolder } = useShowNotification();
   const { getImage } = useContext(ThemeContext);
   const [currentDataLength, setCurrentDataLength] = useState(0);
   const [postedJobModal, setPostedJobModal] = useState(false);
@@ -142,6 +148,13 @@ const PostedJobsCa = () => {
               : record
           ),
         }),
+        onErrorCallback: (errMessage) => {
+          showNotification({
+            text: errMessage,
+            type: NOTIFICATION_TYPES.ERROR,
+            headingText: intl.formatMessage({ id: "label.errorMessage" }),
+          });
+        },
       });
     }
   };
@@ -157,6 +170,13 @@ const PostedJobsCa = () => {
               ? { ...record, status: !data?.status }
               : record
           ),
+        });
+      },
+      onErrorCallback: (errMessage) => {
+        showNotification({
+          text: errMessage,
+          type: NOTIFICATION_TYPES.ERROR,
+          headingText: intl.formatMessage({ id: "label.errorMessage" }),
         });
       },
     });
@@ -330,6 +350,7 @@ const PostedJobsCa = () => {
           />
         </CommonModal>
       }
+      {notificationContextHolder}
       {isGettingJobs && <CustomLoader />}
       {isErrorWhileGettingJobs && (
         <div className={styles.box}>
@@ -352,7 +373,7 @@ const PostedJobsCa = () => {
                   id: "label.designation_or_job_id",
                 })}
               />
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 2 }}>
                 <SearchFilter
                   {...{
                     filterPropertiesArray,
