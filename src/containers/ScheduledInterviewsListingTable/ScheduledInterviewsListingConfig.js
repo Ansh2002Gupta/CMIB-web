@@ -94,7 +94,7 @@ export const getQueryColumn = ({
             label: intl.formatMessage({ id: "label.viewInterviewDetails" }),
           },
           {
-            key: 2,
+            key: 3,
             id: 'offer_job',
             label: intl.formatMessage({ id: "label.offerJob" }),
           },

@@ -131,7 +131,6 @@ const ScheduleInterviewModal = ({
 
   useEffect(() => {
     if (interviewId) {
-      console.log('jhbjhbcj');
       const primary_data = {
         face_to_face: {
           address: interviewDetailData?.venue_address,
@@ -240,7 +239,6 @@ const ScheduleInterviewModal = ({
           handleCloseModal();
         },
         onErrorCallback: (errorMessage) => {
-          console.log(errorMessage)
           showNotification({ text: errorMessage || errorMessage?.data?.message, type: "error" });
         },
       })

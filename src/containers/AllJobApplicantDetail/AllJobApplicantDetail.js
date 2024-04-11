@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { Typography } from "antd";
 
@@ -12,14 +12,11 @@ import { ReactComponent as calendar } from "../../themes/base/assets/images/whit
 import useFetch from "../../core/hooks/useFetch";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import CustomLoader from "../../components/CustomLoader";
-import ScheduleInterviewModal from '../ScheduleInterviewModal';
-import {
-  ADMIN_ROUTE,
-  APPLICANT,
-  JOBS,
-} from "../../constant/apiEndpoints";
+import ScheduleInterviewModal from "../ScheduleInterviewModal";
+import { ADMIN_ROUTE, APPLICANT, JOBS } from "../../constant/apiEndpoints";
 import useFetchInterviewDetailApi from "../../services/api-services/AllJob/useFetchInterviewDetailApi";
 import useShowNotification from "../../core/hooks/useShowNotification";
+import { INTERVIEW_SCHEDULED, SHORTLISTED } from "../../constant/constant";
 
 const AllJobApplicantDetailView = () => {
   const intl = useIntl();
@@ -43,16 +40,16 @@ const AllJobApplicantDetailView = () => {
     interviewDetailData,
   } = useFetchInterviewDetailApi();
 
-  console.log(interviewDetailData);
-
-
   const handleScheduledInterviewCallback = () => {
-    fetchData({})
-  }
+    fetchData({});
+  };
 
-  const applicantShortDetails = applicantDetails && applicantDetails?.length > 0 ? applicantDetails[0] : {}
-  const updatedAt = new Date(applicantShortDetails?.updated_at)
-  const isScheduleInterviewVisible = applicantShortDetails?.status === "Shortlisted" || applicantShortDetails?.status === "Interview Scheduled"
+  const applicantShortDetails =
+    applicantDetails && applicantDetails?.length > 0 ? applicantDetails[0] : {};
+  const updatedAt = new Date(applicantShortDetails?.updated_at);
+  const isScheduleInterviewVisible =
+    applicantShortDetails?.status === SHORTLISTED ||
+    applicantShortDetails?.status === INTERVIEW_SCHEDULED;
 
   const openScheduledInterviewModal = () => {
     if (applicantShortDetails?.interview_id) {
@@ -63,13 +60,13 @@ const AllJobApplicantDetailView = () => {
           showNotification({ text: errorMessage, type: "error" })
       );
     }
-    setOpenScheduleModal(true)
-  }
+    setOpenScheduleModal(true);
+  };
 
   return (
     <div className={styles.headerContainer}>
       {notificationContextHolder}
-      {
+      {openScheduleModal ? (
         <ScheduleInterviewModal
           applicantId={applicantShortDetails?.id}
           interviewId={applicantShortDetails?.interview_id}
@@ -78,7 +75,7 @@ const AllJobApplicantDetailView = () => {
           handleScheduledInterviewCallback={handleScheduledInterviewCallback}
           interviewDetailData={interviewDetailData}
         />
-      }
+      ) : null}
       {!isLoading && isError && (
         <div className={styles.erroContainerBox}>
           <ErrorMessageBox
@@ -100,17 +97,21 @@ const AllJobApplicantDetailView = () => {
                   customStyles={styles.headerResponsiveStyle}
                   rightSection={
                     <>
-                    {isScheduleInterviewVisible ?
-                    <CustomButton
-                      btnText={intl.formatMessage({
-                        id: `label.${applicantShortDetails?.interview_id ?  'updateScheduleInterview' : 'scheduleInterview' }`,
-                      })}
-                      IconElement={calendar}
-                      iconStyles={styles.btnIconStyles}
-                      customStyle={styles.btnCustomStyles}
-                      onClick={()=> openScheduledInterviewModal()}
-                    /> : null
-                  }
+                      {isScheduleInterviewVisible ? (
+                        <CustomButton
+                          btnText={intl.formatMessage({
+                            id: `label.${
+                              applicantShortDetails?.interview_id
+                                ? "updateScheduleInterview"
+                                : "scheduleInterview"
+                            }`,
+                          })}
+                          IconElement={calendar}
+                          iconStyles={styles.btnIconStyles}
+                          customStyle={styles.btnCustomStyles}
+                          onClick={() => openScheduledInterviewModal()}
+                        />
+                      ) : null}
                     </>
                   }
                 />
@@ -122,12 +123,20 @@ const AllJobApplicantDetailView = () => {
                     <div className={styles.applicantDetailContainer}>
                       <Typography className={styles.headingText}>
                         {intl.formatMessage({ id: "label.applicantName" })}:
-                        <span className={styles.detailText}>{applicantShortDetails ? applicantShortDetails?.name : "-"}</span>
+                        <span className={styles.detailText}>
+                          {applicantShortDetails
+                            ? applicantShortDetails?.name
+                            : "-"}
+                        </span>
                       </Typography>
                       <div className={styles.verticalLine}></div>
                       <Typography className={styles.headingText}>
                         {intl.formatMessage({ id: "label.applicantId" })}:
-                        <span className={styles.detailText}>{applicantShortDetails?.applicant_id ? applicantShortDetails?.applicant_id : "-"}</span>
+                        <span className={styles.detailText}>
+                          {applicantShortDetails?.applicant_id
+                            ? applicantShortDetails?.applicant_id
+                            : "-"}
+                        </span>
                       </Typography>
                     </div>
                   }
@@ -135,12 +144,18 @@ const AllJobApplicantDetailView = () => {
                     <div className={styles.applicantDetailContainer}>
                       <Typography className={styles.headingText}>
                         {intl.formatMessage({ id: "label.updatedAt" })}:
-                        <span className={styles.detailText}>{formatDate(updatedAt)}</span>
+                        <span className={styles.detailText}>
+                          {formatDate(updatedAt)}
+                        </span>
                       </Typography>
                       <div className={styles.verticalLine}></div>
                       <Typography className={styles.headingText}>
                         {intl.formatMessage({ id: "label.status" })}:
-                        <span className={styles.detailText}>{applicantShortDetails?.status ? applicantShortDetails?.status : "-"}</span>
+                        <span className={styles.detailText}>
+                          {applicantShortDetails?.status
+                            ? applicantShortDetails?.status
+                            : "-"}
+                        </span>
                       </Typography>
                     </div>
                   }

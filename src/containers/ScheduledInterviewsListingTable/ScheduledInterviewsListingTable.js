@@ -103,17 +103,18 @@ const ScheduledInterViewsTable = ({
   };
 
   const handleMenuItems = (rowData, item) => {
-    if (item.id === 'view_interview_details') {
+    console.log(rowData, 'view_interview_details');
+    if (item === 2) {
       fetchInterviewDetail(
-        rowData.id,
+        rowData?.interview_id,
         () => setOpenInterviewDetailModal(true),
         (errorMessage) =>
           showNotification({ text: errorMessage, type: "error" })
       );
     }
-    if (item.id === 'offer_job') {
+    if (item === 3) {
       changeJobStatus(
-        rowData?.id,
+        rowData?.interview_id,
         { status: 6 },
         () => {
           urlService.setQueryStringValue("tab", "2");

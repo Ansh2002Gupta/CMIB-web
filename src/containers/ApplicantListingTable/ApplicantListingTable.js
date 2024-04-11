@@ -67,12 +67,12 @@ const ApplicantListingTable = ({
 
   const { changeJobStatus, isLoading: isApproveJobLoading } =
     useChangeJobStatusApi();
-  
-    const {
-      fetchInterviewDetail,
-      isLoading: isLoadingFetchInterviewDetails,
-      interviewDetailData,
-    } = useFetchInterviewDetailApi();
+
+  const {
+    fetchInterviewDetail,
+    isLoading: isLoadingFetchInterviewDetails,
+    interviewDetailData,
+  } = useFetchInterviewDetailApi();
 
   const refetchTableData = () => {
     const queryParams = {
@@ -85,12 +85,12 @@ const ApplicantListingTable = ({
       q: searchedValue,
     });
     fetchData({ queryParamsObject: requestedParams });
-  }
+  };
 
   const handleActions = (currentAction, rowData) => {
     const screens = {
       download_profile_resume: () => {
-        // TODO
+        // TODO: Need api for download resume and profile
       },
       view_details: () => {
         navigate(`applicant-details/${rowData?.user_id}`);
@@ -108,7 +108,7 @@ const ApplicantListingTable = ({
           rowData?.id,
           { status: 3 },
           () => {
-            refetchTableData()
+            refetchTableData();
           },
           (errorMessage) => {
             showNotification({ text: errorMessage, type: "error" });
@@ -120,7 +120,7 @@ const ApplicantListingTable = ({
           rowData?.id,
           { status: 2 },
           () => {
-            refetchTableData()
+            refetchTableData();
           },
           (errorMessage) => {
             showNotification({ text: errorMessage, type: "error" });
@@ -132,7 +132,7 @@ const ApplicantListingTable = ({
           rowData?.id,
           { status: 2 },
           () => {
-            refetchTableData()
+            refetchTableData();
           },
           (errorMessage) => {
             showNotification({ text: errorMessage, type: "error" });
@@ -148,7 +148,7 @@ const ApplicantListingTable = ({
           rowData?.id,
           { status: 6 },
           () => {
-            refetchTableData()
+            refetchTableData();
           },
           (errorMessage) => {
             showNotification({ text: errorMessage, type: "error" });
@@ -169,7 +169,7 @@ const ApplicantListingTable = ({
   };
 
   const handleScheduledInterviewCallback = (applicantId) => {
-    refetchTableData()
+    refetchTableData();
   };
 
   let errorString = error;
@@ -300,7 +300,7 @@ const ApplicantListingTable = ({
   }, [activeInactive]);
 
   const filterOptions = [
-    // TODO
+    // TODO: Need to implement filter
   ];
 
   const resetQueryListingData = (ticketsResult) => {
@@ -357,24 +357,26 @@ const ApplicantListingTable = ({
   return (
     <>
       {notificationContextHolder}
-      {
+      {openScheduleModal ? (
         <ScheduleInterviewModal
           applicantId={applicantId}
           isOpen={openScheduleModal}
           handleCloseModal={() => setOpenScheduleModal(false)}
           handleScheduledInterviewCallback={handleScheduledInterviewCallback}
         />
-      }
-      <CommonModal
-        isOpen={openInterviewDetailModal}
-        width={1184}
-        closeIcon={true}
-        onCancel={() => setOpenInterviewDetailModal(false)}
-      >
-        <ScheduleInterviewDetailsView
-          interviewDetailData={interviewDetailData}
-        />
-      </CommonModal>
+      ) : null}
+      {openInterviewDetailModal ? (
+        <CommonModal
+          isOpen={openInterviewDetailModal}
+          width={1184}
+          closeIcon={true}
+          onCancel={() => setOpenInterviewDetailModal(false)}
+        >
+          <ScheduleInterviewDetailsView
+            interviewDetailData={interviewDetailData}
+          />
+        </CommonModal>
+      ) : null}
       {!isError && (
         <TableWithSearchAndFilters
           {...{

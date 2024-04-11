@@ -447,6 +447,9 @@ export const MAX_VACANCIES_LENGTH = 4;
 export const MAX_CHARACTERS_IN_INPUT_FIELD = 999;
 export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 
+export const SHORTLISTED = "Shortlisted";
+export const INTERVIEW_SCHEDULED = "Interview Scheduled"
+
 export const PAYMENT_TYPE = {
   WHOLE: "whole",
   CENTRE_WISE: "centrewise",
