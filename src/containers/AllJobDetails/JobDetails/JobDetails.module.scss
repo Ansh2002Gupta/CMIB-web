@@ -1,0 +1,101 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapSmall);
+  width: var(--fullWidth);
+}
+
+.companyDetails {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  padding-bottom: 0;
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+}
+
+.jobDetailsCard {
+  background-color: var(--bodyBg);
+  padding: var(--paddingSmall);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  gap: var(--gapMedium);
+  width: var(--fullWidth);
+}
+
+.functionAreasContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.jobSummaryContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gapSmall);
+  width: var(--fullWidth);
+}
+
+.headingText {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.gridItem {
+  padding-bottom: var(--paddingMedium);
+}
+
+.blackText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+  line-height: var(--lineHeightNormal);
+  text-transform: capitalize;
+}
+
+.grayText {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.redText {
+  color: var(--error);
+}
+
+.sourceOfInformation {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: var(--paddingMedium);
+}
+
+.periodText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--textBold);
+  padding-top: var(--paddingXXSmall);
+  padding-bottom: var(--paddingXXSmall);
+  padding-left: var(--gapSmallMedium);
+  padding-right: var(--gapSmallMedium);
+  margin-right: var(--gapXSmall);
+  margin-top: var(--marginXXSmall);
+  background-color: var(--lightBlueBg);
+  border-radius: var(--radiusMLg);
+}
+
+@media screen and (max-width: 680px) {
+  .periodText {
+    margin: var(--marginSmall);
+    margin-left: 0;
+    margin-top: var(--marginXXSmall);
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .logoBox {
+    width: var(--fullWidth);
+  }
+  .logoName {
+    width: var(--fullWidth);
+  }
+}

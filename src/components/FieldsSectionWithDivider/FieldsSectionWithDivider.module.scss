@@ -1,0 +1,30 @@
+
+.divider {
+    grid-column: 1 / -1; // This ensures the <hr> spans all columns of the grid
+    border: none;
+    height: 1px;
+    background-color: #d9d9d9; // Use your desired color for the divider
+    margin: 20px 0; // Adjust spacing as needed
+  }
+  
+  .fullWidth {
+    width: 100%;
+  }
+  
+  .gridItem {
+    padding-bottom: var(--paddingMedium);
+  }
+  
+  .blackText {
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--textBold);
+  }
+  
+  .grayText {
+    font-size: var(--fontSizeSmall);
+    font-weight: var(--fontWeightMedium);
+    color: var(--subHeadingColor);
+    padding-bottom: var(--paddingExtraSmall);
+  }
+  

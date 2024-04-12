@@ -125,6 +125,7 @@ const CandidateSettingsTemplate = ({
           customLabelStyles={styles.inputLabel}
           customInputStyle={classes.inputStyle}
           type="date"
+          disabled={field.rules.isDisabled}
           onChange={(val) => {
             handleInputChange(
               val ? dayjs(val).format("YYYY-MM-DD") : "",
@@ -145,6 +146,7 @@ const CandidateSettingsTemplate = ({
       <CustomInput
         controls
         value={field.value}
+        disabled={field.rules.isDisabled}
         customLabelStyles={styles.inputLabel}
         customInputNumberStyles={styles.input}
         customContainerStyles={styles.customContainerStyles}

@@ -9,79 +9,6 @@ import {
   SETUP_MOCK_INTERVIEW,
 } from "../routes/routeNames";
 
-export const ATTACHMENT_TYPE = ["link", "image"];
-export const COLOR = [
-  "#000000",
-  "#e60000",
-  "#ff9900",
-  "#ffff00",
-  "#008a00",
-  "#0066cc",
-  "#9933ff",
-  "#ffffff",
-  "#facccc",
-  "#ffebcc",
-  "#ffffcc",
-  "#cce8cc",
-  "#cce0f5",
-  "#ebd6ff",
-  "#bbbbbb",
-  "#f06666",
-  "#ffc266",
-  "#ffff66",
-  "#66b966",
-  "#66a3e0",
-  "#c285ff",
-  "#888888",
-  "#a10000",
-  "#b26b00",
-  "#b2b200",
-  "#006100",
-  "#0047b2",
-  "#6b24b2",
-  "#444444",
-  "#5c0000",
-  "#663d00",
-  "#666600",
-  "#003700",
-  "#002966",
-  "#3d1466",
-  "custom-color",
-];
-export const FORMAT = [
-  "header",
-  "height",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "color",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "align",
-  "size",
-];
-export const LIST_OPTION = [
-  { list: "ordered" },
-  { list: "bullet" },
-  { indent: "-1" },
-  { indent: "+1" },
-  { align: [] },
-];
-export const LIST_TYPE = [{ list: "ordered" }, { list: "bullet" }];
-export const SIZE = ["small", false, "large", "huge"];
-export const TEXT_FORMATS = [
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-];
-
 export const API_VERSION_QUERY_PARAM = "api-version";
 export const DEFAULT_PAGE_SIZE = 10;
 export const TIMER_OF_15_MINUTES = 15;
@@ -394,6 +321,13 @@ export const COMPANY_ROUND_TWO = [
   "Consent Marking And Interview Process",
 ];
 
+export const CANDIDATES_EDUCATION_DETAILS = [
+  "Education Details",
+  "Exams",
+  "Other Courses",
+];
+export const ALL_JOB_DETAILS = ["Job Details", "Questionnaire"];
+
 export const CONTROL_MODULE_ID = 1;
 
 export const ACTIVE_TAB = "activeTab";
@@ -521,6 +455,84 @@ export const INTERVIEW_TYPE = [
   { id: 1, label: "Online", value: "online" },
   { id: 2, label: "Offline", value: "offline" },
 ];
+
+export const LIST_TYPE = [{ list: "ordered" }, { list: "bullet" }];
+export const ATTACHMENT_TYPE = ["link", "image"];
+export const LIST_OPTION = [
+  { list: "ordered" },
+  { list: "bullet" },
+  { indent: "-1" },
+  { indent: "+1" },
+  { align: [] },
+];
+
+export const FORMAT = [
+  "header",
+  "height",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "color",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "align",
+  "size",
+];
+
+export const COLOR = [
+  "#000000",
+  "#e60000",
+  "#ff9900",
+  "#ffff00",
+  "#008a00",
+  "#0066cc",
+  "#9933ff",
+  "#ffffff",
+  "#facccc",
+  "#ffebcc",
+  "#ffffcc",
+  "#cce8cc",
+  "#cce0f5",
+  "#ebd6ff",
+  "#bbbbbb",
+  "#f06666",
+  "#ffc266",
+  "#ffff66",
+  "#66b966",
+  "#66a3e0",
+  "#c285ff",
+  "#888888",
+  "#a10000",
+  "#b26b00",
+  "#b2b200",
+  "#006100",
+  "#0047b2",
+  "#6b24b2",
+  "#444444",
+  "#5c0000",
+  "#663d00",
+  "#666600",
+  "#003700",
+  "#002966",
+  "#3d1466",
+  "custom-color",
+];
+
+export const SIZE = ["small", false, "large", "huge"];
+
+export const TEXT_FORMATS = [
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+];
+
 export const MAX_REGISTRATION_FEE_LENGTH = 10;
 
 export const NO_BREAK_SPACE = "\u00A0";
