@@ -481,6 +481,7 @@ const locale = {
   "label.path.company-details": "Comapny Details",
   "label.path.all-jobs": "All Jobs",
   "label.path.job-details": "Job Details",
+  "label.path.applicant-details": "Applicant Details",
   "label.logoutSuccessful": "Logged out successfully",
   "label.inactiveMessage":
     "Your account has been marked inactive. Please contact the administrator for assistance",
@@ -781,7 +782,7 @@ const locale = {
   "label.urgentJob": "Urgent Job",
   "label.industry": "Industry",
   "label.minimumExperience": "Minimum Experience",
-  "label.maximumExperience": "maximumExperience",
+  "label.maximumExperience": "Maximum Experience",
   "label.nationality": "Nationality",
   "label.jobLocation": "Job Location",
   "label.genderPreferances": "Gender Preference",
@@ -817,6 +818,20 @@ const locale = {
     "Are you sure that you want to mark this job Inactive ?",
   "label.yes": "Yes",
   "label.no": "No",
+  "label.scheduleInterview": "Schedule Interview",
+  "label.updateScheduleInterview": "Update Schedule Interview",
+  "label.faceToFace": "Face To Face",
+  "label.telephonic": "Telephonic",
+  "label.remote": "Remote",
+  "label.placeholder.link": "Link",
+  "label.placeholder.enterAddress": "Enter Address",
+  "label.address": "Address",
+  "label.placeholder.date": "Select Date",
+  "label.placeholder.time": "Select Time",
+  "label.field_cannot_be_empty": "Field cannot be empty",
+  "label.schedule": "Schedule",
+  "label.InterviewScheduledSuccessfully": "Interview Scheduled Successfully",
+  "label.updatedAt": "Updated At",
   "label.manageCompanies": "Manage Companies",
   "label.approvedCompanyName": "Approved Company Name",
   "label.searchByCompanyUsername": "Search by company name, username",
@@ -864,6 +879,7 @@ const locale = {
   "label.jobsApprovedTillDate": "Jobs Approved Till Date",
   "label.postsOfferedApplicantsTillDate":
     "Posts Offered to Applicants Till Date",
+  "label.downloadResumeAndProfile": "Download Profile & Resume",
 };
 
 export default locale;

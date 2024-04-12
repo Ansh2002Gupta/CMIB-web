@@ -43,6 +43,12 @@ export const formatTime = ({
   return dayjs().format(timeFormat);
 };
 
+export const formateDateandTime = (date, time) => {
+  const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
+  const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
+  return formattedDate && formattedTime ? formattedDate + formattedTime : null;
+};
+
 export const convertDateToStringDate = (date) => {
   return dayjs(date, "M-YYYY").format("MMM YYYY");
 };
@@ -485,4 +491,8 @@ export const urlToName = (url) => {
   const imageParts = url?.split("/");
   const imageName = imageParts?.pop();
   return imageName;
+};
+
+export const XOR = (a, b) => {
+  return (a || b) && !(a && b);
 };

@@ -32,6 +32,7 @@ import styles from "./ScheduledInterviewsListingTable.module.scss";
 import ScheduleInterviewDetailsView from "../SchduledInterviewDetail/SchduledInterviewDetail";
 import CommonModal from "../../components/CommonModal";
 import useFetchInterviewDetailApi from "../../services/api-services/AllJob/useFetchInterviewDetailApi";
+import useChangeJobStatusApi from "../../services/api-services/AllJob/useChangeApplicantJobStatusApi";
 
 const ScheduledInterViewsTable = ({
   jobId,
@@ -47,7 +48,9 @@ const ScheduledInterViewsTable = ({
   const { getImage } = useContext(ThemeContext);
   const { navigateScreen: navigate } = useNavigateScreen();
 
-  const VIEW_INTERVIEW_DETAILS = "View Interview Details";
+
+  const { changeJobStatus, isLoading: isApproveJobLoading } =
+  useChangeJobStatusApi();
 
   const [filterArray, setFilterArray] = useState(
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
@@ -100,12 +103,25 @@ const ScheduledInterViewsTable = ({
   };
 
   const handleMenuItems = (rowData, item) => {
-    if (item.label === VIEW_INTERVIEW_DETAILS) {
+    console.log(rowData, 'view_interview_details');
+    if (item === 2) {
       fetchInterviewDetail(
-        rowData.id,
+        rowData?.interview_id,
         () => setOpenInterviewDetailModal(true),
         (errorMessage) =>
           showNotification({ text: errorMessage, type: "error" })
+      );
+    }
+    if (item === 3) {
+      changeJobStatus(
+        rowData?.interview_id,
+        { status: 6 },
+        () => {
+          urlService.setQueryStringValue("tab", "2");
+        },
+        (errorMessage) => {
+          showNotification({ text: errorMessage, type: "error" });
+        }
       );
     }
   };

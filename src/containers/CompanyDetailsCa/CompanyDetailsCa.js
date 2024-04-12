@@ -35,6 +35,7 @@ const CompanyDetailsCa = ({
   errorWhileGettingCompanyData,
   isGettingCompanyData,
   getCompanyData,
+  isEditCompanyAvailable = false,
 }) => {
   const intl = useIntl();
   const { companyId } = useParams();
@@ -202,7 +203,7 @@ const CompanyDetailsCa = ({
           <TwoRow
             style={classes.mainSectionStyle}
             topSection={
-              isEditable ? (
+              isEditable || isEditCompanyAvailable ? (
                 <></>
               ) : (
                 <div>

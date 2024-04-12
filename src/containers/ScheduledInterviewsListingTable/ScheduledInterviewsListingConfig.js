@@ -85,10 +85,17 @@ export const getQueryColumn = ({
         items: [
           {
             key: 1,
-            label: intl.formatMessage({ id: "label.viewInterviewDetails" }),
+            id: 'download_profile_resume',
+            label: intl.formatMessage({ id: "label.downloadResumeAndProfile" }),
           },
           {
             key: 2,
+            id: 'view_interview_details',
+            label: intl.formatMessage({ id: "label.viewInterviewDetails" }),
+          },
+          {
+            key: 3,
+            id: 'offer_job',
             label: intl.formatMessage({ id: "label.offerJob" }),
           },
         ],

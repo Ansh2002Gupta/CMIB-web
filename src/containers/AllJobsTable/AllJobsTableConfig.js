@@ -6,6 +6,7 @@ export const getQueryColumn = ({
   renderColumn,
   queriesColumnProperties = {},
   handleMenuItems,
+  handleColumnClick,
 }) => {
   const { isSelectedFromTick, selectedItemsList, toggleSelectedQueriesId } =
     queriesColumnProperties;
@@ -26,6 +27,8 @@ export const getQueryColumn = ({
         visible: true,
         textStyles: [styles.tableCell].join(" "),
         isRequiredTooltip: true,
+        isTextLink: true,
+        onClickColumn: (rowData) => {handleColumnClick(rowData, 'job_id')}
       },
     }),
     renderColumn({
@@ -37,6 +40,8 @@ export const getQueryColumn = ({
         visible: true,
         textStyles: [styles.tableCell].join(" "),
         isRequiredTooltip: true,
+        isTextLink: true,
+        onClickColumn: (rowData) => {handleColumnClick(rowData, 'company_name')},
       },
     }),
     renderColumn({
@@ -63,6 +68,8 @@ export const getQueryColumn = ({
         visible: true,
         textStyles: [styles.tableCell].join(" "),
         isRequiredTooltip: false,
+        isTextLink: true,
+        onClickColumn: (rowData) => {handleColumnClick(rowData, 'applicants')}
       },
     }),
     renderColumn({
@@ -76,6 +83,8 @@ export const getQueryColumn = ({
         visible: true,
         textStyles: [styles.tableCell].join(" "),
         isRequiredTooltip: false,
+        isTextLink: true,
+        onClickColumn: (rowData) => {handleColumnClick(rowData, 'scheduled_interview')}
       },
     }),
     renderColumn({

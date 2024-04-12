@@ -151,6 +151,7 @@ const useRenderColumn = () => {
       isIntl,
       isDataObject,
       dataKey,
+      onClickColumn = ()=> {},
     } = renderText;
 
     const {
@@ -243,7 +244,7 @@ const useRenderColumn = () => {
       return "-";
     };
 
-    const getRenderText = (text) => {
+    const getRenderText = (text, rowData) => {
       return (
         <p
           className={[
@@ -253,6 +254,7 @@ const useRenderColumn = () => {
             isCapitalize ? styles.capitalize : "",
             isTextLink ? styles.linkStyles : "",
           ].join(" ")}
+          onClick={()=> {onClickColumn(rowData)}}
         >
           {textRenderFormat({ text: text })}
         </p>
@@ -423,13 +425,13 @@ const useRenderColumn = () => {
               }-${text}`}
             </p>
           ) : isRequiredTooltip ? (
-            <Tooltip title={text}>{getRenderText(text)}</Tooltip>
+            <Tooltip title={text}>{getRenderText(text, rowData)}</Tooltip>
           ) : isYearRange ? (
             getRenderYearRange(rowData)
           ) : isCentre ? (
             getRenderCentre(rowData)
           ) : (
-            getRenderText(text)
+            getRenderText(text, rowData)
           ),
         };
       });

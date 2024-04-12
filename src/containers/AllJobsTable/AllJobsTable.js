@@ -14,7 +14,7 @@ import useFetch from "../../core/hooks/useFetch";
 import { getQueryColumn } from "./AllJobsTableConfig";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
-import { ADMIN_ROUTE, JOBS, SUMMARY } from "../../constant/apiEndpoints";
+import { ADMIN_ROUTE, JOBS, REGISTERED_COMPANIES, SUMMARY } from "../../constant/apiEndpoints";
 import { ReactComponent as ArrowDown } from "../../themes/base/assets/images/arrow-down.svg";
 import {
   DEBOUNCE_TIME,
@@ -26,6 +26,9 @@ import { getValidFilter } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import styles from "./AllJobsTable.module.scss";
 import useApproveJobApi from "../../services/api-services/AllJob/useApproveJobApi";
+import CommonModal from "../../components/CommonModal";
+import PostJobDetailsContainer from "../PostJobDetailsContainer";
+import CompanyDetailsCa from "../CompanyDetailsCa";
 
 const AllJobsTable = ({
   current,
@@ -44,6 +47,12 @@ const AllJobsTable = ({
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
 
+  const [selectedJobId, setSelectedJobId] = useState("");
+  const [selectedCompanyId, setCompanyId] = useState("");
+
+  const [openPostedJobModal, setOpenPostedJobModal] = useState(false);
+  const [openCompanyDetails, setOpenCompanyDetails] = useState(false);
+
   const { showNotification, notificationContextHolder } = useShowNotification();
 
   const { data, error, fetchData, isError, isLoading, setData } = useFetch({
@@ -52,6 +61,22 @@ const AllJobsTable = ({
   });
 
   const { approveJob, isLoading: isApproveJobLoading } = useApproveJobApi();
+  const {
+    data: companyDetailData,
+    error: errorWhileGettingCompanyData,
+    isLoading: isGettingCompanyData,
+    fetchData: getCompanyData,
+  } = useFetch({
+    url: ADMIN_ROUTE + REGISTERED_COMPANIES + "/" + selectedCompanyId,
+    otherOptions: { skipApiCallOnMount: true },
+  });
+
+  useEffect(()=> {
+    if (selectedCompanyId) {
+      getCompanyData({})
+      setOpenCompanyDetails(true);
+    }
+  }, [selectedCompanyId]);
 
   let errorString = error;
   if (typeof error === "object") {
@@ -83,6 +108,23 @@ const AllJobsTable = ({
     fetchData({ queryParamsObject: requestedParams });
   };
 
+  const handleColumnClick = (rowData, columnClicked) => {
+    const jobId = rowData?.id;
+    if (columnClicked === "applicants") {
+      navigate(`job-details/${jobId}?tab=2`);
+    }
+    if (columnClicked === "scheduled_interview") {
+      navigate(`job-details/${jobId}?tab=3`);
+    }
+    if (columnClicked === "company_name") {
+      setCompanyId(rowData?.company_id);
+    }
+    if (columnClicked === "job_id") {
+      setSelectedJobId(jobId);
+      setOpenPostedJobModal(true);
+    }
+  };
+
   const handleMenuItems = (rowData, item) => {
     if (item.label === "Approve") {
       approveJob(
@@ -91,9 +133,7 @@ const AllJobsTable = ({
           setData({
             ...data,
             records: data.records.map((record) =>
-              record.id === rowData?.id
-                ? { ...record, approve: 1 }
-                : record
+              record.id === rowData?.id ? { ...record, approve: 1 } : record
             ),
           });
         },
@@ -113,6 +153,7 @@ const AllJobsTable = ({
     navigate,
     renderColumn,
     handleMenuItems,
+    handleColumnClick,
   });
 
   const handleOnUserSearch = (str) => {
@@ -267,9 +308,39 @@ const AllJobsTable = ({
     );
   };
 
+  const isEditCompanyAvailable = true;
+  const handleOnCancel = () => {
+    setOpenCompanyDetails(false)
+    setCompanyId("");
+  }
+
   return (
     <>
       {notificationContextHolder}
+      {openPostedJobModal ? (
+        <CommonModal isOpen={openPostedJobModal} width={1200}>
+          <PostJobDetailsContainer
+            jobId={selectedJobId}
+            setIsModalOpen={setOpenPostedJobModal}
+          />
+        </CommonModal>
+      ) : null}
+      {openCompanyDetails ? (
+        <CommonModal
+          isOpen={openCompanyDetails}
+          width={1200}
+          closeIcon={true}
+          onCancel={() => handleOnCancel()}
+        >
+          <CompanyDetailsCa {...{
+            data: companyDetailData,
+            errorWhileGettingCompanyData,
+            isGettingCompanyData,
+            getCompanyData,
+            isEditCompanyAvailable,
+          }} />
+        </CommonModal>
+      ) : null}
       {!isError && (
         <TableWithSearchAndFilters
           {...{
