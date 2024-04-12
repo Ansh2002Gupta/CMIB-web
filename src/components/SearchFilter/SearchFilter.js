@@ -10,6 +10,7 @@ import useResponsive from "../../core/hooks/useResponsive";
 import CustomButton from "../CustomButton";
 import CustomCheckBox from "../CustomCheckBox";
 import useOutSideClick from "../../core/hooks/useOutSideClick";
+import { SLIDER_DEFAULT_VALUE } from "../../constant/constant";
 import { classes } from "./SearchFilter.styles";
 import styles from "./SearchFilter.module.scss";
 import CustomSlider from "../CustomSlider";
@@ -39,6 +40,17 @@ const SearchFilter = ({
     elementNotToBeConsidered: elementNotConsideredInOutSideClick,
   });
 
+  const marks = {
+    [0]: 0,
+    [100]: 100,
+  };
+
+  const handleFilter = (itemId, value) => {
+    setCurrentFilterStatus((prevData) => {
+      return { ...prevData, [itemId]: value };
+    });
+  };
+
   const handleOnUpdateAccessFilterStatus = (itemId, optionId) => {
     setCurrentFilterStatus((prevStatus) => {
       const updatedStatus = { ...prevStatus };
@@ -58,9 +70,23 @@ const SearchFilter = ({
     setSelectedIndex(index);
   };
 
+  const sliderSelectOrRemove = (item) => {
+    const itemId = item?.id;
+    if (item?.isSlider) {
+      if (currentFilterStatus?.[itemId]?.length)
+        setCurrentFilterStatus({ ...currentFilterStatus, [itemId]: [] });
+      else
+        setCurrentFilterStatus({
+          ...currentFilterStatus,
+          [itemId]: SLIDER_DEFAULT_VALUE,
+        });
+    }
+  };
+
   const selectOrRemoveAll = (item) => {
     const itemOptionIds = item.options.map((option) => option.optionId);
-    const itemId = item.id;
+    const itemId = item?.id;
+
     if (!currentFilterStatus?.[itemId]?.length) {
       setCurrentFilterStatus({
         ...currentFilterStatus,
@@ -92,18 +118,30 @@ const SearchFilter = ({
 
   const getCheckBoxes = (item) => {
     const selectedOptionIds = currentFilterStatus[item.id] || [];
-    if (selectedOptionIds.length === 0) {
+    if (
+      (item.isSlider && !selectedOptionIds?.length) ||
+      selectedOptionIds?.length === 0
+    ) {
       return getImage("unCheckedBox");
     }
-    if (selectedOptionIds.length === item.options.length) {
+    if (
+      (item.isSlider && selectedOptionIds?.length) ||
+      selectedOptionIds?.length === item.options?.length
+    ) {
       return getImage("checkedBox");
     }
     return getImage("someFiltersAreSelected");
   };
 
   const totalCount = Object.values(filterArray).reduce(
-    (total, currentArray) => {
-      return total + currentArray.length;
+    (total, currentArray, index) => {
+      if (filterPropertiesArray[index]?.isSlider) {
+        if (currentArray?.length) {
+          return total + 1;
+        }
+        return total;
+      }
+      return total + currentArray?.length;
     },
     0
   );
@@ -180,7 +218,11 @@ const SearchFilter = ({
                             style={classes.iconStyle}
                             src={getCheckBoxes(item)}
                             preview={false}
-                            onClick={() => selectOrRemoveAll(item)}
+                            onClick={() =>
+                              item?.isSlider
+                                ? sliderSelectOrRemove(item)
+                                : selectOrRemoveAll(item)
+                            }
                           />
                           <Typography className={styles.leftFilterOptionText}>
                             {item.name}
@@ -202,54 +244,95 @@ const SearchFilter = ({
                 </div>
               }
               rightSection={
-                <div>
-                  {filterPropertiesArray[selectedIndex]?.type === "slider" ? (
-                    <CustomSlider
-                      min={0}
-                      max={40}
-                      defaultValue={experienceRange}
-                      onChange={(value) => {
-                        setExperienceRange(value);
-                      }}
-                      onAfterChange={(value) => {
-                        handleOnUpdateAccessFilterStatus(
-                          filterPropertiesArray[selectedIndex].id,
-                          value
-                        );
-                      }}
-                      range={true}
-                    />
-                  ) : filterPropertiesArray[selectedIndex]?.options ? (
-                    filterPropertiesArray[selectedIndex].options.map(
-                      (item, index) => {
-                        return (
-                          <CustomCheckBox
-                            key={item.optionId}
-                            checked={(
+                filterPropertiesArray[selectedIndex]?.isSlider ? (
+                  <div className={styles.sliderContainer}>
+                    {
+                      <Typography className={styles.sliderLabel}>
+                        {currentFilterStatus[
+                          filterPropertiesArray[selectedIndex]?.id
+                        ]?.length
+                          ? `${
                               currentFilterStatus[
-                                filterPropertiesArray[selectedIndex].id
-                              ] || []
-                            ).includes(item.optionId)}
-                            onChange={() =>
-                              handleOnUpdateAccessFilterStatus(
-                                filterPropertiesArray[selectedIndex].id,
-                                item.optionId
-                              )
-                            }
-                            customStyles={styles.filterSecondLevelOption}
-                          >
-                            <Typography className={styles.filterOptionText}>
-                              {item.str}
-                              <span className={styles.textInBrackets}>
-                                {!isNaN(item.count) ? `(${item.count})` : ""}
-                              </span>
-                            </Typography>
-                          </CustomCheckBox>
+                                filterPropertiesArray[selectedIndex]?.id
+                              ][0]
+                            } - ${
+                              currentFilterStatus[
+                                filterPropertiesArray[selectedIndex]?.id
+                              ][1]
+                            }`
+                          : `0-0`}
+                      </Typography>
+                    }
+                    <Slider
+                      range
+                      tipProps={{ visible: true }}
+                      marks={marks}
+                      defaultValue={SLIDER_DEFAULT_VALUE}
+                      disabled={false}
+                      trackStyle={classes.trackStyle}
+                      onChange={(val) => {
+                        handleFilter(
+                          filterPropertiesArray[selectedIndex]?.id,
+                          val
                         );
+                      }}
+                      value={
+                        currentFilterStatus[
+                          filterPropertiesArray[selectedIndex]?.id
+                        ]
                       }
-                    )
-                  ) : null}
-                </div>
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    {filterPropertiesArray[selectedIndex]?.type === "slider" ? (
+                      <CustomSlider
+                        min={0}
+                        max={40}
+                        defaultValue={experienceRange}
+                        onChange={(value) => {
+                          setExperienceRange(value);
+                        }}
+                        onAfterChange={(value) => {
+                          handleOnUpdateAccessFilterStatus(
+                            filterPropertiesArray[selectedIndex].id,
+                            value
+                          );
+                        }}
+                        range={true}
+                      />
+                    ) : filterPropertiesArray[selectedIndex]?.options ? (
+                      filterPropertiesArray[selectedIndex].options.map(
+                        (item, index) => {
+                          return (
+                            <CustomCheckBox
+                              key={item.optionId}
+                              checked={(
+                                currentFilterStatus[
+                                  filterPropertiesArray[selectedIndex].id
+                                ] || []
+                              ).includes(item.optionId)}
+                              onChange={() =>
+                                handleOnUpdateAccessFilterStatus(
+                                  filterPropertiesArray[selectedIndex].id,
+                                  item.optionId
+                                )
+                              }
+                              customStyles={styles.filterSecondLevelOption}
+                            >
+                              <Typography className={styles.filterOptionText}>
+                                {item.str}
+                                <span className={styles.textInBrackets}>
+                                  {!isNaN(item.count) ? `(${item.count})` : ""}
+                                </span>
+                              </Typography>
+                            </CustomCheckBox>
+                          );
+                        }
+                      )
+                    ) : null}
+                  </div>
+                )
               }
             />
           </Card>

@@ -861,6 +861,9 @@ const locale = {
   "label.stdPlaceholder": "eg 91",
   "label.photo_text": "Photo",
   "label.profilePhoto": "Profile Photo",
+  "label.jobsApprovedTillDate": "Jobs Approved Till Date",
+  "label.postsOfferedApplicantsTillDate":
+    "Posts Offered to Applicants Till Date",
 };
 
 export default locale;
