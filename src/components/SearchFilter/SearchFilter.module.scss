@@ -183,6 +183,18 @@
   color: var(--bodyBg, #fff);
 }
 
+.sliderContainer {
+  padding: var(--padding_20);
+}
+
+.sliderLabel {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  line-height: var(--lineHeightNormal);
+  text-align: center;
+  color: var(--inputText);
+}
+
 @media screen and (max-width: 900px) and (min-width: 510px) {
   .cardParentContainer {
     left: -100px;

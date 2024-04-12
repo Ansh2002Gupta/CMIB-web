@@ -42,4 +42,5 @@ export const classes = {
     height: "16px",
     width: "16px",
   },
+  trackStyle: { backgroundColor: variables.greenBtnBg },
 };
