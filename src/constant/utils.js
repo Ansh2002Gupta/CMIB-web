@@ -492,3 +492,7 @@ export const urlToName = (url) => {
   const imageName = imageParts?.pop();
   return imageName;
 };
+
+export const XOR = (a, b) => {
+  return (a || b) && !(a && b);
+};
