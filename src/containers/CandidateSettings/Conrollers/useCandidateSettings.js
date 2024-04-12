@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { XOR } from "../../../constant/utils";
+
 const useCandidateSettings = ({
   candidateDetails,
   isEditable,
@@ -457,7 +459,19 @@ const useCandidateSettings = ({
   };
 
   const isButtonDisable = () => {
-    return !formFields?.max_no_of_interview || !formFields?.max_no_of_offer;
+    return (
+      !formFields?.max_no_of_interview ||
+      !formFields?.max_no_of_offer ||
+      XOR(formFields?.big_centre_start_date, formFields?.big_centre_end_date) ||
+      XOR(
+        formFields?.small_centre_start_date,
+        formFields?.small_centre_end_date
+      ) ||
+      XOR(
+        selectedCenterTableData[0]?.big_centre_start_date,
+        selectedCenterTableData[0]?.big_centre_end_date
+      )
+    );
   };
 
   return {
