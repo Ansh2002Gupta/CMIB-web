@@ -10,6 +10,7 @@ import CommonModal from "../../components/CommonModal";
 import CustomButton from "../../components/CustomButton";
 import ErrorMessageBox from "../../components/ErrorMessageBox";
 import TableWithSearchAndFilters from "../../components/TableWithSearchAndFilters/TableWithSearchAndFilters";
+import useDownload from "../../core/hooks/useDownload";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
@@ -23,6 +24,7 @@ import { validateSearchTextLength } from "../../Utils/validations";
 import {
   DEBOUNCE_TIME,
   DEFAULT_PAGE_SIZE,
+  NOTIFICATION_TYPES,
   PAGINATION_PROPERTIES,
 } from "../../constant/constant";
 import {
@@ -69,11 +71,8 @@ const PaymentTable = ({
     error: errorWhenDownloadingExcelReport,
     fetchData: fetchExcelReport,
     isLoading: isDownloadingExcelReport,
-    setData: setExcelReport,
-  } = useFetch({
-    url: ADMIN_ROUTE + `/${selectedModule?.key}` + PAYMENT + DOWNLOAD,
-    otherOptions: { skipApiCallOnMount: true },
-  });
+    initiateDownload,
+  } = useDownload({});
 
   const { data: status, fetchData: getStatus } = useFetch({
     url: CORE_ROUTE + STATUS,
@@ -434,8 +433,17 @@ const PaymentTable = ({
       sortDirection: sortFilter?.sortDirection,
       sortField: sortFilter?.sortField,
     });
-    fetchExcelReport({
+    initiateDownload({
+      url: ADMIN_ROUTE + `/${selectedModule?.key}` + PAYMENT + DOWNLOAD,
       queryParamsObject: requestedParams,
+      onSuccessCallback: (response) => {
+        showNotification({
+          text: intl.formatMessage({
+            id: "label.downloadSucess",
+          }),
+          type: NOTIFICATION_TYPES.SUCCESS,
+        });
+      },
       onErrorCallback: () => {
         showNotification({
           text:
