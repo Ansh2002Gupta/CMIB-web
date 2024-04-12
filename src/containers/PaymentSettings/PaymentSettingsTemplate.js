@@ -52,7 +52,7 @@ const PaymentSettingsTemplate = ({
           </div>
         );
       }
-      return <Typography>{item.value}</Typography>;
+      return <Typography className={styles.valueText}>{item.value}</Typography>;
     }
     if (item.isMultiSelect) {
       return (
@@ -65,6 +65,7 @@ const PaymentSettingsTemplate = ({
           selectedOptionsList={selectedCompanyList}
           placeholderText={`session.placeholder.${item.headingIntl}`}
           title={`session.payment.${item.headingIntl}`}
+          disabled={item.rules.isDisabled}
         />
       );
     }
@@ -74,6 +75,7 @@ const PaymentSettingsTemplate = ({
         customLabelStyles={styles.inputLabel}
         customInputStyles={styles.input}
         customContainerStyles={styles.customContainerStyles}
+        disabled={item.rules.isDisabled}
         onChange={(val) => {
           const isValueValid = item.rules.isPercentage
             ? val.target.value <= 100

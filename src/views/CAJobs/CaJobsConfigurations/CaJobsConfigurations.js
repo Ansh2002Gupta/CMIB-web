@@ -101,12 +101,14 @@ const CaJobsConfigurations = () => {
       valueKeyName: keyName,
       actionKeyName: "buttonType",
     });
-    const itSkillsList = updatedItSkills.map((obj) =>
+    const itSkillsKeyNameList = updatedItSkills.map((obj) =>
       !!obj?.[keyName] ? obj?.[keyName] : ""
     );
-    const softSkillsList = updatedSoftSkills.map((obj) =>
+    const softSkillsKeyNameList = updatedSoftSkills.map((obj) =>
       !!obj?.[keyName] ? obj?.[keyName] : ""
     );
+    const itSkillsList = itSkillsKeyNameList.filter((element) => !!element);
+    const softSkillsList = softSkillsKeyNameList.filter((element) => !!element);
 
     postGlobalConfigurations({
       payload: {
@@ -219,18 +221,24 @@ const CaJobsConfigurations = () => {
               })}
               cancelBtnText={intl.formatMessage({ id: "label.cancel" })}
               customActionBtnStyles={styles.saveButton}
-              customContainerStyles={styles.buttonWrapper}
+              customContainerStyle={styles.buttonWrapper}
               isLoading={isSavingConfigurations}
               isActionBtnDisable={
-                !videoTimeLimit ||
                 itSkills.some(
                   (obj) => obj?.error && obj.buttonType !== "add"
                 ) ||
                 softSkills.some((obj) => obj?.error && obj.buttonType !== "add")
               }
-              onActionBtnClick={() => {
-                if (validate()) postProfileSkills({ keyName: "fieldValue" });
-              }}
+              onActionBtnClick={
+                selectedModule?.key === MODULE_KEYS.CA_JOBS_KEY
+                  ? () => {
+                      if (validate())
+                        postProfileSkills({ keyName: "fieldValue" });
+                    }
+                  : () => {
+                      postProfileSkills({ keyName: "fieldValue" });
+                    }
+              }
               onCancelBtnClick={initializeWithPreviousSavedData}
             />
           ) : (

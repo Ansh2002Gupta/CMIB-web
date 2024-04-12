@@ -1,4 +1,3 @@
-
 .filterAndTableContainer {
   background-color: var(--blueBg);
   width: var(--fullWidth);
@@ -7,6 +6,19 @@
   gap: var(--gapSmall);
   padding: var(--paddingMedium);
   flex: 1;
+
+}
+
+.filterAndButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gapSmall);
+}
+
+.filterAndButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gapSmall);
 }
 
 .tableContainer {
@@ -38,6 +50,8 @@
   justify-content: flex-start;
   gap: var(--gapSmall);
   position: relative;
+  flex-grow: 1;
+  width: var(--fullWidth);
 }
 
 input::placeholder {

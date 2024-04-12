@@ -1,0 +1,176 @@
+.mainContainer {
+    gap: var(--gapSmall, 16px);
+    padding: var(--paddingMedium, 24px);
+  }
+
+  .customRadioButtonContainer {
+    gap: var(--gapSmall, 16px);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .gridItem {
+    padding-bottom: var(--paddingMedium);
+  }
+
+  .headingText {
+    font-size: var(--fontSizeExtraSmall, 12px);
+    font-weight: var(--fontWeightMedium, 500);
+    color: var(--subHeadingColor, #616C82);
+  }
+
+  .interviewTypeHeadingText{
+    font-size: var(--fontSizeNormal, 14px);
+    font-weight: var(--fontWeightBold, 600);
+    color: var(--textBold, #000833);
+  }
+
+  .interviewTypeText{
+    font-size: var(--fontSizeNormal, 14px);
+    font-weight: var(--fontWeightMedium, 500);
+    color: var(--textBold, #000833);
+    margin-bottom: var(--marginMedium, 16px);
+  }
+
+  .modalHeadingText{
+    font-size: var(--fontSizeXlarge, 20px);
+    font-weight: var(--fontWeightMedium, 600);
+    color: var(--textBold, "#000833");
+  }
+
+  .redText {
+    color: var(--error, #D93400);
+  }
+
+  .blackText {
+    font-size: var(--fontSizeSmall, 14px);
+    font-weight: var(--fontWeightMedium, 500);
+    color: var(--textBold, "#000833");
+    line-height: var(--lineHeightNormal, "20px");
+    text-transform: capitalize;
+  }
+  
+  .scheduleInterviewDetails {
+    background-color: var(--bodyBg);
+    margin: var(--marginLarge);
+  }
+
+  .headingContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .ActionAndCancelButtonContainer{
+    margin-top: var(--margin_32, 32px);
+  }
+
+  .borderBottom {
+    height: 1px;
+    background-color: var(--bulletPoint, #CCD0E5);
+    margin-top: var( --marginLarge ,24px);
+    margin-bottom: var( --marginLarge ,24px);
+  }
+  .primaryScheduledcontainer {
+    flex: 1;
+  }
+  .customGridStyle {
+    gap: var(--gapSmall, 16px);
+  }
+
+  .inputLabel {
+    color: var(--inputPlaceHolder, #616C82);
+    font-size: var(--fontSizeExtraSmall, 12px);
+    font-weight: var(--fontWeightMedium, 500);
+  }
+  
+  .input {
+    height: var(--height_44, 44px);
+    color: var(--textBold, #000833) !important;
+    font-size: var(--fontSizeSmall, 14px);
+    font-weight: var(--fontWeightMedium, 500);
+    padding: var(--padding_9, 9px) var(--padding_5, 5px);
+    border-radius: var(--radiusLg, 8px);
+    border-width: var(--height_1, 1px);
+    border-color: var(--borderColor, #ccd0e5);
+    background-color: var(--bodyBg, #ffffff);
+  
+    &::placeholder {
+      color: var(--inputPlaceHolder, #616C82) !important;
+    }
+  }
+  
+  .timeInput {
+    height: var(--height_44, 44px);
+    color: var(--textBold, #000833) !important;
+    font-size: var(--fontSizeSmall, 14px);
+    font-weight: var(--fontWeightMedium, 500);
+    padding: var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px);
+    border-radius: var(--radiusLg, 8px);
+    border-width: var(--height_1, 1px);
+    border-color: var(--borderColor, #ccd0e5);
+    flex: 1;
+    background-color: var(--bodyBg, #ffffff);
+    &::placeholder {
+      color: var(--inputPlaceHolder, #616C82) !important;
+    }
+  }
+
+  .customActionBtnStyles {
+    display: flex;
+    flex: 1;
+    padding: var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--gapXSmall, 8px);
+    min-height: var(--height_44, 44px);
+    border-radius: var(--radiusLg, 8px) !important;
+    color: var(--btnText, #fbfcff);
+    font-size: var(--fontSizeSmall, 14px);
+    font-weight: var(--fontWeightMedium, 500);
+    border: none !important;
+    &:not(:disabled):hover {
+      color: var(--btnText, #fbfcff) !important;
+      background-color: var(--greenBtnBg, #04af55) !important;
+    }
+  }
+
+  .marginTop {
+    margin-top: var(--marginMedium, 16px);
+  }
+
+  .datePickerContainer {
+    gap: var(--gapMedium, 24px);
+    margin-top: var(--marginMedium, 16px);
+  }
+  
+  .customCancelBtnStyles {
+    min-height: var(--height_44, 44px);
+  }
+  
+  @media screen and (max-width: 767px) {
+    .customActionBtnStyles {
+      min-height: var(--height_40, 40px);
+    }
+  
+    .customCancelBtnStyles {
+      min-height: var(--height_40, 40px) !important;
+    }
+  }
+
+  .customContainerStyles {
+    width: var(--fullWidth);
+    margin-top: var(--marginMedium, 16px);
+  }
+  
+  @media (min-width: 400px) and (max-width: 600px) {
+    .customContainerStyles {
+      width: var(--width_45Per);
+    }
+  }
+  @media (min-width: 600px) {
+    .customContainerStyles {
+      width: var(--width_30Per);
+    }
+  }
+  

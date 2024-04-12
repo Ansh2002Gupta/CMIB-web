@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { capitalize } from "lodash";
 
@@ -8,6 +8,7 @@ import useShowNotification from "../../core/hooks/useShowNotification";
 
 import EditSessionRoundTemplate from "./EditSessionRoundTemplate";
 import useUpdateSessionRoundDetailsApi from "../../services/api-services/SessionRounds/useUpdateRoundDetailsApi";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { checkForValidNumber } from "../../constant/utils";
 import { ADMIN_ROUTE, CENTRE_END_POINT } from "../../constant/apiEndpoints";
 import { MENU_KEYS, NOTIFICATION_TYPES } from "../../constant/constant";
@@ -46,6 +47,9 @@ const EditSessionRound = ({
   const { isLoading, updateSessionRoundDetails } =
     useUpdateSessionRoundDetailsApi();
   const [centresError, setCentresError] = useState(false);
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+
+  const sessionId = globalSessionDetails?.globalSessionId;
 
   const { data, isError } = useFetch({
     url: ADMIN_ROUTE + `/${selectedModule?.key}` + CENTRE_END_POINT,
@@ -194,6 +198,7 @@ const EditSessionRound = ({
             onSuccessCallback: () => onClickCancel(true),
             roundId: roundDetails?.id,
             selectedModuleKey: selectedModule?.key,
+            sessionId,
           });
         }
       } else {
@@ -210,6 +215,7 @@ const EditSessionRound = ({
           onSuccessCallback: () => onClickCancel(true),
           roundId: roundDetails?.id,
           selectedModuleKey: selectedModule?.key,
+          sessionId,
         });
       }
     }

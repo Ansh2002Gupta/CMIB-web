@@ -1,0 +1,37 @@
+.ql-toolbar.ql-snow {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  .ql-container.ql-snow {
+    border: 1px solid #ecdddd;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  .error > .ql-toolbar.ql-snow {
+    border: 1px solid #ff0000;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    height: 60px;
+  }
+  .error > .ql-container.ql-snow {
+    border: 1px solid #ff0000;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: #ffff;
+  }
+  .disabled > .ql-toolbar.ql-snow {
+    display: none;
+    border-width: 0;
+  }
+  .disabled > .ql-container.ql-snow {
+    border: none;
+  }
+  .disabled {
+    border: 1px solid #ecdddd;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: #ffff;
+  }
+  .disabled > .ql-container.ql-snow > .ql-editor > ul {
+    padding-left: 0;
+  }

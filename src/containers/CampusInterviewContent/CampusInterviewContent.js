@@ -16,10 +16,12 @@ import useCompanySettings from "../CompanySettings/Conrollers/useCompanySettings
 import usePaymentSettings from "../PaymentSettings/Conrollers/usePaymentSettings";
 import useResponsive from "../../core/hooks/useResponsive";
 import useFetch from "../../core/hooks/useFetch";
+import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
+import { NotificationContext } from "../../globalContext/notification/notificationProvider";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { usePut } from "../../core/hooks/useApiRequest";
 import useShowNotification from "../../core/hooks/useShowNotification";
-import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { setShowSuccessNotification } from "../../globalContext/notification/notificationActions";
 import { urlService } from "../../Utils/urlService";
 import { getErrorMessage } from "../../constant/utils";
 import { API_STATUS, ROUND_ID } from "../../constant/constant";
@@ -46,6 +48,8 @@ const CampusInterviewContent = () => {
 
   const hasRoundTwo = location?.pathname.includes("round2");
   const { showNotification, notificationContextHolder } = useShowNotification();
+  const [, setNotificationStateDispatch] = useContext(NotificationContext);
+
   const isEditable = !!currentGlobalSession?.is_editable;
   const roundId = urlService.getQueryStringValue(ROUND_ID);
 
@@ -136,8 +140,11 @@ const CampusInterviewContent = () => {
     handleRemove,
     handleCandidateDataChange,
     selectedCenterTableData,
+    isStartDateEditable,
+    isEndDateEditable,
     isButtonDisable: isCandidateSettingsInvalid,
     tableData,
+    handleValidation,
   } = useCandidateSettings({
     candidateDetails: campusInterviewData,
     isEditable,
@@ -165,6 +172,9 @@ const CampusInterviewContent = () => {
   });
 
   const onClickSave = () => {
+    const valid = handleValidation();
+    if (!valid) return;
+
     const consentData = tableData
       .filter(
         (item) =>
@@ -255,17 +265,18 @@ const CampusInterviewContent = () => {
     updateCampusInterviewDetails({
       body: hasRoundTwo ? roundTwoPayload : payload,
       onSuccessCallback: () => {
-        showNotification({
-          text: intl.formatMessage({ id: "label.data_saved_successfully" }),
-          type: API_STATUS.SUCCESS,
-        });
+        setNotificationStateDispatch(
+          setShowSuccessNotification({ isEdited: true })
+        );
+        navigate(-1);
       },
       onErrorCallback: (errorMessage) => {
         const errors =
           errorMessage?.errors ||
           errorMessage?.data?.data?.errors ||
-          errorMessage?.data?.message;
-        const messages = Object.values(errors).flat();
+          errorMessage?.data?.message ||
+          errorMessage;
+        const messages = Object?.values(errors).flat();
         showNotification({
           text: messages,
           type: API_STATUS.ERROR,
@@ -317,6 +328,8 @@ const CampusInterviewContent = () => {
                         roundCentres,
                         selectedCenterTableData,
                         isEditable,
+                        isStartDateEditable,
+                        isEndDateEditable,
                         campusInterviewData,
                         tableData,
                       }}

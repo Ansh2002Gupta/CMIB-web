@@ -1,0 +1,55 @@
+.mainContainer {
+  padding: var(--paddingSmall) var(--paddingMedium) var(--paddingMedium)
+    var(--paddingMedium);
+  gap: var(--gapSmall);
+  background-color: var(--blueBg);
+}
+
+.filterContainer {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--gapSmall);
+  position: relative;
+  flex: 1;
+}
+.customSearchBar {
+  border-radius: var(--radiusLg);
+  width: var(--fullWidth);
+}
+
+@media screen and (max-width: 511px) {
+  .filterContainer {
+    flex-direction: column;
+  }
+}
+
+.customContainerStyles {
+  border-radius: var(--radiusMLg);
+  overflow: hidden;
+  flex: 1;
+  width: var(--fullWidth);
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
+}
+
+.box {
+  width: var(--fullWidth);
+  height: var(--fullHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.asc {
+  transform: rotate(0deg);
+}
+
+.desc {
+  transform: rotate(180deg);
+}
+
+.active {
+  background-color: var(--lightGrey3Bg);
+  border-radius: 50%;
+}

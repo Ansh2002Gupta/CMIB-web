@@ -40,6 +40,8 @@
   padding-bottom: var(--paddingExtraSmall);
   border-radius: var(--radiusLg);
   border: var(--borderLight);
+  height: var(--height_44) ;
+  align-items: center;
   background-color: var(--bodyBg);
   &::placeholder {
     color: var(--textBold) !important;
@@ -48,4 +50,9 @@
 
 .redText {
   color: var(--error);
+}
+
+.valueText{
+  font-size: 14px;
+  font-weight: var(--fontWeightMedium);
 }

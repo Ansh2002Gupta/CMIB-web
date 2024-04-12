@@ -7,16 +7,16 @@ import { TwoRow } from "../../core/layouts";
 import CustomGrid from "../../components/CustomGrid";
 import CustomInput from "../../components/CustomInput";
 import CustomDateTimePicker from "../../components/CustomDateTimePicker";
-import {
-  HYPHEN,
-  MAX_REGISTRATION_FEE_LENGTH,
-  TIMER_OF_1_MINUTES,
-} from "../../constant/constant";
+import { HYPHEN, MAX_REGISTRATION_FEE_LENGTH } from "../../constant/constant";
 import commonStyles from "../../common/commonStyles.module.scss";
+import {
+  compareTwoDayjsDates,
+  formatDate,
+  isNotAFutureDate,
+} from "../../constant/utils";
 import { classes } from "./CandidateSettings.styles";
 import styles from "./CandidateSettings.module.scss";
 import "./Override.css";
-import { compareTwoDayjsDates, isNotAFutureDate } from "../../constant/utils";
 
 const CandidateSettingsTemplate = ({
   editConfigurations,
@@ -112,9 +112,11 @@ const CandidateSettingsTemplate = ({
 
   const renderBottomSection = (field) => {
     if (!isEditable) {
-      return (
-        <Typography className={styles.inputLabel}>{field.value}</Typography>
-      );
+      const content = field?.isDateTimePicker
+        ? formatDate({ date: field.value })
+        : field.value;
+
+      return <Typography className={styles.inputLabel}>{content}</Typography>;
     }
 
     if (field.isDateTimePicker) {
@@ -123,6 +125,7 @@ const CandidateSettingsTemplate = ({
           customLabelStyles={styles.inputLabel}
           customInputStyle={classes.inputStyle}
           type="date"
+          disabled={field.rules.isDisabled}
           onChange={(val) => {
             handleInputChange(
               val ? dayjs(val).format("YYYY-MM-DD") : "",
@@ -143,6 +146,7 @@ const CandidateSettingsTemplate = ({
       <CustomInput
         controls
         value={field.value}
+        disabled={field.rules.isDisabled}
         customLabelStyles={styles.inputLabel}
         customInputNumberStyles={styles.input}
         customContainerStyles={styles.customContainerStyles}
