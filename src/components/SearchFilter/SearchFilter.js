@@ -68,8 +68,6 @@ const SearchFilter = ({
     setSelectedIndex(index);
   };
 
-  console.log(currentFilterStatus, "currentFilterStatus..");
-
   const sliderSelectOrRemove = (item) => {
     const itemId = item?.id;
     if (item?.isSlider) {
@@ -242,7 +240,7 @@ const SearchFilter = ({
                   <div className={styles.sliderContainer}>
                     <Slider
                       range
-                      tooltip
+                      tipProps={{ visible: true }}
                       marks={marks}
                       defaultValue={SLIDER_DEFAULT_VALUE}
                       disabled={false}
