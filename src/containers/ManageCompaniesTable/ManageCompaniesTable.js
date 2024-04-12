@@ -20,7 +20,11 @@ import {
   getValidFilter,
 } from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
-import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
+import {
+  DEBOUNCE_TIME,
+  PAGINATION_PROPERTIES,
+  SLIDER_FILTER_KEY,
+} from "../../constant/constant";
 import {
   ADMIN_ROUTE,
   COMPANY_ROUTE,
@@ -56,13 +60,13 @@ const ManageCompaniesTable = () => {
 
   const filterPropertiesArray = [
     {
-      id: "jobs_approved_till_date",
+      id: SLIDER_FILTER_KEY.JOBS_APPROVE,
       name: intl.formatMessage({ id: "label.jobsApprovedTillDate" }),
       isSelected: false,
       isSlider: true,
     },
     {
-      id: "posts_offered_to_candidate_till_date",
+      id: SLIDER_FILTER_KEY?.POSTED_OFFERS,
       name: intl.formatMessage({ id: "label.postsOfferedApplicantsTillDate" }),
       isSelected: false,
       isSlider: true,
@@ -94,9 +98,9 @@ const ManageCompaniesTable = () => {
         size: +pageSize,
         sortDirection: sortFilter?.sortDirection,
         sortField: sortFilter?.sortField,
-        jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+        jobs_approved_till_date: filterArray[SLIDER_FILTER_KEY.JOBS_APPROVE],
         posts_offered_to_candidate_till_date:
-          filterArray["posts_offered_to_candidate_till_date"],
+          filterArray[SLIDER_FILTER_KEY.POSTED_OFFERS],
       }),
     });
   }, []);
@@ -110,9 +114,10 @@ const ManageCompaniesTable = () => {
     getCompanyListing({
       queryParamsObject: getRequestedParams({
         search: validateSearchTextLength(searchedValue),
-        jobs_approved_till_date: currentFilterStatus["jobs_approved_till_date"],
+        jobs_approved_till_date:
+          currentFilterStatus[SLIDER_FILTER_KEY.JOBS_APPROVE],
         posts_offered_to_candidate_till_date:
-          currentFilterStatus["posts_offered_to_candidate_till_date"],
+          currentFilterStatus[SLIDER_FILTER_KEY.POSTED_OFFERS],
       }),
     });
   };
@@ -129,9 +134,9 @@ const ManageCompaniesTable = () => {
       search: searchedValue,
       sortDirection: sortDetails?.sortDirection,
       sortField: sortDetails?.sortDirection ? sortDetails?.sortField : "",
-      jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+      jobs_approved_till_date: filterArray[SLIDER_FILTER_KEY.JOBS_APPROVE],
       posts_offered_to_candidate_till_date:
-        filterArray["posts_offered_to_candidate_till_date"],
+        filterArray[SLIDER_FILTER_KEY.POSTED_OFFERS],
     });
     getCompanyListing({ queryParamsObject: requestedParams });
     if (sortDetails.sortDirection) {
@@ -189,9 +194,9 @@ const ManageCompaniesTable = () => {
         size: +size,
         sortDirection: sortFilter?.sortDirection,
         sortField: sortFilter?.sortField,
-        jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+        jobs_approved_till_date: filterArray[SLIDER_FILTER_KEY.JOBS_APPROVE],
         posts_offered_to_candidate_till_date:
-          filterArray["posts_offered_to_candidate_till_date"],
+          filterArray[SLIDER_FILTER_KEY.POSTED_OFFERS],
       }),
     });
   };
@@ -209,9 +214,9 @@ const ManageCompaniesTable = () => {
         search: validateSearchTextLength(searchedValue),
         sortDirection: sortFilter?.sortDirection,
         sortField: sortFilter?.sortField,
-        jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+        jobs_approved_till_date: filterArray[SLIDER_FILTER_KEY.JOBS_APPROVE],
         posts_offered_to_candidate_till_date:
-          filterArray["posts_offered_to_candidate_till_date"],
+          filterArray[SLIDER_FILTER_KEY.POSTED_OFFERS],
       }),
     });
   };
@@ -225,9 +230,9 @@ const ManageCompaniesTable = () => {
           search: validateSearchTextLength(str),
           sortDirection: sortFilter?.sortDirection,
           sortField: sortFilter?.sortField,
-          jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+          jobs_approved_till_date: filterArray[SLIDER_FILTER_KEY.JOBS_APPROVE],
           posts_offered_to_candidate_till_date:
-            filterArray["posts_offered_to_candidate_till_date"],
+            filterArray[SLIDER_FILTER_KEY.POSTED_OFFERS],
         }),
       });
       urlService.setQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
@@ -242,8 +247,9 @@ const ManageCompaniesTable = () => {
         queryParamsObject: getRequestedParams({
           page: 1,
           search: "",
-          jobs_approved_till_date: filterArray["jobs_approved_till_date"],
-          jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+          jobs_approved_till_date: filterArray[SLIDER_FILTER_KEY.JOBS_APPROVE],
+          posts_offered_to_candidate_till_date:
+            filterArray[SLIDER_FILTER_KEY.POSTED_OFFERS],
         }),
       });
       urlService.removeParam(PAGINATION_PROPERTIES.SEARCH_QUERY);
@@ -258,9 +264,9 @@ const ManageCompaniesTable = () => {
         search: validateSearchTextLength(searchedValue),
         sortDirection: sortFilter?.sortDirection,
         sortField: sortFilter?.sortField,
-        jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+        jobs_approved_till_date: filterArray[SLIDER_FILTER_KEY.JOBS_APPROVE],
         posts_offered_to_candidate_till_date:
-          filterArray["jobs_approved_till_date"],
+          filterArray[SLIDER_FILTER_KEY.POSTED_OFFERS],
       }),
     });
   };
@@ -279,9 +285,10 @@ const ManageCompaniesTable = () => {
             size: +pageSize,
             sortDirection: sortFilter?.sortDirection,
             sortField: sortFilter?.sortField,
-            jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+            jobs_approved_till_date:
+              filterArray[SLIDER_FILTER_KEY.JOBS_APPROVE],
             posts_offered_to_candidate_till_date:
-              filterArray["posts_offered_to_candidate_till_date"],
+              filterArray[SLIDER_FILTER_KEY.POSTED_OFFERS],
           }),
         });
       }

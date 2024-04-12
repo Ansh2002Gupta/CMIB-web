@@ -134,7 +134,13 @@ const SearchFilter = ({
   };
 
   const totalCount = Object.values(filterArray).reduce(
-    (total, currentArray) => {
+    (total, currentArray, index) => {
+      if (filterPropertiesArray[index]?.isSlider) {
+        if (currentArray?.length) {
+          return total + 1;
+        }
+        return total;
+      }
       return total + currentArray?.length;
     },
     0
@@ -240,6 +246,23 @@ const SearchFilter = ({
               rightSection={
                 filterPropertiesArray[selectedIndex]?.isSlider ? (
                   <div className={styles.sliderContainer}>
+                    {
+                      <Typography className={styles.sliderLabel}>
+                        {currentFilterStatus[
+                          filterPropertiesArray[selectedIndex]?.id
+                        ]?.length
+                          ? `${
+                              currentFilterStatus[
+                                filterPropertiesArray[selectedIndex]?.id
+                              ][0]
+                            } - ${
+                              currentFilterStatus[
+                                filterPropertiesArray[selectedIndex]?.id
+                              ][1]
+                            }`
+                          : `0-0`}
+                      </Typography>
+                    }
                     <Slider
                       range
                       tipProps={{ visible: true }}

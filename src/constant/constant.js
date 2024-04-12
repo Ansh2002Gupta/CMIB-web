@@ -590,3 +590,8 @@ export const SOURCE_OF_INFORM_ICAI_OPTIONS = [
 ];
 
 export const SLIDER_DEFAULT_VALUE = [0, 20];
+
+export const SLIDER_FILTER_KEY = {
+  JOBS_APPROVE: "jobs_approved_till_date",
+  POSTED_OFFERS: "posts_offered_to_candidate_till_date",
+};
