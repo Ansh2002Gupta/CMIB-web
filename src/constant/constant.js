@@ -576,3 +576,5 @@ export const SOURCE_OF_INFORM_ICAI_OPTIONS = [
   "Programme brochure from ICAI",
   "Advertisement in the Chartered Accountant Journal",
 ];
+
+export const SLIDER_DEFAULT_VALUE = [0, 20];

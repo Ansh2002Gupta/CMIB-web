@@ -9,11 +9,16 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import DataTable from "../../components/DataTable";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
 import SearchableComponent from "../../components/SearchableComponent";
+import SearchFilter from "../../components/SearchFilter/SearchFilter";
 import getCompaniesColumn from "./ManageCompanyTableConfig";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
 import useFetch from "../../core/hooks/useFetch";
 import { urlService } from "../../Utils/urlService";
-import { getValidPageNumber, getValidPageSize } from "../../constant/utils";
+import {
+  getValidPageNumber,
+  getValidPageSize,
+  getValidFilter,
+} from "../../constant/utils";
 import { validateSearchTextLength } from "../../Utils/validations";
 import { DEBOUNCE_TIME, PAGINATION_PROPERTIES } from "../../constant/constant";
 import {
@@ -30,6 +35,11 @@ const ManageCompaniesTable = () => {
   const [currentDataLength, setCurrentDataLength] = useState(0);
   const [sortBy, setSortBy] = useState("");
   const [sortFilter, setSortFilter] = useState({});
+  const [showFilters, setShowFilters] = useState(false);
+  const [filterArray, setFilterArray] = useState(
+    getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
+  );
+
   const [current, setCurrent] = useState(
     getValidPageNumber(
       urlService.getQueryStringValue(PAGINATION_PROPERTIES.CURRENT_PAGE)
@@ -43,6 +53,22 @@ const ManageCompaniesTable = () => {
   const [searchedValue, setSearchedValue] = useState(
     urlService.getQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY) || ""
   );
+
+  const filterPropertiesArray = [
+    {
+      id: "jobs_approved_till_date",
+      name: intl.formatMessage({ id: "label.jobsApprovedTillDate" }),
+      isSelected: false,
+      isSlider: true,
+    },
+    {
+      id: "posts_offered_to_candidate_till_date",
+      name: intl.formatMessage({ id: "label.postsOfferedApplicantsTillDate" }),
+      isSelected: false,
+      isSlider: true,
+    },
+  ];
+
   const navigate = useNavigate();
 
   const { renderColumn } = useRenderColumn();
@@ -68,9 +94,28 @@ const ManageCompaniesTable = () => {
         size: +pageSize,
         sortDirection: sortFilter?.sortDirection,
         sortField: sortFilter?.sortField,
+        jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+        posts_offered_to_candidate_till_date:
+          filterArray["posts_offered_to_candidate_till_date"],
       }),
     });
   }, []);
+
+  const onFilterApply = (currentFilterStatus) => {
+    setFilterArray(currentFilterStatus);
+    urlService.setQueryStringValue(
+      PAGINATION_PROPERTIES.FILTER,
+      encodeURIComponent(JSON.stringify(currentFilterStatus))
+    );
+    getCompanyListing({
+      queryParamsObject: getRequestedParams({
+        search: validateSearchTextLength(searchedValue),
+        jobs_approved_till_date: currentFilterStatus["jobs_approved_till_date"],
+        posts_offered_to_candidate_till_date:
+          currentFilterStatus["posts_offered_to_candidate_till_date"],
+      }),
+    });
+  };
 
   const debounceSearch = useMemo(() => {
     return _.debounce(getCompanyListing, DEBOUNCE_TIME);
@@ -84,6 +129,9 @@ const ManageCompaniesTable = () => {
       search: searchedValue,
       sortDirection: sortDetails?.sortDirection,
       sortField: sortDetails?.sortDirection ? sortDetails?.sortField : "",
+      jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+      posts_offered_to_candidate_till_date:
+        filterArray["posts_offered_to_candidate_till_date"],
     });
     getCompanyListing({ queryParamsObject: requestedParams });
     if (sortDetails.sortDirection) {
@@ -99,6 +147,8 @@ const ManageCompaniesTable = () => {
     size,
     sortDirection,
     sortField,
+    jobs_approved_till_date,
+    posts_offered_to_candidate_till_date,
   }) => {
     return {
       perPage: size || pageSize,
@@ -106,6 +156,9 @@ const ManageCompaniesTable = () => {
       name: search || "",
       sortOrder: sortDirection,
       sortBy: sortField,
+      jobs_approved_till_date: jobs_approved_till_date || [],
+      posts_offered_to_candidate_till_date:
+        posts_offered_to_candidate_till_date || [],
     };
   };
 
@@ -136,6 +189,9 @@ const ManageCompaniesTable = () => {
         size: +size,
         sortDirection: sortFilter?.sortDirection,
         sortField: sortFilter?.sortField,
+        jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+        posts_offered_to_candidate_till_date:
+          filterArray["posts_offered_to_candidate_till_date"],
       }),
     });
   };
@@ -153,6 +209,9 @@ const ManageCompaniesTable = () => {
         search: validateSearchTextLength(searchedValue),
         sortDirection: sortFilter?.sortDirection,
         sortField: sortFilter?.sortField,
+        jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+        posts_offered_to_candidate_till_date:
+          filterArray["posts_offered_to_candidate_till_date"],
       }),
     });
   };
@@ -166,6 +225,9 @@ const ManageCompaniesTable = () => {
           search: validateSearchTextLength(str),
           sortDirection: sortFilter?.sortDirection,
           sortField: sortFilter?.sortField,
+          jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+          posts_offered_to_candidate_till_date:
+            filterArray["posts_offered_to_candidate_till_date"],
         }),
       });
       urlService.setQueryStringValue(PAGINATION_PROPERTIES.SEARCH_QUERY, str);
@@ -180,6 +242,8 @@ const ManageCompaniesTable = () => {
         queryParamsObject: getRequestedParams({
           page: 1,
           search: "",
+          jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+          jobs_approved_till_date: filterArray["jobs_approved_till_date"],
         }),
       });
       urlService.removeParam(PAGINATION_PROPERTIES.SEARCH_QUERY);
@@ -194,6 +258,9 @@ const ManageCompaniesTable = () => {
         search: validateSearchTextLength(searchedValue),
         sortDirection: sortFilter?.sortDirection,
         sortField: sortFilter?.sortField,
+        jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+        posts_offered_to_candidate_till_date:
+          filterArray["jobs_approved_till_date"],
       }),
     });
   };
@@ -212,6 +279,9 @@ const ManageCompaniesTable = () => {
             size: +pageSize,
             sortDirection: sortFilter?.sortDirection,
             sortField: sortFilter?.sortField,
+            jobs_approved_till_date: filterArray["jobs_approved_till_date"],
+            posts_offered_to_candidate_till_date:
+              filterArray["posts_offered_to_candidate_till_date"],
           }),
         });
       }
@@ -256,12 +326,26 @@ const ManageCompaniesTable = () => {
           <TwoRow
             className={styles.mainContainer}
             topSection={
-              <SearchableComponent
-                {...{ searchedValue, handleOnUserSearch }}
-                placeholder={intl.formatMessage({
-                  id: "label.searchByCompanyUsername",
-                })}
-              />
+              <div className={styles.filterContainer}>
+                <SearchableComponent
+                  customSearchBar={styles.customSearchBar}
+                  {...{ searchedValue, handleOnUserSearch }}
+                  placeholder={intl.formatMessage({
+                    id: "label.searchByCompanyUsername",
+                  })}
+                />
+                <div style={{ flex: 2 }}>
+                  <SearchFilter
+                    {...{
+                      filterPropertiesArray,
+                      filterArray,
+                      showFilters,
+                      onFilterApply,
+                      setShowFilters,
+                    }}
+                  />
+                </div>
+              </div>
             }
             bottomSection={
               <DataTable
