@@ -190,7 +190,10 @@ const CompanyDetailsCa = ({
         <div className={styles.errorContainer}>
           <ErrorMessageBox
             {...{ onRetry }}
-            errorText={errorWhileGettingCompanyData}
+            errorText={
+              errorWhileGettingCompanyData?.data?.message ||
+              errorWhileGettingCompanyData
+            }
             errorHeading={intl.formatMessage({
               id: "label.error",
             })}

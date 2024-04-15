@@ -63,13 +63,13 @@ const DetailsCard = ({
         }
         bottomSection={
           item?.isImage ? (
-            <Image
-              src={item.value ? item?.value : getImage("company_placeholder")}
-              width={340}
-              height={240}
-              className={styles.logoStyle}
-              alt={"company_logo"}
-            />
+            <div className={styles.imageContaier}>
+              <Image
+                src={item.value ? item?.value : getImage("company_placeholder")}
+                className={styles.logoStyle}
+                alt={"company_logo"}
+              />
+            </div>
           ) : item?.isHtmlElement ? (
             <CustomTextEditor
               value={item?.value}
@@ -168,7 +168,6 @@ const DetailsCard = ({
           updateUserData={handleUploadImage}
           deletedImage={deletedImage}
           setDeletedImage={setDeletedImage}
-          subHeading={intl.formatMessage({ id: item?.label })}
         />
       );
     }

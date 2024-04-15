@@ -13,3 +13,7 @@
   gap: var(--gapSmall);
   padding-bottom: var(--paddingMedium);
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
