@@ -20,8 +20,6 @@ const CustomInput = React.forwardRef(
       customInputStyles,
       customLabelStyles,
       customSelectInputStyles,
-      defaultSelectValueArray,
-      defaultSelectValueString,
       disabled,
       errorInput,
       errorMessage,
@@ -45,6 +43,7 @@ const CustomInput = React.forwardRef(
       placeholder,
       prefixElement,
       precision,
+      rows,
       selectOptions,
       SuffixIcon,
       type,
@@ -53,6 +52,7 @@ const CustomInput = React.forwardRef(
     ref
   ) => {
     const inputFieldRef = useRef();
+    const { TextArea } = Input;
 
     const restoreCursorPosition = () => {
       let selectionStart = inputFieldRef?.current?.input?.selectionStart;
@@ -89,7 +89,6 @@ const CustomInput = React.forwardRef(
         e.preventDefault();
       }
     };
-
     return (
       <Base className={[styles.container, customContainerStyles].join(" ")}>
         {!!label && (
@@ -108,31 +107,29 @@ const CustomInput = React.forwardRef(
           ref={ref}
         >
           {type === "select" && (
-            <>
-              <Select
-                mode={isMultiSelect ? "multiple" : ""}
-                className={[styles.selectInput, customSelectInputStyles].join(
-                  " "
-                )}
-                onChange={(changedValue) => {
-                  onSelectItem({
-                    target: {
-                      value: changedValue,
-                    },
-                  });
-                }}
-                options={selectOptions}
-                defaultValue={
-                  isMultiSelect
-                    ? defaultSelectValueArray
-                    : defaultSelectValueString
-                }
-                disabled={isSelectBoxDisable}
-              />
-            </>
+            <Select
+              mode={isMultiSelect ? "multiple" : ""}
+              className={[
+                styles.selectInput,
+                customSelectInputStyles,
+                isError && errorMessage ? styles.selectBoxError : "",
+              ].join(" ")}
+              onChange={(changedValue) => {
+                onSelectItem({
+                  target: {
+                    value: changedValue,
+                  },
+                });
+              }}
+              value={value}
+              options={selectOptions}
+              placeholder={placeholder}
+              disabled={isSelectBoxDisable}
+            />
           )}
-          {type !== "select" && type !== "inputNumber" && type !== "mobile" && (
-            <Input
+          {type === "textArea" && (
+            <TextArea
+              rows={rows}
               ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
               type={type || "text"}
               style={classes.inputStyle}
@@ -185,6 +182,63 @@ const CustomInput = React.forwardRef(
               }
             />
           )}
+          {type !== "select" &&
+            type !== "inputNumber" &&
+            type !== "mobile" &&
+            type !== "textArea" && (
+              <Input
+                ref={isSuffixRequiredForPassword ? inputFieldRef : ref}
+                type={type || "text"}
+                style={classes.inputStyle}
+                className={[
+                  styles.inputField,
+                  customInputStyles,
+                  isError && errorMessage ? styles.errorInput : "",
+                ].join(" ")}
+                {...{
+                  value,
+                  placeholder,
+                  disabled,
+                  maxLength,
+                  onChange,
+                  onBlur,
+                }}
+                prefix={isPrefixRequired ? prefixElement : null}
+                suffix={
+                  <>
+                    {isSuffixRequiredForPassword &&
+                      (isTextVisible ? (
+                        <span
+                          className={styles.suffixElement}
+                          onClick={() => {
+                            onSuffixElementClick && restoreCursorPosition();
+                          }}
+                        >
+                          <EyeOutlined />
+                        </span>
+                      ) : (
+                        <span
+                          className={styles.suffixElement}
+                          onClick={() => {
+                            onSuffixElementClick && restoreCursorPosition();
+                          }}
+                        >
+                          <EyeInvisibleOutlined />
+                        </span>
+                      ))}
+                    {SuffixIcon && (
+                      <span className={styles.suffixElement}>
+                        <SuffixIcon
+                          onClick={() => {
+                            onSuffixElementClick && onSuffixElementClick();
+                          }}
+                        />
+                      </span>
+                    )}
+                  </>
+                }
+              />
+            )}
           {type === "inputNumber" && (
             <InputNumber
               maxLength={maxLength}
@@ -200,6 +254,7 @@ const CustomInput = React.forwardRef(
               parser={(value) => value.replace(/[^\d]/g, "")} // Allows only digits
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
+              prefix={isPrefixRequired ? prefixElement : null}
               {...{
                 value,
                 placeholder,
@@ -219,7 +274,7 @@ const CustomInput = React.forwardRef(
                 isError ? styles.showError : "",
               ].join(" ")}
             >
-              {errorMessage ? `${errorMessage}` : ""}
+              {errorMessage ? `${errorMessage}` : " "}
             </Typography>
           </div>
         )}
@@ -246,8 +301,6 @@ CustomInput.defaultProps = {
   customInputStyles: "",
   customLabelStyles: "",
   customSelectInputStyles: "",
-  defaultSelectValueArray: [],
-  defaultSelectValueString: "",
   disabled: false,
   errorInput: "",
   errorMessage: "",
@@ -271,6 +324,7 @@ CustomInput.defaultProps = {
   prefixElement: null,
   precision: 0,
   ref: null,
+  rows: 4,
   selectOptions: [],
   SuffixIcon: null,
   type: "",
@@ -285,8 +339,6 @@ CustomInput.propTypes = {
   customInputStyles: PropTypes.string,
   customLabelStyles: PropTypes.string,
   customSelectInputStyles: PropTypes.string,
-  defaultSelectValueArray: PropTypes.array,
-  defaultSelectValueString: PropTypes.string,
   disabled: PropTypes.bool,
   errorInput: PropTypes.string,
   errorMessage: PropTypes.string,
@@ -311,6 +363,7 @@ CustomInput.propTypes = {
   prefixElement: PropTypes.node,
   precision: PropTypes.number,
   ref: PropTypes.func,
+  rows: PropTypes.number,
   selectOptions: PropTypes.array,
   SuffixIcon: PropTypes.node,
   type: PropTypes.string,

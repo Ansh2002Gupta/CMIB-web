@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { ThemeContext } from "core/providers/theme";
 import { Image, Spin, Typography } from "antd";
@@ -25,9 +25,17 @@ import {
   ADMIN_ROUTE,
   CENTRE_END_POINT,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import { SESSION } from "../../routes/routeNames";
-import { MODULE_KEYS, PAYMENT_TYPE, ROUND_ID } from "../../constant/constant";
+import {
+  API_STATUS,
+  API_VERSION_QUERY_PARAM,
+  MODULE_KEYS,
+  PAYMENT_TYPE,
+  ROUND_ID,
+  SESSION_ID_QUERY_PARAM,
+} from "../../constant/constant";
 import { NUMERIC_VALUE_REGEX } from "../../constant/regex";
 import { classes } from "./SetupCenter.styles";
 import styles from "./SetupCenter.module.scss";
@@ -35,6 +43,7 @@ import styles from "./SetupCenter.module.scss";
 const SetupCenter = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const location = useLocation();
   const { getImage } = useContext(ThemeContext);
   const [globalSessionDetails] = useContext(GlobalSessionContext);
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -48,6 +57,9 @@ const SetupCenter = () => {
   const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
     (item) => item.id === globalSessionDetails?.globalSessionId
   );
+
+  const sessionId = globalSessionDetails?.globalSessionId;
+  const hasRoundTwo = location?.pathname.includes("round2");
 
   const { showNotification, notificationContextHolder } = useShowNotification();
   const { updateSessionRoundDetails } = useUpdateSessionRoundDetailsApi();
@@ -76,14 +88,17 @@ const SetupCenter = () => {
     error: errorWhileGettingCentres,
     fetchData: getSetupCentres,
     isLoading: isGettingSetupCentres,
+    apiStatus,
   } = useFetch({
     url:
       ADMIN_ROUTE +
       `/${selectedModule?.key}` +
       ROUNDS +
       `/${roundId}` +
-      CENTRE_END_POINT,
+      CENTRE_END_POINT +
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: { skipApiCallOnMount: true },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
   });
 
   useEffect(() => {
@@ -108,6 +123,7 @@ const SetupCenter = () => {
   }, [userProfileDetails?.selectedModuleItem]);
 
   useModuleWiseApiCall({
+    otherOptions: { sessionId, isApiCallDependentOnSessionId: true },
     initialApiCall: () => {
       if (roundId) {
         getSetupCentres({});
@@ -194,7 +210,7 @@ const SetupCenter = () => {
         </div>
       );
     }
-    if (isGettingSetupCentres) {
+    if (isGettingSetupCentres || apiStatus === API_STATUS.IDLE) {
       return (
         <div className={styles.loaderContainer}>
           <Spin size="large" />
@@ -206,9 +222,15 @@ const SetupCenter = () => {
       return (
         <div className={styles.errorContainer}>
           <ErrorMessageBox
-            errorText={intl.formatMessage({
-              id: "label.select_centres_error_msg",
-            })}
+            errorText={
+              hasRoundTwo
+                ? intl.formatMessage({
+                    id: "label.select_centres_error_msg_round_two",
+                  })
+                : intl.formatMessage({
+                    id: "label.select_centres_error_msg",
+                  })
+            }
             errorHeading={intl.formatMessage({
               id: "label.error",
             })}
@@ -251,6 +273,7 @@ const SetupCenter = () => {
       },
       roundId: roundId,
       selectedModuleKey: selectedModule?.key,
+      sessionId,
     });
   };
 

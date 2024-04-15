@@ -1,0 +1,23 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapMedium, 24px);
+  flex: 1;
+  padding-left: var(--paddingMedium, 12px);
+  padding-right: var(--paddingMedium, 24px);
+}
+
+.ButtonCustomContainerStyle {
+  border: var(--borderLight, 1px solid #ccd0e5);
+  background-color: var(--bodyBg, #ffffff);
+  padding: var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px);
+  border-radius: var(--radiusLg, 8px);
+}
+
+.errorContainer {
+  width: var(--fullWidth, 100%);
+  height: var(--fullHeight, 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

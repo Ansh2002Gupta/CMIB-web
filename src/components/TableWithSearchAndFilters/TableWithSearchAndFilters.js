@@ -25,7 +25,7 @@ const TableWithSearchAndFilters = ({
   onChangePageSize,
   pageSize,
   placeholder,
-  RightSection,
+  rightSection,
   searchedValue,
   setFilterArray,
   isLoading,
@@ -73,7 +73,7 @@ const TableWithSearchAndFilters = ({
             }}
           />
         </div>
-        {RightSection}
+        {rightSection}
       </div>
       {!isLoading ? (
         <DataTable
@@ -107,6 +107,7 @@ TableWithSearchAndFilters.defaultProps = {
   onChangeCurrentPage: () => {},
   onChangePageSize: () => {},
   onFilterApply: () => {},
+  rightSection: <></>,
   pageSize: DEFAULT_PAGE_SIZE,
   searchedValue: "",
 };
@@ -122,6 +123,7 @@ TableWithSearchAndFilters.propTypes = {
   onChangeCurrentPage: PropTypes.func,
   onChangePageSize: PropTypes.func,
   onFilterApply: PropTypes.func,
+  rightSection: PropTypes.element,
   pageSize: PropTypes.number,
   placeholder: PropTypes.string,
   searchedValue: PropTypes.string,

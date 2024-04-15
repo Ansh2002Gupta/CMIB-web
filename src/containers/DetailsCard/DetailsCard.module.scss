@@ -1,0 +1,117 @@
+.customStyle {
+  row-gap: var(--gapSmall, 16px);
+}
+
+.customLabelStyles {
+  font-size: var(--fontSizeExtraSmall, 12px) !important;
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--inputPlaceHolder, #616c82);
+}
+
+.customValueStyles {
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+  color: var(--textBold, #000833);
+}
+
+.customHeaderStyles {
+  font-size: var(--fontSizeNormal, 16px);
+  font-weight: var(--fontWeightBold, 600);
+  color: var(--textBold, #000833);
+}
+
+.singleGrid {
+  grid-template-columns: unset;
+}
+.logoStyle {
+  padding-top: var(--marginMedium, 16px);
+}
+
+.customInputNumberStyles {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  padding: 8px 4px;
+  height: var(--height_44);
+  font-weight: var(--fontWeightMedium);
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: var(--inputPlaceHolder) !important;
+  }
+}
+.customInputStyles {
+  color: var(--textBold) !important;
+  font-size: var(--fontSizeSmall);
+  height: var(--height_44);
+  font-weight: 400;
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background-color: var(--bodyBg);
+  &::placeholder {
+    color: var(--v) !important;
+  }
+}
+
+.gridItem {
+  grid-column: 1 / -1;
+}
+
+.remainWidth {
+  grid-column: 2 / -1;
+}
+
+.customChipContainerStyles {
+  background-color: var(--snow, #f2f4fc);
+}
+
+.chipContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--gapXSmall, 8px);
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.customLabelStyles {
+  color: var(--inputPlaceHolder, #616c82);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
+}
+
+.viewItemStyle {
+  gap: var(--gapXSmall, 8px);
+}
+
+.text {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.input {
+  display: flex;
+  padding: 12px var(--paddingSmall);
+  align-items: center;
+  gap: var(--gapXSmall);
+  align-self: stretch;
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background: var(--bodyBg);
+  font-weight: var(--fontWeightMedium, 500) !important;
+}
+
+.selectInput {
+  padding: 0px;
+  min-height: var(--height_44);
+}
+
+.customContaierStyles {
+  border-width: 0;
+  padding: 0;
+  border-radius: 0;
+}

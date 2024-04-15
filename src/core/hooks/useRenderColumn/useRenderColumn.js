@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import { Dropdown, Image, Switch, Tooltip, Typography } from "antd";
 
-import { TwoColumn } from "../../layouts";
+import { TwoColumn, TwoRow } from "../../layouts";
 
 import AutoPlaceComplete from "../../../components/AutoPlaceComplete";
 import Chip from "../../../components/Chip/Chip";
@@ -32,9 +32,11 @@ const useRenderColumn = () => {
     renderDateTime = {},
     render,
     renderChip = {},
+    renderDropdown = {},
     renderImage = {},
     renderInput = {},
     renderMenu = {},
+    renderActions = {},
     renderSorterColumn,
     renderText = {},
     renderTextWithCheckBoxes = {},
@@ -60,6 +62,7 @@ const useRenderColumn = () => {
 
     const {
       customContainerStyles,
+      customInputStyle,
       customTimeStyle,
       defaultValue,
       disabled = false,
@@ -70,10 +73,12 @@ const useRenderColumn = () => {
       getError = () => {},
       isEditable = true,
       isRequired = false,
+      isSpacedError = false,
       onChange = () => {},
       placeholder = "",
       type,
       disabledDate = () => {},
+      useExactDate,
     } = renderDateTime;
 
     const {
@@ -103,11 +108,20 @@ const useRenderColumn = () => {
 
     const {
       items = [],
+      isConditionalMenu = false,
       menuSrc = "",
       onMenuClick = () => {},
       menuPreview,
       triggerType = "",
     } = renderMenu;
+
+    const {
+      actionSrc = "",
+      onActionClick = () => {},
+      actionPreview,
+      actionTriggerType = "",
+      customActionPairs = () => {},
+    } = renderActions;
 
     const {
       onClickCheckbox = () => {},
@@ -117,18 +131,27 @@ const useRenderColumn = () => {
     } = renderTextWithCheckBoxes;
 
     const {
+      centreStyles,
       includeDotAfterText,
+      isCentre,
+      isBooleanHandlerKey = null,
       isTextBold,
+      isTimeInHoursMinuteSecondFormat,
       isTypeDate,
+      isTypeTime,
       textStyles,
       isCapitalize,
+      isDays,
       isRequiredTooltip,
+      isTextLink,
       isMoney,
       isYearRange,
+      isNumber,
       mobile,
       isIntl,
       isDataObject,
       dataKey,
+      onClickColumn = () => {},
     } = renderText;
 
     const {
@@ -165,6 +188,12 @@ const useRenderColumn = () => {
     } = renderTitleWithCheckbox;
 
     const getStatusStyles = (status) => {
+      if (status === 1) {
+        return ["statusContainer_success", "statusText_success"];
+      }
+      if (status === 0) {
+        return ["statusContainer_inactive", "statusText_inactive"];
+      }
       if (
         status?.toLowerCase() === "closed" ||
         status?.toLowerCase() === "answered"
@@ -178,6 +207,9 @@ const useRenderColumn = () => {
     };
 
     const textRenderFormat = ({ text }) => {
+      if (isBooleanHandlerKey) {
+        return intl.formatMessage({ id: `approve.${text}` });
+      }
       if (isDataObject) {
         return text[dataKey] || "-";
       }
@@ -186,6 +218,13 @@ const useRenderColumn = () => {
           time: dayjs(text, "HH:mm:ss"),
         })}`;
       }
+      if (isTypeTime) {
+        return formatTime({
+          time: text,
+          usePassedTime: true,
+          isTimeInHoursMinuteSecondFormat,
+        });
+      }
       if (includeDotAfterText) {
         return `${text} .`;
       }
@@ -193,15 +232,21 @@ const useRenderColumn = () => {
         return intl.formatMessage({ id: `label.${text}` });
       }
       if (isMoney) {
-        return `${text} INR`;
+        return `${text} ${intl.formatMessage({ id: "label.inr" })}`;
       }
-      if (text) {
+      if (isDays) {
+        return `${text} ${intl.formatMessage({ id: "label.days" })}`;
+      }
+      if (text || typeof text === "number") {
         return text;
+      }
+      if (isNumber) {
+        return !!text ? text : 0;
       }
       return "-";
     };
 
-    const getRenderText = (text) => {
+    const getRenderText = (text, rowData) => {
       return (
         <p
           className={[
@@ -209,7 +254,11 @@ const useRenderColumn = () => {
             isTextBold ? styles.boldText : "",
             styles.textEllipsis,
             isCapitalize ? styles.capitalize : "",
+            isTextLink ? styles.linkStyles : "",
           ].join(" ")}
+          onClick={() => {
+            onClickColumn(rowData);
+          }}
         >
           {textRenderFormat({ text: text })}
         </p>
@@ -224,6 +273,7 @@ const useRenderColumn = () => {
             isTextBold ? styles.boldText : "",
             styles.textEllipsis,
             isCapitalize ? styles.capitalize : "",
+            isTextLink ? styles.linkStyles : "",
           ].join(" ")}
         >
           {data?.use_more_experience
@@ -239,6 +289,19 @@ const useRenderColumn = () => {
                     : "label.years",
               })}`}
         </p>
+      );
+    };
+
+    const getRenderCentre = (data) => {
+      return (
+        <TwoRow
+          topSection={getRenderText(data?.centre_name)}
+          bottomSection={
+            <p className={[centreStyles, styles.customCentreStyles].join(" ")}>
+              {intl.formatMessage({ id: `label.${data?.centre_size}` })}
+            </p>
+          }
+        />
       );
     };
 
@@ -356,6 +419,7 @@ const useRenderColumn = () => {
                 isTextBold ? styles.boldText : "",
                 styles.textEllipsis,
                 isCapitalize ? styles.capitalize : "",
+                isTextLink ? styles.linkStyles : "",
               ].join(" ")}
             >
               {`${
@@ -365,11 +429,53 @@ const useRenderColumn = () => {
               }-${text}`}
             </p>
           ) : isRequiredTooltip ? (
-            <Tooltip title={text}>{getRenderText(text)}</Tooltip>
+            <Tooltip title={text}>{getRenderText(text, rowData)}</Tooltip>
           ) : isYearRange ? (
             getRenderYearRange(rowData)
+          ) : isCentre ? (
+            getRenderCentre(rowData)
           ) : (
             getRenderText(isDataObject ? rowData : text)
+            // getRenderText(text, rowData)
+          ),
+        };
+      });
+
+    renderDropdown.visible &&
+      (columnObject.render = (value, rowData, index) => {
+        const {
+          dropdownItems = [],
+          dropdownPlaceholder = "",
+          customInputStyles,
+          customStyles,
+          dropdownDisabled = false,
+          getDropdownError = () => {},
+          onDropdownChange = () => {},
+          selectedValue = () => {},
+        } = renderDropdown;
+        const defaultValue = !!selectedValue(rowData)
+          ? selectedValue(rowData)
+          : null;
+
+        return {
+          props: {
+            className: customStyles,
+          },
+          children: (
+            <CustomInput
+              type="select"
+              customSelectInputStyles={customInputStyles}
+              selectOptions={dropdownItems}
+              onSelectItem={(val) => {
+                onDropdownChange(val?.target?.value, rowData, index);
+              }}
+              placeholder={dropdownPlaceholder}
+              isSelectBoxDisable={dropdownDisabled}
+              errorMessage={getDropdownError(index)}
+              isError={!!getDropdownError(index)}
+              errorInput={!!getDropdownError(index) && styles.errorTimeInput}
+              value={defaultValue}
+            />
           ),
         };
       });
@@ -381,7 +487,13 @@ const useRenderColumn = () => {
         const styleClassForText = getStatusStyles(status)[1];
         return (
           <Chip
-            label={status}
+            label={
+              status === 1
+                ? intl.formatMessage({ id: "label.active" })
+                : status === 0
+                ? intl.formatMessage({ id: "label.inactive" })
+                : status
+            }
             customContainerStyles={[
               styles.chipContainer,
               styles[styleClassForContainer],
@@ -503,12 +615,62 @@ const useRenderColumn = () => {
 
     renderMenu.visible &&
       (columnObject.render = (_, rowData) => {
+        const menuItems = isConditionalMenu
+          ? {
+              items: items(rowData).map((item) => ({
+                key: item.key,
+                label: (
+                  <div
+                    onClick={
+                      onMenuClick
+                        ? () => onMenuClick(rowData, item.key)
+                        : () => {}
+                    }
+                    className={styles.dropdownMenuItem}
+                  >
+                    {item.label}
+                  </div>
+                ),
+              })),
+            }
+          : {
+              items: items.map((item) => ({
+                key: item.key,
+                label: (
+                  <div
+                    onClick={
+                      onMenuClick
+                        ? () => onMenuClick(rowData, item.key)
+                        : () => {}
+                    }
+                    className={styles.dropdownMenuItem}
+                  >
+                    {item.label}
+                  </div>
+                ),
+              })),
+            };
+        return (
+          <Dropdown menu={menuItems} trigger={[triggerType || "click"]}>
+            <Image
+              src={menuSrc}
+              className={styles.moreIcon}
+              preview={menuPreview}
+            />
+          </Dropdown>
+        );
+      });
+
+    renderActions.visible &&
+      (columnObject.render = (_, rowData) => {
         const menuItems = {
-          items: items.map((item) => ({
-            key: item.key,
+          items: customActionPairs(rowData)?.map((item, index) => ({
+            key: index,
             label: (
               <div
-                onClick={onMenuClick ? () => onMenuClick(rowData) : () => {}}
+                onClick={
+                  onActionClick ? () => onActionClick(rowData, item) : () => {}
+                }
                 className={styles.dropdownMenuItem}
               >
                 {item.label}
@@ -517,11 +679,11 @@ const useRenderColumn = () => {
           })),
         };
         return (
-          <Dropdown menu={menuItems} trigger={[triggerType || "click"]}>
+          <Dropdown menu={menuItems} trigger={[actionTriggerType || "click"]}>
             <Image
-              src={menuSrc}
+              src={actionSrc}
               className={styles.moreIcon}
-              preview={menuPreview}
+              preview={actionPreview}
             />
           </Dropdown>
         );
@@ -537,15 +699,18 @@ const useRenderColumn = () => {
             <CustomDateTimePicker
               {...{
                 customContainerStyles,
+                customInputStyle,
                 customTimeStyle,
                 defaultValue,
                 disabled,
                 format,
                 isEditable,
                 isRequired,
+                isSpacedError,
                 type,
                 placeholder,
                 value,
+                useExactDate,
               }}
               errorTimeInput={
                 ((record?.isAddRow && errorMessage) || getError(index)) &&

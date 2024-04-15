@@ -26,6 +26,7 @@
   padding: var(--paddingSmall);
   gap: var(--gapXSmall);
   display: flex;
+  min-height: var(--height_55);
   align-items: center;
   justify-content: center;
   border: var(--borderLight);
@@ -181,6 +182,18 @@
   font-size: var(--fontSizeSmall);
   font-weight: var(--fontWeightMedium);
   color: var(--bodyBg, #fff);
+}
+
+.sliderContainer {
+  padding: var(--padding_20);
+}
+
+.sliderLabel {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+  line-height: var(--lineHeightNormal);
+  text-align: center;
+  color: var(--inputText);
 }
 
 @media screen and (max-width: 900px) and (min-width: 510px) {

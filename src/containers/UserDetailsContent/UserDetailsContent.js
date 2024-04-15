@@ -50,7 +50,7 @@ const UserDetailsContent = ({
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [, setNotificationStateDispatch] = useContext(NotificationContext);
-  const { handleDeleteImage } = useDeleteImageApi();
+  const { handleDeleteImage } = useDeleteImageApi({ isCompany: false });
   const [deletedImage, setDeletedImage] = useState([]);
   const isActionBtnDisable =
     !userData?.name || !userData?.email || !userData?.mobile || !isAccessValid;
@@ -297,6 +297,8 @@ const UserDetailsContent = ({
                     ? viewUserData?.profile_photo
                     : userData?.profile_photo
                 }
+                heading={intl.formatMessage({ id: "label.profilePhoto" })}
+                subHeading={intl.formatMessage({ id: "label.photo_text" })}
                 isNotAddable
               />
             </div>

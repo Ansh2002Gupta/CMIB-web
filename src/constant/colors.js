@@ -30,6 +30,7 @@ export const colorPallets = {
   ltGrey4: "#717B9E",
   ltGrey5: "#d9d9d9",
   ltGrey6: "#CCD0E5",
+  ltGrey7: "#667085",
   lightGrey: "#cccccc",
   mediumGrey: "#B1B3B5",
   darkGrey1: "#616C82",
@@ -37,6 +38,7 @@ export const colorPallets = {
   fadedGrey: "grey",
   letGrey7: "#bfbfbf",
   disableColor: "rgba(0, 0, 0, 0.04)",
+  ltGreyBg: "#F1F1F1",
 
   // Black color shades
   black1: "#000833",
@@ -58,6 +60,7 @@ export const colorPallets = {
   white2: "#fafafa",
   snow: "#F2F4FC",
   whiteSmoke: "#f5f5f5",
+  inactiveWhite: "#F1F1F1",
 
   //Yellow color shades
   yellow1: "#fabb00",

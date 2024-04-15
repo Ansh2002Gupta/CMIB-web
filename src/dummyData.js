@@ -239,6 +239,100 @@ export const COMPANIES_FILTER_DATA = [
   },
 ];
 
+
+export const CANDIDATE_DUMMY_DATA = [
+  {
+    id: "1",
+    name: "John Doe",
+    email: "johndoe@example.com",
+    member_id: "NRO0123456"
+  },
+  {
+    id: "2",
+    name: "Jane Smith",
+    email: "janesmith@example.com",
+    member_id: "NRO0123457"
+  },
+  {
+    id: "3",
+    name: "William Johnson",
+    email: "williamjohnson@example.com",
+    member_id: "NRO0123458"
+  },
+  {
+    id: "4",
+    name: "Emma Williams",
+    email: "emmawilliams@example.com",
+    member_id: "NRO0123459"
+  },
+  {
+    id: "5",
+    name: "Olivia Brown",
+    email: "oliviabrown@example.com",
+    member_id: "NRO0123460"
+  },
+  {
+    id: "6",
+    name: "Michael Davis",
+    email: "michaeldavis@example.com",
+    member_id: "NRO0123461"
+  },
+  {
+    id: "7",
+    name: "Emily Garcia",
+    email: "emilygarcia@example.com",
+    member_id: "NRO0123462"
+  },
+  {
+    id: "8",
+    name: "James Wilson",
+    email: "jameswilson@example.com",
+    member_id: "NRO0123463"
+  },
+  {
+    id: "9",
+    name: "Charlotte Miller",
+    email: "charlottemiller@example.com",
+    member_id: "NRO0123464"
+  },
+  {
+    id: "10",
+    name: "Benjamin Moore",
+    email: "benjaminmoore@example.com",
+    member_id: "NRO0123465"
+  },
+  {
+    id: "11",
+    name: "Sophia Taylor",
+    email: "sophiataylor@example.com",
+    member_id: "NRO0123466"
+  },
+  {
+    id: "12",
+    name: "Lucas Anderson",
+    email: "lucasanderson@example.com",
+    member_id: "NRO0123467"
+  },
+  {
+    id: "13",
+    name: "Harper Thomas",
+    email: "harperthomas@example.com",
+    member_id: "NRO0123468"
+  },
+  {
+    id: "14",
+    name: "Mason Jackson",
+    email: "masonjackson@example.com",
+    member_id: "NRO0123469"
+  },
+  {
+    id: "15",
+    name: "Evelyn White",
+    email: "evelynwhite@example.com",
+    member_id: "NRO0123470"
+  }
+]
+
 export const SESSION_DETAILS = {
   name: "Jadyn Bartoletti",
   session_start_date: "2023-12-19T05:11:46.000000Z",
@@ -332,211 +426,6 @@ export const MOCK_INTERVIEW = [
     totalStudentBooked: "12",
   },
 ];
-
-export const CONSENT_MARKING_REGESTRATION_DETAILS = [
-  {
-    id: 1,
-    sNo: "1",
-    centreName: "Ghaziabad-I",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 2,
-    sNo: "2",
-    centreName: "Ghaziabad-II",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 3,
-    sNo: "3",
-    centreName: "Meerut-I",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 4,
-    sNo: "4",
-    centreName: "Meerut-II",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 5,
-    sNo: "5",
-    centreName: "Delhi-I",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 6,
-    sNo: "6",
-    centreName: "Delhi-II",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 7,
-    sNo: "7",
-    centreName: "Ahmedabad-I",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 8,
-    sNo: "8",
-    centreName: "Ahmedabad-II",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 9,
-    sNo: "9",
-    centreName: "Akola-I",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 10,
-    sNo: "10",
-    centreName: "Akola-II",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 11,
-    sNo: "11",
-    centreName: "Akola-III",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-  {
-    id: 12,
-    sNo: "12",
-    centreName: "Akola-III",
-    companyStartDate: "2023-12-19T05:11:46.000000Z",
-    companyEndDate: "2023-12-19T05:11:46.000000Z",
-    consentFromDate: "2023-12-19T05:11:46.000000Z",
-    consentToDate: "2023-12-19T05:11:46.000000Z",
-  },
-];
-
-export const LAST_MARKING_REGESTRATION_DETAILS = [
-  {
-    id: 1,
-    sNo: "1",
-    centreName: "Ghaziabad-I",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 2,
-    sNo: "2",
-    centreName: "Ghaziabad-II",
-    lastRegistrationDate: null,
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 3,
-    sNo: "3",
-    centreName: "Meerut-I",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 4,
-    sNo: "4",
-    centreName: "Meerut-II",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 5,
-    sNo: "5",
-    centreName: "Delhi-I",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 6,
-    sNo: "6",
-    centreName: "Delhi-II",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 7,
-    sNo: "7",
-    centreName: "Ahmedabad-I",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 8,
-    sNo: "8",
-    centreName: "Ahmedabad-II",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 9,
-    sNo: "9",
-    centreName: "Akola-I",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 10,
-    sNo: "10",
-    centreName: "Akola-II",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 11,
-    sNo: "11",
-    centreName: "Akola-III",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-  {
-    id: 12,
-    sNo: "12",
-    centreName: "Akola-III",
-    lastRegistrationDate: "2023-08-21T05:11:46.000000Z",
-    psychometricTestDate: "2022-11-07T05:11:46.000000Z",
-  },
-];
-
-export const REGISTRATION_DATES = {
-  startDateCompanies: "2023-12-19T05:11:46.000000Z",
-  startDateCandidates: "2023-12-19T05:11:46.000000Z",
-  lastDateBigCentres: "2023-12-19T05:11:46.000000Z",
-  lastDateSmallCentres: "2023-12-19T05:11:46.000000Z",
-};
 
 export const PERMISION_AND_ROLE = {
   error: false,

@@ -7,25 +7,25 @@
 
 .inputLabelContainer {
   display: flex;
-  gap: var(--gapXXSmall);
-  padding-bottom: var(--paddingXXSmall);
+  gap: var(--gapXXSmall, 4px);
+  padding-bottom: var(--paddingXXSmall, 4px);
 }
 
 .timeInput {
-  min-height: var(--height_44);
-  background-color: var(--bodyBg);
-  border: var(--borderLight);
+  min-height: var(--height_44, 44px);
+  background-color: var(--bodyBg, #ffffff);
+  border: var(--borderLight, 1px solid #ccd0e5);
 }
 
 .errorText {
-  color: var(--error);
-  font-weight: var(--fontWeightMedium);
-  font-size: var(--fontSizeExtraSmall);
-  margin-top: var(--marginXXSmall);
+  color: var(--error, #D93400);
+  font-weight: var(--fontWeightMedium, 500);
+  font-size: var(--fontSizeExtraSmall, 12px);
+  margin-top: var(--marginXXSmall, 4px);
 }
 
 .dateText {
-  color: var(--textBold);
-  font-weight: var(--fontWeightMedium);
-  font-size: var(--fontSizeSmall);
+  color: var(--textBold, #000833);
+  font-weight: var(--fontWeightMedium, 500);
+  font-size: var(--fontSizeSmall, 14px);
 }

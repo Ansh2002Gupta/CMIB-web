@@ -1,79 +1,80 @@
 .container {
-  padding: var(--paddingMedium);
-  background-color: var(--bodyBg);
+  padding: var(--paddingMedium, 24px);
+  background-color: var(--bodyBg, #ffffff);
   display: flex;
   flex-direction: column;
-  gap: var(--gapLarge);
-  border-radius: var(--radiusXLg);
-  width: var(--widthViewPort_35);
-  max-width: var(--width_500);
-  border: var(--borderLight);
+  gap: var(--gapLarge, 32px);
+  border-radius: var(--radiusXLg, 12px);
+  width: var(--widthViewPort_35, 35vw);
+  max-width: var(--width_500, 500px);
+  border: var(--borderLight, 1px solid #ccd0e5);
 }
 
 .topSection {
   display: flex;
   flex-direction: column;
-  gap: var(--gapMedium);
+  gap: var(--gapMedium, 24px);
 }
 
 .errorIcon {
-  width: var(--width_48);
-  height: var(--height_48);
+  width: var(--width_48, 48px);
+  height: var(--height_48, 48px);
 }
 
 .headingAndSubHeadingContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--gapXSmall);
+  gap: var(--gapXSmall, 8px);
 }
 
 .errorHeading {
-  color: var(--textBold);
-  font-size: var(--fontSizeXlarge);
-  font-weight: var(--fontWeightBold);
+  color: var(--textBold, #000833);
+  font-size: var(--fontSizeXlarge, 20px);
+  font-weight: var(--fontWeightBold, 600);
 }
 
 .errorSubHeading {
-  color: var(--subHeadingColor);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor, #616c82);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
 }
 
 .btn {
-  background-color: var(--error);
-  min-height: var(--height_50);
-  color: var(--headerBg);
-  font-size: var(--fontSizeSmall);
-  font-weight: var(--fontWeightMedium);
+  background-color: var(--error, #d93400);
+  min-height: var(--height_50, 50px);
+  color: var(--headerBg, #f5f5f5);
+  font-size: var(--fontSizeSmall, 14px);
+  font-weight: var(--fontWeightMedium, 500);
   display: flex;
-  padding: var(--paddingMediumSmall) var(--paddingSmall);
+  padding: var(--paddingMediumSmall, 12px) var(--paddingSmall, 16px);
   justify-content: center;
   align-items: center;
-  gap: var(--gapXSmall);
+  gap: var(--gapXSmall, 8px);
   flex: 1 0 0;
-  border-radius: var(--radiusLg);
+  border-radius: var(--radiusLg, 8px);
   &:hover {
-    color: var(--black1) !important;
+    background-color: var(--error, #d93400) !important;
+    color: var(--headerBg, #f5f5f5) !important;
   }
 }
 
-.btnContainer{
-  width: var(--fullWidth);
+.btnContainer {
+  width: var(--fullWidth, 100%);
 }
 
 @media screen and (max-width: 767px) {
   .btn {
-    min-height: var(--height_32);
-    font-size: var(--fontSizeExtraSmall);
+    min-height: var(--height_40, 40px);
+    font-size: var(--fontSizeExtraSmall, 12px);
   }
   .errorHeading {
-    font-size: var(--fontSizeNormal);
+    font-size: var(--fontSizeNormal, 16px);
   }
   .errorSubHeading {
-    font-size: var(--fontSizeExtraSmall);
+    font-size: var(--fontSizeExtraSmall, 12px);
   }
   .container {
-    padding: var(--paddingSmall);
-    width: var(--widthViewPort_65);
+    padding: var(--paddingSmall, 16px);
+    width: var(--widthViewPort_65, 65vw);
   }
 }

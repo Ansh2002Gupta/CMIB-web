@@ -11,29 +11,33 @@ import { ThemeContext } from "core/providers/theme";
 import { GlobalSessionContext } from "../../globalContext/globalSession/globalSessionProvider";
 import { NotificationContext } from "../../globalContext/notification/notificationProvider";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import useFetch from "../../core/hooks/useFetch";
 import useDownload from "../../core/hooks/useDownload";
-import useShowNotification from "../../core/hooks/useShowNotification";
+import useFetch from "../../core/hooks/useFetch";
 import useNavigateScreen from "../../core/hooks/useNavigateScreen";
 import useRenderColumn from "../../core/hooks/useRenderColumn/useRenderColumn";
-import { updateInterviewNotification } from "../../globalContext/notification/notificationActions";
+import useShowNotification from "../../core/hooks/useShowNotification";
 import getSetupMockColumn from "./SetupMockInterviewConfig";
+import { updateInterviewNotification } from "../../globalContext/notification/notificationActions";
 import { urlService } from "../../Utils/urlService";
 
 import {
+  API_VERSION_QUERY_PARAM,
   ROUND_ID,
   NOTIFICATION_TYPES,
   STATUS_CODES,
+  SESSION_ID_QUERY_PARAM,
+  API_STATUS,
 } from "../../constant/constant";
 import {
   CORE_ROUTE,
   DOWNLOAD,
   MOCK_INTERVIEWS,
-  ORIENTATION_CENTRES,
   ROUNDS,
+  UPDATED_API_VERSION,
 } from "../../constant/apiEndpoints";
 import { SESSION } from "../../routes/routeNames";
 import { classes } from "./SetupMockInterview.styles";
+import useModuleWiseApiCall from "../../core/hooks/useModuleWiseApiCall";
 import commonStyles from "../../common/commonStyles.module.scss";
 import styles from "./SetupMockInterview.module.scss";
 
@@ -47,22 +51,42 @@ const SetupMockInterviewContent = () => {
     useContext(NotificationContext);
   const currentlySelectedModuleKey =
     userProfileDetails?.selectedModuleItem?.key;
-
   const roundId = urlService.getQueryStringValue(ROUND_ID);
+  const [globalSessionDetails] = useContext(GlobalSessionContext);
+
+  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
+    (item) => item.id === globalSessionDetails?.globalSessionId
+  );
+  const sessionId = globalSessionDetails?.globalSessionId;
+
   const {
     data,
     error: errorWhileFetchingInterview,
     isLoading: isGettingInterview,
     fetchData,
+    apiStatus,
   } = useFetch({
     url:
       CORE_ROUTE +
       `/${currentlySelectedModuleKey}` +
       ROUNDS +
       `/${roundId}` +
-      MOCK_INTERVIEWS,
+      MOCK_INTERVIEWS +
+      `?${SESSION_ID_QUERY_PARAM}=${sessionId}`,
     otherOptions: {
       skipApiCallOnMount: true,
+    },
+    apiOptions: { headers: { [API_VERSION_QUERY_PARAM]: UPDATED_API_VERSION } },
+  });
+
+  useModuleWiseApiCall({
+    otherOptions: { isApiCallDependentOnSessionId: true, sessionId },
+    initialApiCall: () => {
+      if (roundId) {
+        fetchData({});
+      } else {
+        navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
+      }
     },
   });
 
@@ -73,11 +97,8 @@ const SetupMockInterviewContent = () => {
     initiateDownload,
   } = useDownload({});
 
-  const [globalSessionDetails] = useContext(GlobalSessionContext);
   const { showNotification, notificationContextHolder } = useShowNotification();
-  const currentGlobalSession = globalSessionDetails?.globalSessionList?.find(
-    (item) => item.id === globalSessionDetails?.globalSessionId
-  );
+
   const isEdit =
     currentGlobalSession?.is_editable && currentGlobalSession?.status;
 
@@ -124,16 +145,6 @@ const SetupMockInterviewContent = () => {
   );
 
   useEffect(() => {
-    if (userProfileDetails?.selectedModuleItem?.key) {
-      if (roundId) {
-        fetchData({});
-        return;
-      }
-      navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
-    }
-  }, [userProfileDetails?.selectedModuleItem?.key]);
-
-  useEffect(() => {
     if (errorWhileFetchingInterview?.data?.code === STATUS_CODES.NOT_FOUND) {
       navigate(`/${currentlySelectedModuleKey}/${SESSION}`);
     }
@@ -168,7 +179,7 @@ const SetupMockInterviewContent = () => {
           />
         }
         bottomSection={
-          isGettingInterview ? (
+          isGettingInterview || apiStatus === API_STATUS.IDLE ? (
             <div className={commonStyles.errorContainer}>
               <CustomLoader />
             </div>

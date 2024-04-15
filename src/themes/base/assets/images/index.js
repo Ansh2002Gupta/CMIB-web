@@ -6,10 +6,12 @@ import arrowLeft from "./arrow-left.svg";
 import arrowRight from "./arrow-right.svg";
 import arrowRightFilter from "./arrow-right-filter.svg";
 import blackArrowDown from "./blackArrowDown.svg";
+import blackArrowUp from "./blackArrowUp.svg";
 import Building from "./Building.svg";
 import checkedBox from "./checkedBox.svg";
 import checkIconWhite from "./check-white.svg";
 import calendar from "./calendar.svg";
+import whiteCalender from "./whiteCalender.svg";
 import clock from "./clock.svg";
 import cancel from "./cancel.svg";
 import CircleCheck from "./CircleCheck.svg";
@@ -74,6 +76,10 @@ import disabledArrow from "./disabled arrow.svg";
 import iconProfileAdd from "./iconProfileAdd.svg";
 import iconProfileAddDisabled from "./iconProfileAddDisabled.svg";
 import disableEdit from "../icons/disableEdit.svg";
+import company_placeholder from "../images/company_placeholder.svg";
+import moreIcon from "./more.svg";
+import arrowDownNoCircle from "./arrow-down-no-circle.svg";
+import brifCase from "./briefcase.svg";
 
 const images = {
   activeSend,
@@ -84,6 +90,7 @@ const images = {
   arrowRight,
   arrowRightFilter,
   blackArrowDown,
+  blackArrowUp,
   Building,
   checkedBox,
   download,
@@ -152,6 +159,11 @@ const images = {
   iconProfileAdd,
   iconProfileAddDisabled,
   disableEdit,
+  company_placeholder,
+  moreIcon,
+  arrowDownNoCircle,
+  brifCase,
+  whiteCalender,
 };
 
 export default images;

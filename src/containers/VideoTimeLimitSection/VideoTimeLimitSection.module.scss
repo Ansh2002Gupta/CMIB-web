@@ -1,0 +1,77 @@
+.outerContainer {
+  background-color: var(--bodyBg);
+  padding: var(--paddingMedium);
+  border-radius: var(--radiusMLg);
+  border: var(--borderLight);
+  margin-bottom: var(--marginMedium);
+  width: var(--fullWidth);
+}
+
+.outerFlexColWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gapXXSmall);
+  width: var(--fullWidth);
+}
+
+.topSectionHeader {
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--headingColor);
+  margin-bottom: var(--marginLarge);
+}
+
+.topSectionLabel {
+  font-size: var(--fontSizeExtraSmall);
+  font-weight: var(--fontWeightMedium);
+  color: var(--subHeadingColor);
+}
+
+.inputNumberOuterContainer {
+  border: var(--borderLight);
+  border-radius: var(--radiusLg);
+  display: flex;
+  flex-direction: row;
+  gap: var(--gapXXSmall);
+}
+
+.width_350 {
+  width: var(--width_350);
+}
+
+.width_200 {
+  width: var(--width_200);
+}
+
+.inputNumberMainContainer {
+  border-radius: var(--radiusLg);
+  padding-left: var(--paddingSmall);
+  padding-right: var(--paddingSmall);
+  padding-top: var(--paddingMediumSmall);
+  padding-bottom: var(--paddingMediumSmall);
+  width: var(--fullWidth);
+}
+
+.arrowContainer {
+  display: flex;
+  flex-direction: column;
+  padding-right: var(--paddingSmall);
+}
+
+.imageStyle {
+  cursor: pointer;
+}
+
+.inputNumberStyle {
+  width: var(--fullWidth);
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
+  padding: var(--padding_9) var(--padding_5);
+  font-size: var(--fontSizeSmall);
+  line-height: var(--lineHeightNormal);
+}
+
+.errorInput {
+  border: var(--borderError) !important;
+}
