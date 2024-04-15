@@ -22,138 +22,151 @@ import {
   transformedOptionsStates,
 } from "../../constant/utils";
 
-const company_details = ({ intl, industryData, stateData }) => [
-  {
-    key: "company_name",
-    isMandatory: true,
-    label: "label.companyName",
-    placeholder: "label.companyName",
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
+const company_details = ({ intl, industryData, stateData, entityValue }) => {
+  const BASE_OPTIONS = [
+    {
+      key: "company_name",
+      isMandatory: true,
+      label: "label.companyName",
+      placeholder: "label.companyName",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+      },
+      isCapitalize: true,
     },
-    isCapitalize: true,
-  },
-  {
-    key: "company_entity",
-    isMandatory: true,
-    label: "label.entity",
-    placeholder: "label.entity",
-    type: "select",
-    selectOptions: ENTITY_OPTIONS,
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
+    {
+      key: "company_entity",
+      isMandatory: true,
+      label: "label.entity",
+      placeholder: "label.entity",
+      type: "select",
+      selectOptions: ENTITY_OPTIONS,
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+      },
     },
-  },
-  {
-    key: "comapny_frn",
-    isMandatory: true,
-    label: "label.firmRegistrationNo",
-    placeholder: "label.firmRegistrationNo",
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
-    },
-  },
-  {
-    key: "company_partners",
-    isMandatory: true,
-    label: "label.numberOfPartner",
-    placeholder: "label.numberOfPartner",
-    type: "inputNumber",
-    controls: true,
-    maxLength: 3,
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
-    },
-  },
-  {
-    key: "current_industry",
-    isMandatory: true,
-    label: "label.currentIndustry",
-    placeholder: "label.currentIndustry",
-    isoptionObject: true,
-    type: "select",
-    selectOptions: transformedOptions(industryData),
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
-    },
-  },
+  ];
 
-  {
-    key: "correspondance_address",
-    isMandatory: true,
-    label: "label.addressOfCorrespondance",
-    placeholder: "label.addressOfCorrespondance",
-    type: "textArea",
-    rows: 3,
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
+  const MANDOTARY_OPTIONS = [
+    {
+      key: "current_industry",
+      isMandatory: true,
+      label: "label.currentIndustry",
+      placeholder: "label.currentIndustry",
+      isoptionObject: true,
+      type: "select",
+      selectOptions: transformedOptions(industryData),
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+      },
     },
-    isCapitalize: true,
-  },
-  {
-    key: "company_state",
-    isMandatory: true,
-    label: "label.state",
-    placeholder: "label.state",
-    isState: true,
-    type: "select",
-    selectOptions: transformedOptionsStates(stateData),
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
+
+    {
+      key: "correspondance_address",
+      isMandatory: true,
+      label: "label.addressOfCorrespondance",
+      placeholder: "label.addressOfCorrespondance",
+      type: "textArea",
+      rows: 3,
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+      },
+      isCapitalize: true,
     },
-    isCapitalize: true,
-  },
-  {
-    key: "company_email",
-    isMandatory: true,
-    label: "label.emailId",
-    placeholder: "label.emailId",
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
-      if (!EMAIL_REGEX.test(value)) {
-        return intl.formatMessage({ id: "label.invalidEmail" });
-      }
+    {
+      key: "company_state",
+      isMandatory: true,
+      label: "label.state",
+      placeholder: "label.state",
+      isState: true,
+      type: "select",
+      selectOptions: transformedOptionsStates(stateData),
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+      },
+      isCapitalize: true,
     },
-  },
-  {
-    key: "company_std",
-    isMandatory: true,
-    label: "label.isdCode",
-    placeholder: "label.stdPlaceholder",
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
+    {
+      key: "company_email",
+      isMandatory: true,
+      label: "label.emailId",
+      placeholder: "label.emailId",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+        if (!EMAIL_REGEX.test(value)) {
+          return intl.formatMessage({ id: "label.invalidEmail" });
+        }
+      },
     },
-  },
-  {
-    key: "company_telephone",
-    isMandatory: true,
-    label: "label.telephoneNumber",
-    placeholder: "label.telephoneNumber",
-    validate: (value) => {
-      if (!value) {
-        return intl.formatMessage({ id: "label.fieldRequired" });
-      }
+    {
+      key: "company_std",
+      isMandatory: true,
+      label: "label.isdCode",
+      placeholder: "label.stdPlaceholder",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+      },
     },
-  },
-];
+    {
+      key: "company_telephone",
+      isMandatory: true,
+      label: "label.telephoneNumber",
+      placeholder: "label.telephoneNumber",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+      },
+    },
+  ];
+
+  const FIRM_CA_OPTIONS = [
+    {
+      key: "comapny_frn",
+      isMandatory: true,
+      label: "label.firmRegistrationNo",
+      placeholder: "label.firmRegistrationNo",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+      },
+    },
+    {
+      key: "company_partners",
+      isMandatory: true,
+      label: "label.numberOfPartner",
+      placeholder: "label.numberOfPartner",
+      type: "inputNumber",
+      controls: true,
+      maxLength: 3,
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({ id: "label.fieldRequired" });
+        }
+      },
+    },
+  ];
+
+  return entityValue === "Firm of chartered accountants"
+    ? [...BASE_OPTIONS, ...FIRM_CA_OPTIONS, ...MANDOTARY_OPTIONS]
+    : [...BASE_OPTIONS, ...MANDOTARY_OPTIONS];
+};
+
 const contact_person_details = ({ intl, countryData }) => [
   {
     key: "salutation",
@@ -288,8 +301,6 @@ const company_logo = ({ intl }) => [
   {
     key: "company_logo_image",
     keyName: "company_logo_name",
-    label: "label.companyIciaMessage",
-    placeholder: "label.companyIciaMessage",
     isImage: true,
     isCompany: true,
   },
@@ -316,7 +327,11 @@ const addValueOnField = ({ state, details, isEditable }) => {
     if (item?.isPhone) {
       return {
         ...item,
-        value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+        value: !isEditable
+          ? !state?.[item?.key]
+            ? "--"
+            : `${state[item?.countryKey]} ${state?.[item?.key]}`
+          : state?.[item?.key],
         countryValue: state[item?.countryKey],
       };
     }
@@ -362,7 +377,12 @@ export const useCompanyDetailsCa = ({ state, isEditable }) => {
     url: CORE_COUNTRIES,
   });
   const [company_details_state, setCompany_details_state] = useState(
-    company_details({ intl, industryData, stateData })
+    company_details({
+      intl,
+      industryData,
+      stateData,
+      entityValue: state?.company_entity,
+    })
   );
   const [contact_person_details_state, setContact_person_details_state] =
     useState(contact_person_details({ intl, countryData }));
@@ -377,12 +397,17 @@ export const useCompanyDetailsCa = ({ state, isEditable }) => {
 
   useEffect(() => {
     setCompany_details_state(
-      company_details({ intl, industryData, stateData })
+      company_details({
+        intl,
+        industryData,
+        stateData,
+        entityValue: state?.company_entity,
+      })
     );
     setContact_person_details_state(
       contact_person_details({ intl, countryData })
     );
-  }, [industryData, stateData, countryData]);
+  }, [industryData, stateData, countryData, state?.company_entity]);
 
   const validateOnBlur = ({ state, details, key, index, intl }) => {
     const value = state[key];
