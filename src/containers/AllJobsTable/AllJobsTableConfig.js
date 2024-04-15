@@ -89,12 +89,12 @@ export const getQueryColumn = ({
     }),
     renderColumn({
       title: intl.formatMessage({
-        id: "label.approval_by_admin",
+        id: "label.active/inactive",
       }),
       customColumnHeading: styles.columnHeading,
       dataIndex: "status",
       key: "status",
-      renderText: {
+      renderChip: {
         visible: true,
       },
     }),
