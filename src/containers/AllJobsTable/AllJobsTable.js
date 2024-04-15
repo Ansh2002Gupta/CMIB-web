@@ -219,7 +219,6 @@ const AllJobsTable = ({
   };
 
   const handleOnFilterApply = (updatedFiltersValue) => {
-    console.log(updatedFiltersValue, "updatedFiltersValue");
     setCurrent(1);
     let arrayAsString = filterArray?.length ? JSON.stringify(filterArray) : "";
 
@@ -341,17 +340,15 @@ const AllJobsTable = ({
           onCancel={() => handleOnCancel()}
           customContainerStyles={styles.companyDetailsCaContainer}
         >
-          <div >
-            <CompanyDetailsCa
-              {...{
-                data: companyDetailData,
-                errorWhileGettingCompanyData,
-                isGettingCompanyData,
-                getCompanyData,
-                isEditCompanyAvailable,
-              }}
-            />
-          </div>
+          <CompanyDetailsCa
+            {...{
+              data: companyDetailData,
+              errorWhileGettingCompanyData,
+              isGettingCompanyData,
+              getCompanyData,
+              isEditCompanyAvailable,
+            }}
+          />
         </CommonModal>
       ) : null}
       {!isError && (
