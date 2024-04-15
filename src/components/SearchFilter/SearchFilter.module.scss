@@ -30,6 +30,7 @@
   align-items: center;
   justify-content: center;
   border: var(--borderLight);
+  height: var(--height_55) !important;
   &:hover {
     border: var(--borderLight) !important;
   }

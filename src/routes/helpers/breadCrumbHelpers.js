@@ -17,7 +17,7 @@ export const getLabelForPath = ({ isEdit, path, pathSegments }) => {
     return "label.path.editDetails";
   }
   if (path === "details") {
-    const relevantSegment = pathSegments.find(
+    const relevantSegment = pathSegments?.find(
       (segment) => segment === "users" || SESSION_PATHS.includes(segment)
     );
     const labelId = detailPageBreadCrumbLabelId[relevantSegment] || "";

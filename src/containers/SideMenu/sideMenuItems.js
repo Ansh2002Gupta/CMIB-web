@@ -8,6 +8,7 @@ import {
   SUBSCRIPTIONS,
   QUERIES,
   TICKETS,
+  MANAGE_PAYMENTS,
   CANDIDATES,
 } from "../../routes/routeNames";
 import { MODULE_KEYS, MENU_KEYS } from "../../constant/constant";
@@ -73,7 +74,7 @@ const caJobsMenu = [
   },
   {
     label: MENU_KEYS.MANAGE_PAYMENTS,
-    key: "/payments",
+    key: MANAGE_PAYMENTS,
     icon: <Wallet />,
     selectedicon: <SelectedWallet />,
   },
