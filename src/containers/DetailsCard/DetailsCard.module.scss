@@ -24,7 +24,22 @@
   grid-template-columns: unset;
 }
 .logoStyle {
-  padding-top: var(--marginMedium, 16px);
+  width: var(--fullWidth);
+  object-fit: contain;
+  max-height: var(--height_184, 184px) !important;
+  min-height: var(--height_184, 184px) !important;
+}
+
+.imageContaier {
+  border: var(--borderLight);
+  border-radius: var(--radiusMLg);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 40vw;
+  max-width: var(--width_400);
+  overflow: hidden;
+  position: relative;
 }
 
 .customInputNumberStyles {

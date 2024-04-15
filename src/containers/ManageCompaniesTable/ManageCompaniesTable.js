@@ -158,7 +158,7 @@ const ManageCompaniesTable = () => {
     return {
       perPage: size || pageSize,
       page: page || current,
-      name: search || "",
+      q: search || "",
       sortOrder: sortDirection,
       sortBy: sortField,
       jobs_approved_till_date: jobs_approved_till_date || [],
