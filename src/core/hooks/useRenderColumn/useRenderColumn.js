@@ -183,7 +183,7 @@ const useRenderColumn = () => {
       }
       if (isTypeDate) {
         return `${formatDate({ date: text })}, ${formatTime({
-          time: dayjs(text, "HH:mm:ss"),
+          time: text,
         })}`;
       }
       if (includeDotAfterText) {
