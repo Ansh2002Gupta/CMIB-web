@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { isValueEmpty } from "../../constant/utils";
 
 const job_details = () => [
   {
@@ -213,10 +214,16 @@ const job_details = () => [
 
 const addValueOnField = ({ state, details, isEditable }) => {
   return details.map((item) => {
-    if (item?.isImage || item?.isToggle || item?.isStatus || item?.isYear) {
+    if (item?.isImage || item?.isToggle || item?.isStatus ) {
       return {
         ...item,
         value: state?.[item?.key],
+      };
+    }
+    if(item?.isYear){
+      return {
+        ...item,
+        value: !isEditable && isValueEmpty(state?.[item?.key]) ? "--" : state?.[item?.key],
       };
     }
     return {
