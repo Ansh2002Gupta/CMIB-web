@@ -14,7 +14,12 @@ import useFetch from "../../core/hooks/useFetch";
 import { getQueryColumn } from "./AllJobsTableConfig";
 import useShowNotification from "../../core/hooks/useShowNotification";
 import { urlService } from "../../Utils/urlService";
-import { ADMIN_ROUTE, JOBS, REGISTERED_COMPANIES, SUMMARY } from "../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  JOBS,
+  REGISTERED_COMPANIES,
+  SUMMARY,
+} from "../../constant/apiEndpoints";
 import { ReactComponent as ArrowDown } from "../../themes/base/assets/images/arrow-down.svg";
 import {
   DEBOUNCE_TIME,
@@ -46,6 +51,7 @@ const AllJobsTable = ({
   const [filterArray, setFilterArray] = useState(
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
+  console.log(filterArray, "filterArray");
 
   const [selectedJobId, setSelectedJobId] = useState("");
   const [selectedCompanyId, setCompanyId] = useState("");
@@ -71,9 +77,9 @@ const AllJobsTable = ({
     otherOptions: { skipApiCallOnMount: true },
   });
 
-  useEffect(()=> {
+  useEffect(() => {
     if (selectedCompanyId) {
-      getCompanyData({})
+      getCompanyData({});
       setOpenCompanyDetails(true);
     }
   }, [selectedCompanyId]);
@@ -207,11 +213,13 @@ const AllJobsTable = ({
     const requestedParams = getRequestedParams({
       page: newPageNumber,
       q: searchedValue,
+      updatedFiltersValue: filterArray,
     });
     fetchData({ queryParamsObject: requestedParams });
   };
 
   const handleOnFilterApply = (updatedFiltersValue) => {
+    console.log(updatedFiltersValue, "updatedFiltersValue");
     setCurrent(1);
     let arrayAsString = filterArray?.length ? JSON.stringify(filterArray) : "";
 
@@ -310,9 +318,9 @@ const AllJobsTable = ({
 
   const isEditCompanyAvailable = true;
   const handleOnCancel = () => {
-    setOpenCompanyDetails(false)
+    setOpenCompanyDetails(false);
     setCompanyId("");
-  }
+  };
 
   return (
     <>
@@ -331,14 +339,19 @@ const AllJobsTable = ({
           width={1200}
           closeIcon={true}
           onCancel={() => handleOnCancel()}
+          customContainerStyles={styles.companyDetailsCaContainer}
         >
-          <CompanyDetailsCa {...{
-            data: companyDetailData,
-            errorWhileGettingCompanyData,
-            isGettingCompanyData,
-            getCompanyData,
-            isEditCompanyAvailable,
-          }} />
+          <div >
+            <CompanyDetailsCa
+              {...{
+                data: companyDetailData,
+                errorWhileGettingCompanyData,
+                isGettingCompanyData,
+                getCompanyData,
+                isEditCompanyAvailable,
+              }}
+            />
+          </div>
         </CommonModal>
       ) : null}
       {!isError && (
