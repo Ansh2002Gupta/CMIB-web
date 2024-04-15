@@ -25,7 +25,7 @@ const TableWithSearchAndFilters = ({
   onChangePageSize,
   pageSize,
   placeholder,
-  RightSection,
+  rightSection,
   searchedValue,
   setFilterArray,
   isLoading,
@@ -73,7 +73,7 @@ const TableWithSearchAndFilters = ({
             }}
           />
         </div>
-        {RightSection}
+        {rightSection}
       </div>
       {!isLoading ? (
         <DataTable
