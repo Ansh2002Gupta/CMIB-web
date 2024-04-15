@@ -15,7 +15,11 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import { getCurrentActiveTab } from "../../constant/utils";
 import { urlService } from "../../Utils/urlService";
 import { STATUS_CODES, VALID_COMPANIES_TABS_ID } from "../../constant/constant";
-import { ADMIN_ROUTE, REGISTERED_COMPANIES } from "../../constant/apiEndpoints";
+import {
+  ADMIN_ROUTE,
+  MANAGE,
+  COMPANY_ROUTE,
+} from "../../constant/apiEndpoints";
 import { classes } from "./ManageCompanyDetails.styles";
 import styles from "./ManageCompanyDetails.module.scss";
 import { COMPANIES } from "../../routes/routeNames";
@@ -41,7 +45,7 @@ const ManageCompanyDetails = () => {
     isLoading: isGettingCompanyData,
     fetchData: getCompanyData,
   } = useFetch({
-    url: ADMIN_ROUTE + REGISTERED_COMPANIES + "/" + companyId,
+    url: ADMIN_ROUTE + MANAGE + "/" + COMPANY_ROUTE + "/" + companyId,
   });
 
   useEffect(() => {
