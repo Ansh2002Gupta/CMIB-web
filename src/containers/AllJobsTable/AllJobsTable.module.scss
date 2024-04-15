@@ -179,6 +179,20 @@ input::placeholder {
   margin-left: -8px;
 }
 
-.companyDetailsCaContainer {
-  height: 90vh;
+.CompanyDetailsCaModal {
+  padding-top: var(--margin_40, 40px);
+}
+
+.modalContainerStyle {
+  padding: var(--paddingMedium, 24px);
+}
+
+.headerText {
+  font-size: var(--fontSizeXlarge, 20px);
+  color: var(--textBold);
+  font-weight: var(--fontWeightBold, 600);
+}
+
+.companyDetailWrapper {
+  padding-bottom: 24px !important;
 }

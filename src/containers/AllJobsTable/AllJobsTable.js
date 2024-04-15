@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import * as _ from "lodash";
+import { Typography, Image } from "antd";
 
 import { ThemeContext } from "core/providers/theme";
 
@@ -34,6 +35,8 @@ import useApproveJobApi from "../../services/api-services/AllJob/useApproveJobAp
 import CommonModal from "../../components/CommonModal";
 import PostJobDetailsContainer from "../PostJobDetailsContainer";
 import CompanyDetailsCa from "../CompanyDetailsCa";
+import { TwoColumn, TwoRow } from "../../core/layouts";
+import { classes } from "./AllJobsTable.styles";
 
 const AllJobsTable = ({
   current,
@@ -332,21 +335,43 @@ const AllJobsTable = ({
         </CommonModal>
       ) : null}
       {openCompanyDetails ? (
-        <CommonModal
-          isOpen={openCompanyDetails}
-          width={1200}
-          closeIcon={true}
-          onCancel={() => handleOnCancel()}
-          customContainerStyles={styles.companyDetailsCaContainer}
-        >
-          <CompanyDetailsCa
-            {...{
-              data: companyDetailData,
-              errorWhileGettingCompanyData,
-              isGettingCompanyData,
-              getCompanyData,
-              isEditCompanyAvailable,
-            }}
+        <CommonModal isOpen={openCompanyDetails} width={1200}>
+          <TwoRow
+            className={styles.modalContainerStyle}
+            topSection={
+              <TwoColumn
+                isLeftFillSpace
+                leftSection={
+                  <Typography className={styles.headerText}>
+                    {/* {intl.formatMessage({ id: "label.postedJobDetails" })} */}
+                  </Typography>
+                }
+                rightSection={
+                  <Image
+                    src={getImage("cross")}
+                    preview={false}
+                    onClick={() => handleOnCancel()}
+                    className={styles.crossIcon}
+                    style={classes.crossIcon}
+                  />
+                }
+              />
+            }
+            bottomSection={
+              <div style={classes.customMainStyles}>
+                <div className={styles.companyDetailWrapper}>
+                  <CompanyDetailsCa
+                    {...{
+                      data: companyDetailData,
+                      errorWhileGettingCompanyData,
+                      isGettingCompanyData,
+                      getCompanyData,
+                      isEditCompanyAvailable,
+                    }}
+                  />
+                </div>
+              </div>
+            }
           />
         </CommonModal>
       ) : null}
