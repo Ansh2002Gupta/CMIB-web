@@ -34,6 +34,8 @@ const variables = {
   darkBlueBg1: colorPallets.blue9,
   lightGrey: colorPallets.lightGrey,
   disableColor: colorPallets.disableColor,
+  statusProgressBlue: colorPallets.blue10,
+  refundProgressBlue: colorPallets.letGrey7,
   ltGreyBg: colorPallets.ltGreyBg,
   inactiveWhite: colorPallets.inactiveWhite,
 
@@ -69,6 +71,8 @@ const variables = {
   whiteText: colorPallets.white,
   darkBlue2: colorPallets.darkBlue2,
   skyBlue: colorPallets.skyBlue,
+  statusTextBlue: colorPallets.darkBlue10,
+  pendingOrange: colorPallets.darkOrange,
 
   // Border-Radius
   radiusNone: "0px",

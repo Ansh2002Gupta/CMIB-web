@@ -62,6 +62,8 @@ export const ROUND_TWO = "/round-2";
 export const SEND_OTP = "/reset-password/request";
 export const SESSIONS = "/sessions";
 export const STATUS = "/status";
+export const COMPANY = "/company";
+export const PAYMENT_MODES = "/payment_modes";
 export const STATES = "/states";
 export const SUBSCRIPTIONS_END_POINT = "/subscriptions";
 export const SUBSCRIPTIONS = "/subscriptions";
@@ -73,6 +75,8 @@ export const USERS_END_POINT = "/users";
 export const VERIFY_OTP = "/otp/verify";
 export const REPLIES = "/replies";
 export const CLOSE = "/close";
+export const PAYMENT = "/payments";
+export const REFUND = "/refund";
 export const MEMBERS_END_POINT = "/members";
 export const CANDIDATE_DETAILS = "candidates-details";
 

@@ -18,6 +18,7 @@ import ManageCompanies from "../views/ManageCompanies/ManageCompanies.js";
 import ManageCompanyDetails from "../views/ManageCompanyDetails/ManageCompanyDetails.js";
 import ManageUsers from "../views/ManageUsers";
 import OrientationCenter from "../views/OrientationCenter";
+import PaymentListing from "../views/PaymentListing/PaymentListing";
 import RedirectToAccessedModule from "./components/RedirectToAccessModules";
 import RegisteredCompaniesList from "../views/RegisteredCompaniesList/RegisteredCompaniesList";
 import RegisteredCompaniesDetails from "../views/RegisteredCompaniesDetails/RegisteredCompaniesDetails";
@@ -57,6 +58,7 @@ import {
   FORGOT_PASSWORD,
   INTERVIEW_DETAILS,
   LOGIN,
+  MANAGE_PAYMENTS,
   OUT_SOURCED,
   QUERIES,
   QUERY_DETAILS,
@@ -217,11 +219,11 @@ const config = [
       },
       {
         viewPath: CANDIDATES,
-        element: <Candidates/>,
+        element: <Candidates />,
       },
       {
         viewPath: CANDIDATES + CANDIDATES_DETAILS,
-        element: <CandidateDetails/>,
+        element: <CandidateDetails />,
       },
       {
         viewPath: COMPANIES,
@@ -244,6 +246,10 @@ const config = [
         element: <ConfigureCentreView />,
       },
       {
+        viewPath: MANAGE_PAYMENTS,
+        element: <PaymentListing />,
+      },
+      {
         viewPath: SUBSCRIPTIONS + ADD_SUBSCRIPTIONS,
         element: <SubscriptionDetails isAddSubscription />,
       },
@@ -261,7 +267,7 @@ const config = [
       },
       {
         viewPath: JOB_LISTING + JOB_DETAILS + APPLICANTS_DETAILS,
-        element: <AllJobApplicantDetail />
+        element: <AllJobApplicantDetail />,
       },
     ],
   },

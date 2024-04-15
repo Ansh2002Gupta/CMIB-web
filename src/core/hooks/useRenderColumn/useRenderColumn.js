@@ -151,7 +151,7 @@ const useRenderColumn = () => {
       isIntl,
       isDataObject,
       dataKey,
-      onClickColumn = ()=> {},
+      onClickColumn = () => {},
     } = renderText;
 
     const {
@@ -214,7 +214,9 @@ const useRenderColumn = () => {
         return text[dataKey] || "-";
       }
       if (isTypeDate) {
-        return formatDate({ date: text });
+        return `${formatDate({ date: text })}, ${formatTime({
+          time: dayjs(text, "HH:mm:ss"),
+        })}`;
       }
       if (isTypeTime) {
         return formatTime({
@@ -254,7 +256,9 @@ const useRenderColumn = () => {
             isCapitalize ? styles.capitalize : "",
             isTextLink ? styles.linkStyles : "",
           ].join(" ")}
-          onClick={()=> {onClickColumn(rowData)}}
+          onClick={() => {
+            onClickColumn(rowData);
+          }}
         >
           {textRenderFormat({ text: text })}
         </p>
@@ -431,7 +435,8 @@ const useRenderColumn = () => {
           ) : isCentre ? (
             getRenderCentre(rowData)
           ) : (
-            getRenderText(text, rowData)
+            getRenderText(isDataObject ? rowData : text)
+            // getRenderText(text, rowData)
           ),
         };
       });
