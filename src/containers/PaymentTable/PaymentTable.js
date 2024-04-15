@@ -502,7 +502,7 @@ const PaymentTable = ({
             filterArray,
             setFilterArray,
           }}
-          RightSection={renderDownloadExcelButton()}
+          rightSection={renderDownloadExcelButton()}
           isLoading={isLoading}
           data={data?.records}
           currentDataLength={data?.meta?.total}
