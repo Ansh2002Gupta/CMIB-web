@@ -137,7 +137,7 @@ const PaymentTable = ({
 
   const debounceSearch = useMemo(() => {
     return _.debounce(fetchData, DEBOUNCE_TIME);
-  }, []);
+  }, [selectedModule?.key]);
 
   const paymentModeOptions = useMemo(() => {
     return paymentModes?.map((mode) => ({
