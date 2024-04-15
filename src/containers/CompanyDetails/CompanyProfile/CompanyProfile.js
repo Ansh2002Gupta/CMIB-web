@@ -24,11 +24,12 @@ const CompanyProfile = ({ companyProfileDetails }) => {
     companyProfileDetails?.entity || "",
     companyProfileDetails?.frn_number || "",
     companyProfileDetails?.number_of_partner || "",
-    companyProfileDetails?.company_type || "",
+    companyProfileDetails?.industry_type?.name || "",
     companyProfileDetails?.address || "",
     companyProfileDetails?.email || "",
     companyProfileDetails?.std_country_code || "",
-    companyProfileDetails?.telephone_number || ""
+    companyProfileDetails?.telephone_number || "",
+    companyProfileDetails?.state?.name || ""
   );
 
   const other_details = OTHER_DETAILS_FEILDS(

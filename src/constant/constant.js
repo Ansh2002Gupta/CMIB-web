@@ -448,7 +448,7 @@ export const MAX_CHARACTERS_IN_INPUT_FIELD = 999;
 export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 
 export const SHORTLISTED = "Shortlisted";
-export const INTERVIEW_SCHEDULED = "Interview Scheduled"
+export const INTERVIEW_SCHEDULED = "Interview Scheduled";
 
 export const PAYMENT_TYPE = {
   WHOLE: "whole",
@@ -599,3 +599,5 @@ export const SLIDER_FILTER_KEY = {
   JOBS_APPROVE: "jobs_approved_till_date",
   POSTED_OFFERS: "posts_offered_to_candidate_till_date",
 };
+
+export const PARAGRAPH_MAX_LENGTH = 2000;
