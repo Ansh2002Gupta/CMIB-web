@@ -42,7 +42,7 @@ const SearchFilter = ({
 
   const marks = {
     [0]: 0,
-    [100]: 100,
+    [1000]: 1000,
   };
 
   const handleFilter = (itemId, value) => {
@@ -265,6 +265,7 @@ const SearchFilter = ({
                     }
                     <Slider
                       range
+                      max={1000}
                       tipProps={{ visible: true }}
                       marks={marks}
                       defaultValue={SLIDER_DEFAULT_VALUE}

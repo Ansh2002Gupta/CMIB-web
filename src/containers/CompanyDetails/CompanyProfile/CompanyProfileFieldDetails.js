@@ -7,7 +7,8 @@ export const COMPANY_DETAILS_FIELDS = (
   address,
   email,
   std_country_code,
-  telephone_number
+  telephone_number,
+  state
 ) => {
   return [
     {
@@ -63,6 +64,12 @@ export const COMPANY_DETAILS_FIELDS = (
       headingIntl: "telephoneNumber",
       label: "telephone_number",
       value: telephone_number,
+    },
+    {
+      id: 10,
+      headingIntl: "state",
+      label: "state",
+      value: state,
     },
   ];
 };
