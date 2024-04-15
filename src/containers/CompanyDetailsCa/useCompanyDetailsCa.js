@@ -14,6 +14,7 @@ import {
   COMPANY_TYPE_OPTIONS,
   ENTITY_OPTIONS,
   NATURE_OF_SUPPLIER_OPTIONS,
+  PARAGRAPH_MAX_LENGTH,
   SALUTATION_OPTIONS,
   SOURCE_OF_INFORM_ICAI_OPTIONS,
 } from "../../constant/constant";
@@ -240,6 +241,7 @@ const other_details = ({ intl }) => [
     fullWidth: true,
     type: "textArea",
     rows: 2,
+    maxLength: PARAGRAPH_MAX_LENGTH,
     validate: (value) => {
       if (!value) {
         return intl.formatMessage({ id: "label.fieldRequired" });
