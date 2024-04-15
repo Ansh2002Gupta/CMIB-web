@@ -51,7 +51,6 @@ const AllJobsTable = ({
   const [filterArray, setFilterArray] = useState(
     getValidFilter(urlService.getQueryStringValue(PAGINATION_PROPERTIES.FILTER))
   );
-  console.log(filterArray, "filterArray");
 
   const [selectedJobId, setSelectedJobId] = useState("");
   const [selectedCompanyId, setCompanyId] = useState("");
