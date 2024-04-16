@@ -79,6 +79,7 @@ export const PAYMENT = "/payments";
 export const REFUND = "/refund";
 export const MEMBERS_END_POINT = "/members";
 export const CANDIDATE_DETAILS = "candidates-details";
+export const QUERY_TYPES = "/query-types";
 
 // Query
 export const MARK_AS_ANSWER_END_POINT = "/answer";

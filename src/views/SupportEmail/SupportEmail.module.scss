@@ -1,0 +1,15 @@
+.customStyles {
+  font-size: var(--fontSizeXlargeMedium);
+}
+
+.container {
+  flex: 1;
+  background-color: var(--blueBg);
+}
+
+.topSection {
+  padding: var(--width_24);
+  border-top: var(--borderLight);
+  border-bottom: var(--borderLight);
+  background-color: var(--white1);
+}

@@ -875,6 +875,12 @@ const locale = {
   "label.postsOfferedApplicantsTillDate":
     "Posts Offered to Applicants Till Date",
   "label.downloadResumeAndProfile": "Download Profile & Resume",
+  "label.queryEmailSetup": "Query Email Setup",
+  "label.queryTypeWiseEmailSetup": "Query Type-wise Email Setup",
+  "label.companyEmailPlaceholder": "Enter Company Email",
+  "label.companyEmailLabel": "Company Email",
+  "label.candidateEmailPlaceholder": "Enter Candidate Email",
+  "label.candidateEmailLabel": "Candidate Email",
 };
 
 export default locale;
