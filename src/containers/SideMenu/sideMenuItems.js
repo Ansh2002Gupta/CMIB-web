@@ -10,6 +10,7 @@ import {
   TICKETS,
   MANAGE_PAYMENTS,
   CANDIDATES,
+  SUPPORT_EMAIL,
 } from "../../routes/routeNames";
 import { MODULE_KEYS, MENU_KEYS } from "../../constant/constant";
 import { ReactComponent as Activity } from "../../themes/base/assets/icons/activity.svg";
@@ -52,6 +53,8 @@ import { ReactComponent as SelectedTestimonials } from "../../themes/base/assets
 import { ReactComponent as SelectedWallet } from "../../themes/base/assets/icons/selectedWallet.svg";
 import { ReactComponent as SelectedTicket } from "../../themes/base/assets/icons/selectedTicket.svg";
 import { ReactComponent as SelectedEmailAlias } from "../../themes/base/assets/icons/selectedEmailAlias.svg";
+import { ReactComponent as SmsBlueIcon } from "../../themes/base/assets/icons/smsBlue.svg";
+import { ReactComponent as SmsBlueActiveIcon } from "../../themes/base/assets/icons/smsBlueActive.svg";
 
 const caJobsMenu = [
   {
@@ -155,9 +158,9 @@ export const controlMenu = [
   },
   {
     label: MENU_KEYS.SUPPORT_EMAIL_MANGEMENT,
-    key: "/email-management",
-    icon: <EmailAlias />,
-    selectedicon: <SelectedEmailAlias />,
+    key: SUPPORT_EMAIL,
+    icon: <SmsBlueIcon />,
+    selectedicon: <SmsBlueActiveIcon />,
   },
 ];
 

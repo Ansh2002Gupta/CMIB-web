@@ -1,0 +1,95 @@
+.fieldRow {
+  margin-top: var(--margin_10);
+  row-gap: var(--gapSmall);
+  column-gap: var(--gapMedium);
+}
+
+.container {
+  flex: 1;
+}
+
+.editContainer {
+  flex: 1;
+  background-color: var(--bodyBg);
+  margin: var(--marginLarge);
+  margin-bottom: var(--marginNone);
+  padding: var(--paddingMedium);
+  border: var(--borderLight);
+  border-radius: var(--radiusMLg);
+}
+
+.customContainerStyles {
+  flex: 1;
+}
+
+.fieldLabel {
+  font-size: var(--paddingMediumSmall);
+  line-height: var(--paddingSmall);
+  color: var(--subHeadingColor);
+  font-weight: var(--fontWeightMedium);
+}
+
+.joinedCustomContainerStyles {
+  height: var(--height_44);
+  display: flex;
+  align-items: center;
+  border-top-right-radius: var(--radiusNone);
+  border-bottom-right-radius: var(--radiusNone);
+  padding: var(--padding_9) var(--padding_5);
+}
+
+.renderItem {
+  flex: 1;
+  margin-bottom: var(--margin_12);
+}
+
+.inputNumberStyle {
+  color: var(--textBold);
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightMedium);
+}
+
+.headingText {
+  font-size: var(--fontSizeNormal);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+  margin-bottom: var(--marginLarge);
+  font-weight: var(--fontWeightBold);
+}
+
+.contentHeaderText {
+  font-size: var(--fontSizeSmall);
+  font-weight: var(--fontWeightBold);
+  color: var(--textBold);
+}
+
+.textInput {
+  color: var(--inputText) !important;
+  font-size: var(--fontSizeSmall) !important;
+  font-weight: var(--fontWeightMedium) !important;
+}
+
+.input {
+  display: flex;
+  padding: var(--paddingMediumSmall) var(--paddingSmall);
+  align-items: center;
+  gap: var(--gapXSmall);
+  align-self: stretch;
+  border-radius: var(--radiusLg);
+  border: var(--borderLight);
+  background: var(--bodyBg);
+  font-weight: var(--fontWeightMedium, 500) !important;
+}
+
+.supportLoading {
+  flex: 1;
+}
+
+.errorContainerBox {
+  width: var(--fullWidth);
+  height: var(--fullHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--marginLarge);
+}

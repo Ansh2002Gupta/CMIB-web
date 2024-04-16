@@ -51,3 +51,5 @@ export const TICKETS = "tickets/";
 export const TICKETS_VIEW_DETAILS = "reply/:id";
 export const USER_DETAILS = "details/:userId";
 export const USERS = "users/";
+
+export const SUPPORT_EMAIL = "supportEmail/";

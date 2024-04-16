@@ -83,11 +83,13 @@ import {
   CANDIDATES,
   CANDIDATES_DETAILS,
   APPLICANTS_DETAILS,
+  SUPPORT_EMAIL,
 } from "./routeNames";
 import { MODULE_KEYS } from "../constant/constant";
 import Candidates from "../views/Candidates/Candidates.js";
 import CandidateDetails from "../views/CandidateDetails/CandidateDetails.js";
 import AllJobs from "../views/AllJobs/AllJobs.js";
+import SupportEmail from "../views/SupportEmail/SupportEmail.js";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const HeaderContentWithFooterWithPublicAccess = withPublicAccess(
@@ -314,6 +316,10 @@ const config = [
       {
         viewPath: REGISTERED_COMPANY + REGISTERED_COMPANY_DETAILS,
         element: <RegisteredCompaniesDetails />,
+      },
+      {
+        viewPath: SUPPORT_EMAIL,
+        element: <SupportEmail />,
       },
     ],
   },
