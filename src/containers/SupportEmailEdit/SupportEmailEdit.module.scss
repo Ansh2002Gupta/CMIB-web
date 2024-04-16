@@ -1,8 +1,7 @@
 .fieldRow {
-  display: flex;
-  justify-content: space-between;
   margin-top: var(--margin_10);
-  flex-wrap: wrap;
+  row-gap: var(--gapSmall);
+  column-gap: var(--gapMedium);
 }
 
 .container {
@@ -21,7 +20,6 @@
 
 .customContainerStyles {
   flex: 1;
-  margin: var(--paddingNone) var(--fontSizeExtraSmall);
 }
 
 .fieldLabel {

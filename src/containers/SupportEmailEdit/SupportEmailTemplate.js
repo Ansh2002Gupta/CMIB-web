@@ -7,6 +7,7 @@ import CustomInput from "../../components/CustomInput";
 import SupportAssigneeDropdown from "./SupportAssigneeDropdown";
 import CustomLoader from "../../components/CustomLoader";
 import ErrorMessageBox from "../../components/ErrorMessageBox/ErrorMessageBox";
+import CustomGrid from "../../components/CustomGrid";
 
 const SupportEmailTemplate = ({
   data,
@@ -30,6 +31,7 @@ const SupportEmailTemplate = ({
       value = "",
       isDropdown,
       error,
+      isRequired,
     } = inputData;
 
     if (isDropdown) {
@@ -51,6 +53,7 @@ const SupportEmailTemplate = ({
         type="text"
         isError={!!error}
         errorMessage={error}
+        isRequired={isRequired}
         value={value}
         onBlur={() => handleBlur(key, slug)}
         customInputStyles={[styles.textInput, styles.input].join(" ")}
@@ -68,9 +71,9 @@ const SupportEmailTemplate = ({
     return (
       <div key={slug} className={styles.renderItem}>
         <Typography className={styles.contentHeaderText}>{name}</Typography>
-        <div className={styles.fieldRow}>
+        <CustomGrid customStyle={styles.fieldRow}>
           {row.map((val) => renderCustomInput(val, slug))}
-        </div>
+        </CustomGrid>
       </div>
     );
   };

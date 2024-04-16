@@ -9,7 +9,7 @@ import { NOTIFICATION_TYPES } from "../../constant/constant";
 import {
   ADMIN_ROUTE,
   QUERY_TYPE,
-  UPDATE_QUERY_TYPES,
+  QUERY_TYPES,
 } from "../../constant/apiEndpoints";
 
 const queryRow = (intl) => [
@@ -17,6 +17,7 @@ const queryRow = (intl) => [
     key: "company_email",
     label: intl.formatMessage({ id: "label.candidateEmailLabel" }),
     placeholder: intl.formatMessage({ id: "label.candidateEmailPlaceholder" }),
+    isRequired: true,
     validate: (value) => {
       if (value && !EMAIL_REGEX.test(value)) {
         return intl.formatMessage({ id: "label.invalidEmail" });
@@ -27,6 +28,7 @@ const queryRow = (intl) => [
     key: "candidate_email",
     label: intl.formatMessage({ id: "label.companyEmailLabel" }),
     placeholder: intl.formatMessage({ id: "label.companyEmailPlaceholder" }),
+    isRequired: true,
     validate: (value) => {
       if (value && !EMAIL_REGEX.test(value)) {
         return intl.formatMessage({ id: "label.invalidEmail" });
@@ -69,7 +71,7 @@ const useSupportEmailEdit = () => {
   });
 
   const { makeRequest: updateSupportData, isLoading: isSaveDataLoading } =
-    usePatch({ url: ADMIN_ROUTE + UPDATE_QUERY_TYPES });
+    usePatch({ url: ADMIN_ROUTE + QUERY_TYPES });
 
   useEffect(() => {
     setSupportData();
@@ -172,11 +174,12 @@ const useSupportEmailEdit = () => {
     let isError = false;
     formattedData?.forEach(({ row, slug }) => {
       row?.forEach((field) => {
-        const { validate, key } = field;
+        const { validate, key, isRequired } = field;
         if (
-          validate &&
-          state?.[slug]?.[key] &&
-          Boolean(validate(state[slug][key]))
+          (isRequired && !state?.[slug]?.[key]) ||
+          (validate &&
+            state?.[slug]?.[key] &&
+            Boolean(validate(state[slug][key])))
         ) {
           isError = true;
         }
