@@ -23,6 +23,9 @@ const SupportAssigneeDropdown = ({
     error,
   } = useFetch({
     url: CORE_ROUTE + TICKET_LIST + ASSIGNEES,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const selectRef = useRef();
@@ -38,7 +41,6 @@ const SupportAssigneeDropdown = ({
   }, [data]);
 
   const handleSelectAssignee = (_, option) => {
-    console.log(selectRef.current);
     handleChangeData(option);
     setTimeout(() => {
       selectRef.current.blur();
@@ -58,6 +60,10 @@ const SupportAssigneeDropdown = ({
     return _.debounce(handleSearch, DEBOUNCE_TIME);
   }, [handleSearch]);
 
+  const handleClickOnSearchField = () => {
+    fetchMoreAssignee({});
+  };
+
   return (
     <div className={style}>
       <SearchableDropDown
@@ -71,6 +77,7 @@ const SupportAssigneeDropdown = ({
         title={label ?? ""}
         loading={isAssingeeLoading}
         selectedOptionsList={value ?? []}
+        onClickField={handleClickOnSearchField}
       />
     </div>
   );
