@@ -24,6 +24,7 @@ const SearchableDropDown = forwardRef(
       title,
       onSearch,
       loading,
+      onClickField
     },
     ref
   ) => {
@@ -57,6 +58,7 @@ const SearchableDropDown = forwardRef(
               options={options}
               disabled={disabled}
               onSearch={onSearch}
+              onClick={onClickField}
               optionRender={(option) => (
                 <TwoColumn
                   className={styles.dropDownItem}
