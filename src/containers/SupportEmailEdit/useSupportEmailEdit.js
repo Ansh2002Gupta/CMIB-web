@@ -19,6 +19,9 @@ const queryRow = (intl) => [
     placeholder: intl.formatMessage({ id: "label.candidateEmailPlaceholder" }),
     isRequired: true,
     validate: (value) => {
+      if (!value) {
+        return intl.formatMessage({ id: "label.fieldRequired" });
+      }
       if (value && !EMAIL_REGEX.test(value)) {
         return intl.formatMessage({ id: "label.invalidEmail" });
       }
@@ -30,6 +33,9 @@ const queryRow = (intl) => [
     placeholder: intl.formatMessage({ id: "label.companyEmailPlaceholder" }),
     isRequired: true,
     validate: (value) => {
+      if (!value) {
+        return intl.formatMessage({ id: "label.fieldRequired" });
+      }
       if (value && !EMAIL_REGEX.test(value)) {
         return intl.formatMessage({ id: "label.invalidEmail" });
       }
@@ -160,7 +166,7 @@ const useSupportEmailEdit = () => {
   const handleBlur = (key, slug) => {
     formattedData?.forEach(({ row }) => {
       row?.forEach((field) => {
-        if (field?.validate && state[slug]?.[key]) {
+        if (field?.validate) {
           setFieldError({
             ...fieldError,
             [`${slug}:${key}`]: field?.validate(state[slug][key]),
@@ -177,9 +183,7 @@ const useSupportEmailEdit = () => {
         const { validate, key, isRequired } = field;
         if (
           (isRequired && !state?.[slug]?.[key]) ||
-          (validate &&
-            state?.[slug]?.[key] &&
-            Boolean(validate(state[slug][key])))
+          (validate && Boolean(validate(state[slug][key])))
         ) {
           isError = true;
         }
