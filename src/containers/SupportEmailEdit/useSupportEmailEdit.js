@@ -14,7 +14,7 @@ import {
 
 const queryRow = (intl) => [
   {
-    key: "company_email",
+    key: "candidate_email",
     label: intl.formatMessage({ id: "label.candidateEmailLabel" }),
     placeholder: intl.formatMessage({ id: "label.candidateEmailPlaceholder" }),
     isRequired: true,
@@ -28,7 +28,7 @@ const queryRow = (intl) => [
     },
   },
   {
-    key: "candidate_email",
+    key: "company_email",
     label: intl.formatMessage({ id: "label.companyEmailLabel" }),
     placeholder: intl.formatMessage({ id: "label.companyEmailPlaceholder" }),
     isRequired: true,
